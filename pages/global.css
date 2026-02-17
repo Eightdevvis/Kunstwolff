@@ -1,0 +1,70 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+
+
+@font-face {
+    font-family: 'Mayonice';
+    src: url('../fonts/mayonice/Mayonice.woff2') format('woff2'),
+        url('../fonts/mayonice/Mayonice.woff') format('woff');
+    font-style: normal;
+    font-display: swap;
+}
+
+/* =========================
+   SECTION BASICS
+========================= */
+
+.section {
+  width: 100%;
+  padding: 120px 40px;
+}
+
+.section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section h2 {
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  opacity: 0.85;
+}
+
+.section p {
+  max-width: 720px;
+  font-size: 16px;
+  line-height: 1.7;
+  opacity: 0.85;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 80px 24px;
+  }
+
+  .contact-form {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form textarea,
+  .contact-form button {
+    grid-column: span 1;
+  }
+}
+
+
