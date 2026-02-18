@@ -17,29 +17,16 @@ body {
 
 
 
-
 .hero {
-  min-height: calc(100vh - 80px); /* Viewport minus Nav */
-  background: url("pages/startpage/img/titelbild.avif") center / cover no-repeat;
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  background: url("../assets/img/titelbild.avif") center / cover no-repeat;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
   box-sizing: border-box;
-  overflow: hidden;
-  position: relative;
-}
-
-.hero {
-  width: 100%;
-  min-height: calc(100vh - 80px);
-  background: url("img/titelbild.avif") center / cover no-repeat;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
   position: relative;
   overflow: hidden;
 }
