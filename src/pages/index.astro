@@ -4,6 +4,7 @@ import hochzeit from "../assets/img/Hochzeitsmaler.jpg";
 import BrandStripe from "../components/BrandStripe.astro";
 import Navigation from "../components/Navigation.astro";
 import Opener from "../components/Opener.astro";
+import SkillBanner from "../components/SkillBanner.astro";
 
 import Layout from "../layouts/Layout.astro";
 ---
@@ -31,27 +32,7 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
-  <!-- =========================
-     SKILLS / FÄHIGKEITEN
-========================= -->
-  <section class="skills-section">
-    <div class="skills-grid">
-      <div class="skill-item">
-        <div class="skill-image" style="background-image: url(${hochzeit})">
-        </div>
-        <div class="skill-label">Schnellzeichner</div>
-      </div>
-      <div class="skill-item">
-        <div
-          class="skill-image"
-          style="background-image: url('../assets/img/Hochzeitsmaler.jpg')"
-        >
-        </div>
-        <div class="skill-label">Szenenmaler</div>
-      </div>
-      <!-- weitere Skills später -->
-    </div>
-  </section>
+<SkillBanner />
 
   <!-- =========================
      SWIPE GALLERY
