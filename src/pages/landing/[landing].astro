@@ -1,27 +1,35 @@
 ---
 import fs from 'fs';
 import path from 'path';
-import MarkdownIt from 'markdown-it';
 
+import Layout from '../../layouts/Layout.astro';
 import Skills from '../../components/SkillBanner.astro';
 import Slideshow from '../../components/Slideshow.astro';
 import Reviews from '../../components/Reviews.astro';
 import References from '../../components/References.astro';
 
+// getStaticPaths liefert alle möglichen Landingpages
+export async function getStaticPaths() {
+  const landingDir = path.resolve('./src/content/landing');
+  const files = fs.readdirSync(landingDir);
+
+  const paths = files
+    .filter((f) => f.endsWith('.json'))
+    .map((f) => ({ params: { landing: f.replace('.json', '') } }));
+
+  return paths;
+}
+
+// Props pro Seite laden
 const { landing } = Astro.params;
-
-const landingPath = path.resolve(`./src/content/landingpages/${landing}`);
-
-const md = new MarkdownIt();
-
-const skills = JSON.parse(fs.readFileSync(path.join(landingPath, 'skills.json'), 'utf-8'));
-const slideshow = JSON.parse(fs.readFileSync(path.join(landingPath, 'slideshow.json'), 'utf-8'));
-const reviews = JSON.parse(fs.readFileSync(path.join(landingPath, 'reviews.json'), 'utf-8'));
-const references = JSON.parse(fs.readFileSync(path.join(landingPath, 'references.json'), 'utf-8'));
-
+const landingDir = path.resolve('./src/content/landing');
+const landingFile = path.join(landingDir, `${landing}.json`);
+const data = JSON.parse(fs.readFileSync(landingFile, 'utf-8'));
 ---
 
-<Skills items={skills} />
-<Slideshow items={slideshow} />
-<Reviews items={reviews} />
-<References items={references} />
+<Layout title={data.title}>
+  <Skills items={data.skills} />
+  <Slideshow items={data.slideshow} />
+  <Reviews items={data.reviews} />
+  <References items={data.references} />
+</Layout>
