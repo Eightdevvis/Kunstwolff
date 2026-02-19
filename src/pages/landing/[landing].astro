@@ -1,0 +1,27 @@
+---
+import fs from 'fs';
+import path from 'path';
+import MarkdownIt from 'markdown-it';
+
+import Skills from '../../components/SkillBanner.astro';
+import Slideshow from '../../components/Slideshow.astro';
+import Reviews from '../../components/Reviews.astro';
+import References from '../../components/References.astro';
+
+const { landing } = Astro.params;
+
+const landingPath = path.resolve(`./src/content/landingpages/${landing}`);
+
+const md = new MarkdownIt();
+
+const skills = JSON.parse(fs.readFileSync(path.join(landingPath, 'skills.json'), 'utf-8'));
+const slideshow = JSON.parse(fs.readFileSync(path.join(landingPath, 'slideshow.json'), 'utf-8'));
+const reviews = JSON.parse(fs.readFileSync(path.join(landingPath, 'reviews.json'), 'utf-8'));
+const references = JSON.parse(fs.readFileSync(path.join(landingPath, 'references.json'), 'utf-8'));
+
+---
+
+<Skills items={skills} />
+<Slideshow items={slideshow} />
+<Reviews items={reviews} />
+<References items={references} />

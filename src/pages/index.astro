@@ -7,6 +7,23 @@ import Opener from "../components/Opener.astro";
 import SkillBanner from "../components/SkillBanner.astro";
 
 import Layout from "../layouts/Layout.astro";
+
+import Skills from "../components/SkillBanner.astro";
+import Slideshow from "../components/Slideshow.astro";
+import References from "../components/References.astro";
+
+const skills = [
+  {
+    title: "Schnellzeichner",
+    image: "/img/UnsereFähigkeitenBilder/Hochzeitsmaler.jpg",
+    alt: "Live Schnellzeichner auf Events",
+  },
+  {
+    title: "Szenenmaler",
+    image: "/img/UnsereFähigkeitenBilder/Hochzeitsmaler.jpg",
+    alt: "Szenenmalerei bei Hochzeiten",
+  },
+];
 ---
 
 <Layout>
@@ -32,36 +49,10 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
-<SkillBanner />
+  <SkillBanner skills={skills} />
 
-  <!-- =========================
-     SWIPE GALLERY
-========================= -->
-  <section class="section gallery" id="work">
-    <div class="section-inner">
-      <h2>Unsere Kunst</h2>
-
-      <div class="gallery-swipe">
-        <!-- später: Swipe / Slider / Lightbox -->
-        <p>Swipe Gallery Placeholder</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================
-     REFERENCES / GÄSTEBUCH
-========================= -->
-  <section class="section references">
-    <div class="section-inner">
-      <h2>Referenzen</h2>
-
-      <!-- Logos / Marken -->
-      <div class="reference-logos">
-        <!-- später: Logos, Cards, Slider, Gästebuch -->
-        <p>Marken & Events, mit denen wir gearbeitet haben</p>
-      </div>
-    </div>
-  </section>
+  <Slideshow />
+<References />
 
   <!-- =========================
      CONTACT

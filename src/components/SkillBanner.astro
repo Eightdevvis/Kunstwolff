@@ -1,21 +1,77 @@
-  <!-- =========================
-     SKILLS / FÄHIGKEITEN
-========================= -->
-  <section class="skills-section">
-    <div class="skills-grid">
+---
+type Skill = {
+  title: string;
+  image: string;
+  alt?: string;
+};
+
+const { skills = [] } = Astro.props as { skills?: Skill[] };
+---
+<section class="skills-section">
+  <div class="skills-grid">
+    {skills.map((skill) => (
       <div class="skill-item">
-        <div class="skill-image" style="background-image: url(${hochzeit})">
-        </div>
-        <div class="skill-label">Schnellzeichner</div>
-      </div>
-      <div class="skill-item">
-        <div
+        <img
+          src={skill.image}
+          alt={skill.alt ?? skill.title}
           class="skill-image"
-          style="background-image: url('../assets/img/Hochzeitsmaler.jpg')"
-        >
-        </div>
-        <div class="skill-label">Szenenmaler</div>
+          loading="lazy"
+        />
+
+        <div class="skill-label">{skill.title}</div>
       </div>
-      <!-- weitere Skills später -->
-    </div>
-  </section>
+    ))}
+  </div>
+</section>
+
+<style>
+.skills-section {
+  padding: 30px 20px;
+  background: #595454;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 220px));
+  gap: 40px;
+  justify-content: center;
+}
+
+.skill-item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.skill-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.85);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.skill-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.skill-item:hover .skill-image {
+  filter: brightness(0.45);
+  transform: scale(1.05);
+}
+
+.skill-item:hover .skill-label {
+  opacity: 1;
+}
+</style>
