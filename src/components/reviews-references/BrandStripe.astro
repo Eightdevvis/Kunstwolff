@@ -1,0 +1,210 @@
+---
+import { readdir } from 'node:fs/promises';
+
+const logosDirectory = new URL('../../../public/img/referenzenLogos', import.meta.url);
+const allowedExtensions = new Set(['.avif', '.gif', '.jpeg', '.jpg', '.png', '.svg', '.webp']);
+
+let logoItems: { src: string; label: string }[] = [];
+
+try {
+  const files = await readdir(logosDirectory, { withFileTypes: true });
+
+  logoItems = files
+    .filter((file) => {
+      if (!file.isFile()) return false;
+      const lowerCaseName = file.name.toLowerCase();
+      const extension = lowerCaseName.slice(lowerCaseName.lastIndexOf('.'));
+      return allowedExtensions.has(extension);
+    })
+    .map((file) => ({
+      src: `/img/referenzenLogos/${file.name}`,
+      label: decodeURIComponent(file.name)
+        .replace(/\.[^.]+$/, '')
+        .replace(/[_-]+/g, ' ')
+        .trim(),
+    }))
+    .sort((a, b) => a.src.localeCompare(b.src));
+} catch {
+  logoItems = [];
+}
+
+const loopSpeedMultiplier = 1.6;
+const baseLoopDurationSeconds = Math.max(20, logoItems.length * 3.5);
+const loopDurationSeconds = baseLoopDurationSeconds * loopSpeedMultiplier;
+---
+
+<!-- =========================
+     BRAND STRIPE / LOGOS
+========================= -->
+<section class="brand-stripe" style={`--brand-loop-duration: ${loopDurationSeconds}s;`}>
+  <div class="brand-marquee">
+    <div class="brand-track">
+      <div class="brand-group">
+        {logoItems.map((logo) => (
+          <div class="brand-slot" data-logo-name={logo.label}>
+            <img
+              class="brand-item"
+              src={logo.src}
+              alt={`Referenzlogo ${logo.label}`}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        ))}
+      </div>
+
+      <div class="brand-group" aria-hidden="true">
+        {logoItems.map((logo) => (
+          <div class="brand-slot" data-logo-name={logo.label}>
+            <img
+              class="brand-item"
+              src={logo.src}
+              alt={`Referenzlogo ${logo.label}`}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+  <div class="brand-tooltip" aria-hidden="true"></div>
+</section>
+
+<style>
+  .brand-stripe {
+    --brand-strip-height: 50px;
+    --brand-vertical-padding: 1px;
+    --brand-slot-height: calc(var(--brand-strip-height) - (var(--brand-vertical-padding) * 2));
+    --brand-slot-width: calc(var(--brand-slot-height) * 2.8235);
+    --brand-gap: 28px;
+    width: 100%;
+    background: #000000;          /* dunkel, schlanker Look */
+    padding: var(--brand-vertical-padding) 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;   /* zentriert die ganze Reihe */
+    align-items: center;
+    position: relative;
+}
+
+  .brand-marquee {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .brand-track {
+    display: flex;
+    width: max-content;
+    gap: var(--brand-gap);
+    animation: brand-loop var(--brand-loop-duration) linear infinite;
+    will-change: transform;
+  }
+
+  .brand-group {
+    display: flex;
+    gap: var(--brand-gap);
+  align-items: center;
+    flex-wrap: nowrap;
+}
+
+.brand-slot {
+    flex: 0 0 auto;
+    width: var(--brand-slot-width);
+    height: var(--brand-slot-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.brand-item {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: invert(1) grayscale(1) brightness(0.78);
+}
+
+.brand-tooltip {
+  position: fixed;
+  left: 0;
+  top: 0;
+  transform: translate3d(0, 0, 0);
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: #fff;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 2000;
+  transition: opacity 0.12s ease;
+}
+
+.brand-tooltip.is-visible {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .brand-stripe {
+    --brand-gap: 20px;
+    --brand-strip-height: 74px;
+  }
+
+  .brand-item {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-track {
+    animation: none;
+  }
+}
+
+@keyframes brand-loop {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - (var(--brand-gap) / 2)));
+  }
+}
+
+</style>
+
+<script>
+  const stripes = document.querySelectorAll('.brand-stripe');
+
+  stripes.forEach((stripe) => {
+    const tooltip = stripe.querySelector<HTMLElement>('.brand-tooltip');
+    const logos = stripe.querySelectorAll<HTMLElement>('.brand-slot');
+
+    if (!tooltip || logos.length === 0) return;
+
+    const moveTooltip = (event: MouseEvent) => {
+      tooltip.style.left = `${event.clientX + 14}px`;
+      tooltip.style.top = `${event.clientY + 18}px`;
+    };
+
+    logos.forEach((logo) => {
+      logo.addEventListener('mouseenter', (event) => {
+        const logoName = logo.getAttribute('data-logo-name') || 'Logo';
+        tooltip.textContent = logoName;
+        tooltip.classList.add('is-visible');
+        moveTooltip(event);
+      });
+
+      logo.addEventListener('mousemove', moveTooltip);
+      logo.addEventListener('mouseleave', () => {
+        tooltip.classList.remove('is-visible');
+      });
+    });
+  });
+</script>

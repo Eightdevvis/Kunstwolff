@@ -1,137 +1,40 @@
 ---
-import hochzeit from "../assets/img/Hochzeitsmaler.jpg";
-
-import BrandStripe from "../components/BrandStripe.astro";
-import Navigation from "../components/Navigation.astro";
-import Opener from "../components/Opener.astro";
+import Opener from "../components/hero/Opener.astro";
 import SkillBanner from "../components/SkillBanner.astro";
-
 import Layout from "../layouts/Layout.astro";
+import Slideshow from "../components/slideshows/Slideshow.astro";
+import References from "../components/reviews-references/References.astro";
+import Contact from "../components/Contact.astro";
+import Landingsection from "../components/Landingsection.astro";
+import Aboutsection from "../components/about/Aboutsection.astro";
+import { getSharedSkills } from "../utils/skills";
+import {
+  getHomepageSlides,
+} from "../utils/slideImages";
 
-import Skills from "../components/SkillBanner.astro";
-import Slideshow from "../components/Slideshow.astro";
-import References from "../components/References.astro";
+const skills = getSharedSkills();
 
-const skills = [
-  {
-    title: "Schnellzeichner",
-    image: "/img/UnsereFähigkeitenBilder/Hochzeitsmaler.jpg",
-    alt: "Live Schnellzeichner auf Events",
-  },
-  {
-    title: "Szenenmaler",
-    image: "/img/UnsereFähigkeitenBilder/Hochzeitsmaler.jpg",
-    alt: "Szenenmalerei bei Hochzeiten",
-  },
-];
+// Slideshow-Items nur aus Ordnern zusammenführen
+const homepageSlides = getHomepageSlides();
 ---
 
 <Layout>
   
-  <Opener/>
+  <Opener />
 
-  <!-- =========================
-     ABOUT / STORY
-========================= -->
-  <section class="section about" id="skills">
-    <div class="section-inner">
-      <h2>Professionell. Erfahren. Kreativ.</h2>
-      <p>
-        <!-- hier kommt später eure Story rein Text über Kunstwolff, Philosophie, Live-Kunst, Erfahrung usw.-->
-
-        <br />Kunststudio aber Familie. Mit zahllosen Aufträgen und Auftritten
-        wissen wir genau, wie wir unsere Kunst an Sie liefern. Ob Live-Event und
-        performant als besondere Gästeunterhaltung oder Anfertigung im Atelier
-        auf Wunsch.
-        <br /><br />
-        Lernen Sie hier unsere Fähigkeiten kennen.
-      </p>
-    </div>
-  </section>
+  <Aboutsection />
 
   <SkillBanner skills={skills} />
 
-  <Slideshow />
-<References />
+  <Slideshow
+    items={homepageSlides}
+  />
 
-  <!-- =========================
-     CONTACT
-========================= -->
-  <section id="contact" class="section contact">
-    <div class="section-inner">
-      <h2>Kontakt</h2>
+  <References />
 
-      <!-- Formspree-Formular (mit JS) -->
-      <form id="contactForm" class="contact-form">
-        <input
-          type="hidden"
-          name="_subject"
-          value="Neue Anfrage von Kunstwolff Website"
-        />
+  <Contact />
 
-        <input type="text" name="name" placeholder="Name" required />
-        <input type="email" name="email" placeholder="E-Mail" required />
-        <input type="tel" name="phone" placeholder="Telefon" required />
-        <input
-          type="date"
-          name="date"
-          required
-          onfocus="this.showPicker()"
-          placeholder="Datum des Events"
-          style="color: #fff;"
-        />
-
-        <textarea name="message" placeholder="Ihre Anfrage" required></textarea>
-
-        <button type="submit">Anfrage senden</button>
-      </form>
-
-      <div
-        id="formMessage"
-        style="display:none; color:#0f0; margin-top:10px; text-align:center; font-weight:700;"
-      >
-        Sent!
-      </div>
-
-      <!-- alternative Kontaktinfos -->
-      <div class="contact-info">
-        <p>Telefon: +49 …</p>
-        <p>E-Mail: info@kunstwolff.de</p>
-      </div>
-    </div>
-  </section>
-
-
-
-  <!-- =========================
-     LANDING PAGE LINKS / CTA
-========================= -->
-  <section class="section landing-links">
-    <div class="section-inner">
-      <p>
-        <!-- hier kannst du einfach Text + Links reinwerfen -->
-        Weitere Angebote & Spezialisierungen:
-        <a href="#">Live Painting</a> ·
-        <a href="#">Eventkunst</a> ·
-        <a href="#">Corporate Art</a>
-        Städte: <br />
-        Karlsruhe · Stuttgart · Mannheim · Heidelberg · Freiburg · Baden-Baden · Frankfurt
-        am Main · Walldorf · Wiesbaden · Mainz · Köln · Düsseldorf · Aachen · München
-        · Nürnberg · Garmisch-Partenkirchen · Berlin · Hamburg · Leipzig · Dresden
-        <br />
-        <br />
-        Regionen: <br />
-        Schwarzwald · Odenwald · Pfalz · Rhein-Main · Rhein-Neckar · Main-Taunus ·
-        Franken · Oberbayern · Allgäu · Berlin / Brandenburg · Norddeutschland
-        <br />
-        <br />
-        Bundesländer: <br />
-        Baden-Württemberg · Bayern · Berlin · Brandenburg · Bremen · Hamburg · Hessen
-        · Niedersachsen · Nordrhein-Westfalen · Rheinland-Pfalz · Saarland · Sachsen
-        · Sachsen-Anhalt · Thüringen · Mecklenburg-Vorpommern · Schleswig-Holstein
-      </p>
-    </div>
-  </section>
+  <Landingsection />
 
   <script src="../scripts/formspree.js"></script>
 </Layout>

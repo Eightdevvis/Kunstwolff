@@ -1,0 +1,139 @@
+---
+type Review = {
+  author: string;
+  text: string;
+  categories?: string[];
+};
+
+const { items = [], filteredCategories = [] } = Astro.props;
+
+const filteredItems = 
+  filteredCategories.length === 0
+    ? items
+    : items.filter((review: Review) =>
+        review.categories?.some((cat) => filteredCategories.includes(cat))
+      );
+---
+
+<div class="review-slider" data-review-rotator>
+      {filteredItems.map((review: Review, index: number) => (
+        <div class={`swiper-slide ${index === 0 ? "is-active" : ""}`}>
+          <p class="review-text">&ldquo;{review.text}&rdquo;</p>
+          <p class="review-stars" aria-label="5 von 5 Sternen">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+          <span class="review-author">&mdash; {review.author}</span>
+        </div>
+      ))}
+    </div>
+
+<script>
+  const reviewRotators = document.querySelectorAll("[data-review-rotator]");
+
+  reviewRotators.forEach((rotator) => {
+    const slides = Array.from(rotator.querySelectorAll(".swiper-slide"));
+
+    if (slides.length <= 1) {
+      return;
+    }
+
+    let activeIndex = 0;
+    const transitionDuration = 650;
+
+    setInterval(() => {
+      const currentSlide = slides[activeIndex];
+      currentSlide.classList.remove("is-active");
+      currentSlide.classList.add("is-leaving");
+
+      activeIndex = (activeIndex + 1) % slides.length;
+
+      const nextSlide = slides[activeIndex];
+      nextSlide.classList.remove("is-leaving");
+      nextSlide.classList.add("is-active");
+
+      setTimeout(() => {
+        currentSlide.classList.remove("is-leaving");
+      }, transitionDuration);
+    }, 2500);
+  });
+</script>
+
+<style>
+  .review-slider {
+    display: grid;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 22px 24px;
+  }
+
+  .review-slider .swiper-slide {
+    grid-area: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    text-align: center;
+    padding: 18px 22px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-24px);
+    transition: opacity 650ms ease, transform 650ms ease, visibility 650ms;
+    pointer-events: none;
+  }
+
+  .review-slider .review-text {
+    max-width: 700px;
+    font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+    line-height: 1.65;
+    font-style: italic;
+    color: rgba(17, 17, 17, 0.92);
+    letter-spacing: 0.01em;
+  }
+
+  .review-slider .review-stars {
+    margin-top: 0;
+    font-size: 1.15rem;
+    letter-spacing: 0.2em;
+    color: #d4af37;
+  }
+
+  .review-slider .review-author {
+    margin-top: 2px;
+    font-family: "Mayonice", Georgia, serif;
+    font-size: clamp(1.05rem, 2vw, 1.2rem);
+    color: rgba(34, 34, 34, 0.9);
+    letter-spacing: 0.06em;
+  }
+
+  .review-slider .swiper-slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .review-slider .swiper-slide.is-leaving {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(24px);
+  }
+
+  @media (max-width: 768px) {
+    .review-slider {
+      padding: 16px 14px;
+    }
+
+    .review-slider .swiper-slide {
+      padding: 14px 12px;
+    }
+
+    .review-slider .review-stars {
+      letter-spacing: 0.15em;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .review-slider .swiper-slide {
+      transition: none;
+    }
+  }
+</style>

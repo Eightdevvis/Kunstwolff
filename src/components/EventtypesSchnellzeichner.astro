@@ -1,0 +1,155 @@
+---
+type EventImageOverride = {
+  image?: string;
+};
+
+const { events = [], items = [] } = Astro.props as {
+  events?: EventImageOverride[];
+  items?: EventImageOverride[];
+};
+
+const rawOverrides: EventImageOverride[] =
+  events && events.length ? events : items;
+
+/*
+  FEST DEFINIERTE EVENTTYPEN
+  → Titel, Link und ALT bleiben immer gleich (SEO-Kontrolle)
+  → Nur image darf überschrieben werden
+*/
+
+const DEFAULT_EVENTS = [
+  {
+    title: "Firmenfeiern & Corporate Events",
+    image: "/img/samples/sample1.jpeg",
+    link: "/schnellzeichner/firmenfeier/",
+    alt: "Schnellzeichner auf einer Firmenfeier zeichnet Gäste live",
+  },
+  {
+    title: "Messen & Promotion",
+    image: "/img/samples/sample2.jpeg",
+    link: "/schnellzeichner/messe/",
+    alt: "Schnellzeichner als Besuchermagnet am Messestand",
+  },
+  {
+    title: "Hochzeiten",
+    image: "/img/samples/sample3.jpeg",
+    link: "/schnellzeichner/hochzeit/",
+    alt: "Schnellzeichner zeichnet Brautpaar live auf Hochzeit",
+  },
+  {
+    title: "Geburtstage & Private Feiern",
+    image: "/img/samples/sample4.jpeg",
+    link: "/schnellzeichner/private-feier/",
+    alt: "Live Karikaturist auf einer privaten Feier",
+  },
+  
+];
+
+/*
+  Merge:
+  Nur image darf überschrieben werden.
+*/
+
+const list = DEFAULT_EVENTS.map((def, idx) => {
+  const override = rawOverrides[idx];
+  return {
+    ...def,
+    image: override?.image ?? def.image,
+  };
+});
+---
+
+<section class="eventtypes-section">
+  <div class="eventtypes-grid">
+    {list.map((event) => (
+      <div class="eventtype-item">
+        <a class="eventtype-link" href={event.link}>
+          <img
+            src={event.image}
+            alt={event.alt}
+            class="eventtype-image"
+            loading="lazy"
+          />
+          <div class="eventtype-label">
+            <h3>{event.title}</h3>
+          </div>
+        </a>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+.eventtypes-section {
+  padding: 70px 20px;
+  background: #111;
+}
+
+.eventtypes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.eventtype-item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.eventtype-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  text-decoration: none;
+}
+
+.eventtype-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.75);
+  transition: transform 0.4s ease, filter 0.3s ease;
+}
+
+@media (max-width: 640px) {
+  .eventtypes-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.eventtype-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 25px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.1));
+  transition: background 0.3s ease;
+}
+
+.eventtype-label h3 {
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+.eventtype-item:hover .eventtype-image {
+  transform: scale(1.07);
+  filter: brightness(0.45);
+}
+
+.eventtype-item:hover .eventtype-label {
+  background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.2));
+}
+</style>

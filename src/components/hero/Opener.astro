@@ -1,0 +1,95 @@
+---
+import BrandStripe from "../reviews-references/BrandStripe.astro";
+---
+<style>
+.hero {
+  width: 100%;
+  min-height: calc(100vh - 60px);
+  background: url("/img/Titelbild/titelbild.avif") center / cover no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.98) 0%,
+    rgba(0, 0, 0, 0.82) 32%,
+    rgba(0, 0, 0, 0.24) 70%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  mask-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.98) 46%,
+    rgba(0, 0, 0, 0.45) 76%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.98) 46%,
+    rgba(0, 0, 0, 0.45) 76%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  pointer-events: none;
+}
+
+.hero-band {
+  transform: translateY(20vh);
+  background: rgba(0, 0, 0, 0.55);
+  padding: 32px 48px;
+  max-width: 1000px;
+  text-align: center;
+}
+
+
+.hero-band p {
+  font-size: 18px;
+  letter-spacing: 0.18em; 
+  margin-top: 8px;
+  font-weight: 10;
+  opacity: 0.75;
+}
+
+.hero-band h1 {
+  font-family: Mayonice;
+  font-weight: 200;
+  font-size: 80px;
+  margin-bottom: 16px;
+}
+</style>
+
+
+
+<!-- Hero Section -->
+  <section class="hero">
+    <!-- Unsichtbares Bild für SEO / Alt-Text ECHTES BILD LIEGT IN CSSstartpage.css!!!!-->
+    <img
+      src="/img/Titelbild/titelbild.avif"
+      alt="Kunstwolff - Eventkünstler seit über 20 Jahren"
+      style="display:none;"
+    />
+
+    <!-- Overlay-Streifen für Text -->
+    <div class="hero-band">
+      <h1>Kunstwolff</h1>
+      <p>SEIT ÜBER 25 JAHREN IHRE EVENT- UND SHOWKÜNSTLER</p>
+    </div>
+  </section>
+
+  <BrandStripe />

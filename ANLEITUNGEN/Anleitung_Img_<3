@@ -1,0 +1,34 @@
+DIESE ANLEITUNG LIEGT AUCH IN /public/img/Anleitung<3
+
+-------------------------------------------------------
+
+Hallo Mutti <3 
+
+In die verschiedenen Ordner kannst du die Fotos die du auf der Website sehen willst ablegen, 
+sie werden dann automatisch dahin ausgelesen wo der Name des Ordners es dir sagt. 
+
+Ich habe diese Regeln festgelegt damit die Seite SEO-relevant und schnell ist, und auch gut aussieht!
+
+MARKENLOGOS:
+Logos müssen .svg Dateien sein. 
+Logo einfach in ORIGINALFARBE ablegen, am besten eine kontrastreiche Version, das Programm passt sie automatisch dem Farbthema an.
+
+BILDER:
+Bilder müssen .webp Dateien sein oder mindestens .avif.
+.jpg und .png geht auch noch, ist aber schon schlechter von der Geschwindigkeit!
+Ggf. auf Bildgröße achten noch.
+
+
+
+Volles Verzeichnis: 
+
+Ordnername       I  Wo taucht es auf der Website auf?
+--------------------------------------------------
+logo/               Unser kleines Logo in der Ecke der Navigationsleiste
+
+referenzenLogos/    Logos unserer Referenzen in dem coolen schwarz-weiß Streifen bei dem  
+                    sie sich über die Seite automatisch in einer Schleife bewegen.
+
+slides              Bilder in den beweglichen Slideshows; auf der Hauptseite tauchen 
+                    verschiedene aus den Städten gemischte auf, auf den Landingpages die, die in die Städteordner unter slides/[stadtname] abgelegt sind. Unter slides/default/ kannst du Bilder ablegen, die du auf der Hauptseite unbedingt sehen willst. Diese unter slides/default/ werden auch die slideshows der landing pages ergänzen, falls es nicht genug Bilder in ihnen gibt. 
+

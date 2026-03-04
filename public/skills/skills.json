@@ -1,0 +1,16 @@
+{
+  "skills": [
+    {
+      "title": "Schnellzeichner",
+      "link": "/schnellzeichner/",
+      "image": "/img/UnsereFähigkeitenBilder/Hochzeitsmaler.jpg",
+      "alt": "Live Schnellzeichner"
+    },
+    {
+      "title": "Szenenmaler",
+      "link": "/szenenmaler/",
+      "image": "/img/UnsereFähigkeitenBilder/Hochzeitsmaler.jpg",
+      "alt": "Szenenmalerei"
+    }
+  ]
+}

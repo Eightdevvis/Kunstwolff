@@ -1,0 +1,18 @@
+{
+  "title": "Berlin Landingpage",
+  "titleImage": "/img/samples/sample2.jpeg",
+  "reviews": [
+    { "author": "knax", "text": "Snuper Malerevent!", "categories": ["Szenenmaler"]},
+    { "author": "knax", "text": "Snuper mal zeichenEvent! in berlin", "categories": ["Schnellzeichner","Szenenmaler"]},
+    { "author": "knax", "text": "Snuper Event!berlingo", "categories": ["Schnellzeichner","Szenenmaler"]}
+  ],
+  "references": [
+    { "title": "Referenz 1", "image": "/img/ref1.jpg" }
+  ],
+  "eventtypes": [
+  { "image": "..." }, 
+  { "image": "..." },
+  { "image": "..." },
+  { "image": "..." }
+  ]
+}

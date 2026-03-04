@@ -1,0 +1,90 @@
+  <!-- =========================
+     CONTACT
+========================= -->
+  <section id="contact" class="section contact">
+    <div class="section-inner">
+      <h2>Kontakt</h2>
+
+      <!-- Formspree-Formular (mit JS) -->
+      <form id="contactForm" class="contact-form">
+        <input
+          type="hidden"
+          name="_subject"
+          value="Neue Anfrage von Kunstwolff Website"
+        />
+
+        <input type="text" name="name" placeholder="Name" required />
+        <input type="email" name="email" placeholder="E-Mail" required />
+        <input type="tel" name="phone" placeholder="Telefon" required />
+        <input
+          type="date"
+          name="date"
+          required
+          onfocus="this.showPicker()"
+          placeholder="Datum des Events"
+          style="color: #fff;"
+        />
+
+        <textarea name="message" placeholder="Ihre Anfrage" required></textarea>
+
+        <button type="submit">Anfrage senden</button>
+      </form>
+
+      <div
+        id="formMessage"
+        style="display:none; color:#0f0; margin-top:10px; text-align:center; font-weight:700;"
+      >
+        Sent!
+      </div>
+
+      <!-- alternative Kontaktinfos -->
+      <div class="contact-info">
+        <p>Telefon: +49 …</p>
+        <p>E-Mail: info@kunstwolff.de</p>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .contact {
+  background: #0a0a0a;
+}
+
+.contact-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 720px;
+}
+
+.contact-form textarea {
+  grid-column: span 2;
+  min-height: 140px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 14px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.contact-form button {
+  grid-column: span 2;
+  padding: 14px;
+  background: #fff;
+  color: #000;
+  border: none;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.contact-info {
+  margin-top: 40px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+  </style>

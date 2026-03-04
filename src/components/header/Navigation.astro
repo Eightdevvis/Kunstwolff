@@ -1,0 +1,220 @@
+<!-- =========================
+     Hauptnavigation
+========================= -->
+<nav class="nav">
+  <div class="nav-inner">
+    <!-- Logo links -->
+    <div class="nav-logo">
+      <img src="/img/logo/logo2.svg" alt="Kunstwolff Logo" class="nav_logo">
+    </div>
+
+    <!-- Sprache + Menü rechts -->
+    <div class="nav-right">
+      <input class="nav-toggle-input" type="checkbox" id="nav-toggle-main" />
+      <label
+        class="nav-toggle"
+        for="nav-toggle-main"
+        aria-label="Navigation umschalten"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <!-- Hauptmenü -->
+      <ul class="nav-menu" id="main-nav-menu">
+        <li><a href="#">Home</a></li>
+        <li class="divider">|</li>
+        <li><a href="#skills">Services</a></li>
+        <li class="divider">|</li>
+        <li><a href="#work">Work</a></li>
+        <li class="divider">|</li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<style>
+/* =========================
+   Navigation Container + Ombre
+========================= */
+
+.nav-logo img {
+  height: 32px;
+  width: auto;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.nav {
+  width: 100%;
+  padding: 20px 40px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  /* Ombre von Schwarz zu Transparent */
+  background: linear-gradient(to bottom, rgba(0,0,0,0.95), rgba(0,0,0,0));
+  backdrop-filter: blur(8px); /* leichtes Glas-Effekt */
+  -webkit-backdrop-filter: blur(8px);
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 62%,
+    rgba(0, 0, 0, 0.65) 82%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 62%,
+    rgba(0, 0, 0, 0.65) 82%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  transition: background 0.3s ease;
+}
+
+/* Innerer Flex-Container */
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 10px 8px;
+}
+
+.nav-toggle-input {
+  display: none;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  margin: 4px 0;
+  background: #fff;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.nav-toggle-input:checked + .nav-toggle span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.nav-toggle-input:checked + .nav-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle-input:checked + .nav-toggle span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* =========================
+   Logo
+========================= */
+.nav-logo a {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.nav-logo a:hover {
+  transform: scale(1.05);
+  color: #ffd700; /* kleines Highlight beim Hover */
+}
+
+/* =========================
+   Hauptmenü + Divider
+========================= */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 12px;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0.8;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.nav-menu a:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.nav-menu .divider {
+  opacity: 0.3;
+  font-size: 12px;
+  user-select: none;
+}
+
+/* =========================
+   Responsives Verhalten
+========================= */
+@media (max-width: 768px) {
+  .nav-inner {
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .nav-right {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .nav-toggle {
+    display: inline-block;
+  }
+
+  .nav-menu {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    margin-top: 8px;
+    padding: 0 14px;
+    background: rgba(0, 0, 0, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    transition: max-height 0.28s ease, opacity 0.22s ease, transform 0.22s ease, padding 0.22s ease;
+  }
+
+  .nav-toggle-input:checked ~ .nav-menu {
+    max-height: 280px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    padding: 12px 14px;
+  }
+
+  .nav-menu .divider {
+    display: none;
+  }
+}
+</style>

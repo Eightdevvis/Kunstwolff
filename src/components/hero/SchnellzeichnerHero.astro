@@ -1,0 +1,127 @@
+---
+import MiniReviews from '../reviews-references/MiniReviews.astro';
+
+const { reviews = [], titleImage = '' } = Astro.props;
+---
+
+<section class="hero section">
+  <div class="hero-inner section-inner">
+    <div class="hero-content">
+      <h1>Live Schnellzeichner fuer Events</h1>
+      
+      <div class="hero-badges">
+        <span> International</span>
+        <span> 5.0 Google</span>
+      </div>
+
+    
+
+        <MiniReviews items={reviews} filteredCategories={["Schnellzeichner"]} />
+    </div>
+
+        <div class="hero-media">
+          {titleImage && <img src={titleImage} alt="Hero Image" />}
+        </div>
+  </div>
+
+  <style>
+
+    .hero {
+      background:
+        radial-gradient(circle at 18% 18%, #ffffff 0%, #f9f9f9 16%, #ececec 34%, #d6d6d6 58%, #bcbcbc 100%),
+        radial-gradient(circle at 78% 72%, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.18) 36%, rgba(255, 255, 255, 0) 60%),
+        radial-gradient(circle at 8% 92%, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0) 52%);
+      color: #111;
+      padding-top: 160px; /* mehr als normale section */
+      padding-bottom: 160px;
+    }
+
+    /* nutzt deine section-inner Breite */
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 96px;
+      align-items: center;
+    }
+
+    /* ---------- TEXT ---------- */
+
+    .hero-content h1 {
+      font-family: "Mayonice", system-ui, sans-serif;
+      font-size: clamp(2.8rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+      margin-bottom: 24px;
+      color: #111;
+    }
+
+    .hero-content p {
+      font-size: 18px;
+      line-height: 1.6;
+      opacity: 0.85;
+      max-width: 520px;
+      color: #222;
+    }
+
+    /* ---------- BADGES ---------- */
+
+    .hero-badges {
+      display: flex;
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .hero-badges span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.9;
+      color: #222;
+    }
+
+    /* ---------- REVIEWS ---------- */
+
+
+    /* ---------- MEDIA ---------- */
+
+    .hero-media {
+      width: 100%;
+      height: 420px;
+      border-radius: 24px;
+      background: #dcdcdc;
+      overflow: hidden;
+      border: 1px solid #d1d1d1;
+    }
+
+    /* später: img / video */
+    .hero-media img,
+    .hero-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 64px;
+      }
+
+      .hero {
+        padding-top: 120px;
+        padding-bottom: 120px;
+      }
+
+      .hero-media {
+        height: 300px;
+      }
+    }
+  </style>
+</section>

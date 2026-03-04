@@ -1,15 +1,10 @@
 {
   "title": "Frankfurt Landingpage",
-  "skills": [
-    { "title": "Schnellzeichner", "image": "/img/UnsereFähigkeitenBilder/Hochzeitsmaler.jpg", "alt": "Live Schnellzeichner" },
-    { "title": "Szenenmaler", "image": "/img/UnsereFähigkeitenBilder/Hochzeitsmaler.jpg", "alt": "Szenenmalerei" }
-  ],
-  "slideshow": [
-    { "src": "/img/Hochzeitsmaler.jpg", "alt": "Slide 1" },
-    { "src": "/img/slider2.jpg", "alt": "Slide 2" }
-  ],
+  "titleImage": "/img/samples/sample1.jpeg",
   "reviews": [
-    { "author": "Max", "text": "Super Event!" }
+    { "author": "knax", "text": "Snuper Malerevent!", "categories": ["Szenenmaler"]},
+    { "author": "knax", "text": "Snuper mal zeichenEvent!", "categories": ["Schnellzeichner","Szenenmaler"]},
+    { "author": "knax", "text": "Snuper Event!", "categories": ["Schnellzeichner","Szenenmaler"]}
   ],
   "references": [
     { "title": "Referenz 1", "image": "/img/ref1.jpg" }

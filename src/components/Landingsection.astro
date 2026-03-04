@@ -1,0 +1,59 @@
+---
+import fs from "fs";
+import path from "path";
+
+const landingDir = path.resolve("./src/content/landing");
+
+const cities = fs
+  .readdirSync(landingDir)
+  .filter((f) => f.endsWith(".json"))
+  .map((f) => f.replace(".json", ""));
+
+const { site = "" } = Astro.props;
+const normalizedSite = String(site).replace(/^\/+|\/+$/g, "");
+const basePath = normalizedSite ? `/${normalizedSite}` : "";
+---
+
+<!-- =========================
+     LANDING PAGE LINKS / CTA
+========================= -->
+<section class="section landing-links">
+  <div class="section-inner">
+    <p>
+      Orte:<br />
+
+      {
+        cities.map((city, index) => (
+          <>
+            <a href={`${basePath}/${city}`}>
+              {city.charAt(0).toUpperCase() + city.slice(1)}
+            </a>
+            {index < cities.length - 1 && " · "}
+          </>
+        ))
+      }
+    </p>
+  </div>
+</section>
+
+<style>
+  .landing-links {
+    background: #000000;
+    padding: 60px 40px;
+  }
+
+  .landing-links p {
+    font-size: 14px;
+    letter-spacing: 0.12em;
+  }
+
+  .landing-links a {
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.8;
+  }
+
+  .landing-links a:hover {
+    opacity: 1;
+  }
+</style>

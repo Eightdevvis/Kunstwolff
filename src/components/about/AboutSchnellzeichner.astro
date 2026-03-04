@@ -1,0 +1,127 @@
+---
+const { src, alt } = Astro.props;
+const imageSrc = src;
+---
+
+<section class="about-kunstwolff">
+  <div class="container">
+    <div class="about-grid">
+      
+      <div class="about-text">
+        <h2>Schnellzeichner mit Persönlichkeit - keine Agentur, echte Künstler</h2>
+        
+        <p class="lead">
+          Kunstwolff steht für Live-Kunst auf höchstem Niveau. 
+          Wir sind keine Vermittlungsagentur - wir sind selbst die Künstler.
+        </p>
+
+        <p>
+          Seit vielen Jahren zeichnen wir live auf Firmenfeiern, Messen,
+          Hochzeiten und exklusiven Events. Jede Karikatur entsteht in wenigen Minuten
+          direkt vor den Augen Ihrer Gäste - mit Charme, Humor und künstlerischer Qualität.
+        </p>
+
+        <p>
+          Ob klassisch auf Papier oder digital auf dem iPad:
+          Unsere Schnellzeichnungen sind nicht nur Unterhaltung,
+          sondern bleibende Erinnerungen mit echtem Mehrwert.
+        </p>
+
+        <ul class="benefits">
+          <li>✔ Über X Events erfolgreich begleitet</li>
+          <li>✔ Buchbar deutschlandweit</li>
+          <li>✔ Digital & klassisch möglich</li>
+          <li>✔ Logo-Branding für Unternehmen integrierbar</li>
+        </ul>
+
+        <a href="/kontakt" class="primary-btn">
+          Jetzt Event anfragen
+        </a>
+      </div>
+
+      <div class="about-image">
+        <img src={imageSrc} alt={alt ?? "Schnellzeichner bei der Arbeit"} />
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+    .about-kunstwolff {
+  padding: 6rem 1.5rem;
+  background: #ffffff;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-text h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.about-text .lead {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.about-text p {
+  margin-bottom: 1.2rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+.benefits {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+}
+
+.benefits li {
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+}
+
+.primary-btn {
+  display: inline-block;
+  padding: 0.9rem 1.8rem;
+  background: black;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.primary-btn:hover {
+  background: #333;
+}
+
+.about-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .about-text h2 {
+    font-size: 1.8rem;
+  }
+}
+</style>

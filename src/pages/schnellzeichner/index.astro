@@ -1,0 +1,53 @@
+---
+import AboutSchnellzeichner from '../../components/about/AboutSchnellzeichner.astro';
+import EventtypesSchnellzeichner from '../../components/EventtypesSchnellzeichner.astro';
+import FAQ from '../../components/FAQ.astro';
+import SchnellzeichnerHero from '../../components/hero/SchnellzeichnerHero.astro';
+import Landingsection from '../../components/Landingsection.astro';
+import References from '../../components/reviews-references/References.astro';
+import Slideshow from '../../components/slideshows/Slideshow.astro';
+import Why from '../../components/Why.astro';
+import SchnellzeichnerLayout from '../../layouts/SchnellzeichnerLayout.astro';
+
+import fs from 'fs';
+import path from 'path';
+
+// Alle JSON-Dateien aus dem landing-Ordner lesen
+const landingDir = path.resolve('./src/content/landing');
+const files = fs.readdirSync(landingDir).filter(f => f.endsWith('.json'));
+
+// Alle Daten kombinieren
+const allData = files.map(file => {
+  const filePath = path.join(landingDir, file);
+  return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+});
+
+// Slideshow-Items und Reviews aus allen Dateien zusammenführen
+const allSlideshow = allData.flatMap(data => data.slideshow || []);
+const allReviews = allData.flatMap(data => data.reviews || []);
+const IMG = "/img/samples/sample1.jpeg";
+---
+!!Keyword cluster analyse für landingpages
+!!head für landing pages
+!!landingpage H1 dynamic
+!!regionale FAQ für landingpages
+<SchnellzeichnerLayout>
+ <SchnellzeichnerHero reviews={allReviews} titleImage={allData[0]?.titleImage} />
+ !!Hero braucht noch: Googlebadge, Globus, Benefitstatements, CTA-Button
+
+ <Slideshow items={allSlideshow} filteredCategories={["Schnellzeichner"]} />
+ 
+ <AboutSchnellzeichner src={IMG} />
+
+ <EventtypesSchnellzeichner />
+ GroßeReviews/Gästebuch later
+ CTA
+ <Why />
+
+<References />
+
+<FAQ />
+
+ <Landingsection site="schnellzeichner"/>
+
+</SchnellzeichnerLayout>

@@ -1,0 +1,134 @@
+---
+type Reference = {
+  title: string;
+  image: string;
+  alt?: string;
+  link?: string;
+};
+
+const { references = [] } = Astro.props as { references?: Reference[] };
+
+// Default Referenzen / Logos + Bilder
+const DEFAULT_REFERENCES: Reference[] = [
+  { title: "BMW", image: "/img/samples/sample1.jpeg", alt: "BMW Event" },
+  { title: "Siemens", image: "/img/samples/sample2.jpeg", alt: "Siemens Event" },
+  { title: "Sony", image: "/img/samples/sample3.jpeg", alt: "Sony Event" },
+  { title: "Deutsche Bank", image: "/img/samples/sample4.jpeg", alt: "Deutsche Bank Event" },
+  { title: "Internationale Messen", image: "/img/samples/sample1.jpeg", alt: "Internationale Messe Auftritte" },
+];
+
+const list = references.length ? references : DEFAULT_REFERENCES;
+---
+
+<section class="experience-section">
+  <div class="experience-container">
+    
+    <div class="experience-header">
+      <h2>25 Jahre Erfahrung - national & international</h2>
+      <p>
+        Seit über 25 Jahren sind wir als Schnellzeichner & Szenenmaler auf Events weltweit unterwegs.
+        Unsere Kunden reichen von Firmen bis zu privaten Veranstaltungen, von Deutschland bis international.
+      </p>
+    </div>
+
+    <div class="experience-logos">
+      {list.map((ref) => (
+        <div class="experience-item">
+          {ref.link ? (
+            <a href={ref.link} target="_blank" rel="noopener noreferrer">
+              <img src={ref.image} alt={ref.alt ?? ref.title} loading="lazy" />
+            </a>
+          ) : (
+            <img src={ref.image} alt={ref.alt ?? ref.title} loading="lazy" />
+          )}
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+.experience-section {
+  --diamond-rotation: 12deg;
+  padding: 80px 20px;
+  background: #f0f0f0;
+}
+
+.experience-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.experience-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 60px auto;
+}
+
+.experience-header h2 {
+  font-size: 2.4rem;
+  margin-bottom: 15px;
+}
+
+.experience-header p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.experience-logos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 30px;
+  justify-items: center;
+  align-items: center;
+}
+
+.experience-item {
+  width: 180px;
+  height: 180px;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 0;
+  border: 2px solid #fff;
+  padding: 0;
+  overflow: hidden;
+  transform: rotate(var(--diamond-rotation));
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.experience-item > a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.experience-item img {
+  display: block;
+  width: 76%;
+  max-width: none;
+  max-height: none;
+  height: auto;
+  object-fit: contain;
+  transform: rotate(calc(var(--diamond-rotation) * -1));
+  filter: grayscale(0.1);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.experience-item:hover {
+  transform: rotate(var(--diamond-rotation)) translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+}
+
+.experience-item:hover img {
+  filter: grayscale(0);
+  transform: rotate(calc(var(--diamond-rotation) * -1)) scale(1.06);
+}
+</style>
