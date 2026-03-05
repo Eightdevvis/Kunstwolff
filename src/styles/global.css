@@ -12,9 +12,41 @@ html {
   scroll-behavior: smooth;
 }
 
+:root {
+  --font-body: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Alternative testen:
+  --font-body: "Mayonice", Georgia, serif;
+  */
+
+  --font-headings: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Alternative testen:
+  --font-headings: "Mayonice", Georgia, serif;
+  */
+
+  --h2-font-weight: 400;
+  /* Alternative testen:
+  --h2-font-weight: 400;
+  */
+
+  --h2-letter-spacing: 0.18em;
+  /* Alternative testen:
+  --h2-letter-spacing: 0.12em;
+  */
+
+  --h2-font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+  /* Alternative testen:
+  --h2-font-size: 28px;
+  */
+
+  --h2-opacity: 0.85;
+  /* Alternative testen:
+  --h2-opacity: 1;
+  */
+}
+
 
 body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-body);
     color: #ffffff;
     background-color: #000000;
     margin: 0;
@@ -44,13 +76,23 @@ body {
   margin: 0 auto;
 }
 
+h2 {
+  font-family: var(--font-headings);
+  font-size: var(--h2-font-size);
+  font-weight: var(--h2-font-weight);
+  letter-spacing: var(--h2-letter-spacing);
+  opacity: var(--h2-opacity);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
 .section h2 {
-  font-size: 28px;
-  font-weight: 300;
-  letter-spacing: 0.18em;
   text-transform: uppercase;
   margin-bottom: 32px;
-  opacity: 0.85;
+}
+
+.skills-intro h2 {
+  text-transform: uppercase;
 }
 
 .section p {

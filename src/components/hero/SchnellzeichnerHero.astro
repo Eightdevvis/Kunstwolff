@@ -1,5 +1,6 @@
 ---
 import MiniReviews from '../reviews-references/MiniReviews.astro';
+import BrandStripe from '../reviews-references/BrandStripe.astro';
 
 const { reviews = [], titleImage = '' } = Astro.props;
 ---
@@ -24,6 +25,10 @@ const { reviews = [], titleImage = '' } = Astro.props;
         </div>
   </div>
 
+  <div class="hero-brandstripe">
+    <BrandStripe />
+  </div>
+
   <style>
 
     .hero {
@@ -34,6 +39,8 @@ const { reviews = [], titleImage = '' } = Astro.props;
       color: #111;
       padding-top: 160px; /* mehr als normale section */
       padding-bottom: 160px;
+      position: relative;
+      overflow: hidden;
     }
 
     /* nutzt deine section-inner Breite */
@@ -104,6 +111,14 @@ const { reviews = [], titleImage = '' } = Astro.props;
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    .hero-brandstripe {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 3;
     }
 
     /* ---------- RESPONSIVE ---------- */

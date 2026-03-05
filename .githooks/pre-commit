@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -e
+
+npm run sync:content
+
+git add public/img/slides public/reviews public/img/UnsereFähigkeitenBilder

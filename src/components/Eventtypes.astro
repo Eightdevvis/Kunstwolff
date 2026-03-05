@@ -23,24 +23,28 @@ const DEFAULT_EVENTS = [
     image: "/img/samples/sample1.jpeg",
     link: "/schnellzeichner/firmenfeier/",
     alt: "Schnellzeichner auf einer Firmenfeier zeichnet Gäste live",
+    text: "Ein Schnellzeichner bringt Energie in Corporate Events: Gäste werden live porträtiert, kommen ins Gespräch und nehmen eine persönliche Erinnerung mit.",
   },
   {
     title: "Messen & Promotion",
     image: "/img/samples/sample2.jpeg",
     link: "/schnellzeichner/messe/",
     alt: "Schnellzeichner als Besuchermagnet am Messestand",
+    text: "Auf Messen sorgt Live-Zeichnen für Aufmerksamkeit am Stand, längere Verweildauer und einen sympathischen Erstkontakt mit Ihrer Marke.",
   },
   {
     title: "Hochzeiten",
     image: "/img/samples/sample3.jpeg",
     link: "/schnellzeichner/hochzeit/",
     alt: "Schnellzeichner zeichnet Brautpaar live auf Hochzeit",
+    text: "Bei Hochzeiten entstehen charmante Live-Porträts von Brautpaar und Gästen – unterhaltsam während des Tages und ein besonderes Andenken.",
   },
   {
     title: "Geburtstage & Private Feiern",
     image: "/img/samples/sample4.jpeg",
     link: "/schnellzeichner/private-feier/",
     alt: "Live Karikaturist auf einer privaten Feier",
+    text: "Für private Feiern schafft ein Schnellzeichner lockere Stimmung, individuelle Erinnerungen und ein Highlight, über das noch lange gesprochen wird.",
   },
   
 ];
@@ -62,8 +66,8 @@ const list = DEFAULT_EVENTS.map((def, idx) => {
 <section class="eventtypes-section">
   <div class="eventtypes-grid">
     {list.map((event) => (
-      <div class="eventtype-item">
-        <a class="eventtype-link" href={event.link}>
+      <details class="eventtype-item">
+        <summary class="eventtype-link">
           <img
             src={event.image}
             alt={event.alt}
@@ -73,8 +77,13 @@ const list = DEFAULT_EVENTS.map((def, idx) => {
           <div class="eventtype-label">
             <h3>{event.title}</h3>
           </div>
-        </a>
-      </div>
+        </summary>
+
+        <div class="eventtype-textbox">
+          <p>{event.text}</p>
+          <a href={event.link}>Mehr erfahren</a>
+        </div>
+      </details>
     ))}
   </div>
 </section>
@@ -98,7 +107,17 @@ const list = DEFAULT_EVENTS.map((def, idx) => {
   position: relative;
   aspect-ratio: 1 / 1;
   border-radius: 14px;
-  overflow: hidden;
+  overflow: visible;
+  background: #161616;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.eventtype-item summary {
+  list-style: none;
+}
+
+.eventtype-item summary::-webkit-details-marker {
+  display: none;
 }
 
 .eventtype-link {
@@ -106,7 +125,9 @@ const list = DEFAULT_EVENTS.map((def, idx) => {
   width: 100%;
   height: 100%;
   position: relative;
-  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 14px;
 }
 
 .eventtype-image {
@@ -142,6 +163,43 @@ const list = DEFAULT_EVENTS.map((def, idx) => {
   font-weight: 700;
   text-align: center;
   letter-spacing: 0.04em;
+}
+
+.eventtype-textbox {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 10px);
+  z-index: 20;
+  background: #161616;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  transition: max-height 0.35s ease, padding 0.35s ease, opacity 0.25s ease;
+}
+
+.eventtype-textbox p {
+  color: #e8e8e8;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.eventtype-textbox a {
+  display: inline-block;
+  margin-top: 14px;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.eventtype-item[open] .eventtype-textbox {
+  max-height: 220px;
+  padding: 18px 20px 20px;
+  opacity: 1;
 }
 
 .eventtype-item:hover .eventtype-image {

@@ -1,4 +1,6 @@
 ---
+import MiniReviews from "./reviews-references/MiniReviews.astro";
+
 type Skill = {
   title?: string;
   image?: string;
@@ -6,9 +8,31 @@ type Skill = {
   alt?: string;
 };
 
+type Review = {
+  author: string;
+  text: string;
+  categories?: string[];
+};
+
 // Astro.props enthält die skills, die wir aus der Landingpage-JSON oder von einer Seite übergeben
-const { skills = [], items = [] } = Astro.props as { skills?: Skill[]; items?: Skill[] };
-const rawItems: Skill[] = (skills && skills.length) ? skills : items;
+const {
+  skills = [],
+  items = [],
+  introTitle = "UNSERE LEISTUNGEN",
+  introText = "Wähle die passende Künstlerkategorie für dein Event.",
+  showIntro = true,
+  reviews = [],
+  reviewCategories = [],
+} = Astro.props as {
+  skills?: Skill[];
+  items?: Skill[];
+  introTitle?: string;
+  introText?: string;
+  showIntro?: boolean;
+  reviews?: Review[];
+  reviewCategories?: string[];
+};
+const rawItems: Skill[] = skills && skills.length ? skills : items;
 
 const FALLBACK_SKILLS: Required<Skill>[] = [
   {
@@ -40,122 +64,259 @@ const list: Required<Skill>[] =
   normalizedItems.length > 0
     ? normalizedItems
     : FALLBACK_SKILLS.map((skill) => ({
-    title: skill.title ?? DEFAULT_TITLE,
-    image: skill.image ?? DEFAULT_IMAGE,
-    link: skill.link ?? DEFAULT_LINK,
-    alt: skill.alt ?? skill.title ?? DEFAULT_TITLE,
-  }));
+        title: skill.title ?? DEFAULT_TITLE,
+        image: skill.image ?? DEFAULT_IMAGE,
+        link: skill.link ?? DEFAULT_LINK,
+        alt: skill.alt ?? skill.title ?? DEFAULT_TITLE,
+      }));
+
+const leftSkill = list[0] ?? FALLBACK_SKILLS[0];
+const rightSkill = list[1] ?? FALLBACK_SKILLS[1] ?? FALLBACK_SKILLS[0];
 ---
 
 <section class="skills-section">
-  <div class="skills-grid">
-    {list.map((skill) => (
+  <div class="skills-columns">
+    <div class="skills-col skills-col-left">
       <div class="skill-item">
-        {skill.link ? (
-          <a class="skill-link" href={skill.link} target="_blank" rel="noopener noreferrer">
-            <img
-              src={skill.image}
-              alt={skill.alt ?? skill.title}
-              class="skill-image"
-              loading="lazy"
-            />
-            <div class="skill-label">{skill.title}</div>
-          </a>
-        ) : (
-          <>
-            <img
-              src={skill.image}
-              alt={skill.alt ?? skill.title}
-              class="skill-image"
-              loading="lazy"
-            />
-            <div class="skill-label">{skill.title}</div>
-          </>
-        )}
+        {
+          leftSkill.link ? (
+            <a
+              class="skill-link"
+              href={leftSkill.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src={leftSkill.image}
+                alt={leftSkill.alt ?? leftSkill.title}
+                class="skill-image"
+                loading="lazy"
+              />
+              <div class="skill-label">{leftSkill.title}</div>
+            </a>
+          ) : (
+            <>
+              <img
+                src={leftSkill.image}
+                alt={leftSkill.alt ?? leftSkill.title}
+                class="skill-image"
+                loading="lazy"
+              />
+              <div class="skill-label">{leftSkill.title}</div>
+            </>
+          )
+        }
       </div>
-    ))}
+    </div>
+
+    <div class="skills-col skills-col-center">
+      {
+        showIntro && (
+          <div class="skills-intro">
+            <h2>{introTitle}</h2>
+            <p>{introText}</p>
+          </div>
+        )
+      }
+
+      <div class="skills-mini-reviews">
+        <MiniReviews items={reviews} filteredCategories={reviewCategories} />
+      </div>
+
+      <slot />
+    </div>
+
+    <div class="skills-col skills-col-right">
+      <div class="skill-item">
+        {
+          rightSkill.link ? (
+            <a
+              class="skill-link"
+              href={rightSkill.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src={rightSkill.image}
+                alt={rightSkill.alt ?? rightSkill.title}
+                class="skill-image"
+                loading="lazy"
+              />
+              <div class="skill-label">{rightSkill.title}</div>
+            </a>
+          ) : (
+            <>
+              <img
+                src={rightSkill.image}
+                alt={rightSkill.alt ?? rightSkill.title}
+                class="skill-image"
+                loading="lazy"
+              />
+              <div class="skill-label">{rightSkill.title}</div>
+            </>
+          )
+        }
+      </div>
+    </div>
   </div>
 </section>
 
 <style>
-.skills-section {
-  --skill-size: 220px;
-  --skill-gap: 36px;
-  padding: clamp(58px, 9vw, 88px) 20px 34px;
-  background: #000000;
-}
-
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--skill-size), var(--skill-size)));
-  gap: var(--skill-gap);
-  justify-content: center;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.skill-item {
-  position: relative;
-  width: var(--skill-size);
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.skill-link {
-  display: block;
-  width: 100%;
-  height: 100%;
-  color: inherit;
-  text-decoration: none;
-  position: relative;
-}
-
-.skill-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.85);
-  transition: filter 0.3s ease, transform 0.3s ease;
-}
-
-.skill-label {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.skill-item:hover .skill-image {
-  filter: brightness(0.45);
-  transform: scale(1.05);
-}
-
-.skill-item:hover .skill-label {
-  opacity: 1;
-}
-
-@media (max-width: 900px) {
   .skills-section {
-    --skill-size: 190px;
-    --skill-gap: 26px;
-    padding-top: clamp(48px, 7.5vw, 68px);
+    --skill-size: 220px;
+    /* Abstand der Kreise nach innen (Richtung Mitte): kleiner = weniger nach innen */
+    --skills-circle-inner-offset: 30px;
+    /* EINZIGER Regler: 1 = normal, 1.1 = +10%, 0.9 = -10% */
+    --skills-padding-factor: 1.2;
+    /* Steuert ausschließlich den oberen Abstand der gesamten Skill-Section */
+    --skills-padding-top: clamp(
+      calc(72px * var(--skills-padding-factor)),
+      calc(10vw * var(--skills-padding-factor)),
+      calc(102px * var(--skills-padding-factor))
+    );
+    padding: var(--skills-padding-top) 20px 24px;
+    background: #000000;
   }
-}
 
-@media (max-width: 560px) {
-  .skills-section {
-    --skill-size: 160px;
-    --skill-gap: 20px;
-    padding-top: 44px;
+  .skills-columns {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
   }
-}
-</style> 
+
+  .skills-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .skills-col-left,
+  .skills-col-right {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+
+  .skills-col-left {
+    align-items: flex-start;
+  }
+
+  .skills-col-right {
+    align-items: flex-end;
+  }
+
+  .skills-col-center {
+    flex: 0 0 50%;
+    max-width: 50%;
+    min-width: 0;
+    padding: 0 20px;
+  }
+
+  .skills-intro {
+    max-width: 100%;
+    margin: 0;
+    text-align: center;
+    color: #fff;
+  }
+
+  .skills-intro h2 {
+    margin: 0;
+  }
+
+  .skills-intro p {
+    margin: 12px 0 0;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  .skills-mini-reviews {
+    margin: 40px 0;
+    width: 100%;
+  }
+
+  .skill-item {
+    position: relative;
+    width: var(--skill-size);
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .skills-col-left .skill-item {
+    transform: translateX(var(--skills-circle-inner-offset));
+  }
+
+  .skills-col-right .skill-item {
+    transform: translateX(calc(var(--skills-circle-inner-offset) * -1));
+  }
+
+  .skill-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+  }
+
+  .skill-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.85);
+    transition:
+      filter 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .skill-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .skill-item:hover .skill-image {
+    filter: brightness(0.45);
+    transform: scale(1.05);
+  }
+
+  .skill-item:hover .skill-label {
+    opacity: 1;
+  }
+
+  @media (max-width: 900px) {
+    .skills-section {
+      --skill-size: 190px;
+      --skills-circle-inner-offset: 18px;
+      --skills-padding-top: clamp(
+        calc(58px * var(--skills-padding-factor)),
+        calc(8.5vw * var(--skills-padding-factor)),
+        calc(78px * var(--skills-padding-factor))
+      );
+    }
+  }
+
+  @media (max-width: 560px) {
+    .skills-section {
+      --skill-size: 160px;
+      --skills-circle-inner-offset: 12px;
+      --skills-padding-top: calc(52px * var(--skills-padding-factor));
+    }
+
+    .skills-col-center {
+      padding: 0 12px;
+    }
+  }
+</style>
+

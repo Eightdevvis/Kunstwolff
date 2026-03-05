@@ -3,42 +3,33 @@ import SchnellzeichnerHero from '../../components/hero/SchnellzeichnerHero.astro
 import Landingsection from '../../components/Landingsection.astro';
 import Slideshow from '../../components/slideshows/Slideshow.astro';
 import SchnellzeichnerLayout from '../../layouts/SchnellzeichnerLayout.astro';
+import { getLandingBySlug, getLandingSlugs } from '../../utils/landings';
 import {
   MIN_LANDING_SLIDES,
   getCitySlides,
   getDefaultSlides,
   supplementWithDefaultSlides,
 } from '../../utils/slideImages';
+import { getReviewsByLandingAndSkill } from '../../utils/reviews';
 
 // getStaticPaths liefert alle möglichen Landingpages
 export async function getStaticPaths() {
-  const landingDir = path.resolve('./src/content/landing');
-  const files = fs.readdirSync(landingDir);
-
-  const paths = files
-    .filter((f) => f.endsWith('.json'))
-    .map((f) => ({ params: { landing: f.replace('.json', '') } }));
-
-  return paths;
+  return getLandingSlugs().map((landing) => ({ params: { landing } }));
 }
-
-import fs from 'fs';
-import path from 'path';
 
 // Props pro Seite laden
 const { landing } = Astro.params;
-const landingDir = path.resolve('./src/content/landing');
-const landingFile = path.join(landingDir, `${landing}.json`);
-
-const data = JSON.parse(fs.readFileSync(landingFile, 'utf-8'));
+const landingData = getLandingBySlug(landing ?? '');
 const citySlides = getCitySlides(landing);
 const defaultSlides = getDefaultSlides();
 const landingSlides = supplementWithDefaultSlides(citySlides, defaultSlides, MIN_LANDING_SLIDES);
+const skillName = 'Schnellzeichner';
+const reviews = getReviewsByLandingAndSkill(landing, skillName);
 
 ---
 
 <SchnellzeichnerLayout title="Schnellzeichner">
- <SchnellzeichnerHero reviews={data.reviews} titleImage={data.titleImage} />
+ <SchnellzeichnerHero reviews={reviews} titleImage={landingData.titleImage} />
 
  <Slideshow items={landingSlides} filteredCategories={["Schnellzeichner"]} />
  Leistungen

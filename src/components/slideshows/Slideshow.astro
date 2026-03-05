@@ -11,9 +11,13 @@ const { items = [], filteredCategories = [] } = Astro.props;
 const filteredItems =
     filteredCategories.length === 0
         ? items
-        : items.filter((slide: Slide) =>
-              slide.categories?.some((cat) => filteredCategories.includes(cat)),
-          );
+        : items.filter((slide: Slide) => {
+              if (!slide.categories || slide.categories.length === 0) {
+                  return false;
+              }
+
+              return slide.categories.some((cat) => filteredCategories.includes(cat));
+          });
 
 
 ---
@@ -46,47 +50,124 @@ const filteredItems =
     import lightGallery from "lightgallery";
     import "lightgallery/css/lightgallery.css";
 
-    const sliderElements = document.querySelectorAll(".mySwiper");
+    const syncUniformImageHeights = (host: HTMLElement) => {
+        const images = Array.from(host.querySelectorAll(".swiper-slide img")) as HTMLImageElement[];
 
-    sliderElements.forEach((sliderElement) => {
-        const paginationEl = sliderElement.querySelector(".swiper-pagination");
-        const nextEl = sliderElement.querySelector(".swiper-button-next");
-        const prevEl = sliderElement.querySelector(".swiper-button-prev");
-
-        if (!paginationEl || !nextEl || !prevEl) {
+        if (images.length === 0) {
             return;
         }
 
-        new Swiper(sliderElement as HTMLElement, {
-            modules: [Autoplay, Navigation, Pagination],
-            slidesPerView: 3,
-            spaceBetween: 10,
-            loop: true,
-            preventClicks: false,
-            preventClicksPropagation: false,
-            autoplay: {
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: paginationEl as HTMLElement,
-                clickable: true,
-            },
-            navigation: {
-                nextEl: nextEl as HTMLElement,
-                prevEl: prevEl as HTMLElement,
-            },
-        });
+        host.classList.remove("uniform-image-height");
+        host.style.removeProperty("--slide-image-height");
 
-        lightGallery(sliderElement as HTMLElement, {
-            selector: ".lg-item",
-            download: false,
+        requestAnimationFrame(() => {
+            let tallestHeight = 0;
+
+            images.forEach((img) => {
+                const { height } = img.getBoundingClientRect();
+
+                if (height > tallestHeight) {
+                    tallestHeight = height;
+                }
+            });
+
+            if (tallestHeight > 0) {
+                host.style.setProperty("--slide-image-height", `${Math.round(tallestHeight)}px`);
+                host.classList.add("uniform-image-height");
+            }
         });
-    });
+    };
+
+    const initSliders = () => {
+        const sliderElements = document.querySelectorAll(".mySwiper");
+
+        sliderElements.forEach((sliderElement) => {
+            const host = sliderElement as HTMLElement;
+
+            if (host.dataset.sliderInitialized === "true") {
+                return;
+            }
+
+            const slidesCount = host.querySelectorAll(".swiper-slide").length;
+            const paginationEl = host.querySelector(".swiper-pagination");
+            const nextEl = host.querySelector(".swiper-button-next");
+            const prevEl = host.querySelector(".swiper-button-prev");
+
+            if (!paginationEl || !nextEl || !prevEl || slidesCount === 0) {
+                return;
+            }
+
+            host.dataset.sliderInitialized = "true";
+
+            const sliderImages = Array.from(host.querySelectorAll(".swiper-slide img")) as HTMLImageElement[];
+
+            const recalcUniformHeight = () => syncUniformImageHeights(host);
+
+            sliderImages.forEach((img) => {
+                if (!img.complete) {
+                    img.addEventListener("load", recalcUniformHeight, { once: true });
+                    img.addEventListener("error", recalcUniformHeight, { once: true });
+                }
+            });
+
+            recalcUniformHeight();
+            window.addEventListener("resize", recalcUniformHeight);
+
+            new Swiper(host, {
+                modules: [Autoplay, Navigation, Pagination],
+                slidesPerView: "auto",
+                spaceBetween: 10,
+                loop: slidesCount > 1,
+                watchOverflow: true,
+                observer: true,
+                observeParents: true,
+                preventClicks: false,
+                preventClicksPropagation: false,
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: false,
+                },
+                pagination: {
+                    el: paginationEl as HTMLElement,
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: nextEl as HTMLElement,
+                    prevEl: prevEl as HTMLElement,
+                },
+            });
+
+            try {
+                lightGallery(host, {
+                    selector: ".lg-item",
+                    download: false,
+                });
+            } catch {
+                // Slider soll auch ohne LightGallery zuverlässig laufen
+            }
+        });
+    };
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initSliders, { once: true });
+    } else {
+        initSliders();
+    }
 </script>
 
 <style>
+    .gallery.section {
+        padding-top: 60px;
+    }
+
+    .gallery h2 {
+        text-align: center;
+    }
+
     .mySwiper {
         position: relative;
+        --slide-image-height: 500px;
     }
 
     .swiper-slide {
@@ -96,14 +177,15 @@ const filteredItems =
         display: flex;
         justify-content: center;
         align-items: center;
+        width: auto;
         min-height: 400px; /* optional: Höhe des Slides, kann angepasst werden */
     }
 
     .swiper-slide img {
         display: block;
-        width: 100%;
-        height: 100%;
-        max-width: 90%; /* Bild maximal 90% der Breite */
+        width: auto;
+        height: auto;
+        max-width: 100%;
         max-height: 500px; /* Bild maximal 500px hoch */
         object-fit: contain; /* Bild komplett sichtbar, nicht abgeschnitten */
     }
@@ -115,6 +197,19 @@ const filteredItems =
         width: 100%;
         height: 100%;
         cursor: zoom-in;
+    }
+
+    .mySwiper.uniform-image-height .swiper-slide,
+    .mySwiper.uniform-image-height .lg-item {
+        min-height: var(--slide-image-height);
+        width: auto;
+    }
+
+    .mySwiper.uniform-image-height .swiper-slide img {
+        height: var(--slide-image-height);
+        width: auto;
+        max-width: none;
+        max-height: none;
     }
 
     .swiper-button-next,

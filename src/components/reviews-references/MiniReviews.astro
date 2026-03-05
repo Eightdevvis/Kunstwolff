@@ -26,9 +26,81 @@ const filteredItems =
     </div>
 
 <script>
-  const reviewRotators = document.querySelectorAll("[data-review-rotator]");
+  type RgbaColor = { r: number; g: number; b: number; a: number };
+
+  const parseRgba = (value?: string | null): RgbaColor | null => {
+    const match = value
+      ?.trim()
+      .match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([0-9.]+))?\)$/i);
+
+    if (!match) {
+      return null;
+    }
+
+    return {
+      r: Number(match[1]),
+      g: Number(match[2]),
+      b: Number(match[3]),
+      a: match[4] === undefined ? 1 : Number(match[4]),
+    };
+  };
+
+  const srgbToLinear = (channel: number): number => {
+    const normalized = channel / 255;
+    return normalized <= 0.03928
+      ? normalized / 12.92
+      : Math.pow((normalized + 0.055) / 1.055, 2.4);
+  };
+
+  const luminance = ({ r, g, b }: Pick<RgbaColor, "r" | "g" | "b">): number =>
+    0.2126 * srgbToLinear(r) + 0.7152 * srgbToLinear(g) + 0.0722 * srgbToLinear(b);
+
+  const resolveBackgroundSample = (element: Element): RgbaColor => {
+    let current: Element | null = element;
+
+    while (current && current !== document.documentElement) {
+      const styles = getComputedStyle(current);
+      const parsed = parseRgba(styles.backgroundColor);
+
+      if (parsed && parsed.a > 0.05) {
+        return parsed;
+      }
+
+      current = current.parentElement;
+    }
+
+    const bodyColor = parseRgba(getComputedStyle(document.body).backgroundColor);
+    if (bodyColor) {
+      return bodyColor;
+    }
+
+    return { r: 255, g: 255, b: 255, a: 1 };
+  };
+
+  const applyReviewTheme = (rotator: Element): void => {
+    const sample = resolveBackgroundSample(rotator);
+    let isDarkBackground = luminance(sample) < 0.5;
+
+    const inheritedText = parseRgba(getComputedStyle(rotator).color);
+
+    if (inheritedText) {
+      const textLuminance = luminance(inheritedText);
+
+      if (textLuminance <= 0.45) {
+        isDarkBackground = false;
+      } else if (textLuminance >= 0.65) {
+        isDarkBackground = true;
+      }
+    }
+
+    rotator.setAttribute("data-review-theme", isDarkBackground ? "dark-bg" : "light-bg");
+  };
+
+  const reviewRotators = document.querySelectorAll<HTMLElement>("[data-review-rotator]");
 
   reviewRotators.forEach((rotator) => {
+    applyReviewTheme(rotator);
+
     const slides = Array.from(rotator.querySelectorAll(".swiper-slide"));
 
     if (slides.length <= 1) {
@@ -54,14 +126,27 @@ const filteredItems =
       }, transitionDuration);
     }, 2500);
   });
+
+  window.addEventListener("resize", () => {
+    reviewRotators.forEach((rotator) => applyReviewTheme(rotator));
+  });
 </script>
 
 <style>
   .review-slider {
+    --review-text-color: rgba(17, 17, 17, 0.92);
+    --review-author-color: rgba(34, 34, 34, 0.9);
+    --review-stars-color: #d4af37;
     display: grid;
     max-width: 860px;
     margin: 0 auto;
     padding: 22px 24px;
+  }
+
+  .review-slider[data-review-theme="dark-bg"] {
+    --review-text-color: rgba(255, 255, 255, 0.92);
+    --review-author-color: rgba(255, 255, 255, 0.9);
+    --review-stars-color: #d4af37;
   }
 
   .review-slider .swiper-slide {
@@ -82,10 +167,11 @@ const filteredItems =
 
   .review-slider .review-text {
     max-width: 700px;
-    font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+    font-size: clamp(0.95rem, 1.8vw, 1.1rem);
     line-height: 1.65;
-    font-style: italic;
-    color: rgba(17, 17, 17, 0.92);
+    font-style: normal;
+    font-family: var(--font-body);
+    color: var(--review-text-color);
     letter-spacing: 0.01em;
   }
 
@@ -93,15 +179,18 @@ const filteredItems =
     margin-top: 0;
     font-size: 1.15rem;
     letter-spacing: 0.2em;
-    color: #d4af37;
+    color: var(--review-stars-color);
   }
 
   .review-slider .review-author {
     margin-top: 2px;
-    font-family: "Mayonice", Georgia, serif;
-    font-size: clamp(1.05rem, 2vw, 1.2rem);
-    color: rgba(34, 34, 34, 0.9);
-    letter-spacing: 0.06em;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: var(--review-author-color);
+    letter-spacing: 0.18em;
+    opacity: 0.8;
   }
 
   .review-slider .swiper-slide.is-active {

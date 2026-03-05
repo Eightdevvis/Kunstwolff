@@ -74,13 +74,16 @@ const loopDurationSeconds = baseLoopDurationSeconds * loopSpeedMultiplier;
 <style>
   .brand-stripe {
     --brand-strip-height: 50px;
-    --brand-vertical-padding: 1px;
+    --brand-vertical-padding: 0px;
+    --brand-bottom-padding: 15px;
     --brand-slot-height: calc(var(--brand-strip-height) - (var(--brand-vertical-padding) * 2));
     --brand-slot-width: calc(var(--brand-slot-height) * 2.8235);
     --brand-gap: 28px;
+    --brand-logo-filter: invert(1) grayscale(1) brightness(0.92) contrast(1.36);
     width: 100%;
-    background: #000000;          /* dunkel, schlanker Look */
-    padding: var(--brand-vertical-padding) 0;
+    background: transparent;
+    margin-top: -1px;
+    padding: var(--brand-vertical-padding) 0 var(--brand-bottom-padding);
     box-sizing: border-box;
     display: flex;
     justify-content: center;   /* zentriert die ganze Reihe */
@@ -124,7 +127,11 @@ const loopDurationSeconds = baseLoopDurationSeconds * loopSpeedMultiplier;
   width: auto;
   height: auto;
   object-fit: contain;
-  filter: invert(1) grayscale(1) brightness(0.78);
+  filter: var(--brand-logo-filter);
+}
+
+:global(body[data-nav-tone="light"]) .brand-stripe {
+  --brand-logo-filter: invert(0) grayscale(1) brightness(0.72) contrast(1.08);
 }
 
 .brand-tooltip {
@@ -154,6 +161,7 @@ const loopDurationSeconds = baseLoopDurationSeconds * loopSpeedMultiplier;
   .brand-stripe {
     --brand-gap: 20px;
     --brand-strip-height: 74px;
+    --brand-bottom-padding: 6px;
   }
 
   .brand-item {

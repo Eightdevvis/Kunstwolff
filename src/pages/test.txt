@@ -1,5 +1,0 @@
-{items.map((slide: { src: string | null | undefined; alt: any; }) => (
-        <div class="swiper-slide">
-          <img src={slide.src} alt={slide.alt ?? ''} />
-        </div>
-      ))}

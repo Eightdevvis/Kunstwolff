@@ -1,7 +1,4 @@
 ---
-import fs from 'fs';
-import path from 'path';
-
 import Layout from '../layouts/Layout.astro';
 import Skills from '../components/SkillBanner.astro';
 import Slideshow from '../components/slideshows/Slideshow.astro';
@@ -10,6 +7,8 @@ import Opener from '../components/hero/Opener.astro';
 import Landingsection from '../components/Landingsection.astro';
 import Reviews from '../components/reviews-references/Reviews.astro';
 import { getSharedSkills } from '../utils/skills';
+import { getReviewsByLanding } from '../utils/reviews';
+import { getLandingBySlug, getLandingSlugs } from '../utils/landings';
 import {
   MIN_LANDING_SLIDES,
   getCitySlides,
@@ -19,33 +18,24 @@ import {
 
 // getStaticPaths liefert alle möglichen Landingpages
 export async function getStaticPaths() {
-  const landingDir = path.resolve('./src/content/landing');
-  const files = fs.readdirSync(landingDir);
-
-  const paths = files
-    .filter((f) => f.endsWith('.json'))
-    .map((f) => ({ params: { landing: f.replace('.json', '') } }));
-
-  return paths;
+  return getLandingSlugs().map((landing) => ({ params: { landing } }));
 }
 
 // Props pro Seite laden
 const { landing } = Astro.params;
-const landingDir = path.resolve('./src/content/landing');
-const landingFile = path.join(landingDir, `${landing}.json`);
-
-const data = JSON.parse(fs.readFileSync(landingFile, 'utf-8'));
+const landingData = getLandingBySlug(landing ?? '');
 const skills = getSharedSkills();
 const citySlides = getCitySlides(landing);
 const defaultSlides = getDefaultSlides();
 const landingSlides = supplementWithDefaultSlides(citySlides, defaultSlides, MIN_LANDING_SLIDES);
+const reviews = getReviewsByLanding(landing);
 ---
 
-<Layout title={data.title}>
+<Layout title={landingData.title}>
   <Opener/>
-  <Skills skills={skills} />
+  <Skills skills={skills} reviews={reviews} />
   <Slideshow items={landingSlides} />
-  <Reviews items={data.reviews} />
-  <References items={data.references} />
+  <Reviews items={reviews} />
+  <References references={landingData.references} />
   <Landingsection/>
 </Layout>

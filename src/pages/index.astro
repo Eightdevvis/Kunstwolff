@@ -8,28 +8,33 @@ import Contact from "../components/Contact.astro";
 import Landingsection from "../components/Landingsection.astro";
 import Aboutsection from "../components/about/Aboutsection.astro";
 import { getSharedSkills } from "../utils/skills";
+import { getAllReviews } from "../utils/reviews";
 import {
   getHomepageSlides,
 } from "../utils/slideImages";
+import Eventtypes from "../components/Eventtypes.astro";
 
 const skills = getSharedSkills();
+const reviews = getAllReviews();
 
 // Slideshow-Items nur aus Ordnern zusammenführen
 const homepageSlides = getHomepageSlides();
+
+//<Aboutsection />
 ---
 
 <Layout>
   
   <Opener />
 
-  <Aboutsection />
+  
 
-  <SkillBanner skills={skills} />
+  <SkillBanner skills={skills} reviews={reviews} />
 
   <Slideshow
     items={homepageSlides}
   />
-
+  <Eventtypes />
   <References />
 
   <Contact />

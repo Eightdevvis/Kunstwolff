@@ -5,7 +5,9 @@
   <div class="nav-inner">
     <!-- Logo links -->
     <div class="nav-logo">
-      <img src="/img/logo/logo2.svg" alt="Kunstwolff Logo" class="nav_logo">
+      <a href="/" aria-label="Zur Startseite">
+        <img src="/img/logo/logo_transparent.png" alt="Kunstwolff Logo" class="nav_logo">
+      </a>
     </div>
 
     <!-- Sprache + Menü rechts -->
@@ -22,7 +24,15 @@
       </label>
       <!-- Hauptmenü -->
       <ul class="nav-menu" id="main-nav-menu">
-        <li><a href="#">Home</a></li>
+        <li class="nav-menu-item">
+          <div class="nav-mini-dropdown">
+            <span class="nav-mini-toggle">Home</span>
+            <div class="nav-mini-card">
+              <a class="nav-mini-link" href="/">Kunstwolff</a>
+              <a class="nav-mini-link" href="/schnellzeichner/">Schnellzeichner</a>
+            </div>
+          </div>
+        </li>
         <li class="divider">|</li>
         <li><a href="#skills">Services</a></li>
         <li class="divider">|</li>
@@ -40,9 +50,37 @@
 ========================= */
 
 .nav-logo img {
-  height: 32px;
+  height: 60px;
   width: auto;
   transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.nav-logo {
+  margin-left: -18px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-logo::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  transform: translate(-50%, -50%);
+  border-radius: 30%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 75%);
+  filter: blur(5px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.nav-logo a {
+  position: relative;
+  z-index: 1;
 }
 
 .nav {
@@ -52,10 +90,21 @@
   top: 0;
   left: 0;
   z-index: 1000;
+  overflow: visible;
 
   /* Ombre von Schwarz zu Transparent */
+  background: transparent;
+  transition: background 0.3s ease;
+}
+
+.nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
   background: linear-gradient(to bottom, rgba(0,0,0,0.95), rgba(0,0,0,0));
-  backdrop-filter: blur(8px); /* leichtes Glas-Effekt */
+  backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   mask-image: linear-gradient(
     to bottom,
@@ -71,11 +120,12 @@
     rgba(0, 0, 0, 0.65) 82%,
     rgba(0, 0, 0, 0) 100%
   );
-  transition: background 0.3s ease;
 }
 
 /* Innerer Flex-Container */
 .nav-inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -118,24 +168,7 @@
 }
 
 /* =========================
-   Logo
-========================= */
-.nav-logo a {
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: #fff;
-  text-decoration: none;
-  transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.nav-logo a:hover {
-  transform: scale(1.05);
-  color: #ffd700; /* kleines Highlight beim Hover */
-}
-
-/* =========================
-   Hauptmenü + Divider
+  Hauptmenü + Divider
 ========================= */
 .nav-menu {
   display: flex;
@@ -146,25 +179,89 @@
   gap: 12px;
 }
 
-.nav-menu a {
+.nav-menu-item {
+  position: relative;
+}
+
+.nav-menu a,
+.nav-mini-toggle,
+.nav-mini-link {
   text-decoration: none;
   font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  font-weight: inherit;
   color: #fff;
   opacity: 0.8;
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.nav-menu a:hover {
+.nav-mini-dropdown {
+  position: relative;
+}
+
+.nav-mini-toggle {
+  display: inline-block;
+  cursor: default;
+}
+
+.nav-menu a:hover,
+.nav-mini-toggle:hover {
   opacity: 1;
   transform: translateY(-2px);
+}
+
+.nav-mini-card {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  z-index: 1300;
+  width: max-content;
+  min-width: 0;
+  padding: 10px 10px 8px;
+  border-radius: 0;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.nav-mini-link {
+  display: block;
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: inherit;
+  color: #fff;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.nav-mini-dropdown:hover .nav-mini-card {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
 }
 
 .nav-menu .divider {
   opacity: 0.3;
   font-size: 12px;
   user-select: none;
+}
+
+:global(body[data-nav-tone="light"]) .nav-mini-card .nav-mini-link {
+  color: #111;
+}
+
+:global(body[data-nav-tone="light"]) .nav-mini-card {
+  border-color: rgba(17, 17, 17, 0.18);
 }
 
 /* =========================
@@ -215,6 +312,13 @@
 
   .nav-menu .divider {
     display: none;
+  }
+
+  .nav-mini-card {
+    position: static;
+    width: max-content;
+    min-width: 0;
+    margin-top: 8px;
   }
 }
 </style>

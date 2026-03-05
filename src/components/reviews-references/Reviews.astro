@@ -1,0 +1,21 @@
+---
+import MiniReviews from './MiniReviews.astro';
+
+const { items = [] } = Astro.props;
+---
+
+{items.length > 0 && (
+	<section class="section reviews" id="reviews">
+		<div class="section-inner">
+			<h2>Stimmen unserer Kunden</h2>
+			<MiniReviews items={items} />
+		</div>
+	</section>
+)}
+
+<style>
+	.reviews h2 {
+		text-align: center;
+		margin-bottom: 10px;
+	}
+</style>

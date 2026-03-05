@@ -2,6 +2,11 @@
 import Footer from "../components/Footer.astro";
 import Header from "../components/header/Header.astro";
 import "../styles/global.css";
+
+const {
+	title = "Schnellzeichner für Events buchen | Kunstwolff",
+	description = "Schnellzeichner für Firmenfeiern, Messen & Hochzeiten. Live Karikaturen und digitale Portraits als Highlight für Ihr Event. Jetzt Kunstwolff buchen!",
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -12,18 +17,14 @@ import "../styles/global.css";
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Schnellzeichner für Events buchen | Kunstwolff</title>
-        <meta name="description" content="Schnellzeichner für Firmenfeiern, Messen & Hochzeiten. Live Karikaturen und digitale Portraits als Highlight für Ihr Event. Jetzt Kunstwolff buchen!" />
+		<title>{title}</title>
+        <meta name="description" content={description} />
 
 		<!-- Meta-Tags (im <head>) -->
-		<meta
-			name="description"
-			content="Kunstwolff - Kreative Event-Kunst & Live-Performance für Ihr Event seit über 20 Jahren."
-		/>
 		
 	</head>
 
-	<body>
+	<body data-nav-tone="light">
 		<Header />
 		<slot />
 		<Footer />

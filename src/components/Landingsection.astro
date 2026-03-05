@@ -1,13 +1,7 @@
 ---
-import fs from "fs";
-import path from "path";
+import { getLandingSlugs } from "../utils/landings";
 
-const landingDir = path.resolve("./src/content/landing");
-
-const cities = fs
-  .readdirSync(landingDir)
-  .filter((f) => f.endsWith(".json"))
-  .map((f) => f.replace(".json", ""));
+const cities = getLandingSlugs();
 
 const { site = "" } = Astro.props;
 const normalizedSite = String(site).replace(/^\/+|\/+$/g, "");
