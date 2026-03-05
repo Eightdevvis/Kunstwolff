@@ -1,0 +1,33 @@
+{
+  "default/1_schnellzeichner_hq.JPG": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 1
+  },
+  "default/2_karikatur_stadtfest.jpg": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 2
+  },
+  "default/3_Schnellzeichner Schweiz.jpg": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "priority": 3,
+    "altOverride": "Live-Karikaturen von Gästen bei einem Event in der Schweiz"
+  },
+  "default/4_Hochzeit_schnellzeichner_maler.jpg": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 4,
+    "altOverride": "Schnellzeichner zeichnet Gäste bei einer Hochzeit live"
+  },
+  "default/5_flip.jpg": {
+    "categories": [],
+    "priority": 5
+  }
+}
