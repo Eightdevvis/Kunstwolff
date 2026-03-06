@@ -146,6 +146,12 @@ if (cities.length === 0) {
 const created = [];
 const reviewTemplateContent = getReviewTemplateContent();
 
+// Ensure root-level _vorlage.md exists
+const rootTemplate = ensureCityReviewTemplate(reviewsRoot, reviewTemplateContent);
+if (rootTemplate) {
+  created.push(`+ ${path.relative(projectRoot, rootTemplate)}`);
+}
+
 for (const city of cities) {
   const slideDir = path.join(slidesRoot, city);
   const reviewDir = path.join(reviewsRoot, city);
