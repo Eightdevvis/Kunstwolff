@@ -1,11 +1,33 @@
 ---
-type FAQItem = {
-  question: string;
-  answer: string;
+import { getAllFAQs, getFAQsByCategory, getFAQsByCity, getFAQsByCategories, type FAQItem } from '../utils/faq';
+
+const { 
+  categories = [],
+  city = '',
+  faqs = [],
+} = Astro.props as { 
+  categories?: string[]; 
+  city?: string;
+  faqs?: FAQItem[]; 
 };
 
-const { faqs = [] } = Astro.props as { faqs?: FAQItem[] };
+let list: FAQItem[];
 
+if (faqs.length > 0) {
+  // Wenn FAQs explizit übergeben werden, nutze diese
+  list = faqs;
+} else if (categories.length > 0) {
+  // Wenn Kategorien übergeben werden, filtere danach
+  list = getFAQsByCategories(categories);
+} else if (city) {
+  // Wenn Stadt übergeben wird, filtere danach
+  list = getFAQsByCity(city);
+} else {
+  // Sonst alle FAQs laden
+  list = getAllFAQs();
+}
+
+// Fallback auf Default-FAQs wenn keine FAQs gefunden
 const DEFAULT_FAQS: FAQItem[] = [
   {
     question: "Wie buche ich einen Schnellzeichner von Kunstwolff?",
@@ -29,13 +51,13 @@ const DEFAULT_FAQS: FAQItem[] = [
   }
 ];
 
-const list = faqs.length ? faqs : DEFAULT_FAQS;
+const finalList = list.length > 0 ? list : DEFAULT_FAQS;
 
 // JSON-LD für FAQ Schema
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": list.map(item => ({
+  "mainEntity": finalList.map(item => ({
     "@type": "Question",
     "name": item.question,
     "acceptedAnswer": {
@@ -51,7 +73,7 @@ const faqSchema = {
     <h2>Häufige Fragen (FAQ)</h2>
 
     <div class="faq-grid">
-      {list.map((faq, idx) => (
+      {finalList.map((faq, idx) => (
         <details class="faq-item">
           <summary>{faq.question}</summary>
           <p>{faq.answer}</p>

@@ -6,6 +6,8 @@ export type SkillItem = {
   link: string;
   image?: string;
   alt?: string;
+  heroTitle?: string;
+  description?: string;
 };
 
 type SkillsJson = SkillItem[] | { skills?: SkillItem[] };
@@ -23,19 +25,33 @@ const normalizeKey = (value: string): string =>
     .toLowerCase()
     .trim();
 
+const slugify = (text: string): string => {
+  return text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+};
+
 const normalizeSkill = (skill: Partial<SkillItem>): SkillItem | null => {
   const title = (skill.title ?? '').trim();
-  const link = (skill.link ?? '').trim();
-
-  if (!title || !link) {
+  
+  if (!title) {
     return null;
   }
+
+  // Auto-generate link from title if not provided
+  const link = (skill.link ?? '').trim() || `/${slugify(title)}/`;
 
   return {
     title,
     link,
     image: skill.image?.trim() || undefined,
     alt: skill.alt?.trim() || undefined,
+    heroTitle: skill.heroTitle?.trim() || undefined,
+    description: skill.description?.trim() || undefined,
   };
 };
 
@@ -128,4 +144,19 @@ export const getSharedSkills = (): SkillItem[] => {
       image: folderImage ?? skill.image,
     };
   });
+};
+
+export const getSkillSlugs = (): string[] => {
+  const skills = getSharedSkills();
+  return skills.map((skill) => {
+    // Extract slug from link (e.g., "/schnellzeichner/" -> "schnellzeichner")
+    const slug = skill.link.replace(/^\/|\/$/g, '');
+    return slug;
+  });
+};
+
+export const getSkillBySlug = (slug: string): SkillItem | null => {
+  const skills = getSharedSkills();
+  const normalizedSlug = `/${slug}/`;
+  return skills.find((skill) => skill.link === normalizedSlug) || null;
 };

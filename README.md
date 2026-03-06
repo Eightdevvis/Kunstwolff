@@ -1,6 +1,8 @@
 # Kunstwolff Website
 
-Astro-Projekt für die Kunstwolff-Landingpages mit statischen Stadtseiten, Skill-Seiten und dateibasierter Content-Pflege.
+Astro-Projekt für die Kunstwolff-Landingpages mit statischen Stadtseiten, Skill-Seiten und dateibasierter Content-Pflege. 
+
+Ziele des Projekts: saubere und professionelle Representation von Kunstwolff, Erzielung des höchsten Page-Ranking das möglich ist in Suchmaschinen und anderen digitalen organischen Marketingbereichen durch SEO-Optimierung usw.
 
 ## Inhaltsverzeichnis
 
@@ -13,6 +15,7 @@ Astro-Projekt für die Kunstwolff-Landingpages mit statischen Stadtseiten, Skill
    - [3.4 Kategorie-Matching für neue Slides](#34-kategorie-matching-für-neue-slides)
    - [3.5 Reviews pflegen](#35-reviews-pflegen)
    - [3.6 Skills pflegen](#36-skills-pflegen)
+   - [3.7 FAQs pflegen](#37-faqs-pflegen)
 - [4) Seite bauen und prüfen](#4-seite-bauen-und-prüfen)
 - [5) Automatisierung](#5-automatisierung)
 - [6) Befehle](#6-befehle)
@@ -37,15 +40,19 @@ Wichtig:
 ## 2) Aktuelle Funktionsweise (kurz)
 
 - Städte werden über `public/landings/landings.md` gesteuert.
+- Skills werden über `public/skills/skills.json` gesteuert und automatisch als Seiten generiert.
 - Für jede Stadt entstehen (falls fehlend) Ordner in:
    - `public/img/slides/<stadt>/`
    - `public/reviews/<stadt>/`
-- Landingseiten werden statisch generiert für:
-   - `/<stadt>/`
-   - `/schnellzeichner/<stadt>/`
+   - `public/faq/<stadt>/`
+- Landingseiten werden automatisch statisch generiert für:
+   - `/<stadt>/` (allgemeine Stadt-Landing)
+   - `/<skill>/` (Skill-Hauptseite, z.B. `/schnellzeichner/`)
+   - `/<skill>/<stadt>/` (Skill + Stadt Kombination, z.B. `/schnellzeichner/berlin/`)
 - Slides kommen aus Stadtordnern + Fallback aus `default`.
 - Reviews kommen zuerst aus der Stadt, dann aus `default`, dann aus anderen Städten (bis Mindestanzahl erreicht ist).
-- Skills kommen aus `public/skills/skills.json`; Skill-Bilder werden aus Skill-Ordnern geladen.
+- FAQs werden aus `public/faq/` geladen und nach Stadt und Skill-Kategorie gefiltert.
+- Skill-Bilder werden automatisch aus `public/img/UnsereFähigkeitenBilder/<Skill-Titel>/` geladen.
 
 ## 3) Content-Pflege
 
@@ -162,19 +169,62 @@ Beispiel:
    "skills": [
       {
          "title": "Schnellzeichner",
-         "link": "/schnellzeichner/",
-         "alt": "Live Schnellzeichner"
+         "heroTitle": "Live Schnellzeichner für Events",
+         "description": "Schnellzeichner für Firmenfeiern, Messen & Hochzeiten..."
+      },
+      {
+         "title": "Szenenmaler"
       }
    ]
 }
 ```
 
-Wichtig:
-- `title` und `link` sind erforderlich.
-- Für jeden Skill wird ein Bildordner erwartet:
-   `public/img/UnsereFähigkeitenBilder/<Skill-Titel>/`
-- Das erste Bild alphabetisch im Ordner wird verwendet.
-- `image` in `skills.json` ist optional; Ordnerbild hat Vorrang.
+Felder:
+- `title` (erforderlich): Skill-Name, wird auch für Kategorisierung verwendet
+- `heroTitle` (optional): Angepasster Titel für die Hero-Sektion
+- `description` (optional): Meta-Description für SEO
+
+Automatik:
+- Der Link wird automatisch aus dem Titel generiert: `"Schnellzeichner"` → `/schnellzeichner/`
+- Für jeden Skill werden automatisch Seiten generiert:
+   - `/<skill>/` (Hauptseite)
+   - `/<skill>/<stadt>/` (für jede Stadt aus `landings.md`)
+- Skill-Bilder werden automatisch aus `public/img/UnsereFähigkeitenBilder/<Skill-Titel>/` geladen
+- Das erste Bild alphabetisch im Ordner wird verwendet
+- Slides werden automatisch nach Skill-Kategorie gefiltert (nutzt `categories` in `slides.meta.json`)
+- Reviews werden automatisch nach Skill-Kategorie gefiltert (nutzt `categories` in Review-Markdown)
+- FAQs werden automatisch nach Skill-Kategorie gefiltert (nutzt `categories` in FAQ-Markdown)
+
+### 3.7 FAQs pflegen
+
+Ablage:
+- `public/faq/<stadt>/*.md` für stadtspezifische FAQs
+- `public/faq/default/*.md` für allgemeine FAQs
+
+Beispiel:
+
+```md
+---
+question: "Wie buche ich einen Schnellzeichner?"
+answer: "Sie können uns direkt über das Kontaktformular anfragen..."
+categories:
+   - Schnellzeichner
+   - Szenenmaler
+---
+```
+
+Pflicht:
+- `question`: Die Frage
+- `answer`: Die Antwort
+
+Optional:
+- `categories`: Array von Skills, für die diese FAQ relevant ist
+- `city`: Überschreibt den Ordnernamen (Stadt-Zuordnung)
+
+Automatik:
+- FAQs werden automatisch nach Skill und Stadt gefiltert
+- Auf Skill-Seiten werden nur FAQs mit passender Kategorie angezeigt
+- Auf Stadt-Landings werden stadt-spezifische FAQs bevorzugt
 
 ## 4) Seite bauen und prüfen
 

@@ -1,0 +1,71 @@
+---
+import FAQ from '../../components/FAQ.astro';
+import SkillHero from '../../components/hero/SkillHero.astro';
+import Landingsection from '../../components/Landingsection.astro';
+import References from '../../components/reviews-references/References.astro';
+import Slideshow from '../../components/slideshows/Slideshow.astro';
+import Why from '../../components/Why.astro';
+import SkillLayout from '../../layouts/SkillLayout.astro';
+import { getLandingBySlug, getLandingSlugs } from '../../utils/landings';
+import { getSkillBySlug, getSkillSlugs } from '../../utils/skills';
+import {
+  MIN_LANDING_SLIDES,
+  getCitySlides,
+  getDefaultSlides,
+  supplementWithDefaultSlides,
+} from '../../utils/slideImages';
+import { getReviewsByLandingAndSkill } from '../../utils/reviews';
+
+export async function getStaticPaths() {
+  const skills = getSkillSlugs();
+  const landings = getLandingSlugs();
+  
+  // Create all combinations of skill + landing
+  const paths = [];
+  for (const skill of skills) {
+    for (const landing of landings) {
+      paths.push({ params: { skill, landing } });
+    }
+  }
+  
+  return paths;
+}
+
+const { skill, landing } = Astro.params;
+const skillData = getSkillBySlug(skill ?? '');
+const landingData = getLandingBySlug(landing ?? '');
+
+if (!skillData) {
+  return Astro.redirect('/404');
+}
+
+const citySlides = getCitySlides(landing);
+const defaultSlides = getDefaultSlides();
+const landingSlides = supplementWithDefaultSlides(citySlides, defaultSlides, MIN_LANDING_SLIDES);
+const reviews = getReviewsByLandingAndSkill(landing, skillData.title);
+
+const heroTitle = skillData.heroTitle || `Live ${skillData.title} für Events`;
+const pageTitle = `${skillData.title} ${landing} | Kunstwolff`;
+const pageDescription = skillData.description || `${skillData.title} in ${landing} für Firmenfeiern, Messen & Hochzeiten buchen.`;
+
+---
+
+<SkillLayout title={pageTitle} description={pageDescription}>
+  <SkillHero 
+    title={heroTitle}
+    reviews={reviews} 
+    titleImage={landingData.titleImage}
+    skillName={skillData.title}
+  />
+
+  <Slideshow items={landingSlides} filteredCategories={[skillData.title]} />
+
+  <Why />
+
+  <References />
+
+  <FAQ city={landing} categories={[skillData.title]} />
+
+  <Landingsection site={skill}/>
+
+</SkillLayout>

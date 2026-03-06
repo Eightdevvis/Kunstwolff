@@ -1,0 +1,66 @@
+---
+import fs from 'fs';
+import path from 'path';
+import FAQ from '../components/FAQ.astro';
+import SkillHero from '../components/hero/SkillHero.astro';
+import Landingsection from '../components/Landingsection.astro';
+import References from '../components/reviews-references/References.astro';
+import Slideshow from '../components/slideshows/Slideshow.astro';
+import Why from '../components/Why.astro';
+import SkillLayout from '../layouts/SkillLayout.astro';
+import { getSkillBySlug, getSkillSlugs } from '../utils/skills';
+import { getHomepageSlides } from '../utils/slideImages';
+import { getAllReviews } from '../utils/reviews';
+
+export async function getStaticPaths() {
+  const slugs = getSkillSlugs();
+  return slugs.map((skill) => ({ params: { skill } }));
+}
+
+const { skill } = Astro.params;
+const skillData = getSkillBySlug(skill ?? '');
+
+if (!skillData) {
+  return Astro.redirect('/404');
+}
+
+const allSlideshow = getHomepageSlides();
+const allReviews = getAllReviews();
+
+// Try to find skill-specific title image
+const titleImageDir = path.resolve(`./public/img/Titelbild/${skill}`);
+const titleImageFile = fs.existsSync(titleImageDir)
+	? fs
+			.readdirSync(titleImageDir)
+			.filter((entry) => /\.(avif|webp|png|jpe?g)$/i.test(entry))
+			.sort((a, b) => a.localeCompare(b))[0]
+	: undefined;
+
+const titleImage = titleImageFile
+	? `/img/Titelbild/${skill}/${titleImageFile}`
+	: skillData.image || '/img/samples/sample1.jpeg';
+
+const heroTitle = skillData.heroTitle || `Live ${skillData.title} für Events`;
+const pageTitle = skillData.title + ' für Events buchen | Kunstwolff';
+const pageDescription = skillData.description || `${skillData.title} für Firmenfeiern, Messen & Hochzeiten. Live-Kunst als Highlight für Ihr Event. Jetzt Kunstwolff buchen!`;
+
+---
+<SkillLayout title={pageTitle} description={pageDescription}>
+	<SkillHero 
+		title={heroTitle}
+		reviews={allReviews} 
+		titleImage={titleImage}
+		skillName={skillData.title}
+	/>
+
+	<Slideshow items={allSlideshow} filteredCategories={[skillData.title]} />
+
+	<Why />
+
+	<References />
+
+	<FAQ categories={[skillData.title]} />
+
+	<Landingsection site={skill}/>
+
+</SkillLayout>

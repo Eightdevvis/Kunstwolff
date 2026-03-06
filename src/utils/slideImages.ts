@@ -33,6 +33,7 @@ const encodePathSegment = (segment: string): string => encodeURIComponent(segmen
 const normalizeAlt = (fileName: string): string =>
   decodeURIComponent(fileName)
     .replace(/\.[^.]+$/, '')
+    .replace(/^\d+[_-]+/, '')
     .replace(/[_-]+/g, ' ')
     .trim();
 
