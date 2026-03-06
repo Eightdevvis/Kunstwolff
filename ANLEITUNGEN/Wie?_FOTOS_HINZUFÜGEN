@@ -56,7 +56,7 @@ Für Bilder in /public/img/slides/... gilt zusätzlich:
 - Lücken bei Nummern werden automatisch geglättet.
 
 2) Automatische Skill-Zuordnung über Keywords im Dateinamen
-- Keywords werden automatisch aus den bestehenden Skills gezogen (Skill-Name + Skill-Slug aus /public/skills/).
+- Keywords werden automatisch aus den bestehenden Skills gezogen (Skill-Name + Skill-Kurzname aus /public/skills/).
 - Beim ersten Einlesen werden Kategorien aus dem Dateinamen erkannt.
 - Zusätzliche Synonyme kannst du in /public/img/slides/category-matching.md ergänzen.
 - Wichtig: Bei inhaltlicher Umbenennung (anderer Dateiname mit anderen Keywords) wird neu zugeordnet.

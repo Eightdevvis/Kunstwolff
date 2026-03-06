@@ -8,6 +8,15 @@ const landingsMdPath = path.join(landingsRoot, 'landings.md');
 const landingsJsonPath = path.join(landingsRoot, 'landings.json');
 const slidesRoot = path.join(projectRoot, 'public', 'img', 'slides');
 const reviewsRoot = path.join(projectRoot, 'public', 'reviews');
+const rootReviewTemplatePath = path.join(reviewsRoot, '_vorlage.md');
+const cityReviewTemplateFileName = '_vorlage.md';
+const fallbackReviewTemplate = `---
+author: "Max Mustermann"
+categories:
+  - Schnellzeichner
+---
+Das war ein großartiges Event und alle Gäste waren begeistert.
+`;
 
 const normalizeSlug = (value) =>
   String(value)
@@ -92,6 +101,29 @@ const ensureGitkeep = (dir) => {
   }
 };
 
+const getReviewTemplateContent = () => {
+  if (!fs.existsSync(rootReviewTemplatePath)) {
+    return fallbackReviewTemplate;
+  }
+
+  return fs.readFileSync(rootReviewTemplatePath, 'utf-8');
+};
+
+const ensureCityReviewTemplate = (dir, templateContent) => {
+  const existingTemplateNames = ['_vorlage.md', 'vorlage.md'];
+  const hasTemplate = existingTemplateNames.some((fileName) =>
+    fs.existsSync(path.join(dir, fileName)),
+  );
+
+  if (hasTemplate) {
+    return null;
+  }
+
+  const cityTemplatePath = path.join(dir, cityReviewTemplateFileName);
+  fs.writeFileSync(cityTemplatePath, templateContent);
+  return cityTemplatePath;
+};
+
 ensureDirectory(landingsRoot);
 ensureDirectory(slidesRoot);
 ensureDirectory(reviewsRoot);
@@ -112,6 +144,7 @@ if (cities.length === 0) {
 }
 
 const created = [];
+const reviewTemplateContent = getReviewTemplateContent();
 
 for (const city of cities) {
   const slideDir = path.join(slidesRoot, city);
@@ -129,6 +162,11 @@ for (const city of cities) {
 
   ensureGitkeep(slideDir);
   ensureGitkeep(reviewDir);
+
+  const createdCityTemplate = ensureCityReviewTemplate(reviewDir, reviewTemplateContent);
+  if (createdCityTemplate) {
+    created.push(`+ ${path.relative(projectRoot, createdCityTemplate)}`);
+  }
 }
 
 if (created.length > 0) {

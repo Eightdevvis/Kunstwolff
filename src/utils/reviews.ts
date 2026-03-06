@@ -13,8 +13,13 @@ export type ReviewItem = {
 const reviewsRoot = path.resolve('./public/reviews');
 const defaultCityKey = 'default';
 const minLandingReviews = 7;
+const reviewTemplateFileNames = new Set(['_vorlage.md', 'vorlage.md']);
 
 const normalize = (value: string): string => value.trim().toLowerCase();
+
+const isTemplateFile = (fileName: string): boolean => {
+  return reviewTemplateFileNames.has(fileName.trim().toLowerCase());
+};
 
 const readMarkdownFiles = (dir: string): string[] => {
   if (!fs.existsSync(dir)) {
@@ -23,7 +28,9 @@ const readMarkdownFiles = (dir: string): string[] => {
 
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   const files = entries
-    .filter((entry) => entry.isFile() && /\.md$/i.test(entry.name))
+    .filter(
+      (entry) => entry.isFile() && /\.md$/i.test(entry.name) && !isTemplateFile(entry.name),
+    )
     .map((entry) => path.join(dir, entry.name));
 
   const nestedFiles = entries
