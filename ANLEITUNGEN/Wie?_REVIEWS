@@ -34,7 +34,7 @@ SO IST EINE REVIEW-DATEI AUFGEBAUT
 Am einfachsten:
 - Die _vorlage.md im gewünschten Stadtordner öffnen (z. B. /public/reviews/berlin/_vorlage.md)
 - Review direkt dort reinschreiben
-- Bei mehreren Reviews: _vorlage.md kopieren und z. B. review-1.md, review-2.md anlegen
+- Bei mehreren Reviews: _vorlage.md kopieren und z. B. review-1.md, review-2.md anlegen oder nach jeder Review pushen damit eine neue Vorlage generiert wird.
 - Text, Name, Ort/Firma anpassen
 
 Falls im Stadtordner keine _vorlage.md vorhanden ist:
