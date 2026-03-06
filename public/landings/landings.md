@@ -8,6 +8,11 @@ cities:
   - trier
   - wiesbaden
   - mainz
+  - luxembourg
+  - koeln
+  - ludwigshafen
+  - mannheim
+  - saarbruecken
 ---
 
 NUR KLEIN SCHREIBEN!!! KEINE LEERZEICHEN KEINE SONDERZEICHEN
