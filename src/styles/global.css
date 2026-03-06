@@ -23,6 +23,8 @@ html {
   --font-headings: "Mayonice", Georgia, serif;
   */
 
+  --body-font-weight: 100;
+  
   --h2-font-weight: 400;
   /* Alternative testen:
   --h2-font-weight: 400;
@@ -47,6 +49,7 @@ html {
 
 body {
     font-family: var(--font-body);
+    font-weight: var(--body-font-weight);
     color: #ffffff;
     background-color: #000000;
     margin: 0;
