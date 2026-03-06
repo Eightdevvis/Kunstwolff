@@ -13,6 +13,7 @@ cities:
   - ludwigshafen
   - mannheim
   - saarbruecken
+  - belgique
 ---
 
 NUR KLEIN SCHREIBEN!!! KEINE LEERZEICHEN KEINE SONDERZEICHEN
