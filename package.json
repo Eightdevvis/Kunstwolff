@@ -8,6 +8,7 @@
     "sync:skills": "node scripts/sync-skills.mjs",
     "sync:slides": "node scripts/sync-slides-metadata.mjs",
     "sync:content": "npm run sync:landings && npm run sync:skills && npm run sync:slides",
+    "optimize:images": "node scripts/optimize-staged-images.mjs",
     "predev": "npm run sync:content",
     "dev": "astro dev",
     "prebuild": "npm run sync:content",
@@ -22,6 +23,7 @@
     "lightgallery": "^2.9.0",
     "markdown-it": "^14.1.1",
     "preact": "^10.28.4",
+    "sharp": "^0.34.5",
     "swiper": "^12.1.2"
   },
   "devDependencies": {
