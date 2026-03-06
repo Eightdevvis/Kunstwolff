@@ -16,6 +16,19 @@ let list: FAQItem[];
 if (faqs.length > 0) {
   // Wenn FAQs explizit übergeben werden, nutze diese
   list = faqs;
+} else if (categories.length > 0 && city) {
+  // Wenn Stadt + Kategorien übergeben werden, zuerst nach Stadt filtern, dann nach Kategorien
+  const cityFaqs = getFAQsByCity(city);
+  const categoryKeys = categories.map((value) => value.trim().toLowerCase());
+
+  list = cityFaqs.filter((faq) =>
+    faq.categories?.some((cat) => categoryKeys.includes(cat.trim().toLowerCase())),
+  );
+
+  // Fallback: wenn in der Stadt keine Kategorie-FAQs gefunden wurden, zumindest Kategorie-FAQs anzeigen
+  if (list.length === 0) {
+    list = getFAQsByCategories(categories);
+  }
 } else if (categories.length > 0) {
   // Wenn Kategorien übergeben werden, filtere danach
   list = getFAQsByCategories(categories);
@@ -68,7 +81,7 @@ const faqSchema = {
 };
 ---
 
-<section class="faq-section">
+<section id="faq" class="faq-section">
   <div class="faq-container">
     <h2>Häufige Fragen (FAQ)</h2>
 

@@ -5,6 +5,11 @@
     <div class="section-inner">
       <h2>Kontakt</h2>
 
+      <p class="contact-intro">
+        Stellen Sie uns jetzt unverbindlich eine Anfrage. Auch Fragen oder Vorschläge nehmen wir gerne hier direkt entgegen. Für allgemeine Fragen werfen Sie zuerst einen Blick in unsere
+        <a href="#faq">FAQ's</a>, dort finden Sie auch einige Antworten. Wir freuen uns auf Ihre Nachricht!
+      </p>
+
       <!-- Formspree-Formular (mit JS) -->
       <form id="contactForm" class="contact-form">
         <input
@@ -47,8 +52,23 @@
 
   <style>
     .contact {
-  background: #0a0a0a;
+      background: #000;
 }
+
+    .contact-intro {
+      max-width: 860px;
+      margin: 0 0 16px;
+      text-align: left;
+      line-height: 1.7;
+      opacity: 0.9;
+    }
+
+    .contact-intro a {
+      color: inherit;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
 
 .contact-form {
   display: grid;

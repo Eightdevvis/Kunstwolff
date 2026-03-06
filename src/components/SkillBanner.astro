@@ -23,6 +23,7 @@ const {
   showIntro = true,
   reviews = [],
   reviewCategories = [],
+  currentLanding = "",
 } = Astro.props as {
   skills?: Skill[];
   items?: Skill[];
@@ -31,8 +32,17 @@ const {
   showIntro?: boolean;
   reviews?: Review[];
   reviewCategories?: string[];
+  currentLanding?: string;
 };
 const rawItems: Skill[] = skills && skills.length ? skills : items;
+
+// Funktion zum Anpassen der Links basierend auf currentLanding
+const adjustSkillLink = (originalLink: string): string => {
+  if (!currentLanding) return originalLink;
+  // Entferne trailing slashes und füge landing hinzu
+  const cleanLink = originalLink.replace(/\/+$/, '');
+  return `${cleanLink}/${currentLanding}`;
+};
 
 const FALLBACK_SKILLS: Required<Skill>[] = [
   {
@@ -56,7 +66,7 @@ const DEFAULT_LINK = "";
 const normalizedItems: Required<Skill>[] = rawItems.map((skill) => ({
   title: skill.title ?? DEFAULT_TITLE,
   image: skill.image ?? DEFAULT_IMAGE,
-  link: skill.link ?? DEFAULT_LINK,
+  link: adjustSkillLink(skill.link ?? DEFAULT_LINK),
   alt: skill.alt ?? skill.title ?? DEFAULT_TITLE,
 }));
 
@@ -66,7 +76,7 @@ const list: Required<Skill>[] =
     : FALLBACK_SKILLS.map((skill) => ({
         title: skill.title ?? DEFAULT_TITLE,
         image: skill.image ?? DEFAULT_IMAGE,
-        link: skill.link ?? DEFAULT_LINK,
+        link: adjustSkillLink(skill.link ?? DEFAULT_LINK),
         alt: skill.alt ?? skill.title ?? DEFAULT_TITLE,
       }));
 

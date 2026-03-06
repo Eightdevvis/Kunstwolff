@@ -1,8 +1,8 @@
 ---
 import FAQ from '../../components/FAQ.astro';
+import Contact from '../../components/Contact.astro';
 import SkillHero from '../../components/hero/SkillHero.astro';
 import Landingsection from '../../components/Landingsection.astro';
-import References from '../../components/reviews-references/References.astro';
 import Slideshow from '../../components/slideshows/Slideshow.astro';
 import Why from '../../components/Why.astro';
 import SkillLayout from '../../layouts/SkillLayout.astro';
@@ -62,10 +62,11 @@ const pageDescription = skillData.description || `${skillData.title} in ${landin
 
   <Why skill={skill} landing={landing} />
 
-  <References />
+  <Contact />
 
   <FAQ city={landing} categories={[skillData.title]} />
 
   <Landingsection site={skill}/>
 
+  <script src="../../scripts/formspree.js"></script>
 </SkillLayout>

@@ -3,16 +3,16 @@ import Opener from "../components/hero/Opener.astro";
 import SkillBanner from "../components/SkillBanner.astro";
 import Layout from "../layouts/Layout.astro";
 import Slideshow from "../components/slideshows/Slideshow.astro";
-import References from "../components/reviews-references/References.astro";
 import Contact from "../components/Contact.astro";
 import Landingsection from "../components/Landingsection.astro";
+import Why from "../components/Why.astro";
+import FAQ from "../components/FAQ.astro";
 import Aboutsection from "../components/about/Aboutsection.astro";
 import { getSharedSkills } from "../utils/skills";
 import { getAllReviews } from "../utils/reviews";
 import {
   getHomepageSlides,
 } from "../utils/slideImages";
-import Eventtypes from "../components/Eventtypes.astro";
 
 const skills = getSharedSkills();
 const reviews = getAllReviews();
@@ -34,10 +34,11 @@ const homepageSlides = getHomepageSlides();
   <Slideshow
     items={homepageSlides}
   />
-  <Eventtypes />
-  <References />
+  <Why />
 
   <Contact />
+
+  <FAQ />
 
   <Landingsection />
 

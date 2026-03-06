@@ -2,9 +2,9 @@
 import fs from 'fs';
 import path from 'path';
 import FAQ from '../components/FAQ.astro';
+import Contact from '../components/Contact.astro';
 import SkillHero from '../components/hero/SkillHero.astro';
 import Landingsection from '../components/Landingsection.astro';
-import References from '../components/reviews-references/References.astro';
 import Slideshow from '../components/slideshows/Slideshow.astro';
 import Why from '../components/Why.astro';
 import SkillLayout from '../layouts/SkillLayout.astro';
@@ -57,10 +57,11 @@ const pageDescription = skillData.description || `${skillData.title} für Firmen
 
 	<Why skill={skill} />
 
-	<References />
+	<Contact />
 
 	<FAQ categories={[skillData.title]} />
 
 	<Landingsection site={skill}/>
 
+	<script src="../scripts/formspree.js"></script>
 </SkillLayout>

@@ -2,10 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import Skills from '../components/SkillBanner.astro';
 import Slideshow from '../components/slideshows/Slideshow.astro';
-import References from '../components/reviews-references/References.astro';
 import Opener from '../components/hero/Opener.astro';
 import Landingsection from '../components/Landingsection.astro';
-import Reviews from '../components/reviews-references/Reviews.astro';
+import Why from '../components/Why.astro';
+import Contact from '../components/Contact.astro';
 import FAQ from '../components/FAQ.astro';
 import { getSharedSkills } from '../utils/skills';
 import { getReviewsByLanding } from '../utils/reviews';
@@ -34,10 +34,11 @@ const reviews = getReviewsByLanding(landing);
 
 <Layout title={landingData.title}>
   <Opener/>
-  <Skills skills={skills} reviews={reviews} />
+  <Skills skills={skills} reviews={reviews} currentLanding={landing} />
   <Slideshow items={landingSlides} />
-  <Reviews items={reviews} />
-  <References references={landingData.references} />
+  <Why landing={landing} />
+  <Contact />
   <FAQ city={landing} />
   <Landingsection/>
+  <script src="../scripts/formspree.js"></script>
 </Layout>
