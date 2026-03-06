@@ -29,22 +29,27 @@ const titleImage = titleImageFile
 	? `/img/Titelbild/schnellzeichner/${titleImageFile}`
 	: '/img/samples/sample1.jpeg';
 const IMG = "/img/samples/sample1.jpeg";
----
+
+/*
+ !!Hero braucht noch: Googlebadge, Globus, Benefitstatements, CTA-Button
 !!Keyword cluster analyse für landingpages
 !!head für landing pages
 !!landingpage H1 dynamic
 !!regionale FAQ für landingpages
+ GroßeReviews/Gästebuch later
+ CTA
+ */
+
+---
 <SchnellzeichnerLayout>
  <SchnellzeichnerHero reviews={allReviews} titleImage={titleImage} />
- !!Hero braucht noch: Googlebadge, Globus, Benefitstatements, CTA-Button
 
  <Slideshow items={allSlideshow} filteredCategories={["Schnellzeichner"]} />
  
  <AboutSchnellzeichner src={IMG} />
 
  <EventtypesSchnellzeichner />
- GroßeReviews/Gästebuch later
- CTA
+
  <Why />
 
 <References />

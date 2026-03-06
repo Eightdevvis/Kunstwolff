@@ -13,12 +13,12 @@ html {
 }
 
 :root {
-  --font-body: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   /* Alternative testen:
   --font-body: "Mayonice", Georgia, serif;
   */
 
-  --font-headings: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-headings: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   /* Alternative testen:
   --font-headings: "Mayonice", Georgia, serif;
   */

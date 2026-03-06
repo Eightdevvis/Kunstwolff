@@ -5,7 +5,7 @@ import BrandStripe from '../reviews-references/BrandStripe.astro';
 const { reviews = [], titleImage = '' } = Astro.props;
 ---
 
-<section class="hero section">
+<div class="hero section">
   <div class="hero-inner section-inner">
     <div class="hero-content">
       <h1>Live Schnellzeichner fuer Events</h1>
@@ -32,15 +32,19 @@ const { reviews = [], titleImage = '' } = Astro.props;
   <style>
 
     .hero {
+      width: 100%;
+      min-height: 100vh;
       background:
         radial-gradient(circle at 18% 18%, #ffffff 0%, #f9f9f9 16%, #ececec 34%, #d6d6d6 58%, #bcbcbc 100%),
         radial-gradient(circle at 78% 72%, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.18) 36%, rgba(255, 255, 255, 0) 60%),
         radial-gradient(circle at 8% 92%, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0) 52%);
       color: #111;
-      padding-top: 160px; /* mehr als normale section */
+      padding-top: 100px;
       padding-bottom: 160px;
       position: relative;
       overflow: hidden;
+      display: flex;
+      align-items: center;
     }
 
     /* nutzt deine section-inner Breite */
@@ -139,4 +143,4 @@ const { reviews = [], titleImage = '' } = Astro.props;
       }
     }
   </style>
-</section>
+</div>

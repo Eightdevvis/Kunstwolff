@@ -1,171 +1,217 @@
 # Kunstwolff Website
 
-## Kurzüberblick
+Astro-Projekt für die Kunstwolff-Landingpages mit statischen Stadtseiten, Skill-Seiten und dateibasierter Content-Pflege.
 
-- Landings werden über `public/landings/landings.md` gesteuert.
-- Slides liegen in `public/img/slides/<stadt>/`.
-- Slide-Metadaten (Kategorien) liegen in `public/img/slides/slides.meta.json`.
-- Kategorie-Matching-Regeln für Dateinamen liegen in `public/img/slides/category-matching.md`.
-- Reviews liegen in `public/reviews/<stadt>/` als Markdown.
-- Skill-Bilder werden automatisch aus `public/img/UnsereFähigkeitenBilder/<Skillname>/` geladen.
-- Es gibt keine Landing-JSON-Logik mehr.
+## Inhaltsverzeichnis
 
-## Slide-Metadaten
+- [1) Schnellstart](#1-schnellstart)
+- [2) Aktuelle Funktionsweise (kurz)](#2-aktuelle-funktionsweise-kurz)
+- [3) Content-Pflege](#3-content-pflege)
+   - [3.1 Städte pflegen](#31-städte-pflegen)
+   - [3.2 Slides pflegen](#32-slides-pflegen)
+   - [3.3 Slide-Metadaten](#33-slide-metadaten)
+   - [3.4 Kategorie-Matching für neue Slides](#34-kategorie-matching-für-neue-slides)
+   - [3.5 Reviews pflegen](#35-reviews-pflegen)
+   - [3.6 Skills pflegen](#36-skills-pflegen)
+- [4) Seite bauen und prüfen](#4-seite-bauen-und-prüfen)
+- [5) Automatisierung](#5-automatisierung)
+- [6) Befehle](#6-befehle)
 
-Slides werden weiterhin automatisch aus den Stadtordnern gelesen.
-Kategorien pro Bild kommen aus `public/img/slides/slides.meta.json`.
-Die Einträge werden automatisch durch `npm run sync:slides` ergänzt.
+## 1) Schnellstart
+
+Voraussetzungen:
+- Node.js 20+
+- npm
+
+Setup:
+
+```bash
+npm install
+npm run dev
+```
+
+Wichtig:
+- Vor `dev` und `build` läuft automatisch `npm run sync:content`.
+- Dadurch sind Ordner- und Metadatenstruktur immer aktuell, bevor Seiten gebaut werden.
+
+## 2) Aktuelle Funktionsweise (kurz)
+
+- Städte werden über `public/landings/landings.md` gesteuert.
+- Für jede Stadt entstehen (falls fehlend) Ordner in:
+   - `public/img/slides/<stadt>/`
+   - `public/reviews/<stadt>/`
+- Landingseiten werden statisch generiert für:
+   - `/<stadt>/`
+   - `/schnellzeichner/<stadt>/`
+- Slides kommen aus Stadtordnern + Fallback aus `default`.
+- Reviews kommen zuerst aus der Stadt, dann aus `default`, dann aus anderen Städten (bis Mindestanzahl erreicht ist).
+- Skills kommen aus `public/skills/skills.json`; Skill-Bilder werden aus Skill-Ordnern geladen.
+
+## 3) Content-Pflege
+
+### 3.1 Städte pflegen
+
+Datei: `public/landings/landings.md`
+
+```md
+---
+cities:
+   - berlin
+   - frankfurt
+   - hamburg
+---
+```
+
+Regeln:
+- Nur Slugs eintragen (klein, z. B. `koeln`).
+- Nach Änderung `npm run sync:landings` oder direkt `npm run dev`/`npm run build` ausführen.
+
+### 3.2 Slides pflegen
+
+Ablage:
+- `public/img/slides/default/` für generische Slides
+- `public/img/slides/<stadt>/` für stadtspezifische Slides
+
+Erlaubte Formate:
+- `.avif`, `.gif`, `.jpeg`, `.jpg`, `.png`, `.webp`
+
+Sortierung & Priorität:
+- Dateiname mit Prefix steuert Priorität, z. B. `120_event.jpg`.
+- Höhere Priorität wird zuerst angezeigt.
+- Fehlt Prefix, vergibt `sync:slides` automatisch einen.
+- Lücken in Prefix-Reihen werden automatisch geglättet.
+
+### 3.3 Slide-Metadaten
+
+Datei: `public/img/slides/slides.meta.json`
 
 Format:
 
 ```json
 {
-   "<stadt>/<dateiname>": {
-      "categories": ["Schnellzeichner", "Szenenmaler"],
-      "altOverride": "Optionaler manueller Alt-Text",
-      "priority": 10,
+   "berlin/120_event.jpg": {
+      "categories": ["Schnellzeichner"],
+      "altOverride": "Live-Karikaturen in Berlin",
+      "priority": 120,
       "enabled": true
    }
 }
 ```
 
-Beispiel mit vorhandenem Bild:
+Felder:
+- `categories` (Array): Skill-Filter, z. B. für Schnellzeichner-Slideshow.
+- `altOverride` (optional): eigener Alt-Text.
+- `priority` (Zahl): wird durch `sync:slides` aus Prefix gepflegt.
+- `enabled` (optional, `false`): Bild ausblenden.
 
-```json
-{
-   "default/Schnellzeichner Schweiz.jpg": {
-      "categories": ["Schnellzeichner", "Szenenmaler"]
-   }
-}
-```
+Automatik:
+- Neue Bilder bekommen automatisch einen Metadaten-Eintrag.
+- Kategorien werden beim ersten Anlegen via Dateiname-Regeln vorbelegt.
+- Bei klarer Umbenennung werden Metadaten auf den neuen Dateinamen migriert.
 
-Hinweise:
+### 3.4 Kategorie-Matching für neue Slides
 
-- Key muss exakt zum relativen Pfad unter `public/img/slides/` passen.
-- Ein Bild kann in mehreren Kategorien sein (`categories` als Array).
-- `altOverride` ist optional; wenn gesetzt, wird dieser Text als `alt` genutzt.
-- `priority` ist optional (Zahl): höhere Werte werden früher angezeigt.
-- `enabled` ist optional (Boolean): `false` blendet ein Bild aus.
-- Priorität wird primär aus dem Dateinamen gelesen: `<zahl>_<rest>.jpg` (z. B. `42_karikatur_event.jpg`).
-- Fehlt die Zahl am Anfang, benennt `sync:slides` die Datei automatisch um und setzt den Prefix.
-- Bei mehreren Dateien ohne Prefix im selben Ordner gilt eine Queue: erst ältere Datei, dann neuere; die neueste bekommt dadurch die höchste Zahl.
-- Bei identischer Änderungszeit bleibt die Queue trotzdem stabil (zusätzliche Zeitfelder + Name als Tie-Breaker), damit die Reihenfolge reproduzierbar ist.
-- Lücken in bestehenden Präfixen werden beim Sync automatisch geglättet, Reihenfolge bleibt gleich (z. B. `9,11,12` -> `9,10,11`).
-- Kategorien werden nur beim ersten Anlegen eines neuen Eintrags automatisch aus dem Dateinamen gematcht und danach nicht überschrieben.
-- Wenn ein Bild umbenannt wird, verschiebt `sync:slides` den Metadaten-Eintrag automatisch auf den neuen Dateinamen (wenn die Umbenennung eindeutig erkennbar ist: im gleichen Stadtordner genau 1 alter + 1 neuer Dateiname).
-- Einträge mit leerer `categories`-Liste werden bei `sync:slides` erneut aus dem Dateinamen gematcht.
-- Standard-Alt-Text wird automatisch aus dem Dateinamen erzeugt.
-- In Skill-Slideshows werden nur Bilder mit passender Kategorie angezeigt.
+Datei: `public/img/slides/category-matching.md`
 
-Beispiel Priorisierung/Auswahl:
-
-```json
-{
-   "default/Hochzeit_schnellzeichner_maler.jpg": {
-      "categories": ["Schnellzeichner"],
-      "priority": 100
-   },
-   "default/IMG_6657.JPG": {
-      "categories": [],
-      "enabled": false
-   }
-}
-```
-
-Dateiname-Priorität Beispiele:
-
-```text
-1_schnellzeichner_messe.jpg
-25_hochzeit_livekarikatur.webp
-120_szenenmaler_event.png
-```
-
-Bei Umbenennung auf einen neuen Prefix (z. B. `5_...` -> `200_...`) wird `priority` beim nächsten `npm run sync:slides` automatisch in `slides.meta.json` aktualisiert.
-
-## Kategorie-Matching aus Dateinamen
-
-Regeln stehen in `public/img/slides/category-matching.md` in einem einfachen Format:
+Format der Regeln:
 
 ```md
-- Schnellzeichner: schnellzeichner, schnelzeichner, karikatur
+Regeln:
+- Schnellzeichner: schnellzeichner, karikatur, caricature
 - Szenenmaler: szenenmaler, speedpainting
 ```
 
-Wenn ein Begriff im Dateinamen gefunden wird, wird die Kategorie beim ersten Sync in `slides.meta.json` gesetzt.
+Hinweis:
+- Diese Zuordnung greift nur beim ersten Erstellen eines Metadaten-Eintrags.
 
-## Neue Stadt hinzufügen
+### 3.5 Reviews pflegen
 
-1. In `public/landings/landings.md` unter `cities` den Stadtnamen ergänzen (Slug, z. B. `hamburg`).
-2. Commit pushen (oder lokal `npm run sync:landings` ausführen).
-3. Fehlende Ordner werden automatisch angelegt:
-   - `public/img/slides/<stadt>/`
-   - `public/reviews/<stadt>/`
-4. Inhalte einfügen:
-   - Slides als `.jpg/.jpeg/.png/.webp/.avif/.gif`
-   - Reviews als `.md` in den Stadtordner
+Ablage:
+- `public/reviews/<stadt>/*.md`
+- Vorlage: `public/reviews/_vorlage.md`
 
-Ergebnis:
-
-- Landing unter `/<stadt>/`
-- Skill-Landing unter `/schnellzeichner/<stadt>/`
-
-## Review-Format
-
-Vorlage: `public/reviews/_vorlage.md`
+Beispiel:
 
 ```md
 ---
 author: "Max Mustermann"
 categories:
-  - Schnellzeichner
-  - Szenenmaler
+   - Schnellzeichner
+rating: 5
 ---
 Das war ein großartiges Event.
 ```
 
-- `author` und Text sind Pflicht.
-- `categories` steuert die Skill-Zuordnung.
-- Optional: `city` (überschreibt Ordner), `rating`.
+Pflicht:
+- `author`
+- Review-Text im Body
 
-## Skills hinzufügen
+Optional:
+- `categories` (für Skill-Filter)
+- `rating`
+- `city` (überschreibt Ordnernamen)
 
-1. Neuen Skill in `public/skills/skills.json` eintragen (`title`, `link`, optional `alt`).
-2. `npm run sync:skills` ausführen (oder einfach `npm run dev` / `npm run build`).
-3. Der Ordner `public/img/UnsereFähigkeitenBilder/<Skillname>/` wird automatisch angelegt.
-4. Bilddatei in diesen Ordner legen (erste Datei alphabetisch wird verwendet).
+### 3.6 Skills pflegen
 
-Hinweis: `image` in `skills.json` ist nicht mehr nötig, da das Bild aus dem Skill-Ordner kommt.
+Datei: `public/skills/skills.json`
 
-## Automatisierung
+Beispiel:
 
-- Lokal: `npm run dev` und `npm run build` führen automatisch `npm run sync:content` aus.
-- `sync:content` enthält auch `npm run sync:slides` für Slide-Metadaten.
-- GitHub: `.github/workflows/sync-landings.yml` läuft bei Änderungen an `public/landings/landings.md` oder `public/skills/skills.json` und committed neue Ordner zurück ins Repo.
+```json
+{
+   "skills": [
+      {
+         "title": "Schnellzeichner",
+         "link": "/schnellzeichner/",
+         "alt": "Live Schnellzeichner"
+      }
+   ]
+}
+```
 
-## Git Commit Hook (automatischer Sync)
+Wichtig:
+- `title` und `link` sind erforderlich.
+- Für jeden Skill wird ein Bildordner erwartet:
+   `public/img/UnsereFähigkeitenBilder/<Skill-Titel>/`
+- Das erste Bild alphabetisch im Ordner wird verwendet.
+- `image` in `skills.json` ist optional; Ordnerbild hat Vorrang.
 
-Bei jedem Commit kann automatisch `sync:content` laufen.
+## 4) Seite bauen und prüfen
 
-Einmalig im lokalen Repo aktivieren:
+```bash
+npm run build
+npm run preview
+```
+
+## 5) Automatisierung
+
+- `npm run dev` und `npm run build` starten automatisch `sync:content`.
+- `sync:content` führt aus:
+   - `sync:landings`
+   - `sync:skills`
+   - `sync:slides`
+- GitHub Action: `.github/workflows/sync-landings.yml`
+   - Triggert bei Änderungen an `public/landings/landings.md` und `public/skills/skills.json`
+   - Führt `npm run sync:content` aus
+   - Committet neu erzeugte Content-Ordner zurück
+
+Optional lokal:
 
 ```bash
 npm run setup:hooks
 ```
 
-Danach führt der Hook in `.githooks/pre-commit` bei jedem `git commit` aus:
+Danach läuft bei jedem Commit der Pre-Commit-Hook aus `.githooks/pre-commit`.
 
-- `npm run sync:content`
-- `git add public/img/slides public/reviews public/img/UnsereFähigkeitenBilder`
+## 6) Befehle
 
-## Befehle
-
-| Command | Zweck |
+| Befehl | Zweck |
 | :-- | :-- |
 | `npm install` | Abhängigkeiten installieren |
-| `npm run sync:landings` | Stadtordner für Slides/Reviews erzeugen |
-| `npm run sync:skills` | Skill-Bildordner erzeugen |
-| `npm run sync:slides` | Slide-Metadaten automatisch ergänzen |
-| `npm run sync:content` | Landings + Skills zusammen synchronisieren |
-| `npm run dev` | Dev-Server starten |
-| `npm run build` | Produktionsbuild |
+| `npm run sync:landings` | Stadtordner für Slides und Reviews anlegen |
+| `npm run sync:skills` | Skill-Bildordner anlegen |
+| `npm run sync:slides` | Slide-Dateien und `slides.meta.json` synchronisieren |
+| `npm run sync:content` | Alle Content-Syncs nacheinander ausführen |
+| `npm run dev` | Entwicklungsserver starten (inkl. Sync) |
+| `npm run build` | Produktionsbuild (inkl. Sync) |
 | `npm run preview` | Build lokal prüfen |
