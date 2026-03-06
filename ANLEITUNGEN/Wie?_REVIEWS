@@ -38,8 +38,8 @@ Am einfachsten:
 - Text, Name, Ort/Firma anpassen
 
 Falls im Stadtordner keine _vorlage.md vorhanden ist:
-- Prüfen, ob es noch nicht gepushte Änderungen gibt.
-- Danach pushen und erneut prüfen (die Vorlage wird automatisch erzeugt).
+- Einfach committen – die Vorlage wird automatisch beim Commit erzeugt und hinzugefügt.
+- Danach wie gewohnt pushen.
 
 Wichtig:
 - Immer das bestehende Format der Vorlage beibehalten.
@@ -62,3 +62,15 @@ WENN DU UNSICHER BIST
 
 Lieber kurz nachfragen.
 Der Ordner entscheidet direkt, auf welcher Landingpage die Reviews erscheinen.
+
+
+-------------------------------------------------------
+
+WICHTIG: AUTOMATISCHER SYNC
+
+Beim Committen läuft automatisch ein Sync, der:
+- Fehlende _vorlage.md-Dateien neu erzeugt
+- Stadt-Ordner für neue Landings anlegt
+- Slide-Bilder automatisch nummeriert
+
+Du musst nichts manuell starten – einfach committen + pushen reicht!
