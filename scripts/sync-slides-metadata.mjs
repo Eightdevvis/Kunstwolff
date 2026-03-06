@@ -5,6 +5,7 @@ const projectRoot = process.cwd();
 const slidesRoot = path.join(projectRoot, 'public', 'img', 'slides');
 const metadataPath = path.join(slidesRoot, 'slides.meta.json');
 const matchingRulesPath = path.join(slidesRoot, 'category-matching.md');
+const skillsRoot = path.join(projectRoot, 'public', 'skills');
 
 const allowedExtensions = new Set(['.avif', '.gif', '.jpeg', '.jpg', '.png', '.webp']);
 const priorityPrefixPattern = /^(\d+)_/;
@@ -32,6 +33,142 @@ const uniqueStrings = (items) => {
   return out;
 };
 
+const slugify = (value) =>
+  normalize(value)
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+const toKeywordVariants = (value) => {
+  const normalized = normalize(value);
+  const compact = normalized.replace(/[^a-z0-9]+/g, '');
+  return uniqueStrings([normalized, compact]).filter((entry) => entry.length >= 3);
+};
+
+const parseSkillsContent = (content) => {
+  const rawList = Array.isArray(content)
+    ? content
+    : content && typeof content === 'object' && Array.isArray(content.skills)
+      ? content.skills
+      : [];
+
+  return rawList
+    .map((entry) => {
+      if (!entry || typeof entry !== 'object') {
+        return null;
+      }
+
+      const title = typeof entry.title === 'string' ? entry.title.trim() : '';
+      if (!title) {
+        return null;
+      }
+
+      const rawLink = typeof entry.link === 'string' ? entry.link.trim() : '';
+      const slug = rawLink ? rawLink.replace(/^\/+|\/+$/g, '') : slugify(title);
+
+      return {
+        title,
+        slug,
+      };
+    })
+    .filter((entry) => entry !== null);
+};
+
+const readSkillEntries = () => {
+  if (!fs.existsSync(skillsRoot)) {
+    return [];
+  }
+
+  const canonicalFile = path.join(skillsRoot, 'skills.json');
+  const skillFiles = fs.existsSync(canonicalFile)
+    ? [canonicalFile]
+    : fs
+        .readdirSync(skillsRoot)
+        .filter((name) => name.endsWith('.json'))
+        .sort((a, b) => a.localeCompare(b))
+        .map((name) => path.join(skillsRoot, name));
+
+  const allEntries = [];
+
+  for (const filePath of skillFiles) {
+    try {
+      const raw = fs.readFileSync(filePath, 'utf-8');
+      const parsed = JSON.parse(raw);
+      allEntries.push(...parseSkillsContent(parsed));
+    } catch {
+      continue;
+    }
+  }
+
+  const seen = new Set();
+  return allEntries.filter((entry) => {
+    const key = `${normalize(entry.title)}::${normalize(entry.slug)}`;
+    if (seen.has(key)) {
+      return false;
+    }
+
+    seen.add(key);
+    return true;
+  });
+};
+
+const buildSkillCategoryRules = () => {
+  const skills = readSkillEntries();
+
+  return skills
+    .map((skill) => {
+      const keywords = uniqueStrings([
+        ...toKeywordVariants(skill.title),
+        ...toKeywordVariants(skill.slug),
+      ]);
+
+      if (keywords.length === 0) {
+        return null;
+      }
+
+      return {
+        category: skill.title,
+        keywords,
+      };
+    })
+    .filter((rule) => rule !== null);
+};
+
+const mergeCategoryRules = (...ruleSets) => {
+  const byCategory = new Map();
+
+  for (const rules of ruleSets) {
+    for (const rule of rules) {
+      if (!rule || typeof rule !== 'object') {
+        continue;
+      }
+
+      const category = typeof rule.category === 'string' ? rule.category.trim() : '';
+      if (!category) {
+        continue;
+      }
+
+      const normalizedCategory = normalize(category);
+      const nextKeywords = uniqueStrings(Array.isArray(rule.keywords) ? rule.keywords : []).map(normalize);
+
+      if (nextKeywords.length === 0) {
+        continue;
+      }
+
+      if (!byCategory.has(normalizedCategory)) {
+        byCategory.set(normalizedCategory, {
+          category,
+          keywords: [],
+        });
+      }
+
+      const current = byCategory.get(normalizedCategory);
+      current.keywords = uniqueStrings([...current.keywords, ...nextKeywords]);
+    }
+  }
+
+  return Array.from(byCategory.values());
+};
+
 const parseCategoryRules = () => {
   if (!fs.existsSync(matchingRulesPath)) {
     return [];
@@ -46,7 +183,7 @@ const parseCategoryRules = () => {
     const trimmed = line.trim();
 
     if (!inRulesSection) {
-      if (trimmed.toLowerCase() === 'regeln:') {
+      if (/^regeln\b/i.test(trimmed)) {
         inRulesSection = true;
       }
       continue;
@@ -191,11 +328,21 @@ const compareQueueOrder = (a, b) => {
 const inferCategoriesFromFileName = (fileName, rules) => {
   const baseName = path.basename(fileName, path.extname(fileName));
   const normalizedName = normalize(baseName);
+  const compactName = normalizedName.replace(/[^a-z0-9]+/g, '');
 
   const matched = [];
 
   for (const rule of rules) {
-    const hasMatch = rule.keywords.some((keyword) => normalizedName.includes(keyword));
+    const hasMatch = rule.keywords.some((keyword) => {
+      const normalizedKeyword = normalize(keyword);
+      const compactKeyword = normalizedKeyword.replace(/[^a-z0-9]+/g, '');
+
+      return (
+        (normalizedKeyword.length > 0 && normalizedName.includes(normalizedKeyword)) ||
+        (compactKeyword.length > 0 && compactName.includes(compactKeyword))
+      );
+    });
+
     if (hasMatch) {
       matched.push(rule.category);
     }
@@ -403,7 +550,9 @@ const migrateMetadataForRenames = (metadata, imageKeys) => {
   return migratedCount;
 };
 
-const rules = parseCategoryRules();
+const skillRules = buildSkillCategoryRules();
+const customRules = parseCategoryRules();
+const rules = mergeCategoryRules(skillRules, customRules);
 const metadata = readMetadata();
 
 const renamedWithoutPrefixCount = ensurePriorityPrefixes();
@@ -461,5 +610,7 @@ console.log(`sync-slides: ${renameMigratedCount} Metadaten-Einträge bei Umbenen
 console.log(`sync-slides: ${removedCount} veraltete Metadaten-Einträge entfernt.`);
 console.log(`sync-slides: ${refreshedCount} bestehende Einträge aktualisiert.`);
 console.log(`sync-slides: ${addedCount} neue Metadaten-Einträge erstellt.`);
-console.log(`sync-slides: Regeln geladen: ${rules.length}`);
+console.log(`sync-slides: Skill-Regeln geladen: ${skillRules.length}`);
+console.log(`sync-slides: Zusätzliche Regeln aus category-matching.md: ${customRules.length}`);
+console.log(`sync-slides: Gesamt-Regeln aktiv: ${rules.length}`);
 console.log(`sync-slides: Gesamt-Einträge: ${Object.keys(metadata).length}`);

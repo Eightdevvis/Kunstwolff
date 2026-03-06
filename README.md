@@ -120,16 +120,22 @@ Automatik:
 
 Datei: `public/img/slides/category-matching.md`
 
-Format der Regeln:
+Automatische Basis:
+- Keywords werden automatisch aus den vorhandenen Skills in `public/skills/` erzeugt.
+- Pro Skill werden Skill-Name und Skill-Slug als Keywords genutzt.
+
+Format optionaler Zusatzregeln:
 
 ```md
 Regeln:
-- Schnellzeichner: schnellzeichner, karikatur, caricature
-- Szenenmaler: szenenmaler, speedpainting
+- Schnellzeichner: karikatur, caricature
+- Szenenmaler: speedpainting, eventmaler
 ```
 
 Hinweis:
-- Diese Zuordnung greift nur beim ersten Erstellen eines Metadaten-Eintrags.
+- Diese Regeln ergänzen nur die automatisch erzeugten Skill-Keywords.
+- Bei inhaltlicher Umbenennung (anderer Dateiname/Keywords) kann neu zugeordnet werden.
+- Bei reiner Prefix-/Nummern-Änderung bleibt die Zuordnung erhalten.
 
 ### 3.5 Reviews pflegen
 

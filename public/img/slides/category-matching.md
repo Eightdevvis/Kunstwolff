@@ -1,16 +1,18 @@
 # Kategorie-Matching für Slide-Dateinamen
 
-Dieses Dokument steuert die automatische Erst-Zuordnung von Kategorien für neue Slide-Bilder.
+Dieses Dokument ergänzt die automatische Zuordnung von Kategorien für neue Slide-Bilder.
 
 So funktioniert es:
-- Pro Zeile eine Kategorie mit Suchbegriffen.
-- Wenn ein Suchbegriff im Dateinamen vorkommt, wird die Kategorie gesetzt.
-- Die automatische Zuordnung passiert nur beim ersten Anlegen eines Eintrags in `slides.meta.json`.
-- Danach bleibt die Kategorie im JSON fest, bis sie manuell geändert wird.
+- Basis-Keywords kommen automatisch aus den bestehenden Skills in `/public/skills/`.
+- Pro Skill werden mindestens Skill-Name und Skill-Slug als Keywords verwendet.
+- Regeln in dieser Datei sind optional und erweitern nur um zusätzliche Synonyme.
+- Die automatische Zuordnung passiert beim Anlegen neuer Einträge in `slides.meta.json`.
+- Bei inhaltlicher Umbenennung (anderer Dateiname/Keywords) kann neu zugeordnet werden.
+- Bei reiner Prefix-/Nummern-Änderung bleibt die Zuordnung erhalten.
 
 Format:
 - Kategorie: begriff1, begriff2, begriff3
 
-Regeln:
-- Schnellzeichner: schnellzeichner, schnelzeichner, karikatur, caricature
-- Szenenmaler: szenenmaler, speedpainting, speed-painting, eventmaler
+Regeln (optionale Synonyme):
+- Schnellzeichner: schnelzeichner, karikatur, caricature
+- Szenenmaler: speedpainting, speed-painting, eventmaler
