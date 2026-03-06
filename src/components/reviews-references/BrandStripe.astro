@@ -1,32 +1,7 @@
 ---
-import { readdir } from 'node:fs/promises';
+import { getBrandLogos } from '../../utils/brandLogos';
 
-const logosDirectory = new URL('../../../public/img/referenzenLogos', import.meta.url);
-const allowedExtensions = new Set(['.avif', '.gif', '.jpeg', '.jpg', '.png', '.svg', '.webp']);
-
-let logoItems: { src: string; label: string }[] = [];
-
-try {
-  const files = await readdir(logosDirectory, { withFileTypes: true });
-
-  logoItems = files
-    .filter((file) => {
-      if (!file.isFile()) return false;
-      const lowerCaseName = file.name.toLowerCase();
-      const extension = lowerCaseName.slice(lowerCaseName.lastIndexOf('.'));
-      return allowedExtensions.has(extension);
-    })
-    .map((file) => ({
-      src: `/img/referenzenLogos/${file.name}`,
-      label: decodeURIComponent(file.name)
-        .replace(/\.[^.]+$/, '')
-        .replace(/[_-]+/g, ' ')
-        .trim(),
-    }))
-    .sort((a, b) => a.src.localeCompare(b.src));
-} catch {
-  logoItems = [];
-}
+const logoItems = getBrandLogos();
 
 const loopSpeedMultiplier = 1.6;
 const baseLoopDurationSeconds = Math.max(20, logoItems.length * 3.5);
