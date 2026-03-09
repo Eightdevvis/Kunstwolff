@@ -31,7 +31,7 @@ const filteredItems =
                 filteredItems.map((slide: Slide) => (
                     <div class="swiper-slide">
                         <a class="lg-item" href={slide.src}>
-                            <img src={slide.src} alt={slide.alt ?? ""} />
+                            <img src={slide.src} alt={slide.alt ?? ""} loading="lazy" decoding="async" />
                         </a>
                     </div>
                 ))

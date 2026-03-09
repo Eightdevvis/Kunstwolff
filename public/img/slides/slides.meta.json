@@ -1,4 +1,12 @@
 {
+  "belgique/1_caricaturiste_belgique.jpg": {
+    "categories": [],
+    "priority": 1
+  },
+  "belgique/2_caricaturistes_live_belgique.jpg": {
+    "categories": [],
+    "priority": 2
+  },
   "default/1_schnellzeichner_hq.JPG": {
     "categories": [
       "Schnellzeichner"
@@ -28,25 +36,6 @@
   },
   "default/5_flip.jpg": {
     "categories": [],
-    "priority": 5
-  },
-  "schweiz/2_Screenshot_28-1-2026_203449_erol-art.de.jpeg": {
-    "categories": [],
-    "priority": 2
-  },
-  "schweiz/3_Screenshot_28-1-2026_21133_outlook.live.com.jpeg": {
-    "categories": [],
-    "priority": 3
-  },
-  "schweiz/4_Hochzeitsmaler.jpg": {
-    "categories": [],
-    "priority": 4
-  },
-  "schweiz/5_szenenmaler_schnellzeichnerschweiz.jpg": {
-    "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
-    ],
     "priority": 5
   }
 }
