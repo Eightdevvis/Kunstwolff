@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "label": "Home",
+      "children": [
+        { "label": "Kunstwolff", "url": "/" },
+        { "label": "Schnellzeichner", "url": "/schnellzeichner/" }
+      ]
+    },
+    { "label": "Services", "url": "#skills" },
+    { "label": "Contact", "url": "#contact" },
+    { "label": "FAQ", "url": "#faq" }
+  ]
+}

@@ -10,6 +10,7 @@ import FAQ from "../components/FAQ.astro";
 import Aboutsection from "../components/about/Aboutsection.astro";
 import { getSharedSkills } from "../utils/skills";
 import { getAllReviews } from "../utils/reviews";
+import { resolveTitleImage } from "../utils/titleImages";
 import {
   getHomepageSlides,
 } from "../utils/slideImages";
@@ -19,13 +20,14 @@ const reviews = getAllReviews();
 
 // Slideshow-Items nur aus Ordnern zusammenführen
 const homepageSlides = getHomepageSlides();
+const titleImage = resolveTitleImage();
 
 //<Aboutsection />
 ---
 
 <Layout>
   
-  <Opener />
+  <Opener titleImage={titleImage} />
 
   
 

@@ -6,8 +6,9 @@ import Landingsection from '../../components/Landingsection.astro';
 import Slideshow from '../../components/slideshows/Slideshow.astro';
 import Why from '../../components/Why.astro';
 import SkillLayout from '../../layouts/SkillLayout.astro';
-import { getLandingBySlug, getLandingSlugs } from '../../utils/landings';
+import { getLandingSlugs } from '../../utils/landings';
 import { getSkillBySlug, getSkillSlugs } from '../../utils/skills';
+import { resolveTitleImage } from '../../utils/titleImages';
 import {
   MIN_LANDING_SLIDES,
   getCitySlides,
@@ -33,7 +34,6 @@ export async function getStaticPaths() {
 
 const { skill, landing } = Astro.params;
 const skillData = getSkillBySlug(skill ?? '');
-const landingData = getLandingBySlug(landing ?? '');
 
 if (!skillData) {
   return Astro.redirect('/404');
@@ -47,6 +47,7 @@ const reviews = getReviewsByLandingAndSkill(landing, skillData.title);
 const heroTitle = skillData.heroTitle || `Live ${skillData.title} für Events`;
 const pageTitle = `${skillData.title} ${landing} | Kunstwolff`;
 const pageDescription = skillData.description || `${skillData.title} in ${landing} für Firmenfeiern, Messen & Hochzeiten buchen.`;
+const titleImage = resolveTitleImage({ skill, landing });
 
 ---
 
@@ -54,7 +55,7 @@ const pageDescription = skillData.description || `${skillData.title} in ${landin
   <SkillHero 
     title={heroTitle}
     reviews={reviews} 
-    titleImage={landingData.titleImage}
+    titleImage={titleImage}
     skillName={skillData.title}
   />
 

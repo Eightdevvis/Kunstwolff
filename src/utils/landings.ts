@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { resolveTitleImage } from './titleImages';
 
 export type LandingReference = {
   title: string;
@@ -21,10 +22,16 @@ const landingsRegistryMdPath = path.join(landingsRoot, 'landings.md');
 const landingsRegistryJsonPath = path.join(landingsRoot, 'landings.json');
 const slidesRoot = path.resolve('./public/img/slides');
 const reviewsRoot = path.resolve('./public/reviews');
-const defaultTitleImage = '/img/samples/sample1.jpeg';
+
+const transliterateGerman = (value: string): string =>
+  String(value)
+    .replace(/ä/gi, 'ae')
+    .replace(/ö/gi, 'oe')
+    .replace(/ü/gi, 'ue')
+    .replace(/ß/gi, 'ss');
 
 const normalizeSlug = (value: string): string =>
-  value
+  transliterateGerman(value)
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
@@ -77,11 +84,28 @@ const normalizeList = (items: unknown[]): string[] => {
       continue;
     }
 
+    if (normalized === 'default') {
+      continue;
+    }
+
+    if (normalized.startsWith('_')) {
+      continue;
+    }
+
     unique.add(normalized);
   }
 
   return Array.from(unique).sort((a, b) => a.localeCompare(b));
 };
+
+const readCitiesFromBodyBullets = (content: string): string[] =>
+  normalizeList(
+    content
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter((line) => line.startsWith('- ') || line.startsWith('* '))
+      .map((line) => line.slice(2).trim()),
+  );
 
 const readRegistryFromMarkdown = (): string[] => {
   if (!fs.existsSync(landingsRegistryMdPath)) {
@@ -89,21 +113,21 @@ const readRegistryFromMarkdown = (): string[] => {
   }
 
   const raw = fs.readFileSync(landingsRegistryMdPath, 'utf-8');
-  const parsed = matter(raw);
-  const data = parsed.data as Record<string, unknown>;
-  const frontmatterCities = data.cities ?? data.landings;
+  try {
+    const parsed = matter(raw);
+    const data = parsed.data as Record<string, unknown>;
+    const frontmatterCities = data.cities ?? data.landings;
 
-  if (Array.isArray(frontmatterCities)) {
-    return normalizeList(frontmatterCities);
+    if (Array.isArray(frontmatterCities)) {
+      return normalizeList(frontmatterCities);
+    }
+
+    return readCitiesFromBodyBullets(parsed.content);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.warn(`landings: Could not parse landings.md frontmatter (${message}). Using body fallback.`);
+    return readCitiesFromBodyBullets(raw);
   }
-
-  const bodyCities = parsed.content
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter((line) => line.startsWith('- ') || line.startsWith('* '))
-    .map((line) => line.slice(2).trim());
-
-  return normalizeList(bodyCities);
 };
 
 const readRegistryFromJson = (): string[] => {
@@ -154,7 +178,7 @@ export const getLandingBySlug = (slug: string): LandingMeta => {
   return {
     slug: normalizedSlug,
     title: toTitle(normalizedSlug),
-    titleImage: defaultTitleImage,
+    titleImage: resolveTitleImage({ landing: normalizedSlug }),
     references: [],
   };
 };

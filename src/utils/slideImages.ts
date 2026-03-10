@@ -39,6 +39,8 @@ const normalizeAlt = (fileName: string): string =>
 
 const normalizeMetadataKey = (value: string): string => value.replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
 
+const metadataExtensionFallbacks = ['.webp', '.jpg', '.jpeg', '.png', '.avif', '.gif'];
+
 const toNumberOrUndefined = (value: unknown): number | undefined => {
   if (typeof value !== 'number' || Number.isNaN(value)) {
     return undefined;
@@ -61,6 +63,33 @@ const toStringArray = (value: unknown): string[] => {
 const isAllowedImage = (fileName: string): boolean => {
   const extension = path.extname(fileName).toLowerCase();
   return allowedExtensions.has(extension);
+};
+
+const resolveMetadataForFile = (
+  folderName: string,
+  fileName: string,
+  metadata: SlideMetadataMap,
+): SlideMetadataEntry | undefined => {
+  const exactKey = normalizeMetadataKey(path.posix.join(folderName, fileName));
+  if (metadata[exactKey]) {
+    return metadata[exactKey];
+  }
+
+  const extension = path.extname(fileName).toLowerCase();
+  const baseName = path.basename(fileName, extension);
+
+  for (const fallbackExt of metadataExtensionFallbacks) {
+    if (fallbackExt === extension) {
+      continue;
+    }
+
+    const fallbackKey = normalizeMetadataKey(path.posix.join(folderName, `${baseName}${fallbackExt}`));
+    if (metadata[fallbackKey]) {
+      return metadata[fallbackKey];
+    }
+  }
+
+  return undefined;
 };
 
 const dedupeSlides = (items: SlideItem[]): SlideItem[] => {
@@ -128,19 +157,30 @@ const readFolderSlides = (folderName: string): SlideItem[] => {
     return [];
   }
 
-  const entries = fs
+  const fileNames = fs
     .readdirSync(folderPath, { withFileTypes: true })
     .filter((entry) => entry.isFile() && isAllowedImage(entry.name))
+    .map((entry) => entry.name)
+    .filter((fileName, _, allFileNames) => {
+      const extension = path.extname(fileName).toLowerCase();
+      if (extension === '.webp') {
+        return true;
+      }
+
+      const webpVariant = `${path.basename(fileName, extension)}.webp`;
+      return !allFileNames.includes(webpVariant);
+    });
+
+  const entries = fileNames
     .map((entry) => {
-      const metadataKey = normalizeMetadataKey(path.posix.join(folderName, entry.name));
-      const itemMetadata = metadata[metadataKey];
+      const itemMetadata = resolveMetadataForFile(folderName, entry, metadata);
       const categories = itemMetadata?.categories ?? [];
       const priority = itemMetadata?.priority ?? 0;
       const enabled = itemMetadata?.enabled !== false;
 
       return {
-        src: `/img/slides/${encodePathSegment(folderName)}/${encodePathSegment(entry.name)}`,
-        alt: itemMetadata?.altOverride || normalizeAlt(entry.name),
+        src: `/img/slides/${encodePathSegment(folderName)}/${encodePathSegment(entry)}`,
+        alt: itemMetadata?.altOverride || normalizeAlt(entry),
         categories: categories.length > 0 ? categories : undefined,
         priority,
         enabled,

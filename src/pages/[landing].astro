@@ -33,7 +33,7 @@ const reviews = getReviewsByLanding(landing);
 ---
 
 <Layout title={landingData.title}>
-  <Opener/>
+  <Opener titleImage={landingData.titleImage} titleImageAlt={landingData.title} />
   <Skills skills={skills} reviews={reviews} currentLanding={landing} />
   <Slideshow items={landingSlides} />
   <Why landing={landing} />

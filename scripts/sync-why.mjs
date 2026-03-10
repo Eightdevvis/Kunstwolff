@@ -14,6 +14,13 @@ const whyImagesRoot = path.join(projectRoot, 'public', 'img', 'why');
 const defaultWhyImagesDir = path.join(whyImagesRoot, 'default');
 const imageExtensions = new Set(['.avif', '.webp', '.png', '.jpg', '.jpeg', '.gif']);
 
+const transliterateGerman = (value) =>
+  String(value)
+    .replace(/ä/gi, 'ae')
+    .replace(/ö/gi, 'oe')
+    .replace(/ü/gi, 'ue')
+    .replace(/ß/gi, 'ss');
+
 const fallbackDefaultWhy = {
   benefits: [
     {
@@ -67,7 +74,7 @@ const readSkills = () => {
 };
 
 const normalizeSlug = (value) =>
-  String(value)
+  transliterateGerman(value)
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
@@ -89,27 +96,36 @@ const normalizeList = (items) => {
   return Array.from(unique).sort((a, b) => a.localeCompare(b));
 };
 
+const readLandingsFromBodyBullets = (content) =>
+  normalizeList(
+    content
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter((line) => line.startsWith('- ') || line.startsWith('* '))
+      .map((line) => line.slice(2).trim()),
+  );
+
 const readLandingsFromMarkdown = () => {
   if (!fs.existsSync(landingsMdPath)) {
     return [];
   }
 
   const raw = fs.readFileSync(landingsMdPath, 'utf-8');
-  const parsed = matter(raw);
-  const data = parsed.data || {};
-  const fromFrontmatter = data.cities ?? data.landings;
+  try {
+    const parsed = matter(raw);
+    const data = parsed.data || {};
+    const fromFrontmatter = data.cities ?? data.landings;
 
-  if (Array.isArray(fromFrontmatter)) {
-    return normalizeList(fromFrontmatter);
+    if (Array.isArray(fromFrontmatter)) {
+      return normalizeList(fromFrontmatter);
+    }
+
+    return readLandingsFromBodyBullets(parsed.content);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unbekannter Fehler';
+    console.warn(`sync-why: Warnung - landings.md Frontmatter konnte nicht geparst werden (${message}). Nutze Body-Fallback.`);
+    return readLandingsFromBodyBullets(raw);
   }
-
-  const fromBody = parsed.content
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter((line) => line.startsWith('- ') || line.startsWith('* '))
-    .map((line) => line.slice(2).trim());
-
-  return normalizeList(fromBody);
 };
 
 const readLandingsFromJson = () => {

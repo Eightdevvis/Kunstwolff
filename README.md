@@ -44,6 +44,7 @@ Wichtig:
 - Für jede Stadt entstehen (falls fehlend) Ordner in:
    - `public/img/slides/<stadt>/`
    - `public/reviews/<stadt>/`
+- Wenn mehrere Schreibweisen auf denselben Slug normalisieren (z. B. `Berlin` und `berlin`), werden bestehende City-Ordner zusammengeführt statt gelöscht (kollisionssicher).
    - `public/faq/<stadt>/`
 - Landingseiten werden automatisch statisch generiert für:
    - `/<stadt>/` (allgemeine Stadt-Landing)
@@ -266,8 +267,11 @@ Danach läuft bei jedem Commit der Pre-Commit-Hook aus `.githooks/pre-commit`.
 | `npm install` | Abhängigkeiten installieren |
 | `npm run sync:landings` | Stadtordner für Slides und Reviews anlegen |
 | `npm run sync:skills` | Skill-Bildordner anlegen |
+| `npm run sync:title-images` | Titelbild-Ordner für default, Landings, Skills und Skill+Landing-Kombis anlegen |
 | `npm run sync:slides` | Slide-Dateien und `slides.meta.json` synchronisieren |
+| `npm run sync:content:safe` | Führt alle Syncs fehlertolerant aus (Teilfehler werden isoliert, Build/Dev läuft weiter) |
 | `npm run sync:content` | Alle Content-Syncs nacheinander ausführen |
+| `npm run remove:landing -- <stadt> [archivpfad]` | Archiviert alle Landing-Daten einer Stadt nach `removed_landings/` und entfernt die Stadt aus `landings.md/json` |
 | `npm run dev` | Entwicklungsserver starten (inkl. Sync) |
 | `npm run build` | Produktionsbuild (inkl. Sync) |
 | `npm run preview` | Build lokal prüfen |

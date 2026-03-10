@@ -30,7 +30,31 @@ ICH WILL, DASS ...
 (nur dann wird es einsortiert!)
 
 6) ... ein großes Aufmacher-/Titelbild genutzt wird.
--> Dann in: /public/img/Titelbild/
+-> Titelbilder liegen jetzt strukturiert unter /public/img/Titelbild/
+
+  A) Default-Titelbilder (global):
+  -> /public/img/Titelbild/default/
+
+  B) Landing-spezifische Titelbilder:
+  -> /public/img/Titelbild/[stadt-kennung]/
+  -> Beispiel: /public/img/Titelbild/berlin/
+
+  C) Kategorisierung wie bei Slides:
+  -> Metadaten in /public/img/Titelbild/title.meta.json
+  -> Felder: categories, priority, enabled
+  -> Beispiel:
+    {
+      "default/1_hero.webp": {
+       "categories": ["Schnellzeichner"],
+       "priority": 10,
+       "enabled": true
+      }
+    }
+
+  Reihenfolge der Auflösung:
+  -> Landing-Ordner + Fallback default (wie Slides)
+  -> Bei Skill-Seiten wird nach categories gefiltert (wie Slides)
+  -> Ohne Treffer: höchste Priorität aus Pool
 
 7) ... ein Bild im Skills-Bereich auftaucht.
 -> Dann in: /public/img/UnsereFähigkeitenBilder/[skillname]/
@@ -39,10 +63,6 @@ ICH WILL, DASS ...
 
 8) ... ein allgemeines Beispielbild / Arbeitsprobe abgelegt wird.
 -> Dann in: /public/img/samples/
-
-
-
-
 
 
 WICHTIG BEI SLIDES (NUMMERN + KEYWORDS)
@@ -61,6 +81,12 @@ Für Bilder in /public/img/slides/... gilt zusätzlich:
 - Zusätzliche Synonyme kannst du in /public/img/slides/category-matching.md ergänzen.
 - Wichtig: Bei inhaltlicher Umbenennung (anderer Dateiname mit anderen Keywords) wird neu zugeordnet.
 - Bei reiner Prefix-/Nummern-Änderung bleibt die bestehende Zuordnung erhalten.
+
+
+SYNC-HINWEIS TITELBILD-ORDNER
+
+- `npm run sync:title-images` legt fehlende Titelbild-Ordner automatisch an (`default` + alle Landings) und erstellt bei Bedarf `title.meta.json`.
+- Der Schritt läuft auch in `sync:content` und `sync:content:safe`.
 
 
 KURZE REGELN (BITTE EINHALTEN)

@@ -1,3 +1,11 @@
+---
+import { getNavigationItems, type NavigationDropdownItem, type NavigationItem } from '../../utils/navigation';
+
+const navigationItems = getNavigationItems();
+
+const isDropdownItem = (item: NavigationItem): item is NavigationDropdownItem => 'children' in item;
+---
+
 <!-- =========================
      Hauptnavigation
 ========================= -->
@@ -24,25 +32,96 @@
       </label>
       <!-- Hauptmenü -->
       <ul class="nav-menu" id="main-nav-menu">
-        <li class="nav-menu-item">
-          <div class="nav-mini-dropdown">
-            <span class="nav-mini-toggle">Home</span>
-            <div class="nav-mini-card">
-              <a class="nav-mini-link" href="/">Kunstwolff</a>
-              <a class="nav-mini-link" href="/schnellzeichner/">Schnellzeichner</a>
-            </div>
-          </div>
-        </li>
-        <li class="divider">|</li>
-        <li><a href="#skills">Services</a></li>
-        <li class="divider">|</li>
-        <li><a href="#work">Work</a></li>
-        <li class="divider">|</li>
-        <li><a href="#contact">Contact</a></li>
+        {
+          navigationItems.map((item, index) => {
+            if (!isDropdownItem(item)) {
+              return [
+                <li>
+                  <a
+                    href={item.url}
+                    data-nav-contact={item.url === '#contact' ? 'true' : undefined}
+                    data-nav-contact-fallback={item.url === '#contact' ? '/contact' : undefined}
+                    data-nav-faq={item.url === '#faq' ? 'true' : undefined}
+                    data-nav-faq-fallback={item.url === '#faq' ? '/faq' : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </li>,
+                index < navigationItems.length - 1 ? <li class="divider">|</li> : null
+              ];
+            } else {
+              return [
+                <li class="nav-menu-item">
+                  <div class="nav-mini-dropdown">
+                    <span class="nav-mini-toggle">{item.label}</span>
+                    <div class="nav-mini-card">
+                      {item.children.map((link) => (
+                        <a class="nav-mini-link" href={link.url}>{link.label}</a>
+                      ))}
+                    </div>
+                  </div>
+                </li>,
+                index < navigationItems.length - 1 ? <li class="divider">|</li> : null
+              ];
+            }
+          })
+        }
       </ul>
     </div>
   </div>
 </nav>
+
+<script>
+  // Contact-Fallback
+  const contactLinks = document.querySelectorAll('a[data-nav-contact="true"]');
+  contactLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const href = link.getAttribute('href') ?? '';
+      if (href !== '#contact') return;
+      const anchor = document.querySelector('#contact');
+      if (anchor) return;
+      const fallback = link.getAttribute('data-nav-contact-fallback') ?? '/contact';
+      event.preventDefault();
+      window.location.href = fallback;
+    });
+  });
+
+  // FAQ-Fallback
+  const faqLinks = document.querySelectorAll('a[data-nav-faq="true"]');
+  faqLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const href = link.getAttribute('href') ?? '';
+      if (href !== '#faq') return;
+      const anchor = document.querySelector('#faq');
+      if (anchor) return;
+      const fallback = link.getAttribute('data-nav-faq-fallback') ?? '/faq';
+      event.preventDefault();
+      window.location.href = fallback;
+    });
+  });
+</script>
+
+<script>
+  const contactLinks = document.querySelectorAll('a[data-nav-contact="true"]');
+
+  contactLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const href = link.getAttribute('href') ?? '';
+      if (href !== '#contact') {
+        return;
+      }
+
+      const anchor = document.querySelector('#contact');
+      if (anchor) {
+        return;
+      }
+
+      const fallback = link.getAttribute('data-nav-contact-fallback') ?? '/contact';
+      event.preventDefault();
+      window.location.href = fallback;
+    });
+  });
+</script>
 
 <style>
 /* =========================

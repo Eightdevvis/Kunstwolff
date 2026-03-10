@@ -1,6 +1,4 @@
 ---
-import fs from 'fs';
-import path from 'path';
 import FAQ from '../components/FAQ.astro';
 import Contact from '../components/Contact.astro';
 import SkillHero from '../components/hero/SkillHero.astro';
@@ -11,6 +9,7 @@ import SkillLayout from '../layouts/SkillLayout.astro';
 import { getSkillBySlug, getSkillSlugs } from '../utils/skills';
 import { getHomepageSlides } from '../utils/slideImages';
 import { getAllReviews } from '../utils/reviews';
+import { resolveTitleImage } from '../utils/titleImages';
 
 export async function getStaticPaths() {
   const slugs = getSkillSlugs();
@@ -27,18 +26,7 @@ if (!skillData) {
 const allSlideshow = getHomepageSlides();
 const allReviews = getAllReviews();
 
-// Try to find skill-specific title image
-const titleImageDir = path.resolve(`./public/img/Titelbild/${skill}`);
-const titleImageFile = fs.existsSync(titleImageDir)
-	? fs
-			.readdirSync(titleImageDir)
-			.filter((entry) => /\.(avif|webp|png|jpe?g)$/i.test(entry))
-			.sort((a, b) => a.localeCompare(b))[0]
-	: undefined;
-
-const titleImage = titleImageFile
-	? `/img/Titelbild/${skill}/${titleImageFile}`
-	: skillData.image || '/img/samples/sample1.jpeg';
+const titleImage = resolveTitleImage({ skill });
 
 const heroTitle = skillData.heroTitle || `Live ${skillData.title} für Events`;
 const pageTitle = skillData.title + ' für Events buchen | Kunstwolff';
