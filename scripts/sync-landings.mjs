@@ -64,6 +64,8 @@ const normalizeImageName = (fileName) => {
   return normalizeSlug(stripPriorityPrefix(withoutExt));
 };
 
+const normalizeMetadataKey = (value) => String(value).replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
+
 const encodeUrlPath = (segments) => segments.map((segment) => encodeURIComponent(segment)).join('/');
 
 const toImageUrlFromImgRelativePath = (imgRelativePath) => {

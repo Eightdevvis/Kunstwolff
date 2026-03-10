@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-03-09T15:46:50.908Z",
+  "createdAt": "2026-03-10T10:36:09.033Z",
   "selectedCities": [
     "belgique",
     "berlin",
@@ -690,34 +690,8 @@
       ]
     },
     {
-      "url": "/img/Titelbild/schnellzeichner/IMG_0059.jpg",
-      "relativeFromImgRoot": "Titelbild/schnellzeichner/IMG_0059.jpg",
-      "fileName": "IMG_0059.jpg",
-      "extension": ".jpg",
-      "prefixIndex": null,
-      "rawBaseName": "IMG_0059",
-      "normalizedImageSlug": "img-0059",
-      "visibleOnPages": [
-        "/schnellzeichner/",
-        "/schnellzeichner/belgique/",
-        "/schnellzeichner/berlin/",
-        "/schnellzeichner/frankfurt/",
-        "/schnellzeichner/hamburg/",
-        "/schnellzeichner/kaiserslautern/",
-        "/schnellzeichner/koeln/",
-        "/schnellzeichner/ludwigshafen/",
-        "/schnellzeichner/luxembourg/",
-        "/schnellzeichner/mainz/",
-        "/schnellzeichner/mannheim/",
-        "/schnellzeichner/saarbruecken/",
-        "/schnellzeichner/schweiz/",
-        "/schnellzeichner/trier/",
-        "/schnellzeichner/wiesbaden/"
-      ]
-    },
-    {
-      "url": "/img/Titelbild/titelbild.avif",
-      "relativeFromImgRoot": "Titelbild/titelbild.avif",
+      "url": "/img/Titelbild/default/titelbild.avif",
+      "relativeFromImgRoot": "Titelbild/default/titelbild.avif",
       "fileName": "titelbild.avif",
       "extension": ".avif",
       "prefixIndex": null,
@@ -736,6 +710,21 @@
         "/mainz/",
         "/mannheim/",
         "/saarbruecken/",
+        "/schnellzeichner/",
+        "/schnellzeichner/belgique/",
+        "/schnellzeichner/berlin/",
+        "/schnellzeichner/frankfurt/",
+        "/schnellzeichner/hamburg/",
+        "/schnellzeichner/kaiserslautern/",
+        "/schnellzeichner/koeln/",
+        "/schnellzeichner/ludwigshafen/",
+        "/schnellzeichner/luxembourg/",
+        "/schnellzeichner/mainz/",
+        "/schnellzeichner/mannheim/",
+        "/schnellzeichner/saarbruecken/",
+        "/schnellzeichner/schweiz/",
+        "/schnellzeichner/trier/",
+        "/schnellzeichner/wiesbaden/",
         "/schweiz/",
         "/szenenmaler/",
         "/szenenmaler/belgique/",
@@ -755,6 +744,16 @@
         "/trier/",
         "/wiesbaden/"
       ]
+    },
+    {
+      "url": "/img/Titelbild/schnellzeichner/IMG_0059.jpg",
+      "relativeFromImgRoot": "Titelbild/schnellzeichner/IMG_0059.jpg",
+      "fileName": "IMG_0059.jpg",
+      "extension": ".jpg",
+      "prefixIndex": null,
+      "rawBaseName": "IMG_0059",
+      "normalizedImageSlug": "img-0059",
+      "visibleOnPages": []
     },
     {
       "url": "/img/UnsereF%C3%A4higkeitenBilder/Schnellzeichner/IMG_20240528_143426.jpg",
@@ -1846,6 +1845,16 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/Titelbild/schnellzeichner/IMG_0059.jpg",
+      "relativeFromImgRoot": "Titelbild/schnellzeichner/IMG_0059.jpg",
+      "fileName": "IMG_0059.jpg",
+      "extension": ".jpg",
+      "prefixIndex": null,
+      "rawBaseName": "IMG_0059",
+      "normalizedImageSlug": "img-0059",
       "visibleOnPages": []
     }
   ]
