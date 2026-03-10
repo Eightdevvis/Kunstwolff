@@ -1,13 +1,13 @@
 {
   "items": [
     {
-      "label": "Home",
-      "children": [
-        { "label": "Kunstwolff", "url": "/" },
-        { "label": "Schnellzeichner", "url": "/schnellzeichner/" }
+      "label": "Home", "url": "/"
+    },
+    { "label": "Services", "children": [
+        { "label": "Schnellzeichner", "url": "/schnellzeichner/" },
+        { "label": "Szenenmaler", "url": "/szenenmaler/" }
       ]
     },
-    { "label": "Services", "url": "#skills" },
     { "label": "Contact", "url": "#contact" },
     { "label": "FAQ", "url": "#faq" }
   ]
