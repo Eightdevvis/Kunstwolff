@@ -37,5 +37,79 @@
   "default/5_flip.jpg": {
     "categories": [],
     "priority": 5
+  },
+  "koeln/1_IMG_20240129_120914.jpg": {
+    "categories": [],
+    "priority": 1
+  },
+  "koeln/10_digitale-live-portraits.jpg": {
+    "categories": [],
+    "priority": 10
+  },
+  "koeln/11_digitale-schnellzeichnung.jpg": {
+    "categories": [],
+    "priority": 11
+  },
+  "koeln/12_digitaler-schnellzeichner-messe-koeln.jpg": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 12
+  },
+  "koeln/13_schnellzeichner-messe-koeln.jpg": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 13
+  },
+  "koeln/14_schnellzeichner-messe-nrw.jpg": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 14
+  },
+  "koeln/15_schnellzeichner-messe.jpg": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 15
+  },
+  "koeln/2_digital-art.jpg": {
+    "categories": [],
+    "priority": 2
+  },
+  "koeln/3_digital-artist.jpg": {
+    "categories": [],
+    "priority": 3
+  },
+  "koeln/4_digital-caricature.jpg": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 4
+  },
+  "koeln/5_digital-caricatures-trade-show.jpg": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 5
+  },
+  "koeln/6_digital-speed-painting-trade-show.jpg": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 6
+  },
+  "koeln/7_digital-speedpainter-cologne.jpg": {
+    "categories": [],
+    "priority": 7
+  },
+  "koeln/8_digital-speedpainter-trade-show-cologne.jpg": {
+    "categories": [],
+    "priority": 8
+  },
+  "koeln/9_digital-speedpainter-trade-show.jpg": {
+    "categories": [],
+    "priority": 9
   }
 }
