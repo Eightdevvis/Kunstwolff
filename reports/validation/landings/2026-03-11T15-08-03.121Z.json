@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-03-11T14:56:03.772Z",
+  "createdAt": "2026-03-11T15:08:03.121Z",
   "selectedCities": [
     "belgique",
     "berlin",
@@ -334,119 +334,128 @@
       ]
     },
     {
-      "slideKey": "frankfurt/karikaturist-hilton-frankfurt-gravenbruch.jpg",
+      "slideKey": "frankfurt/1_karikaturist-hilton-frankfurt-gravenbruch.jpg",
       "folder": "frankfurt",
-      "fileName": "karikaturist-hilton-frankfurt-gravenbruch.jpg",
-      "prefixIndex": null,
+      "fileName": "1_karikaturist-hilton-frankfurt-gravenbruch.jpg",
+      "prefixIndex": 1,
       "rawBaseName": "karikaturist-hilton-frankfurt-gravenbruch",
       "normalizedImageSlug": "karikaturist-hilton-frankfurt-gravenbruch",
-      "metadataKey": "frankfurt/karikaturist-hilton-frankfurt-gravenbruch.jpg",
-      "priority": 0,
-      "categories": [],
+      "metadataKey": "frankfurt/1_karikaturist-hilton-frankfurt-gravenbruch.jpg",
+      "priority": 1,
+      "categories": [
+        "Schnellzeichner"
+      ],
       "enabled": true,
-      "url": "/img/slides/frankfurt/karikaturist-hilton-frankfurt-gravenbruch.jpg",
+      "url": "/img/slides/frankfurt/1_karikaturist-hilton-frankfurt-gravenbruch.jpg",
       "visibleOnPages": [
         "/",
-        "/frankfurt/"
+        "/frankfurt/",
+        "/schnellzeichner/frankfurt/"
       ]
     },
     {
-      "slideKey": "frankfurt/karikaturit-frankfurt-messe.jpg",
+      "slideKey": "frankfurt/2_karikaturit-frankfurt-messe.jpg",
       "folder": "frankfurt",
-      "fileName": "karikaturit-frankfurt-messe.jpg",
-      "prefixIndex": null,
+      "fileName": "2_karikaturit-frankfurt-messe.jpg",
+      "prefixIndex": 2,
       "rawBaseName": "karikaturit-frankfurt-messe",
       "normalizedImageSlug": "karikaturit-frankfurt-messe",
-      "metadataKey": "frankfurt/karikaturit-frankfurt-messe.jpg",
-      "priority": 0,
-      "categories": [],
+      "metadataKey": "frankfurt/2_karikaturit-frankfurt-messe.jpg",
+      "priority": 2,
+      "categories": [
+        "Schnellzeichner"
+      ],
       "enabled": true,
-      "url": "/img/slides/frankfurt/karikaturit-frankfurt-messe.jpg",
+      "url": "/img/slides/frankfurt/2_karikaturit-frankfurt-messe.jpg",
       "visibleOnPages": [
         "/",
-        "/frankfurt/"
+        "/frankfurt/",
+        "/schnellzeichner/frankfurt/"
       ]
     },
     {
-      "slideKey": "frankfurt/markt-frankfurt-am-main.jpg",
+      "slideKey": "frankfurt/3_markt-frankfurt-am-main.jpg",
       "folder": "frankfurt",
-      "fileName": "markt-frankfurt-am-main.jpg",
-      "prefixIndex": null,
+      "fileName": "3_markt-frankfurt-am-main.jpg",
+      "prefixIndex": 3,
       "rawBaseName": "markt-frankfurt-am-main",
       "normalizedImageSlug": "markt-frankfurt-am-main",
-      "metadataKey": "frankfurt/markt-frankfurt-am-main.jpg",
-      "priority": 0,
+      "metadataKey": "frankfurt/3_markt-frankfurt-am-main.jpg",
+      "priority": 3,
       "categories": [],
       "enabled": true,
-      "url": "/img/slides/frankfurt/markt-frankfurt-am-main.jpg",
+      "url": "/img/slides/frankfurt/3_markt-frankfurt-am-main.jpg",
       "visibleOnPages": [
         "/",
         "/frankfurt/"
       ]
     },
     {
-      "slideKey": "frankfurt/messezeichnerin-frankfurt.jpg",
+      "slideKey": "frankfurt/4_messezeichnerin-frankfurt.jpg",
       "folder": "frankfurt",
-      "fileName": "messezeichnerin-frankfurt.jpg",
-      "prefixIndex": null,
+      "fileName": "4_messezeichnerin-frankfurt.jpg",
+      "prefixIndex": 4,
       "rawBaseName": "messezeichnerin-frankfurt",
       "normalizedImageSlug": "messezeichnerin-frankfurt",
-      "metadataKey": "frankfurt/messezeichnerin-frankfurt.jpg",
-      "priority": 0,
+      "metadataKey": "frankfurt/4_messezeichnerin-frankfurt.jpg",
+      "priority": 4,
       "categories": [],
       "enabled": true,
-      "url": "/img/slides/frankfurt/messezeichnerin-frankfurt.jpg",
+      "url": "/img/slides/frankfurt/4_messezeichnerin-frankfurt.jpg",
       "visibleOnPages": [
         "/",
         "/frankfurt/"
       ]
     },
     {
-      "slideKey": "frankfurt/schnellportraits-messe.jpg",
+      "slideKey": "frankfurt/5_schnellportraits-messe.jpg",
       "folder": "frankfurt",
-      "fileName": "schnellportraits-messe.jpg",
-      "prefixIndex": null,
+      "fileName": "5_schnellportraits-messe.jpg",
+      "prefixIndex": 5,
       "rawBaseName": "schnellportraits-messe",
       "normalizedImageSlug": "schnellportraits-messe",
-      "metadataKey": "frankfurt/schnellportraits-messe.jpg",
-      "priority": 0,
+      "metadataKey": "frankfurt/5_schnellportraits-messe.jpg",
+      "priority": 5,
       "categories": [],
       "enabled": true,
-      "url": "/img/slides/frankfurt/schnellportraits-messe.jpg",
+      "url": "/img/slides/frankfurt/5_schnellportraits-messe.jpg",
       "visibleOnPages": [
         "/",
         "/frankfurt/"
       ]
     },
     {
-      "slideKey": "frankfurt/szenenmalerin-frankfurt-messe.jpg",
+      "slideKey": "frankfurt/6_szenenmalerin-frankfurt-messe.jpg",
       "folder": "frankfurt",
-      "fileName": "szenenmalerin-frankfurt-messe.jpg",
-      "prefixIndex": null,
+      "fileName": "6_szenenmalerin-frankfurt-messe.jpg",
+      "prefixIndex": 6,
       "rawBaseName": "szenenmalerin-frankfurt-messe",
       "normalizedImageSlug": "szenenmalerin-frankfurt-messe",
-      "metadataKey": "frankfurt/szenenmalerin-frankfurt-messe.jpg",
-      "priority": 0,
-      "categories": [],
+      "metadataKey": "frankfurt/6_szenenmalerin-frankfurt-messe.jpg",
+      "priority": 6,
+      "categories": [
+        "Szenenmaler"
+      ],
       "enabled": true,
-      "url": "/img/slides/frankfurt/szenenmalerin-frankfurt-messe.jpg",
+      "url": "/img/slides/frankfurt/6_szenenmalerin-frankfurt-messe.jpg",
       "visibleOnPages": [
         "/",
-        "/frankfurt/"
+        "/frankfurt/",
+        "/szenenmaler/frankfurt/"
       ]
     },
     {
-      "slideKey": "frankfurt/zeichnerin-messe-frankfurt.jpg",
+      "slideKey": "frankfurt/7_zeichnerin-messe-frankfurt.jpg",
       "folder": "frankfurt",
-      "fileName": "zeichnerin-messe-frankfurt.jpg",
-      "prefixIndex": null,
+      "fileName": "7_zeichnerin-messe-frankfurt.jpg",
+      "prefixIndex": 7,
       "rawBaseName": "zeichnerin-messe-frankfurt",
       "normalizedImageSlug": "zeichnerin-messe-frankfurt",
-      "metadataKey": "frankfurt/zeichnerin-messe-frankfurt.jpg",
-      "priority": 0,
+      "metadataKey": "frankfurt/7_zeichnerin-messe-frankfurt.jpg",
+      "priority": 7,
       "categories": [],
       "enabled": true,
-      "url": "/img/slides/frankfurt/zeichnerin-messe-frankfurt.jpg",
+      "url": "/img/slides/frankfurt/7_zeichnerin-messe-frankfurt.jpg",
       "visibleOnPages": [
         "/",
         "/frankfurt/"
@@ -1045,37 +1054,39 @@
       ]
     },
     {
-      "url": "/img/slides/frankfurt/karikaturist-hilton-frankfurt-gravenbruch.jpg",
-      "relativeFromImgRoot": "slides/frankfurt/karikaturist-hilton-frankfurt-gravenbruch.jpg",
-      "fileName": "karikaturist-hilton-frankfurt-gravenbruch.jpg",
+      "url": "/img/slides/frankfurt/1_karikaturist-hilton-frankfurt-gravenbruch.jpg",
+      "relativeFromImgRoot": "slides/frankfurt/1_karikaturist-hilton-frankfurt-gravenbruch.jpg",
+      "fileName": "1_karikaturist-hilton-frankfurt-gravenbruch.jpg",
       "extension": ".jpg",
-      "prefixIndex": null,
+      "prefixIndex": 1,
       "rawBaseName": "karikaturist-hilton-frankfurt-gravenbruch",
       "normalizedImageSlug": "karikaturist-hilton-frankfurt-gravenbruch",
       "visibleOnPages": [
         "/",
-        "/frankfurt/"
+        "/frankfurt/",
+        "/schnellzeichner/frankfurt/"
       ]
     },
     {
-      "url": "/img/slides/frankfurt/karikaturit-frankfurt-messe.jpg",
-      "relativeFromImgRoot": "slides/frankfurt/karikaturit-frankfurt-messe.jpg",
-      "fileName": "karikaturit-frankfurt-messe.jpg",
+      "url": "/img/slides/frankfurt/2_karikaturit-frankfurt-messe.jpg",
+      "relativeFromImgRoot": "slides/frankfurt/2_karikaturit-frankfurt-messe.jpg",
+      "fileName": "2_karikaturit-frankfurt-messe.jpg",
       "extension": ".jpg",
-      "prefixIndex": null,
+      "prefixIndex": 2,
       "rawBaseName": "karikaturit-frankfurt-messe",
       "normalizedImageSlug": "karikaturit-frankfurt-messe",
       "visibleOnPages": [
         "/",
-        "/frankfurt/"
+        "/frankfurt/",
+        "/schnellzeichner/frankfurt/"
       ]
     },
     {
-      "url": "/img/slides/frankfurt/markt-frankfurt-am-main.jpg",
-      "relativeFromImgRoot": "slides/frankfurt/markt-frankfurt-am-main.jpg",
-      "fileName": "markt-frankfurt-am-main.jpg",
+      "url": "/img/slides/frankfurt/3_markt-frankfurt-am-main.jpg",
+      "relativeFromImgRoot": "slides/frankfurt/3_markt-frankfurt-am-main.jpg",
+      "fileName": "3_markt-frankfurt-am-main.jpg",
       "extension": ".jpg",
-      "prefixIndex": null,
+      "prefixIndex": 3,
       "rawBaseName": "markt-frankfurt-am-main",
       "normalizedImageSlug": "markt-frankfurt-am-main",
       "visibleOnPages": [
@@ -1084,11 +1095,11 @@
       ]
     },
     {
-      "url": "/img/slides/frankfurt/messezeichnerin-frankfurt.jpg",
-      "relativeFromImgRoot": "slides/frankfurt/messezeichnerin-frankfurt.jpg",
-      "fileName": "messezeichnerin-frankfurt.jpg",
+      "url": "/img/slides/frankfurt/4_messezeichnerin-frankfurt.jpg",
+      "relativeFromImgRoot": "slides/frankfurt/4_messezeichnerin-frankfurt.jpg",
+      "fileName": "4_messezeichnerin-frankfurt.jpg",
       "extension": ".jpg",
-      "prefixIndex": null,
+      "prefixIndex": 4,
       "rawBaseName": "messezeichnerin-frankfurt",
       "normalizedImageSlug": "messezeichnerin-frankfurt",
       "visibleOnPages": [
@@ -1097,11 +1108,11 @@
       ]
     },
     {
-      "url": "/img/slides/frankfurt/schnellportraits-messe.jpg",
-      "relativeFromImgRoot": "slides/frankfurt/schnellportraits-messe.jpg",
-      "fileName": "schnellportraits-messe.jpg",
+      "url": "/img/slides/frankfurt/5_schnellportraits-messe.jpg",
+      "relativeFromImgRoot": "slides/frankfurt/5_schnellportraits-messe.jpg",
+      "fileName": "5_schnellportraits-messe.jpg",
       "extension": ".jpg",
-      "prefixIndex": null,
+      "prefixIndex": 5,
       "rawBaseName": "schnellportraits-messe",
       "normalizedImageSlug": "schnellportraits-messe",
       "visibleOnPages": [
@@ -1110,24 +1121,25 @@
       ]
     },
     {
-      "url": "/img/slides/frankfurt/szenenmalerin-frankfurt-messe.jpg",
-      "relativeFromImgRoot": "slides/frankfurt/szenenmalerin-frankfurt-messe.jpg",
-      "fileName": "szenenmalerin-frankfurt-messe.jpg",
+      "url": "/img/slides/frankfurt/6_szenenmalerin-frankfurt-messe.jpg",
+      "relativeFromImgRoot": "slides/frankfurt/6_szenenmalerin-frankfurt-messe.jpg",
+      "fileName": "6_szenenmalerin-frankfurt-messe.jpg",
       "extension": ".jpg",
-      "prefixIndex": null,
+      "prefixIndex": 6,
       "rawBaseName": "szenenmalerin-frankfurt-messe",
       "normalizedImageSlug": "szenenmalerin-frankfurt-messe",
       "visibleOnPages": [
         "/",
-        "/frankfurt/"
+        "/frankfurt/",
+        "/szenenmaler/frankfurt/"
       ]
     },
     {
-      "url": "/img/slides/frankfurt/zeichnerin-messe-frankfurt.jpg",
-      "relativeFromImgRoot": "slides/frankfurt/zeichnerin-messe-frankfurt.jpg",
-      "fileName": "zeichnerin-messe-frankfurt.jpg",
+      "url": "/img/slides/frankfurt/7_zeichnerin-messe-frankfurt.jpg",
+      "relativeFromImgRoot": "slides/frankfurt/7_zeichnerin-messe-frankfurt.jpg",
+      "fileName": "7_zeichnerin-messe-frankfurt.jpg",
       "extension": ".jpg",
-      "prefixIndex": null,
+      "prefixIndex": 7,
       "rawBaseName": "zeichnerin-messe-frankfurt",
       "normalizedImageSlug": "zeichnerin-messe-frankfurt",
       "visibleOnPages": [
