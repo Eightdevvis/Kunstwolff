@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-03-11T13:27:41.582Z",
+  "createdAt": "2026-03-11T15:07:38.286Z",
   "selectedCities": [
     "belgique",
     "berlin",
@@ -143,7 +143,6 @@
       "visibleOnPages": [
         "/",
         "/berlin/",
-        "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
         "/ludwigshafen/",
@@ -152,7 +151,6 @@
         "/mannheim/",
         "/saarbruecken/",
         "/schnellzeichner/berlin/",
-        "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
         "/schnellzeichner/ludwigshafen/",
@@ -186,7 +184,6 @@
         "/",
         "/belgique/",
         "/berlin/",
-        "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
         "/ludwigshafen/",
@@ -196,7 +193,6 @@
         "/saarbruecken/",
         "/schnellzeichner/belgique/",
         "/schnellzeichner/berlin/",
-        "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
         "/schnellzeichner/ludwigshafen/",
@@ -231,7 +227,6 @@
         "/",
         "/belgique/",
         "/berlin/",
-        "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
         "/ludwigshafen/",
@@ -241,7 +236,6 @@
         "/saarbruecken/",
         "/schnellzeichner/belgique/",
         "/schnellzeichner/berlin/",
-        "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
         "/schnellzeichner/ludwigshafen/",
@@ -255,7 +249,6 @@
         "/schweiz/",
         "/szenenmaler/belgique/",
         "/szenenmaler/berlin/",
-        "/szenenmaler/frankfurt/",
         "/szenenmaler/hamburg/",
         "/szenenmaler/kaiserslautern/",
         "/szenenmaler/ludwigshafen/",
@@ -288,7 +281,6 @@
         "/",
         "/belgique/",
         "/berlin/",
-        "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
         "/ludwigshafen/",
@@ -298,7 +290,6 @@
         "/saarbruecken/",
         "/schnellzeichner/belgique/",
         "/schnellzeichner/berlin/",
-        "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
         "/schnellzeichner/ludwigshafen/",
@@ -330,7 +321,6 @@
         "/",
         "/belgique/",
         "/berlin/",
-        "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
         "/ludwigshafen/",
@@ -341,6 +331,134 @@
         "/schweiz/",
         "/trier/",
         "/wiesbaden/"
+      ]
+    },
+    {
+      "slideKey": "frankfurt/1_karikaturist-hilton-frankfurt-gravenbruch.jpg",
+      "folder": "frankfurt",
+      "fileName": "1_karikaturist-hilton-frankfurt-gravenbruch.jpg",
+      "prefixIndex": 1,
+      "rawBaseName": "karikaturist-hilton-frankfurt-gravenbruch",
+      "normalizedImageSlug": "karikaturist-hilton-frankfurt-gravenbruch",
+      "metadataKey": "frankfurt/1_karikaturist-hilton-frankfurt-gravenbruch.jpg",
+      "priority": 1,
+      "categories": [
+        "Schnellzeichner"
+      ],
+      "enabled": true,
+      "url": "/img/slides/frankfurt/1_karikaturist-hilton-frankfurt-gravenbruch.jpg",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/",
+        "/schnellzeichner/frankfurt/"
+      ]
+    },
+    {
+      "slideKey": "frankfurt/2_karikaturit-frankfurt-messe.jpg",
+      "folder": "frankfurt",
+      "fileName": "2_karikaturit-frankfurt-messe.jpg",
+      "prefixIndex": 2,
+      "rawBaseName": "karikaturit-frankfurt-messe",
+      "normalizedImageSlug": "karikaturit-frankfurt-messe",
+      "metadataKey": "frankfurt/2_karikaturit-frankfurt-messe.jpg",
+      "priority": 2,
+      "categories": [
+        "Schnellzeichner"
+      ],
+      "enabled": true,
+      "url": "/img/slides/frankfurt/2_karikaturit-frankfurt-messe.jpg",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/",
+        "/schnellzeichner/frankfurt/"
+      ]
+    },
+    {
+      "slideKey": "frankfurt/3_markt-frankfurt-am-main.jpg",
+      "folder": "frankfurt",
+      "fileName": "3_markt-frankfurt-am-main.jpg",
+      "prefixIndex": 3,
+      "rawBaseName": "markt-frankfurt-am-main",
+      "normalizedImageSlug": "markt-frankfurt-am-main",
+      "metadataKey": "frankfurt/3_markt-frankfurt-am-main.jpg",
+      "priority": 3,
+      "categories": [],
+      "enabled": true,
+      "url": "/img/slides/frankfurt/3_markt-frankfurt-am-main.jpg",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/"
+      ]
+    },
+    {
+      "slideKey": "frankfurt/4_messezeichnerin-frankfurt.jpg",
+      "folder": "frankfurt",
+      "fileName": "4_messezeichnerin-frankfurt.jpg",
+      "prefixIndex": 4,
+      "rawBaseName": "messezeichnerin-frankfurt",
+      "normalizedImageSlug": "messezeichnerin-frankfurt",
+      "metadataKey": "frankfurt/4_messezeichnerin-frankfurt.jpg",
+      "priority": 4,
+      "categories": [],
+      "enabled": true,
+      "url": "/img/slides/frankfurt/4_messezeichnerin-frankfurt.jpg",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/"
+      ]
+    },
+    {
+      "slideKey": "frankfurt/5_schnellportraits-messe.jpg",
+      "folder": "frankfurt",
+      "fileName": "5_schnellportraits-messe.jpg",
+      "prefixIndex": 5,
+      "rawBaseName": "schnellportraits-messe",
+      "normalizedImageSlug": "schnellportraits-messe",
+      "metadataKey": "frankfurt/5_schnellportraits-messe.jpg",
+      "priority": 5,
+      "categories": [],
+      "enabled": true,
+      "url": "/img/slides/frankfurt/5_schnellportraits-messe.jpg",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/"
+      ]
+    },
+    {
+      "slideKey": "frankfurt/6_szenenmalerin-frankfurt-messe.jpg",
+      "folder": "frankfurt",
+      "fileName": "6_szenenmalerin-frankfurt-messe.jpg",
+      "prefixIndex": 6,
+      "rawBaseName": "szenenmalerin-frankfurt-messe",
+      "normalizedImageSlug": "szenenmalerin-frankfurt-messe",
+      "metadataKey": "frankfurt/6_szenenmalerin-frankfurt-messe.jpg",
+      "priority": 6,
+      "categories": [
+        "Szenenmaler"
+      ],
+      "enabled": true,
+      "url": "/img/slides/frankfurt/6_szenenmalerin-frankfurt-messe.jpg",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/",
+        "/szenenmaler/frankfurt/"
+      ]
+    },
+    {
+      "slideKey": "frankfurt/7_zeichnerin-messe-frankfurt.jpg",
+      "folder": "frankfurt",
+      "fileName": "7_zeichnerin-messe-frankfurt.jpg",
+      "prefixIndex": 7,
+      "rawBaseName": "zeichnerin-messe-frankfurt",
+      "normalizedImageSlug": "zeichnerin-messe-frankfurt",
+      "metadataKey": "frankfurt/7_zeichnerin-messe-frankfurt.jpg",
+      "priority": 7,
+      "categories": [],
+      "enabled": true,
+      "url": "/img/slides/frankfurt/7_zeichnerin-messe-frankfurt.jpg",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/"
       ]
     },
     {
@@ -768,7 +886,6 @@
       "visibleOnPages": [
         "/",
         "/berlin/",
-        "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
         "/ludwigshafen/",
@@ -777,7 +894,6 @@
         "/mannheim/",
         "/saarbruecken/",
         "/schnellzeichner/berlin/",
-        "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
         "/schnellzeichner/ludwigshafen/",
@@ -805,7 +921,6 @@
         "/",
         "/belgique/",
         "/berlin/",
-        "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
         "/ludwigshafen/",
@@ -815,7 +930,6 @@
         "/saarbruecken/",
         "/schnellzeichner/belgique/",
         "/schnellzeichner/berlin/",
-        "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
         "/schnellzeichner/ludwigshafen/",
@@ -843,7 +957,6 @@
         "/",
         "/belgique/",
         "/berlin/",
-        "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
         "/ludwigshafen/",
@@ -853,7 +966,6 @@
         "/saarbruecken/",
         "/schnellzeichner/belgique/",
         "/schnellzeichner/berlin/",
-        "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
         "/schnellzeichner/ludwigshafen/",
@@ -867,7 +979,6 @@
         "/schweiz/",
         "/szenenmaler/belgique/",
         "/szenenmaler/berlin/",
-        "/szenenmaler/frankfurt/",
         "/szenenmaler/hamburg/",
         "/szenenmaler/kaiserslautern/",
         "/szenenmaler/ludwigshafen/",
@@ -894,7 +1005,6 @@
         "/",
         "/belgique/",
         "/berlin/",
-        "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
         "/ludwigshafen/",
@@ -904,7 +1014,6 @@
         "/saarbruecken/",
         "/schnellzeichner/belgique/",
         "/schnellzeichner/berlin/",
-        "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
         "/schnellzeichner/ludwigshafen/",
@@ -932,7 +1041,6 @@
         "/",
         "/belgique/",
         "/berlin/",
-        "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
         "/ludwigshafen/",
@@ -943,6 +1051,100 @@
         "/schweiz/",
         "/trier/",
         "/wiesbaden/"
+      ]
+    },
+    {
+      "url": "/img/slides/frankfurt/1_karikaturist-hilton-frankfurt-gravenbruch.jpg",
+      "relativeFromImgRoot": "slides/frankfurt/1_karikaturist-hilton-frankfurt-gravenbruch.jpg",
+      "fileName": "1_karikaturist-hilton-frankfurt-gravenbruch.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 1,
+      "rawBaseName": "karikaturist-hilton-frankfurt-gravenbruch",
+      "normalizedImageSlug": "karikaturist-hilton-frankfurt-gravenbruch",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/",
+        "/schnellzeichner/frankfurt/"
+      ]
+    },
+    {
+      "url": "/img/slides/frankfurt/2_karikaturit-frankfurt-messe.jpg",
+      "relativeFromImgRoot": "slides/frankfurt/2_karikaturit-frankfurt-messe.jpg",
+      "fileName": "2_karikaturit-frankfurt-messe.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 2,
+      "rawBaseName": "karikaturit-frankfurt-messe",
+      "normalizedImageSlug": "karikaturit-frankfurt-messe",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/",
+        "/schnellzeichner/frankfurt/"
+      ]
+    },
+    {
+      "url": "/img/slides/frankfurt/3_markt-frankfurt-am-main.jpg",
+      "relativeFromImgRoot": "slides/frankfurt/3_markt-frankfurt-am-main.jpg",
+      "fileName": "3_markt-frankfurt-am-main.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 3,
+      "rawBaseName": "markt-frankfurt-am-main",
+      "normalizedImageSlug": "markt-frankfurt-am-main",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/"
+      ]
+    },
+    {
+      "url": "/img/slides/frankfurt/4_messezeichnerin-frankfurt.jpg",
+      "relativeFromImgRoot": "slides/frankfurt/4_messezeichnerin-frankfurt.jpg",
+      "fileName": "4_messezeichnerin-frankfurt.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 4,
+      "rawBaseName": "messezeichnerin-frankfurt",
+      "normalizedImageSlug": "messezeichnerin-frankfurt",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/"
+      ]
+    },
+    {
+      "url": "/img/slides/frankfurt/5_schnellportraits-messe.jpg",
+      "relativeFromImgRoot": "slides/frankfurt/5_schnellportraits-messe.jpg",
+      "fileName": "5_schnellportraits-messe.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 5,
+      "rawBaseName": "schnellportraits-messe",
+      "normalizedImageSlug": "schnellportraits-messe",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/"
+      ]
+    },
+    {
+      "url": "/img/slides/frankfurt/6_szenenmalerin-frankfurt-messe.jpg",
+      "relativeFromImgRoot": "slides/frankfurt/6_szenenmalerin-frankfurt-messe.jpg",
+      "fileName": "6_szenenmalerin-frankfurt-messe.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 6,
+      "rawBaseName": "szenenmalerin-frankfurt-messe",
+      "normalizedImageSlug": "szenenmalerin-frankfurt-messe",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/",
+        "/szenenmaler/frankfurt/"
+      ]
+    },
+    {
+      "url": "/img/slides/frankfurt/7_zeichnerin-messe-frankfurt.jpg",
+      "relativeFromImgRoot": "slides/frankfurt/7_zeichnerin-messe-frankfurt.jpg",
+      "fileName": "7_zeichnerin-messe-frankfurt.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 7,
+      "rawBaseName": "zeichnerin-messe-frankfurt",
+      "normalizedImageSlug": "zeichnerin-messe-frankfurt",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/"
       ]
     },
     {
@@ -1159,7 +1361,6 @@
         "/",
         "/belgique/",
         "/berlin/",
-        "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
         "/ludwigshafen/",
@@ -1170,7 +1371,6 @@
         "/schnellzeichner/",
         "/schnellzeichner/belgique/",
         "/schnellzeichner/berlin/",
-        "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
         "/schnellzeichner/ludwigshafen/",
@@ -1185,7 +1385,6 @@
         "/szenenmaler/",
         "/szenenmaler/belgique/",
         "/szenenmaler/berlin/",
-        "/szenenmaler/frankfurt/",
         "/szenenmaler/hamburg/",
         "/szenenmaler/kaiserslautern/",
         "/szenenmaler/ludwigshafen/",
@@ -1198,6 +1397,20 @@
         "/szenenmaler/wiesbaden/",
         "/trier/",
         "/wiesbaden/"
+      ]
+    },
+    {
+      "url": "/img/Titelbild/frankfurt/schnellzeichnerin-frankfurt-messe.jpg",
+      "relativeFromImgRoot": "Titelbild/frankfurt/schnellzeichnerin-frankfurt-messe.jpg",
+      "fileName": "schnellzeichnerin-frankfurt-messe.jpg",
+      "extension": ".jpg",
+      "prefixIndex": null,
+      "rawBaseName": "schnellzeichnerin-frankfurt-messe",
+      "normalizedImageSlug": "schnellzeichnerin-frankfurt-messe",
+      "visibleOnPages": [
+        "/frankfurt/",
+        "/schnellzeichner/frankfurt/",
+        "/szenenmaler/frankfurt/"
       ]
     },
     {
