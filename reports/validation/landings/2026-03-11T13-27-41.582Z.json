@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-03-11T11:36:45.422Z",
+  "createdAt": "2026-03-11T13:27:41.582Z",
   "selectedCities": [
     "belgique",
     "berlin",
@@ -146,7 +146,6 @@
         "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
-        "/koeln/",
         "/ludwigshafen/",
         "/luxembourg/",
         "/mainz/",
@@ -156,7 +155,6 @@
         "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
-        "/schnellzeichner/koeln/",
         "/schnellzeichner/ludwigshafen/",
         "/schnellzeichner/luxembourg/",
         "/schnellzeichner/mainz/",
@@ -191,7 +189,6 @@
         "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
-        "/koeln/",
         "/ludwigshafen/",
         "/luxembourg/",
         "/mainz/",
@@ -202,7 +199,6 @@
         "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
-        "/schnellzeichner/koeln/",
         "/schnellzeichner/ludwigshafen/",
         "/schnellzeichner/luxembourg/",
         "/schnellzeichner/mainz/",
@@ -238,7 +234,6 @@
         "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
-        "/koeln/",
         "/ludwigshafen/",
         "/luxembourg/",
         "/mainz/",
@@ -249,7 +244,6 @@
         "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
-        "/schnellzeichner/koeln/",
         "/schnellzeichner/ludwigshafen/",
         "/schnellzeichner/luxembourg/",
         "/schnellzeichner/mainz/",
@@ -264,7 +258,6 @@
         "/szenenmaler/frankfurt/",
         "/szenenmaler/hamburg/",
         "/szenenmaler/kaiserslautern/",
-        "/szenenmaler/koeln/",
         "/szenenmaler/ludwigshafen/",
         "/szenenmaler/luxembourg/",
         "/szenenmaler/mainz/",
@@ -298,7 +291,6 @@
         "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
-        "/koeln/",
         "/ludwigshafen/",
         "/luxembourg/",
         "/mainz/",
@@ -309,7 +301,6 @@
         "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
-        "/schnellzeichner/koeln/",
         "/schnellzeichner/ludwigshafen/",
         "/schnellzeichner/luxembourg/",
         "/schnellzeichner/mainz/",
@@ -342,7 +333,6 @@
         "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
-        "/koeln/",
         "/ludwigshafen/",
         "/luxembourg/",
         "/mainz/",
@@ -351,6 +341,282 @@
         "/schweiz/",
         "/trier/",
         "/wiesbaden/"
+      ]
+    },
+    {
+      "slideKey": "koeln/1_IMG_20240129_120914.jpg",
+      "folder": "koeln",
+      "fileName": "1_IMG_20240129_120914.jpg",
+      "prefixIndex": 1,
+      "rawBaseName": "IMG_20240129_120914",
+      "normalizedImageSlug": "img-20240129-120914",
+      "metadataKey": "koeln/1_IMG_20240129_120914.jpg",
+      "priority": 1,
+      "categories": [],
+      "enabled": true,
+      "url": "/img/slides/koeln/1_IMG_20240129_120914.jpg",
+      "visibleOnPages": [
+        "/",
+        "/koeln/"
+      ]
+    },
+    {
+      "slideKey": "koeln/10_digitale-live-portraits.jpg",
+      "folder": "koeln",
+      "fileName": "10_digitale-live-portraits.jpg",
+      "prefixIndex": 10,
+      "rawBaseName": "digitale-live-portraits",
+      "normalizedImageSlug": "digitale-live-portraits",
+      "metadataKey": "koeln/10_digitale-live-portraits.jpg",
+      "priority": 10,
+      "categories": [],
+      "enabled": true,
+      "url": "/img/slides/koeln/10_digitale-live-portraits.jpg",
+      "visibleOnPages": [
+        "/",
+        "/koeln/"
+      ]
+    },
+    {
+      "slideKey": "koeln/11_digitale-schnellzeichnung.jpg",
+      "folder": "koeln",
+      "fileName": "11_digitale-schnellzeichnung.jpg",
+      "prefixIndex": 11,
+      "rawBaseName": "digitale-schnellzeichnung",
+      "normalizedImageSlug": "digitale-schnellzeichnung",
+      "metadataKey": "koeln/11_digitale-schnellzeichnung.jpg",
+      "priority": 11,
+      "categories": [],
+      "enabled": true,
+      "url": "/img/slides/koeln/11_digitale-schnellzeichnung.jpg",
+      "visibleOnPages": [
+        "/",
+        "/koeln/"
+      ]
+    },
+    {
+      "slideKey": "koeln/12_digitaler-schnellzeichner-messe-koeln.jpg",
+      "folder": "koeln",
+      "fileName": "12_digitaler-schnellzeichner-messe-koeln.jpg",
+      "prefixIndex": 12,
+      "rawBaseName": "digitaler-schnellzeichner-messe-koeln",
+      "normalizedImageSlug": "digitaler-schnellzeichner-messe-koeln",
+      "metadataKey": "koeln/12_digitaler-schnellzeichner-messe-koeln.jpg",
+      "priority": 12,
+      "categories": [
+        "Schnellzeichner"
+      ],
+      "enabled": true,
+      "url": "/img/slides/koeln/12_digitaler-schnellzeichner-messe-koeln.jpg",
+      "visibleOnPages": [
+        "/",
+        "/koeln/",
+        "/schnellzeichner/koeln/"
+      ]
+    },
+    {
+      "slideKey": "koeln/13_schnellzeichner-messe-koeln.jpg",
+      "folder": "koeln",
+      "fileName": "13_schnellzeichner-messe-koeln.jpg",
+      "prefixIndex": 13,
+      "rawBaseName": "schnellzeichner-messe-koeln",
+      "normalizedImageSlug": "schnellzeichner-messe-koeln",
+      "metadataKey": "koeln/13_schnellzeichner-messe-koeln.jpg",
+      "priority": 13,
+      "categories": [
+        "Schnellzeichner"
+      ],
+      "enabled": true,
+      "url": "/img/slides/koeln/13_schnellzeichner-messe-koeln.jpg",
+      "visibleOnPages": [
+        "/",
+        "/koeln/",
+        "/schnellzeichner/koeln/"
+      ]
+    },
+    {
+      "slideKey": "koeln/14_schnellzeichner-messe-nrw.jpg",
+      "folder": "koeln",
+      "fileName": "14_schnellzeichner-messe-nrw.jpg",
+      "prefixIndex": 14,
+      "rawBaseName": "schnellzeichner-messe-nrw",
+      "normalizedImageSlug": "schnellzeichner-messe-nrw",
+      "metadataKey": "koeln/14_schnellzeichner-messe-nrw.jpg",
+      "priority": 14,
+      "categories": [
+        "Schnellzeichner"
+      ],
+      "enabled": true,
+      "url": "/img/slides/koeln/14_schnellzeichner-messe-nrw.jpg",
+      "visibleOnPages": [
+        "/",
+        "/koeln/",
+        "/schnellzeichner/koeln/"
+      ]
+    },
+    {
+      "slideKey": "koeln/15_schnellzeichner-messe.jpg",
+      "folder": "koeln",
+      "fileName": "15_schnellzeichner-messe.jpg",
+      "prefixIndex": 15,
+      "rawBaseName": "schnellzeichner-messe",
+      "normalizedImageSlug": "schnellzeichner-messe",
+      "metadataKey": "koeln/15_schnellzeichner-messe.jpg",
+      "priority": 15,
+      "categories": [
+        "Schnellzeichner"
+      ],
+      "enabled": true,
+      "url": "/img/slides/koeln/15_schnellzeichner-messe.jpg",
+      "visibleOnPages": [
+        "/",
+        "/koeln/",
+        "/schnellzeichner/koeln/"
+      ]
+    },
+    {
+      "slideKey": "koeln/2_digital-art.jpg",
+      "folder": "koeln",
+      "fileName": "2_digital-art.jpg",
+      "prefixIndex": 2,
+      "rawBaseName": "digital-art",
+      "normalizedImageSlug": "digital-art",
+      "metadataKey": "koeln/2_digital-art.jpg",
+      "priority": 2,
+      "categories": [],
+      "enabled": true,
+      "url": "/img/slides/koeln/2_digital-art.jpg",
+      "visibleOnPages": [
+        "/",
+        "/koeln/"
+      ]
+    },
+    {
+      "slideKey": "koeln/3_digital-artist.jpg",
+      "folder": "koeln",
+      "fileName": "3_digital-artist.jpg",
+      "prefixIndex": 3,
+      "rawBaseName": "digital-artist",
+      "normalizedImageSlug": "digital-artist",
+      "metadataKey": "koeln/3_digital-artist.jpg",
+      "priority": 3,
+      "categories": [],
+      "enabled": true,
+      "url": "/img/slides/koeln/3_digital-artist.jpg",
+      "visibleOnPages": [
+        "/",
+        "/koeln/"
+      ]
+    },
+    {
+      "slideKey": "koeln/4_digital-caricature.jpg",
+      "folder": "koeln",
+      "fileName": "4_digital-caricature.jpg",
+      "prefixIndex": 4,
+      "rawBaseName": "digital-caricature",
+      "normalizedImageSlug": "digital-caricature",
+      "metadataKey": "koeln/4_digital-caricature.jpg",
+      "priority": 4,
+      "categories": [
+        "Schnellzeichner"
+      ],
+      "enabled": true,
+      "url": "/img/slides/koeln/4_digital-caricature.jpg",
+      "visibleOnPages": [
+        "/",
+        "/koeln/",
+        "/schnellzeichner/koeln/"
+      ]
+    },
+    {
+      "slideKey": "koeln/5_digital-caricatures-trade-show.jpg",
+      "folder": "koeln",
+      "fileName": "5_digital-caricatures-trade-show.jpg",
+      "prefixIndex": 5,
+      "rawBaseName": "digital-caricatures-trade-show",
+      "normalizedImageSlug": "digital-caricatures-trade-show",
+      "metadataKey": "koeln/5_digital-caricatures-trade-show.jpg",
+      "priority": 5,
+      "categories": [
+        "Schnellzeichner"
+      ],
+      "enabled": true,
+      "url": "/img/slides/koeln/5_digital-caricatures-trade-show.jpg",
+      "visibleOnPages": [
+        "/",
+        "/koeln/",
+        "/schnellzeichner/koeln/"
+      ]
+    },
+    {
+      "slideKey": "koeln/6_digital-speed-painting-trade-show.jpg",
+      "folder": "koeln",
+      "fileName": "6_digital-speed-painting-trade-show.jpg",
+      "prefixIndex": 6,
+      "rawBaseName": "digital-speed-painting-trade-show",
+      "normalizedImageSlug": "digital-speed-painting-trade-show",
+      "metadataKey": "koeln/6_digital-speed-painting-trade-show.jpg",
+      "priority": 6,
+      "categories": [
+        "Szenenmaler"
+      ],
+      "enabled": true,
+      "url": "/img/slides/koeln/6_digital-speed-painting-trade-show.jpg",
+      "visibleOnPages": [
+        "/",
+        "/koeln/",
+        "/szenenmaler/koeln/"
+      ]
+    },
+    {
+      "slideKey": "koeln/7_digital-speedpainter-cologne.jpg",
+      "folder": "koeln",
+      "fileName": "7_digital-speedpainter-cologne.jpg",
+      "prefixIndex": 7,
+      "rawBaseName": "digital-speedpainter-cologne",
+      "normalizedImageSlug": "digital-speedpainter-cologne",
+      "metadataKey": "koeln/7_digital-speedpainter-cologne.jpg",
+      "priority": 7,
+      "categories": [],
+      "enabled": true,
+      "url": "/img/slides/koeln/7_digital-speedpainter-cologne.jpg",
+      "visibleOnPages": [
+        "/",
+        "/koeln/"
+      ]
+    },
+    {
+      "slideKey": "koeln/8_digital-speedpainter-trade-show-cologne.jpg",
+      "folder": "koeln",
+      "fileName": "8_digital-speedpainter-trade-show-cologne.jpg",
+      "prefixIndex": 8,
+      "rawBaseName": "digital-speedpainter-trade-show-cologne",
+      "normalizedImageSlug": "digital-speedpainter-trade-show-cologne",
+      "metadataKey": "koeln/8_digital-speedpainter-trade-show-cologne.jpg",
+      "priority": 8,
+      "categories": [],
+      "enabled": true,
+      "url": "/img/slides/koeln/8_digital-speedpainter-trade-show-cologne.jpg",
+      "visibleOnPages": [
+        "/",
+        "/koeln/"
+      ]
+    },
+    {
+      "slideKey": "koeln/9_digital-speedpainter-trade-show.jpg",
+      "folder": "koeln",
+      "fileName": "9_digital-speedpainter-trade-show.jpg",
+      "prefixIndex": 9,
+      "rawBaseName": "digital-speedpainter-trade-show",
+      "normalizedImageSlug": "digital-speedpainter-trade-show",
+      "metadataKey": "koeln/9_digital-speedpainter-trade-show.jpg",
+      "priority": 9,
+      "categories": [],
+      "enabled": true,
+      "url": "/img/slides/koeln/9_digital-speedpainter-trade-show.jpg",
+      "visibleOnPages": [
+        "/",
+        "/koeln/"
       ]
     }
   ],
@@ -505,7 +771,6 @@
         "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
-        "/koeln/",
         "/ludwigshafen/",
         "/luxembourg/",
         "/mainz/",
@@ -515,7 +780,6 @@
         "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
-        "/schnellzeichner/koeln/",
         "/schnellzeichner/ludwigshafen/",
         "/schnellzeichner/luxembourg/",
         "/schnellzeichner/mainz/",
@@ -544,7 +808,6 @@
         "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
-        "/koeln/",
         "/ludwigshafen/",
         "/luxembourg/",
         "/mainz/",
@@ -555,7 +818,6 @@
         "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
-        "/schnellzeichner/koeln/",
         "/schnellzeichner/ludwigshafen/",
         "/schnellzeichner/luxembourg/",
         "/schnellzeichner/mainz/",
@@ -584,7 +846,6 @@
         "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
-        "/koeln/",
         "/ludwigshafen/",
         "/luxembourg/",
         "/mainz/",
@@ -595,7 +856,6 @@
         "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
-        "/schnellzeichner/koeln/",
         "/schnellzeichner/ludwigshafen/",
         "/schnellzeichner/luxembourg/",
         "/schnellzeichner/mainz/",
@@ -610,7 +870,6 @@
         "/szenenmaler/frankfurt/",
         "/szenenmaler/hamburg/",
         "/szenenmaler/kaiserslautern/",
-        "/szenenmaler/koeln/",
         "/szenenmaler/ludwigshafen/",
         "/szenenmaler/luxembourg/",
         "/szenenmaler/mainz/",
@@ -638,7 +897,6 @@
         "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
-        "/koeln/",
         "/ludwigshafen/",
         "/luxembourg/",
         "/mainz/",
@@ -649,7 +907,6 @@
         "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
-        "/schnellzeichner/koeln/",
         "/schnellzeichner/ludwigshafen/",
         "/schnellzeichner/luxembourg/",
         "/schnellzeichner/mainz/",
@@ -678,7 +935,6 @@
         "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
-        "/koeln/",
         "/ludwigshafen/",
         "/luxembourg/",
         "/mainz/",
@@ -687,6 +943,208 @@
         "/schweiz/",
         "/trier/",
         "/wiesbaden/"
+      ]
+    },
+    {
+      "url": "/img/slides/koeln/1_IMG_20240129_120914.jpg",
+      "relativeFromImgRoot": "slides/koeln/1_IMG_20240129_120914.jpg",
+      "fileName": "1_IMG_20240129_120914.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 1,
+      "rawBaseName": "IMG_20240129_120914",
+      "normalizedImageSlug": "img-20240129-120914",
+      "visibleOnPages": [
+        "/",
+        "/koeln/"
+      ]
+    },
+    {
+      "url": "/img/slides/koeln/10_digitale-live-portraits.jpg",
+      "relativeFromImgRoot": "slides/koeln/10_digitale-live-portraits.jpg",
+      "fileName": "10_digitale-live-portraits.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 10,
+      "rawBaseName": "digitale-live-portraits",
+      "normalizedImageSlug": "digitale-live-portraits",
+      "visibleOnPages": [
+        "/",
+        "/koeln/"
+      ]
+    },
+    {
+      "url": "/img/slides/koeln/11_digitale-schnellzeichnung.jpg",
+      "relativeFromImgRoot": "slides/koeln/11_digitale-schnellzeichnung.jpg",
+      "fileName": "11_digitale-schnellzeichnung.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 11,
+      "rawBaseName": "digitale-schnellzeichnung",
+      "normalizedImageSlug": "digitale-schnellzeichnung",
+      "visibleOnPages": [
+        "/",
+        "/koeln/"
+      ]
+    },
+    {
+      "url": "/img/slides/koeln/12_digitaler-schnellzeichner-messe-koeln.jpg",
+      "relativeFromImgRoot": "slides/koeln/12_digitaler-schnellzeichner-messe-koeln.jpg",
+      "fileName": "12_digitaler-schnellzeichner-messe-koeln.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 12,
+      "rawBaseName": "digitaler-schnellzeichner-messe-koeln",
+      "normalizedImageSlug": "digitaler-schnellzeichner-messe-koeln",
+      "visibleOnPages": [
+        "/",
+        "/koeln/",
+        "/schnellzeichner/koeln/"
+      ]
+    },
+    {
+      "url": "/img/slides/koeln/13_schnellzeichner-messe-koeln.jpg",
+      "relativeFromImgRoot": "slides/koeln/13_schnellzeichner-messe-koeln.jpg",
+      "fileName": "13_schnellzeichner-messe-koeln.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 13,
+      "rawBaseName": "schnellzeichner-messe-koeln",
+      "normalizedImageSlug": "schnellzeichner-messe-koeln",
+      "visibleOnPages": [
+        "/",
+        "/koeln/",
+        "/schnellzeichner/koeln/"
+      ]
+    },
+    {
+      "url": "/img/slides/koeln/14_schnellzeichner-messe-nrw.jpg",
+      "relativeFromImgRoot": "slides/koeln/14_schnellzeichner-messe-nrw.jpg",
+      "fileName": "14_schnellzeichner-messe-nrw.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 14,
+      "rawBaseName": "schnellzeichner-messe-nrw",
+      "normalizedImageSlug": "schnellzeichner-messe-nrw",
+      "visibleOnPages": [
+        "/",
+        "/koeln/",
+        "/schnellzeichner/koeln/"
+      ]
+    },
+    {
+      "url": "/img/slides/koeln/15_schnellzeichner-messe.jpg",
+      "relativeFromImgRoot": "slides/koeln/15_schnellzeichner-messe.jpg",
+      "fileName": "15_schnellzeichner-messe.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 15,
+      "rawBaseName": "schnellzeichner-messe",
+      "normalizedImageSlug": "schnellzeichner-messe",
+      "visibleOnPages": [
+        "/",
+        "/koeln/",
+        "/schnellzeichner/koeln/"
+      ]
+    },
+    {
+      "url": "/img/slides/koeln/2_digital-art.jpg",
+      "relativeFromImgRoot": "slides/koeln/2_digital-art.jpg",
+      "fileName": "2_digital-art.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 2,
+      "rawBaseName": "digital-art",
+      "normalizedImageSlug": "digital-art",
+      "visibleOnPages": [
+        "/",
+        "/koeln/"
+      ]
+    },
+    {
+      "url": "/img/slides/koeln/3_digital-artist.jpg",
+      "relativeFromImgRoot": "slides/koeln/3_digital-artist.jpg",
+      "fileName": "3_digital-artist.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 3,
+      "rawBaseName": "digital-artist",
+      "normalizedImageSlug": "digital-artist",
+      "visibleOnPages": [
+        "/",
+        "/koeln/"
+      ]
+    },
+    {
+      "url": "/img/slides/koeln/4_digital-caricature.jpg",
+      "relativeFromImgRoot": "slides/koeln/4_digital-caricature.jpg",
+      "fileName": "4_digital-caricature.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 4,
+      "rawBaseName": "digital-caricature",
+      "normalizedImageSlug": "digital-caricature",
+      "visibleOnPages": [
+        "/",
+        "/koeln/",
+        "/schnellzeichner/koeln/"
+      ]
+    },
+    {
+      "url": "/img/slides/koeln/5_digital-caricatures-trade-show.jpg",
+      "relativeFromImgRoot": "slides/koeln/5_digital-caricatures-trade-show.jpg",
+      "fileName": "5_digital-caricatures-trade-show.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 5,
+      "rawBaseName": "digital-caricatures-trade-show",
+      "normalizedImageSlug": "digital-caricatures-trade-show",
+      "visibleOnPages": [
+        "/",
+        "/koeln/",
+        "/schnellzeichner/koeln/"
+      ]
+    },
+    {
+      "url": "/img/slides/koeln/6_digital-speed-painting-trade-show.jpg",
+      "relativeFromImgRoot": "slides/koeln/6_digital-speed-painting-trade-show.jpg",
+      "fileName": "6_digital-speed-painting-trade-show.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 6,
+      "rawBaseName": "digital-speed-painting-trade-show",
+      "normalizedImageSlug": "digital-speed-painting-trade-show",
+      "visibleOnPages": [
+        "/",
+        "/koeln/",
+        "/szenenmaler/koeln/"
+      ]
+    },
+    {
+      "url": "/img/slides/koeln/7_digital-speedpainter-cologne.jpg",
+      "relativeFromImgRoot": "slides/koeln/7_digital-speedpainter-cologne.jpg",
+      "fileName": "7_digital-speedpainter-cologne.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 7,
+      "rawBaseName": "digital-speedpainter-cologne",
+      "normalizedImageSlug": "digital-speedpainter-cologne",
+      "visibleOnPages": [
+        "/",
+        "/koeln/"
+      ]
+    },
+    {
+      "url": "/img/slides/koeln/8_digital-speedpainter-trade-show-cologne.jpg",
+      "relativeFromImgRoot": "slides/koeln/8_digital-speedpainter-trade-show-cologne.jpg",
+      "fileName": "8_digital-speedpainter-trade-show-cologne.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 8,
+      "rawBaseName": "digital-speedpainter-trade-show-cologne",
+      "normalizedImageSlug": "digital-speedpainter-trade-show-cologne",
+      "visibleOnPages": [
+        "/",
+        "/koeln/"
+      ]
+    },
+    {
+      "url": "/img/slides/koeln/9_digital-speedpainter-trade-show.jpg",
+      "relativeFromImgRoot": "slides/koeln/9_digital-speedpainter-trade-show.jpg",
+      "fileName": "9_digital-speedpainter-trade-show.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 9,
+      "rawBaseName": "digital-speedpainter-trade-show",
+      "normalizedImageSlug": "digital-speedpainter-trade-show",
+      "visibleOnPages": [
+        "/",
+        "/koeln/"
       ]
     },
     {
@@ -704,7 +1162,6 @@
         "/frankfurt/",
         "/hamburg/",
         "/kaiserslautern/",
-        "/koeln/",
         "/ludwigshafen/",
         "/luxembourg/",
         "/mainz/",
@@ -716,7 +1173,6 @@
         "/schnellzeichner/frankfurt/",
         "/schnellzeichner/hamburg/",
         "/schnellzeichner/kaiserslautern/",
-        "/schnellzeichner/koeln/",
         "/schnellzeichner/ludwigshafen/",
         "/schnellzeichner/luxembourg/",
         "/schnellzeichner/mainz/",
@@ -732,7 +1188,6 @@
         "/szenenmaler/frankfurt/",
         "/szenenmaler/hamburg/",
         "/szenenmaler/kaiserslautern/",
-        "/szenenmaler/koeln/",
         "/szenenmaler/ludwigshafen/",
         "/szenenmaler/luxembourg/",
         "/szenenmaler/mainz/",
@@ -743,6 +1198,20 @@
         "/szenenmaler/wiesbaden/",
         "/trier/",
         "/wiesbaden/"
+      ]
+    },
+    {
+      "url": "/img/Titelbild/koeln/digitale-live-portraits.jpg",
+      "relativeFromImgRoot": "Titelbild/koeln/digitale-live-portraits.jpg",
+      "fileName": "digitale-live-portraits.jpg",
+      "extension": ".jpg",
+      "prefixIndex": null,
+      "rawBaseName": "digitale-live-portraits",
+      "normalizedImageSlug": "digitale-live-portraits",
+      "visibleOnPages": [
+        "/koeln/",
+        "/schnellzeichner/koeln/",
+        "/szenenmaler/koeln/"
       ]
     },
     {

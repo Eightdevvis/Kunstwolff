@@ -38,6 +38,40 @@
     "categories": [],
     "priority": 5
   },
+  "frankfurt/1_karikaturist-hilton-frankfurt-gravenbruch.jpg": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 1
+  },
+  "frankfurt/2_karikaturit-frankfurt-messe.jpg": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 2
+  },
+  "frankfurt/3_markt-frankfurt-am-main.jpg": {
+    "categories": [],
+    "priority": 3
+  },
+  "frankfurt/4_messezeichnerin-frankfurt.jpg": {
+    "categories": [],
+    "priority": 4
+  },
+  "frankfurt/5_schnellportraits-messe.jpg": {
+    "categories": [],
+    "priority": 5
+  },
+  "frankfurt/6_szenenmalerin-frankfurt-messe.jpg": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 6
+  },
+  "frankfurt/7_zeichnerin-messe-frankfurt.jpg": {
+    "categories": [],
+    "priority": 7
+  },
   "koeln/1_IMG_20240129_120914.jpg": {
     "categories": [],
     "priority": 1
