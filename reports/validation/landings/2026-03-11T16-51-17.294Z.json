@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-03-11T15:06:38.611Z",
+  "createdAt": "2026-03-11T16:51:17.294Z",
   "selectedCities": [
     "belgique",
     "berlin",
@@ -456,6 +456,40 @@
       "categories": [],
       "enabled": true,
       "url": "/img/slides/frankfurt/7_zeichnerin-messe-frankfurt.jpg",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/"
+      ]
+    },
+    {
+      "slideKey": "frankfurt/8_event-illustration-frankfurt.jpg",
+      "folder": "frankfurt",
+      "fileName": "8_event-illustration-frankfurt.jpg",
+      "prefixIndex": 8,
+      "rawBaseName": "event-illustration-frankfurt",
+      "normalizedImageSlug": "event-illustration-frankfurt",
+      "metadataKey": "frankfurt/8_event-illustration-frankfurt.jpg",
+      "priority": 8,
+      "categories": [],
+      "enabled": true,
+      "url": "/img/slides/frankfurt/8_event-illustration-frankfurt.jpg",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/"
+      ]
+    },
+    {
+      "slideKey": "frankfurt/9_event-illustration-frankfurt.webp",
+      "folder": "frankfurt",
+      "fileName": "9_event-illustration-frankfurt.webp",
+      "prefixIndex": 9,
+      "rawBaseName": "event-illustration-frankfurt",
+      "normalizedImageSlug": "event-illustration-frankfurt",
+      "metadataKey": "frankfurt/9_event-illustration-frankfurt.webp",
+      "priority": 9,
+      "categories": [],
+      "enabled": true,
+      "url": "/img/slides/frankfurt/9_event-illustration-frankfurt.webp",
       "visibleOnPages": [
         "/",
         "/frankfurt/"
@@ -1142,6 +1176,32 @@
       "prefixIndex": 7,
       "rawBaseName": "zeichnerin-messe-frankfurt",
       "normalizedImageSlug": "zeichnerin-messe-frankfurt",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/"
+      ]
+    },
+    {
+      "url": "/img/slides/frankfurt/8_event-illustration-frankfurt.jpg",
+      "relativeFromImgRoot": "slides/frankfurt/8_event-illustration-frankfurt.jpg",
+      "fileName": "8_event-illustration-frankfurt.jpg",
+      "extension": ".jpg",
+      "prefixIndex": 8,
+      "rawBaseName": "event-illustration-frankfurt",
+      "normalizedImageSlug": "event-illustration-frankfurt",
+      "visibleOnPages": [
+        "/",
+        "/frankfurt/"
+      ]
+    },
+    {
+      "url": "/img/slides/frankfurt/9_event-illustration-frankfurt.webp",
+      "relativeFromImgRoot": "slides/frankfurt/9_event-illustration-frankfurt.webp",
+      "fileName": "9_event-illustration-frankfurt.webp",
+      "extension": ".webp",
+      "prefixIndex": 9,
+      "rawBaseName": "event-illustration-frankfurt",
+      "normalizedImageSlug": "event-illustration-frankfurt",
       "visibleOnPages": [
         "/",
         "/frankfurt/"
