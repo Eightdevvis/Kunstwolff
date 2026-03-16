@@ -41,13 +41,13 @@ const ensureGitkeep = (dirPath) => {
 
 const uniqueSorted = (items) => Array.from(new Set(items)).sort((a, b) => a.localeCompare(b));
 
-const readLandingsFromBodyBullets = (content) =>
+const readLandingsFromBodyLines = (content) =>
   uniqueSorted(
     content
       .split(/\r?\n/)
       .map((line) => line.trim())
-      .filter((line) => line.startsWith('- ') || line.startsWith('* '))
-      .map((line) => normalizeSlug(line.slice(2).trim()))
+      .filter((line) => line && !line.startsWith('#') && !line.startsWith('---'))
+      .map((line) => normalizeSlug(line.startsWith('- ') || line.startsWith('* ') ? line.slice(2).trim() : line))
       .filter((slug) => slug.length > 0 && slug !== 'default'),
   );
 
@@ -67,10 +67,10 @@ const readLandings = () => {
         );
       }
 
-      return readLandingsFromBodyBullets(parsed.content);
+      return readLandingsFromBodyLines(parsed.content);
     } catch {
       const fallback = fs.readFileSync(landingsMdPath, 'utf-8');
-      return readLandingsFromBodyBullets(fallback);
+      return readLandingsFromBodyLines(fallback);
     }
   }
 

@@ -233,13 +233,13 @@ const mergeDuplicateLandingArtifacts = (slug) => {
   return { moved, collisions, mergedDirCount };
 };
 
-const readCitiesFromBodyBullets = (content) =>
+const readCitiesFromBodyLines = (content) =>
   normalizeList(
     content
       .split(/\r?\n/)
       .map((line) => line.trim())
-      .filter((line) => line.startsWith('- ') || line.startsWith('* '))
-      .map((line) => line.slice(2).trim()),
+      .filter((line) => line && !line.startsWith('#') && !line.startsWith('---'))
+      .map((line) => (line.startsWith('- ') || line.startsWith('* ') ? line.slice(2).trim() : line)),
   );
 
 const readCitiesFromMarkdown = () => {
@@ -257,11 +257,11 @@ const readCitiesFromMarkdown = () => {
       return normalizeList(fromFrontmatter);
     }
 
-    return readCitiesFromBodyBullets(parsed.content);
+    return readCitiesFromBodyLines(parsed.content);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unbekannter Fehler';
     console.warn(`sync-landings: Warnung - landings.md Frontmatter konnte nicht geparst werden (${message}). Nutze Body-Fallback.`);
-    return readCitiesFromBodyBullets(raw);
+    return readCitiesFromBodyLines(raw);
   }
 };
 
@@ -915,8 +915,8 @@ const configuredRawEntries = (() => {
         parsed.content
           .split(/\r?\n/)
           .map((line) => line.trim())
-          .filter((line) => line.startsWith('- ') || line.startsWith('* '))
-          .map((line) => line.slice(2).trim()),
+          .filter((line) => line && !line.startsWith('#') && !line.startsWith('---'))
+          .map((line) => (line.startsWith('- ') || line.startsWith('* ') ? line.slice(2).trim() : line)),
       );
     } catch {
       return [];

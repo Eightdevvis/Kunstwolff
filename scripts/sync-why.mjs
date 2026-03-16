@@ -96,13 +96,13 @@ const normalizeList = (items) => {
   return Array.from(unique).sort((a, b) => a.localeCompare(b));
 };
 
-const readLandingsFromBodyBullets = (content) =>
+const readLandingsFromBodyLines = (content) =>
   normalizeList(
     content
       .split(/\r?\n/)
       .map((line) => line.trim())
-      .filter((line) => line.startsWith('- ') || line.startsWith('* '))
-      .map((line) => line.slice(2).trim()),
+      .filter((line) => line && !line.startsWith('#') && !line.startsWith('---'))
+      .map((line) => (line.startsWith('- ') || line.startsWith('* ') ? line.slice(2).trim() : line)),
   );
 
 const readLandingsFromMarkdown = () => {
@@ -120,11 +120,11 @@ const readLandingsFromMarkdown = () => {
       return normalizeList(fromFrontmatter);
     }
 
-    return readLandingsFromBodyBullets(parsed.content);
+    return readLandingsFromBodyLines(parsed.content);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unbekannter Fehler';
     console.warn(`sync-why: Warnung - landings.md Frontmatter konnte nicht geparst werden (${message}). Nutze Body-Fallback.`);
-    return readLandingsFromBodyBullets(raw);
+    return readLandingsFromBodyLines(raw);
   }
 };
 

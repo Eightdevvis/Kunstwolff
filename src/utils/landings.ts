@@ -98,13 +98,13 @@ const normalizeList = (items: unknown[]): string[] => {
   return Array.from(unique).sort((a, b) => a.localeCompare(b));
 };
 
-const readCitiesFromBodyBullets = (content: string): string[] =>
+const readCitiesFromBodyLines = (content: string): string[] =>
   normalizeList(
     content
       .split(/\r?\n/)
       .map((line) => line.trim())
-      .filter((line) => line.startsWith('- ') || line.startsWith('* '))
-      .map((line) => line.slice(2).trim()),
+      .filter((line) => line && !line.startsWith('#') && !line.startsWith('---'))
+      .map((line) => (line.startsWith('- ') || line.startsWith('* ') ? line.slice(2).trim() : line)),
   );
 
 const readRegistryFromMarkdown = (): string[] => {
@@ -122,11 +122,11 @@ const readRegistryFromMarkdown = (): string[] => {
       return normalizeList(frontmatterCities);
     }
 
-    return readCitiesFromBodyBullets(parsed.content);
+    return readCitiesFromBodyLines(parsed.content);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.warn(`landings: Could not parse landings.md frontmatter (${message}). Using body fallback.`);
-    return readCitiesFromBodyBullets(raw);
+    return readCitiesFromBodyLines(raw);
   }
 };
 
