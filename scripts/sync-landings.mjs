@@ -104,15 +104,16 @@ const getUniquePath = (targetPath) => {
   }
 
   const parsed = path.parse(targetPath);
-  let counter = 1;
 
-  while (true) {
+  for (let counter = 1; counter < 1000; counter++) {
     const candidate = path.join(parsed.dir, `${parsed.name}__merged_${counter}${parsed.ext}`);
     if (!fs.existsSync(candidate)) {
       return candidate;
     }
-    counter += 1;
   }
+
+  throw new Error(`getUniquePath: Konnte keinen freien Pfad für ${targetPath} finden (>1000 Kollisionen)`);
+
 };
 
 const mergeDirectoryContents = (sourceDir, targetDir) => {
@@ -404,10 +405,10 @@ const resolveWhyImagesForContext = (skillSlug, landingSlug) => {
   }
 
   return [
-    '/img/samples/sample1.jpeg',
-    '/img/samples/sample2.jpeg',
-    '/img/samples/sample3.jpeg',
-    '/img/samples/sample4.jpeg',
+    '/img/samples/sample1.webp',
+    '/img/samples/sample2.webp',
+    '/img/samples/sample3.webp',
+    '/img/samples/sample4.webp',
   ];
 };
 
@@ -701,7 +702,7 @@ const buildSlidesVisibilityReport = (cities) => {
       addPage(slide.slideKey, `/${city}/`);
 
       for (const skill of skills) {
-        if (slide.categories.includes(skill.title)) {
+        if (slide.categories.some((cat) => normalizeSlug(cat) === skill.slug)) {
           addPage(slide.slideKey, `/${skill.slug}/${city}/`);
         }
       }
@@ -890,36 +891,27 @@ ensureDirectory(landingsRoot);
 ensureDirectory(slidesRoot);
 ensureDirectory(reviewsRoot);
 
-const cities = (() => {
-  const fromMd = readCitiesFromMarkdown();
-  if (fromMd.length > 0) return fromMd;
-
-  const fromJson = readCitiesFromJson();
-  if (fromJson.length > 0) return fromJson;
-
-  return [];
-})();
-
-const configuredRawEntries = (() => {
+// Liest Städteliste einmal und gibt sowohl deduped cities als auch raw entries zurück
+const readAllLandingsData = () => {
   if (fs.existsSync(landingsMdPath)) {
     try {
       const raw = fs.readFileSync(landingsMdPath, 'utf-8');
       const parsed = matter(raw);
       const data = parsed.data || {};
       const fromFrontmatter = data.cities ?? data.landings;
-      if (Array.isArray(fromFrontmatter)) {
-        return normalizeItems(fromFrontmatter);
-      }
 
-      return normalizeItems(
-        parsed.content
-          .split(/\r?\n/)
-          .map((line) => line.trim())
-          .filter((line) => line && !line.startsWith('#') && !line.startsWith('---'))
-          .map((line) => (line.startsWith('- ') || line.startsWith('* ') ? line.slice(2).trim() : line)),
-      );
-    } catch {
-      return [];
+      const rawLines = Array.isArray(fromFrontmatter)
+        ? fromFrontmatter
+        : parsed.content
+            .split(/\r?\n/)
+            .map((line) => line.trim())
+            .filter((line) => line && !line.startsWith('#') && !line.startsWith('---'))
+            .map((line) => (line.startsWith('- ') || line.startsWith('* ') ? line.slice(2).trim() : line));
+
+      return { cities: normalizeList(rawLines), rawEntries: normalizeItems(rawLines) };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unbekannter Fehler';
+      console.warn(`sync-landings: Warnung - landings.md konnte nicht geparst werden (${message}). Nutze Body-Fallback.`);
     }
   }
 
@@ -927,24 +919,19 @@ const configuredRawEntries = (() => {
     try {
       const raw = fs.readFileSync(landingsJsonPath, 'utf-8');
       const parsed = JSON.parse(raw);
-
-      if (Array.isArray(parsed)) {
-        return normalizeItems(parsed);
-      }
-
-      if (parsed && typeof parsed === 'object') {
-        const values = parsed.cities ?? parsed.landings;
-        if (Array.isArray(values)) {
-          return normalizeItems(values);
-        }
+      const values = Array.isArray(parsed) ? parsed : (parsed?.cities ?? parsed?.landings ?? []);
+      if (Array.isArray(values)) {
+        return { cities: normalizeList(values), rawEntries: normalizeItems(values) };
       }
     } catch {
-      return [];
+      // ignore
     }
   }
 
-  return [];
-})();
+  return { cities: [], rawEntries: [] };
+};
+
+const { cities, rawEntries: configuredRawEntries } = readAllLandingsData();
 
 if (cities.length === 0) {
   console.log('sync-landings: Keine Städte in public/landings/landings.md oder landings.json gefunden.');
