@@ -1,40 +1,37 @@
 {
-  "belgique/1_caricaturiste_belgique.jpg": {
+  "belgique/1_caricaturiste_belgique.webp": {
     "categories": [],
     "priority": 1
   },
-  "belgique/2_caricaturistes_live_belgique.jpg": {
+  "belgique/2_caricaturistes_live_belgique.webp": {
     "categories": [],
     "priority": 2
   },
-  "default/1_schnellzeichner_hq.JPG": {
+  "default/1_schnellzeichner_hq.webp": {
     "categories": [
       "Schnellzeichner"
     ],
     "priority": 1
   },
-  "default/2_karikatur_stadtfest.jpg": {
+  "default/2_karikatur_stadtfest.webp": {
     "categories": [
       "Schnellzeichner"
     ],
     "priority": 2
   },
-  "default/3_Schnellzeichner Schweiz.jpg": {
-    "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
-    ],
-    "priority": 3,
-    "altOverride": "Live-Karikaturen von Gästen bei einem Event in der Schweiz"
-  },
-  "default/4_Hochzeit_schnellzeichner_maler.jpg": {
+  "default/3_Schnellzeichner Schweiz.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "priority": 4,
-    "altOverride": "Schnellzeichner zeichnet Gäste bei einer Hochzeit live"
+    "priority": 3
   },
-  "default/5_flip.jpg": {
+  "default/4_Hochzeit_schnellzeichner_maler.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 4
+  },
+  "default/5_flip.webp": {
     "categories": [],
     "priority": 5
   },
@@ -44,35 +41,35 @@
     ],
     "priority": 1
   },
-  "frankfurt/2_karikaturit-frankfurt-messe.jpg": {
+  "frankfurt/2_karikaturit-frankfurt-messe.webp": {
     "categories": [
       "Schnellzeichner"
     ],
     "priority": 2
   },
-  "frankfurt/3_markt-frankfurt-am-main.jpg": {
+  "frankfurt/3_markt-frankfurt-am-main.webp": {
     "categories": [],
     "priority": 3
   },
-  "frankfurt/4_messezeichnerin-frankfurt.jpg": {
+  "frankfurt/4_messezeichnerin-frankfurt.webp": {
     "categories": [],
     "priority": 4
   },
-  "frankfurt/5_schnellportraits-messe.jpg": {
+  "frankfurt/5_schnellportraits-messe.webp": {
     "categories": [],
     "priority": 5
   },
-  "frankfurt/6_szenenmalerin-frankfurt-messe.jpg": {
+  "frankfurt/6_szenenmalerin-frankfurt-messe.webp": {
     "categories": [
       "Szenenmaler"
     ],
     "priority": 6
   },
-  "frankfurt/7_zeichnerin-messe-frankfurt.jpg": {
+  "frankfurt/7_zeichnerin-messe-frankfurt.webp": {
     "categories": [],
     "priority": 7
   },
-  "frankfurt/8_event-illustration-frankfurt.jpg": {
+  "frankfurt/8_event-illustration-frankfurt.webp": {
     "categories": [],
     "priority": 8
   },
@@ -80,77 +77,77 @@
     "categories": [],
     "priority": 9
   },
-  "koeln/1_IMG_20240129_120914.jpg": {
+  "koeln/1_IMG_20240129_120914.webp": {
     "categories": [],
     "priority": 1
   },
-  "koeln/10_digitale-live-portraits.jpg": {
+  "koeln/10_digitale-live-portraits.webp": {
     "categories": [],
     "priority": 10
   },
-  "koeln/11_digitale-schnellzeichnung.jpg": {
+  "koeln/11_digitale-schnellzeichnung.webp": {
     "categories": [],
     "priority": 11
   },
-  "koeln/12_digitaler-schnellzeichner-messe-koeln.jpg": {
+  "koeln/12_digitaler-schnellzeichner-messe-koeln.webp": {
     "categories": [
       "Schnellzeichner"
     ],
     "priority": 12
   },
-  "koeln/13_schnellzeichner-messe-koeln.jpg": {
+  "koeln/13_schnellzeichner-messe-koeln.webp": {
     "categories": [
       "Schnellzeichner"
     ],
     "priority": 13
   },
-  "koeln/14_schnellzeichner-messe-nrw.jpg": {
+  "koeln/14_schnellzeichner-messe-nrw.webp": {
     "categories": [
       "Schnellzeichner"
     ],
     "priority": 14
   },
-  "koeln/15_schnellzeichner-messe.jpg": {
+  "koeln/15_schnellzeichner-messe.webp": {
     "categories": [
       "Schnellzeichner"
     ],
     "priority": 15
   },
-  "koeln/2_digital-art.jpg": {
+  "koeln/2_digital-art.webp": {
     "categories": [],
     "priority": 2
   },
-  "koeln/3_digital-artist.jpg": {
+  "koeln/3_digital-artist.webp": {
     "categories": [],
     "priority": 3
   },
-  "koeln/4_digital-caricature.jpg": {
+  "koeln/4_digital-caricature.webp": {
     "categories": [
       "Schnellzeichner"
     ],
     "priority": 4
   },
-  "koeln/5_digital-caricatures-trade-show.jpg": {
+  "koeln/5_digital-caricatures-trade-show.webp": {
     "categories": [
       "Schnellzeichner"
     ],
     "priority": 5
   },
-  "koeln/6_digital-speed-painting-trade-show.jpg": {
+  "koeln/6_digital-speed-painting-trade-show.webp": {
     "categories": [
       "Szenenmaler"
     ],
     "priority": 6
   },
-  "koeln/7_digital-speedpainter-cologne.jpg": {
+  "koeln/7_digital-speedpainter-cologne.webp": {
     "categories": [],
     "priority": 7
   },
-  "koeln/8_digital-speedpainter-trade-show-cologne.jpg": {
+  "koeln/8_digital-speedpainter-trade-show-cologne.webp": {
     "categories": [],
     "priority": 8
   },
-  "koeln/9_digital-speedpainter-trade-show.jpg": {
+  "koeln/9_digital-speedpainter-trade-show.webp": {
     "categories": [],
     "priority": 9
   }
