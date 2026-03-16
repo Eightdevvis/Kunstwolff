@@ -344,3 +344,57 @@ Zusätzlich wird auf jeder Seite ein `<link rel="canonical">` gesetzt, der auf d
 ### HTML-Sprache
 
 Das `<html lang="de">` Attribut ist korrekt gesetzt. Damit weiß Google, dass der Content auf Deutsch ist, und bevorzugt die Seite bei deutschen Suchanfragen.
+
+### Open Graph Tags
+
+Auf jeder Seite werden automatisch Open Graph Tags generiert – für schöne Vorschau-Karten wenn Links auf WhatsApp, LinkedIn oder Facebook geteilt werden:
+
+```html
+<meta property="og:title" content="Schnellzeichner Berlin buchen | Kunstwolff" />
+<meta property="og:description" content="..." />
+<meta property="og:url" content="https://kunstwolff.de/schnellzeichner/berlin/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://kunstwolff.de/img/Titelbild/..." />
+```
+
+Das `og:image` wird automatisch aus dem jeweiligen Titelbild der Seite generiert. Kein manueller Aufwand nötig.
+
+### robots.txt
+
+`public/robots.txt` erlaubt alle Crawler und verweist auf die Sitemap:
+
+```
+User-agent: *
+Allow: /
+
+Sitemap: https://kunstwolff.de/sitemap-index.xml
+```
+
+### Structured Data (Schema.org JSON-LD)
+
+Jede Seite enthält maschinenlesbare Metadaten für Google (Rich Snippets). Alles wird **vollautomatisch** beim Build generiert – keine manuelle Pflege nötig.
+
+| Seitentyp | Schema-Typen |
+| :-- | :-- |
+| Homepage `/` | `LocalBusiness` + `FAQPage` |
+| Skill-Seite `/schnellzeichner/` | `Service` + `FAQPage` |
+| Stadtseite `/berlin/` | `BreadcrumbList` + `FAQPage` |
+| Skill+Stadt `/schnellzeichner/berlin/` | `BreadcrumbList` + `FAQPage` |
+
+**`LocalBusiness`** (nur Homepage) – Unternehmensadresse, Telefon, Tätigkeitsgebiet. Basis für Google-Wissensbox und Maps-Anbindung.
+
+**`Service`** – beschreibt die konkrete Dienstleistung (Schnellzeichner/Szenenmaler), verknüpft mit dem Anbieter. Stärkt das Signal für "XY buchen"-Suchanfragen.
+
+**`BreadcrumbList`** – Pfadstruktur für Google:
+```
+kunstwolff.de › Schnellzeichner › Berlin
+```
+Erscheint unter dem Link in den Suchergebnissen, verbessert Klickrate und Seitenstruktur-Erkennung.
+
+**`FAQPage`** (alle Seiten via `FAQ.astro`) – bereits vorhandene FAQ-Komponente generiert automatisch Schema für jede Frage/Antwort. Kann zu aufklappbaren FAQ-Blöcken direkt in den Suchergebnissen führen.
+
+**Wo Daten herkommen:**
+- `LocalBusiness`-Adresse/Telefon → hardcoded in `src/pages/index.astro`
+- `Service`-Name/Description → aus `public/skills/skills.json`
+- `BreadcrumbList`-Pfade → dynamisch aus URL-Parametern (`skill`, `landing`)
+- `FAQPage` → aus `public/faq/` Markdown-Dateien

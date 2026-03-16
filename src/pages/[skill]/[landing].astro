@@ -50,9 +50,20 @@ const pageTitle = `${skillData.title} ${cityName} buchen | Kunstwolff`;
 const pageDescription = skillData.description || `${skillData.title} in ${cityName} für Firmenfeiern, Messen & Hochzeiten buchen. Jetzt Kunstwolff anfragen!`;
 const titleImage = resolveTitleImage({ skill, landing });
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://kunstwolff.de/" },
+    { "@type": "ListItem", "position": 2, "name": skillData.title, "item": `https://kunstwolff.de/${skill}/` },
+    { "@type": "ListItem", "position": 3, "name": `${skillData.title} ${cityName}`, "item": `https://kunstwolff.de/${skill}/${landing}/` }
+  ]
+};
+
 ---
 
 <SkillLayout title={pageTitle} description={pageDescription} image={titleImage}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <SkillHero 
     title={heroTitle}
     reviews={reviews} 

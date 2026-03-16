@@ -34,9 +34,19 @@ const reviews = getReviewsByLanding(landing);
 const cityName = (landing ?? '').charAt(0).toUpperCase() + (landing ?? '').slice(1);
 const pageTitle = `Eventkünstler ${cityName} – Live-Kunst & Performance | Kunstwolff`;
 const pageDescription = `Kunstwolff in ${cityName}: Professionelle Eventkünstler für Firmenfeiern, Messen & Hochzeiten. Schnellzeichner, Szenenmaler & mehr.`;
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://kunstwolff.de/" },
+    { "@type": "ListItem", "position": 2, "name": `Eventkünstler ${cityName}`, "item": `https://kunstwolff.de/${landing}/` }
+  ]
+};
 ---
 
 <Layout title={pageTitle} description={pageDescription} image={landingData.titleImage}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <Opener titleImage={landingData.titleImage} titleImageAlt={landingData.title} />
   <Skills skills={skills} reviews={reviews} currentLanding={landing} />
   <Slideshow items={landingSlides} />

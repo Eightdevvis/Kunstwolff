@@ -47,9 +47,224 @@ const filteredItems =
 <script>
     import Swiper from "swiper";
     import { Autoplay, Navigation, Pagination } from "swiper/modules";
-    import lightGallery from "lightgallery";
-    import "lightgallery/css/lightgallery.css";
 
+    // =====================================================================
+    // LIGHTBOX STATE
+    // =====================================================================
+    type LbSlide = { src: string; alt: string };
+
+    let lb: HTMLElement | null = null;
+    let lbImg: HTMLImageElement | null = null;
+    let lbCounter: HTMLElement | null = null;
+    let lbSlides: LbSlide[] = [];
+    let lbIdx = 0;
+
+    // Zoom + Pan
+    let lbZoom = 1;
+    let lbPanX = 0;
+    let lbPanY = 0;
+    const LB_MAX_ZOOM = 4;
+
+    // Touch tracking
+    let touchCount = 0;
+    let swipeStartX = 0;
+    let swipeStartY = 0;
+    let lastTouchX = 0;
+    let lastTouchY = 0;
+    let pinchStartDist = 0;
+    let pinchStartZoom = 1;
+
+    // =====================================================================
+    // LIGHTBOX DOM SETUP (einmalig für die gesamte Seite)
+    // =====================================================================
+    function createLightbox() {
+        if (document.getElementById("kw-lightbox")) {
+            lb = document.getElementById("kw-lightbox");
+            lbImg = lb!.querySelector(".lb-img");
+            lbCounter = lb!.querySelector(".lb-counter");
+            return;
+        }
+
+        const el = document.createElement("div");
+        el.id = "kw-lightbox";
+        el.setAttribute("hidden", "");
+        el.setAttribute("role", "dialog");
+        el.setAttribute("aria-modal", "true");
+        el.setAttribute("aria-label", "Bildvorschau");
+        el.innerHTML = `
+            <div class="lb-backdrop"></div>
+            <div class="lb-wrap">
+                <img class="lb-img" src="" alt="" draggable="false" />
+            </div>
+            <button class="lb-close" aria-label="Schließen">✕</button>
+            <button class="lb-prev" aria-label="Vorheriges Bild">&#8249;</button>
+            <button class="lb-next" aria-label="Nächstes Bild">&#8250;</button>
+            <span class="lb-counter"></span>
+        `;
+        document.body.appendChild(el);
+
+        lb = el;
+        lbImg = el.querySelector(".lb-img");
+        lbCounter = el.querySelector(".lb-counter");
+
+        el.querySelector(".lb-backdrop")!.addEventListener("click", closeLightbox);
+        el.querySelector(".lb-close")!.addEventListener("click", closeLightbox);
+        el.querySelector(".lb-prev")!.addEventListener("click", () => navigate(-1));
+        el.querySelector(".lb-next")!.addEventListener("click", () => navigate(1));
+
+        // Keyboard
+        document.addEventListener("keydown", onKeydown);
+
+        // Touch & Zoom auf dem Bild-Container
+        const wrap = el.querySelector(".lb-wrap") as HTMLElement;
+        wrap.addEventListener("touchstart", onTouchStart, { passive: true });
+        wrap.addEventListener("touchmove", onTouchMove, { passive: false });
+        wrap.addEventListener("touchend", onTouchEnd, { passive: true });
+
+        // Doppelklick-Zoom (Desktop)
+        lbImg!.addEventListener("dblclick", onDblClick);
+    }
+
+    // =====================================================================
+    // OPEN / CLOSE / NAVIGATE
+    // =====================================================================
+    function openLightbox(slides: LbSlide[], idx: number) {
+        if (!lb) createLightbox();
+        lbSlides = slides;
+        lbIdx = idx;
+        resetZoom();
+        showSlide();
+        lb!.removeAttribute("hidden");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+        lb?.setAttribute("hidden", "");
+        document.body.style.overflow = "";
+        resetZoom();
+    }
+
+    function navigate(dir: number) {
+        if (lbSlides.length < 2) return;
+        lbIdx = (lbIdx + dir + lbSlides.length) % lbSlides.length;
+        resetZoom();
+        showSlide();
+    }
+
+    function showSlide() {
+        if (!lbImg || !lbCounter) return;
+        const slide = lbSlides[lbIdx];
+        lbImg.src = slide.src;
+        lbImg.alt = slide.alt;
+        lbCounter.textContent = `${lbIdx + 1} / ${lbSlides.length}`;
+
+        const prevBtn = lb?.querySelector(".lb-prev") as HTMLElement | null;
+        const nextBtn = lb?.querySelector(".lb-next") as HTMLElement | null;
+        const hidden = lbSlides.length <= 1;
+        if (prevBtn) prevBtn.style.display = hidden ? "none" : "";
+        if (nextBtn) nextBtn.style.display = hidden ? "none" : "";
+    }
+
+    // =====================================================================
+    // ZOOM + PAN
+    // =====================================================================
+    function resetZoom() {
+        lbZoom = 1;
+        lbPanX = 0;
+        lbPanY = 0;
+        applyTransform();
+    }
+
+    function applyTransform() {
+        if (!lbImg) return;
+        // translate vor scale, damit Pan in Bildkoordinaten arbeitet
+        lbImg.style.transform = `scale(${lbZoom}) translate(${lbPanX / lbZoom}px, ${lbPanY / lbZoom}px)`;
+        lbImg.style.cursor = lbZoom > 1 ? "grab" : "zoom-in";
+    }
+
+    function onDblClick(e: MouseEvent) {
+        if (lbZoom > 1) {
+            resetZoom();
+        } else {
+            // Zoom zur Klick-Position hin
+            const rect = lbImg!.getBoundingClientRect();
+            const offsetX = e.clientX - (rect.left + rect.width / 2);
+            const offsetY = e.clientY - (rect.top + rect.height / 2);
+            lbZoom = 2.5;
+            lbPanX = -offsetX;
+            lbPanY = -offsetY;
+            applyTransform();
+        }
+    }
+
+    // =====================================================================
+    // KEYBOARD
+    // =====================================================================
+    function onKeydown(e: KeyboardEvent) {
+        if (lb?.hasAttribute("hidden")) return;
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowRight") navigate(1);
+        if (e.key === "ArrowLeft") navigate(-1);
+    }
+
+    // =====================================================================
+    // TOUCH: Swipe (zoom=1) | Pan (zoom>1) | Pinch-Zoom
+    // =====================================================================
+    function getTouchDist(t: TouchList): number {
+        const dx = t[0].clientX - t[1].clientX;
+        const dy = t[0].clientY - t[1].clientY;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    function onTouchStart(e: TouchEvent) {
+        touchCount = e.touches.length;
+        if (touchCount === 1) {
+            swipeStartX = e.touches[0].clientX;
+            swipeStartY = e.touches[0].clientY;
+            lastTouchX = swipeStartX;
+            lastTouchY = swipeStartY;
+        } else if (touchCount === 2) {
+            pinchStartDist = getTouchDist(e.touches);
+            pinchStartZoom = lbZoom;
+        }
+    }
+
+    function onTouchMove(e: TouchEvent) {
+        if (e.touches.length === 2) {
+            // Pinch-Zoom
+            const dist = getTouchDist(e.touches);
+            lbZoom = Math.max(1, Math.min(LB_MAX_ZOOM, pinchStartZoom * (dist / pinchStartDist)));
+            applyTransform();
+            e.preventDefault();
+        } else if (e.touches.length === 1 && lbZoom > 1) {
+            // Pan (nur wenn gezoomt)
+            const dx = e.touches[0].clientX - lastTouchX;
+            const dy = e.touches[0].clientY - lastTouchY;
+            lbPanX += dx;
+            lbPanY += dy;
+            lastTouchX = e.touches[0].clientX;
+            lastTouchY = e.touches[0].clientY;
+            applyTransform();
+            e.preventDefault();
+        }
+    }
+
+    function onTouchEnd(e: TouchEvent) {
+        // Swipe-Navigation nur wenn nicht gezoomt und single-touch
+        if (touchCount === 1 && lbZoom <= 1) {
+            const dx = e.changedTouches[0].clientX - swipeStartX;
+            const dy = e.changedTouches[0].clientY - swipeStartY;
+            // Horizontal-Swipe: Mindest-Delta 50px, mehr horizontal als vertikal
+            if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+                navigate(dx < 0 ? 1 : -1);
+            }
+        }
+        touchCount = e.touches.length;
+    }
+
+    // =====================================================================
+    // UNIFORM IMAGE HEIGHT
+    // =====================================================================
     const syncUniformImageHeights = (host: HTMLElement) => {
         const images = Array.from(host.querySelectorAll(".swiper-slide img")) as HTMLImageElement[];
 
@@ -78,6 +293,9 @@ const filteredItems =
         });
     };
 
+    // =====================================================================
+    // SLIDER INIT
+    // =====================================================================
     const initSliders = () => {
         const sliderElements = document.querySelectorAll(".mySwiper");
 
@@ -99,8 +317,26 @@ const filteredItems =
 
             host.dataset.sliderInitialized = "true";
 
-            const sliderImages = Array.from(host.querySelectorAll(".swiper-slide img")) as HTMLImageElement[];
+            // Slides VOR Swiper-Init sammeln (noch keine Duplikate durch Loop)
+            const lgAnchors = Array.from(host.querySelectorAll<HTMLAnchorElement>(
+                ".swiper-slide .lg-item"
+            ));
+            const slides: LbSlide[] = lgAnchors.map((a) => ({
+                src: a.getAttribute("href") || "",
+                alt: a.querySelector("img")?.getAttribute("alt") || "",
+            }));
 
+            // Click-Handler via Event-Delegation (funktioniert auch auf geklonten Swiper-Slides)
+            host.addEventListener("click", (e) => {
+                const lgItem = (e.target as HTMLElement).closest(".lg-item");
+                if (!lgItem) return;
+                e.preventDefault();
+                const href = lgItem.getAttribute("href") || "";
+                const idx = slides.findIndex((s) => s.src === href);
+                openLightbox(slides, idx >= 0 ? idx : 0);
+            });
+
+            const sliderImages = Array.from(host.querySelectorAll(".swiper-slide img")) as HTMLImageElement[];
             const recalcUniformHeight = () => syncUniformImageHeights(host);
 
             sliderImages.forEach((img) => {
@@ -137,15 +373,6 @@ const filteredItems =
                     prevEl: prevEl as HTMLElement,
                 },
             });
-
-            try {
-                lightGallery(host, {
-                    selector: ".lg-item",
-                    download: false,
-                });
-            } catch {
-                // Slider soll auch ohne LightGallery zuverlässig laufen
-            }
         });
     };
 
@@ -178,7 +405,7 @@ const filteredItems =
         justify-content: center;
         align-items: center;
         width: auto;
-        min-height: 400px; /* optional: Höhe des Slides, kann angepasst werden */
+        min-height: 400px;
     }
 
     .swiper-slide img {
@@ -186,8 +413,8 @@ const filteredItems =
         width: auto;
         height: auto;
         max-width: 100%;
-        max-height: 500px; /* Bild maximal 500px hoch */
-        object-fit: contain; /* Bild komplett sichtbar, nicht abgeschnitten */
+        max-height: 500px;
+        object-fit: contain;
     }
 
     .lg-item {
@@ -222,5 +449,129 @@ const filteredItems =
     .swiper-button-prev::after {
         font-size: 24px;
         font-weight: 700;
+    }
+</style>
+
+<style is:global>
+    /* =====================================================================
+       LIGHTBOX – global, da das Element direkt in <body> injiziert wird
+    ===================================================================== */
+    #kw-lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #kw-lightbox[hidden] {
+        display: none;
+    }
+
+    .lb-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.92);
+    }
+
+    .lb-wrap {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 90vw;
+        max-height: 90vh;
+        overflow: hidden;
+        touch-action: none; /* Pinch-Zoom via JS steuern */
+    }
+
+    .lb-img {
+        max-width: 90vw;
+        max-height: 90vh;
+        object-fit: contain;
+        user-select: none;
+        -webkit-user-drag: none;
+        transition: transform 0.08s ease-out;
+        will-change: transform;
+    }
+
+    .lb-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        z-index: 2;
+        background: rgba(0, 0, 0, 0.55);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 42px;
+        height: 42px;
+        font-size: 20px;
+        line-height: 1;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.15s;
+    }
+
+    .lb-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .lb-prev,
+    .lb-next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+        background: rgba(0, 0, 0, 0.4);
+        color: #fff;
+        border: none;
+        font-size: 48px;
+        line-height: 1;
+        cursor: pointer;
+        padding: 8px 18px;
+        border-radius: 4px;
+        transition: background 0.15s;
+        user-select: none;
+    }
+
+    .lb-prev:hover,
+    .lb-next:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .lb-prev {
+        left: 16px;
+    }
+
+    .lb-next {
+        right: 16px;
+    }
+
+    .lb-counter {
+        position: absolute;
+        bottom: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 4px 14px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-family: sans-serif;
+        white-space: nowrap;
+    }
+
+    @media (max-width: 600px) {
+        .lb-prev,
+        .lb-next {
+            font-size: 36px;
+            padding: 6px 12px;
+        }
     }
 </style>

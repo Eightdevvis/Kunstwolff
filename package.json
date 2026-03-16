@@ -26,7 +26,6 @@
     "@astrojs/sitemap": "^3.7.1",
     "astro": "^5.17.1",
     "gray-matter": "^4.0.3",
-    "lightgallery": "^2.9.0",
     "markdown-it": "^14.1.1",
     "preact": "^10.28.4",
     "sharp": "^0.34.5",

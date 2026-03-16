@@ -22,10 +22,30 @@ const reviews = getAllReviews();
 const homepageSlides = getHomepageSlides();
 const titleImage = resolveTitleImage();
 
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Kunstwolff",
+  "description": "Eventkünstler seit über 20 Jahren – Schnellzeichner, Szenenmaler & Live-Performance für Firmenfeiern, Messen und Hochzeiten.",
+  "url": "https://kunstwolff.de",
+  "telephone": "+491736677229",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Birkenstr. 3",
+    "addressLocality": "Saarbrücken",
+    "postalCode": "66121",
+    "addressCountry": "DE"
+  },
+  "areaServed": ["DE", "AT", "CH", "LU", "BE"],
+  "image": "https://kunstwolff.de/img/logo/logo_transparent.webp",
+  "priceRange": "€€"
+};
+
 //<Aboutsection />
 ---
 
 <Layout image={titleImage}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   
   <Opener titleImage={titleImage} />
 

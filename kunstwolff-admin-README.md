@@ -549,12 +549,42 @@ Deployment auf GitHub Pages:
 
 ## Bekannte Besonderheiten des Kunstwolff-Repos
 
-- Beim Commit auf `main` laufen automatisch Pre-Commit-Hooks (`sync:slides`, `sync:landings` etc.)
-  die Dateien umbenennen und Metadaten generieren. Das passiert aber auf der Netlify-Seite beim Build,
-  nicht im Admin-Tool. Das Admin-Tool muss sich darum nicht kümmern.
-- Bilder können als `.jpg` oder `.webp` existieren. Das Sync-Script konvertiert JPGs automatisch zu WebP.
-  Das Admin-Tool kann einfach JPGs/PNGs hochladen, WebP-Konvertierung übernimmt der Build.
-- `slides.meta.json` Schlüssel enthalten manchmal Sonderzeichen im Dateinamen (URLs, Umlaute).
+### Pre-Commit-Hooks vs. Netlify-Build
+
+Es gibt zwei verschiedene Script-Ebenen:
+
+**Lokal (Pre-Commit-Hook, läuft nur bei git commit auf dem Rechner):**
+- `optimize-staged-images.mjs` – konvertiert neue JPG/PNG-Bilder zu WebP
+- `sync-slides-metadata.mjs` – vergibt Nummerierungs-Prefix und füllt slides.meta.json
+- `sync-landings.mjs` – legt fehlende Ordner für neue Städte an
+
+**Netlify Build (prebuild, läuft immer bei jedem Netlify-Build):**
+- `sync:content:safe` – stellt sicher dass alle Ordner existieren, renummeriert Slides
+- **Kein** Image-Optimizer – WebP-Konvertierung passiert hier **nicht**
+
+**Konsequenz für das Admin-Tool:** Commits via GitHub API lösen keinen Pre-Commit-Hook aus.
+Das bedeutet:
+- Hochgeladene JPGs/PNGs bleiben als JPG/PNG auf der Website (kein Auto-WebP)
+- Nummerierungs-Prefix (`1_`, `2_`, etc.) wird vom Netlify-Build vergeben ✓
+- Neue Städte-Ordner werden vom Netlify-Build angelegt ✓
+
+→ **Empfehlung:** Im Admin-Tool beim Bild-Upload direkt WebP erzwingen (Canvas API oder
+  clientseitige Konvertierung vor dem Upload).
+
+### GitHub Web-Interface Rename-Bug (wichtig!)
+
+Das GitHub Web-Interface kann Binärdateien (Bilder) **nicht** korrekt umbenennen.
+Wenn man eine Bilddatei über "Rename file" umbenennt, erstellt GitHub eine neue Textdatei
+mit 2 Bytes (`\r\n`) statt den Binärinhalt zu kopieren. Die Originaldatei verliert ihren Inhalt.
+
+Das ist der Hauptgrund für dieses Admin-Tool. **Niemals** Bilder über das GitHub Web-Interface
+umbenennen – immer über dieses Admin-Tool oder git CLI.
+
+### Weitere Besonderheiten
+
+- `slides.meta.json` Schlüssel enthalten manchmal Sonderzeichen im Dateinamen (Umlaute, Apostrophe).
   Beim Schreiben exakt so beibehalten wie gelesen.
-- Nummerierungs-Prefix (`1_`, `2_`, `3_` etc.) in Bildnamen wird automatisch vom Sync-Script gesetzt.
-  Neue Bilder können ohne Prefix hochgeladen werden.
+- Nummerierungs-Prefix (`1_`, `2_`, `3_` etc.) in Bildnamen: neue Bilder ohne Prefix hochladen,
+  der Netlify-Build vergibt die Nummer automatisch.
+- Bilder in `public/img/slides/` und `public/img/Titelbild/` werden beide optimiert
+  (seit Update: der Pre-Commit-Hook deckt beide Ordner ab).
