@@ -15,4 +15,4 @@ Format:
 
 Regeln (optionale Synonyme):
 - Schnellzeichner: schnelzeichner, karikatur, caricature
-- Szenenmaler: speedpainting, speed-painting, eventmaler
+- Szenenmaler: speedpainting, speed-painting, eventmaler, live-sketcher, live-sketching, karikaturist, caricaturiste, schnellzeichnerin, karikaturistin, event-artist, hochzeitsmaler, wedding-painter, dessinateur, live-zeichner, event-illustration, Portrait-Artist

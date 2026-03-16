@@ -14,7 +14,21 @@ cities:
   - mannheim
   - saarbruecken
   - belgique
----
+  - saarland
+  - hessen
+  - rhein-main-gebiet
+  - rheinland-pfalz
+  - wuppertal
+  - nord-rhein-westfalen
+  - main-taunus-kreis
+  - koblenz
+  - neuwied
+  - tuebingen
+  - karlsruhe
+  - heidelberg
+    
+  
+
 
 NUR KLEIN SCHREIBEN!!! KEINE LEERZEICHEN KEINE SONDERZEICHEN
 Neue Stadt hinzufügen: einfach hier in `cities` ergänzen.
