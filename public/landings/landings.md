@@ -1,5 +1,5 @@
 # Städteliste für kunstwolff.de
-# Eine Stadt pro Zeile. Lowercase, keine Leerzeichen, keine Sonderzeichen.
+# Eine Stadt pro Zeile. kleingeschrieben, keine Leerzeichen, keine Sonderzeichen.
 # Korrekt: berlin  |  Falsch: Berlin, Berl in, Berlín
 
 berlin
