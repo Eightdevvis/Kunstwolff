@@ -83,6 +83,10 @@ Ablage:
 Erlaubte Formate:
 - `.avif`, `.gif`, `.jpeg`, `.jpg`, `.png`, `.webp`
 
+Bilder hinzufügen:
+- Einfach Bild in den richtigen Ordner legen, committen und pushen.
+- Beim Push läuft automatisch die Bildoptimierung (siehe [Abschnitt 5](#5-automatisierung)).
+
 Sortierung & Priorität:
 - Dateiname mit Prefix steuert Priorität, z. B. `120_event.jpg`.
 - Höhere Priorität wird zuerst angezeigt.
@@ -252,13 +256,32 @@ npm run preview
    - Führt `npm run sync:content` aus
    - Committet neu erzeugte Content-Ordner zurück
 
-Optional lokal:
+### Git-Hooks (einmalig aktivieren)
 
 ```bash
 npm run setup:hooks
 ```
 
-Danach läuft bei jedem Commit der Pre-Commit-Hook aus `.githooks/pre-commit`.
+| Hook | Wann | Was |
+| :-- | :-- | :-- |
+| `pre-commit` | Vor jedem Commit | Gestagete Slides optimieren, Content-Sync |
+| `pre-push` | Vor jedem Push | **Alle** nicht-WebP Bilder in `public/img/` konvertieren |
+
+### Automatische Bildoptimierung beim Push
+
+Einfach Bilder (`.jpg`, `.jpeg`, `.png`, `.gif`) in beliebige Unterordner von `public/img/` legen, committen und pushen. Der Pre-Push-Hook macht dann automatisch:
+
+1. Scannt alle `public/img/` Unterordner rekursiv
+2. Konvertiert gefundene Nicht-WebP-Bilder → `.webp` (max. 1600px, Qualität 75)
+3. Löscht die Originaldateien
+4. Wenn Slides betroffen: `slides.meta.json` wird automatisch aktualisiert
+5. Erstellt einen Commit `chore: optimize images to webp` und pusht ihn mit
+
+Für eine einmalige manuelle Ausführung (z. B. um bestehende Bilder zu migrieren):
+
+```bash
+npm run optimize:all
+```
 
 ## 6) Befehle
 
@@ -272,6 +295,7 @@ Danach läuft bei jedem Commit der Pre-Commit-Hook aus `.githooks/pre-commit`.
 | `npm run sync:content:safe` | Führt alle Syncs fehlertolerant aus (Teilfehler werden isoliert, Build/Dev läuft weiter) |
 | `npm run sync:content` | Alle Content-Syncs nacheinander ausführen |
 | `npm run remove:landing -- <stadt> [archivpfad]` | Archiviert alle Landing-Daten einer Stadt nach `removed_landings/` und entfernt die Stadt aus `landings.md/json` |
+| `npm run optimize:all` | Alle Bilder in `public/img/` zu WebP konvertieren (einmalig/manuell) |
 | `npm run dev` | Entwicklungsserver starten (inkl. Sync) |
 | `npm run build` | Produktionsbuild (inkl. Sync) |
 | `npm run preview` | Build lokal prüfen |

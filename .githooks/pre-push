@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+set -e
+
+node scripts/optimize-all-images.mjs
+
+# Prüfen ob Änderungen durch die Optimierung entstanden sind
+if ! git diff --cached --quiet; then
+  git commit -m "chore: optimize images to webp"
+fi
