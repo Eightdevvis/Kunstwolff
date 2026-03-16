@@ -30,9 +30,13 @@ const citySlides = getCitySlides(landing);
 const defaultSlides = getDefaultSlides();
 const landingSlides = supplementWithDefaultSlides(citySlides, defaultSlides, MIN_LANDING_SLIDES);
 const reviews = getReviewsByLanding(landing);
+
+const cityName = (landing ?? '').charAt(0).toUpperCase() + (landing ?? '').slice(1);
+const pageTitle = `Eventkünstler ${cityName} – Live-Kunst & Performance | Kunstwolff`;
+const pageDescription = `Kunstwolff in ${cityName}: Professionelle Eventkünstler für Firmenfeiern, Messen & Hochzeiten. Schnellzeichner, Szenenmaler & mehr.`;
 ---
 
-<Layout title={landingData.title}>
+<Layout title={pageTitle} description={pageDescription} image={landingData.titleImage}>
   <Opener titleImage={landingData.titleImage} titleImageAlt={landingData.title} />
   <Skills skills={skills} reviews={reviews} currentLanding={landing} />
   <Slideshow items={landingSlides} />

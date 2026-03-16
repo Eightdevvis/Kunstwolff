@@ -19,6 +19,7 @@ Ziele des Projekts: saubere und professionelle Representation von Kunstwolff, Er
 - [4) Seite bauen und prüfen](#4-seite-bauen-und-prüfen)
 - [5) Automatisierung](#5-automatisierung)
 - [6) Befehle](#6-befehle)
+- [7) SEO-Technische Grundlagen](#7-seo-technische-grundlagen)
 
 ## 1) Schnellstart
 
@@ -299,3 +300,47 @@ npm run optimize:all
 | `npm run dev` | Entwicklungsserver starten (inkl. Sync) |
 | `npm run build` | Produktionsbuild (inkl. Sync) |
 | `npm run preview` | Build lokal prüfen |
+
+## 7) SEO-Technische Grundlagen
+
+### Sitemap
+
+Die Sitemap wird automatisch beim Build über `@astrojs/sitemap` generiert.
+
+Ausgabe nach `npm run build`:
+
+```
+dist/sitemap-index.xml
+dist/sitemap-0.xml
+```
+
+Alle statisch generierten Seiten (Homepage, Stadtseiten, Skill-Seiten, Skill+Stadt-Kombinationen) werden automatisch erfasst. Nach dem Deploy ist die Sitemap erreichbar unter:
+
+```
+https://kunstwolff.de/sitemap-index.xml
+```
+
+Diese URL sollte in der **Google Search Console** eingetragen werden, damit Google alle Seiten schnell findet und indexiert.
+
+### Meta Tags (Title, Description, Canonical)
+
+Jede Seite bekommt automatisch individuell generierte Meta-Tags:
+
+| Seitentyp | Beispiel-Title | Description |
+| :-- | :-- | :-- |
+| Homepage | `Kunstwolff – Eventkünstler seit über 20 Jahren` | Generisch (aus `Layout.astro`) |
+| Stadtseite `/berlin/` | `Eventkünstler Berlin – Live-Kunst & Performance \| Kunstwolff` | Stadtspezifisch |
+| Skill-Seite `/schnellzeichner/` | `Schnellzeichner für Events buchen \| Kunstwolff` | Aus `skills.json` (`description`-Feld) |
+| Skill+Stadt `/schnellzeichner/berlin/` | `Schnellzeichner Berlin buchen \| Kunstwolff` | Aus `skills.json` (`description`-Feld) |
+
+Zusätzlich wird auf jeder Seite ein `<link rel="canonical">` gesetzt, der auf die kanonische URL zeigt (wichtig gegen Duplicate-Content-Strafen).
+
+**Wie Title und Description angepasst werden:**
+
+- Skill-Beschreibungen für die Meta-Description → `public/skills/skills.json` im Feld `description`
+- Seiten-Titel für Skill-Seiten → `public/skills/skills.json` im Feld `heroTitle`
+- Stadtseiten-Texte → direkt in `src/pages/[landing].astro`
+
+### HTML-Sprache
+
+Das `<html lang="de">` Attribut ist korrekt gesetzt. Damit weiß Google, dass der Content auf Deutsch ist, und bevorzugt die Seite bei deutschen Suchanfragen.

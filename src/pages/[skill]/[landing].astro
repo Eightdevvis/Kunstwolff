@@ -44,14 +44,15 @@ const defaultSlides = getDefaultSlides();
 const landingSlides = supplementWithDefaultSlides(citySlides, defaultSlides, MIN_LANDING_SLIDES);
 const reviews = getReviewsByLandingAndSkill(landing, skillData.title);
 
+const cityName = (landing ?? '').charAt(0).toUpperCase() + (landing ?? '').slice(1);
 const heroTitle = skillData.heroTitle || `Live ${skillData.title} für Events`;
-const pageTitle = `${skillData.title} ${landing} | Kunstwolff`;
-const pageDescription = skillData.description || `${skillData.title} in ${landing} für Firmenfeiern, Messen & Hochzeiten buchen.`;
+const pageTitle = `${skillData.title} ${cityName} buchen | Kunstwolff`;
+const pageDescription = skillData.description || `${skillData.title} in ${cityName} für Firmenfeiern, Messen & Hochzeiten buchen. Jetzt Kunstwolff anfragen!`;
 const titleImage = resolveTitleImage({ skill, landing });
 
 ---
 
-<SkillLayout title={pageTitle} description={pageDescription}>
+<SkillLayout title={pageTitle} description={pageDescription} image={titleImage}>
   <SkillHero 
     title={heroTitle}
     reviews={reviews} 

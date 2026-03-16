@@ -3,11 +3,18 @@ import "../styles/global.css";
 import Header from "../components/header/Header.astro";
 import Footer from "../components/Footer.astro";
 
-const { title = "Kunstwolff - Eventkünstler seit über 20 Jahren" } = Astro.props;
+const {
+  title = "Kunstwolff – Eventkünstler seit über 20 Jahren",
+  description = "Kunstwolff – Kreative Event-Kunst & Live-Performance für Ihr Event seit über 20 Jahren.",
+  image,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImage = image && Astro.site ? new URL(image, Astro.site).href : undefined;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="de">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,15 +23,15 @@ const { title = "Kunstwolff - Eventkünstler seit über 20 Jahren" } = Astro.pro
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 		<link rel="icon" type="image/png" href="/img/logo/logo_transparent.png" />
 		<link rel="apple-touch-icon" href="/img/logo/logo_transparent.png" />
+		<link rel="canonical" href={canonicalURL} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-
-		<!-- Meta-Tags (im <head>) -->
-		<meta
-			name="description"
-			content="Kunstwolff - Kreative Event-Kunst & Live-Performance für Ihr Event seit über 20 Jahren."
-		/>
-		
+		<meta name="description" content={description} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:type" content="website" />
+		{ogImage && <meta property="og:image" content={ogImage} />}
 	</head>
 
 	<body data-nav-tone="dark">
