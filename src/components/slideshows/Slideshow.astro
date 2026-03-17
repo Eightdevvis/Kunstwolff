@@ -74,6 +74,11 @@ const filteredItems =
     let pinchStartDist = 0;
     let pinchStartZoom = 1;
 
+    // Maus-Drag tracking (Pan mit Maus wenn gezoomt)
+    let mouseDownX = 0;
+    let mouseDownY = 0;
+    let mouseIsDragging = false; // true sobald Maus >= 5px bewegt wurde
+
     // =====================================================================
     // LIGHTBOX DOM SETUP (einmalig für die gesamte Seite)
     // =====================================================================
@@ -115,14 +120,19 @@ const filteredItems =
         // Keyboard
         document.addEventListener("keydown", onKeydown);
 
-        // Touch & Zoom auf dem Bild-Container
+        // Touch (Swipe, Pinch, Pan)
         const wrap = el.querySelector(".lb-wrap") as HTMLElement;
         wrap.addEventListener("touchstart", onTouchStart, { passive: true });
         wrap.addEventListener("touchmove", onTouchMove, { passive: false });
         wrap.addEventListener("touchend", onTouchEnd, { passive: true });
 
-        // Doppelklick-Zoom (Desktop)
-        lbImg!.addEventListener("dblclick", onDblClick);
+        // Maus-Drag-Panning (Desktop)
+        wrap.addEventListener("mousedown", onMouseDown);
+        window.addEventListener("mousemove", onMouseMove);
+        window.addEventListener("mouseup", onMouseUp);
+
+        // Einfacher Klick = Zoom-Toggle (Desktop)
+        lbImg!.addEventListener("click", onImgClick);
     }
 
     // =====================================================================
@@ -179,14 +189,17 @@ const filteredItems =
         if (!lbImg) return;
         // translate vor scale, damit Pan in Bildkoordinaten arbeitet
         lbImg.style.transform = `scale(${lbZoom}) translate(${lbPanX / lbZoom}px, ${lbPanY / lbZoom}px)`;
-        lbImg.style.cursor = lbZoom > 1 ? "grab" : "zoom-in";
+        lbImg.style.cursor = lbZoom > 1 ? "grab" : "zoom-in"; // "grabbing" wird beim Drag direkt gesetzt
     }
 
-    function onDblClick(e: MouseEvent) {
+    // Einfacher Klick: rein- oder rauszoomen.
+    // Guard: wenn Maus vorher gezogen wurde, ist es kein Zoom-Klick.
+    function onImgClick(e: MouseEvent) {
+        if (mouseIsDragging) return;
         if (lbZoom > 1) {
             resetZoom();
         } else {
-            // Zoom zur Klick-Position hin
+            // Zoom zur Klick-Position hin (2.5× reicht für eine gute Detailansicht)
             const rect = lbImg!.getBoundingClientRect();
             const offsetX = e.clientX - (rect.left + rect.width / 2);
             const offsetY = e.clientY - (rect.top + rect.height / 2);
@@ -195,6 +208,39 @@ const filteredItems =
             lbPanY = -offsetY;
             applyTransform();
         }
+    }
+
+    // Maus gedrückt: Startposition merken, Drag noch nicht aktiv
+    function onMouseDown(e: MouseEvent) {
+        if (e.button !== 0) return; // nur linke Maustaste
+        mouseDownX = e.clientX;
+        mouseDownY = e.clientY;
+        mouseIsDragging = false;
+    }
+
+    // Maus bewegt: ab 5px Delta → Pan (nur wenn gezoomt)
+    function onMouseMove(e: MouseEvent) {
+        if (e.buttons !== 1) return; // linke Taste muss gehalten sein
+        const dx = e.clientX - mouseDownX;
+        const dy = e.clientY - mouseDownY;
+        if (!mouseIsDragging && Math.hypot(dx, dy) < 5) return;
+        if (lbZoom <= 1) return;
+
+        mouseIsDragging = true;
+        lbPanX += e.movementX;
+        lbPanY += e.movementY;
+        applyTransform();
+        if (lbImg) lbImg.style.cursor = "grabbing";
+    }
+
+    // Maus losgelassen: Drag beenden, Cursor zurücksetzen
+    function onMouseUp() {
+        if (mouseIsDragging) {
+            applyTransform(); // setzt cursor zurück auf "grab"
+        }
+        // mouseIsDragging erst beim nächsten Frame zurücksetzen,
+        // damit der click-Handler es noch lesen kann
+        requestAnimationFrame(() => { mouseIsDragging = false; });
     }
 
     // =====================================================================

@@ -15,11 +15,16 @@ Ziele des Projekts: saubere und professionelle Representation von Kunstwolff, Er
    - [3.4 Kategorie-Matching für neue Slides](#34-kategorie-matching-für-neue-slides)
    - [3.5 Reviews pflegen](#35-reviews-pflegen)
    - [3.6 Skills pflegen](#36-skills-pflegen)
-   - [3.7 FAQs pflegen](#37-faqs-pflegen)
-- [4) Seite bauen und prüfen](#4-seite-bauen-und-prüfen)
-- [5) Automatisierung](#5-automatisierung)
-- [6) Befehle](#6-befehle)
-- [7) SEO-Technische Grundlagen](#7-seo-technische-grundlagen)
+   - [3.7 Why-Sektion pflegen](#37-why-sektion-pflegen)
+   - [3.8 Titelbild pflegen](#38-titelbild-pflegen)
+   - [3.9 FAQs pflegen](#39-faqs-pflegen)
+- [4) Neue Stadt hinzufügen](#4-neue-stadt-hinzufügen-vollständiger-workflow)
+- [5) Seite bauen und prüfen](#5-seite-bauen-und-prüfen)
+- [6) Automatisierung](#6-automatisierung)
+- [7) Befehle](#7-befehle)
+- [8) SEO-Technische Grundlagen](#8-seo-technische-grundlagen)
+- [Anleitungen (nicht-technisch)](#anleitungen-nicht-technisch)
+- [8) SEO-Technische Grundlagen](#8-seo-technische-grundlagen)
 
 ## 1) Schnellstart
 
@@ -42,11 +47,14 @@ Wichtig:
 
 - Städte werden über `public/landings/landings.md` gesteuert.
 - Skills werden über `public/skills/skills.json` gesteuert und automatisch als Seiten generiert.
-- Für jede Stadt entstehen (falls fehlend) Ordner in:
+- Für jede Stadt entstehen (falls fehlend) Ordner und Dateien in:
    - `public/img/slides/<stadt>/`
    - `public/reviews/<stadt>/`
-- Wenn mehrere Schreibweisen auf denselben Slug normalisieren (z. B. `Berlin` und `berlin`), werden bestehende City-Ordner zusammengeführt statt gelöscht (kollisionssicher).
    - `public/faq/<stadt>/`
+   - `public/img/Titelbild/<stadt>/`
+   - `public/img/why/<stadt>/benefit-{1-4}/`
+   - `public/why/<stadt>.json`
+- Wenn mehrere Schreibweisen auf denselben Slug normalisieren (z. B. `Berlin` und `berlin`), werden bestehende City-Ordner zusammengeführt statt gelöscht (kollisionssicher).
 - Landingseiten werden automatisch statisch generiert für:
    - `/<stadt>/` (allgemeine Stadt-Landing)
    - `/<skill>/` (Skill-Hauptseite, z.B. `/schnellzeichner/`)
@@ -62,14 +70,22 @@ Wichtig:
 
 Datei: `public/landings/landings.md`
 
-```md
----
-cities:
-   - berlin
-   - frankfurt
-   - hamburg
----
 ```
+# Städteliste für kunstwolff.de
+# Eine Stadt pro Zeile. kleingeschrieben, keine Leerzeichen, keine Sonderzeichen.
+# Korrekt: berlin  |  Falsch: Berlin, Berl in, Berlín
+
+berlin
+frankfurt
+hamburg
+```
+
+**Kein YAML-Frontmatter** – einfache Textliste, eine Stadt pro Zeile. Kommentarzeilen mit `#` werden ignoriert.
+
+**Fallback-Quellen (Reihenfolge):** `landings.ts` kennt drei Quellen für Stadtlisten:
+1. `public/landings/landings.md` – primäre Quelle
+2. `public/landings/landings.json` – Fallback falls `.md` fehlt (aktuell nicht verwendet)
+3. Auto-Discovery aus Verzeichnisstrukturen – letzter Ausweg wenn beide fehlen
 
 Regeln:
 - Nur Slugs eintragen (klein, z. B. `koeln`).
@@ -207,7 +223,76 @@ Automatik:
 - Reviews werden automatisch nach Skill-Kategorie gefiltert (nutzt `categories` in Review-Markdown)
 - FAQs werden automatisch nach Skill-Kategorie gefiltert (nutzt `categories` in FAQ-Markdown)
 
-### 3.7 FAQs pflegen
+### 3.7 Why-Sektion pflegen
+
+#### Bilder
+
+Ablage: `public/img/why/<key>/benefit-{1-4}/`
+
+Der `<key>` ist ein Stadtslug oder Skillslug (z.B. `berlin/`, `schnellzeichner/`). Pro Key gibt es 4 Benefit-Ordner. Einfach ein Bild in den jeweiligen Ordner legen.
+
+#### Texte
+
+Datei: `public/why/<key>.json`
+
+Mögliche Keys (Priorität absteigend bei der Auflösung durch `why.ts`):
+1. `{skill}-{stadt}.json` – z.B. `schnellzeichner-berlin.json` (spezifischste Variante)
+2. `{stadt}.json` – z.B. `berlin.json`
+3. `{skill}.json` – z.B. `schnellzeichner.json`
+4. `default.json` – globaler Fallback
+
+Format:
+
+```json
+{
+  "benefits": [
+    {
+      "title": "Echte Künstler - keine Agentur",
+      "text": "Sie buchen uns direkt ...",
+      "image": "/img/why/berlin/benefit-1/sample1.jpeg",
+      "alt": "Live Künstler von Kunstwolff beim Zeichnen"
+    }
+  ]
+}
+```
+
+Felder pro Benefit:
+- `title` – Überschrift des Benefit-Blocks
+- `text` – Beschreibungstext
+- `image` – Pfad zum Bild relativ zu `public/`
+- `alt` – Alt-Text des Bildes (SEO)
+
+**Automatik:** `sync:why` erstellt `{stadt}.json` und `{skill}.json` für alle Einträge aus `landings.md` und `skills.json` automatisch (Basis: `default.json`, Bildpfade werden angepasst). Manuell anlegen muss man nur `{skill}-{stadt}.json` Kombis.
+
+---
+
+### 3.8 Titelbild pflegen
+
+Ablage: `public/img/Titelbild/<stadt>/`
+
+Metadaten: `public/img/Titelbild/title.meta.json`
+
+Selbes Format wie `slides.meta.json`:
+
+```json
+{
+  "berlin/titelbild.webp": {
+    "categories": ["Schnellzeichner"],
+    "priority": 1,
+    "enabled": true
+  }
+}
+```
+
+- `categories` – steuert welches Bild bei Skill-Seiten verwendet wird
+- `priority` – höhere Zahl = bevorzugt
+- `enabled: false` – Bild ausblenden ohne zu löschen
+
+Fallback: wenn keine stadtspezifischen Titelbilder vorhanden, wird `default/` verwendet.
+
+---
+
+### 3.9 FAQs pflegen
 
 Ablage:
 - `public/faq/<stadt>/*.md` für stadtspezifische FAQs
@@ -238,20 +323,35 @@ Automatik:
 - Auf Skill-Seiten werden nur FAQs mit passender Kategorie angezeigt
 - Auf Stadt-Landings werden stadt-spezifische FAQs bevorzugt
 
-## 4) Seite bauen und prüfen
+## 4) Neue Stadt hinzufügen (vollständiger Workflow)
+
+1. Slug in `public/landings/landings.md` eintragen (lowercase, keine Leerzeichen)
+2. `npm run sync:content` ausführen (oder `npm run dev` – läuft automatisch)
+   - Erstellt automatisch: `public/img/slides/<stadt>/`, `public/reviews/<stadt>/`, `public/faq/<stadt>/`, `public/img/Titelbild/<stadt>/`, `public/img/why/<stadt>/benefit-{1-4}/`, `public/why/<stadt>.json`
+3. Stadtspezifische Bilder hochladen (Slides, Titelbild, Why-Bilder)
+4. Texte in `public/why/<stadt>.json` anpassen (wurde in Schritt 2 mit Default-Texten erstellt)
+5. Optional: stadtspezifische Reviews und FAQs anlegen
+
+**Hinweis:** GitHub Action `sync-landings.yml` macht Schritt 2 automatisch bei Push. Alles außer Bild-Upload und Text-Anpassung ist vollautomatisch.
+
+---
+
+## 5) Seite bauen und prüfen
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## 5) Automatisierung
+## 6) Automatisierung
 
 - `npm run dev` und `npm run build` starten automatisch `sync:content`.
-- `sync:content` führt aus:
-   - `sync:landings`
-   - `sync:skills`
-   - `sync:slides`
+- `sync:content` führt aus (in dieser Reihenfolge):
+   - `sync:landings` – Stadtordner anlegen, Kollisionen mergen, Validierungsreport
+   - `sync:skills` – Skill-Bildordner anlegen
+   - `sync:title-images` – Titelbild-Ordner anlegen
+   - `sync:slides` – `slides.meta.json` pflegen (Priority-Prefix, Kategorien, Migration)
+   - `sync:why` – `public/why/{city|skill}.json` und Why-Bildordner anlegen
 - GitHub Action: `.github/workflows/sync-landings.yml`
    - Triggert bei Änderungen an `public/landings/landings.md` und `public/skills/skills.json`
    - Führt `npm run sync:content` aus
@@ -284,7 +384,7 @@ Für eine einmalige manuelle Ausführung (z. B. um bestehende Bilder zu migriere
 npm run optimize:all
 ```
 
-## 6) Befehle
+## 7) Befehle
 
 | Befehl | Zweck |
 | :-- | :-- |
@@ -293,6 +393,7 @@ npm run optimize:all
 | `npm run sync:skills` | Skill-Bildordner anlegen |
 | `npm run sync:title-images` | Titelbild-Ordner für default, Landings, Skills und Skill+Landing-Kombis anlegen |
 | `npm run sync:slides` | Slide-Dateien und `slides.meta.json` synchronisieren |
+| `npm run sync:why` | `public/why/` JSON-Dateien und Why-Bildordner synchronisieren |
 | `npm run sync:content:safe` | Führt alle Syncs fehlertolerant aus (Teilfehler werden isoliert, Build/Dev läuft weiter) |
 | `npm run sync:content` | Alle Content-Syncs nacheinander ausführen |
 | `npm run remove:landing -- <stadt> [archivpfad]` | Archiviert alle Landing-Daten einer Stadt nach `removed_landings/` und entfernt die Stadt aus `landings.md/json` |
@@ -301,7 +402,7 @@ npm run optimize:all
 | `npm run build` | Produktionsbuild (inkl. Sync) |
 | `npm run preview` | Build lokal prüfen |
 
-## 7) SEO-Technische Grundlagen
+## 8) SEO-Technische Grundlagen
 
 ### Sitemap
 
@@ -398,3 +499,19 @@ Erscheint unter dem Link in den Suchergebnissen, verbessert Klickrate und Seiten
 - `Service`-Name/Description → aus `public/skills/skills.json`
 - `BreadcrumbList`-Pfade → dynamisch aus URL-Parametern (`skill`, `landing`)
 - `FAQPage` → aus `public/faq/` Markdown-Dateien
+
+
+---
+
+## Anleitungen (nicht-technisch)
+
+Im Ordner [`ANLEITUNGEN/`](ANLEITUNGEN/) liegen Schritt-für-Schritt-Anleitungen für wiederkehrende Aufgaben:
+
+| Datei | Inhalt |
+| :-- | :-- |
+| [`Wie?_FOTOS_HINZUFÜGEN.md`](ANLEITUNGEN/Wie?_FOTOS_HINZUFÜGEN.md) | Bilder für Slideshow/Titelbild/Why hochladen |
+| [`Wie?_LANDINGPAGES.md`](ANLEITUNGEN/Wie?_LANDINGPAGES.md) | Neue Stadt als Landingpage anlegen (Non-Tech-Workflow) |
+| [`Wie?_NAVIGATION.md`](ANLEITUNGEN/Wie?_NAVIGATION.md) | Navigationseinträge anpassen |
+| [`Wie?_REVIEWS.md`](ANLEITUNGEN/Wie?_REVIEWS.md) | Kundenbewertungen hinzufügen oder bearbeiten |
+| [`Wie?_WARUM_KUNSTWOLFF.md`](ANLEITUNGEN/Wie?_WARUM_KUNSTWOLFF.md) | Why-Sektion Texte & Bilder pflegen |
+| [`UNDEFINED_BEHAVIOR_TIDY_UPS.md`](ANLEITUNGEN/UNDEFINED_BEHAVIOR_TIDY_UPS.md) | Dokumentation von Edge Cases und Fallback-Verhalten |

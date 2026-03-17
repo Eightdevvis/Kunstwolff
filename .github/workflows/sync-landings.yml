@@ -37,7 +37,7 @@ jobs:
           if [[ -n "$(git status --porcelain)" ]]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add public/img/slides public/reviews public/img/UnsereFähigkeitenBilder
+            git add public/img/slides public/reviews public/img/UnsereFähigkeitenBilder public/img/Titelbild public/img/why public/why public/faq
             git commit -m "chore: sync content folders"
             git push
           else
