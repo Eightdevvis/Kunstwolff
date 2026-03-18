@@ -156,62 +156,9 @@
     ],
     "priority": 30
   },
-  "frankfurt/31_digital-artist-business-event-allianz-frankfurt.webp": {
-    "categories": [],
-    "priority": 31
-  },
-  "frankfurt/32_digitale-schnellzeichnung-auf-leinwand-projiziert-mit-beamer-comoany-event-allianz-frankfurt.webp": {
-    "categories": [],
-    "priority": 32
-  },
-  "frankfurt/33_event-zeichner-zeichnet-an-staffelei-shop-eroeffnung-frankfurt.webp": {
-    "categories": [],
-    "priority": 33
-  },
-  "frankfurt/34_eventzeichnerin-sitzt-an-staffelei-und-portraitiert-kunden-bulgari-frankfurt.webp": {
-    "categories": [],
-    "priority": 34
-  },
-  "frankfurt/35_gaeste-schauen-auf-lustige-team-karikatur-auf-leinwand-von-kuensterlin-mit-ipad-digital-gezeichnet-firmenparty-frankfurt.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 35
-  },
-  "frankfurt/36_illustratorin-zeichnet-event-illustration-fuer-kunden-als-muttertag-geschenk-frankfurt.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "priority": 36
-  },
-  "frankfurt/37_live-zeichner-malt-portraits-fuer-kunden-aktion-bulgari-frankfurt.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "priority": 37
-  },
-  "frankfurt/38_paar-lacht-ueber-digitale-karikatur-auf-samsung-flip-von-karikaturistin-gezeichnet-auf-betriebsfeier-frankfurt.webp": {
-    "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
-    ],
-    "priority": 38
-  },
-  "frankfurt/39_portraitmalerin-malt-aquarell-portraets-muttertagsaktion-bulgar-frankfurt.webp": {
-    "categories": [],
-    "priority": 39
-  },
   "frankfurt/4_messezeichnerin-frankfurt.webp": {
     "categories": [],
     "priority": 4
-  },
-  "frankfurt/40_szenentmaler-malt-fuer-promotion-bulgari-frankfurt.webp": {
-    "categories": [],
-    "priority": 40
-  },
-  "frankfurt/41_zeichner-fertigt-hunde-zeichnung-bei-shop-event-bulgarifrankfurt.webp": {
-    "categories": [],
-    "priority": 41
   },
   "frankfurt/5_schnellportraits-messe.webp": {
     "categories": [],
@@ -232,12 +179,6 @@
       "Szenenmaler"
     ],
     "priority": 8
-  },
-  "frankfurt/9_4-kollegen-stehen-vor-ihrer-team-karikatur-auf-dem-digitalen-flipchart-auf-firmen-event-frankfurt.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 9
   },
   "kaiserslautern/1_caricature-of-a-couple-by-speedpainter-event-umgc-rheinland-pfalz.webp": {
     "categories": [
@@ -272,42 +213,9 @@
     ],
     "priority": 2
   },
-  "kaiserslautern/3_karikaturist-betriebsfeier-kleine-alm-landgasthaus-bremerhof-kaiserslautern.webp": {
-    "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
-    ],
-    "priority": 3
-  },
-  "kaiserslautern/4_live-artist-party-kaiserslautern.webp": {
-    "categories": [],
-    "priority": 4
-  },
-  "kaiserslautern/5_live-painter-event-kmc-kaiserslautern.webp": {
-    "categories": [],
-    "priority": 5
-  },
-  "kaiserslautern/6_man-shows-speedpainting-by-caricaturist-kaiserslautern.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "priority": 6
-  },
   "kaiserslautern/7_speedpainter-event-armstrong´s-club-kaiserslautern.webp": {
     "categories": [],
     "priority": 7
-  },
-  "kaiserslautern/8_caricature-of-a-couple-by-speedpainter-event-umgc-rheinland-pfalz.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 8
-  },
-  "kaiserslautern/9_colleagues-present-their-funny-quick-portrait-of-a-caricature-artist-at-a-party-pfalz.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 9
   },
   "koeln/1_IMG_20240129_120914.webp": {
     "categories": [],
@@ -317,10 +225,6 @@
     "categories": [],
     "priority": 10
   },
-  "koeln/11_the-customer-is-delighted-with-her-portrait-on-digital-display-event-cologne.webp": {
-    "categories": [],
-    "priority": 11
-  },
   "koeln/12_digital-speedpainter-trade-show-cologne.webp": {
     "categories": [],
     "priority": 12
@@ -329,14 +233,6 @@
     "categories": [],
     "priority": 13
   },
-  "koeln/14_cheerful-female-executive-laughing-while-looking-at-her-professional-portrait-o--a-big-screen-drawn-by-artist-event.webp": {
-    "categories": [],
-    "priority": 14
-  },
-  "koeln/15_cheerful-female-executive-laughing-while-looking-at-her-professional-portrait-o--a-big-screen-drawn-by-artist-event.webp": {
-    "categories": [],
-    "priority": 15
-  },
   "koeln/16_digitale-live-portraits.webp": {
     "categories": [],
     "priority": 16
@@ -344,14 +240,6 @@
   "koeln/17_digitale-schnellzeichnung.webp": {
     "categories": [],
     "priority": 17
-  },
-  "koeln/18_messe-besucher-steht-stolz-bei-seinem-digitale-schnell-portraet.webp": {
-    "categories": [],
-    "priority": 18
-  },
-  "koeln/19_messe-besucher-steht-stolz-bei-seinem-digitale-schnell-portraet.webp": {
-    "categories": [],
-    "priority": 19
   },
   "koeln/2_digital-art.webp": {
     "categories": [],
@@ -363,37 +251,11 @@
     ],
     "priority": 20
   },
-  "koeln/21_digitaler-schnellzeichner-portraetiert-frau-auf-samsung-flip-bei-messe-koeln.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 21
-  },
-  "koeln/22_digitaler-schnellzeichner-portraetiert-frau-auf-samsung-flip-bei-messe-koeln.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 22
-  },
   "koeln/23_schnellzeichner-messe-koeln.webp": {
     "categories": [
       "Schnellzeichner"
     ],
     "priority": 23
-  },
-  "koeln/24_schnellzeichnerin-steht-neben-karikatur-digitalem-flipchart-bei-samsung-messe-stand.webp": {
-    "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
-    ],
-    "priority": 24
-  },
-  "koeln/25_schnellzeichnerin-steht-neben-karikatur-digitalem-flipchart-bei-samsung-messe-stand.webp": {
-    "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
-    ],
-    "priority": 25
   },
   "koeln/26_schnellzeichner-messe-nrw.webp": {
     "categories": [
@@ -410,14 +272,6 @@
   "koeln/3_digital-artist.webp": {
     "categories": [],
     "priority": 3
-  },
-  "koeln/4_digital-artist-is-painting-a-dynamic-picture-with-samsung-flip.webp": {
-    "categories": [],
-    "priority": 4
-  },
-  "koeln/5_digital-artist-is-painting-a-dynamic-picture-with-samsung-flip.webp": {
-    "categories": [],
-    "priority": 5
   },
   "koeln/6_digital-caricature.webp": {
     "categories": [
@@ -436,10 +290,6 @@
       "Szenenmaler"
     ],
     "priority": 8
-  },
-  "koeln/9_digital-speedpainter-cologne.webp": {
-    "categories": [],
-    "priority": 9
   },
   "ludwigshafen/1_digital-artist-zeichnet-live-auf-buehne-mit-tabelt-pc-und-beamer-karikaturen-betriebsfeier-cinema-paradiso-ludwigshafen.webp": {
     "categories": [
@@ -473,39 +323,6 @@
       "Szenenmaler"
     ],
     "priority": 3
-  },
-  "ludwigshafen/4_live-digital-caricature-funny-picture-projected-on-canvas.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 4
-  },
-  "ludwigshafen/5_speed-painter-drawing-with-tablet-pc-beamer-ludwigshafen.webp": {
-    "categories": [],
-    "priority": 5
-  },
-  "ludwigshafen/6_zeichnung-mann-als-bowlingkugel-mit-bramer-auf-leinwand-von-digital-caricaturist-ludwigshafen.webp": {
-    "categories": [],
-    "priority": 6
-  },
-  "ludwigshafen/7_digital-artist-zeichnet-live-auf-buehne-mit-tabelt-pc-und-beamer-karikaturen-betriebsfeier-cinema-paradiso-ludwigshafen.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 7
-  },
-  "ludwigshafen/8_digital-schnellzeichner-ljames-bond-party-ludwigshafen.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 8
-  },
-  "ludwigshafen/9_digitale-schnellzeichnerin-ludwigshafen.webp": {
-    "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
-    ],
-    "priority": 9
   },
   "luxembourg/1_caricaturiste-assise-à-un-chevalet-dessinant-en-luxembourg.webp": {
     "categories": [
@@ -544,18 +361,6 @@
     ],
     "priority": 3
   },
-  "luxembourg/4_dessins-caricaturaux-lors-d'un-mariage.webp": {
-    "categories": [],
-    "priority": 4
-  },
-  "luxembourg/5_dessins-caricaturaux-luxembourg.webp": {
-    "categories": [],
-    "priority": 5
-  },
-  "luxembourg/6_portraitiste-pour-festival-des-enfants-luxembourg.jpg": {
-    "categories": [],
-    "priority": 6
-  },
   "luxembourg/7_schnellzeichner-sommerfest-cipa-howald-caricature-couple.webp": {
     "categories": [
       "Schnellzeichner"
@@ -565,10 +370,6 @@
   "luxembourg/8_un-couple-heureux-montre-fièrement-son-portrait-caricatural-personnalisé-lors-d-une-foire-d-art-au-luxembourg-entouré-d-autres-oeuvres-de-bande-dessinée.webp": {
     "categories": [],
     "priority": 8
-  },
-  "luxembourg/9_une-portraitiste-souriante-est-assise-devant-un-chevalet-en-luxembourg-et-dessine-un-portrait.webp": {
-    "categories": [],
-    "priority": 9
   },
   "saarbruecken/1_live-karikatur-zeichnen-paar-sylvester-spielbank-saarbruecken-schnellzeichnerin.webp": {
     "categories": [
@@ -612,64 +413,11 @@
     ],
     "priority": 15
   },
-  "saarbruecken/16_schnellzeichnung-mitarbeiter-von-karikaturis-weihnachtsfeier-saarlandtherme-saarland.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 16
-  },
   "saarbruecken/17_szenenmalerei-hotel-leidinger-saarbruecken.webp": {
     "categories": [
       "Szenenmaler"
     ],
     "priority": 17
-  },
-  "saarbruecken/2_live-karikaturen-syvlvester-saarbruecken.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 2
-  },
-  "saarbruecken/3_live-portraetzeichnen-im-forsthaus-neuhaus-kuenstlerin-zeichnet-gaeste.webp": {
-    "categories": [],
-    "priority": 3
-  },
-  "saarbruecken/4_paarzeichnung-von-schnellzeichner-kunst-aktion-europa-galerie-saarbruecken.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 4
-  },
-  "saarbruecken/5_schnellzeichner-weihnachtsfeier-saarlandtherme-saarbruecken-1.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 5
-  },
-  "saarbruecken/6_schnellzeichner-weihnachtsfeier-saarlandtherme-saarbruecken-2.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 6
-  },
-  "saarbruecken/7_schnellzeichnerin-saarland-sylvester-event-spielbanken-saarbruecken.webp": {
-    "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
-    ],
-    "priority": 7
-  },
-  "saarbruecken/8_schnellzeichnung-mitarbeiter-von-karikaturis-weihnachtsfeier-saarlandtherme-saarland.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 8
-  },
-  "saarbruecken/9_szenenmalerei-hotel-leidinger-saarbruecken.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "priority": 9
   },
   "trier/1_2-kollegen-zeigen-froehlich-ihre-karikaturzeichnung-mit-bierglas-auf-der-weihnachtsfeier-in-tommys-teufelskueche-trier.webp": {
     "categories": [
