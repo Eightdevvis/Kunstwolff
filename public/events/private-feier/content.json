@@ -1,0 +1,77 @@
+{
+  "ablauf": {
+    "enabled": true,
+    "title": "So läuft Ihre private Feier mit uns ab",
+    "steps": [
+      {
+        "title": "Kurze Absprache",
+        "text": "Wir klären gemeinsam Datum, Ort, Gästeanzahl und Anlass. Ob Geburtstag, Jubiläum oder einfach eine Feier mit Freunden – wir passen das Programm an.",
+        "icon": "chat"
+      },
+      {
+        "title": "Wir kommen zu Ihnen",
+        "text": "Kein Aufwand Ihrerseits – wir kommen pünktlich, bauen alles auf und integrieren uns locker in Ihre Runde.",
+        "icon": "setup"
+      },
+      {
+        "title": "Live-Kunst & gute Stimmung",
+        "text": "Während die Gäste lachen und feiern, entstehen lustige oder stimmungsvolle Porträts – direkt vor den Augen aller.",
+        "icon": "star"
+      },
+      {
+        "title": "Persönliches Souvenir",
+        "text": "Jeder Gast nimmt ein einzigartiges Kunstwerk mit nach Hause. Ein Highlight über das man noch lange spricht.",
+        "icon": "gift"
+      }
+    ]
+  },
+  "pakete": {
+    "enabled": true,
+    "title": "Unsere Pakete für private Feiern",
+    "items": [
+      {
+        "title": "Klein & Fein",
+        "duration": "2 Stunden",
+        "price": "Auf Anfrage",
+        "features": [
+          "1 Künstler",
+          "Bis 20 Gäste",
+          "Bis ca. 30 Porträts",
+          "Material inklusive"
+        ]
+      },
+      {
+        "title": "Geburtstagsparty",
+        "duration": "3 Stunden",
+        "price": "Auf Anfrage",
+        "features": [
+          "1 Künstler",
+          "Bis 50 Gäste",
+          "Bis ca. 60 Porträts",
+          "Material inklusive"
+        ]
+      },
+      {
+        "title": "Große Feier",
+        "duration": "4+ Stunden",
+        "price": "Auf Anfrage",
+        "features": [
+          "1–2 Künstler",
+          "Für größere Gästeanzahlen",
+          "Individuell abgestimmt",
+          "Material inklusive"
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "enabled": true,
+    "title": "Unsere Künstler für Ihre private Feier"
+  },
+  "referenzen": {
+    "enabled": false,
+    "title": "Was andere sagen",
+    "text": "",
+    "logos": []
+  }
+}

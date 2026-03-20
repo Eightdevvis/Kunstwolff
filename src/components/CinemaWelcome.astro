@@ -1,0 +1,784 @@
+---
+/**
+ * CinemaWelcome.astro
+ *
+ * Datengetriebene Cinema-Welcome-Komponente.
+ * Alle Inhalte (Titel, Subtitel, Hauptkreis, Satelliten) kommen aus
+ * public/cinema/cinema.json – editierbar über das Admin-Tool.
+ *
+ * Aufbau:
+ *
+ * [INTRO]   Cinematic opener (zentrierter Text, kein Orbit)
+ * [1] Text links  / Orbit rechts  – Satelliten nach links
+ * [2] Orbit links / Text rechts   – Satelliten nach rechts (reversed)
+ * [3] Text links  / Orbit rechts  – Satelliten nach links
+ *
+ * Layout (welche Sektion reversed ist, IDs, CSS-Positionen) bleibt im Code.
+ * Content (Texte, Bilder, Links) kommt aus der JSON-Datei.
+ *
+ * Alle drei Orbit-Sektionen teilen sich Dimmer + Factory-Funktion `setupCinemaSection()`.
+ * Merge-Animation: Satellit-Klick tauscht Hauptkreis-Bild.
+ */
+
+import { getCinemaData } from '../utils/cinema';
+
+// Daten aus public/cinema/cinema.json laden (Build-Time)
+const cinema = getCinemaData();
+
+// Destructuring für bessere Lesbarkeit im Template
+const { intro } = cinema;
+const [sec1, sec2, sec3] = cinema.sections;
+---
+
+<!-- ══════════════════════════════════════════════════════════════════
+     INTRO – Cinematic Opener (reine Text-Begrüßung, zentriert)
+     Nutzt dieselbe cw-title / cw-subtitle Logik wie die Orbit-Sektionen.
+     JS aktiviert Dimmer + spielt Wipe-Animationen sequenziell ab.
+═══════════════════════════════════════════════════════════════════ -->
+<div class="cw-intro" id="cw-intro">
+  <p class="cw-title">{intro.title}</p>
+  <p class="cw-subtitle">{intro.subtitle}</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SEKTION 1 – Text links, Orbit rechts (Satelliten nach links)
+═══════════════════════════════════════════════════════════════════ -->
+<section class="cw" id="cinema-welcome">
+  <div class="cw-inner">
+
+    <div class="cw-text">
+      <h2 class="cw-title">{sec1.title}</h2>
+      <p class="cw-subtitle">{sec1.subtitle}</p>
+    </div>
+
+    <div class="cw-orbit" id="cw-orbit">
+      {sec1.satellites.map((item, i) => (
+        <a href={item.link} class="cw-satellite" data-sat-index={i.toString()} aria-label={item.title}>
+          <img src={item.image} alt={item.alt ?? item.title} loading="lazy" />
+          <span class="cw-satellite-label">{item.title}</span>
+        </a>
+      ))}
+      <button class="cw-main" id="cw-main" aria-label="Unsere Leistungen anzeigen" aria-expanded="false">
+        <img src={sec1.mainCircle.image} alt={sec1.mainCircle.alt} />
+        <span class="cw-main-hint">{sec1.mainCircle.hint ?? 'Entdecken'}</span>
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SEKTION 2 – Orbit links, Text rechts (Satelliten nach rechts)
+═══════════════════════════════════════════════════════════════════ -->
+<section class="cw cw--reversed" id="cinema-welcome-2">
+  <div class="cw-inner">
+
+    <div class="cw-orbit" id="cw-orbit-2">
+      {sec2.satellites.map((item, i) => (
+        <a href={item.link} class="cw-satellite" data-sat-index={i.toString()} aria-label={item.title}>
+          <img src={item.image} alt={item.alt ?? item.title} loading="lazy" />
+          <span class="cw-satellite-label">{item.title}</span>
+        </a>
+      ))}
+      <button class="cw-main" id="cw-main-2" aria-label="Unsere Leistungen anzeigen" aria-expanded="false">
+        <img src={sec2.mainCircle.image} alt={sec2.mainCircle.alt} />
+        <span class="cw-main-hint">{sec2.mainCircle.hint ?? 'Entdecken'}</span>
+      </button>
+    </div>
+
+    <div class="cw-text cw-text--right">
+      <h2 class="cw-title">{sec2.title}</h2>
+      <p class="cw-subtitle">{sec2.subtitle}</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SEKTION 3 – Text links, Orbit rechts (Satelliten nach links)
+═══════════════════════════════════════════════════════════════════ -->
+<section class="cw" id="cinema-welcome-3">
+  <div class="cw-inner">
+
+    <div class="cw-text">
+      <h2 class="cw-title">{sec3.title}</h2>
+      <p class="cw-subtitle">{sec3.subtitle}</p>
+    </div>
+
+    <div class="cw-orbit" id="cw-orbit-3">
+      {sec3.satellites.map((item, i) => (
+        <a href={item.link} class="cw-satellite" data-sat-index={i.toString()} aria-label={item.title}>
+          <img src={item.image} alt={item.alt ?? item.title} loading="lazy" />
+          <span class="cw-satellite-label">{item.title}</span>
+        </a>
+      ))}
+      <button class="cw-main" id="cw-main-3" aria-label="Unsere Leistungen anzeigen" aria-expanded="false">
+        <img src={sec3.mainCircle.image} alt={sec3.mainCircle.alt} />
+        <span class="cw-main-hint">{sec3.mainCircle.hint ?? 'Entdecken'}</span>
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+  /* ═══════════════════════════════════════════════════════════════════
+     INTRO BLOCK
+     Kein Orbit, zentriert – aber volle Cinema-Experience:
+     Dimmer aktiv, cw-title / cw-subtitle wipe-animiert wie die Orbit-Sektionen.
+  ═══════════════════════════════════════════════════════════════════ */
+  .cw-intro {
+    position:        relative;    /* nötig damit z-index greift wenn Sektion über Dimmer gehoben wird */
+    background:      #000;
+    min-height:      60vh;
+    display:         flex;
+    flex-direction:  column;
+    align-items:     center;     /* horizontal zentriert */
+    justify-content: center;     /* vertikal mittig */
+    text-align:      center;
+    padding:         clamp(60px, 10vh, 110px) clamp(40px, 9vw, 130px) clamp(30px, 5vh, 60px);
+    gap:             clamp(14px, 2.5vh, 28px);
+  }
+
+  /*
+    cw-title und cw-subtitle innerhalb des Intros bekommen dieselbe
+    Wipe-Animation wie in den Orbit-Sektionen. Die globalen Klassen-Styles
+    (.cw-title, .cw-subtitle, .cw-title.revealed, .cw-subtitle.revealed) greifen
+    automatisch – kein Extra-CSS nötig.
+  */
+
+  /* ═══════════════════════════════════════════════════════════════════
+     ORBIT-SEKTIONEN (gemeinsam)
+  ═══════════════════════════════════════════════════════════════════ */
+  .cw {
+    position:    relative;
+    background:  #000;
+    /*
+      Etwas kleiner als vorher (war 90vh / 80px).
+      Damit der User smooth durchscrollt ohne zu viel Leerraum.
+    */
+    min-height:  75vh;
+    display:     flex;
+    align-items: center;
+    overflow:    visible;
+    padding:     60px 0;
+  }
+
+  .cw-inner {
+    width:     100%;
+    max-width: 1300px;
+    margin:    0 auto;
+    /*
+      Sektion 1 + 3: viel Padding links für Text, wenig rechts → Kreis nahe Kante.
+    */
+    padding-left:  clamp(40px, 9vw, 130px);
+    padding-right: clamp(10px, 2vw, 30px);
+    display:       flex;
+    align-items:   center;
+    gap:           clamp(30px, 5vw, 60px);
+  }
+
+  /*
+    Sektion 2 (reversed): Orbit links → wenig Padding links, viel rechts.
+    DOM-Reihenfolge ist bereits Orbit → Text, also flex-direction: row reicht.
+  */
+  .cw--reversed .cw-inner {
+    flex-direction: row;
+    padding-left:  clamp(10px, 2vw, 30px);
+    padding-right: clamp(40px, 9vw, 130px);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     TEXT
+  ═══════════════════════════════════════════════════════════════════ */
+  .cw-text {
+    flex:      1;
+    min-width: 0;
+  }
+
+  /* Text in Sektion 2: linksbündig, etwas Abstand zum Orbit */
+  .cw-text--right {
+    text-align:   left;
+    padding-left: clamp(20px, 4vw, 60px);
+  }
+
+  .cw-title {
+    font-family:    'Mayonice', serif;
+    font-size:      clamp(2.2rem, 5vw, 3.8rem);
+    font-weight:    400;
+    color:          #fff;
+    line-height:    1.1;
+    margin:         0 0 clamp(16px, 3vw, 30px);
+    letter-spacing: 0.02em;
+    /* Startzustand: Wipe von rechts */
+    clip-path:      inset(0 100% 0 0);
+    opacity:        0;
+  }
+
+  .cw-subtitle {
+    font-family:    var(--font-body, 'Inter', sans-serif);
+    font-size:      clamp(1rem, 2.2vw, 1.45rem);
+    font-weight:    300;
+    color:          rgba(255,255,255,0.8);
+    line-height:    1.55;
+    margin:         0;
+    clip-path:      inset(0 100% 0 0);
+    opacity:        0;
+  }
+
+  /* ── Wipe-Reveal ──────────────────────────────────────────────────
+     clip-path inset von rechts: Text wird von links nach rechts aufgedeckt.
+  ── */
+  @keyframes text-reveal {
+    0%  { clip-path: inset(0 100% 0 0); opacity: 0; }
+    15% { opacity: 1; }
+    100%{ clip-path: inset(0 0% 0 0);   opacity: 1; }
+  }
+
+  .cw-title.revealed    { animation: text-reveal 1.05s cubic-bezier(0.22, 0.61, 0.36, 1) forwards; }
+  .cw-subtitle.revealed { animation: text-reveal 0.95s cubic-bezier(0.22, 0.61, 0.36, 1) forwards; }
+
+  .cw-title.instant,
+  .cw-subtitle.instant {
+    clip-path: inset(0 0% 0 0);
+    opacity:   1;
+    animation: none;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     ORBIT
+  ═══════════════════════════════════════════════════════════════════ */
+  .cw-orbit {
+    position: relative;
+    flex:     0 0 auto;
+    width:    420px;
+    height:   420px;
+    overflow: visible;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     HAUPTKREIS
+  ═══════════════════════════════════════════════════════════════════ */
+  .cw-main {
+    position:      absolute;
+    top:           50%;
+    left:          50%;
+    transform:     translate(-50%, -50%);
+    width:         200px;
+    height:        200px;
+    border-radius: 50%;
+    border:        2px solid rgba(255,255,255,0.22);
+    overflow:      hidden;
+    cursor:        pointer;
+    background:    #000;
+    padding:       0;
+    opacity:       0;
+    scale:         0.5;
+    transition:
+      opacity 0.55s ease,
+      scale   0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow   0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  .cw-main.visible {
+    opacity: 1;
+    scale:   1;
+  }
+
+  .cw-main img {
+    width:          100%;
+    height:         100%;
+    object-fit:     cover;
+    filter:         brightness(0.78);
+    display:        block;
+    pointer-events: none;
+    transition:     filter 0.3s ease, transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  .cw-main:hover img     { filter: brightness(0.45); transform: scale(1.06); }
+  .cw-main:hover         { border-color: rgba(255,255,255,0.5); box-shadow: 0 0 30px rgba(255,255,255,0.12); }
+
+  .cw-main-hint {
+    position:        absolute;
+    inset:           0;
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    color:           #fff;
+    font-size:       0.68rem;
+    letter-spacing:  0.12em;
+    text-transform:  uppercase;
+    opacity:         0;
+    transition:      opacity 0.3s ease;
+    pointer-events:  none;
+  }
+
+  .cw-main:hover .cw-main-hint { opacity: 0.85; }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     SATELLITEN
+  ═══════════════════════════════════════════════════════════════════ */
+  .cw-satellite {
+    position:        absolute;
+    top:             50%;
+    left:            50%;
+    width:           95px;
+    height:          95px;
+    border-radius:   50%;
+    overflow:        hidden;
+    border:          2px solid rgba(255,255,255,0.18);
+    background:      #000;
+    display:         block;
+    text-decoration: none;
+    color:           #fff;
+    transform:       translate(-50%, -50%) scale(0);
+    opacity:         0;
+    transition:
+      transform    0.52s cubic-bezier(0.34, 1.56, 0.64, 1),
+      opacity      0.4s ease,
+      filter       0.3s ease,
+      box-shadow   0.3s ease,
+      border-color 0.3s ease;
+    will-change: transform, opacity;
+  }
+
+  /*
+    Sektion 1 + 3: Satelliten nach LINKS
+    Winkel 120°/160°/200°/240°, r=190.
+    Chord = 2×190×sin(20°) = 130px → Lücke ≈ 35px ✓
+  */
+  #cw-orbit  .cw-satellite[data-sat-index="0"],
+  #cw-orbit-3 .cw-satellite[data-sat-index="0"] { --sx: -95px;  --sy: -165px; }
+  #cw-orbit  .cw-satellite[data-sat-index="1"],
+  #cw-orbit-3 .cw-satellite[data-sat-index="1"] { --sx: -179px; --sy:  -65px; }
+  #cw-orbit  .cw-satellite[data-sat-index="2"],
+  #cw-orbit-3 .cw-satellite[data-sat-index="2"] { --sx: -179px; --sy:   65px; }
+  #cw-orbit  .cw-satellite[data-sat-index="3"],
+  #cw-orbit-3 .cw-satellite[data-sat-index="3"] { --sx: -95px;  --sy:  165px; }
+
+  /*
+    Sektion 2: Satelliten nach RECHTS (gespiegelt), r=190.
+    Winkel 60°/20°/340°/300° → sx positiv.
+  */
+  #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  95px; --sy: -165px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx: 179px; --sy:  -65px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx: 179px; --sy:   65px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx:  95px; --sy:  165px; }
+
+  .cw-satellite.visible {
+    transform: translate(calc(-50% + var(--sx)), calc(-50% + var(--sy))) scale(1);
+    opacity:   1;
+  }
+
+  .cw-satellite:hover {
+    transform:    translate(calc(-50% + var(--sx)), calc(-50% + var(--sy))) scale(1.3) !important;
+    box-shadow:   0 0 28px rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.55);
+    z-index:      2;
+  }
+
+  .cw-satellite img {
+    width:          100%;
+    height:         100%;
+    object-fit:     cover;
+    filter:         brightness(0.78);
+    display:        block;
+    pointer-events: none;
+    transition:     filter 0.3s ease, transform 0.3s ease;
+  }
+
+  .cw-satellite:hover img { filter: brightness(0.45); transform: scale(1.08); }
+
+  .cw-satellite-label {
+    position:        absolute;
+    inset:           0;
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    color:           #fff;
+    font-size:       0.6rem;
+    font-weight:     600;
+    letter-spacing:  0.09em;
+    text-transform:  uppercase;
+    text-align:      center;
+    padding:         6px;
+    opacity:         0;
+    transition:      opacity 0.3s ease;
+    pointer-events:  none;
+  }
+
+  .cw-satellite:hover .cw-satellite-label { opacity: 1; }
+
+  /* Geschwister verblassen beim Hover */
+  .cw-orbit:has(.cw-satellite:hover) .cw-satellite:not(:hover) {
+    opacity: 0.38;
+    filter:  brightness(0.55);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════════════════════════════════════ */
+  @media (max-width: 1000px) {
+    .cw-intro {
+      padding-left:  clamp(24px, 6vw, 60px);
+      padding-right: clamp(24px, 6vw, 60px);
+    }
+
+    .cw-inner {
+      flex-direction: column;
+      padding:        0 clamp(24px, 6vw, 60px);
+      gap:            48px;
+    }
+
+    .cw--reversed .cw-inner {
+      flex-direction: column;
+      padding-left:  clamp(24px, 6vw, 60px);
+      padding-right: clamp(24px, 6vw, 60px);
+    }
+
+    .cw-text,
+    .cw-text--right { text-align: center; padding-left: 0; }
+
+    .cw-orbit { width: 340px; height: 340px; }
+    .cw-main  { width: 160px; height: 160px; }
+    .cw-satellite { width: 76px; height: 76px; }
+
+    /* r=152 — Sektion 1 + 3 nach links */
+    #cw-orbit  .cw-satellite[data-sat-index="0"],
+    #cw-orbit-3 .cw-satellite[data-sat-index="0"] { --sx: -76px;  --sy: -132px; }
+    #cw-orbit  .cw-satellite[data-sat-index="1"],
+    #cw-orbit-3 .cw-satellite[data-sat-index="1"] { --sx: -143px; --sy:  -52px; }
+    #cw-orbit  .cw-satellite[data-sat-index="2"],
+    #cw-orbit-3 .cw-satellite[data-sat-index="2"] { --sx: -143px; --sy:   52px; }
+    #cw-orbit  .cw-satellite[data-sat-index="3"],
+    #cw-orbit-3 .cw-satellite[data-sat-index="3"] { --sx: -76px;  --sy:  132px; }
+
+    /* r=152 — Sektion 2 nach rechts */
+    #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  76px; --sy: -132px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx: 143px; --sy:  -52px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx: 143px; --sy:   52px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx:  76px; --sy:  132px; }
+  }
+
+  @media (max-width: 600px) {
+    .cw { min-height: 80dvh; padding: 50px 0; }
+
+    .cw-orbit     { width: 280px; height: 280px; }
+    .cw-main      { width: 130px; height: 130px; }
+    .cw-satellite { width: 62px;  height: 62px;  }
+
+    /* r=124 — Sektion 1 + 3 nach links */
+    #cw-orbit  .cw-satellite[data-sat-index="0"],
+    #cw-orbit-3 .cw-satellite[data-sat-index="0"] { --sx: -62px;  --sy: -107px; }
+    #cw-orbit  .cw-satellite[data-sat-index="1"],
+    #cw-orbit-3 .cw-satellite[data-sat-index="1"] { --sx: -116px; --sy:  -42px; }
+    #cw-orbit  .cw-satellite[data-sat-index="2"],
+    #cw-orbit-3 .cw-satellite[data-sat-index="2"] { --sx: -116px; --sy:   42px; }
+    #cw-orbit  .cw-satellite[data-sat-index="3"],
+    #cw-orbit-3 .cw-satellite[data-sat-index="3"] { --sx: -62px;  --sy:  107px; }
+
+    /* r=124 — Sektion 2 nach rechts */
+    #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  62px; --sy: -107px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx: 116px; --sy:  -42px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx: 116px; --sy:   42px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx:  62px; --sy:  107px; }
+  }
+</style>
+
+<script>
+  // ═══════════════════════════════════════════════════════════════════════════
+  // CINEMA-WELCOME – Orchestrierung für Intro + 3 Orbit-Sektionen
+  //
+  // Geteilt:     Kino-Dimmer, activeSections-Set, setExtraDark()
+  // Pro Sektion: sessionStorage-Flag, IntersectionObserver, Satellit-Zustand
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // ── Gemeinsamer Dimmer ────────────────────────────────────────────────────
+  let dimmer = document.getElementById("cinema-dimmer") as HTMLElement | null;
+  if (!dimmer) {
+    dimmer = document.createElement("div");
+    dimmer.id = "cinema-dimmer";
+    Object.assign(dimmer.style, {
+      position:      "fixed",
+      inset:         "0",
+      zIndex:        "1001",
+      background:    "rgba(0,0,0,0)",
+      pointerEvents: "none",
+      transition:    "background 1.3s ease",
+    });
+    document.body.appendChild(dimmer);
+  }
+
+  // Wie viele Elemente (Intro + Sektionen) sind gerade sichtbar?
+  // Dimmer bleibt aktiv solange mindestens eines aktiv ist.
+  const activeSections = new Set<string>();
+
+  function activateDimmer(id: string) {
+    activeSections.add(id);
+    if (dimmer) dimmer.style.background = "rgba(0,0,0,0.80)";
+  }
+
+  function deactivateDimmer(id: string) {
+    activeSections.delete(id);
+    if (activeSections.size === 0 && dimmer) dimmer.style.background = "rgba(0,0,0,0)";
+  }
+
+  function setExtraDark(on: boolean) {
+    if (!dimmer || activeSections.size === 0) return;
+    dimmer.style.background = on ? "rgba(0,0,0,0.91)" : "rgba(0,0,0,0.80)";
+  }
+
+  // ── INTRO: Cinema-Sequenz (kein Orbit, zentriert) ────────────────────────
+  //
+  // Genau wie die Orbit-Sektionen:
+  //   1. Sektion über Dimmer heben (z-index 1002)
+  //   2. Dimmer aktivieren
+  //   3. "Willkommen." wipe-reveal (t=400ms)
+  //   4. Untertitel wipe-reveal (t=1500ms)
+  //   5. sessionStorage-Flag damit beim erneuten Durchscrollen Instant-Reveal läuft
+  //
+  const introEl   = document.getElementById("cw-intro");
+  const introHead = introEl?.querySelector<HTMLElement>(".cw-title");
+  const introSub  = introEl?.querySelector<HTMLElement>(".cw-subtitle");
+
+  if (introEl) {
+    const INTRO_KEY = "cinemaIntro_v1";
+    let introPlayed       = !!sessionStorage.getItem(INTRO_KEY);
+    let introCinemaActive = false;
+
+    function playIntroSequence(instant: boolean) {
+      // Sektion über den Dimmer heben damit sie sichtbar bleibt
+      introEl!.style.zIndex = "1002";
+      activateDimmer("cw-intro");
+
+      if (instant) {
+        // Schon mal gesehen → sofort alles sichtbar
+        introHead?.classList.add("instant");
+        introSub?.classList.add("instant");
+      } else {
+        // Erstes Mal → gestaffelte Wipe-Animation
+        setTimeout(() => introHead?.classList.add("revealed"), 400);
+        setTimeout(() => introSub?.classList.add("revealed"),  1500);
+        sessionStorage.setItem(INTRO_KEY, "1");
+        introPlayed = true;
+      }
+    }
+
+    const introObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (!introCinemaActive) {
+              introCinemaActive = true;
+              // introPlayed: nach erstem Durchlauf sofort zeigen (kein erneuter Wipe)
+              playIntroSequence(introPlayed);
+            } else {
+              activateDimmer("cw-intro");
+            }
+          } else {
+            introCinemaActive = false;
+            deactivateDimmer("cw-intro");
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    introObserver.observe(introEl);
+  }
+
+  // ── Factory-Funktion für eine Orbit-Sektion ───────────────────────────────
+  function setupCinemaSection(config: {
+    sectionId:  string;
+    orbitId:    string;
+    mainBtnId:  string;
+    sessionKey: string;
+  }) {
+    const { sectionId, orbitId, mainBtnId, sessionKey } = config;
+
+    const section    = document.getElementById(sectionId)  as HTMLElement | null;
+    const orbit      = document.getElementById(orbitId)    as HTMLElement | null;
+    const mainBtn    = document.getElementById(mainBtnId)  as HTMLButtonElement | null;
+    const titleEl    = section?.querySelector<HTMLElement>(".cw-title");
+    const subtitleEl = section?.querySelector<HTMLElement>(".cw-subtitle");
+    const satEls     = orbit
+      ? Array.from(orbit.querySelectorAll<HTMLElement>(".cw-satellite"))
+      : [];
+
+    if (!section || !orbit || !mainBtn) {
+      console.warn(`[CinemaWelcome] Elemente für "${sectionId}" nicht gefunden.`);
+      return;
+    }
+
+    const sec = section!;
+    const btn = mainBtn!;
+
+    let animationPlayed = !!sessionStorage.getItem(sessionKey);
+    let satellitesOpen  = false;
+    let cinemaActive    = false;
+    let isAnimating     = false;
+
+    function raiseSectionAboveDimmer() {
+      sec.style.position = "relative";
+      sec.style.zIndex   = "1002";
+    }
+
+    function openSatellites(instant = false) {
+      if (satellitesOpen) return;
+      satellitesOpen = true;
+      btn.setAttribute("aria-expanded", "true");
+      satEls.forEach((sat, i) => {
+        if (instant) sat.classList.add("visible");
+        else setTimeout(() => sat.classList.add("visible"), i * 200);
+      });
+    }
+
+    function closeSatellites() {
+      if (!satellitesOpen) return;
+      satellitesOpen = false;
+      btn.setAttribute("aria-expanded", "false");
+      satEls.forEach(sat => sat.classList.remove("visible"));
+    }
+
+    // ── Merge-Animation ─────────────────────────────────────────────
+    function handleSatelliteClick(clickedIdx: number) {
+      if (isAnimating || !satellitesOpen) return;
+      isAnimating = true;
+
+      const clickedSat = satEls[clickedIdx];
+      if (!clickedSat) return;
+
+      const satImg = clickedSat.querySelector<HTMLImageElement>("img");
+      const newSrc = satImg?.currentSrc || satImg?.src || "";
+      const newAlt = satImg?.alt ?? "";
+
+      // Phase 1: andere Satelliten einfahren (gestaffelt)
+      let delay = 0;
+      satEls.forEach((sat, i) => {
+        if (i === clickedIdx) return;
+        setTimeout(() => sat.classList.remove("visible"), delay);
+        delay += 100;
+      });
+      satellitesOpen = false;
+      btn.setAttribute("aria-expanded", "false");
+
+      // Phase 2 (t=350): Satellit wächst auf Hauptkreis-Größe, Bild blendet aus
+      setTimeout(() => {
+        clickedSat.style.zIndex     = "5";
+        clickedSat.style.transition = "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)";
+        clickedSat.style.transform  = "translate(-50%, -50%) scale(2.1)";
+
+        const mainImg = btn.querySelector<HTMLImageElement>("img");
+        if (mainImg) {
+          mainImg.style.transition = "opacity 0.45s ease";
+          mainImg.style.opacity    = "0";
+        }
+      }, 350);
+
+      // Phase 3 (t=800): Bildquelle tauschen
+      setTimeout(() => {
+        const mainImg = btn.querySelector<HTMLImageElement>("img");
+        if (mainImg) {
+          mainImg.src           = newSrc;
+          mainImg.alt           = newAlt;
+          mainImg.style.opacity = "";
+        }
+      }, 800);
+
+      // Phase 4 (t=1050): Satellit ausblenden
+      setTimeout(() => {
+        clickedSat.style.transition += ", opacity 0.35s ease";
+        clickedSat.style.opacity     = "0";
+      }, 1050);
+
+      // Phase 5 (t=1400): Aufräumen, Satelliten bleiben zu
+      setTimeout(() => {
+        clickedSat.style.transition = "none";
+        clickedSat.style.transform  = "";
+        clickedSat.style.opacity    = "";
+        clickedSat.style.zIndex     = "";
+        clickedSat.classList.remove("visible");
+
+        const mainImg = btn.querySelector<HTMLImageElement>("img");
+        if (mainImg) mainImg.style.transition = "";
+
+        requestAnimationFrame(() => { clickedSat.style.transition = ""; });
+        isAnimating = false;
+      }, 1400);
+    }
+
+    // ── Cinema-Sequenz ───────────────────────────────────────────────
+    function playCinemaSequence() {
+      raiseSectionAboveDimmer();
+      activateDimmer(sectionId);
+
+      setTimeout(() => titleEl?.classList.add("revealed"),    400);
+      setTimeout(() => subtitleEl?.classList.add("revealed"), 1500);
+      setTimeout(() => btn.classList.add("visible"),          2500);
+      setTimeout(() => openSatellites(false),                 3300);
+
+      sessionStorage.setItem(sessionKey, "1");
+      animationPlayed = true;
+    }
+
+    function instantReveal() {
+      raiseSectionAboveDimmer();
+      activateDimmer(sectionId);
+      titleEl?.classList.add("instant");
+      subtitleEl?.classList.add("instant");
+      btn.classList.add("visible");
+      openSatellites(true);
+    }
+
+    // ── Event-Listener ───────────────────────────────────────────────
+    btn.addEventListener("click", () => {
+      if (isAnimating) return;
+      if (satellitesOpen) closeSatellites();
+      else openSatellites(false);
+    });
+
+    satEls.forEach((sat, idx) => {
+      sat.addEventListener("click", (e) => { e.preventDefault(); handleSatelliteClick(idx); });
+      sat.addEventListener("mouseenter", () => setExtraDark(true));
+      sat.addEventListener("mouseleave", () => setExtraDark(false));
+    });
+
+    // ── IntersectionObserver ─────────────────────────────────────────
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (!cinemaActive) {
+              cinemaActive = true;
+              if (animationPlayed) {
+                instantReveal();
+              } else {
+                playCinemaSequence();
+              }
+            } else {
+              activateDimmer(sectionId);
+            }
+          } else {
+            cinemaActive = false;
+            deactivateDimmer(sectionId);
+          }
+        });
+      },
+      /*
+        0.58 statt 0.4: Reveal-Animation startet erst wenn ~58% der Sektion
+        sichtbar sind. Verhindert dass Text zu früh erscheint wenn man
+        gerade erst an der Sektionsgrenze angekommen ist.
+      */
+      { threshold: 0.58 }
+    );
+    observer.observe(sec);
+  }
+
+  // ── Alle drei Sektionen initialisieren ───────────────────────────────────
+  setupCinemaSection({ sectionId: "cinema-welcome",   orbitId: "cw-orbit",   mainBtnId: "cw-main",   sessionKey: "cinemaWelcome_v1"  });
+  setupCinemaSection({ sectionId: "cinema-welcome-2", orbitId: "cw-orbit-2", mainBtnId: "cw-main-2", sessionKey: "cinemaWelcome2_v1" });
+  setupCinemaSection({ sectionId: "cinema-welcome-3", orbitId: "cw-orbit-3", mainBtnId: "cw-main-3", sessionKey: "cinemaWelcome3_v1" });
+</script>

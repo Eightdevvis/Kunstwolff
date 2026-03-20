@@ -1,0 +1,113 @@
+{
+  "intro": {
+    "title": "Willkommen",
+    "subtitle": "Erzählen Sie uns doch etwas über sich."
+  },
+  "sections": [
+    {
+      "title": "Ihr Event",
+      "subtitle": "auf welches Event dürfen\u00a0wir\u00a0Sie begleiten?",
+      "mainCircle": {
+        "image": "/img/UnsereFähigkeitenBilder/Schnellzeichner/IMG_20240528_143426.webp",
+        "alt": "Kunstwolff – Eventkünstler",
+        "hint": "Entdecken"
+      },
+      "satellites": [
+        {
+          "title": "Schnellzeichner",
+          "image": "/img/slides/default/1_schnellzeichner_hq.webp",
+          "link": "/schnellzeichner/",
+          "alt": "Live Schnellzeichner für Events"
+        },
+        {
+          "title": "Szenenmaler",
+          "image": "/img/slides/default/2_karikatur_stadtfest.webp",
+          "link": "/szenenmaler/",
+          "alt": "Live Szenenmaler"
+        },
+        {
+          "title": "Karikaturen",
+          "image": "/img/slides/default/3_schnellzeichner-schweiz.webp",
+          "link": "/schnellzeichner/",
+          "alt": "Live Karikaturen"
+        },
+        {
+          "title": "Speedpainting",
+          "image": "/img/slides/default/4_Hochzeit_schnellzeichner_maler.webp",
+          "link": "/szenenmaler/",
+          "alt": "Speedpainting live"
+        }
+      ]
+    },
+    {
+      "title": "Ihre Muse",
+      "subtitle": "Wen möchten Sie kunstvoll beschenken? Persönliche Kunstwerke die bleibende Erinnerungen schenken.",
+      "mainCircle": {
+        "image": "/img/UnsereFähigkeitenBilder/Schnellzeichner/IMG_20240528_143426.webp",
+        "alt": "Kunstwolff – Eventkünstler",
+        "hint": "Entdecken"
+      },
+      "satellites": [
+        {
+          "title": "Schnellzeichner",
+          "image": "/img/slides/default/1_schnellzeichner_hq.webp",
+          "link": "/schnellzeichner/",
+          "alt": "Live Schnellzeichner für Events"
+        },
+        {
+          "title": "Szenenmaler",
+          "image": "/img/slides/default/2_karikatur_stadtfest.webp",
+          "link": "/szenenmaler/",
+          "alt": "Live Szenenmaler"
+        },
+        {
+          "title": "Karikaturen",
+          "image": "/img/slides/default/3_schnellzeichner-schweiz.webp",
+          "link": "/schnellzeichner/",
+          "alt": "Live Karikaturen"
+        },
+        {
+          "title": "Speedpainting",
+          "image": "/img/slides/default/4_Hochzeit_schnellzeichner_maler.webp",
+          "link": "/szenenmaler/",
+          "alt": "Speedpainting live"
+        }
+      ]
+    },
+    {
+      "title": "Ihr Geschmack",
+      "subtitle": "Welche Kunst passt zu\u00a0Ihnen?",
+      "mainCircle": {
+        "image": "/img/UnsereFähigkeitenBilder/Schnellzeichner/IMG_20240528_143426.webp",
+        "alt": "Kunstwolff – Eventkünstler",
+        "hint": "Entdecken"
+      },
+      "satellites": [
+        {
+          "title": "Schnellzeichner",
+          "image": "/img/slides/default/1_schnellzeichner_hq.webp",
+          "link": "/schnellzeichner/",
+          "alt": "Live Schnellzeichner für Events"
+        },
+        {
+          "title": "Szenenmaler",
+          "image": "/img/slides/default/2_karikatur_stadtfest.webp",
+          "link": "/szenenmaler/",
+          "alt": "Live Szenenmaler"
+        },
+        {
+          "title": "Karikaturen",
+          "image": "/img/slides/default/3_schnellzeichner-schweiz.webp",
+          "link": "/schnellzeichner/",
+          "alt": "Live Karikaturen"
+        },
+        {
+          "title": "Speedpainting",
+          "image": "/img/slides/default/4_Hochzeit_schnellzeichner_maler.webp",
+          "link": "/szenenmaler/",
+          "alt": "Speedpainting live"
+        }
+      ]
+    }
+  ]
+}

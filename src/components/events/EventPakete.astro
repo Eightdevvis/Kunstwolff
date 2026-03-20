@@ -1,0 +1,239 @@
+---
+/**
+ * EventPakete.astro
+ *
+ * Buchungspakete-Sektion für Event-Seiten.
+ * Zeigt 1–3 Pakete als Cards mit Dauer, Preis und Feature-Liste.
+ * CTA-Link führt zur Kontaktseite / Kontakt-Formular.
+ *
+ * Props:
+ *   title  – Überschrift der Sektion (aus content.json → pakete.title)
+ *   items  – Array von Paketen (title, duration, price, features[])
+ */
+
+import type { EventPaket } from '../../utils/events';
+
+const {
+  title = 'Unsere Pakete',
+  items = [] as EventPaket[],
+} = Astro.props as {
+  title?: string;
+  items?: EventPaket[];
+};
+---
+
+<section class="event-pakete">
+  <div class="event-pakete-inner">
+    <h2 class="event-pakete-heading">{title}</h2>
+
+    <div class="event-pakete-grid">
+      {items.map((paket, i) => (
+        <!-- Mittleres Paket (Index 1 bei 3 Paketen) wird hervorgehoben -->
+        <div class={`event-paket-card${i === 1 && items.length === 3 ? ' event-paket-card--featured' : ''}`}>
+          <div class="event-paket-header">
+            <h3 class="event-paket-title">{paket.title}</h3>
+            <p class="event-paket-duration">{paket.duration}</p>
+            <p class="event-paket-price">{paket.price}</p>
+          </div>
+
+          <ul class="event-paket-features">
+            {paket.features.map((feature) => (
+              <li>{feature}</li>
+            ))}
+          </ul>
+
+          <a href="#contact" class="event-paket-cta">Anfragen</a>
+        </div>
+      ))}
+    </div>
+
+    <!-- Hinweis unter den Karten -->
+    <p class="event-pakete-note">
+      Alle Preise auf Anfrage – wir erstellen Ihnen ein individuelles Angebot.
+    </p>
+  </div>
+</section>
+
+<style>
+  /* ── Sektion ─────────────────────────────────────────────────────────── */
+  .event-pakete {
+    background: #111;
+    padding: clamp(60px, 10vh, 100px) clamp(20px, 6vw, 80px);
+    color: #fff;
+  }
+
+  .event-pakete-inner {
+    max-width: 1060px;
+    margin: 0 auto;
+  }
+
+  /* ── Überschrift ─────────────────────────────────────────────────────── */
+  .event-pakete-heading {
+    font-family: Mayonice, serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    color: #fff;
+    margin: 0 0 clamp(40px, 7vh, 64px);
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+
+  /* ── Karten-Grid ─────────────────────────────────────────────────────── */
+  .event-pakete-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    align-items: start;
+  }
+
+  /* ── Einzelne Karte ──────────────────────────────────────────────────── */
+  .event-paket-card {
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 12px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    transition: border-color 0.25s ease;
+  }
+
+  .event-paket-card:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  /* Hervorgehobene Karte (Mittleres Paket bei 3 Karten) */
+  .event-paket-card--featured {
+    background: #fff;
+    border-color: #fff;
+    color: #111;
+
+    /* Leicht größer für visuelle Hierarchie */
+    transform: scale(1.03);
+    transform-origin: center;
+  }
+
+  .event-paket-card--featured:hover {
+    border-color: #fff;
+  }
+
+  /* ── Karten-Header ───────────────────────────────────────────────────── */
+  .event-paket-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .event-paket-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin: 0;
+    color: inherit;
+  }
+
+  .event-paket-duration {
+    font-size: 0.82rem;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.50);
+    margin: 0;
+  }
+
+  /* In der Featured-Karte: dunkle Schrift */
+  .event-paket-card--featured .event-paket-duration {
+    color: rgba(0, 0, 0, 0.45);
+  }
+
+  .event-paket-price {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 8px 0 0;
+    color: inherit;
+  }
+
+  /* ── Feature-Liste ───────────────────────────────────────────────────── */
+  .event-paket-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;   /* nimmt verfügbaren Platz ein → CTA bleibt unten */
+  }
+
+  .event-paket-features li {
+    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.78);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  /* Häkchen vor jeder Feature-Zeile */
+  .event-paket-features li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.82rem;
+  }
+
+  /* Featured-Karte: dunkle Feature-Texte */
+  .event-paket-card--featured .event-paket-features li {
+    color: rgba(0, 0, 0, 0.75);
+  }
+
+  .event-paket-card--featured .event-paket-features li::before {
+    color: rgba(0, 0, 0, 0.40);
+  }
+
+  /* ── CTA-Button ──────────────────────────────────────────────────────── */
+  .event-paket-cta {
+    display: block;
+    text-align: center;
+    padding: 12px 24px;
+    border: 1.5px solid rgba(255, 255, 255, 0.40);
+    color: #fff;
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.25s ease, border-color 0.25s ease;
+  }
+
+  .event-paket-cta:hover {
+    background: rgba(255, 255, 255, 0.10);
+    border-color: rgba(255, 255, 255, 0.70);
+  }
+
+  /* Featured-Karte: invertierter Button */
+  .event-paket-card--featured .event-paket-cta {
+    border-color: #111;
+    color: #111;
+  }
+
+  .event-paket-card--featured .event-paket-cta:hover {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: #000;
+  }
+
+  /* ── Hinweis unter Karten ────────────────────────────────────────────── */
+  .event-pakete-note {
+    text-align: center;
+    margin: clamp(28px, 5vh, 48px) 0 0;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.38);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Responsive ──────────────────────────────────────────────────────── */
+  @media (max-width: 700px) {
+    /* Hervorhebung auf Mobil deaktivieren (kein Platz für transform) */
+    .event-paket-card--featured {
+      transform: none;
+    }
+  }
+</style>

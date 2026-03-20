@@ -1,2 +1,16 @@
 {
+  // TypeScript: Astro-eigenes TS-Plugin nutzen statt VS Code-Standard
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // Astro-Extension: Formatter für .astro-Dateien aktivieren
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+
+  // Dateien die im Explorer ausgeblendet werden können (optional)
+  "files.exclude": {
+    "**/.astro": true,
+    "**/node_modules": true
+  }
 }

@@ -1,0 +1,28 @@
+{
+  "partners": [
+    {
+      "id": "eventspace-gmbh",
+      "name": "EventSpace GmbH",
+      "logo": "/img/partners/eventspace-gmbh.svg",
+      "description": "Moderne Event-Locations mit professioneller Bühnen- und Lichttechnik – der perfekte Rahmen für Firmenevents, Galas und kreative Abendveranstaltungen in der gesamten Region.",
+      "url": "https://example.com/eventspace",
+      "enabled": true
+    },
+    {
+      "id": "printmagic",
+      "name": "PrintMagic",
+      "logo": "/img/partners/printmagic.svg",
+      "description": "Hochwertige Druckveredelung von Karikaturen und Kunstwerken – vom Sofortdruck auf Events bis zum gerahmten Unikat als bleibende Erinnerung für Ihre Gäste.",
+      "url": "https://example.com/printmagic",
+      "enabled": true
+    },
+    {
+      "id": "lightshow-pro",
+      "name": "LightShow Pro",
+      "logo": "/img/partners/lightshow-pro.svg",
+      "description": "Professionelle Licht- und Tontechnik für Events aller Größen – von der intimen Vernissage bis zur großen Firmenfeier mit hunderten Gästen.",
+      "url": "https://example.com/lightshow-pro",
+      "enabled": true
+    }
+  ]
+}

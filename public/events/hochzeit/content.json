@@ -1,0 +1,79 @@
+{
+  "ablauf": {
+    "enabled": true,
+    "title": "So läuft Ihre Hochzeit mit uns ab",
+    "steps": [
+      {
+        "title": "Beratung & Planung",
+        "text": "Wir besprechen Ihren Hochzeitstag, den gewünschten Stil und den optimalen Zeitrahmen für Live-Kunst. Ob Sektempfang, Abendprogramm oder ganzer Tag – wir passen uns an.",
+        "icon": "chat"
+      },
+      {
+        "title": "Ankunft & Aufbau",
+        "text": "Wir kommen diskret, richten uns ein und sind zur vereinbarten Zeit bereit – ohne Stress für Sie.",
+        "icon": "setup"
+      },
+      {
+        "title": "Live-Porträts für Brautpaar & Gäste",
+        "text": "Während die Feier läuft entstehen charmante Porträts – vom Brautpaar über die Trauzeugen bis zu Oma und Opa. Gelächter, Staunen und Begeisterung inklusive.",
+        "icon": "star"
+      },
+      {
+        "title": "Unvergessliche Erinnerungen",
+        "text": "Jeder Gast nimmt ein persönliches Kunstwerk als Erinnerung mit. Das Brautpaar erhält auf Wunsch ein größeres Gemeinschaftsbild.",
+        "icon": "gift"
+      }
+    ]
+  },
+  "pakete": {
+    "enabled": true,
+    "title": "Unsere Hochzeitspakete",
+    "items": [
+      {
+        "title": "Sektempfang",
+        "duration": "2 Stunden",
+        "price": "Auf Anfrage",
+        "features": [
+          "1 Künstler",
+          "Ideal für den Empfang",
+          "Bis ca. 40 Porträts",
+          "Material inklusive"
+        ]
+      },
+      {
+        "title": "Hochzeitstag",
+        "duration": "4–6 Stunden",
+        "price": "Auf Anfrage",
+        "features": [
+          "1 Künstler",
+          "Empfang und Abendprogramm",
+          "Bis ca. 100 Porträts",
+          "Material inklusive",
+          "Brautpaar-Porträt"
+        ]
+      },
+      {
+        "title": "Rundum-Sorglos",
+        "duration": "Ganzer Tag",
+        "price": "Auf Anfrage",
+        "features": [
+          "1–2 Künstler",
+          "Von Zeremonie bis Tanzfläche",
+          "Unbegrenzte Porträts",
+          "Material inklusive",
+          "Großes Brautpaar-Gemälde"
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "enabled": true,
+    "title": "Unsere Künstler für Ihre Hochzeit"
+  },
+  "referenzen": {
+    "enabled": false,
+    "title": "Brautpaare die uns gebucht haben",
+    "text": "",
+    "logos": []
+  }
+}

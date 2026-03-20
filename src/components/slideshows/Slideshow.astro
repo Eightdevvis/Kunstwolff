@@ -3,6 +3,7 @@
 type Slide = {
     src: string;
     alt?: string;
+    title?: string;
     categories?: string[];
 };
 
@@ -30,7 +31,7 @@ const filteredItems =
             {
                 filteredItems.map((slide: Slide) => (
                     <div class="swiper-slide">
-                        <a class="lg-item" href={slide.src}>
+                        <a class="lg-item" href={slide.src} data-title={slide.title ?? ""}>
                             <img src={slide.src} alt={slide.alt ?? ""} loading="lazy" decoding="async" />
                         </a>
                     </div>
@@ -51,11 +52,12 @@ const filteredItems =
     // =====================================================================
     // LIGHTBOX STATE
     // =====================================================================
-    type LbSlide = { src: string; alt: string };
+    type LbSlide = { src: string; alt: string; title: string };
 
     let lb: HTMLElement | null = null;
     let lbImg: HTMLImageElement | null = null;
     let lbCounter: HTMLElement | null = null;
+    let lbCaption: HTMLElement | null = null;
     let lbSlides: LbSlide[] = [];
     let lbIdx = 0;
 
@@ -87,6 +89,7 @@ const filteredItems =
             lb = document.getElementById("kw-lightbox");
             lbImg = lb!.querySelector(".lb-img");
             lbCounter = lb!.querySelector(".lb-counter");
+            lbCaption = lb!.querySelector(".lb-caption");
             return;
         }
 
@@ -104,13 +107,17 @@ const filteredItems =
             <button class="lb-close" aria-label="Schließen">✕</button>
             <button class="lb-prev" aria-label="Vorheriges Bild">&#8249;</button>
             <button class="lb-next" aria-label="Nächstes Bild">&#8250;</button>
-            <span class="lb-counter"></span>
+            <div class="lb-footer">
+                <span class="lb-caption"></span>
+                <span class="lb-counter"></span>
+            </div>
         `;
         document.body.appendChild(el);
 
         lb = el;
         lbImg = el.querySelector(".lb-img");
         lbCounter = el.querySelector(".lb-counter");
+        lbCaption = el.querySelector(".lb-caption");
 
         el.querySelector(".lb-backdrop")!.addEventListener("click", closeLightbox);
         el.querySelector(".lb-close")!.addEventListener("click", closeLightbox);
@@ -167,6 +174,12 @@ const filteredItems =
         lbImg.src = slide.src;
         lbImg.alt = slide.alt;
         lbCounter.textContent = `${lbIdx + 1} / ${lbSlides.length}`;
+        // title hat Vorrang, Fallback auf alt – Caption ausblenden wenn beides leer
+        if (lbCaption) {
+            const caption = slide.title || slide.alt || "";
+            lbCaption.textContent = caption;
+            lbCaption.style.display = caption ? "" : "none";
+        }
 
         const prevBtn = lb?.querySelector(".lb-prev") as HTMLElement | null;
         const nextBtn = lb?.querySelector(".lb-next") as HTMLElement | null;
@@ -370,6 +383,7 @@ const filteredItems =
             const slides: LbSlide[] = lgAnchors.map((a) => ({
                 src: a.getAttribute("href") || "",
                 alt: a.querySelector("img")?.getAttribute("alt") || "",
+                title: a.getAttribute("data-title") || "",
             }));
 
             // Click-Handler via Event-Delegation (funktioniert auch auf geklonten Swiper-Slides)
@@ -454,6 +468,7 @@ const filteredItems =
         min-height: 400px;
     }
 
+
     .swiper-slide img {
         display: block;
         width: auto;
@@ -483,6 +498,10 @@ const filteredItems =
         width: auto;
         max-width: none;
         max-height: none;
+    }
+
+    .swiper-pagination {
+        display: none;
     }
 
     .swiper-button-next,
@@ -598,12 +617,34 @@ const filteredItems =
         right: 16px;
     }
 
-    .lb-counter {
+    /* Footer-Bereich: Caption + Counter, zentriert am unteren Rand */
+    .lb-footer {
         position: absolute;
         bottom: 16px;
         left: 50%;
         transform: translateX(-50%);
         z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        max-width: min(90vw, 700px);
+    }
+
+    /* Sichtbarer Bildtitel in der Lightbox */
+    .lb-caption {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 14px;
+        font-family: sans-serif;
+        font-style: italic;
+        text-align: center;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    /* Zähler "2 / 8" */
+    .lb-counter {
         color: #fff;
         background: rgba(0, 0, 0, 0.5);
         padding: 4px 14px;

@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# VS Code Local History (auto-generated, should not be tracked)
+.history/

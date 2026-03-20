@@ -1,0 +1,25 @@
+---
+/**
+ * EventLayout.astro
+ *
+ * Layout-Wrapper für Event-Seiten (Firmenfeier, Messe, Hochzeit, Private Feier).
+ * Funktioniert analog zu SkillLayout.astro – thin wrapper um Layout.astro
+ * mit event-spezifischen Default-Texten.
+ *
+ * Genutzt von:
+ *   - src/pages/[landing].astro (wenn pageType === 'event')
+ *   - src/pages/[skill]/[landing].astro (wenn pageType === 'event')
+ */
+import Layout from "./Layout.astro";
+import "../styles/global.css";
+
+const {
+  title = "Eventkünstler buchen | Kunstwolff",
+  description = "Professionelle Eventkünstler für Firmenfeiern, Messen, Hochzeiten & private Feiern. Live-Karikaturen und Szenenmalerei als Highlight für Ihr Event.",
+  image,
+} = Astro.props;
+---
+
+<Layout title={title} description={description} image={image}>
+  <slot />
+</Layout>

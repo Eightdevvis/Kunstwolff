@@ -1,0 +1,205 @@
+---
+/**
+ * EventHero.astro
+ *
+ * Dark/Cinematic Hero-Block für Event-Seiten.
+ * Design orientiert sich an Opener.astro (dunkles Theme mit Titelbild-Hintergrund)
+ * aber mit event-spezifischen Elementen: Eventtyp-Label, Titel, Beschreibung, CTA.
+ *
+ * Props:
+ *   titleImage  – Pfad zum Hintergrundbild (aus resolveEventTitleImage())
+ *   title       – Hauptüberschrift (aus event.heroTitle)
+ *   subtitle    – Beschreibungstext (aus event.description)
+ *   eventLabel  – Label oben (z.B. "Firmenfeier" oder "Schnellzeichner · Firmenfeier")
+ *   ctaLink     – Wohin der CTA-Button linkt (Standard: /contact oder Formular-Anker)
+ */
+
+const {
+  titleImage = '/img/samples/sample1.jpeg',
+  title = 'Live-Kunst für Ihr Event',
+  subtitle = 'Professionelle Eventkünstler für unvergessliche Momente.',
+  eventLabel = '',
+  ctaLink = '#contact',
+} = Astro.props;
+---
+
+<!-- Hero Section -->
+<section class="event-hero" style={`--hero-bg-image: url('${titleImage}')`}>
+  <!-- Verstecktes Bild für SEO / Alt-Text -->
+  <img src={titleImage} alt={title} style="display:none;" />
+
+  <!-- Dunkler Overlay oben für Navigation -->
+  <div class="event-hero-top-fade" aria-hidden="true"></div>
+
+  <!-- Content zentriert -->
+  <div class="event-hero-content">
+    {eventLabel && (
+      <p class="event-hero-label">{eventLabel}</p>
+    )}
+    <h1 class="event-hero-title">{title}</h1>
+    {subtitle && (
+      <p class="event-hero-subtitle">{subtitle}</p>
+    )}
+    <a href={ctaLink} class="event-hero-cta">Jetzt anfragen</a>
+  </div>
+
+  <!-- Gradient-Blur unten (übergang zum nächsten Abschnitt) -->
+  <div class="event-hero-bottom-fade" aria-hidden="true"></div>
+</section>
+
+<style>
+  /* ── Hero: Vollbild-Hintergrund mit Dark-Overlay ────────────────────── */
+  .event-hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+
+    /* Titelbild als CSS-Custom-Property – gesetzt im style-Attribut */
+    background: var(--hero-bg-image) center / cover no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Dunkler Overlay über das gesamte Bild */
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  /* Globaler Overlay: abdunkeln damit Text gut lesbar ist */
+  .event-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.58);
+    z-index: 0;
+  }
+
+  /* ── Gradient oben: Navigation bleibt sichtbar ─────────────────────── */
+  .event-hero-top-fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 160px;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.55) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* ── Gradient-Blur unten: weicher Übergang ──────────────────────────── */
+  .event-hero-bottom-fade {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 140px;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.95) 0%,
+      rgba(0, 0, 0, 0.80) 35%,
+      rgba(0, 0, 0, 0.20) 75%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    mask-image: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.95) 40%,
+      rgba(0, 0, 0, 0.40) 72%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.95) 40%,
+      rgba(0, 0, 0, 0.40) 72%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── Content-Box zentriert im Hero ─────────────────────────────────── */
+  .event-hero-content {
+    position: relative;
+    z-index: 2;              /* über den Overlays */
+    text-align: center;
+    padding: 48px 32px;
+    max-width: 820px;
+    margin: 0 auto;
+    color: #fff;
+
+    /* Leichte vertikale Verschiebung nach oben (optisch schöner) */
+    transform: translateY(-8vh);
+  }
+
+  /* Eventtyp-Label: kleiner Text über dem Haupttitel (z.B. "Firmenfeier") */
+  .event-hero-label {
+    font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 0 0 clamp(12px, 2vh, 20px);
+    font-weight: 500;
+  }
+
+  /* Haupttitel: Mayonice, groß, dünn */
+  .event-hero-title {
+    font-family: Mayonice, serif;
+    font-weight: 200;
+    font-size: clamp(2.6rem, 6vw, 5.2rem);
+    line-height: 1.08;
+    letter-spacing: 0.02em;
+    margin: 0 0 clamp(16px, 3vh, 28px);
+    color: #fff;
+  }
+
+  /* Beschreibungstext: leicht transparent */
+  .event-hero-subtitle {
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+    line-height: 1.6;
+    opacity: 0.8;
+    margin: 0 0 clamp(28px, 5vh, 48px);
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 300;
+  }
+
+  /* CTA-Button: hell auf dunkel */
+  .event-hero-cta {
+    display: inline-block;
+    padding: 14px 36px;
+    border: 1.5px solid rgba(255, 255, 255, 0.75);
+    color: #fff;
+    font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  }
+
+  .event-hero-cta:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: #fff;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .event-hero-content {
+      transform: translateY(-4vh);
+      padding: 40px 24px;
+    }
+
+    .event-hero-cta {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>

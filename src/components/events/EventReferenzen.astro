@@ -1,0 +1,133 @@
+---
+/**
+ * EventReferenzen.astro
+ *
+ * Kunden-Referenzen-Sektion für Event-Seiten.
+ * Zeigt Kundenlogos und optionalen Einleitungstext.
+ *
+ * Wenn `logos` leer ist und keine `text` vorhanden ist, rendert die Komponente
+ * nichts – so können leere Referenzen-Sektionen sauber ausgeblendet werden
+ * ohne die Seite zu verunstalten.
+ *
+ * Props:
+ *   title  – Überschrift der Sektion
+ *   text   – Optionaler Einleitungstext
+ *   logos  – Array von { src, alt } Logo-Objekten
+ */
+
+import type { EventLogo } from '../../utils/events';
+
+const {
+  title = 'Das sagen unsere Kunden',
+  text = '',
+  logos = [] as EventLogo[],
+} = Astro.props as {
+  title?: string;
+  text?: string;
+  logos?: EventLogo[];
+};
+
+// Wenn weder Text noch Logos vorhanden: nichts rendern
+const hasContent = logos.length > 0 || text.trim().length > 0;
+---
+
+{hasContent && (
+  <section class="event-referenzen">
+    <div class="event-referenzen-inner">
+      <h2 class="event-referenzen-heading">{title}</h2>
+
+      {text && (
+        <p class="event-referenzen-text">{text}</p>
+      )}
+
+      {logos.length > 0 && (
+        <div class="event-referenzen-logos">
+          {logos.map((logo) => (
+            <div class="event-referenzen-logo">
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                loading="lazy"
+              />
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+<style>
+  /* ── Sektion ─────────────────────────────────────────────────────────── */
+  .event-referenzen {
+    background: #f2f2f2;
+    padding: clamp(60px, 10vh, 90px) clamp(20px, 6vw, 80px);
+  }
+
+  .event-referenzen-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  /* ── Überschrift ─────────────────────────────────────────────────────── */
+  .event-referenzen-heading {
+    font-family: Mayonice, serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 400;
+    color: #111;
+    margin: 0 0 clamp(16px, 3vh, 24px);
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Einleitungstext ─────────────────────────────────────────────────── */
+  .event-referenzen-text {
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    line-height: 1.65;
+    color: #555;
+    max-width: 620px;
+    margin: 0 auto clamp(32px, 5vh, 48px);
+  }
+
+  /* ── Logo-Grid ───────────────────────────────────────────────────────── */
+  .event-referenzen-logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px 36px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* ── Einzelnes Logo ──────────────────────────────────────────────────── */
+  .event-referenzen-logo {
+    height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .event-referenzen-logo img {
+    height: 100%;
+    width: auto;
+    max-width: 140px;
+    object-fit: contain;
+
+    /* Logos in grau darstellen (einheitliches Erscheinungsbild) */
+    filter: grayscale(100%) opacity(0.60);
+    transition: filter 0.25s ease;
+  }
+
+  .event-referenzen-logo:hover img {
+    filter: grayscale(0%) opacity(1);
+  }
+
+  /* ── Responsive ──────────────────────────────────────────────────────── */
+  @media (max-width: 480px) {
+    .event-referenzen-logos {
+      gap: 20px 28px;
+    }
+
+    .event-referenzen-logo {
+      height: 36px;
+    }
+  }
+</style>

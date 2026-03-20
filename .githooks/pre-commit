@@ -5,4 +5,4 @@ npm run optimize:images
 
 npm run sync:content
 
-git add public/img/slides public/reviews public/img/UnsereFähigkeitenBilder public/why
+git add public/img/slides public/reviews public/img/UnsereFähigkeitenBilder public/img/Titelbild public/img/why public/why public/faq

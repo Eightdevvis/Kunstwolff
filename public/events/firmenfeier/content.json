@@ -1,0 +1,79 @@
+{
+  "ablauf": {
+    "enabled": true,
+    "title": "So läuft Ihre Firmenfeier mit uns ab",
+    "steps": [
+      {
+        "title": "Anfrage & Briefing",
+        "text": "Sie kontaktieren uns mit Datum, Ort und Gästeanzahl. Wir besprechen gemeinsam welcher Künstler und welches Format am besten zu Ihrer Veranstaltung passt.",
+        "icon": "chat"
+      },
+      {
+        "title": "Aufbau vor Ort",
+        "text": "Wir kommen rechtzeitig an, bauen unser Equipment diskret auf und stimmen uns kurz mit Ihrem Event-Team ab.",
+        "icon": "setup"
+      },
+      {
+        "title": "Live-Kunst während der Feier",
+        "text": "Während Ihre Gäste feiern, zeichnen oder malen wir live – direkt unter den Menschen, als Showact oder am eigenen Tisch.",
+        "icon": "star"
+      },
+      {
+        "title": "Persönliche Erinnerungen",
+        "text": "Jeder Gast nimmt ein individuelles Kunstwerk mit nach Hause – ein echtes, persönliches Souvenir von Ihrer Firmenfeier.",
+        "icon": "gift"
+      }
+    ]
+  },
+  "pakete": {
+    "enabled": true,
+    "title": "Unsere Pakete für Ihre Firmenfeier",
+    "items": [
+      {
+        "title": "Starter",
+        "duration": "2 Stunden",
+        "price": "Auf Anfrage",
+        "features": [
+          "1 Künstler",
+          "Live-Karikaturen oder Szenenmalerei",
+          "Bis ca. 40 Porträts",
+          "Material inklusive"
+        ]
+      },
+      {
+        "title": "Event",
+        "duration": "4 Stunden",
+        "price": "Auf Anfrage",
+        "features": [
+          "1–2 Künstler",
+          "Live-Karikaturen und/oder Szenenmalerei",
+          "Bis ca. 80 Porträts",
+          "Material inklusive",
+          "Kurze Pause inklusive"
+        ]
+      },
+      {
+        "title": "Premium",
+        "duration": "Ganztägig",
+        "price": "Auf Anfrage",
+        "features": [
+          "2+ Künstler",
+          "Kombination verschiedener Kunstformen",
+          "Unbegrenzte Porträts",
+          "Material inklusive",
+          "Individuelle Abstimmung"
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "enabled": true,
+    "title": "Passende Künstler für Ihre Firmenfeier"
+  },
+  "referenzen": {
+    "enabled": false,
+    "title": "Unternehmen die uns bereits gebucht haben",
+    "text": "",
+    "logos": []
+  }
+}

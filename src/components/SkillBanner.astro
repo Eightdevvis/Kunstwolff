@@ -18,8 +18,8 @@ type Review = {
 const {
   skills = [],
   items = [],
-  introTitle = "UNSERE LEISTUNGEN",
-  introText = "Wähle die passende Künstlerkategorie für dein Event.",
+  introTitle = "Welcher Geschmack darf's sein?",
+  introText = "Sie suchen Kunst und Unterhaltung für Ihren besonderen Anlass? Da sind sie hier goldrichtig. Wir bieten mehr als nur einen Live Künstler. Finden Sie in unserem Repertoire Zeichnungen, die natürliche Icebreaker bieten, persönliche Kunstwerke die permanente Erinnerungen schaffen, bis hin zu kompletten Gemälden die Sie beim Entstehen beobachten konnten.",
   showIntro = true,
   reviews = [],
   reviewCategories = [],
@@ -84,10 +84,10 @@ const leftSkill = list[0] ?? FALLBACK_SKILLS[0];
 const rightSkill = list[1] ?? FALLBACK_SKILLS[1] ?? FALLBACK_SKILLS[0];
 ---
 
-<section class="skills-section">
+<section class="skills-section" id="skills-section-banner">
   <div class="skills-columns">
     <div class="skills-col skills-col-left">
-      <div class="skill-item">
+      <div class="skill-item" data-flash-index="0">
         {
           leftSkill.link ? (
             <a
@@ -137,7 +137,7 @@ const rightSkill = list[1] ?? FALLBACK_SKILLS[1] ?? FALLBACK_SKILLS[0];
     </div>
 
     <div class="skills-col skills-col-right">
-      <div class="skill-item">
+      <div class="skill-item" data-flash-index="1">
         {
           rightSkill.link ? (
             <a
@@ -317,6 +317,35 @@ const rightSkill = list[1] ?? FALLBACK_SKILLS[1] ?? FALLBACK_SKILLS[0];
     }
   }
 
+  /* ── Aufleuchten-Animation ──────────────────────────────────────────────
+     Kurzer Helligkeits-Flash + weißer Glow-Ring ums Bild.
+     Läuft einmal pro Kreis, gestaffelt nach data-flash-index.
+  ─────────────────────────────────────────────────────────────────────── */
+  /* Brightness-Blitz auf dem Bild */
+  @keyframes skill-flash {
+    0%   { filter: brightness(0.85); }
+    30%  { filter: brightness(2.0); }
+    60%  { filter: brightness(1.4); }
+    100% { filter: brightness(0.85); }
+  }
+
+  /* Heiligenschein-Ring auf dem Kreis selbst – box-shadow überlebt overflow:hidden */
+  @keyframes skill-glow {
+    0%   { box-shadow: 0 0 0   0px rgba(255, 240, 200, 0); }
+    30%  { box-shadow: 0 0 18px 10px rgba(255, 240, 200, 0.85); }
+    60%  { box-shadow: 0 0 12px  6px rgba(255, 240, 200, 0.4); }
+    100% { box-shadow: 0 0 0   0px rgba(255, 240, 200, 0); }
+  }
+
+  /* Klasse wird via JS gesetzt */
+  .skill-item.is-flashing {
+    animation: skill-glow 0.9s ease-out forwards;
+  }
+  .skill-item.is-flashing .skill-image {
+    animation: skill-flash 0.9s ease-out forwards;
+    transition: none;
+  }
+
   @media (max-width: 560px) {
     .skills-section {
       --skill-size: 160px;
@@ -330,3 +359,63 @@ const rightSkill = list[1] ?? FALLBACK_SKILLS[1] ?? FALLBACK_SKILLS[0];
   }
 </style>
 
+<script>
+  // ── Skill-Flash-Intro-Animation ─────────────────────────────────────────
+  // Feuert NUR EINMAL pro Session (sessionStorage-Flag), sobald der Banner
+  // das erste Mal ins Sichtfeld scrollt. Die Kreise leuchten nacheinander auf.
+  // ──────────────────────────────────────────────────────────────────────────
+
+  const FLASH_KEY = "skillBannerFlashed_v4";
+  // Pause nach dem Scroll bevor die erste Animation startet
+  const INITIAL_DELAY_MS = 500;
+  // Abstand zwischen den Kreisen
+  const STAGGER_MS = 700;
+
+  function triggerFlash() {
+    // Abbruch wenn schon in dieser Session gefeuert
+    if (sessionStorage.getItem(FLASH_KEY)) return;
+    sessionStorage.setItem(FLASH_KEY, "1");
+
+    const section = document.getElementById("skills-section-banner");
+    if (!section) return;
+
+    // Alle Kreise nach ihrem data-flash-index sortieren und gestaffelt starten
+    const items = Array.from(
+      section.querySelectorAll<HTMLElement>(".skill-item[data-flash-index]")
+    ).sort(
+      (a, b) =>
+        Number(a.dataset.flashIndex) - Number(b.dataset.flashIndex)
+    );
+
+    items.forEach((item, i) => {
+      setTimeout(() => {
+        item.classList.add("is-flashing");
+
+        // Nach der Animation Klasse wieder entfernen (damit hover-Effekte
+        // nicht durch verbleibende Styles gestört werden)
+        item.addEventListener(
+          "animationend",
+          () => item.classList.remove("is-flashing"),
+          { once: true }
+        );
+      }, INITIAL_DELAY_MS + i * STAGGER_MS);
+    });
+  }
+
+  // IntersectionObserver: feuert wenn 30% der Section sichtbar sind
+  const section = document.getElementById("skills-section-banner");
+  if (section) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            triggerFlash();
+            observer.disconnect(); // nie wieder beobachten nötig
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(section);
+  }
+</script>

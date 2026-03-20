@@ -1,0 +1,227 @@
+---
+import Layout from "../layouts/Layout.astro";
+import fs from "fs";
+import path from "path";
+
+// ─── Partnerdaten aus JSON lesen ─────────────────────────────────────────────
+// Quelle: public/partners/partners.json
+// Wird später vom Admin-Tool beschrieben.
+const partnersPath = path.resolve("./public/partners/partners.json");
+const raw = fs.readFileSync(partnersPath, "utf-8");
+const data = JSON.parse(raw) as {
+  partners: {
+    id: string;
+    name: string;
+    logo: string;
+    description: string;
+    url: string;
+    enabled?: boolean;
+  }[];
+};
+
+// Nur aktivierte Partner anzeigen (enabled: false = ausblenden)
+const partners = data.partners.filter((p) => p.enabled !== false);
+---
+
+<Layout
+  title="Unsere Partner | Kunstwolff"
+  description="Verlässliche Partner an unserer Seite – von Event-Locations bis zur Drucktechnik."
+>
+  <main class="partners-page">
+    <div class="partners-header">
+      <h1>Unsere Partner</h1>
+      <p class="partners-intro">
+        Gemeinsam machen wir Events unvergesslich. Diese Partner begleiten uns
+        seit Jahren mit Kompetenz und Leidenschaft.
+      </p>
+    </div>
+
+    <!-- Kachel-Grid: hover auf dem Grid dimmt alle nicht-aktiven Kacheln -->
+    <div class="partners-grid">
+      {
+        partners.map((partner) => (
+          // Ganze Kachel ist ein Link – Klick aufs Logo UND auf "Erfahre mehr →"
+          // führt zur Partner-Website
+          <a
+            class="partner-card"
+            href={partner.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${partner.name} – Partner-Website besuchen`}
+          >
+            {/* Logo-Bereich – wird beim Hover gedimmt */}
+            <div class="partner-logo-wrap">
+              <img
+                src={partner.logo}
+                alt={`${partner.name} Logo`}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+
+            {/* Info-Panel – klappt beim Hover von unten herein */}
+            <div class="partner-info" aria-hidden="true">
+              <p class="partner-description">{partner.description}</p>
+              <span class="partner-more">Erfahre mehr →</span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </main>
+</Layout>
+
+<style>
+  /* ── Seiten-Layout ──────────────────────────────────────────────────────── */
+  .partners-page {
+    /* width: 100% nötig damit das <main> als flex-item in body (column-flex)
+       die volle Breite bekommt. Ohne das deaktiviert margin: 0 auto das
+       align-self: stretch → Element schrumpft auf max-content-Breite → Grid bricht. */
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 140px 24px 120px;
+  }
+
+  .partners-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .partners-header h1 {
+    /* Mayonice explizit – --font-headings ist aktuell Inter, daher direkt gesetzt */
+    font-family: 'Mayonice', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    margin-bottom: 16px;
+    color: #ffffff;
+  }
+
+  .partners-intro {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.5);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+  }
+
+  /* Dezente Trennlinie unter dem Header, wie auf anderen Sektionen */
+  .partners-header::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: #d4af37;
+    margin: 28px auto 0;
+    opacity: 0.7;
+  }
+
+  /* ── Grid ───────────────────────────────────────────────────────────────── */
+  .partners-grid {
+    display: grid;
+    /* 3 Spalten auf Desktop, 2 auf Tablet, 1 auf Mobil */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    /* Verhindert dass Zeilen sich auf die volle Flex-Höhe strecken */
+    align-content: start;
+  }
+
+  @media (max-width: 900px) {
+    .partners-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .partners-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── Kachel ─────────────────────────────────────────────────────────────── */
+  .partner-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #0d0d0d;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    display: block;
+    aspect-ratio: 4 / 3;
+    text-decoration: none;
+    transition: filter 0.35s ease, opacity 0.35s ease, border-color 0.35s ease;
+  }
+
+  .partner-card:hover {
+    border-color: rgba(212, 175, 55, 0.3);
+  }
+
+  /* Andere Kacheln dimmen wenn eine aktiv ist */
+  .partners-grid:has(.partner-card:hover) .partner-card:not(:hover) {
+    filter: brightness(0.45);
+    opacity: 0.9;
+  }
+
+  /* ── Logo-Bereich ───────────────────────────────────────────────────────── */
+  .partner-logo-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    /* Logo-Bereich dimmt wenn Info-Panel aufklappt */
+    transition: filter 0.4s ease;
+  }
+
+  .partner-card:hover .partner-logo-wrap {
+    filter: brightness(0.55);
+  }
+
+  .partner-logo-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* ── Info-Panel ─────────────────────────────────────────────────────────── */
+  .partner-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* Panel startet unsichtbar unterhalb der Kachel */
+    transform: translateY(100%);
+    /* Sanftes, leicht federndes Ausklapperln */
+    transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+    background: rgba(8, 8, 8, 0.93);
+    backdrop-filter: blur(4px);
+    padding: 20px 22px 18px;
+    /* Sicherheitshalber: falls Beschreibung doch länger ist */
+    max-height: 85%;
+    overflow-y: auto;
+  }
+
+  /* Panel beim Hover einfahren */
+  .partner-card:hover .partner-info {
+    transform: translateY(0);
+  }
+
+  .partner-description {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.875rem;
+    line-height: 1.55;
+    margin: 0 0 14px 0;
+  }
+
+  /* "Erfahre mehr →" in Projektgold */
+  .partner-more {
+    display: inline-block;
+    color: #d4af37;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+</style>

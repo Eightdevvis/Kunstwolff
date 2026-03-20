@@ -1,85 +1,262 @@
 ---
-import FAQ from '../../components/FAQ.astro';
+/**
+ * [skill]/[landing].astro
+ *
+ * Dynamische Route für zwei Seiten-Typen:
+ *
+ * 1. pageType === 'landing'  → Skill+Stadt-Seiten: /schnellzeichner/berlin/, /szenenmaler/frankfurt/, ...
+ *    Wie bisher: SkillLayout mit SkillHero, Slideshow, Why, FAQ, Contact
+ *
+ * 2. pageType === 'event'    → Skill+Event-Seiten: /schnellzeichner/firmenfeier/, /szenenmaler/hochzeit/, ...
+ *    EventLayout mit EventHero (skill-spezifisch), Slideshow, Ablauf, Pakete, EventSkills, Referenzen, FAQ, Contact
+ *
+ * getStaticPaths() generiert:
+ *   - Alle Skills × alle Städte  → pageType: 'landing'
+ *   - Alle Skills × alle Events  → pageType: 'event'
+ */
+
+// ── Gemeinsame Imports ─────────────────────────────────────────────────────────
+import EventLayout from '../../layouts/EventLayout.astro';
 import Contact from '../../components/Contact.astro';
-import SkillHero from '../../components/hero/SkillHero.astro';
-import Landingsection from '../../components/Landingsection.astro';
+import FAQ from '../../components/FAQ.astro';
 import Slideshow from '../../components/slideshows/Slideshow.astro';
-import Why from '../../components/Why.astro';
-import SkillLayout from '../../layouts/SkillLayout.astro';
 import { getLandingSlugs } from '../../utils/landings';
 import { getSkillBySlug, getSkillSlugs } from '../../utils/skills';
-import { resolveTitleImage } from '../../utils/titleImages';
 import {
   MIN_LANDING_SLIDES,
   getCitySlides,
   getDefaultSlides,
   supplementWithDefaultSlides,
 } from '../../utils/slideImages';
+
+// ── Landing-spezifische Imports ───────────────────────────────────────────────
+import SkillHero from '../../components/hero/SkillHero.astro';
+import Landingsection from '../../components/Landingsection.astro';
+import Why from '../../components/Why.astro';
+import LandingErinnerungen from '../../components/LandingErinnerungen.astro';
+import SkillLayout from '../../layouts/SkillLayout.astro';
+import { resolveTitleImage } from '../../utils/titleImages';
 import { getReviewsByLandingAndSkill } from '../../utils/reviews';
 
+// ── Event-spezifische Imports ─────────────────────────────────────────────────
+import EventHero from '../../components/events/EventHero.astro';
+import EventAblauf from '../../components/events/EventAblauf.astro';
+import EventPakete from '../../components/events/EventPakete.astro';
+import EventSkills from '../../components/events/EventSkills.astro';
+import EventReferenzen from '../../components/events/EventReferenzen.astro';
+import {
+  getEventSlugs,
+  getEventBySlug,
+  getEventContent,
+  getEventSlides,
+  resolveEventTitleImage,
+} from '../../utils/events';
+
+// ── getStaticPaths: alle Skill+Stadt + Skill+Event Kombinationen ──────────────
 export async function getStaticPaths() {
   const skills = getSkillSlugs();
   const landings = getLandingSlugs();
-  
-  // Create all combinations of skill + landing
-  const paths = [];
-  for (const skill of skills) {
-    for (const landing of landings) {
-      paths.push({ params: { skill, landing } });
-    }
-  }
-  
-  return paths;
+  const events = getEventSlugs();
+
+  // Skill × Stadt → pageType: 'landing'
+  const cityPaths = skills.flatMap((skill) =>
+    landings.map((landing) => ({
+      params: { skill, landing },
+      props: { pageType: 'landing' as const },
+    }))
+  );
+
+  // Skill × Event → pageType: 'event'
+  const eventPaths = skills.flatMap((skill) =>
+    events.map((landing) => ({
+      params: { skill, landing },
+      props: { pageType: 'event' as const },
+    }))
+  );
+
+  return [...cityPaths, ...eventPaths];
 }
 
+// ── Params & Props ────────────────────────────────────────────────────────────
 const { skill, landing } = Astro.params;
+const { pageType } = Astro.props as { pageType: 'landing' | 'event' };
+
+// Skill ist für beide Typen nötig
 const skillData = getSkillBySlug(skill ?? '');
 
 if (!skillData) {
   return Astro.redirect('/404');
 }
 
-const citySlides = getCitySlides(landing);
-const defaultSlides = getDefaultSlides();
-const landingSlides = supplementWithDefaultSlides(citySlides, defaultSlides, MIN_LANDING_SLIDES);
-const reviews = getReviewsByLandingAndSkill(landing, skillData.title);
+// ─────────────────────────────────────────────────────────────────────────────
+// SKILL+LANDING-Seite: bestehende Logik unverändert
+// ─────────────────────────────────────────────────────────────────────────────
+let landingSlides: Awaited<ReturnType<typeof supplementWithDefaultSlides>> | undefined;
+let reviews: unknown[] = [];
+let skillCityTitleImage = '';
+let skillCityPageTitle = '';
+let skillCityDescription = '';
+let skillCityBreadcrumb: unknown;
 
-const cityName = (landing ?? '').charAt(0).toUpperCase() + (landing ?? '').slice(1);
-const heroTitle = skillData.heroTitle || `Live ${skillData.title} für Events`;
-const pageTitle = `${skillData.title} ${cityName} buchen | Kunstwolff`;
-const pageDescription = skillData.description || `${skillData.title} in ${cityName} für Firmenfeiern, Messen & Hochzeiten buchen. Jetzt Kunstwolff anfragen!`;
-const titleImage = resolveTitleImage({ skill, landing });
+if (pageType === 'landing') {
+  const rawCitySlides = getCitySlides(landing ?? '');
+  const defaultSlides = getDefaultSlides();
+  landingSlides = supplementWithDefaultSlides(rawCitySlides, defaultSlides, MIN_LANDING_SLIDES);
+  reviews = getReviewsByLandingAndSkill(landing ?? '', skillData.title);
+  skillCityTitleImage = resolveTitleImage({ skill, landing });
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://kunstwolff.de/" },
-    { "@type": "ListItem", "position": 2, "name": skillData.title, "item": `https://kunstwolff.de/${skill}/` },
-    { "@type": "ListItem", "position": 3, "name": `${skillData.title} ${cityName}`, "item": `https://kunstwolff.de/${skill}/${landing}/` }
-  ]
-};
+  const cityName = (landing ?? '').charAt(0).toUpperCase() + (landing ?? '').slice(1);
+  skillCityPageTitle = `${skillData.title} ${cityName} buchen | Kunstwolff`;
+  skillCityDescription =
+    skillData.description ||
+    `${skillData.title} in ${cityName} für Firmenfeiern, Messen & Hochzeiten buchen. Jetzt Kunstwolff anfragen!`;
 
+  skillCityBreadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kunstwolff.de/' },
+      { '@type': 'ListItem', position: 2, name: skillData.title, item: `https://kunstwolff.de/${skill}/` },
+      { '@type': 'ListItem', position: 3, name: `${skillData.title} ${cityName}`, item: `https://kunstwolff.de/${skill}/${landing}/` },
+    ],
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SKILL+EVENT-Seite: neue Logik
+// ─────────────────────────────────────────────────────────────────────────────
+let eventData: Awaited<ReturnType<typeof getEventBySlug>> | undefined;
+let eventContent: Awaited<ReturnType<typeof getEventContent>> | undefined;
+let eventSlides: Awaited<ReturnType<typeof supplementWithDefaultSlides>> | undefined;
+let eventTitleImage = '';
+let eventPageTitle = '';
+let eventPageDescription = '';
+let eventBreadcrumb: unknown;
+
+if (pageType === 'event') {
+  eventData = getEventBySlug(landing ?? '');
+
+  if (!eventData) {
+    return Astro.redirect('/404');
+  }
+
+  eventContent = getEventContent(landing ?? '');
+  const rawEventSlides = getEventSlides(landing ?? '');
+  const defaultSlides = getDefaultSlides();
+  eventSlides = supplementWithDefaultSlides(rawEventSlides, defaultSlides, MIN_LANDING_SLIDES);
+  eventTitleImage = resolveEventTitleImage(landing ?? '');
+
+  // Titel: "{Skill} für {Event}" z.B. "Schnellzeichner für Firmenfeiern"
+  eventPageTitle = `${skillData.title} für ${eventData.title} buchen | Kunstwolff`;
+  eventPageDescription =
+    skillData.description ||
+    `${skillData.title} für ${eventData.title}: Live-Kunst als Highlight für Ihre Veranstaltung. Jetzt Kunstwolff anfragen!`;
+
+  eventBreadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kunstwolff.de/' },
+      { '@type': 'ListItem', position: 2, name: skillData.title, item: `https://kunstwolff.de/${skill}/` },
+      { '@type': 'ListItem', position: 3, name: `${skillData.title} – ${eventData.title}`, item: `https://kunstwolff.de/${skill}/${landing}/` },
+    ],
+  };
+}
+
+// Seitenspezifische Variable aus dem jeweiligen Zweig zusammenführen
+const finalHeroTitle =
+  pageType === 'landing'
+    ? (skillData.heroTitle || `Live ${skillData.title} für Events`)
+    : (eventData ? `${skillData.title} für ${eventData.title}` : skillData.title);
 ---
 
-<SkillLayout title={pageTitle} description={pageDescription} image={titleImage}>
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-  <SkillHero 
-    title={heroTitle}
-    reviews={reviews} 
-    titleImage={titleImage}
-    skillName={skillData.title}
-  />
+{pageType === 'landing' && landingSlides && (
+  <!-- ══════════════════════════════════════════════════
+       SKILL+STADT-SEITE – bestehende Struktur unverändert
+  ══════════════════════════════════════════════════ -->
+  <SkillLayout title={skillCityPageTitle} description={skillCityDescription} image={skillCityTitleImage}>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(skillCityBreadcrumb)} />
+    <SkillHero
+      title={finalHeroTitle}
+      reviews={reviews as any}
+      titleImage={skillCityTitleImage}
+      skillName={skillData.title}
+    />
 
-  <Slideshow items={landingSlides} filteredCategories={[skillData.title]} />
+    <Slideshow items={landingSlides} filteredCategories={[skillData.title]} />
 
-  <Why skill={skill} landing={landing} />
+    <Why skill={skill} landing={landing} />
 
-  <Contact />
+    <LandingErinnerungen skill={skill} landing={landing} />
 
-  <FAQ city={landing} categories={[skillData.title]} />
+    <Contact />
 
-  <Landingsection site={skill}/>
+    <FAQ city={landing} categories={[skillData.title]} />
 
-  <script src="../../scripts/formspree.js"></script>
-</SkillLayout>
+    <Landingsection site={skill}/>
+
+    <script src="../../scripts/formspree.js"></script>
+  </SkillLayout>
+)}
+
+{pageType === 'event' && eventData && eventContent && eventSlides && (
+  <!-- ══════════════════════════════════════════════════
+       SKILL+EVENT-SEITE – EventLayout mit Skill-Kontext
+  ══════════════════════════════════════════════════ -->
+  <EventLayout title={eventPageTitle} description={eventPageDescription} image={eventTitleImage}>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(eventBreadcrumb)} />
+
+    <!-- Hero: Skill + Event kombiniert, z.B. "Schnellzeichner für Firmenfeiern" -->
+    <EventHero
+      titleImage={eventTitleImage}
+      title={finalHeroTitle}
+      subtitle={eventPageDescription}
+      eventLabel={`${skillData.title} · ${eventData.title}`}
+    />
+
+    <!-- Slideshow: Event-Bilder gefiltert nach Skill-Kategorie -->
+    <Slideshow items={eventSlides} filteredCategories={[skillData.title]} />
+
+    <!-- Ablauf aus dem Event-Content -->
+    {eventContent.ablauf?.enabled && eventContent.ablauf.steps.length > 0 && (
+      <EventAblauf
+        title={eventContent.ablauf.title}
+        steps={eventContent.ablauf.steps}
+      />
+    )}
+
+    <!-- Pakete aus dem Event-Content -->
+    {eventContent.pakete?.enabled && eventContent.pakete.items.length > 0 && (
+      <EventPakete
+        title={eventContent.pakete.title}
+        items={eventContent.pakete.items}
+      />
+    )}
+
+    <!-- Andere Skills für diesen Event-Typ anzeigen (der aktuelle Skill wird hervorgehoben) -->
+    {eventContent.skills?.enabled && (
+      <EventSkills
+        title={eventContent.skills.title}
+        eventSlug={landing ?? ''}
+        categories={eventData.categories}
+        currentSkill={skill ?? ''}
+      />
+    )}
+
+    <!-- Referenzen (falls enabled und Inhalt vorhanden) -->
+    {eventContent.referenzen?.enabled && (
+      <EventReferenzen
+        title={eventContent.referenzen.title}
+        text={eventContent.referenzen.text}
+        logos={eventContent.referenzen.logos}
+      />
+    )}
+
+    <!-- FAQ gefiltert nach Skill-Kategorie -->
+    <FAQ categories={[skillData.title]} />
+
+    <Contact />
+
+    <script src="../../scripts/formspree.js"></script>
+  </EventLayout>
+)}

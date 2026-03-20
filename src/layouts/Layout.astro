@@ -18,6 +18,10 @@ const ogImage = image && Astro.site ? new URL(image, Astro.site).href : undefine
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- Mayonice sofort laden: preload umgeht die CSS-@import-Kaskade
+		     (HTML → CSS → @import swiper → @font-face → Download).
+		     Ohne preload entdeckt der Browser die Font erst nach allen @imports. -->
+		<link rel="preload" href="/fonts/mayonice/Mayonice.woff2" as="font" type="font/woff2" crossorigin />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />

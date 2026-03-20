@@ -21,30 +21,33 @@ const transliterateGerman = (value) =>
     .replace(/ü/gi, 'ue')
     .replace(/ß/gi, 'ss');
 
+// Fallback wird nur genutzt wenn default.json noch nicht existiert UND keine Bilder gefunden werden.
+// Kein hardcode auf .jpeg – leere image-Strings signalisieren "kein Bild gefunden",
+// buildBenefitsForTarget() füllt die echten Pfade später dynamisch aus dem Dateisystem.
 const fallbackDefaultWhy = {
   benefits: [
     {
       title: 'Echte Künstler - keine Agentur',
       text: 'Sie buchen uns direkt - ohne Vermittlung. Persönlicher Kontakt, klare Absprachen und professionelle Umsetzung.',
-      image: '/img/why/default/benefit-1/sample1.jpeg',
+      image: '',
       alt: 'Live Künstler von Kunstwolff beim Zeichnen',
     },
     {
       title: 'Interaktiv & unvergesslich',
       text: 'Ihre Gäste erleben Kunst live und nehmen eine individuelle Erinnerung mit nach Hause.',
-      image: '/img/why/default/benefit-2/sample2.jpeg',
+      image: '',
       alt: 'Gäste lachen während Schnellzeichner live zeichnet',
     },
     {
       title: 'Branding möglich',
       text: 'Logo, Hashtag oder Event-Motto integrieren wir direkt in jede Zeichnung - perfekt für Corporate Events.',
-      image: '/img/why/default/benefit-3/sample3.jpeg',
+      image: '',
       alt: 'Gebrandete Karikatur mit Firmenlogo',
     },
     {
       title: 'Digital & klassisch',
       text: 'Ob Papier, iPad oder auch großem Monitor - wir passen uns Ihrem Eventkonzept flexibel an.',
-      image: '/img/why/default/benefit-4/sample4.jpeg',
+      image: '',
       alt: 'Digitaler Schnellzeichner zeichnet auf Tablet',
     },
   ],
@@ -191,24 +194,47 @@ const getDefaultBenefitFolders = () => {
     .sort((a, b) => a.localeCompare(b));
 };
 
+// Findet die erste Sample-Datei für einen gegebenen Basisnamen (ohne Extension),
+// damit wir unabhängig von der tatsächlichen Extension (.webp, .jpeg, ...) sind.
+const findSampleFile = (baseName) => {
+  const samplesDir = path.join(projectRoot, 'public', 'img', 'samples');
+  if (!fs.existsSync(samplesDir)) return null;
+
+  const files = fs.readdirSync(samplesDir, { withFileTypes: true })
+    .filter((entry) => entry.isFile())
+    .map((entry) => entry.name);
+
+  // Exakten Match mit beliebiger Extension suchen (z.B. sample1.webp, sample1.jpeg, ...)
+  const match = files.find((name) => {
+    const ext = path.extname(name).toLowerCase();
+    return imageExtensions.has(ext) && path.basename(name, ext) === baseName;
+  });
+
+  return match ? path.join(samplesDir, match) : null;
+};
+
 const ensureDefaultWhyImageSeed = (created) => {
   ensureDirectory(defaultWhyImagesDir);
 
+  // Seed-Ordner und zugehörige Sample-Basisnamen (ohne Extension!)
+  // findSampleFile() sucht dann nach der tatsächlich vorhandenen Datei, egal ob .webp, .jpeg, etc.
   const seeds = [
-    { folder: 'benefit-1', source: path.join(projectRoot, 'public', 'img', 'samples', 'sample1.jpeg') },
-    { folder: 'benefit-2', source: path.join(projectRoot, 'public', 'img', 'samples', 'sample2.jpeg') },
-    { folder: 'benefit-3', source: path.join(projectRoot, 'public', 'img', 'samples', 'sample3.jpeg') },
-    { folder: 'benefit-4', source: path.join(projectRoot, 'public', 'img', 'samples', 'sample4.jpeg') },
+    { folder: 'benefit-1', sampleBase: 'sample1' },
+    { folder: 'benefit-2', sampleBase: 'sample2' },
+    { folder: 'benefit-3', sampleBase: 'sample3' },
+    { folder: 'benefit-4', sampleBase: 'sample4' },
   ];
 
   for (const seed of seeds) {
     const folderPath = path.join(defaultWhyImagesDir, seed.folder);
     ensureDirectory(folderPath);
 
-    if (fs.existsSync(seed.source)) {
-      const target = path.join(folderPath, path.basename(seed.source));
+    const sourcePath = findSampleFile(seed.sampleBase);
+
+    if (sourcePath) {
+      const target = path.join(folderPath, path.basename(sourcePath));
       if (!fs.existsSync(target)) {
-        fs.copyFileSync(seed.source, target);
+        fs.copyFileSync(sourcePath, target);
         created.push(`+ ${path.relative(projectRoot, target)}`);
       }
     } else {
@@ -279,11 +305,13 @@ const buildBenefitsForTarget = (targetKey, defaultWhy) => {
     const targetFolder = path.join(whyImagesRoot, targetKey, folderName);
     const imageFileName = findFirstImageFileName(targetFolder);
 
+    // Kein hardcoded Fallback mehr – wenn kein Bild im Ordner liegt, leerer String.
+    // shouldReplaceImage in syncExistingWhyFileImages() greift bei leerem String.
     const nextImage = imageFileName
       ? `/img/why/${targetKey}/${folderName}/${imageFileName}`
-      : typeof benefit.image === 'string'
+      : typeof benefit.image === 'string' && benefit.image.trim().length > 0
         ? benefit.image
-        : '/img/samples/sample1.jpeg';
+        : '';
 
     return {
       title: typeof benefit.title === 'string' ? benefit.title : `Vorteil ${index + 1}`,
@@ -328,10 +356,13 @@ const syncExistingWhyFileImages = (targetKey, defaultWhy) => {
   const nextBenefits = generated.map((generatedBenefit, index) => {
     const current = existing.benefits[index] ?? {};
     const currentImage = typeof current.image === 'string' ? current.image.trim() : '';
+    // Bild ersetzen wenn: leer, noch Sample/Default-Pfad, oder die Datei nicht mehr existiert (z.B. Extension geändert .jpeg → .webp)
+    const currentImageAbsPath = currentImage ? path.join(projectRoot, 'public', currentImage) : '';
     const shouldReplaceImage =
       currentImage.length === 0 ||
       currentImage.startsWith('/img/samples/') ||
-      currentImage.startsWith('/img/why/default/');
+      currentImage.startsWith('/img/why/default/') ||
+      (currentImageAbsPath.length > 0 && !fs.existsSync(currentImageAbsPath));
 
     return {
       title:

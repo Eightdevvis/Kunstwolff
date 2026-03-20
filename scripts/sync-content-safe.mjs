@@ -6,6 +6,8 @@ const steps = [
   { name: 'sync:title-images', script: 'scripts/sync-title-images.mjs' },
   { name: 'sync:slides', script: 'scripts/sync-slides-metadata.mjs' },
   { name: 'sync:why', script: 'scripts/sync-why.mjs' },
+  { name: 'sync:events', script: 'scripts/sync-events.mjs' },
+  { name: 'sync:erinnerungen', script: 'scripts/sync-erinnerungen.mjs' },
 ];
 
 const failures = [];

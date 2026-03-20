@@ -1,5 +1,7 @@
 # Kunstwolff SEO Relaunch Plan
 
+> **⚠ HISTORISCHES DOKUMENT** – Der Relaunch ist abgeschlossen. Dieses Dokument enthält veraltete Informationen (z.B. falsche Sitemap-URL `sitemap.xml` statt `sitemap-index.xml`, Netlify-Stage als Ziel). Die aktuelle SEO-Dokumentation steht in README.md §8.
+
 Dieses Dokument fasst die SEO-Strategie für den Relaunch der Website **kunstwolff.de** zusammen.
 Die neue Website wird mit **Astro** entwickelt und zunächst auf **kunstwolff.netlify.app** aufgebaut, bevor sie die bestehende Wix-Seite ersetzt.
 

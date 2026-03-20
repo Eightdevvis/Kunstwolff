@@ -8,7 +8,7 @@
         { "label": "Szenenmaler", "url": "/szenenmaler/" }
       ]
     },
-    { "label": "Contact", "url": "#contact" },
-    { "label": "FAQ", "url": "#faq" }
+    { "label": "FAQ", "url": "#faq" },
+    { "label": "Anfrage", "url": "#contact", "cta": true }
   ]
 }

@@ -1,0 +1,78 @@
+{
+  "ablauf": {
+    "enabled": true,
+    "title": "So funktioniert Live-Kunst auf Ihrer Messe",
+    "steps": [
+      {
+        "title": "Planung & Abstimmung",
+        "text": "Wir besprechen Ihren Messestand, die Laufzeiten und das Ziel. Soll der Künstler Besucher anziehen, Verweildauer erhöhen oder als Gesprächseinstieg dienen?",
+        "icon": "chat"
+      },
+      {
+        "title": "Aufbau am Stand",
+        "text": "Wir kommen vor Messebeginn, richten uns diskret ein und integrieren uns nahtlos in Ihren Standaufbau.",
+        "icon": "setup"
+      },
+      {
+        "title": "Live-Performance & Besuchermagnet",
+        "text": "Der Künstler zeichnet oder malt live – Besucher bleiben stehen, kommen ins Gespräch, Ihr Team gewinnt wertvolle Kontakte.",
+        "icon": "star"
+      },
+      {
+        "title": "Souvenir & Markenerinnerung",
+        "text": "Jeder Besucher nimmt ein persönliches Kunstwerk mit – und Ihren Firmennamen im Kopf.",
+        "icon": "gift"
+      }
+    ]
+  },
+  "pakete": {
+    "enabled": true,
+    "title": "Unsere Messepakete",
+    "items": [
+      {
+        "title": "Stand-Boost",
+        "duration": "Halber Messetag",
+        "price": "Auf Anfrage",
+        "features": [
+          "1 Künstler",
+          "3–4 Stunden Live-Kunst",
+          "Maximaler Besucheransturm",
+          "Material inklusive"
+        ]
+      },
+      {
+        "title": "Messe-Komplett",
+        "duration": "Ganzer Messetag",
+        "price": "Auf Anfrage",
+        "features": [
+          "1 Künstler",
+          "Volle Messezeit",
+          "Pausen nach Absprache",
+          "Material inklusive"
+        ]
+      },
+      {
+        "title": "Multi-Day",
+        "duration": "Mehrere Tage",
+        "price": "Auf Anfrage",
+        "features": [
+          "1–2 Künstler",
+          "Alle Messetage",
+          "Tagesweise buchbar",
+          "Material inklusive",
+          "Mengenrabatt"
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "enabled": true,
+    "title": "Unsere Künstler für Ihren Messestand"
+  },
+  "referenzen": {
+    "enabled": false,
+    "title": "Unternehmen die uns auf Messen eingesetzt haben",
+    "text": "",
+    "logos": []
+  }
+}

@@ -8,7 +8,6 @@ const matchingRulesPath = path.join(slidesRoot, 'category-matching.md');
 const skillsRoot = path.join(projectRoot, 'public', 'skills');
 
 const allowedExtensions = new Set(['.avif', '.gif', '.jpeg', '.jpg', '.png', '.webp']);
-const priorityPrefixPattern = /^(\d+)_/;
 
 const normalize = (value) =>
   String(value)
@@ -255,6 +254,8 @@ const readMetadata = () => {
 
         const categories = uniqueStrings(Array.isArray(value.categories) ? value.categories : []);
         const altOverride = typeof value.altOverride === 'string' ? value.altOverride.trim() : '';
+        // title-Feld für Lightbox-Caption – muss preserved werden damit sync es nicht wegschreibt
+        const title = typeof value.title === 'string' ? value.title.trim() : '';
         const priority = typeof value.priority === 'number' && !Number.isNaN(value.priority) ? value.priority : undefined;
         const enabled = typeof value.enabled === 'boolean' ? value.enabled : undefined;
 
@@ -263,6 +264,7 @@ const readMetadata = () => {
           {
             categories,
             ...(altOverride ? { altOverride } : {}),
+            ...(title ? { title } : {}),
             ...(typeof priority === 'number' ? { priority } : {}),
             ...(typeof enabled === 'boolean' ? { enabled } : {}),
           },
@@ -294,189 +296,6 @@ const getSlideFolders = () => {
     .sort((a, b) => a.localeCompare(b));
 };
 
-const parsePriorityFromFileName = (fileName) => {
-  const match = fileName.match(priorityPrefixPattern);
-  if (!match) {
-    return undefined;
-  }
-
-  const parsed = Number.parseInt(match[1], 10);
-  return Number.isNaN(parsed) ? undefined : parsed;
-};
-
-const stripPriorityPrefix = (fileName) => fileName.replace(priorityPrefixPattern, '');
-
-const compareQueueOrder = (a, b) => {
-  if (a.mtimeMs !== b.mtimeMs) {
-    return a.mtimeMs - b.mtimeMs;
-  }
-
-  if (a.birthtimeMs !== b.birthtimeMs) {
-    return a.birthtimeMs - b.birthtimeMs;
-  }
-
-  if (a.ctimeMs !== b.ctimeMs) {
-    return a.ctimeMs - b.ctimeMs;
-  }
-
-  return a.fileName.localeCompare(b.fileName, undefined, {
-    numeric: true,
-    sensitivity: 'base',
-  });
-};
-
-const inferCategoriesFromFileName = (fileName, rules) => {
-  const baseName = path.basename(fileName, path.extname(fileName));
-  const normalizedName = normalize(baseName);
-  const compactName = normalizedName.replace(/[^a-z0-9]+/g, '');
-
-  const matched = [];
-
-  for (const rule of rules) {
-    const hasMatch = rule.keywords.some((keyword) => {
-      const normalizedKeyword = normalize(keyword);
-      const compactKeyword = normalizedKeyword.replace(/[^a-z0-9]+/g, '');
-
-      return (
-        (normalizedKeyword.length > 0 && normalizedName.includes(normalizedKeyword)) ||
-        (compactKeyword.length > 0 && compactName.includes(compactKeyword))
-      );
-    });
-
-    if (hasMatch) {
-      matched.push(rule.category);
-    }
-  }
-
-  return uniqueStrings(matched);
-};
-
-const ensurePriorityPrefixes = () => {
-  const folders = getSlideFolders();
-  let renamedWithoutPrefixCount = 0;
-
-  for (const folder of folders) {
-    const folderPath = path.join(slidesRoot, folder);
-    const files = fs
-      .readdirSync(folderPath, { withFileTypes: true })
-      .filter((entry) => entry.isFile() && isAllowedImage(entry.name))
-      .map((entry) => {
-        const filePath = path.join(folderPath, entry.name);
-        const stat = fs.statSync(filePath);
-
-        return {
-          fileName: entry.name,
-          filePath,
-          mtimeMs: stat.mtimeMs,
-          ctimeMs: stat.ctimeMs,
-          birthtimeMs: stat.birthtimeMs,
-          parsedPriority: parsePriorityFromFileName(entry.name),
-        };
-      });
-
-    const existingPriorities = files
-      .map((file) => file.parsedPriority)
-      .filter((value) => typeof value === 'number');
-
-    let nextPriority = existingPriorities.length > 0 ? Math.max(...existingPriorities) + 1 : 1;
-
-    const withoutPrefix = files
-      .filter((file) => typeof file.parsedPriority !== 'number')
-      .sort(compareQueueOrder);
-
-    for (const file of withoutPrefix) {
-      let candidatePriority = nextPriority;
-      let candidateName = `${candidatePriority}_${file.fileName}`;
-      let candidatePath = path.join(folderPath, candidateName);
-
-      while (fs.existsSync(candidatePath)) {
-        candidatePriority += 1;
-        candidateName = `${candidatePriority}_${file.fileName}`;
-        candidatePath = path.join(folderPath, candidateName);
-      }
-
-      fs.renameSync(file.filePath, candidatePath);
-      renamedWithoutPrefixCount += 1;
-      nextPriority = candidatePriority + 1;
-    }
-  }
-
-  return renamedWithoutPrefixCount;
-};
-
-const compactPriorityPrefixes = () => {
-  const folders = getSlideFolders();
-  let compactedCount = 0;
-
-  for (const folder of folders) {
-    const folderPath = path.join(slidesRoot, folder);
-    const prefixedFiles = fs
-      .readdirSync(folderPath, { withFileTypes: true })
-      .filter((entry) => entry.isFile() && isAllowedImage(entry.name))
-      .map((entry) => {
-        const filePath = path.join(folderPath, entry.name);
-        const stat = fs.statSync(filePath);
-
-        return {
-          fileName: entry.name,
-          filePath,
-          mtimeMs: stat.mtimeMs,
-          ctimeMs: stat.ctimeMs,
-          birthtimeMs: stat.birthtimeMs,
-          parsedPriority: parsePriorityFromFileName(entry.name),
-          restName: stripPriorityPrefix(entry.name),
-        };
-      })
-      .filter((file) => typeof file.parsedPriority === 'number')
-      .sort((a, b) => {
-        if (a.parsedPriority !== b.parsedPriority) {
-          return a.parsedPriority - b.parsedPriority;
-        }
-
-        return compareQueueOrder(a, b);
-      });
-
-    if (prefixedFiles.length <= 1) {
-      continue;
-    }
-
-    const minPriority = prefixedFiles[0].parsedPriority;
-    let nextExpected = minPriority;
-    const operations = [];
-
-    for (const file of prefixedFiles) {
-      const targetName = `${nextExpected}_${file.restName}`;
-      if (targetName !== file.fileName) {
-        operations.push({
-          currentPath: file.filePath,
-          targetPath: path.join(folderPath, targetName),
-          tempPath: path.join(
-            folderPath,
-            `.__sync_tmp__${Date.now()}_${Math.random().toString(16).slice(2)}_${file.fileName}`,
-          ),
-        });
-      }
-
-      nextExpected += 1;
-    }
-
-    if (operations.length === 0) {
-      continue;
-    }
-
-    for (const operation of operations) {
-      fs.renameSync(operation.currentPath, operation.tempPath);
-    }
-
-    for (const operation of operations) {
-      fs.renameSync(operation.tempPath, operation.targetPath);
-      compactedCount += 1;
-    }
-  }
-
-  return compactedCount;
-};
-
 const getImageKeys = () => {
   const folders = getSlideFolders();
   const keys = [];
@@ -497,10 +316,11 @@ const getImageKeys = () => {
   return keys;
 };
 
+// Canonical key für Rename-Migration: Ordner + normalisierter Dateiname (ohne Prefix-Stripping)
 const toCanonicalKey = (key) => {
   const folder = key.split('/')[0] ?? '';
   const fileName = path.basename(key);
-  return `${folder}/${normalize(stripPriorityPrefix(fileName))}`;
+  return `${folder}/${normalize(fileName)}`;
 };
 
 const groupByCanonicalKey = (keys) => {
@@ -550,13 +370,37 @@ const migrateMetadataForRenames = (metadata, imageKeys) => {
   return migratedCount;
 };
 
+const inferCategoriesFromFileName = (fileName, rules) => {
+  const baseName = path.basename(fileName, path.extname(fileName));
+  const normalizedName = normalize(baseName);
+  const compactName = normalizedName.replace(/[^a-z0-9]+/g, '');
+
+  const matched = [];
+
+  for (const rule of rules) {
+    const hasMatch = rule.keywords.some((keyword) => {
+      const normalizedKeyword = normalize(keyword);
+      const compactKeyword = normalizedKeyword.replace(/[^a-z0-9]+/g, '');
+
+      return (
+        (normalizedKeyword.length > 0 && normalizedName.includes(normalizedKeyword)) ||
+        (compactKeyword.length > 0 && compactName.includes(compactKeyword))
+      );
+    });
+
+    if (hasMatch) {
+      matched.push(rule.category);
+    }
+  }
+
+  return uniqueStrings(matched);
+};
+
 const skillRules = buildSkillCategoryRules();
 const customRules = parseCategoryRules();
 const rules = mergeCategoryRules(skillRules, customRules);
 const metadata = readMetadata();
 
-const renamedWithoutPrefixCount = ensurePriorityPrefixes();
-const compactedPriorityCount = compactPriorityPrefixes();
 const imageKeys = getImageKeys();
 const renameMigratedCount = migrateMetadataForRenames(metadata, imageKeys);
 const imageKeySet = new Set(imageKeys);
@@ -576,7 +420,6 @@ let refreshedCount = 0;
 
 for (const key of imageKeys) {
   const fileName = path.basename(key);
-  const parsedPriority = parsePriorityFromFileName(fileName) ?? 0;
   const existing = metadata[key] ?? {};
 
   const existingCategories = uniqueStrings(Array.isArray(existing.categories) ? existing.categories : []);
@@ -585,9 +428,14 @@ for (const key of imageKeys) {
 
   const nextEntry = {
     categories,
-    priority: parsedPriority,
+    // Priority aus JSON preserved – wird nur noch vom Admin-Tool gesetzt, nicht mehr aus Dateinamen gelesen
+    ...(typeof existing.priority === 'number' ? { priority: existing.priority } : {}),
     ...(typeof existing.altOverride === 'string' && existing.altOverride.trim()
       ? { altOverride: existing.altOverride.trim() }
+      : {}),
+    // title für Lightbox-Caption preserved
+    ...(typeof existing.title === 'string' && existing.title.trim()
+      ? { title: existing.title.trim() }
       : {}),
     ...(typeof existing.enabled === 'boolean' ? { enabled: existing.enabled } : {}),
   };
@@ -604,8 +452,6 @@ for (const key of imageKeys) {
 
 writeMetadata(metadata);
 
-console.log(`sync-slides: ${renamedWithoutPrefixCount} Dateien ohne Prefix umbenannt.`);
-console.log(`sync-slides: ${compactedPriorityCount} Dateien zur Lückenglättung umnummeriert.`);
 console.log(`sync-slides: ${renameMigratedCount} Metadaten-Einträge bei Umbenennung migriert.`);
 console.log(`sync-slides: ${removedCount} veraltete Metadaten-Einträge entfernt.`);
 console.log(`sync-slides: ${refreshedCount} bestehende Einträge aktualisiert.`);

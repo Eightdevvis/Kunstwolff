@@ -4,6 +4,8 @@ import path from 'path';
 export type NavigationLinkItem = {
   label: string;
   url: string;
+  /* Markiert den Link als Call-to-Action-Button (gold pill) */
+  cta?: boolean;
 };
 
 export type NavigationDropdownItem = {
@@ -29,7 +31,7 @@ const defaultNavigation: NavigationItem[] = [
   },
   { label: 'Services', url: '#skills' },
   { label: 'Work', url: '#work' },
-  { label: 'Contact', url: '#contact' },
+  { label: 'Anfrage', url: '#contact', cta: true },
 ];
 
 const isString = (value: unknown): value is string => typeof value === 'string';
@@ -81,9 +83,12 @@ const normalizeItem = (value: unknown): NavigationItem | null => {
   }
 
   if (isValidLinkItem(value)) {
+    /* cta-Flag aus der JSON-Quelle übernehmen, falls vorhanden */
+    const record = value as Record<string, unknown>;
     return {
       label: value.label.trim(),
       url: value.url.trim(),
+      ...(record.cta === true && { cta: true }),
     };
   }
 

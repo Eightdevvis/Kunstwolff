@@ -1,15 +1,27 @@
 ---
+/**
+ * [landing].astro
+ *
+ * Dynamische Route für zwei Seiten-Typen:
+ *
+ * 1. pageType === 'landing'  → Stadtseiten: /berlin/, /frankfurt/, ...
+ *    Wie bisher: Layout mit Opener, Slideshow, Why, FAQ, Contact
+ *
+ * 2. pageType === 'event'    → Event-Seiten: /firmenfeier/, /messe/, /hochzeit/, /private-feier/
+ *    Neues EventLayout mit EventHero, Slideshow, Ablauf, Pakete, Skills, Referenzen, FAQ, Contact
+ *
+ * Routing-Trick: Beide Typen teilen denselben URL-Slot [landing].
+ * getStaticPaths() gibt alle Stadt-Slugs + Event-Slugs zurück, jeweils mit
+ * `pageType` als Prop um in der Template-Logik zu unterscheiden.
+ * Stadt-Slugs und Event-Slugs überschneiden sich nicht (berlin ≠ firmenfeier).
+ */
+
+// ── Gemeinsame Imports ─────────────────────────────────────────────────────────
 import Layout from '../layouts/Layout.astro';
-import Skills from '../components/SkillBanner.astro';
-import Slideshow from '../components/slideshows/Slideshow.astro';
-import Opener from '../components/hero/Opener.astro';
-import Landingsection from '../components/Landingsection.astro';
-import Why from '../components/Why.astro';
+import EventLayout from '../layouts/EventLayout.astro';
 import Contact from '../components/Contact.astro';
 import FAQ from '../components/FAQ.astro';
-import { getSharedSkills } from '../utils/skills';
-import { getReviewsByLanding } from '../utils/reviews';
-import { getLandingBySlug, getLandingSlugs } from '../utils/landings';
+import Slideshow from '../components/slideshows/Slideshow.astro';
 import {
   MIN_LANDING_SLIDES,
   getCitySlides,
@@ -17,42 +29,200 @@ import {
   supplementWithDefaultSlides,
 } from '../utils/slideImages';
 
-// getStaticPaths liefert alle möglichen Landingpages
+// ── Landing-spezifische Imports ───────────────────────────────────────────────
+import Skills from '../components/SkillBanner.astro';
+import Opener from '../components/hero/Opener.astro';
+import Landingsection from '../components/Landingsection.astro';
+import Why from '../components/Why.astro';
+import LandingErinnerungen from '../components/LandingErinnerungen.astro';
+import { getSharedSkills } from '../utils/skills';
+import { getReviewsByLanding } from '../utils/reviews';
+import { getLandingBySlug, getLandingSlugs } from '../utils/landings';
+
+// ── Event-spezifische Imports ─────────────────────────────────────────────────
+import EventHero from '../components/events/EventHero.astro';
+import EventAblauf from '../components/events/EventAblauf.astro';
+import EventPakete from '../components/events/EventPakete.astro';
+import EventSkills from '../components/events/EventSkills.astro';
+import EventReferenzen from '../components/events/EventReferenzen.astro';
+import {
+  getEventSlugs,
+  getEventBySlug,
+  getEventContent,
+  getEventSlides,
+  resolveEventTitleImage,
+} from '../utils/events';
+
+// ── getStaticPaths: alle Stadt- + Event-Slugs ────────────────────────────────
 export async function getStaticPaths() {
-  return getLandingSlugs().map((landing) => ({ params: { landing } }));
+  // Stadtseiten: pageType 'landing'
+  const cityPaths = getLandingSlugs().map((slug) => ({
+    params: { landing: slug },
+    props: { pageType: 'landing' as const },
+  }));
+
+  // Event-Seiten: pageType 'event'
+  const eventPaths = getEventSlugs().map((slug) => ({
+    params: { landing: slug },
+    props: { pageType: 'event' as const },
+  }));
+
+  return [...cityPaths, ...eventPaths];
 }
 
-// Props pro Seite laden
+// ── Params & Props ────────────────────────────────────────────────────────────
 const { landing } = Astro.params;
-const landingData = getLandingBySlug(landing ?? '');
-const skills = getSharedSkills();
-const citySlides = getCitySlides(landing);
-const defaultSlides = getDefaultSlides();
-const landingSlides = supplementWithDefaultSlides(citySlides, defaultSlides, MIN_LANDING_SLIDES);
-const reviews = getReviewsByLanding(landing);
+const { pageType } = Astro.props as { pageType: 'landing' | 'event' };
 
-const cityName = (landing ?? '').charAt(0).toUpperCase() + (landing ?? '').slice(1);
-const pageTitle = `Eventkünstler ${cityName} – Live-Kunst & Performance | Kunstwolff`;
-const pageDescription = `Kunstwolff in ${cityName}: Professionelle Eventkünstler für Firmenfeiern, Messen & Hochzeiten. Schnellzeichner, Szenenmaler & mehr.`;
+// ─────────────────────────────────────────────────────────────────────────────
+// LANDING-Seite: Bestehende Logik unverändert
+// ─────────────────────────────────────────────────────────────────────────────
+let landingData: Awaited<ReturnType<typeof getLandingBySlug>> | undefined;
+let skills: Awaited<ReturnType<typeof getSharedSkills>> | undefined;
+let landingSlides: Awaited<ReturnType<typeof supplementWithDefaultSlides>> | undefined;
+let reviews: unknown[] = [];
+let landingPageTitle = '';
+let landingPageDescription = '';
+let breadcrumbSchema: unknown;
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://kunstwolff.de/" },
-    { "@type": "ListItem", "position": 2, "name": `Eventkünstler ${cityName}`, "item": `https://kunstwolff.de/${landing}/` }
-  ]
-};
+if (pageType === 'landing') {
+  landingData = getLandingBySlug(landing ?? '');
+  skills = getSharedSkills();
+  const citySlides = getCitySlides(landing ?? '');
+  const defaultSlides = getDefaultSlides();
+  landingSlides = supplementWithDefaultSlides(citySlides, defaultSlides, MIN_LANDING_SLIDES);
+  reviews = getReviewsByLanding(landing ?? '');
+
+  const cityName = (landing ?? '').charAt(0).toUpperCase() + (landing ?? '').slice(1);
+  landingPageTitle = `Eventkünstler ${cityName} – Live-Kunst & Performance | Kunstwolff`;
+  landingPageDescription = `Kunstwolff in ${cityName}: Professionelle Eventkünstler für Firmenfeiern, Messen & Hochzeiten. Schnellzeichner, Szenenmaler & mehr.`;
+
+  breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kunstwolff.de/' },
+      { '@type': 'ListItem', position: 2, name: `Eventkünstler ${cityName}`, item: `https://kunstwolff.de/${landing}/` },
+    ],
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// EVENT-Seite: Neue Logik
+// ─────────────────────────────────────────────────────────────────────────────
+let eventData: Awaited<ReturnType<typeof getEventBySlug>> | undefined;
+let eventContent: Awaited<ReturnType<typeof getEventContent>> | undefined;
+let eventSlides: Awaited<ReturnType<typeof getEventSlides>> | undefined;
+let eventTitleImage = '';
+let eventPageTitle = '';
+let eventPageDescription = '';
+let eventBreadcrumbSchema: unknown;
+
+if (pageType === 'event') {
+  eventData = getEventBySlug(landing ?? '');
+
+  if (!eventData) {
+    // Sollte nicht passieren (getStaticPaths kennt nur valide Slugs), aber sicher ist sicher
+    return Astro.redirect('/404');
+  }
+
+  eventContent = getEventContent(landing ?? '');
+  const rawEventSlides = getEventSlides(landing ?? '');
+  const defaultSlides = getDefaultSlides();
+  // Fülle event-Slides mit default-Slides auf (Minimum: 6)
+  eventSlides = supplementWithDefaultSlides(rawEventSlides, defaultSlides, MIN_LANDING_SLIDES);
+  eventTitleImage = resolveEventTitleImage(landing ?? '');
+
+  eventPageTitle = `${eventData.heroTitle ?? eventData.title} | Kunstwolff`;
+  eventPageDescription = eventData.description ?? `Kunstwolff – Live-Kunst für ${eventData.title}. Professionelle Eventkünstler für unvergessliche Momente.`;
+
+  eventBreadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kunstwolff.de/' },
+      { '@type': 'ListItem', position: 2, name: eventData.title, item: `https://kunstwolff.de/${landing}/` },
+    ],
+  };
+}
 ---
 
-<Layout title={pageTitle} description={pageDescription} image={landingData.titleImage}>
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-  <Opener titleImage={landingData.titleImage} titleImageAlt={landingData.title} />
-  <Skills skills={skills} reviews={reviews} currentLanding={landing} />
-  <Slideshow items={landingSlides} />
-  <Why landing={landing} />
-  <Contact />
-  <FAQ city={landing} />
-  <Landingsection/>
-  <script src="../scripts/formspree.js"></script>
-</Layout>
+{pageType === 'landing' && landingData && skills && landingSlides && (
+  <!-- ══════════════════════════════════════════════════
+       STADTSEITE – bestehende Struktur unverändert
+  ══════════════════════════════════════════════════ -->
+  <Layout title={landingPageTitle} description={landingPageDescription} image={landingData.titleImage}>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <Opener titleImage={landingData.titleImage} titleImageAlt={landingData.title} />
+    <Skills skills={skills} reviews={reviews as any} currentLanding={landing} />
+    <Slideshow items={landingSlides} />
+    <Why landing={landing} />
+    <LandingErinnerungen landing={landing} />
+    <Contact />
+    <FAQ city={landing} />
+    <Landingsection/>
+    <script src="../scripts/formspree.js"></script>
+  </Layout>
+)}
+
+{pageType === 'event' && eventData && eventContent && eventSlides && (
+  <!-- ══════════════════════════════════════════════════
+       EVENT-SEITE – eigenes EventLayout
+  ══════════════════════════════════════════════════ -->
+  <EventLayout title={eventPageTitle} description={eventPageDescription} image={eventTitleImage}>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(eventBreadcrumbSchema)} />
+
+    <!-- Cinematic Hero mit Titelbild -->
+    <EventHero
+      titleImage={eventTitleImage}
+      title={eventData.heroTitle ?? eventData.title}
+      subtitle={eventData.description}
+      eventLabel={eventData.title}
+    />
+
+    <!-- Slideshow: Event-spezifische Bilder (+ Default-Fallback) -->
+    <Slideshow items={eventSlides} />
+
+    <!-- Ablauf: nur wenn in content.json enabled -->
+    {eventContent.ablauf?.enabled && eventContent.ablauf.steps.length > 0 && (
+      <EventAblauf
+        title={eventContent.ablauf.title}
+        steps={eventContent.ablauf.steps}
+      />
+    )}
+
+    <!-- Pakete: nur wenn in content.json enabled -->
+    {eventContent.pakete?.enabled && eventContent.pakete.items.length > 0 && (
+      <EventPakete
+        title={eventContent.pakete.title}
+        items={eventContent.pakete.items}
+      />
+    )}
+
+    <!-- Skills: welche Künstler passen zu diesem Event -->
+    {eventContent.skills?.enabled && (
+      <EventSkills
+        title={eventContent.skills.title}
+        eventSlug={landing ?? ''}
+        categories={eventData.categories}
+      />
+    )}
+
+    <!-- Referenzen: nur wenn in content.json enabled UND Logos/Text vorhanden -->
+    {eventContent.referenzen?.enabled && (
+      <EventReferenzen
+        title={eventContent.referenzen.title}
+        text={eventContent.referenzen.text}
+        logos={eventContent.referenzen.logos}
+      />
+    )}
+
+    <!-- FAQ: allgemeine FAQs ohne Stadt-Filter -->
+    <FAQ />
+
+    <!-- Kontaktformular -->
+    <Contact />
+
+    <script src="../scripts/formspree.js"></script>
+  </EventLayout>
+)}

@@ -1,0 +1,203 @@
+---
+/**
+ * EventSkills.astro
+ *
+ * Zeigt die Skills (Schnellzeichner, Szenenmaler) die für einen Event-Typ relevant sind.
+ * Jeder Skill wird als Card mit Bild und Link zu "/skill/event-slug/" dargestellt.
+ *
+ * Props:
+ *   title      – Überschrift der Sektion
+ *   eventSlug  – Slug des aktuellen Events (z.B. "firmenfeier")
+ *   categories – Optionale Einschränkung welche Skills gezeigt werden.
+ *                Wenn leer/undefined: alle Skills werden gezeigt.
+ *   currentSkill – Aktuell aktiver Skill-Slug (wenn auf skill+event Seite).
+ *                  Dieser Skill wird dann nicht als Link angezeigt sondern hervorgehoben.
+ */
+
+import { getSharedSkills } from '../../utils/skills';
+import type { SkillItem } from '../../utils/skills';
+
+const {
+  title = 'Passende Künstler',
+  eventSlug = '',
+  categories = [] as string[],
+  currentSkill = '',
+} = Astro.props as {
+  title?: string;
+  eventSlug?: string;
+  categories?: string[];
+  currentSkill?: string;
+};
+
+// Alle Skills laden
+const allSkills: SkillItem[] = getSharedSkills();
+
+// Nach categories filtern wenn angegeben – Vergleich case-insensitive
+const filteredSkills = categories.length > 0
+  ? allSkills.filter((skill) =>
+      categories.some((cat) => cat.toLowerCase() === skill.title.toLowerCase())
+    )
+  : allSkills;
+---
+
+{filteredSkills.length > 0 && (
+  <section class="event-skills">
+    <div class="event-skills-inner">
+      <h2 class="event-skills-heading">{title}</h2>
+
+      <div class="event-skills-grid">
+        {filteredSkills.map((skill) => {
+          // Skill-Slug aus dem Link extrahieren (z.B. "/schnellzeichner/" → "schnellzeichner")
+          const skillSlug = skill.link.replace(/^\/|\/$/g, '');
+          const isCurrentSkill = currentSkill && skillSlug === currentSkill;
+
+          // Link: /skill/event-slug/ (funktioniert nur wenn eventSlug gesetzt)
+          const href = eventSlug ? `/${skillSlug}/${eventSlug}/` : skill.link;
+
+          return (
+            <div class={`event-skill-card${isCurrentSkill ? ' event-skill-card--active' : ''}`}>
+              {skill.image && (
+                <div class="event-skill-image">
+                  <img
+                    src={skill.image}
+                    alt={skill.alt ?? `${skill.title} – Kunstwolff`}
+                    loading="lazy"
+                  />
+                </div>
+              )}
+
+              <div class="event-skill-info">
+                <h3 class="event-skill-title">{skill.title}</h3>
+                {isCurrentSkill ? (
+                  <span class="event-skill-badge">Aktuelle Ansicht</span>
+                ) : (
+                  <a href={href} class="event-skill-link">
+                    {skill.title} für {eventSlug || 'Events'} buchen →
+                  </a>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  /* ── Sektion ─────────────────────────────────────────────────────────── */
+  .event-skills {
+    background: #fff;
+    padding: clamp(60px, 10vh, 100px) clamp(20px, 6vw, 80px);
+  }
+
+  .event-skills-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* ── Überschrift ─────────────────────────────────────────────────────── */
+  .event-skills-heading {
+    font-family: Mayonice, serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    color: #111;
+    margin: 0 0 clamp(40px, 7vh, 64px);
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+
+  /* ── Skill-Grid ──────────────────────────────────────────────────────── */
+  .event-skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+  }
+
+  /* ── Einzelne Skill-Card ─────────────────────────────────────────────── */
+  .event-skill-card {
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fafafa;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .event-skill-card:hover {
+    border-color: #ccc;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  }
+
+  /* Aktiver Skill (aktuell angezeigte Seite) */
+  .event-skill-card--active {
+    border-color: #111;
+    background: #111;
+    color: #fff;
+  }
+
+  /* ── Skill-Bild ──────────────────────────────────────────────────────── */
+  .event-skill-image {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background: #e8e8e8;
+  }
+
+  .event-skill-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    display: block;
+  }
+
+  .event-skill-card:hover .event-skill-image img {
+    transform: scale(1.04);
+  }
+
+  /* ── Skill-Info ──────────────────────────────────────────────────────── */
+  .event-skill-info {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .event-skill-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.02em;
+    color: inherit;
+  }
+
+  .event-skill-link {
+    font-size: 0.88rem;
+    color: #111;
+    text-decoration: none;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 1px;
+    transition: border-color 0.2s ease, color 0.2s ease;
+    align-self: flex-start;
+  }
+
+  .event-skill-link:hover {
+    border-color: #111;
+    color: #000;
+  }
+
+  .event-skill-badge {
+    font-size: 0.78rem;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.60);
+    align-self: flex-start;
+  }
+
+  /* ── Responsive ──────────────────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .event-skills-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

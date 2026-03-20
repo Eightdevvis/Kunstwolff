@@ -18,13 +18,17 @@ Ziele des Projekts: saubere und professionelle Representation von Kunstwolff, Er
    - [3.7 Why-Sektion pflegen](#37-why-sektion-pflegen)
    - [3.8 Titelbild pflegen](#38-titelbild-pflegen)
    - [3.9 FAQs pflegen](#39-faqs-pflegen)
+   - [3.10 Navigation pflegen](#310-navigation-pflegen)
+   - [3.11 Referenzlogos pflegen](#311-referenzlogos-pflegen)
+   - [3.12 Events pflegen](#312-events-pflegen)
+   - [3.13 CinemaWelcome pflegen](#313-cinemawelcome-pflegen)
+   - [3.14 Erinnerungen pflegen](#314-erinnerungen-pflegen)
 - [4) Neue Stadt hinzufügen](#4-neue-stadt-hinzufügen-vollständiger-workflow)
 - [5) Seite bauen und prüfen](#5-seite-bauen-und-prüfen)
 - [6) Automatisierung](#6-automatisierung)
 - [7) Befehle](#7-befehle)
 - [8) SEO-Technische Grundlagen](#8-seo-technische-grundlagen)
 - [Anleitungen (nicht-technisch)](#anleitungen-nicht-technisch)
-- [8) SEO-Technische Grundlagen](#8-seo-technische-grundlagen)
 
 ## 1) Schnellstart
 
@@ -42,6 +46,8 @@ npm run dev
 Wichtig:
 - Vor `dev` und `build` läuft automatisch `npm run sync:content`.
 - Dadurch sind Ordner- und Metadatenstruktur immer aktuell, bevor Seiten gebaut werden.
+- VS Code: projektspezifische Settings liegen in `.vscode/settings.json` (u.a. TypeScript-Plugin für Astro).
+- Fonts: Custom-Font "Mayonice" liegt in `public/fonts/mayonice/` und wird via `global.css` eingebunden.
 
 ## 2) Aktuelle Funktionsweise (kurz)
 
@@ -59,10 +65,34 @@ Wichtig:
    - `/<stadt>/` (allgemeine Stadt-Landing)
    - `/<skill>/` (Skill-Hauptseite, z.B. `/schnellzeichner/`)
    - `/<skill>/<stadt>/` (Skill + Stadt Kombination, z.B. `/schnellzeichner/berlin/`)
-- Slides kommen aus Stadtordnern + Fallback aus `default`.
-- Reviews kommen zuerst aus der Stadt, dann aus `default`, dann aus anderen Städten (bis Mindestanzahl erreicht ist).
+- **Event-Seiten** werden automatisch statisch generiert für:
+   - `/<event>/` (Event-Typ-Seite, z.B. `/firmenfeier/`, `/messe/`, `/hochzeit/`, `/private-feier/`)
+   - `/<skill>/<event>/` (Skill + Event Kombination, z.B. `/schnellzeichner/firmenfeier/`)
+   - Events werden über `public/events/events.json` gesteuert (analog zu skills.json)
+   - Per-Event-Content (Ablauf, Pakete, Referenzen) in `public/events/<event>/content.json`
+   - Event-Slides in `public/img/slides/events/<event>/`, Titelbilder in `public/img/Titelbild/events/<event>/`
+- Slides kommen aus Stadtordnern + Fallback aus `default/` (Mindestzahl: **6 Slides** – wird mit Default-Slides aufgefüllt).
+- Reviews kommen zuerst aus der Stadt, dann aus `default/`, dann aus anderen Städten in alphabetischer Reihenfolge (Mindestzahl: **7 Reviews**).
 - FAQs werden aus `public/faq/` geladen und nach Stadt und Skill-Kategorie gefiltert.
 - Skill-Bilder werden automatisch aus `public/img/UnsereFähigkeitenBilder/<Skill-Titel>/` geladen.
+- **Astro Content Collections** werden aktuell nicht verwendet – Content kommt direkt aus `public/` via Utils in `src/utils/`. (`src/content.config.ts` existiert nur weil Astro den Export erwartet, ist aber leer.)
+- **Admin-Tool:** Ein separates Preact-Admin-Tool (`Kunstwolff-admin`) schreibt via GitHub REST API direkt in dieses Repo. Pfade in `public/` die davon betroffen sind: `public/img/slides/`, `public/reviews/`, `public/faq/`, `public/calendar/`, `public/cinema/`. Pfadänderungen dort müssen mit dem Admin-Tool abgeglichen werden.
+- **Partner-Seite:** `/partner/` → `src/pages/partner.astro`. Daten aus `public/partners/partners.json`, Logos aus `public/img/partners/`. Das Admin-Tool kann diese Datei noch nicht verwalten (geplant).
+- **`CMS-erstellung-anweisung.md`** im Projekt-Root: Das ist die CLAUDE.md-Instruktionsdatei für das Admin-Repo, hier gecacht damit Claude-Instanzen die am Website-Repo arbeiten auch den Admin-Kontext kennen. Wird manuell synchron gehalten wenn sich das Admin-Repo ändert.
+
+### Nicht eingebundene Komponenten (Work in Progress)
+
+Folgende Components existieren, sind aber aktuell nirgendwo in Pages/Layouts importiert:
+
+| Component | Zweck |
+| :-- | :-- |
+| `src/components/Eventtypes.astro` | Eventtypen-Grid (Firmenfeiern, Messen, Hochzeiten, Private Feiern) mit aufklappbaren Detailboxen und Links zu Event-Seiten – noch nicht in Pages eingebunden |
+| `src/components/hero/SchnellzeichnerHero.astro` | Alternativer Hero-Block für Schnellzeichner-Seiten (helles Design, Grid-Layout mit MiniReviews + BrandStripe) |
+| `src/components/about/AboutSchnellzeichner.astro` | Skill-spezifische About-Sektion mit festem Schnellzeichner-Text und Bild-Slot |
+
+Diese Components sind bewusst vorbereitet aber noch nicht live.
+
+---
 
 ## 3) Content-Pflege
 
@@ -105,10 +135,19 @@ Bilder hinzufügen:
 - Beim Push läuft automatisch die Bildoptimierung (siehe [Abschnitt 5](#5-automatisierung)).
 
 Sortierung & Priorität:
-- Dateiname mit Prefix steuert Priorität, z. B. `120_event.jpg`.
-- Höhere Priorität wird zuerst angezeigt.
-- Fehlt Prefix, vergibt `sync:slides` automatisch einen.
-- Lücken in Prefix-Reihen werden automatisch geglättet.
+- Reihenfolge wird über das `priority`-Feld in `slides.meta.json` gesteuert (höhere Zahl = weiter vorne).
+- Das Admin-Tool setzt die Priority beim Upload automatisch.
+- Manuell hochgeladene Bilder ohne Priority-Eintrag werden alphabetisch ans Ende sortiert.
+
+Fallback-Logik:
+- Hat eine Stadt weniger als **6 eigene Slides**, werden automatisch Slides aus `default/` ergänzt bis 6 Slides erreicht sind.
+- Liegen `foto.jpg` und `foto.webp` im selben Ordner, wird nur das `.webp` angezeigt (Deduplication).
+
+Lightbox:
+- Klick auf ein Bild öffnet die Lightbox (eigene Implementierung, kein externes Package).
+- Desktop: Klick zooms auf 2.5×, Doppelklick oder Klick im Zoom setzt zurück; Drag zum Verschieben im Zoom.
+- Mobile: Pinch-Zoom (1–4×), Swipe zum Navigieren (wenn nicht gezoomt).
+- Tastatur: Pfeiltasten navigieren, ESC schließt.
 
 ### 3.3 Slide-Metadaten
 
@@ -118,9 +157,10 @@ Format:
 
 ```json
 {
-   "berlin/120_event.jpg": {
+   "berlin/event.jpg": {
       "categories": ["Schnellzeichner"],
       "altOverride": "Live-Karikaturen in Berlin",
+      "title": "Firmenevent Berlin 2024",
       "priority": 120,
       "enabled": true
    }
@@ -129,8 +169,9 @@ Format:
 
 Felder:
 - `categories` (Array): Skill-Filter, z. B. für Schnellzeichner-Slideshow.
-- `altOverride` (optional): eigener Alt-Text.
-- `priority` (Zahl): wird durch `sync:slides` aus Prefix gepflegt.
+- `altOverride` (optional): Alt-Text für das `<img>`-Tag (Accessibility + Google Bild-SEO).
+- `title` (optional): Anzeigetitel in der Lightbox-Caption. Unabhängig von `altOverride`. Kein Wert gesetzt → Lightbox zeigt `altOverride` als Fallback.
+- `priority` (Zahl, optional): Sortierreihenfolge – höhere Zahl = weiter vorne. Wird vom Admin-Tool gesetzt. `sync:slides` überschreibt diesen Wert nicht.
 - `enabled` (optional, `false`): Bild ausblenden.
 
 Automatik:
@@ -185,6 +226,11 @@ Optional:
 - `categories` (für Skill-Filter)
 - `rating`
 - `city` (überschreibt Ordnernamen)
+
+Fallback-Logik:
+- Die Website zeigt mindestens **7 Reviews** pro Seite.
+- Reihenfolge der Quellen: Stadt-Reviews → `default/`-Reviews → Reviews anderer Städte (alphabetisch zirkulär um die aktuelle Stadt).
+- Hat eine Stadt weniger als 7 eigene Reviews, wird automatisch aufgefüllt.
 
 ### 3.6 Skills pflegen
 
@@ -288,7 +334,9 @@ Selbes Format wie `slides.meta.json`:
 - `priority` – höhere Zahl = bevorzugt
 - `enabled: false` – Bild ausblenden ohne zu löschen
 
-Fallback: wenn keine stadtspezifischen Titelbilder vorhanden, wird `default/` verwendet.
+Fallback-Kette: stadtspezifisch → `default/` → `/img/samples/sample1.jpeg` (Systemfallback wenn auch `default/` leer ist).
+
+**Artefakt-Unterordner:** `public/img/Titelbild/landings/` und `public/img/Titelbild/skills/` sind Überbleibsel aus einer früheren Struktur. Sie werden ignoriert und haben keine Auswirkung auf die Website. Nicht löschen (werden ggf. noch manuell aufgeräumt), aber auch nicht befüllen.
 
 ---
 
@@ -323,16 +371,277 @@ Automatik:
 - Auf Skill-Seiten werden nur FAQs mit passender Kategorie angezeigt
 - Auf Stadt-Landings werden stadt-spezifische FAQs bevorzugt
 
+### 3.10 Navigation pflegen
+
+Datei: `public/navigation/navigation.json`
+
+Format:
+
+```json
+{
+  "items": [
+    { "label": "Home", "url": "/" },
+    { "label": "Services", "children": [
+      { "label": "Schnellzeichner", "url": "/schnellzeichner/" }
+    ]}
+  ]
+}
+```
+
+Einfache Links haben `label` + `url`. Dropdown-Menüs haben `label` + `children` (Array von Links). Ausführliche Anleitung: [`ANLEITUNGEN/Wie?_NAVIGATION.md`](ANLEITUNGEN/Wie?_NAVIGATION.md)
+
+### 3.11 Referenzlogos pflegen
+
+Ablage: `public/img/referenzenLogos/`
+
+Alle Bilder in diesem Ordner werden automatisch in der Referenz-Sektion (`BrandStripe`) angezeigt. Der Dateiname (ohne Extension) wird als Label genutzt – Unterstriche werden zu Leerzeichen: `acme_gmbh.webp` → "acme gmbh". Erlaubte Formate: `.webp`, `.png`, `.jpg`, `.avif`.
+
+### 3.12 Events pflegen
+
+Datei: `public/events/events.json`
+
+```json
+{
+  "events": [
+    {
+      "title": "Firmenfeier",
+      "slug": "firmenfeier",
+      "heroTitle": "Live-Kunst auf Ihrer Firmenfeier",
+      "description": "Professionelle Eventkünstler für Corporate Events...",
+      "categories": ["Schnellzeichner", "Szenenmaler"]
+    }
+  ]
+}
+```
+
+**Neuen Event hinzufügen:**
+1. Eintrag in `public/events/events.json` anlegen (`title`, `slug`, `heroTitle`, `description`, `categories`)
+2. `npm run sync:events` (oder `npm run dev`) ausführen
+   - Erstellt automatisch: `public/img/slides/events/<slug>/`, `public/img/Titelbild/events/<slug>/`, `public/events/<slug>/content.json`
+3. Bilder hochladen: Event-Slides nach `public/img/slides/events/<slug>/`, Titelbild nach `public/img/Titelbild/events/<slug>/`
+4. Content anpassen: `public/events/<slug>/content.json` – Ablauf-Schritte, Pakete, Sektionen ein-/ausblenden via `enabled`-Flag
+
+**Generierten Seiten:**
+- `/<slug>/` – Standalone Event-Seite (z.B. `/firmenfeier/`)
+- `/<skill>/<slug>/` – Skill+Event-Kombination (z.B. `/schnellzeichner/firmenfeier/`) – wird automatisch für alle Skills generiert
+
+**Per-Event-Content (`public/events/<slug>/content.json`):**
+
+Jede Sektion hat ein `enabled`-Flag – Admin-Tool kann Sektionen aktivieren/deaktivieren.
+Vollständiges Format:
+
+```json
+{
+  "ablauf": {
+    "enabled": true,
+    "title": "So läuft Ihre Firmenfeier mit uns ab",
+    "steps": [
+      {
+        "title": "Anfrage & Briefing",
+        "text": "Beschreibung des Schritts...",
+        "icon": "chat"
+      }
+    ]
+  },
+  "pakete": {
+    "enabled": true,
+    "title": "Unsere Pakete für Ihre Firmenfeier",
+    "items": [
+      {
+        "title": "Starter",
+        "duration": "2 Stunden",
+        "price": "Auf Anfrage",
+        "features": [
+          "1 Künstler",
+          "Live-Karikaturen oder Szenenmalerei",
+          "Material inklusive"
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "enabled": true,
+    "title": "Passende Künstler für Ihre Firmenfeier"
+  },
+  "referenzen": {
+    "enabled": false,
+    "title": "Unternehmen die uns bereits gebucht haben",
+    "text": "",
+    "logos": [
+      { "src": "/img/partners/logo.webp", "alt": "Firmenname" }
+    ]
+  }
+}
+```
+
+**Feld-Referenz:**
+
+| Sektion | Feld | Typ | Pflicht | Beschreibung |
+|---|---|---|---|---|
+| `ablauf.steps[]` | `title` | string | ja | Schritt-Überschrift |
+| | `text` | string | ja | Beschreibungstext |
+| | `icon` | string | nein | Icon-Kennung: `chat`, `setup`, `star`, `gift` |
+| `pakete.items[]` | `title` | string | ja | Paketname (z.B. "Starter", "Event", "Premium") |
+| | `duration` | string | ja | Zeitangabe (z.B. "2 Stunden", "Ganztägig") |
+| | `price` | string | ja | Preis (z.B. "Auf Anfrage", "ab 500€") |
+| | `features` | string[] | ja | Feature-Liste als Array |
+| `skills` | `title` | string | nein | Nur Titel – Skills werden automatisch aus `events.json` `categories` gelesen |
+| `referenzen` | `text` | string | nein | Freitext über Referenzen |
+| | `logos[]` | array | nein | `{ src, alt }` – Pfad zu Logo-Bild + Alt-Text |
+
+**Event-Bilder:**
+- Slides: `public/img/slides/events/<slug>/` (separater Namespace, nicht mit Stadtslides vermischt)
+- Titelbild: `public/img/Titelbild/events/<slug>/`
+- Metadaten: gleiche `slides.meta.json` wie Stadtslides, Key-Format: `events/<slug>/dateiname.webp`
+
+**Event entfernen:**
+- Eintrag aus `events.json` löschen
+- Ordner manuell löschen: `public/events/<slug>/`, `public/img/slides/events/<slug>/`, `public/img/Titelbild/events/<slug>/`
+
+### 3.13 CinemaWelcome pflegen
+
+Datei: `public/cinema/cinema.json`
+
+Die CinemaWelcome-Komponente auf der Startseite (3 Orbit-Sektionen mit Hauptkreis + Satelliten) wird komplett über diese JSON-Datei gesteuert.
+
+**Struktur:**
+
+```json
+{
+  "intro": {
+    "title": "Willkommen",
+    "subtitle": "Erzählen Sie uns doch etwas über sich."
+  },
+  "sections": [
+    {
+      "title": "Ihr Event",
+      "subtitle": "auf welches Event dürfen wir Sie begleiten?",
+      "mainCircle": {
+        "image": "/img/pfad/zum/bild.webp",
+        "alt": "Alt-Text",
+        "hint": "Entdecken"
+      },
+      "satellites": [
+        {
+          "title": "Schnellzeichner",
+          "image": "/img/slides/default/1_schnellzeichner_hq.webp",
+          "link": "/schnellzeichner/",
+          "alt": "Live Schnellzeichner für Events"
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Felder:**
+
+| Ebene | Feld | Pflicht | Beschreibung |
+| :-- | :-- | :-- | :-- |
+| `intro` | `title` | Ja | Titel des Willkommen-Blocks (Mayonice-Font) |
+| `intro` | `subtitle` | Ja | Untertitel des Willkommen-Blocks |
+| `sections[]` | `title` | Ja | Sektions-Überschrift (h2, Mayonice-Font) |
+| `sections[]` | `subtitle` | Ja | Sektions-Untertitel |
+| `mainCircle` | `image` | Ja | Pfad zum Bild des großen Kreises (relativ zu `public/`) |
+| `mainCircle` | `alt` | Ja | Alt-Text des Hauptkreis-Bildes |
+| `mainCircle` | `hint` | Nein | Text bei Hover (Default: "Entdecken") |
+| `satellites[]` | `title` | Ja | Label-Text (erscheint bei Hover über den kleinen Kreis) |
+| `satellites[]` | `image` | Ja | Pfad zum Bild (relativ zu `public/`) |
+| `satellites[]` | `link` | Ja | Ziel-URL beim Klick (z.B. `/schnellzeichner/`) |
+| `satellites[]` | `alt` | Nein | Alt-Text (Fallback: `title`) |
+
+**Regeln:**
+- `sections` muss genau **3 Einträge** haben (die Website erwartet 3 Orbit-Sektionen)
+- Pro Sektion: **1–6 Satelliten** erlaubt (CSS-Layout-Limit bei 6)
+- Der Hauptkreis (`mainCircle`) kann nicht entfernt werden – nur Bild/Alt/Hint editierbar
+- Jede Sektion hat eigene Satelliten und einen eigenen Hauptkreis
+- Layout (welche Sektion reversed ist, Positionierung) ist im Code fest – nicht in der JSON
+
+**Technische Details:**
+- Geladen von `src/utils/cinema.ts` (`getCinemaData()`) zur Build-Zeit
+- Verwendet in `src/components/CinemaWelcome.astro`
+- Robuste Validierung: bei fehlender/kaputter JSON greift automatisch ein Fallback (Schnellzeichner + Szenenmaler)
+- Kein Sync-Script nötig – Datei wird direkt gelesen
+
+**Admin-Tool:** Kann `cinema.json` noch nicht verwalten (geplant).
+
+### 3.14 Erinnerungen pflegen
+
+Datei: `public/erinnerungen/<key>.json`
+
+Die Erinnerungen-Komponente zeigt auf Landing-Seiten einen Pinnwand-Streifen mit 4 Fotos, die leicht schräg „angepinnt" wirken (Polaroid-Look mit Pinnadel).
+
+**JSON-Format:**
+
+```json
+{
+  "photos": [
+    {
+      "image": "/img/slides/default/1_schnellzeichner_hq.webp",
+      "alt": "Schnellzeichner bei einem Live-Event"
+    },
+    {
+      "image": "/img/slides/default/2_karikatur_stadtfest.webp",
+      "alt": "Karikatur-Zeichnung als Andenken"
+    },
+    {
+      "image": "/img/slides/default/3_schnellzeichner-schweiz.webp",
+      "alt": "Live-Schnellzeichner sorgt für Staunen"
+    },
+    {
+      "image": "/img/slides/default/4_Hochzeit_schnellzeichner_maler.webp",
+      "alt": "Schnellzeichner auf einer Hochzeitsfeier"
+    }
+  ]
+}
+```
+
+**Felder pro Foto:**
+- `image` – Pfad zum Bild relativ zu `public/`
+- `alt` – Alt-Text des Bildes (SEO + Accessibility)
+
+**Fallback-Kette** (identisch zum Why-System, höchste Priorität zuerst):
+1. `{skill}-{stadt}.json` – z.B. `schnellzeichner-berlin.json`
+2. `{stadt}.json` – z.B. `berlin.json`
+3. `{skill}.json` – z.B. `schnellzeichner.json`
+4. `default.json` – globaler Fallback
+
+**Automatik:** `sync:erinnerungen` erstellt `{stadt}.json` und `{skill}.json` für alle Einträge aus `landings.md` und `skills.json` automatisch (Kopie von `default.json`). Bestehende Dateien werden nie überschrieben.
+
+**Wo die Komponente erscheint:** Auf Stadt-Landings (`/<stadt>/`) und Skill+Stadt-Kombis (`/<skill>/<stadt>/`), zwischen der Why-Sektion und dem Kontaktformular. Nicht auf Event-Seiten.
+
+**Admin-Tool:** Kann Erinnerungen noch nicht verwalten (geplant).
+
 ## 4) Neue Stadt hinzufügen (vollständiger Workflow)
 
 1. Slug in `public/landings/landings.md` eintragen (lowercase, keine Leerzeichen)
 2. `npm run sync:content` ausführen (oder `npm run dev` – läuft automatisch)
-   - Erstellt automatisch: `public/img/slides/<stadt>/`, `public/reviews/<stadt>/`, `public/faq/<stadt>/`, `public/img/Titelbild/<stadt>/`, `public/img/why/<stadt>/benefit-{1-4}/`, `public/why/<stadt>.json`
+   - Erstellt automatisch: `public/img/slides/<stadt>/`, `public/reviews/<stadt>/`, `public/faq/<stadt>/`, `public/img/Titelbild/<stadt>/`, `public/img/why/<stadt>/benefit-{1-4}/`, `public/why/<stadt>.json`, `public/erinnerungen/<stadt>.json`
 3. Stadtspezifische Bilder hochladen (Slides, Titelbild, Why-Bilder)
 4. Texte in `public/why/<stadt>.json` anpassen (wurde in Schritt 2 mit Default-Texten erstellt)
 5. Optional: stadtspezifische Reviews und FAQs anlegen
 
 **Hinweis:** GitHub Action `sync-landings.yml` macht Schritt 2 automatisch bei Push. Alles außer Bild-Upload und Text-Anpassung ist vollautomatisch.
+
+## 4b) Stadt entfernen
+
+```bash
+npm run remove:landing -- <stadtslug>
+# Optional: npm run remove:landing -- <stadtslug> ./eigener-archivpfad
+```
+
+Das Script archiviert alle Daten der Stadt und entfernt sie aus der Stadtliste. **Was archiviert wird** (nach `removed_landings/<timestamp>-<stadt>/`):
+- `public/img/slides/<stadt>/`
+- `public/reviews/<stadt>/`
+- `public/faq/<stadt>/`
+- `public/img/why/<stadt>/`
+- `public/why/<stadt>.json` und alle `public/why/*-<stadt>.json` Dateien
+
+**Was NICHT archiviert wird:**
+- `public/img/Titelbild/<stadt>/` – muss manuell gelöscht werden
+- Einträge in `slides.meta.json` und `title.meta.json` – bleiben als verwaiste Metadaten
+
+**Nach dem Script:** Stadt wird automatisch aus `landings.md` entfernt. Ein `report.json` im Archiv-Ordner dokumentiert was archiviert wurde.
 
 ---
 
@@ -352,6 +661,8 @@ npm run preview
    - `sync:title-images` – Titelbild-Ordner anlegen
    - `sync:slides` – `slides.meta.json` pflegen (Priority-Prefix, Kategorien, Migration)
    - `sync:why` – `public/why/{city|skill}.json` und Why-Bildordner anlegen
+   - `sync:events` – Event-Ordner anlegen (`public/img/slides/events/{event}/`, `public/img/Titelbild/events/{event}/`), default `content.json` erstellen
+   - `sync:erinnerungen` – `public/erinnerungen/{city|skill}.json` anlegen (bestehende nie überschreiben)
 - GitHub Action: `.github/workflows/sync-landings.yml`
    - Triggert bei Änderungen an `public/landings/landings.md` und `public/skills/skills.json`
    - Führt `npm run sync:content` aus
@@ -365,8 +676,21 @@ npm run setup:hooks
 
 | Hook | Wann | Was |
 | :-- | :-- | :-- |
-| `pre-commit` | Vor jedem Commit | Gestagete Slides optimieren, Content-Sync |
-| `pre-push` | Vor jedem Push | **Alle** nicht-WebP Bilder in `public/img/` konvertieren |
+| `pre-commit` | Vor jedem Commit | 1. Gestagete Bilder zu WebP optimieren (`optimize:images`), 2. `sync:content` ausführen, 3. generierte Ordner in `public/` stagen |
+| `pre-push` | Vor jedem Push | **Alle** nicht-WebP Bilder in `public/img/` konvertieren und als separaten Commit pushen |
+
+**Hinweis pre-commit:** Weil `sync:content` im Hook läuft, können neu generierte Dateien automatisch zum Commit hinzugefügt werden – auch solche die vorher nicht gestaged waren.
+
+### Validierungsreports
+
+`sync:landings` schreibt nach jedem Lauf einen detaillierten Report nach `reports/validation/landings/<timestamp>.json`. Der Report enthält:
+- Welche Städte hinzugekommen oder entfernt wurden
+- Zusammengeführte Slug-Kollisionen (z.B. "Berlin" + "berlin" → "berlin")
+- `slideVisibility` – welche Slides auf welchen Seiten sichtbar sind
+- `allImageVisibility` – alle Bilder aus `public/img/` mit Seitenzuordnung
+- `unreferencedImages` – Bilder die auf keiner Seite genutzt werden (Aufräum-Hilfe)
+
+Es werden maximal 7 Reports behalten, ältere werden automatisch gelöscht.
 
 ### Automatische Bildoptimierung beim Push
 
@@ -391,12 +715,14 @@ npm run optimize:all
 | `npm install` | Abhängigkeiten installieren |
 | `npm run sync:landings` | Stadtordner für Slides und Reviews anlegen |
 | `npm run sync:skills` | Skill-Bildordner anlegen |
-| `npm run sync:title-images` | Titelbild-Ordner für default, Landings, Skills und Skill+Landing-Kombis anlegen |
+| `npm run sync:title-images` | Titelbild-Ordner für `default` und alle Landingpage-Städte anlegen; `title.meta.json` initialisieren |
 | `npm run sync:slides` | Slide-Dateien und `slides.meta.json` synchronisieren |
 | `npm run sync:why` | `public/why/` JSON-Dateien und Why-Bildordner synchronisieren |
+| `npm run sync:events` | Event-Ordner anlegen, default `content.json` erstellen (bestehende NICHT überschreiben) |
+| `npm run sync:erinnerungen` | `public/erinnerungen/{city\|skill}.json` anlegen (bestehende NICHT überschreiben) |
 | `npm run sync:content:safe` | Führt alle Syncs fehlertolerant aus (Teilfehler werden isoliert, Build/Dev läuft weiter) |
 | `npm run sync:content` | Alle Content-Syncs nacheinander ausführen |
-| `npm run remove:landing -- <stadt> [archivpfad]` | Archiviert alle Landing-Daten einer Stadt nach `removed_landings/` und entfernt die Stadt aus `landings.md/json` |
+| `npm run remove:landing -- <stadt> [archivpfad]` | Archiviert alle Landing-Daten einer Stadt und entfernt sie aus `landings.md` (siehe §4b) |
 | `npm run optimize:all` | Alle Bilder in `public/img/` zu WebP konvertieren (einmalig/manuell) |
 | `npm run dev` | Entwicklungsserver starten (inkl. Sync) |
 | `npm run build` | Produktionsbuild (inkl. Sync) |
@@ -514,4 +840,4 @@ Im Ordner [`ANLEITUNGEN/`](ANLEITUNGEN/) liegen Schritt-für-Schritt-Anleitungen
 | [`Wie?_NAVIGATION.md`](ANLEITUNGEN/Wie?_NAVIGATION.md) | Navigationseinträge anpassen |
 | [`Wie?_REVIEWS.md`](ANLEITUNGEN/Wie?_REVIEWS.md) | Kundenbewertungen hinzufügen oder bearbeiten |
 | [`Wie?_WARUM_KUNSTWOLFF.md`](ANLEITUNGEN/Wie?_WARUM_KUNSTWOLFF.md) | Why-Sektion Texte & Bilder pflegen |
-| [`UNDEFINED_BEHAVIOR_TIDY_UPS.md`](ANLEITUNGEN/UNDEFINED_BEHAVIOR_TIDY_UPS.md) | Dokumentation von Edge Cases und Fallback-Verhalten |
+| [`UNDEFINED_BEHAVIOR_TIDY_UPS.md`](ANLEITUNGEN/UNDEFINED_BEHAVIOR_TIDY_UPS.md) | **Edge Cases & Fallback-Verhalten** – detaillierte Referenz für Slug-Normalisierung, Duplikat-Handling, Fallback-Reihenfolgen und Sonderfälle |

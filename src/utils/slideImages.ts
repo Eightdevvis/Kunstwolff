@@ -4,6 +4,7 @@ import path from 'path';
 export type SlideItem = {
   src: string;
   alt: string;
+  title?: string;       // Optionaler Anzeigetitel (Lightbox) – unabhängig vom alt-Text
   categories?: string[];
   priority?: number;
 };
@@ -11,6 +12,7 @@ export type SlideItem = {
 type SlideMetadataEntry = {
   categories?: string[];
   altOverride?: string;
+  title?: string;       // Anzeigetitel für Lightbox (optional, unabhängig von altOverride)
   priority?: number;
   enabled?: boolean;
 };
@@ -135,10 +137,14 @@ const readSlidesMetadata = (): SlideMetadataMap => {
         typeof metadata.altOverride === 'string' && metadata.altOverride.trim().length > 0
           ? metadata.altOverride.trim()
           : undefined;
+      const title =
+        typeof metadata.title === 'string' && metadata.title.trim().length > 0
+          ? metadata.title.trim()
+          : undefined;
       const priority = toNumberOrUndefined(metadata.priority);
       const enabled = typeof metadata.enabled === 'boolean' ? metadata.enabled : undefined;
 
-      return [key, { categories, altOverride, priority, enabled }] as const;
+      return [key, { categories, altOverride, title, priority, enabled }] as const;
     });
 
     metadataCache = Object.fromEntries(entries);
@@ -181,6 +187,7 @@ const readFolderSlides = (folderName: string): SlideItem[] => {
       return {
         src: `/img/slides/${encodePathSegment(folderName)}/${encodePathSegment(entry)}`,
         alt: itemMetadata?.altOverride || normalizeAlt(entry),
+        title: itemMetadata?.title,
         categories: categories.length > 0 ? categories : undefined,
         priority,
         enabled,

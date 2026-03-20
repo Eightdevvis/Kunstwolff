@@ -4,6 +4,9 @@ import { getNavigationItems, type NavigationDropdownItem, type NavigationItem } 
 const navigationItems = getNavigationItems();
 
 const isDropdownItem = (item: NavigationItem): item is NavigationDropdownItem => 'children' in item;
+
+/* Prüft ob ein Link-Item als CTA-Button dargestellt werden soll */
+const isCta = (item: NavigationItem): boolean => !isDropdownItem(item) && !!item.cta;
 ---
 
 <!-- =========================
@@ -35,10 +38,15 @@ const isDropdownItem = (item: NavigationItem): item is NavigationDropdownItem =>
         {
           navigationItems.map((item, index) => {
             if (!isDropdownItem(item)) {
+              /* Nächstes Item prüfen: wenn es ein CTA ist, Divider davor ausblenden */
+              const nextItem = navigationItems[index + 1];
+              const nextIsCta = nextItem && isCta(nextItem);
+
               return [
-                <li>
+                <li class={isCta(item) ? 'nav-cta' : undefined}>
                   <a
                     href={item.url}
+                    class={isCta(item) ? 'nav-cta-link' : undefined}
                     data-nav-contact={item.url === '#contact' ? 'true' : undefined}
                     data-nav-contact-fallback={item.url === '#contact' ? '/contact' : undefined}
                     data-nav-faq={item.url === '#faq' ? 'true' : undefined}
@@ -47,7 +55,7 @@ const isDropdownItem = (item: NavigationItem): item is NavigationDropdownItem =>
                     {item.label}
                   </a>
                 </li>,
-                index < navigationItems.length - 1 ? <li class="divider">|</li> : null
+                index < navigationItems.length - 1 && !nextIsCta ? <li class="divider">|</li> : null
               ];
             } else {
               return [
@@ -168,7 +176,9 @@ const isDropdownItem = (item: NavigationItem): item is NavigationDropdownItem =>
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
+  /* Muss über dem Cinema-Dimmer (z-index: 1001) liegen,
+     damit die Nav beim Scrollen durch CinemaWelcome sichtbar bleibt */
+  z-index: 1100;
   overflow: visible;
 
   /* Ombre von Schwarz zu Transparent */
@@ -344,6 +354,98 @@ const isDropdownItem = (item: NavigationItem): item is NavigationDropdownItem =>
 }
 
 /* =========================
+   CTA-Button (Gold Pill)
+   – hebt "Anfrage" als Handlungsaufforderung hervor
+========================= */
+
+/*
+ * Metallischer Gold-Button mit animiertem Shimmer.
+ *
+ * Drei Schichten erzeugen den Gold-Effekt:
+ * 1. Basis-Gradient – von dunklem zu hellem Gold, gibt dem Button
+ *    die typische metallische Tiefe statt flacher Farbe.
+ * 2. Dünne helle Oberkante (border-top) – simuliert eine Lichtreflexion
+ *    an der oberen Kante, wie bei poliertem Metall.
+ * 3. Shimmer-Animation – ein diagonaler heller Streifen (pseudo-Element)
+ *    der alle 4 Sekunden einmal über den Button gleitet.
+ *    Nutzt overflow:hidden damit der Streifen nicht über die Pill-Form
+ *    hinausragt, und mask-image damit er sanft ein-/ausfadet.
+ */
+
+/* Shimmer-Keyframes: der helle Streifen wandert von links nach rechts.
+   Nur 0%–12% ist Bewegung, der Rest ist Pause → Shimmer alle ~10s statt dauerhaft */
+@keyframes cta-shimmer {
+  0%   { transform: translateX(-100%) skewX(-20deg); }
+  12%  { transform: translateX(250%) skewX(-20deg);  }
+  100% { transform: translateX(250%) skewX(-20deg);  }
+}
+
+.nav-cta-link {
+  --cta-gold-dark: #a8893a;      /* dunkles Gold (Schatten-Seite) */
+  --cta-gold: #c9a84c;           /* mittleres Gold */
+  --cta-gold-light: #e0c868;     /* helles Gold (Highlight) */
+  --cta-text: #1a1400;            /* sehr dunkler warmton statt reinem schwarz */
+
+  /* Metallischer Gradient: dunkel unten → hell oben */
+  background: linear-gradient(
+    to bottom,
+    var(--cta-gold-light) 0%,
+    var(--cta-gold) 45%,
+    var(--cta-gold-dark) 100%
+  );
+  color: var(--cta-text) !important;
+  opacity: 1 !important;
+  padding: 6px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+
+  /* Helle Oberkante = Lichtreflexion auf poliertem Metall */
+  border-top: 1px solid rgba(255, 235, 160, 0.5);
+  border-bottom: 1px solid rgba(120, 90, 20, 0.3);
+
+  /* inline-block nötig, weil overflow:hidden auf inline-Elementen ignoriert wird */
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Shimmer-Streifen: diagonaler heller Balken als ::after */
+.nav-cta-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* Schmaler diagonaler Lichtstreifen */
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 245, 200, 0.45) 45%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 245, 200, 0.45) 55%,
+    transparent 70%
+  );
+  /* 10s Gesamtzyklus: ~1.2s Shimmer + ~8.8s Pause (dezent, nicht nervig) */
+  animation: cta-shimmer 10s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.nav-cta-link:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 4px 18px rgba(201, 168, 76, 0.4),
+    0 0 8px rgba(224, 200, 104, 0.2);
+}
+
+/* Animation pausieren wenn User reduced-motion bevorzugt */
+@media (prefers-reduced-motion: reduce) {
+  .nav-cta-link::after {
+    animation: none;
+  }
+}
+
+/* =========================
    Responsives Verhalten
 ========================= */
 @media (max-width: 768px) {
@@ -398,6 +500,13 @@ const isDropdownItem = (item: NavigationItem): item is NavigationDropdownItem =>
     width: max-content;
     min-width: 0;
     margin-top: 8px;
+  }
+
+  /* CTA im mobilen Menü: volle Breite, zentriert */
+  .nav-cta {
+    width: 100%;
+    text-align: center;
+    margin-top: 4px;
   }
 }
 </style>

@@ -1,0 +1,161 @@
+---
+/**
+ * EventAblauf.astro
+ *
+ * Timeline/Ablauf-Sektion für Event-Seiten.
+ * Zeigt Schritt-für-Schritt wie ein Event mit Kunstwolff abläuft.
+ *
+ * Props:
+ *   title  – Überschrift der Sektion (aus content.json → ablauf.title)
+ *   steps  – Array von Ablauf-Steps (titel, text, icon)
+ *
+ * Icons werden als CSS-Pseudoelement gerendert (kein SVG-Import nötig):
+ *   chat  → Sprechblase / Kontakt
+ *   setup → Aufbau / Werkzeug
+ *   star  → Performance / Highlight
+ *   gift  → Erinnerung / Geschenk
+ */
+
+import type { EventAblaufStep } from '../../utils/events';
+
+const {
+  title = 'So läuft Ihr Event ab',
+  steps = [] as EventAblaufStep[],
+} = Astro.props as {
+  title?: string;
+  steps?: EventAblaufStep[];
+};
+---
+
+<section class="event-ablauf">
+  <div class="event-ablauf-inner">
+    <h2 class="event-ablauf-heading">{title}</h2>
+
+    <ol class="event-ablauf-list">
+      {steps.map((step, i) => (
+        <li class="event-ablauf-step" data-icon={step.icon ?? 'star'}>
+          <!-- Schritt-Nummer -->
+          <span class="event-ablauf-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+
+          <div class="event-ablauf-content">
+            <h3 class="event-ablauf-title">{step.title}</h3>
+            <p class="event-ablauf-text">{step.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  /* ── Sektion ─────────────────────────────────────────────────────────── */
+  .event-ablauf {
+    background: #f7f7f7;
+    padding: clamp(60px, 10vh, 100px) clamp(20px, 6vw, 80px);
+  }
+
+  .event-ablauf-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* ── Überschrift ─────────────────────────────────────────────────────── */
+  .event-ablauf-heading {
+    font-family: Mayonice, serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    color: #111;
+    margin: 0 0 clamp(40px, 7vh, 64px);
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+
+  /* ── Step-Liste ──────────────────────────────────────────────────────── */
+  .event-ablauf-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(32px, 5vh, 48px);
+
+    /* Vertikale Linie zwischen Steps */
+    position: relative;
+  }
+
+  /* Verbindungslinie: läuft durch alle Steps */
+  .event-ablauf-list::before {
+    content: "";
+    position: absolute;
+    left: 28px;           /* Zentriert auf der Schritt-Nummer */
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, #ddd, #bbb 50%, #ddd);
+  }
+
+  /* ── Einzelner Step ──────────────────────────────────────────────────── */
+  .event-ablauf-step {
+    display: flex;
+    gap: clamp(20px, 3vw, 36px);
+    align-items: flex-start;
+    position: relative;
+  }
+
+  /* Step-Nummer: kreisförmig, hell auf dunkel */
+  .event-ablauf-num {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #111;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Hebt sich von der Verbindungslinie ab */
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 0 5px #f7f7f7;   /* Hintergrundfarbe als Ring → "Lücke" in der Linie */
+  }
+
+  /* Step-Content */
+  .event-ablauf-content {
+    padding-top: 10px;  /* Optisch auf Höhe der Zahl ausrichten */
+    flex: 1;
+    min-width: 0;
+  }
+
+  .event-ablauf-title {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    font-weight: 600;
+    color: #111;
+    margin: 0 0 8px;
+    letter-spacing: 0.01em;
+  }
+
+  .event-ablauf-text {
+    font-size: clamp(0.9rem, 1.3vw, 1rem);
+    line-height: 1.65;
+    color: #444;
+    margin: 0;
+  }
+
+  /* ── Responsive ──────────────────────────────────────────────────────── */
+  @media (max-width: 540px) {
+    /* Linie auf Mobilgeräten etwas weiter links */
+    .event-ablauf-list::before {
+      left: 22px;
+    }
+
+    .event-ablauf-num {
+      width: 44px;
+      height: 44px;
+      font-size: 0.7rem;
+    }
+  }
+</style>
