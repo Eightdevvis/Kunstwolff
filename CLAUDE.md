@@ -10,17 +10,17 @@ Astro 5 + Preact SSG-Website für kunstwolff.de (Eventkünstler). SEO-fokussiert
 
 Das Projekt hat ein eigenständiges Admin-Tool. Das Admin-Tool ist eine separate Preact-App, die via GitHub REST API direkt in dieses Repo schreibt.
 
-**Pfad ist auf beiden Geräten identisch:**
+**Pfad (in diesem Repo enthalten):**
 
 | Gerät | Admin-Tool-Pfad |
 | :-- | :-- |
-| PC & Laptop | `/home/sasha/codicus/Kunstwolff-admin/kunstwolff-admin/` |
+| PC & Laptop | `/home/sasha/codicus/Kunstwolffwebsite/kunstwolff-admin/` |
 
-**Für Cross-Repo-Arbeit:** Admin-README lesen: `/home/sasha/codicus/Kunstwolff-admin/kunstwolff-admin/README.md`
+**Für Cross-Repo-Arbeit:** Admin-README lesen: `/home/sasha/codicus/Kunstwolffwebsite/kunstwolff-admin/README.md`
 
 **Warum das wichtig ist für jeden Claude der an diesem Projekt arbeitet:**
 - Jede Änderung an Pfadstrukturen, Dateinamen oder Dateiformaten in `public/` kann das Admin-Tool brechen
-- Das Admin-README (`/home/sasha/codicus/Kunstwolff-admin/kunstwolff-admin/README.md`) muss bei Pfadänderungen zwingend mitgepflegt werden
+- Das Admin-README (`/home/sasha/codicus/Kunstwolffwebsite/kunstwolff-admin/README.md`) muss bei Pfadänderungen zwingend mitgepflegt werden
 - Das Admin-Tool kennt nicht alle Features des Websites – Lücken sind dokumentiert im Admin-README unter "Bekannte Einschränkungen"
 - Schnittstelle: Admin schreibt nach `public/` → GitHub Action `sync-landings.yml` + Netlify Build → Website live
 

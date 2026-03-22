@@ -1,0 +1,3 @@
+# Admin-Tool soll nicht indexiert werden
+User-agent: *
+Disallow: /
