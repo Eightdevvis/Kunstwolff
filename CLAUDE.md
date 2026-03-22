@@ -8,10 +8,15 @@ Astro 5 + Preact SSG-Website für kunstwolff.de (Eventkünstler). SEO-fokussiert
 
 ## Das Admin-Tool – warum es hier relevant ist
 
-Das Projekt hat ein eigenständiges Admin-Tool unter `/home/sasha/codicus/Kunstwolff-admin/kunstwolff-admin/`. Das Admin-Tool ist eine separate Preact-App, die via GitHub REST API direkt in dieses Repo schreibt.
+Das Projekt hat ein eigenständiges Admin-Tool. Das Admin-Tool ist eine separate Preact-App, die via GitHub REST API direkt in dieses Repo schreibt.
 
-**Für Cross-Repo-Arbeit:** Admin-CLAUDE.md lesen: `/home/sasha/codicus/Kunstwolff-admin/kunstwolff-admin/CLAUDE.md`
-Admin-README lesen: `/home/sasha/codicus/Kunstwolff-admin/kunstwolff-admin/README.md`
+**Pfad ist auf beiden Geräten identisch:**
+
+| Gerät | Admin-Tool-Pfad |
+| :-- | :-- |
+| PC & Laptop | `/home/sasha/codicus/Kunstwolff-admin/kunstwolff-admin/` |
+
+**Für Cross-Repo-Arbeit:** Admin-README lesen: `/home/sasha/codicus/Kunstwolff-admin/kunstwolff-admin/README.md`
 
 **Warum das wichtig ist für jeden Claude der an diesem Projekt arbeitet:**
 - Jede Änderung an Pfadstrukturen, Dateinamen oder Dateiformaten in `public/` kann das Admin-Tool brechen
@@ -19,9 +24,28 @@ Admin-README lesen: `/home/sasha/codicus/Kunstwolff-admin/kunstwolff-admin/READM
 - Das Admin-Tool kennt nicht alle Features des Websites – Lücken sind dokumentiert im Admin-README unter "Bekannte Einschränkungen"
 - Schnittstelle: Admin schreibt nach `public/` → GitHub Action `sync-landings.yml` + Netlify Build → Website live
 
+**Admin-Tool Komponenten** (`{admin-pfad}/src/components/`):
+- `ImageManager.tsx` – Slideshow, Titelbild, Why-Bilder
+- `ReviewManager.tsx` – Reviews pro Stadt
+- `CityManager.tsx` – Städteliste (`landings.md`)
+- `FaqManager.tsx` – Standard- und stadtspezifische FAQs
+- `CalendarView.tsx` + `EventModal.tsx` – Kalender (nur Admin, nicht auf Website)
+- `CleanupManager.tsx` – Duplikate/kaputte Bilder bereinigen
+- `PartnerManager.tsx` – Partner (`partners.json` + Logo-Upload)
+
+**Pfade die das Admin-Tool schreibt:**
+- `public/img/slides/{stadt}/` + `public/img/slides/slides.meta.json`
+- `public/img/Titelbild/{stadt}/`
+- `public/img/why/{stadt}/benefit-{1-4}/`
+- `public/reviews/{stadt}/review*.md`
+- `public/faq/{stadt}/*.md` + `public/faq/default/*.md`
+- `public/landings/landings.md`
+- `public/calendar/{jahr}/{monat}.json`
+- `public/partners/partners.json` + `public/img/partners/`
+
 **Vor Änderungen an `public/`-Strukturen immer prüfen:**
-1. Schreibt das Admin-Tool in diese Pfade? → `src/components/ImageManager.tsx`, `ReviewManager.tsx`, `CityManager.tsx`, `FaqManager.tsx`
-2. Liest das Website diese Pfade? → `src/utils/*.ts`
+1. Schreibt das Admin-Tool in diese Pfade? → siehe Komponenten-Liste oben
+2. Liest die Website diese Pfade? → `src/utils/*.ts`
 3. Beides in README und Admin-README aktualisieren
 
 ---
@@ -88,6 +112,26 @@ Geladen von `src/utils/erinnerungen.ts` → verwendet in `src/components/Landing
 **Wo angezeigt:** Auf Landing-Seiten (`/<stadt>/`, `/<skill>/<stadt>/`) zwischen Why und Contact. Nicht auf Event-Seiten.
 **Admin-Tool:** Kann Erinnerungen noch nicht verwalten (geplant). `sync-erinnerungen.mjs` erstellt automatisch JSONs für alle Städte/Skills.
 
+### Partner
+
+`public/partners/partners.json` – Liste aller Kooperationspartner, angezeigt auf `/partner/`.
+`public/img/partners/` – Logos der Partner.
+
+**JSON-Format:**
+```json
+{
+  "partners": [
+    { "id": "firma-gmbh", "name": "Firma GmbH", "logo": "/img/partners/firma-gmbh.webp",
+      "description": "...", "url": "https://...", "enabled": true }
+  ]
+}
+```
+- `id` – Slug, bestimmt auch den Logo-Dateinamen
+- `enabled: false` – blendet aus ohne zu löschen
+
+**Admin-Tool:** Tab "Partner" – vollständiges CRUD inkl. Logo-Upload. ID wird aus Name generiert (Umlaut-sicher).
+Komponente: `PartnerManager.tsx`
+
 ### Kalender
 
 `public/calendar/{jahr}/{monat}.json` – Event-Kalender-Daten.
@@ -128,4 +172,7 @@ Das Admin-README dokumentiert:
 ## Memory-Datei
 
 Ausführlichere Projekt-Übersicht steht in:
+
+**Memory-Pfad ist auf beiden Geräten identisch:**
+
 `/home/sasha/.claude/projects/-home-sasha-codicus-Kunstwolffwebsite/memory/MEMORY.md`

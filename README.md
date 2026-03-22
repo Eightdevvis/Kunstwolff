@@ -23,6 +23,7 @@ Ziele des Projekts: saubere und professionelle Representation von Kunstwolff, Er
    - [3.12 Events pflegen](#312-events-pflegen)
    - [3.13 CinemaWelcome pflegen](#313-cinemawelcome-pflegen)
    - [3.14 Erinnerungen pflegen](#314-erinnerungen-pflegen)
+   - [3.15 Partner pflegen](#315-partner-pflegen)
 - [4) Neue Stadt hinzufügen](#4-neue-stadt-hinzufügen-vollständiger-workflow)
 - [5) Seite bauen und prüfen](#5-seite-bauen-und-prüfen)
 - [6) Automatisierung](#6-automatisierung)
@@ -77,7 +78,7 @@ Wichtig:
 - Skill-Bilder werden automatisch aus `public/img/UnsereFähigkeitenBilder/<Skill-Titel>/` geladen.
 - **Astro Content Collections** werden aktuell nicht verwendet – Content kommt direkt aus `public/` via Utils in `src/utils/`. (`src/content.config.ts` existiert nur weil Astro den Export erwartet, ist aber leer.)
 - **Admin-Tool:** Ein separates Preact-Admin-Tool (`Kunstwolff-admin`) schreibt via GitHub REST API direkt in dieses Repo. Pfade in `public/` die davon betroffen sind: `public/img/slides/`, `public/reviews/`, `public/faq/`, `public/calendar/`, `public/cinema/`. Pfadänderungen dort müssen mit dem Admin-Tool abgeglichen werden.
-- **Partner-Seite:** `/partner/` → `src/pages/partner.astro`. Daten aus `public/partners/partners.json`, Logos aus `public/img/partners/`. Das Admin-Tool kann diese Datei noch nicht verwalten (geplant).
+- **Partner-Seite:** `/partner/` → `src/pages/partner.astro`. Daten aus `public/partners/partners.json`, Logos aus `public/img/partners/`. Wird vom Admin-Tool (Tab "Partner") verwaltet.
 - **`CMS-erstellung-anweisung.md`** im Projekt-Root: Das ist die CLAUDE.md-Instruktionsdatei für das Admin-Repo, hier gecacht damit Claude-Instanzen die am Website-Repo arbeiten auch den Admin-Kontext kennen. Wird manuell synchron gehalten wenn sich das Admin-Repo ändert.
 
 ### Nicht eingebundene Komponenten (Work in Progress)
@@ -611,6 +612,42 @@ Die Erinnerungen-Komponente zeigt auf Landing-Seiten einen Pinnwand-Streifen mit
 **Wo die Komponente erscheint:** Auf Stadt-Landings (`/<stadt>/`) und Skill+Stadt-Kombis (`/<skill>/<stadt>/`), zwischen der Why-Sektion und dem Kontaktformular. Nicht auf Event-Seiten.
 
 **Admin-Tool:** Kann Erinnerungen noch nicht verwalten (geplant).
+
+---
+
+### 3.15 Partner pflegen
+
+Seite: `/partner/` → `src/pages/partner.astro`
+
+- JSON: `public/partners/partners.json`
+- Logos: `public/img/partners/`
+
+**JSON-Format:**
+
+```json
+{
+  "partners": [
+    {
+      "id": "firma-gmbh",
+      "name": "Firma GmbH",
+      "logo": "/img/partners/firma-gmbh.webp",
+      "description": "Kurzbeschreibung des Partners.",
+      "url": "https://example.com",
+      "enabled": true
+    }
+  ]
+}
+```
+
+**Felder:**
+- `id` – Slug (URL-sicher, eindeutig); bestimmt auch den Logo-Dateinamen
+- `name` – Anzeigename auf der Website
+- `logo` – URL-Pfad zum Logo (relativ zu `public/`)
+- `description` – Kurzbeschreibung (1–3 Sätze)
+- `url` – Externe Website des Partners
+- `enabled` – `false` blendet den Partner aus ohne ihn zu löschen (Default: `true`)
+
+**Admin-Tool:** Tab "Partner" – vollständiges CRUD inkl. Logo-Upload. ID wird automatisch aus dem Namen generiert (Umlaut-sicher).
 
 ## 4) Neue Stadt hinzufügen (vollständiger Workflow)
 
