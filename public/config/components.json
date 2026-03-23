@@ -1,0 +1,48 @@
+{
+  "homepage": {
+    "_default": {
+      "opener": true,
+      "cinemaWelcome": true,
+      "skillBanner": true,
+      "slideshow": true,
+      "why": true,
+      "contact": true,
+      "faq": true,
+      "landingsection": true
+    }
+  },
+  "landing": {
+    "_default": {
+      "opener": true,
+      "skillBanner": true,
+      "slideshow": true,
+      "why": true,
+      "erinnerungen": true,
+      "contact": true,
+      "faq": true,
+      "landingsection": true
+    }
+  },
+  "event": {
+    "_default": {
+      "eventHero": true,
+      "slideshow": true,
+      "eventAblauf": true,
+      "eventPakete": true,
+      "eventSkills": true,
+      "eventReferenzen": true,
+      "faq": true,
+      "contact": true
+    }
+  },
+  "skill": {
+    "_default": {
+      "skillHero": true,
+      "slideshow": true,
+      "why": true,
+      "contact": true,
+      "faq": true,
+      "landingsection": true
+    }
+  }
+}

@@ -248,7 +248,7 @@ const satelliteData = {
 
   .cw--reversed .cw-inner {
     flex-direction: row;
-    padding-left:  clamp(40px, 9vw, 130px);
+    padding-left:  clamp(20px, 4vw, 60px);
     padding-right: clamp(40px, 9vw, 130px);
   }
 
@@ -496,15 +496,13 @@ const satelliteData = {
   #cw-orbit-3 .cw-satellite[data-sat-index="3"] { --sx: -95px;  --sy:  165px; }
 
   /*
-    Sektion 2: 6 Text-Satelliten (Muse) – voller Kreis, r=200
-    Winkel: 0° / 60° / 120° / 180° / 240° / 300°
+    Sektion 2: 4 Text-Satelliten (Muse) – gespiegelt wie Sektion 1/3, nach RECHTS
+    Winkel 300°/340°/20°/60° (Spiegel von 120°/160°/200°/240°), r=190
   */
-  #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  200px; --sy:    0px; }
-  #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx:  100px; --sy:  173px; }
-  #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx: -100px; --sy:  173px; }
-  #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx: -200px; --sy:    0px; }
-  #cw-orbit-2 .cw-satellite[data-sat-index="4"] { --sx: -100px; --sy: -173px; }
-  #cw-orbit-2 .cw-satellite[data-sat-index="5"] { --sx:  100px; --sy: -173px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  95px; --sy: -165px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx: 179px; --sy:  -65px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx: 179px; --sy:   65px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx:  95px; --sy:  165px; }
 
   .cw-satellite.visible {
     transform: translate(calc(-50% + var(--sx)), calc(-50% + var(--sy))) scale(1);
@@ -787,13 +785,11 @@ const satelliteData = {
     #cw-orbit  .cw-satellite[data-sat-index="3"],
     #cw-orbit-3 .cw-satellite[data-sat-index="3"] { --sx: -76px;  --sy:  132px; }
 
-    /* r=152 — Sektion 2 (6 Text-Satelliten) voller Kreis */
-    #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  152px; --sy:    0px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx:   76px; --sy:  132px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx:  -76px; --sy:  132px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx: -152px; --sy:    0px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="4"] { --sx:  -76px; --sy: -132px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="5"] { --sx:   76px; --sy: -132px; }
+    /* r=152 — Sektion 2 (4 Text-Satelliten) nach rechts */
+    #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  76px; --sy: -132px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx: 143px; --sy:  -52px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx: 143px; --sy:   52px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx:  76px; --sy:  132px; }
 
     /* Ergebnis */
     .cw-result-inner {
@@ -835,13 +831,11 @@ const satelliteData = {
     #cw-orbit  .cw-satellite[data-sat-index="3"],
     #cw-orbit-3 .cw-satellite[data-sat-index="3"] { --sx: -62px;  --sy:  107px; }
 
-    /* r=124 — Sektion 2 (6 Text-Satelliten) voller Kreis */
-    #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  124px; --sy:    0px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx:   62px; --sy:  107px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx:  -62px; --sy:  107px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx: -124px; --sy:    0px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="4"] { --sx:  -62px; --sy: -107px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="5"] { --sx:   62px; --sy: -107px; }
+    /* r=124 — Sektion 2 (4 Text-Satelliten) nach rechts */
+    #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  62px; --sy: -107px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx: 116px; --sy:  -42px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx: 116px; --sy:   42px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx:  62px; --sy:  107px; }
 
     /* Ergebnis */
     .cw-result-left { max-width: 100%; }

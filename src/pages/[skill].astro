@@ -10,6 +10,7 @@ import { getSkillBySlug, getSkillSlugs } from '../utils/skills';
 import { getHomepageSlides } from '../utils/slideImages';
 import { getAllReviews } from '../utils/reviews';
 import { resolveTitleImage } from '../utils/titleImages';
+import { isComponentEnabled } from '../utils/componentConfig';
 
 export async function getStaticPaths() {
   const slugs = getSkillSlugs();
@@ -28,6 +29,7 @@ const allReviews = getAllReviews();
 
 const titleImage = resolveTitleImage({ skill });
 
+const show = (id: string) => isComponentEnabled('skill', skill ?? '', id);
 const heroTitle = skillData.heroTitle || `Live ${skillData.title} für Events`;
 const pageTitle = skillData.title + ' für Events buchen | Kunstwolff';
 const pageDescription = skillData.description || `${skillData.title} für Firmenfeiern, Messen & Hochzeiten. Live-Kunst als Highlight für Ihr Event. Jetzt Kunstwolff buchen!`;
@@ -50,22 +52,22 @@ const serviceSchema = {
 ---
 <SkillLayout title={pageTitle} description={pageDescription} image={titleImage}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
-	<SkillHero 
+	{show('skillHero') && <SkillHero
 		title={heroTitle}
-		reviews={allReviews} 
+		reviews={allReviews}
 		titleImage={titleImage}
 		skillName={skillData.title}
-	/>
+	/>}
 
-	<Slideshow items={allSlideshow} filteredCategories={[skillData.title]} />
+	{show('slideshow') && <Slideshow items={allSlideshow} filteredCategories={[skillData.title]} />}
 
-	<Why skill={skill} />
+	{show('why') && <Why skill={skill} />}
 
-	<Contact />
+	{show('contact') && <Contact />}
 
-	<FAQ categories={[skillData.title]} />
+	{show('faq') && <FAQ categories={[skillData.title]} />}
 
-	<Landingsection site={skill}/>
+	{show('landingsection') && <Landingsection site={skill}/>}
 
 	<script src="../scripts/formspree.js"></script>
 </SkillLayout>

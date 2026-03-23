@@ -15,7 +15,9 @@ import { resolveTitleImage } from "../utils/titleImages";
 import {
   getHomepageSlides,
 } from "../utils/slideImages";
+import { isComponentEnabled } from "../utils/componentConfig";
 
+const show = (id: string) => isComponentEnabled('homepage', '', id);
 const skills = getSharedSkills();
 const reviews = getAllReviews();
 
@@ -48,22 +50,21 @@ const localBusinessSchema = {
 <Layout image={titleImage}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   
-  <Opener titleImage={titleImage} />
+  {show('opener') && <Opener titleImage={titleImage} />}
 
-  <CinemaWelcome />
+  {show('cinemaWelcome') && <CinemaWelcome />}
 
-  <SkillBanner skills={skills} reviews={reviews} />
+  {show('skillBanner') && <SkillBanner skills={skills} reviews={reviews} />}
 
-  <Slideshow
-    items={homepageSlides}
-  />
-  <Why />
+  {show('slideshow') && <Slideshow items={homepageSlides} />}
 
-  <Contact />
+  {show('why') && <Why />}
 
-  <FAQ />
+  {show('contact') && <Contact />}
 
-  <Landingsection />
+  {show('faq') && <FAQ />}
+
+  {show('landingsection') && <Landingsection />}
 
   <script src="../scripts/formspree.js"></script>
 </Layout>

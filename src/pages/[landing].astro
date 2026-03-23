@@ -22,6 +22,7 @@ import EventLayout from '../layouts/EventLayout.astro';
 import Contact from '../components/Contact.astro';
 import FAQ from '../components/FAQ.astro';
 import Slideshow from '../components/slideshows/Slideshow.astro';
+import { isComponentEnabled, type PageType } from '../utils/componentConfig';
 import {
   MIN_LANDING_SLIDES,
   getCitySlides,
@@ -73,6 +74,10 @@ export async function getStaticPaths() {
 // ── Params & Props ────────────────────────────────────────────────────────────
 const { landing } = Astro.params;
 const { pageType } = Astro.props as { pageType: 'landing' | 'event' };
+
+// Component-Visibility
+const pt: PageType = pageType === 'event' ? 'event' : 'landing';
+const show = (id: string) => isComponentEnabled(pt, landing ?? '', id);
 
 // ─────────────────────────────────────────────────────────────────────────────
 // LANDING-Seite: Bestehende Logik unverändert
@@ -153,14 +158,14 @@ if (pageType === 'event') {
   ══════════════════════════════════════════════════ -->
   <Layout title={landingPageTitle} description={landingPageDescription} image={landingData.titleImage}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-    <Opener titleImage={landingData.titleImage} titleImageAlt={landingData.title} />
-    <Skills skills={skills} reviews={reviews as any} currentLanding={landing} />
-    <Slideshow items={landingSlides} />
-    <Why landing={landing} />
-    <LandingErinnerungen landing={landing} />
-    <Contact />
-    <FAQ city={landing} />
-    <Landingsection/>
+    {show('opener') && <Opener titleImage={landingData.titleImage} titleImageAlt={landingData.title} />}
+    {show('skillBanner') && <Skills skills={skills} reviews={reviews as any} currentLanding={landing} />}
+    {show('slideshow') && <Slideshow items={landingSlides} />}
+    {show('why') && <Why landing={landing} />}
+    {show('erinnerungen') && <LandingErinnerungen landing={landing} />}
+    {show('contact') && <Contact />}
+    {show('faq') && <FAQ city={landing} />}
+    {show('landingsection') && <Landingsection/>}
     <script src="../scripts/formspree.js"></script>
   </Layout>
 )}
@@ -173,18 +178,20 @@ if (pageType === 'event') {
     <script is:inline type="application/ld+json" set:html={JSON.stringify(eventBreadcrumbSchema)} />
 
     <!-- Cinematic Hero mit Titelbild -->
-    <EventHero
-      titleImage={eventTitleImage}
-      title={eventData.heroTitle ?? eventData.title}
-      subtitle={eventData.description}
-      eventLabel={eventData.title}
-    />
+    {show('eventHero') && (
+      <EventHero
+        titleImage={eventTitleImage}
+        title={eventData.heroTitle ?? eventData.title}
+        subtitle={eventData.description}
+        eventLabel={eventData.title}
+      />
+    )}
 
     <!-- Slideshow: Event-spezifische Bilder (+ Default-Fallback) -->
-    <Slideshow items={eventSlides} />
+    {show('slideshow') && <Slideshow items={eventSlides} />}
 
     <!-- Ablauf: nur wenn in content.json enabled -->
-    {eventContent.ablauf?.enabled && eventContent.ablauf.steps.length > 0 && (
+    {show('eventAblauf') && eventContent.ablauf?.enabled && eventContent.ablauf.steps.length > 0 && (
       <EventAblauf
         title={eventContent.ablauf.title}
         steps={eventContent.ablauf.steps}
@@ -192,7 +199,7 @@ if (pageType === 'event') {
     )}
 
     <!-- Pakete: nur wenn in content.json enabled -->
-    {eventContent.pakete?.enabled && eventContent.pakete.items.length > 0 && (
+    {show('eventPakete') && eventContent.pakete?.enabled && eventContent.pakete.items.length > 0 && (
       <EventPakete
         title={eventContent.pakete.title}
         items={eventContent.pakete.items}
@@ -200,7 +207,7 @@ if (pageType === 'event') {
     )}
 
     <!-- Skills: welche Künstler passen zu diesem Event -->
-    {eventContent.skills?.enabled && (
+    {show('eventSkills') && eventContent.skills?.enabled && (
       <EventSkills
         title={eventContent.skills.title}
         eventSlug={landing ?? ''}
@@ -209,7 +216,7 @@ if (pageType === 'event') {
     )}
 
     <!-- Referenzen: nur wenn in content.json enabled UND Logos/Text vorhanden -->
-    {eventContent.referenzen?.enabled && (
+    {show('eventReferenzen') && eventContent.referenzen?.enabled && (
       <EventReferenzen
         title={eventContent.referenzen.title}
         text={eventContent.referenzen.text}
@@ -217,11 +224,11 @@ if (pageType === 'event') {
       />
     )}
 
-    <!-- FAQ: allgemeine FAQs ohne Stadt-Filter -->
-    <FAQ />
+    <!-- FAQ -->
+    {show('faq') && <FAQ />}
 
     <!-- Kontaktformular -->
-    <Contact />
+    {show('contact') && <Contact />}
 
     <script src="../scripts/formspree.js"></script>
   </EventLayout>
