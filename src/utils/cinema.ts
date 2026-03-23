@@ -49,6 +49,12 @@ export type CinemaSatellite = {
   displayMode?: 'text';
   /** Default-Textbausteine für die Ergebnis-Komposition */
   defaults: SatelliteDefaults;
+  /**
+   * AutoSelect: Bei Auswahl dieses Satelliten werden andere Sektionen automatisch gesetzt.
+   * Key = Sektions-ID, Value = Satelliten-Value der automatisch gewählt wird.
+   * Bsp.: { "muse": "stand-attraktion" } → Muse-Sektion wird übersprungen.
+   */
+  autoSelect?: Record<string, string>;
 };
 
 /** Der große Hauptkreis in der Mitte */

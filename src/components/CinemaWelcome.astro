@@ -30,7 +30,9 @@ const satelliteData = {
     id: s.id,
     satellites: s.satellites.map(sat => ({
       value: sat.value,
+      title: sat.title,
       defaults: sat.defaults,
+      ...(sat.autoSelect ? { autoSelect: sat.autoSelect } : {}),
     })),
   })),
   overrides,
@@ -105,9 +107,9 @@ const satelliteData = {
           <span class="cw-satellite-label">{item.title}</span>
         </button>
       ))}
-      <button class="cw-main" id="cw-main-2" aria-label="Gästeanzahl wählen" aria-expanded="false" type="button">
-        <img src={sec2.mainCircle.image} alt={sec2.mainCircle.alt} />
+      <button class="cw-main cw-main--empty" id="cw-main-2" aria-label="Gästeanzahl wählen" aria-expanded="false" type="button">
         <span class="cw-main-hint">{sec2.mainCircle.hint ?? 'Wählen'}</span>
+        <span class="cw-main-selected-text" id="cw-main-2-text"></span>
       </button>
     </div>
 
@@ -161,20 +163,38 @@ const satelliteData = {
      Wird per JS befüllt, sobald alle 3 Auswahlen getroffen sind.
 ═══════════════════════════════════════════════════════════════════ -->
 <section class="cw cw-result" id="cinema-result">
-  <div class="cw-result-inner">
+  <div class="cw-result-cards">
 
-    <div class="cw-result-left">
-      <div class="cw-result-image-wrap">
-        <img id="cw-result-img" src="" alt="" loading="lazy" />
+    <!-- Karte 1: Bild + Titel + Beschreibung -->
+    <div class="cw-result-card" id="cw-card-left">
+      <div class="cw-result-card-inner">
+        <div class="cw-result-card-back">
+          <div class="cw-card-back-ornament"></div>
+          <p class="cw-card-back-hint">Ihr Angebot</p>
+        </div>
+        <div class="cw-result-card-front">
+          <div class="cw-result-image-wrap">
+            <img id="cw-result-img" src="" alt="" loading="lazy" />
+          </div>
+          <h3 class="cw-result-title" id="cw-result-title"></h3>
+          <p class="cw-result-description" id="cw-result-description"></p>
+        </div>
       </div>
-      <h3 class="cw-result-title" id="cw-result-title"></h3>
-      <p class="cw-result-description" id="cw-result-description"></p>
     </div>
 
-    <div class="cw-result-right">
-      <p class="cw-result-summary" id="cw-result-summary"></p>
-      <p class="cw-result-offer" id="cw-result-offer"></p>
-      <a href="#contact" class="cw-result-cta" id="cw-result-cta">Termin jetzt anfragen</a>
+    <!-- Karte 2: Angebot + Button -->
+    <div class="cw-result-card" id="cw-card-right">
+      <div class="cw-result-card-inner">
+        <div class="cw-result-card-back">
+          <div class="cw-card-back-ornament"></div>
+          <p class="cw-card-back-hint">Ihre Empfehlung</p>
+        </div>
+        <div class="cw-result-card-front">
+          <p class="cw-result-summary" id="cw-result-summary"></p>
+          <p class="cw-result-offer" id="cw-result-offer"></p>
+          <a href="#contact" class="cw-result-cta" id="cw-result-cta">Termin jetzt anfragen</a>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -228,7 +248,7 @@ const satelliteData = {
 
   .cw--reversed .cw-inner {
     flex-direction: row;
-    padding-left:  clamp(10px, 2vw, 30px);
+    padding-left:  clamp(40px, 9vw, 130px);
     padding-right: clamp(40px, 9vw, 130px);
   }
 
@@ -320,6 +340,32 @@ const satelliteData = {
       border-color 0.3s ease;
   }
 
+  .cw-main--empty {
+    background: radial-gradient(ellipse at center, #1a1510 0%, #0d0b08 100%);
+    border-color: rgba(191, 155, 80, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cw-main-selected-text {
+    display:        none;
+    color:          #c9a84c;
+    font-family:    Georgia, serif;
+    font-size:      1.1rem;
+    text-align:     center;
+    line-height:    1.3;
+    padding:        12px;
+    pointer-events: none;
+    opacity:        0;
+    transition:     opacity 0.4s ease;
+  }
+
+  .cw-main-selected-text.visible {
+    display: block;
+    opacity: 1;
+  }
+
   .cw-main.visible {
     opacity: 1;
     scale:   1;
@@ -387,6 +433,8 @@ const satelliteData = {
 
   /* ── Text-Satelliten (Muse-Sektion): Gold auf Dunkel ── */
   .cw-satellite--text {
+    width:         110px;
+    height:        110px;
     background:    radial-gradient(ellipse at center, #1a1510 0%, #0d0b08 100%);
     border-color:  rgba(191, 155, 80, 0.35);
     display:       flex;
@@ -396,13 +444,13 @@ const satelliteData = {
 
   .cw-satellite-text {
     color:          #c9a84c;
-    font-family:    'Mayonice', serif;
-    font-size:      0.62rem;
+    font-family:    Georgia, 'Times New Roman', serif;
+    font-size:      0.82rem;
     font-weight:    400;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.02em;
     text-align:     center;
-    line-height:    1.2;
-    padding:        8px;
+    line-height:    1.3;
+    padding:        12px;
     pointer-events: none;
   }
 
@@ -448,16 +496,15 @@ const satelliteData = {
   #cw-orbit-3 .cw-satellite[data-sat-index="3"] { --sx: -95px;  --sy:  165px; }
 
   /*
-    Sektion 2: Satelliten nach RECHTS (6 Satelliten für Muse)
-    Verteilt auf rechtem Halbbogen, r=190.
-    Winkel: 30° / 66° / 102° / 258° / 294° / 330°
+    Sektion 2: 6 Text-Satelliten (Muse) – voller Kreis, r=200
+    Winkel: 0° / 60° / 120° / 180° / 240° / 300°
   */
-  #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  165px; --sy: -95px; }
-  #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx:  187px; --sy:  -30px; }
-  #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx:  187px; --sy:   30px; }
-  #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx:  165px; --sy:   95px; }
-  #cw-orbit-2 .cw-satellite[data-sat-index="4"] { --sx:  120px; --sy:  148px; }
-  #cw-orbit-2 .cw-satellite[data-sat-index="5"] { --sx:  120px; --sy: -148px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  200px; --sy:    0px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx:  100px; --sy:  173px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx: -100px; --sy:  173px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx: -200px; --sy:    0px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="4"] { --sx: -100px; --sy: -173px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="5"] { --sx:  100px; --sy: -173px; }
 
   .cw-satellite.visible {
     transform: translate(calc(-50% + var(--sx)), calc(-50% + var(--sy))) scale(1);
@@ -520,44 +567,111 @@ const satelliteData = {
      Links: Bild + Titel + Beschreibung
      Rechts: Zusammenfassung + Angebot + CTA-Button
   ═══════════════════════════════════════════════════════════════════ */
+  /* ══ Ergebnis-Sektion: Karten-Flip ══════════════════════════════════ */
   .cw-result {
     min-height: auto;
     padding:    clamp(60px, 10vh, 120px) 0;
-    opacity:    0;
-    transform:  translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-    pointer-events: none;
+    display:    flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .cw-result.visible {
-    opacity:        1;
-    transform:      translateY(0);
-    pointer-events: auto;
+  .cw-result-cards {
+    width:   100%;
+    max-width: 1100px;
+    padding: 0 clamp(30px, 6vw, 80px);
+    display: flex;
+    gap:     clamp(24px, 4vw, 48px);
+    align-items: stretch;
   }
 
-  .cw-result-inner {
-    width:         100%;
-    max-width:     1100px;
-    margin:        0 auto;
-    padding:       0 clamp(30px, 6vw, 80px);
-    display:       flex;
-    gap:           clamp(40px, 6vw, 80px);
-    align-items:   flex-start;
+  /* ── Karte ── */
+  .cw-result-card {
+    flex:            1;
+    perspective:     1200px;
+    min-height:      520px;
   }
 
-  /* ── Links: Bild + Titel + Beschreibung ── */
-  .cw-result-left {
-    flex:      0 0 40%;
-    max-width: 400px;
+  .cw-result-card-inner {
+    position:         relative;
+    width:            100%;
+    height:           100%;
+    transform-style:  preserve-3d;
+    transition:       transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  .cw-result-card.flipped .cw-result-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .cw-result-card-back,
+  .cw-result-card-front {
+    position:            absolute;
+    inset:               0;
+    backface-visibility: hidden;
+    border-radius:       8px;
+    border:              1px solid rgba(191, 155, 80, 0.3);
+    overflow:            hidden;
+  }
+
+  /* ── Rückseite ── */
+  .cw-result-card-back {
+    background: radial-gradient(ellipse at 40% 40%, #1a1208 0%, #0a0804 100%);
+    display:    flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .cw-card-back-ornament {
+    width:  80px;
+    height: 80px;
+    border: 1px solid rgba(191, 155, 80, 0.4);
+    border-radius: 50%;
+    position: relative;
+  }
+
+  .cw-card-back-ornament::before,
+  .cw-card-back-ornament::after {
+    content:       '';
+    position:      absolute;
+    inset:         10px;
+    border:        1px solid rgba(191, 155, 80, 0.2);
+    border-radius: 50%;
+  }
+
+  .cw-card-back-ornament::after {
+    inset: 22px;
+    background: rgba(191, 155, 80, 0.08);
+  }
+
+  .cw-card-back-hint {
+    font-family:    'Mayonice', serif;
+    font-size:      clamp(1rem, 1.8vw, 1.4rem);
+    color:          rgba(191, 155, 80, 0.5);
+    letter-spacing: 0.05em;
+    margin:         0;
+  }
+
+  /* ── Vorderseite ── */
+  .cw-result-card-front {
+    background:     #080604;
+    transform:      rotateY(180deg);
+    display:        flex;
+    flex-direction: column;
+    padding:        clamp(24px, 3vw, 36px);
+  }
+
+  /* ── Inhalt links ── */
   .cw-result-image-wrap {
     width:         100%;
-    aspect-ratio:  4 / 5;
-    border-radius: 6px;
+    aspect-ratio:  4 / 3;
+    border-radius: 4px;
     overflow:      hidden;
-    border:        1px solid rgba(191, 155, 80, 0.25);
-    margin-bottom: clamp(16px, 2.5vw, 28px);
+    border:        1px solid rgba(191, 155, 80, 0.15);
+    margin-bottom: clamp(16px, 2vw, 24px);
+    flex-shrink:   0;
   }
 
   .cw-result-image-wrap img {
@@ -569,7 +683,7 @@ const satelliteData = {
 
   .cw-result-title {
     font-family:    'Mayonice', serif;
-    font-size:      clamp(1.6rem, 3vw, 2.4rem);
+    font-size:      clamp(1.5rem, 2.5vw, 2.2rem);
     font-weight:    400;
     color:          #c9a84c;
     margin:         0 0 clamp(8px, 1.5vw, 14px);
@@ -578,38 +692,34 @@ const satelliteData = {
 
   .cw-result-description {
     font-family: var(--font-body, 'Inter', sans-serif);
-    font-size:   clamp(0.85rem, 1.4vw, 1rem);
+    font-size:   clamp(0.85rem, 1.3vw, 0.95rem);
     font-weight: 300;
     color:       rgba(255,255,255,0.7);
-    line-height: 1.6;
+    line-height: 1.65;
     margin:      0;
   }
 
-  /* ── Rechts: Zusammenfassung + Angebot + Button ── */
-  .cw-result-right {
-    flex: 1;
-    display:        flex;
-    flex-direction: column;
+  /* ── Inhalt rechts ── */
+  #cw-card-right .cw-result-card-front {
     justify-content: center;
-    padding-top:    clamp(20px, 4vw, 60px);
   }
 
   .cw-result-summary {
     font-family:    'Mayonice', serif;
-    font-size:      clamp(1.1rem, 2vw, 1.6rem);
-    color:          rgba(255,255,255,0.5);
+    font-size:      clamp(1rem, 1.8vw, 1.4rem);
+    color:          rgba(255,255,255,0.45);
     font-weight:    400;
     letter-spacing: 0.01em;
-    margin:         0 0 clamp(20px, 3vw, 36px);
+    margin:         0 0 clamp(20px, 2.5vw, 32px);
     line-height:    1.4;
   }
 
   .cw-result-offer {
     font-family: var(--font-body, 'Inter', sans-serif);
-    font-size:   clamp(0.95rem, 1.6vw, 1.15rem);
+    font-size:   clamp(0.95rem, 1.5vw, 1.1rem);
     font-weight: 300;
     color:       rgba(255,255,255,0.85);
-    line-height: 1.7;
+    line-height: 1.75;
     margin:      0 0 clamp(28px, 4vw, 48px);
   }
 
@@ -664,7 +774,8 @@ const satelliteData = {
     .cw-orbit { width: 340px; height: 340px; }
     .cw-main  { width: 160px; height: 160px; }
     .cw-satellite { width: 76px; height: 76px; }
-    .cw-satellite-text { font-size: 0.52rem; padding: 5px; }
+    .cw-satellite--text { width: 90px; height: 90px; }
+    .cw-satellite-text { font-size: 0.7rem; padding: 8px; }
 
     /* r=152 — Sektion 1 + 3 nach links */
     #cw-orbit  .cw-satellite[data-sat-index="0"],
@@ -676,13 +787,13 @@ const satelliteData = {
     #cw-orbit  .cw-satellite[data-sat-index="3"],
     #cw-orbit-3 .cw-satellite[data-sat-index="3"] { --sx: -76px;  --sy:  132px; }
 
-    /* r=152 — Sektion 2 (6 Satelliten) nach rechts */
-    #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  132px; --sy: -76px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx:  150px; --sy: -24px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx:  150px; --sy:  24px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx:  132px; --sy:  76px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="4"] { --sx:  96px;  --sy:  118px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="5"] { --sx:  96px;  --sy: -118px; }
+    /* r=152 — Sektion 2 (6 Text-Satelliten) voller Kreis */
+    #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  152px; --sy:    0px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx:   76px; --sy:  132px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx:  -76px; --sy:  132px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx: -152px; --sy:    0px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="4"] { --sx:  -76px; --sy: -132px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="5"] { --sx:   76px; --sy: -132px; }
 
     /* Ergebnis */
     .cw-result-inner {
@@ -711,7 +822,8 @@ const satelliteData = {
     .cw-orbit     { width: 280px; height: 280px; }
     .cw-main      { width: 130px; height: 130px; }
     .cw-satellite { width: 62px;  height: 62px;  }
-    .cw-satellite-text { font-size: 0.44rem; padding: 4px; }
+    .cw-satellite--text { width: 74px; height: 74px; }
+    .cw-satellite-text { font-size: 0.58rem; padding: 6px; }
 
     /* r=124 — Sektion 1 + 3 nach links */
     #cw-orbit  .cw-satellite[data-sat-index="0"],
@@ -723,13 +835,13 @@ const satelliteData = {
     #cw-orbit  .cw-satellite[data-sat-index="3"],
     #cw-orbit-3 .cw-satellite[data-sat-index="3"] { --sx: -62px;  --sy:  107px; }
 
-    /* r=124 — Sektion 2 (6 Satelliten) nach rechts */
-    #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  107px; --sy: -62px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx:  122px; --sy: -20px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx:  122px; --sy:  20px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx:  107px; --sy:  62px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="4"] { --sx:  78px;  --sy:  96px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="5"] { --sx:  78px;  --sy: -96px; }
+    /* r=124 — Sektion 2 (6 Text-Satelliten) voller Kreis */
+    #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  124px; --sy:    0px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx:   62px; --sy:  107px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx:  -62px; --sy:  107px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx: -124px; --sy:    0px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="4"] { --sx:  -62px; --sy: -107px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="5"] { --sx:   62px; --sy: -107px; }
 
     /* Ergebnis */
     .cw-result-left { max-width: 100%; }
@@ -784,6 +896,8 @@ const satelliteData = {
 
   // ── Ergebnis-Sektion ────────────────────────────────────────────────────
   const resultSection = document.getElementById("cinema-result");
+  const cardLeft      = document.getElementById("cw-card-left");
+  const cardRight     = document.getElementById("cw-card-right");
   const resultImg     = document.getElementById("cw-result-img") as HTMLImageElement | null;
   const resultTitle   = document.getElementById("cw-result-title");
   const resultDesc    = document.getElementById("cw-result-description");
@@ -856,15 +970,18 @@ const satelliteData = {
     }
     if (resultOffer) resultOffer.textContent = offer;
 
-    // Einblenden
-    resultSection.classList.add("visible");
-    resultSection.style.position = "relative";
-    resultSection.style.zIndex   = "1002";
+    // Karten aufdecken (linke Karte etwas früher)
+    if (resultSection) {
+      resultSection.style.position = "relative";
+      resultSection.style.zIndex   = "1002";
+    }
+    setTimeout(() => cardLeft?.classList.add("flipped"),  100);
+    setTimeout(() => cardRight?.classList.add("flipped"), 350);
 
     // Zum Ergebnis scrollen
     setTimeout(() => {
-      resultSection.scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 300);
+      resultSection?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 400);
   }
 
   // ── INTRO ────────────────────────────────────────────────────────────────
@@ -954,6 +1071,11 @@ const satelliteData = {
       if (satellitesOpen) return;
       satellitesOpen = true;
       btn.setAttribute("aria-expanded", "true");
+      // Text-Satellit-Auswahl im Hauptkreis zurücksetzen
+      const hint   = btn.querySelector<HTMLElement>(".cw-main-hint");
+      const textEl = btn.querySelector<HTMLElement>(".cw-main-selected-text");
+      if (hint)   hint.style.display = "";
+      if (textEl) { textEl.classList.remove("visible"); textEl.textContent = ""; }
       satEls.forEach((sat, i) => {
         if (instant) sat.classList.add("visible");
         else setTimeout(() => sat.classList.add("visible"), i * 200);
@@ -980,6 +1102,21 @@ const satelliteData = {
       const title = clickedSat.getAttribute("aria-label") || "";
       selections[selectionKey] = value;
       selectionTitles[selectionKey] = title;
+
+      // AutoSelect: andere Sektionen automatisch befüllen (z.B. Messe → Stand-Attraktion)
+      const satData = (window as any).__cinemaSatelliteData;
+      const thisSec = satData?.sections.find((s: any) => s.id === selectionKey);
+      const thisSatData = thisSec?.satellites.find((s: any) => s.value === value);
+      if (thisSatData?.autoSelect) {
+        for (const [secId, autoVal] of Object.entries(thisSatData.autoSelect as Record<string, string>)) {
+          const autoSec = satData.sections.find((s: any) => s.id === secId);
+          const autoSat = autoSec?.satellites.find((s: any) => s.value === autoVal);
+          if (autoSat) {
+            selections[secId] = autoVal;
+            selectionTitles[secId] = autoSat.title;
+          }
+        }
+      }
 
       // Visuell markieren
       satEls.forEach(s => s.classList.remove("selected"));
@@ -1015,7 +1152,7 @@ const satelliteData = {
         }
       }, 350);
 
-      // Phase 3 (t=800): Hauptkreis-Bild tauschen (nur bei Bild-Satelliten)
+      // Phase 3 (t=800): Hauptkreis aktualisieren
       setTimeout(() => {
         if (!isTextSat) {
           const mainImg = btn.querySelector<HTMLImageElement>("img");
@@ -1023,6 +1160,15 @@ const satelliteData = {
             mainImg.src           = newSrc;
             mainImg.alt           = newAlt;
             mainImg.style.opacity = "";
+          }
+        } else {
+          // Text-Satellit: ausgewählten Text in Hauptkreis schreiben
+          const hint = btn.querySelector<HTMLElement>(".cw-main-hint");
+          const textEl = btn.querySelector<HTMLElement>(".cw-main-selected-text");
+          if (hint) hint.style.display = "none";
+          if (textEl) {
+            textEl.textContent = title;
+            textEl.classList.add("visible");
           }
         }
       }, 800);

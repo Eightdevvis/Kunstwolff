@@ -30,6 +30,7 @@
           "value": "messe",
           "image": "/img/slides/default/2_karikatur_stadtfest.webp",
           "alt": "Messe-Entertainment",
+          "autoSelect": { "muse": "stand-attraktion" },
           "defaults": {
             "titlePart": "Messe",
             "text": "An Ihrem Messestand sorgt die Live-Kunst für Aufmerksamkeit und zieht Besucher magnetisch an.",
@@ -62,8 +63,8 @@
     },
     {
       "id": "muse",
-      "title": "Ihre Muse",
-      "subtitle": "Wie groß ist Ihre Gesellschaft?",
+      "title": "Ihr Wunsch",
+      "subtitle": "Was soll bei Ihren Gästen entstehen?",
       "mainCircle": {
         "image": "/img/UnsereFähigkeitenBilder/Schnellzeichner/IMG_20240528_143426.webp",
         "alt": "Kunstwolff – Eventkünstler",
@@ -71,63 +72,43 @@
       },
       "satellites": [
         {
-          "title": "<25 Gäste",
-          "value": "unter-25",
+          "title": "Live-Portraits",
+          "value": "live-portraits",
           "displayMode": "text",
           "defaults": {
-            "titlePart": "<25 Gäste",
-            "text": "In dieser intimen Runde kann sich die Kunst dazu ganz auf jeden einzelnen Gast konzentrieren.",
-            "offer": "Für Ihre kleine Runde gestalten wir ein persönliches Kunsterlebnis, bei dem jeder Gast im Mittelpunkt steht."
+            "titlePart": "Live-Portraits",
+            "text": "Jeder Gast erhält sein eigenes persönliches Kunstwerk – direkt vor seinen Augen entstanden, stundenweise gebucht.",
+            "offer": "Wir zeichnen Ihre Gäste live und stundenlang – jeder geht mit einem einzigartigen Portrait nach Hause."
           }
         },
         {
-          "title": "25–50 Gäste",
-          "value": "25-50",
+          "title": "Persönliches Geschenk",
+          "value": "persoenliches-geschenk",
           "displayMode": "text",
           "defaults": {
-            "titlePart": "25–50 Gäste",
-            "text": "Für diese Gesellschaft bieten wir dazu die perfekte Balance aus persönlicher Aufmerksamkeit und lebendiger Unterhaltung.",
-            "offer": "Für Ihre Gesellschaft schaffen wir die perfekte Mischung aus persönlicher Kunst und unterhaltsamer Performance."
+            "titlePart": "Persönliches Geschenk",
+            "text": "Ein aufwendiges, exklusives Portrait für eine oder zwei besondere Personen – als Überraschung oder Ehrung.",
+            "offer": "Wir schaffen ein bleibendes Kunstwerk als persönliches Geschenk – für den Jubilar, das Brautpaar oder eine geehrte Person."
           }
         },
         {
-          "title": "50–100 Gäste",
-          "value": "50-100",
+          "title": "Gruppenportrait",
+          "value": "gruppenportrait",
           "displayMode": "text",
           "defaults": {
-            "titlePart": "50–100 Gäste",
-            "text": "Bei dieser Gästezahl entfaltet die Live-Kunst dazu ihre volle Wirkung als mitreißendes Entertainment.",
-            "offer": "Für Ihre Veranstaltung bringen wir die Energie mit, die Ihre Gäste den ganzen Abend lang begeistert."
+            "titlePart": "Gruppenportrait",
+            "text": "Ein gemeinsames Kunstwerk für Ihr Team oder Ihre Gesellschaft – etwas, das alle verbindet und lange hängen bleibt.",
+            "offer": "Wir malen Ihr Team oder Ihre Gesellschaft als gemeinsames Portrait – ein Erinnerungsstück, das bleibt."
           }
         },
         {
-          "title": "150+ Gäste",
-          "value": "150-plus",
+          "title": "Stand-Attraktion",
+          "value": "stand-attraktion",
           "displayMode": "text",
           "defaults": {
-            "titlePart": "150+ Gäste",
-            "text": "Für dieses Großevent setzen wir dazu mehrere Künstler ein, damit jeder Gast ein persönliches Kunsterlebnis mitnimmt.",
-            "offer": "Für Ihr Großevent stellen wir ein Künstler-Team zusammen, das Ihre Gäste an mehreren Stationen gleichzeitig begeistert."
-          }
-        },
-        {
-          "title": "Gruppe",
-          "value": "gruppe",
-          "displayMode": "text",
-          "defaults": {
-            "titlePart": "Gruppe",
-            "text": "Für Ihre Gruppe gestalten wir dazu ein gemeinsames Kunsterlebnis, das zusammenschweißt und Freude bringt.",
-            "offer": "Für Ihre Gruppe schaffen wir ein interaktives Erlebnis, bei dem alle zusammen Teil der Kunst werden."
-          }
-        },
-        {
-          "title": "Spezialperson(en)",
-          "value": "spezialperson",
-          "displayMode": "text",
-          "defaults": {
-            "titlePart": "Spezialperson(en)",
-            "text": "Die Kunst bietet dazu ein besonderes Geschenk für die besondersten Menschen in Ihrem Leben.",
-            "offer": "Für Ihre Spezialperson schaffen wir ein einzigartiges Kunstwerk – ein Geschenk, das von Herzen kommt und bleibt."
+            "titlePart": "Stand-Attraktion",
+            "text": "Wir sind tagelang an Ihrem Stand präsent, zeichnen Besucher live und machen Ihren Auftritt unvergesslich.",
+            "offer": "Als Stand-Attraktion sind wir täglich für Sie da – Besucher werden gezeichnet, Gespräche entstehen, Ihr Stand bleibt in Erinnerung."
           }
         }
       ]
