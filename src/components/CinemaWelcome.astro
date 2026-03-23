@@ -2,38 +2,43 @@
 /**
  * CinemaWelcome.astro
  *
- * Datengetriebene Cinema-Welcome-Komponente.
- * Alle Inhalte (Titel, Subtitel, Hauptkreis, Satelliten) kommen aus
- * public/cinema/cinema.json – editierbar über das Admin-Tool.
+ * Interaktiver Konfigurator: Der Besucher wählt Event, Gästeanzahl und Stil –
+ * am Ende erscheint ein personalisiertes Angebot.
  *
  * Aufbau:
  *
  * [INTRO]   Cinematic opener (zentrierter Text, kein Orbit)
- * [1] Text links  / Orbit rechts  – Satelliten nach links
- * [2] Orbit links / Text rechts   – Satelliten nach rechts (reversed)
- * [3] Text links  / Orbit rechts  – Satelliten nach links
+ * [1] Ihr Event    – Text links / Orbit rechts  – Event-Typ auswählen
+ * [2] Ihre Muse    – Orbit links / Text rechts   – Gästezahl (Text-Kreise)
+ * [3] Ihr Geschmack – Text links / Orbit rechts  – Stil auswählen
+ * [4] Ergebnis     – Personalisiertes Angebot basierend auf den 3 Auswahlen
  *
- * Layout (welche Sektion reversed ist, IDs, CSS-Positionen) bleibt im Code.
- * Content (Texte, Bilder, Links) kommt aus der JSON-Datei.
- *
- * Alle drei Orbit-Sektionen teilen sich Dimmer + Factory-Funktion `setupCinemaSection()`.
- * Merge-Animation: Satellit-Klick tauscht Hauptkreis-Bild.
+ * Orbit-Animationen + Dimmer bleiben wie gehabt.
+ * Satelliten sind jetzt Auswahl-Buttons statt Links.
+ * Ergebnis-Sektion wird per JS mit den gewählten Daten befüllt.
  */
 
 import { getCinemaData } from '../utils/cinema';
 
-// Daten aus public/cinema/cinema.json laden (Build-Time)
 const cinema = getCinemaData();
-
-// Destructuring für bessere Lesbarkeit im Template
-const { intro } = cinema;
+const { intro, overrides } = cinema;
 const [sec1, sec2, sec3] = cinema.sections;
+
+// Satelliten-Defaults als Lookup für Client-JS (value → defaults)
+const satelliteData = {
+  sections: cinema.sections.map(s => ({
+    id: s.id,
+    satellites: s.satellites.map(sat => ({
+      value: sat.value,
+      defaults: sat.defaults,
+    })),
+  })),
+  overrides,
+};
 ---
 
 <!-- ══════════════════════════════════════════════════════════════════
      INTRO – Cinematic Opener (reine Text-Begrüßung, zentriert)
-     Nutzt dieselbe cw-title / cw-subtitle Logik wie die Orbit-Sektionen.
-     JS aktiviert Dimmer + spielt Wipe-Animationen sequenziell ab.
 ═══════════════════════════════════════════════════════════════════ -->
 <div class="cw-intro" id="cw-intro">
   <p class="cw-title">{intro.title}</p>
@@ -41,7 +46,7 @@ const [sec1, sec2, sec3] = cinema.sections;
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════════
-     SEKTION 1 – Text links, Orbit rechts (Satelliten nach links)
+     SEKTION 1 – Ihr Event (Text links, Orbit rechts)
 ═══════════════════════════════════════════════════════════════════ -->
 <section class="cw" id="cinema-welcome">
   <div class="cw-inner">
@@ -53,37 +58,56 @@ const [sec1, sec2, sec3] = cinema.sections;
 
     <div class="cw-orbit" id="cw-orbit">
       {sec1.satellites.map((item, i) => (
-        <a href={item.link} class="cw-satellite" data-sat-index={i.toString()} aria-label={item.title}>
-          <img src={item.image} alt={item.alt ?? item.title} loading="lazy" />
+        <button
+          class={`cw-satellite ${item.displayMode === 'text' ? 'cw-satellite--text' : ''}`}
+          data-sat-index={i.toString()}
+          data-value={item.value}
+          aria-label={item.title}
+          type="button"
+        >
+          {item.displayMode === 'text' ? (
+            <span class="cw-satellite-text">{item.title}</span>
+          ) : (
+            <img src={item.image} alt={item.alt ?? item.title} loading="lazy" />
+          )}
           <span class="cw-satellite-label">{item.title}</span>
-        </a>
+        </button>
       ))}
-      <button class="cw-main" id="cw-main" aria-label="Unsere Leistungen anzeigen" aria-expanded="false">
+      <button class="cw-main" id="cw-main" aria-label="Event-Typ auswählen" aria-expanded="false" type="button">
         <img src={sec1.mainCircle.image} alt={sec1.mainCircle.alt} />
         <span class="cw-main-hint">{sec1.mainCircle.hint ?? 'Entdecken'}</span>
       </button>
     </div>
 
   </div>
-
 </section>
 
 <!-- ══════════════════════════════════════════════════════════════════
-     SEKTION 2 – Orbit links, Text rechts (Satelliten nach rechts)
+     SEKTION 2 – Ihre Muse (Orbit links, Text rechts) – Text-Kreise
 ═══════════════════════════════════════════════════════════════════ -->
 <section class="cw cw--reversed" id="cinema-welcome-2">
   <div class="cw-inner">
 
     <div class="cw-orbit" id="cw-orbit-2">
       {sec2.satellites.map((item, i) => (
-        <a href={item.link} class="cw-satellite" data-sat-index={i.toString()} aria-label={item.title}>
-          <img src={item.image} alt={item.alt ?? item.title} loading="lazy" />
+        <button
+          class={`cw-satellite ${item.displayMode === 'text' ? 'cw-satellite--text' : ''}`}
+          data-sat-index={i.toString()}
+          data-value={item.value}
+          aria-label={item.title}
+          type="button"
+        >
+          {item.displayMode === 'text' ? (
+            <span class="cw-satellite-text">{item.title}</span>
+          ) : (
+            <img src={item.image} alt={item.alt ?? item.title} loading="lazy" />
+          )}
           <span class="cw-satellite-label">{item.title}</span>
-        </a>
+        </button>
       ))}
-      <button class="cw-main" id="cw-main-2" aria-label="Unsere Leistungen anzeigen" aria-expanded="false">
+      <button class="cw-main" id="cw-main-2" aria-label="Gästeanzahl wählen" aria-expanded="false" type="button">
         <img src={sec2.mainCircle.image} alt={sec2.mainCircle.alt} />
-        <span class="cw-main-hint">{sec2.mainCircle.hint ?? 'Entdecken'}</span>
+        <span class="cw-main-hint">{sec2.mainCircle.hint ?? 'Wählen'}</span>
       </button>
     </div>
 
@@ -93,11 +117,10 @@ const [sec1, sec2, sec3] = cinema.sections;
     </div>
 
   </div>
-
 </section>
 
 <!-- ══════════════════════════════════════════════════════════════════
-     SEKTION 3 – Text links, Orbit rechts (Satelliten nach links)
+     SEKTION 3 – Ihr Geschmack (Text links, Orbit rechts)
 ═══════════════════════════════════════════════════════════════════ -->
 <section class="cw" id="cinema-welcome-3">
   <div class="cw-inner">
@@ -109,46 +132,75 @@ const [sec1, sec2, sec3] = cinema.sections;
 
     <div class="cw-orbit" id="cw-orbit-3">
       {sec3.satellites.map((item, i) => (
-        <a href={item.link} class="cw-satellite" data-sat-index={i.toString()} aria-label={item.title}>
-          <img src={item.image} alt={item.alt ?? item.title} loading="lazy" />
+        <button
+          class={`cw-satellite ${item.displayMode === 'text' ? 'cw-satellite--text' : ''}`}
+          data-sat-index={i.toString()}
+          data-value={item.value}
+          aria-label={item.title}
+          type="button"
+        >
+          {item.displayMode === 'text' ? (
+            <span class="cw-satellite-text">{item.title}</span>
+          ) : (
+            <img src={item.image} alt={item.alt ?? item.title} loading="lazy" />
+          )}
           <span class="cw-satellite-label">{item.title}</span>
-        </a>
+        </button>
       ))}
-      <button class="cw-main" id="cw-main-3" aria-label="Unsere Leistungen anzeigen" aria-expanded="false">
+      <button class="cw-main" id="cw-main-3" aria-label="Stil auswählen" aria-expanded="false" type="button">
         <img src={sec3.mainCircle.image} alt={sec3.mainCircle.alt} />
         <span class="cw-main-hint">{sec3.mainCircle.hint ?? 'Entdecken'}</span>
       </button>
     </div>
 
   </div>
-
 </section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SEKTION 4 – Ergebnis (personalisiertes Angebot)
+     Wird per JS befüllt, sobald alle 3 Auswahlen getroffen sind.
+═══════════════════════════════════════════════════════════════════ -->
+<section class="cw cw-result" id="cinema-result">
+  <div class="cw-result-inner">
+
+    <div class="cw-result-left">
+      <div class="cw-result-image-wrap">
+        <img id="cw-result-img" src="" alt="" loading="lazy" />
+      </div>
+      <h3 class="cw-result-title" id="cw-result-title"></h3>
+      <p class="cw-result-description" id="cw-result-description"></p>
+    </div>
+
+    <div class="cw-result-right">
+      <p class="cw-result-summary" id="cw-result-summary"></p>
+      <p class="cw-result-offer" id="cw-result-offer"></p>
+      <a href="#contact" class="cw-result-cta" id="cw-result-cta">Termin jetzt anfragen</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Satelliten-Daten + Overrides für Client-JS (Build-Time → Runtime) -->
+<script is:inline define:vars={{ satelliteData }}>
+  window.__cinemaSatelliteData = satelliteData;
+</script>
 
 <style>
   /* ═══════════════════════════════════════════════════════════════════
      INTRO BLOCK
-     Kein Orbit, zentriert – aber volle Cinema-Experience:
-     Dimmer aktiv, cw-title / cw-subtitle wipe-animiert wie die Orbit-Sektionen.
   ═══════════════════════════════════════════════════════════════════ */
   .cw-intro {
-    position:        relative;    /* nötig damit z-index greift wenn Sektion über Dimmer gehoben wird */
+    position:        relative;
     background:      #000;
     min-height:      60vh;
     display:         flex;
     flex-direction:  column;
-    align-items:     center;     /* horizontal zentriert */
-    justify-content: center;     /* vertikal mittig */
+    align-items:     center;
+    justify-content: center;
     text-align:      center;
     padding:         clamp(60px, 10vh, 110px) clamp(40px, 9vw, 130px) clamp(30px, 5vh, 60px);
     gap:             clamp(14px, 2.5vh, 28px);
   }
-
-  /*
-    cw-title und cw-subtitle innerhalb des Intros bekommen dieselbe
-    Wipe-Animation wie in den Orbit-Sektionen. Die globalen Klassen-Styles
-    (.cw-title, .cw-subtitle, .cw-title.revealed, .cw-subtitle.revealed) greifen
-    automatisch – kein Extra-CSS nötig.
-  */
 
   /* ═══════════════════════════════════════════════════════════════════
      ORBIT-SEKTIONEN (gemeinsam)
@@ -156,10 +208,6 @@ const [sec1, sec2, sec3] = cinema.sections;
   .cw {
     position:    relative;
     background:  #000;
-    /*
-      Etwas kleiner als vorher (war 90vh / 80px).
-      Damit der User smooth durchscrollt ohne zu viel Leerraum.
-    */
     min-height:  75vh;
     display:     flex;
     align-items: center;
@@ -168,12 +216,9 @@ const [sec1, sec2, sec3] = cinema.sections;
   }
 
   .cw-inner {
-    width:     100%;
-    max-width: 1300px;
-    margin:    0 auto;
-    /*
-      Sektion 1 + 3: viel Padding links für Text, wenig rechts → Kreis nahe Kante.
-    */
+    width:         100%;
+    max-width:     1300px;
+    margin:        0 auto;
     padding-left:  clamp(40px, 9vw, 130px);
     padding-right: clamp(10px, 2vw, 30px);
     display:       flex;
@@ -181,10 +226,6 @@ const [sec1, sec2, sec3] = cinema.sections;
     gap:           clamp(30px, 5vw, 60px);
   }
 
-  /*
-    Sektion 2 (reversed): Orbit links → wenig Padding links, viel rechts.
-    DOM-Reihenfolge ist bereits Orbit → Text, also flex-direction: row reicht.
-  */
   .cw--reversed .cw-inner {
     flex-direction: row;
     padding-left:  clamp(10px, 2vw, 30px);
@@ -199,7 +240,6 @@ const [sec1, sec2, sec3] = cinema.sections;
     min-width: 0;
   }
 
-  /* Text in Sektion 2: linksbündig, etwas Abstand zum Orbit */
   .cw-text--right {
     text-align:   left;
     padding-left: clamp(20px, 4vw, 60px);
@@ -213,7 +253,6 @@ const [sec1, sec2, sec3] = cinema.sections;
     line-height:    1.1;
     margin:         0 0 clamp(16px, 3vw, 30px);
     letter-spacing: 0.02em;
-    /* Startzustand: Wipe von rechts */
     clip-path:      inset(0 100% 0 0);
     opacity:        0;
   }
@@ -229,9 +268,6 @@ const [sec1, sec2, sec3] = cinema.sections;
     opacity:        0;
   }
 
-  /* ── Wipe-Reveal ──────────────────────────────────────────────────
-     clip-path inset von rechts: Text wird von links nach rechts aufgedeckt.
-  ── */
   @keyframes text-reveal {
     0%  { clip-path: inset(0 100% 0 0); opacity: 0; }
     15% { opacity: 1; }
@@ -335,6 +371,9 @@ const [sec1, sec2, sec3] = cinema.sections;
     display:         block;
     text-decoration: none;
     color:           #fff;
+    cursor:          pointer;
+    padding:         0;
+    font:            inherit;
     transform:       translate(-50%, -50%) scale(0);
     opacity:         0;
     transition:
@@ -346,10 +385,58 @@ const [sec1, sec2, sec3] = cinema.sections;
     will-change: transform, opacity;
   }
 
+  /* ── Text-Satelliten (Muse-Sektion): Gold auf Dunkel ── */
+  .cw-satellite--text {
+    background:    radial-gradient(ellipse at center, #1a1510 0%, #0d0b08 100%);
+    border-color:  rgba(191, 155, 80, 0.35);
+    display:       flex;
+    align-items:   center;
+    justify-content: center;
+  }
+
+  .cw-satellite-text {
+    color:          #c9a84c;
+    font-family:    'Mayonice', serif;
+    font-size:      0.62rem;
+    font-weight:    400;
+    letter-spacing: 0.04em;
+    text-align:     center;
+    line-height:    1.2;
+    padding:        8px;
+    pointer-events: none;
+  }
+
+  .cw-satellite--text:hover {
+    border-color: rgba(191, 155, 80, 0.7);
+    box-shadow:   0 0 24px rgba(191, 155, 80, 0.2);
+  }
+
+  .cw-satellite--text:hover .cw-satellite-text {
+    color: #e2c970;
+  }
+
+  /* Text-Satelliten: Label ausblenden (Text IST das Label) */
+  .cw-satellite--text .cw-satellite-label { display: none; }
+
+  /* ── Ausgewählter Satellit ── */
+  .cw-satellite.selected {
+    border-color: rgba(191, 155, 80, 0.8);
+    box-shadow:   0 0 20px rgba(191, 155, 80, 0.3);
+  }
+
+  .cw-satellite--text.selected {
+    background:   radial-gradient(ellipse at center, #2a2010 0%, #1a1508 100%);
+    border-color: rgba(191, 155, 80, 0.9);
+    box-shadow:   0 0 28px rgba(191, 155, 80, 0.4);
+  }
+
+  .cw-satellite--text.selected .cw-satellite-text {
+    color: #e8d07a;
+  }
+
   /*
-    Sektion 1 + 3: Satelliten nach LINKS
+    Sektion 1 + 3: Satelliten nach LINKS (4 Satelliten)
     Winkel 120°/160°/200°/240°, r=190.
-    Chord = 2×190×sin(20°) = 130px → Lücke ≈ 35px ✓
   */
   #cw-orbit  .cw-satellite[data-sat-index="0"],
   #cw-orbit-3 .cw-satellite[data-sat-index="0"] { --sx: -95px;  --sy: -165px; }
@@ -361,13 +448,16 @@ const [sec1, sec2, sec3] = cinema.sections;
   #cw-orbit-3 .cw-satellite[data-sat-index="3"] { --sx: -95px;  --sy:  165px; }
 
   /*
-    Sektion 2: Satelliten nach RECHTS (gespiegelt), r=190.
-    Winkel 60°/20°/340°/300° → sx positiv.
+    Sektion 2: Satelliten nach RECHTS (6 Satelliten für Muse)
+    Verteilt auf rechtem Halbbogen, r=190.
+    Winkel: 30° / 66° / 102° / 258° / 294° / 330°
   */
-  #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  95px; --sy: -165px; }
-  #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx: 179px; --sy:  -65px; }
-  #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx: 179px; --sy:   65px; }
-  #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx:  95px; --sy:  165px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  165px; --sy: -95px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx:  187px; --sy:  -30px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx:  187px; --sy:   30px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx:  165px; --sy:   95px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="4"] { --sx:  120px; --sy:  148px; }
+  #cw-orbit-2 .cw-satellite[data-sat-index="5"] { --sx:  120px; --sy: -148px; }
 
   .cw-satellite.visible {
     transform: translate(calc(-50% + var(--sx)), calc(-50% + var(--sy))) scale(1);
@@ -379,6 +469,11 @@ const [sec1, sec2, sec3] = cinema.sections;
     box-shadow:   0 0 28px rgba(255,255,255,0.18);
     border-color: rgba(255,255,255,0.55);
     z-index:      2;
+  }
+
+  .cw-satellite--text:hover {
+    box-shadow:   0 0 28px rgba(191, 155, 80, 0.25);
+    border-color: rgba(191, 155, 80, 0.7);
   }
 
   .cw-satellite img {
@@ -420,6 +515,129 @@ const [sec1, sec2, sec3] = cinema.sections;
   }
 
   /* ═══════════════════════════════════════════════════════════════════
+     ERGEBNIS-SEKTION
+     Schwarz-Weiß-Gold Eleganz.
+     Links: Bild + Titel + Beschreibung
+     Rechts: Zusammenfassung + Angebot + CTA-Button
+  ═══════════════════════════════════════════════════════════════════ */
+  .cw-result {
+    min-height: auto;
+    padding:    clamp(60px, 10vh, 120px) 0;
+    opacity:    0;
+    transform:  translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    pointer-events: none;
+  }
+
+  .cw-result.visible {
+    opacity:        1;
+    transform:      translateY(0);
+    pointer-events: auto;
+  }
+
+  .cw-result-inner {
+    width:         100%;
+    max-width:     1100px;
+    margin:        0 auto;
+    padding:       0 clamp(30px, 6vw, 80px);
+    display:       flex;
+    gap:           clamp(40px, 6vw, 80px);
+    align-items:   flex-start;
+  }
+
+  /* ── Links: Bild + Titel + Beschreibung ── */
+  .cw-result-left {
+    flex:      0 0 40%;
+    max-width: 400px;
+  }
+
+  .cw-result-image-wrap {
+    width:         100%;
+    aspect-ratio:  4 / 5;
+    border-radius: 6px;
+    overflow:      hidden;
+    border:        1px solid rgba(191, 155, 80, 0.25);
+    margin-bottom: clamp(16px, 2.5vw, 28px);
+  }
+
+  .cw-result-image-wrap img {
+    width:      100%;
+    height:     100%;
+    object-fit: cover;
+    filter:     brightness(0.85);
+  }
+
+  .cw-result-title {
+    font-family:    'Mayonice', serif;
+    font-size:      clamp(1.6rem, 3vw, 2.4rem);
+    font-weight:    400;
+    color:          #c9a84c;
+    margin:         0 0 clamp(8px, 1.5vw, 14px);
+    letter-spacing: 0.02em;
+  }
+
+  .cw-result-description {
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size:   clamp(0.85rem, 1.4vw, 1rem);
+    font-weight: 300;
+    color:       rgba(255,255,255,0.7);
+    line-height: 1.6;
+    margin:      0;
+  }
+
+  /* ── Rechts: Zusammenfassung + Angebot + Button ── */
+  .cw-result-right {
+    flex: 1;
+    display:        flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top:    clamp(20px, 4vw, 60px);
+  }
+
+  .cw-result-summary {
+    font-family:    'Mayonice', serif;
+    font-size:      clamp(1.1rem, 2vw, 1.6rem);
+    color:          rgba(255,255,255,0.5);
+    font-weight:    400;
+    letter-spacing: 0.01em;
+    margin:         0 0 clamp(20px, 3vw, 36px);
+    line-height:    1.4;
+  }
+
+  .cw-result-offer {
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size:   clamp(0.95rem, 1.6vw, 1.15rem);
+    font-weight: 300;
+    color:       rgba(255,255,255,0.85);
+    line-height: 1.7;
+    margin:      0 0 clamp(28px, 4vw, 48px);
+  }
+
+  .cw-result-cta {
+    display:         inline-block;
+    padding:         clamp(14px, 2vw, 18px) clamp(28px, 4vw, 44px);
+    border:          1px solid #c9a84c;
+    color:           #c9a84c;
+    font-family:     var(--font-body, 'Inter', sans-serif);
+    font-size:       clamp(0.8rem, 1.2vw, 0.95rem);
+    font-weight:     500;
+    letter-spacing:  0.1em;
+    text-transform:  uppercase;
+    text-decoration: none;
+    text-align:      center;
+    background:      transparent;
+    cursor:          pointer;
+    transition:      background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    align-self:      flex-start;
+  }
+
+  .cw-result-cta:hover {
+    background: #c9a84c;
+    color:      #000;
+    box-shadow: 0 0 30px rgba(191, 155, 80, 0.3);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
      RESPONSIVE
   ═══════════════════════════════════════════════════════════════════ */
   @media (max-width: 1000px) {
@@ -446,6 +664,7 @@ const [sec1, sec2, sec3] = cinema.sections;
     .cw-orbit { width: 340px; height: 340px; }
     .cw-main  { width: 160px; height: 160px; }
     .cw-satellite { width: 76px; height: 76px; }
+    .cw-satellite-text { font-size: 0.52rem; padding: 5px; }
 
     /* r=152 — Sektion 1 + 3 nach links */
     #cw-orbit  .cw-satellite[data-sat-index="0"],
@@ -457,11 +676,33 @@ const [sec1, sec2, sec3] = cinema.sections;
     #cw-orbit  .cw-satellite[data-sat-index="3"],
     #cw-orbit-3 .cw-satellite[data-sat-index="3"] { --sx: -76px;  --sy:  132px; }
 
-    /* r=152 — Sektion 2 nach rechts */
-    #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  76px; --sy: -132px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx: 143px; --sy:  -52px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx: 143px; --sy:   52px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx:  76px; --sy:  132px; }
+    /* r=152 — Sektion 2 (6 Satelliten) nach rechts */
+    #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  132px; --sy: -76px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx:  150px; --sy: -24px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx:  150px; --sy:  24px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx:  132px; --sy:  76px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="4"] { --sx:  96px;  --sy:  118px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="5"] { --sx:  96px;  --sy: -118px; }
+
+    /* Ergebnis */
+    .cw-result-inner {
+      flex-direction: column;
+      align-items:    center;
+    }
+
+    .cw-result-left {
+      flex:      none;
+      max-width: 320px;
+      width:     100%;
+    }
+
+    .cw-result-right {
+      padding-top: 0;
+      align-items: center;
+      text-align:  center;
+    }
+
+    .cw-result-cta { align-self: center; }
   }
 
   @media (max-width: 600px) {
@@ -470,6 +711,7 @@ const [sec1, sec2, sec3] = cinema.sections;
     .cw-orbit     { width: 280px; height: 280px; }
     .cw-main      { width: 130px; height: 130px; }
     .cw-satellite { width: 62px;  height: 62px;  }
+    .cw-satellite-text { font-size: 0.44rem; padding: 4px; }
 
     /* r=124 — Sektion 1 + 3 nach links */
     #cw-orbit  .cw-satellite[data-sat-index="0"],
@@ -481,20 +723,26 @@ const [sec1, sec2, sec3] = cinema.sections;
     #cw-orbit  .cw-satellite[data-sat-index="3"],
     #cw-orbit-3 .cw-satellite[data-sat-index="3"] { --sx: -62px;  --sy:  107px; }
 
-    /* r=124 — Sektion 2 nach rechts */
-    #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  62px; --sy: -107px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx: 116px; --sy:  -42px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx: 116px; --sy:   42px; }
-    #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx:  62px; --sy:  107px; }
+    /* r=124 — Sektion 2 (6 Satelliten) nach rechts */
+    #cw-orbit-2 .cw-satellite[data-sat-index="0"] { --sx:  107px; --sy: -62px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="1"] { --sx:  122px; --sy: -20px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="2"] { --sx:  122px; --sy:  20px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="3"] { --sx:  107px; --sy:  62px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="4"] { --sx:  78px;  --sy:  96px; }
+    #cw-orbit-2 .cw-satellite[data-sat-index="5"] { --sx:  78px;  --sy: -96px; }
+
+    /* Ergebnis */
+    .cw-result-left { max-width: 100%; }
+    .cw-result-image-wrap { aspect-ratio: 3 / 4; }
   }
 </style>
 
 <script>
   // ═══════════════════════════════════════════════════════════════════════════
-  // CINEMA-WELCOME – Orchestrierung für Intro + 3 Orbit-Sektionen
+  // CINEMA-WELCOME – Orchestrierung für Intro + 3 Orbit-Sektionen + Ergebnis
   //
-  // Geteilt:     Kino-Dimmer, activeSections-Set, setExtraDark()
-  // Pro Sektion: sessionStorage-Flag, IntersectionObserver, Satellit-Zustand
+  // Neu: Satelliten sind Auswahl-Buttons. Nach der 3. Auswahl erscheint
+  // die Ergebnis-Sektion mit einem personalisierten Angebot.
   // ═══════════════════════════════════════════════════════════════════════════
 
   // ── Gemeinsamer Dimmer ────────────────────────────────────────────────────
@@ -513,8 +761,6 @@ const [sec1, sec2, sec3] = cinema.sections;
     document.body.appendChild(dimmer);
   }
 
-  // Wie viele Elemente (Intro + Sektionen) sind gerade sichtbar?
-  // Dimmer bleibt aktiv solange mindestens eines aktiv ist.
   const activeSections = new Set<string>();
 
   function activateDimmer(id: string) {
@@ -532,15 +778,96 @@ const [sec1, sec2, sec3] = cinema.sections;
     dimmer.style.background = on ? "rgba(0,0,0,0.91)" : "rgba(0,0,0,0.80)";
   }
 
-  // ── INTRO: Cinema-Sequenz (kein Orbit, zentriert) ────────────────────────
-  //
-  // Genau wie die Orbit-Sektionen:
-  //   1. Sektion über Dimmer heben (z-index 1002)
-  //   2. Dimmer aktivieren
-  //   3. "Willkommen." wipe-reveal (t=400ms)
-  //   4. Untertitel wipe-reveal (t=1500ms)
-  //   5. sessionStorage-Flag damit beim erneuten Durchscrollen Instant-Reveal läuft
-  //
+  // ── Auswahl-State ───────────────────────────────────────────────────────
+  const selections: Record<string, string> = {};
+  const sectionIds = ["event", "muse", "geschmack"];
+
+  // ── Ergebnis-Sektion ────────────────────────────────────────────────────
+  const resultSection = document.getElementById("cinema-result");
+  const resultImg     = document.getElementById("cw-result-img") as HTMLImageElement | null;
+  const resultTitle   = document.getElementById("cw-result-title");
+  const resultDesc    = document.getElementById("cw-result-description");
+  const resultSummary = document.getElementById("cw-result-summary");
+  const resultOffer   = document.getElementById("cw-result-offer");
+
+  // Satellite-Titel für die Zusammenfassung merken
+  const selectionTitles: Record<string, string> = {};
+
+  function checkAndShowResult() {
+    if (!selections.event || !selections.muse || !selections.geschmack) return;
+    if (!resultSection) return;
+
+    const data = (window as any).__cinemaSatelliteData;
+    if (!data) return;
+
+    // Satellite-Defaults für jede Auswahl nachschlagen
+    function findDefaults(sectionId: string, value: string) {
+      const sec = data.sections.find((s: any) => s.id === sectionId);
+      if (!sec) return null;
+      const sat = sec.satellites.find((s: any) => s.value === value);
+      return sat?.defaults || null;
+    }
+
+    const geschmackDef = findDefaults("geschmack", selections.geschmack);
+    const eventDef     = findDefaults("event",     selections.event);
+    const museDef      = findDefaults("muse",      selections.muse);
+    if (!geschmackDef || !eventDef || !museDef) return;
+
+    // Override prüfen: Key = "{geschmack}-{event}-{muse}"
+    const overrideKey = `${selections.geschmack}-${selections.event}-${selections.muse}`;
+    const override = data.overrides?.[overrideKey];
+
+    let title: string;
+    let description: string;
+    let offer: string;
+    let image: string;
+    let imageAlt: string;
+
+    if (override) {
+      // Vollständiger Override ersetzt alles
+      title       = override.title;
+      description = override.description;
+      offer       = override.offer;
+      image       = override.image || geschmackDef.image || "";
+      imageAlt    = override.imageAlt || title;
+    } else {
+      // Komposition aus den 3 Auswahlen
+      title       = `${geschmackDef.titlePart} auf ${eventDef.titlePart} für ${museDef.titlePart}`;
+      description = [geschmackDef.text, museDef.text, eventDef.text].filter(Boolean).join(" ");
+      offer       = [geschmackDef.offer, museDef.offer, eventDef.offer].filter(Boolean).join(" ");
+      image       = geschmackDef.image || "";
+      imageAlt    = title;
+    }
+
+    // Ergebnis befüllen
+    if (resultImg) {
+      resultImg.src = image;
+      resultImg.alt = imageAlt;
+    }
+    if (resultTitle) resultTitle.textContent = title;
+    if (resultDesc)  resultDesc.textContent  = description;
+
+    // Zusammenfassung: z.B. "„Szenenmalerin" auf „Firmenfeier" für „50–100 Gäste""
+    const skillTitle = selectionTitles.geschmack || selections.geschmack;
+    const eventTitle = selectionTitles.event || selections.event;
+    const museTitle  = selectionTitles.muse || selections.muse;
+    if (resultSummary) {
+      resultSummary.textContent = `\u201E${skillTitle}\u201C auf \u201E${eventTitle}\u201C f\u00fcr \u201E${museTitle}\u201C`;
+    }
+    if (resultOffer) resultOffer.textContent = offer;
+
+    // Einblenden
+    resultSection.classList.add("visible");
+    resultSection.style.position = "relative";
+    resultSection.style.zIndex   = "1002";
+
+    // Zum Ergebnis scrollen
+    setTimeout(() => {
+      resultSection.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 300);
+  }
+
+  // ── INTRO ────────────────────────────────────────────────────────────────
   const introEl   = document.getElementById("cw-intro");
   const introHead = introEl?.querySelector<HTMLElement>(".cw-title");
   const introSub  = introEl?.querySelector<HTMLElement>(".cw-subtitle");
@@ -551,16 +878,13 @@ const [sec1, sec2, sec3] = cinema.sections;
     let introCinemaActive = false;
 
     function playIntroSequence(instant: boolean) {
-      // Sektion über den Dimmer heben damit sie sichtbar bleibt
       introEl!.style.zIndex = "1002";
       activateDimmer("cw-intro");
 
       if (instant) {
-        // Schon mal gesehen → sofort alles sichtbar
         introHead?.classList.add("instant");
         introSub?.classList.add("instant");
       } else {
-        // Erstes Mal → gestaffelte Wipe-Animation
         setTimeout(() => introHead?.classList.add("revealed"), 400);
         setTimeout(() => introSub?.classList.add("revealed"),  1500);
         sessionStorage.setItem(INTRO_KEY, "1");
@@ -574,7 +898,6 @@ const [sec1, sec2, sec3] = cinema.sections;
           if (entry.isIntersecting) {
             if (!introCinemaActive) {
               introCinemaActive = true;
-              // introPlayed: nach erstem Durchlauf sofort zeigen (kein erneuter Wipe)
               playIntroSequence(introPlayed);
             } else {
               activateDimmer("cw-intro");
@@ -592,12 +915,13 @@ const [sec1, sec2, sec3] = cinema.sections;
 
   // ── Factory-Funktion für eine Orbit-Sektion ───────────────────────────────
   function setupCinemaSection(config: {
-    sectionId:  string;
-    orbitId:    string;
-    mainBtnId:  string;
-    sessionKey: string;
+    sectionId:    string;
+    orbitId:      string;
+    mainBtnId:    string;
+    sessionKey:   string;
+    selectionKey: string; // "event" | "muse" | "geschmack"
   }) {
-    const { sectionId, orbitId, mainBtnId, sessionKey } = config;
+    const { sectionId, orbitId, mainBtnId, sessionKey, selectionKey } = config;
 
     const section    = document.getElementById(sectionId)  as HTMLElement | null;
     const orbit      = document.getElementById(orbitId)    as HTMLElement | null;
@@ -643,7 +967,7 @@ const [sec1, sec2, sec3] = cinema.sections;
       satEls.forEach(sat => sat.classList.remove("visible"));
     }
 
-    // ── Merge-Animation ─────────────────────────────────────────────
+    // ── Merge-Animation + Auswahl ─────────────────────────────────────
     function handleSatelliteClick(clickedIdx: number) {
       if (isAnimating || !satellitesOpen) return;
       isAnimating = true;
@@ -651,9 +975,20 @@ const [sec1, sec2, sec3] = cinema.sections;
       const clickedSat = satEls[clickedIdx];
       if (!clickedSat) return;
 
-      const satImg = clickedSat.querySelector<HTMLImageElement>("img");
-      const newSrc = satImg?.currentSrc || satImg?.src || "";
-      const newAlt = satImg?.alt ?? "";
+      // Auswahl speichern
+      const value = clickedSat.getAttribute("data-value") || "";
+      const title = clickedSat.getAttribute("aria-label") || "";
+      selections[selectionKey] = value;
+      selectionTitles[selectionKey] = title;
+
+      // Visuell markieren
+      satEls.forEach(s => s.classList.remove("selected"));
+      clickedSat.classList.add("selected");
+
+      const isTextSat = clickedSat.classList.contains("cw-satellite--text");
+      const satImg    = clickedSat.querySelector<HTMLImageElement>("img");
+      const newSrc    = satImg?.currentSrc || satImg?.src || "";
+      const newAlt    = satImg?.alt ?? "";
 
       // Phase 1: andere Satelliten einfahren (gestaffelt)
       let delay = 0;
@@ -665,26 +1000,30 @@ const [sec1, sec2, sec3] = cinema.sections;
       satellitesOpen = false;
       btn.setAttribute("aria-expanded", "false");
 
-      // Phase 2 (t=350): Satellit wächst auf Hauptkreis-Größe, Bild blendet aus
+      // Phase 2 (t=350): Satellit wächst zum Hauptkreis
       setTimeout(() => {
         clickedSat.style.zIndex     = "5";
         clickedSat.style.transition = "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)";
         clickedSat.style.transform  = "translate(-50%, -50%) scale(2.1)";
 
-        const mainImg = btn.querySelector<HTMLImageElement>("img");
-        if (mainImg) {
-          mainImg.style.transition = "opacity 0.45s ease";
-          mainImg.style.opacity    = "0";
+        if (!isTextSat) {
+          const mainImg = btn.querySelector<HTMLImageElement>("img");
+          if (mainImg) {
+            mainImg.style.transition = "opacity 0.45s ease";
+            mainImg.style.opacity    = "0";
+          }
         }
       }, 350);
 
-      // Phase 3 (t=800): Bildquelle tauschen
+      // Phase 3 (t=800): Hauptkreis-Bild tauschen (nur bei Bild-Satelliten)
       setTimeout(() => {
-        const mainImg = btn.querySelector<HTMLImageElement>("img");
-        if (mainImg) {
-          mainImg.src           = newSrc;
-          mainImg.alt           = newAlt;
-          mainImg.style.opacity = "";
+        if (!isTextSat) {
+          const mainImg = btn.querySelector<HTMLImageElement>("img");
+          if (mainImg) {
+            mainImg.src           = newSrc;
+            mainImg.alt           = newAlt;
+            mainImg.style.opacity = "";
+          }
         }
       }, 800);
 
@@ -694,7 +1033,7 @@ const [sec1, sec2, sec3] = cinema.sections;
         clickedSat.style.opacity     = "0";
       }, 1050);
 
-      // Phase 5 (t=1400): Aufräumen, Satelliten bleiben zu
+      // Phase 5 (t=1400): Aufräumen
       setTimeout(() => {
         clickedSat.style.transition = "none";
         clickedSat.style.transform  = "";
@@ -702,11 +1041,16 @@ const [sec1, sec2, sec3] = cinema.sections;
         clickedSat.style.zIndex     = "";
         clickedSat.classList.remove("visible");
 
-        const mainImg = btn.querySelector<HTMLImageElement>("img");
-        if (mainImg) mainImg.style.transition = "";
+        if (!isTextSat) {
+          const mainImg = btn.querySelector<HTMLImageElement>("img");
+          if (mainImg) mainImg.style.transition = "";
+        }
 
         requestAnimationFrame(() => { clickedSat.style.transition = ""; });
         isAnimating = false;
+
+        // Nach der Auswahl: Ergebnis prüfen
+        checkAndShowResult();
       }, 1400);
     }
 
@@ -767,18 +1111,13 @@ const [sec1, sec2, sec3] = cinema.sections;
           }
         });
       },
-      /*
-        0.58 statt 0.4: Reveal-Animation startet erst wenn ~58% der Sektion
-        sichtbar sind. Verhindert dass Text zu früh erscheint wenn man
-        gerade erst an der Sektionsgrenze angekommen ist.
-      */
       { threshold: 0.58 }
     );
     observer.observe(sec);
   }
 
   // ── Alle drei Sektionen initialisieren ───────────────────────────────────
-  setupCinemaSection({ sectionId: "cinema-welcome",   orbitId: "cw-orbit",   mainBtnId: "cw-main",   sessionKey: "cinemaWelcome_v1"  });
-  setupCinemaSection({ sectionId: "cinema-welcome-2", orbitId: "cw-orbit-2", mainBtnId: "cw-main-2", sessionKey: "cinemaWelcome2_v1" });
-  setupCinemaSection({ sectionId: "cinema-welcome-3", orbitId: "cw-orbit-3", mainBtnId: "cw-main-3", sessionKey: "cinemaWelcome3_v1" });
+  setupCinemaSection({ sectionId: "cinema-welcome",   orbitId: "cw-orbit",   mainBtnId: "cw-main",   sessionKey: "cinemaWelcome_v1",  selectionKey: "event" });
+  setupCinemaSection({ sectionId: "cinema-welcome-2", orbitId: "cw-orbit-2", mainBtnId: "cw-main-2", sessionKey: "cinemaWelcome2_v1", selectionKey: "muse" });
+  setupCinemaSection({ sectionId: "cinema-welcome-3", orbitId: "cw-orbit-3", mainBtnId: "cw-main-3", sessionKey: "cinemaWelcome3_v1", selectionKey: "geschmack" });
 </script>

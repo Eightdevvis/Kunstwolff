@@ -14,34 +14,45 @@ Das Projekt hat ein eigenständiges Admin-Tool. Das Admin-Tool ist eine separate
 
 | Gerät | Admin-Tool-Pfad |
 | :-- | :-- |
-| PC & Laptop | `/home/sasha/codicus/Kunstwolffwebsite/kunstwolff-admin/` |
+| PC & Laptop | `/home/sasha/codicus/Kunstwolff/kunstwolff-admin/` |
 
-**Für Cross-Repo-Arbeit:** Admin-README lesen: `/home/sasha/codicus/Kunstwolffwebsite/kunstwolff-admin/README.md`
+**Für Cross-Repo-Arbeit:** Admin-README lesen: `/home/sasha/codicus/Kunstwolff/kunstwolff-admin/README.md`
 
 **Warum das wichtig ist für jeden Claude der an diesem Projekt arbeitet:**
 - Jede Änderung an Pfadstrukturen, Dateinamen oder Dateiformaten in `public/` kann das Admin-Tool brechen
-- Das Admin-README (`/home/sasha/codicus/Kunstwolffwebsite/kunstwolff-admin/README.md`) muss bei Pfadänderungen zwingend mitgepflegt werden
+- Das Admin-README (`/home/sasha/codicus/Kunstwolff/kunstwolff-admin/README.md`) muss bei Pfadänderungen zwingend mitgepflegt werden
 - Das Admin-Tool kennt nicht alle Features des Websites – Lücken sind dokumentiert im Admin-README unter "Bekannte Einschränkungen"
 - Schnittstelle: Admin schreibt nach `public/` → GitHub Action `sync-landings.yml` + Netlify Build → Website live
 
 **Admin-Tool Komponenten** (`{admin-pfad}/src/components/`):
-- `ImageManager.tsx` – Slideshow, Titelbild, Why-Bilder
+- `Dashboard.tsx` – Hauptlayout: Kategorie→Seite-Navigation, Tab-Leiste (Interface | Städte | Kalender | Bereinigung)
+- `interface/InterfaceView.tsx` – Visueller Seiten-Editor: SVG-Stack (links) + eingebetteter Editor (rechts)
+- `interface/pageTypes.ts` – Seitentyp-Definitionen, Komponent-Stacks, Editor-Mappings
+- `interface/componentSvgs.tsx` – Statische SVG-Wireframes für alle Astro-Komponenten (WARTUNG: bei Layout-Änderungen anpassen!)
+- `ImageManager.tsx` – Slideshow, Titelbild, Why-Bilder (city-Prop = Pfad-Segment, funktioniert auch mit `events/{slug}`)
 - `ReviewManager.tsx` – Reviews pro Stadt
 - `CityManager.tsx` – Städteliste (`landings.md`)
 - `FaqManager.tsx` – Standard- und stadtspezifische FAQs
+- `EventManager.tsx` – Events (`events.json` + `content.json` pro Event + Slideshow + Titelbild)
 - `CalendarView.tsx` + `EventModal.tsx` – Kalender (nur Admin, nicht auf Website)
 - `CleanupManager.tsx` – Duplikate/kaputte Bilder bereinigen
 - `PartnerManager.tsx` – Partner (`partners.json` + Logo-Upload)
+- `CinemaManager.tsx` – Cinema-Welcome-Konfigurator (`cinema.json`: Sektionen, Satelliten, Ergebnisse)
 
 **Pfade die das Admin-Tool schreibt:**
 - `public/img/slides/{stadt}/` + `public/img/slides/slides.meta.json`
+- `public/img/slides/events/{slug}/` + `public/img/slides/slides.meta.json`
 - `public/img/Titelbild/{stadt}/`
+- `public/img/Titelbild/events/{slug}/`
 - `public/img/why/{stadt}/benefit-{1-4}/`
 - `public/reviews/{stadt}/review*.md`
 - `public/faq/{stadt}/*.md` + `public/faq/default/*.md`
 - `public/landings/landings.md`
+- `public/events/events.json` + `public/events/{slug}/content.json`
 - `public/calendar/{jahr}/{monat}.json`
 - `public/partners/partners.json` + `public/img/partners/`
+- `public/config/components.json` – Komponent-Visibility (Enable/Disable pro Seite)
+- `public/cinema/cinema.json` – Cinema-Welcome-Konfigurator (Sektionen, Satelliten, Ergebnisse)
 
 **Vor Änderungen an `public/`-Strukturen immer prüfen:**
 1. Schreibt das Admin-Tool in diese Pfade? → siehe Komponenten-Liste oben
@@ -85,21 +96,23 @@ Die `landings/` und `skills/` Unterordner darin sind Sync-Artefakte aus einer al
 
 **Slides-Metadaten:** Nutzen dieselbe `public/img/slides/slides.meta.json` wie Stadt-Slides. Key-Format: `events/{slug}/dateiname.webp`.
 
-**Admin-Tool:** Kann Events noch nicht verwalten (geplant). Content.json wird NIE vom sync-Script überschrieben.
+**Admin-Tool:** Tab "Events" – vollständiges CRUD für events.json, content.json-Editor (Ablauf, Pakete, Referenzen) + Slideshow + Titelbild pro Event. Komponente: `EventManager.tsx`. Content.json wird NIE vom sync-Script überschrieben.
 
-### CinemaWelcome (Startseiten-Orbit)
+### CinemaWelcome (Interaktiver Konfigurator)
 
-`public/cinema/cinema.json` – Konfiguration der 3 Orbit-Sektionen + Intro auf der Startseite.
-Enthält pro Sektion: Titel, Subtitle, Hauptkreis (Bild/Alt/Hint), Satelliten (Titel/Bild/Link/Alt).
+`public/cinema/cinema.json` – Interaktiver Auswahl-Konfigurator auf der Startseite (Event → Muse → Geschmack → Angebot).
 Geladen von `src/utils/cinema.ts` → verwendet in `src/components/CinemaWelcome.astro`.
 
-**JSON-Struktur:**
-- `intro` – Titel + Subtitle des Willkommen-Blocks
-- `sections[0..2]` – Die 3 Orbit-Sektionen (Ihr Event, Ihre Muse, Ihr Geschmack)
-  - `mainCircle` – Großer Kreis (image, alt, hint) – immer genau einer pro Sektion
-  - `satellites[]` – Kleine Kreise (title, image, link, alt) – 1 bis 6 Stück
+**Ausführliche Doku:** Siehe `README.md` → Sektion "CinemaWelcome".
 
-**Admin-Tool:** Kann cinema.json noch nicht verwalten (geplant). Layout (welche Sektion reversed ist, IDs) bleibt im Code.
+**Für Entwickler wichtig:**
+- Satelliten haben `value` (Logik) + `title` (Anzeige) + `defaults` (Textbausteine) + optional `displayMode: "text"` (Muse-Kreise)
+- **Kompositions-Modell:** Ergebnis wird aus den 3 Auswahlen zusammengesetzt (Titel: `"{geschmack} auf {event} für {muse}"`, Text/Offer: Bausteine konkateniert in Reihenfolge geschmack→muse→event)
+- **Overrides:** `overrides["{geschmack}-{event}-{muse}"]` ersetzt das gesamte Ergebnis für eine Kombination
+- Event/Geschmack-Satelliten kommen aus `events.json`/`skills.json` – nicht frei eingebbar
+- Layout (reversed, CSS-Positionen, Animationen) hartcodiert in `.astro` – JSON steuert nur Inhalte
+
+**Admin-Tool:** `CinemaManager.tsx` (editorType `'cinema'`) – Tab „Sektionen" (Intro + Satelliten mit Defaults bearbeiten) + Tab „Kombinationen" (Grid aller Kombis mit Vorschau + Override-Editor).
 
 ### Erinnerungen (Pinnwand-Fotos)
 
@@ -136,6 +149,49 @@ Komponente: `PartnerManager.tsx`
 
 `public/calendar/{jahr}/{monat}.json` – Event-Kalender-Daten.
 Diese werden **nur vom Admin-Tool** (CalendarView) gelesen und geschrieben – die Website selbst nutzt sie nicht.
+
+### Component-Visibility-Config
+
+`public/config/components.json` – Steuert welche Astro-Komponenten pro Seitentyp/Seite aktiv sind.
+Geladen von `src/utils/componentConfig.ts` → `isComponentEnabled(pageType, pageSlug, componentId)`.
+Geschrieben vom Admin-Tool: Interface-Tab → Enable/Disable-Toggle pro Komponent.
+
+**JSON-Struktur:**
+```json
+{
+  "homepage": {
+    "_default": { "opener": true, "cinemaWelcome": true, "slideshow": true, ... }
+  },
+  "landing": {
+    "_default": { "opener": true, "slideshow": true, "faq": true, ... },
+    "berlin": { "erinnerungen": false }
+  },
+  "event": {
+    "_default": { "eventHero": true, "slideshow": true, "eventAblauf": true, ... }
+  },
+  "skill": {
+    "_default": { "skillHero": true, "slideshow": true, ... }
+  }
+}
+```
+
+**Fallback-Kette:** Seiten-spezifisch (`landing.berlin.faq`) → Kategorie-Default (`landing._default.faq`) → `true`
+
+**Komponenten-IDs:** `opener`, `cinemaWelcome`, `skillBanner`, `slideshow`, `why`, `erinnerungen`, `contact`, `faq`, `landingsection`, `eventHero`, `eventAblauf`, `eventPakete`, `eventSkills`, `eventReferenzen`, `skillHero`
+
+**Integriert in alle Seiten-Templates:**
+- `src/pages/index.astro` (Homepage)
+- `src/pages/[landing].astro` (Landing + Event)
+- `src/pages/[skill].astro` (Skill-Index)
+- `src/pages/[skill]/[landing].astro` (Skill+Landing + Skill+Event)
+
+**Admin-Tool:** Interface-Tab → SVG-Stack zeigt alle Komponenten der gewählten Seite → Toggle schaltet Komponent ein/aus → Änderung landet in Pending-Queue → wird beim Veröffentlichen committet.
+
+**WARTUNG:** Wenn ein neuer Astro-Komponent hinzugefügt wird:
+1. ID in `components.json` Defaults eintragen
+2. `show('id')` Guard in die Astro-Seite einfügen
+3. SVG-Wireframe in `componentSvgs.tsx` hinzufügen
+4. Komponent-Definition in `pageTypes.ts` → `COMP` + `PAGE_STACKS` eintragen
 
 ---
 
@@ -175,4 +231,4 @@ Ausführlichere Projekt-Übersicht steht in:
 
 **Memory-Pfad ist auf beiden Geräten identisch:**
 
-`/home/sasha/.claude/projects/-home-sasha-codicus-Kunstwolffwebsite/memory/MEMORY.md`
+`/home/sasha/.claude/projects/-home-sasha-codicus-Kunstwolff-Kunstwolffwebsite/memory/MEMORY.md`
