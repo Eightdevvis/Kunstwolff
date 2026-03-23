@@ -1,0 +1,17 @@
+---
+import MiniReviews from "./reviews-references/MiniReviews.astro";
+import { getAllReviews } from "../utils/reviews";
+
+const reviews = getAllReviews();
+---
+
+<section class="homepage-reviews">
+  <MiniReviews items={reviews} />
+</section>
+
+<style>
+  .homepage-reviews {
+    background: #000;
+    padding: clamp(32px, 5vw, 56px) 20px;
+  }
+</style>

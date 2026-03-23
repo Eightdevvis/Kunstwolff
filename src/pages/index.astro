@@ -1,7 +1,7 @@
 ---
 import Opener from "../components/hero/Opener.astro";
 import CinemaWelcome from "../components/CinemaWelcome.astro";
-import SkillBanner from "../components/SkillBanner.astro";
+import HomepageReviews from "../components/HomepageReviews.astro";
 import Layout from "../layouts/Layout.astro";
 import Slideshow from "../components/slideshows/Slideshow.astro";
 import Contact from "../components/Contact.astro";
@@ -9,8 +9,6 @@ import Landingsection from "../components/Landingsection.astro";
 import Why from "../components/Why.astro";
 import FAQ from "../components/FAQ.astro";
 import Aboutsection from "../components/about/Aboutsection.astro";
-import { getSharedSkills } from "../utils/skills";
-import { getAllReviews } from "../utils/reviews";
 import { resolveTitleImage } from "../utils/titleImages";
 import {
   getHomepageSlides,
@@ -18,8 +16,6 @@ import {
 import { isComponentEnabled } from "../utils/componentConfig";
 
 const show = (id: string) => isComponentEnabled('homepage', '', id);
-const skills = getSharedSkills();
-const reviews = getAllReviews();
 
 // Slideshow-Items nur aus Ordnern zusammenführen
 const homepageSlides = getHomepageSlides();
@@ -54,7 +50,7 @@ const localBusinessSchema = {
 
   {show('cinemaWelcome') && <CinemaWelcome />}
 
-  {show('skillBanner') && <SkillBanner skills={skills} reviews={reviews} />}
+  {show('homepageReviews') && <HomepageReviews />}
 
   {show('slideshow') && <Slideshow items={homepageSlides} />}
 

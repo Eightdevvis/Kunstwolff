@@ -1,17 +1,9 @@
 ---
-import MiniReviews from "./reviews-references/MiniReviews.astro";
-
 type Skill = {
   title?: string;
   image?: string;
   link?: string;
   alt?: string;
-};
-
-type Review = {
-  author: string;
-  text: string;
-  categories?: string[];
 };
 
 // Astro.props enthält die skills, die wir aus der Landingpage-JSON oder von einer Seite übergeben
@@ -21,8 +13,6 @@ const {
   introTitle = "Welcher Geschmack darf's sein?",
   introText = "Sie suchen Kunst und Unterhaltung für Ihren besonderen Anlass? Da sind sie hier goldrichtig. Wir bieten mehr als nur einen Live Künstler. Finden Sie in unserem Repertoire Zeichnungen, die natürliche Icebreaker bieten, persönliche Kunstwerke die permanente Erinnerungen schaffen, bis hin zu kompletten Gemälden die Sie beim Entstehen beobachten konnten.",
   showIntro = true,
-  reviews = [],
-  reviewCategories = [],
   currentLanding = "",
 } = Astro.props as {
   skills?: Skill[];
@@ -30,8 +20,6 @@ const {
   introTitle?: string;
   introText?: string;
   showIntro?: boolean;
-  reviews?: Review[];
-  reviewCategories?: string[];
   currentLanding?: string;
 };
 const rawItems: Skill[] = skills && skills.length ? skills : items;
@@ -128,10 +116,6 @@ const rightSkill = list[1] ?? FALLBACK_SKILLS[1] ?? FALLBACK_SKILLS[0];
           </div>
         )
       }
-
-      <div class="skills-mini-reviews">
-        <MiniReviews items={reviews} filteredCategories={reviewCategories} />
-      </div>
 
       <slot />
     </div>

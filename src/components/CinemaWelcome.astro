@@ -70,7 +70,7 @@ const satelliteData = {
           {item.displayMode === 'text' ? (
             <span class="cw-satellite-text">{item.title}</span>
           ) : (
-            <img src={item.image} alt={item.alt ?? item.title} loading="lazy" />
+            <img src={item.image} alt={item.alt ?? item.title} loading="eager" />
           )}
           <span class="cw-satellite-label">{item.title}</span>
         </button>
@@ -102,7 +102,7 @@ const satelliteData = {
           {item.displayMode === 'text' ? (
             <span class="cw-satellite-text">{item.title}</span>
           ) : (
-            <img src={item.image} alt={item.alt ?? item.title} loading="lazy" />
+            <img src={item.image} alt={item.alt ?? item.title} loading="eager" />
           )}
           <span class="cw-satellite-label">{item.title}</span>
         </button>
@@ -144,7 +144,7 @@ const satelliteData = {
           {item.displayMode === 'text' ? (
             <span class="cw-satellite-text">{item.title}</span>
           ) : (
-            <img src={item.image} alt={item.alt ?? item.title} loading="lazy" />
+            <img src={item.image} alt={item.alt ?? item.title} loading="eager" />
           )}
           <span class="cw-satellite-label">{item.title}</span>
         </button>
@@ -174,7 +174,7 @@ const satelliteData = {
         </div>
         <div class="cw-result-card-front">
           <div class="cw-result-image-wrap">
-            <img id="cw-result-img" src="" alt="" loading="lazy" />
+            <img id="cw-result-img" src="" alt="" loading="eager" />
           </div>
           <h3 class="cw-result-title" id="cw-result-title"></h3>
           <p class="cw-result-description" id="cw-result-description"></p>
@@ -1194,21 +1194,54 @@ const satelliteData = {
       }, 1400);
     }
 
+    // ── AutoSelect: Sektion bereits befüllt → überspringen ───────────
+    function applyAutoSelected() {
+      const autoVal   = selections[selectionKey];
+      const autoTitle = selectionTitles[selectionKey];
+      if (!autoVal) return false;
+
+      // Sektion kurz einblenden, dann zur nächsten Section scrollen
+      raiseSectionAboveDimmer();
+      titleEl?.classList.add("instant");
+      subtitleEl?.classList.add("instant");
+      btn.classList.add("visible");
+      animationPlayed = true;
+      sessionStorage.setItem(sessionKey, "1");
+
+      // Hauptkreis mit dem auto-gewählten Text befüllen
+      const hint   = btn.querySelector<HTMLElement>(".cw-main-hint");
+      const textEl = btn.querySelector<HTMLElement>(".cw-main-selected-text");
+      if (hint)   hint.style.display = "none";
+      if (textEl) { textEl.textContent = autoTitle || autoVal; textEl.classList.add("visible"); }
+
+      // Kurz danach zur nächsten Sektion scrollen
+      setTimeout(() => {
+        const nextSec = sec.nextElementSibling as HTMLElement | null;
+        if (nextSec) nextSec.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 600);
+
+      return true;
+    }
+
     // ── Cinema-Sequenz ───────────────────────────────────────────────
     function playCinemaSequence() {
+      if (applyAutoSelected()) return;
+
       raiseSectionAboveDimmer();
       activateDimmer(sectionId);
 
-      setTimeout(() => titleEl?.classList.add("revealed"),    400);
-      setTimeout(() => subtitleEl?.classList.add("revealed"), 1500);
-      setTimeout(() => btn.classList.add("visible"),          2500);
-      setTimeout(() => openSatellites(false),                 3300);
+      setTimeout(() => titleEl?.classList.add("revealed"),    200);
+      setTimeout(() => subtitleEl?.classList.add("revealed"), 700);
+      setTimeout(() => btn.classList.add("visible"),          1200);
+      setTimeout(() => openSatellites(false),                 1800);
 
       sessionStorage.setItem(sessionKey, "1");
       animationPlayed = true;
     }
 
     function instantReveal() {
+      if (applyAutoSelected()) return;
+
       raiseSectionAboveDimmer();
       activateDimmer(sectionId);
       titleEl?.classList.add("instant");

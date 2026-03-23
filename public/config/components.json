@@ -3,7 +3,7 @@
     "_default": {
       "opener": true,
       "cinemaWelcome": true,
-      "skillBanner": true,
+      "homepageReviews": true,
       "slideshow": true,
       "why": true,
       "contact": true,
