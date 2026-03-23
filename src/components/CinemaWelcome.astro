@@ -875,6 +875,14 @@ const satelliteData = {
 
   const activeSections = new Set<string>();
 
+  // Externe Controls für Section 2 + 3 (werden nach Initialisierung gesetzt)
+  type SectionControls = {
+    unlockAndActivate: () => void;
+    applyAutoSelected: (value: string, title: string) => void;
+  };
+  let sec2Controls: SectionControls | null = null;
+  let sec3Controls: SectionControls | null = null;
+
   function activateDimmer(id: string) {
     activeSections.add(id);
     if (dimmer) dimmer.style.background = "rgba(0,0,0,0.80)";
@@ -1032,13 +1040,14 @@ const satelliteData = {
 
   // ── Factory-Funktion für eine Orbit-Sektion ───────────────────────────────
   function setupCinemaSection(config: {
-    sectionId:    string;
-    orbitId:      string;
-    mainBtnId:    string;
-    sessionKey:   string;
-    selectionKey: string; // "event" | "muse" | "geschmack"
-  }) {
-    const { sectionId, orbitId, mainBtnId, sessionKey, selectionKey } = config;
+    sectionId:      string;
+    orbitId:        string;
+    mainBtnId:      string;
+    sessionKey:     string;
+    selectionKey:   string; // "event" | "muse" | "geschmack"
+    requiresUnlock?: boolean; // Sektionen 2 + 3: nicht per Observer starten, nur per Auswahl
+  }): SectionControls {
+    const { sectionId, orbitId, mainBtnId, sessionKey, selectionKey, requiresUnlock } = config;
 
     const section    = document.getElementById(sectionId)  as HTMLElement | null;
     const orbit      = document.getElementById(orbitId)    as HTMLElement | null;
@@ -1057,10 +1066,12 @@ const satelliteData = {
     const sec = section!;
     const btn = mainBtn!;
 
-    let animationPlayed = !!sessionStorage.getItem(sessionKey);
-    let satellitesOpen  = false;
-    let cinemaActive    = false;
-    let isAnimating     = false;
+    let animationPlayed        = !!sessionStorage.getItem(sessionKey);
+    let satellitesOpen         = false;
+    let cinemaActive           = false;
+    let isAnimating            = false;
+    let locked                 = !!requiresUnlock;
+    let currentlyIntersecting  = false;
 
     function raiseSectionAboveDimmer() {
       sec.style.position = "relative";
@@ -1107,8 +1118,9 @@ const satelliteData = {
       const satData = (window as any).__cinemaSatelliteData;
       const thisSec = satData?.sections.find((s: any) => s.id === selectionKey);
       const thisSatData = thisSec?.satellites.find((s: any) => s.value === value);
-      if (thisSatData?.autoSelect) {
-        for (const [secId, autoVal] of Object.entries(thisSatData.autoSelect as Record<string, string>)) {
+      const autoSelectMap: Record<string, string> | undefined = thisSatData?.autoSelect;
+      if (autoSelectMap) {
+        for (const [secId, autoVal] of Object.entries(autoSelectMap)) {
           const autoSec = satData.sections.find((s: any) => s.id === secId);
           const autoSat = autoSec?.satellites.find((s: any) => s.value === autoVal);
           if (autoSat) {
@@ -1195,6 +1207,22 @@ const satelliteData = {
         requestAnimationFrame(() => { clickedSat.style.transition = ""; });
         isAnimating = false;
 
+        // Nächste Sektion aktivieren (sequenziell statt via Observer)
+        if (selectionKey === "event") {
+          const museAutoVal = autoSelectMap?.muse;
+          if (museAutoVal && sec2Controls && sec3Controls) {
+            // Messe o.ä.: Section 2 überspringen, direkt zu Section 3
+            const museSec = satData?.sections.find((s: any) => s.id === "muse");
+            const museSat = museSec?.satellites.find((s: any) => s.value === museAutoVal);
+            sec2Controls.applyAutoSelected(museAutoVal, museSat?.title || museAutoVal);
+            sec3Controls.unlockAndActivate();
+          } else if (sec2Controls) {
+            sec2Controls.unlockAndActivate();
+          }
+        } else if (selectionKey === "muse" && sec3Controls) {
+          sec3Controls.unlockAndActivate();
+        }
+
         // Nach der Auswahl: Ergebnis prüfen
         checkAndShowResult();
       }, 1400);
@@ -1223,6 +1251,47 @@ const satelliteData = {
       openSatellites(true);
     }
 
+    // ── Von außen aufrufbar: Sektion entsperren + abspielen ──────────
+    function unlockAndActivate() {
+      locked = false;
+      if (currentlyIntersecting) {
+        if (!cinemaActive) {
+          cinemaActive = true;
+          if (animationPlayed) instantReveal();
+          else playCinemaSequence();
+        }
+        // Bereits aktiv → nichts tun
+      } else {
+        // Noch nicht im Viewport → hinscrolln; Observer übernimmt den Rest
+        sec.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+
+    // ── Von außen aufrufbar: Sektion als auto-gewählt markieren ──────
+    // (Hauptkreis zeigt Auswahl, Satelliten erscheinen nicht)
+    function applyAutoSelected(value: string, title: string) {
+      selections[selectionKey]       = value;
+      selectionTitles[selectionKey]  = title;
+      locked      = false;
+      cinemaActive = true;
+
+      raiseSectionAboveDimmer();
+      activateDimmer(sectionId);
+
+      titleEl?.classList.add("instant");
+      subtitleEl?.classList.add("instant");
+      btn.classList.add("visible");
+
+      // Ausgewählten Text im Hauptkreis zeigen (Text-Satelliten-Stil)
+      const hint   = btn.querySelector<HTMLElement>(".cw-main-hint");
+      const textEl = btn.querySelector<HTMLElement>(".cw-main-selected-text");
+      if (hint)   hint.style.display = "none";
+      if (textEl) { textEl.textContent = title; textEl.classList.add("visible"); }
+
+      sessionStorage.setItem(sessionKey, "1");
+      animationPlayed = true;
+    }
+
     // ── Event-Listener ───────────────────────────────────────────────
     btn.addEventListener("click", () => {
       if (isAnimating) return;
@@ -1240,7 +1309,9 @@ const satelliteData = {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
+          currentlyIntersecting = entry.isIntersecting;
           if (entry.isIntersecting) {
+            if (locked) return; // Warten bis vorherige Sektion eine Auswahl getroffen hat
             if (!cinemaActive) {
               cinemaActive = true;
               if (animationPlayed) {
@@ -1260,10 +1331,13 @@ const satelliteData = {
       { threshold: 0.58 }
     );
     observer.observe(sec);
+
+    return { unlockAndActivate, applyAutoSelected };
   }
 
   // ── Alle drei Sektionen initialisieren ───────────────────────────────────
+  // Section 1 startet per Observer. Sections 2 + 3 warten auf Auswahl in der vorherigen Sektion.
   setupCinemaSection({ sectionId: "cinema-welcome",   orbitId: "cw-orbit",   mainBtnId: "cw-main",   sessionKey: "cinemaWelcome_v1",  selectionKey: "event" });
-  setupCinemaSection({ sectionId: "cinema-welcome-2", orbitId: "cw-orbit-2", mainBtnId: "cw-main-2", sessionKey: "cinemaWelcome2_v1", selectionKey: "muse" });
-  setupCinemaSection({ sectionId: "cinema-welcome-3", orbitId: "cw-orbit-3", mainBtnId: "cw-main-3", sessionKey: "cinemaWelcome3_v1", selectionKey: "geschmack" });
+  sec2Controls = setupCinemaSection({ sectionId: "cinema-welcome-2", orbitId: "cw-orbit-2", mainBtnId: "cw-main-2", sessionKey: "cinemaWelcome2_v1", selectionKey: "muse",      requiresUnlock: true });
+  sec3Controls = setupCinemaSection({ sectionId: "cinema-welcome-3", orbitId: "cw-orbit-3", mainBtnId: "cw-main-3", sessionKey: "cinemaWelcome3_v1", selectionKey: "geschmack", requiresUnlock: true });
 </script>

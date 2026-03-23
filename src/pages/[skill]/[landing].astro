@@ -36,6 +36,7 @@ import Why from '../../components/Why.astro';
 import LandingErinnerungen from '../../components/LandingErinnerungen.astro';
 import SkillLayout from '../../layouts/SkillLayout.astro';
 import { resolveTitleImage } from '../../utils/titleImages';
+import { resolveHeroBg } from '../../utils/heroBg';
 import { getReviewsByLandingAndSkill } from '../../utils/reviews';
 
 // ── Event-spezifische Imports ─────────────────────────────────────────────────
@@ -98,6 +99,7 @@ if (!skillData) {
 let landingSlides: Awaited<ReturnType<typeof supplementWithDefaultSlides>> | undefined;
 let reviews: unknown[] = [];
 let skillCityTitleImage = '';
+let skillCityHeroBg: string | null = null;
 let skillCityPageTitle = '';
 let skillCityDescription = '';
 let skillCityBreadcrumb: unknown;
@@ -108,6 +110,7 @@ if (pageType === 'landing') {
   landingSlides = supplementWithDefaultSlides(rawCitySlides, defaultSlides, MIN_LANDING_SLIDES);
   reviews = getReviewsByLandingAndSkill(landing ?? '', skillData.title);
   skillCityTitleImage = resolveTitleImage({ skill, landing });
+  skillCityHeroBg = resolveHeroBg({ skill, landing });
 
   const cityName = (landing ?? '').charAt(0).toUpperCase() + (landing ?? '').slice(1);
   skillCityPageTitle = `${skillData.title} ${cityName} buchen | Kunstwolff`;
@@ -185,6 +188,7 @@ const finalHeroTitle =
       reviews={reviews as any}
       titleImage={skillCityTitleImage}
       skillName={skillData.title}
+      backgroundImage={skillCityHeroBg}
     />}
 
     {show('slideshow') && <Slideshow items={landingSlides} filteredCategories={[skillData.title]} />}

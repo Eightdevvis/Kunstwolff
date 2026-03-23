@@ -2,15 +2,19 @@
 import MiniReviews from '../reviews-references/MiniReviews.astro';
 import BrandStripe from '../reviews-references/BrandStripe.astro';
 
-const { 
+const {
   title = 'Live Event-Künstler',
-  reviews = [], 
+  reviews = [],
   titleImage = '',
   skillName = '',
+  backgroundImage = '',
 } = Astro.props;
 ---
 
 <div class="hero section">
+  {backgroundImage && (
+    <img class="hero-bg" src={backgroundImage} alt="" aria-hidden="true" loading="eager" />
+  )}
   <div class="hero-inner section-inner">
     <div class="hero-content">
       <h1>{title}</h1>
@@ -54,7 +58,20 @@ const {
       align-items: center;
     }
 
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+    }
+
     .hero-inner {
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       gap: 96px;

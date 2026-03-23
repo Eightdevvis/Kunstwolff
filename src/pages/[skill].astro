@@ -10,6 +10,7 @@ import { getSkillBySlug, getSkillSlugs } from '../utils/skills';
 import { getHomepageSlides } from '../utils/slideImages';
 import { getAllReviews } from '../utils/reviews';
 import { resolveTitleImage } from '../utils/titleImages';
+import { resolveHeroBg } from '../utils/heroBg';
 import { isComponentEnabled } from '../utils/componentConfig';
 
 export async function getStaticPaths() {
@@ -28,6 +29,7 @@ const allSlideshow = getHomepageSlides();
 const allReviews = getAllReviews();
 
 const titleImage = resolveTitleImage({ skill });
+const heroBg = resolveHeroBg({ skill });
 
 const show = (id: string) => isComponentEnabled('skill', skill ?? '', id);
 const heroTitle = skillData.heroTitle || `Live ${skillData.title} für Events`;
@@ -57,6 +59,7 @@ const serviceSchema = {
 		reviews={allReviews}
 		titleImage={titleImage}
 		skillName={skillData.title}
+		backgroundImage={heroBg}
 	/>}
 
 	{show('slideshow') && <Slideshow items={allSlideshow} filteredCategories={[skillData.title]} />}

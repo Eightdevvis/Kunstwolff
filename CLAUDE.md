@@ -29,7 +29,7 @@ Das Projekt hat ein eigenständiges Admin-Tool. Das Admin-Tool ist eine separate
 - `interface/InterfaceView.tsx` – Visueller Seiten-Editor: SVG-Stack (links) + eingebetteter Editor (rechts)
 - `interface/pageTypes.ts` – Seitentyp-Definitionen, Komponent-Stacks, Editor-Mappings
 - `interface/componentSvgs.tsx` – Statische SVG-Wireframes für alle Astro-Komponenten (WARTUNG: bei Layout-Änderungen anpassen!)
-- `ImageManager.tsx` – Slideshow, Titelbild, Why-Bilder (city-Prop = Pfad-Segment, funktioniert auch mit `events/{slug}`)
+- `ImageManager.tsx` – Slideshow, Titelbild, Why-Bilder, Hero-Hintergrund (city-Prop = Pfad-Segment, funktioniert auch mit `events/{slug}`)
 - `ReviewManager.tsx` – Reviews pro Stadt
 - `CityManager.tsx` – Städteliste (`landings.md`)
 - `FaqManager.tsx` – Standard- und stadtspezifische FAQs
@@ -51,6 +51,7 @@ Das Projekt hat ein eigenständiges Admin-Tool. Das Admin-Tool ist eine separate
 - `public/events/events.json` + `public/events/{slug}/content.json`
 - `public/calendar/{jahr}/{monat}.json`
 - `public/partners/partners.json` + `public/img/partners/`
+- `public/img/hero-bg/{key}/` – Hero-Hintergrundbild pro Skill/Stadt
 - `public/config/components.json` – Komponent-Visibility (Enable/Disable pro Seite)
 - `public/cinema/cinema.json` – Cinema-Welcome-Konfigurator (Sektionen, Satelliten, Ergebnisse)
 
@@ -177,7 +178,7 @@ Geschrieben vom Admin-Tool: Interface-Tab → Enable/Disable-Toggle pro Komponen
 
 **Fallback-Kette:** Seiten-spezifisch (`landing.berlin.faq`) → Kategorie-Default (`landing._default.faq`) → `true`
 
-**Komponenten-IDs:** `opener`, `cinemaWelcome`, `skillBanner`, `slideshow`, `why`, `erinnerungen`, `contact`, `faq`, `landingsection`, `eventHero`, `eventAblauf`, `eventPakete`, `eventSkills`, `eventReferenzen`, `skillHero`
+**Komponenten-IDs:** `opener`, `cinemaWelcome`, `skillBanner`, `slideshow`, `why`, `erinnerungen`, `contact`, `faq`, `landingsection`, `eventHero`, `eventAblauf`, `eventPakete`, `eventSkills`, `eventReferenzen`, `skillHero`, `heroBackground`
 
 **Integriert in alle Seiten-Templates:**
 - `src/pages/index.astro` (Homepage)
