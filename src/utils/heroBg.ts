@@ -20,7 +20,7 @@ const findFirstImage = (folderName: string): string | null => {
 
 /**
  * Löst ein Hero-Hintergrundbild auf.
- * Fallback-Kette: {skill}-{landing} → {landing} → {skill} → null
+ * Fallback-Kette (ohne Skill-"Default"): {skill}-{landing} → {landing} → null
  */
 export const resolveHeroBg = (params?: { skill?: string; landing?: string }): string | null => {
   const skill = params?.skill ?? '';
@@ -29,17 +29,12 @@ export const resolveHeroBg = (params?: { skill?: string; landing?: string }): st
   if (skill && landing) {
     const combo = findFirstImage(`${skill}-${landing}`);
     if (combo) return combo;
-  }
-
-  if (landing) {
     const city = findFirstImage(landing);
     if (city) return city;
+    return null;
   }
 
-  if (skill) {
-    const sk = findFirstImage(skill);
-    if (sk) return sk;
-  }
-
+  if (landing) return findFirstImage(landing);
+  if (skill) return findFirstImage(skill);
   return null;
 };
