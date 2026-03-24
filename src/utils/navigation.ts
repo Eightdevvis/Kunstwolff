@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { getEvents } from './events';
 
 export type NavigationLinkItem = {
   label: string;
@@ -33,6 +34,46 @@ const defaultNavigation: NavigationItem[] = [
   { label: 'Work', url: '#work' },
   { label: 'Anfrage', url: '#contact', cta: true },
 ];
+
+const isDropdownItemWithLabel = (
+  item: NavigationItem,
+  label: string,
+): item is NavigationDropdownItem => 'children' in item && item.label === label;
+
+const buildEventsDropdownItem = (): NavigationDropdownItem | null => {
+  const events = getEvents();
+  if (events.length === 0) return null;
+
+  const children = events.map((e) => ({
+    label: e.title,
+    url: e.link,
+  }));
+
+  return {
+    label: 'Events',
+    children,
+  };
+};
+
+const addEventsDropdownNextToServices = (items: NavigationItem[]): NavigationItem[] => {
+  const eventsItem = buildEventsDropdownItem();
+  if (!eventsItem) return items;
+
+  const existingEventsIndex = items.findIndex((item) => isDropdownItemWithLabel(item, eventsItem.label));
+  const servicesIndex = items.findIndex((item) => item.label === 'Services');
+
+  if (existingEventsIndex >= 0) {
+    // Ersetze vorhandenes Events-Dropdown (falls es in navigation.json schon existiert).
+    const next = [...items];
+    next[existingEventsIndex] = eventsItem;
+    return next;
+  }
+
+  const insertIndex = servicesIndex >= 0 ? servicesIndex + 1 : items.length;
+  const next = [...items];
+  next.splice(insertIndex, 0, eventsItem);
+  return next;
+};
 
 const isString = (value: unknown): value is string => typeof value === 'string';
 
@@ -112,20 +153,23 @@ const parseNavigationContent = (raw: string): NavigationItem[] => {
 };
 
 export const getNavigationItems = (): NavigationItem[] => {
+  let items: NavigationItem[] = defaultNavigation;
+
   if (!fs.existsSync(navigationConfigPath)) {
-    return defaultNavigation;
+    return addEventsDropdownNextToServices(items);
   }
 
   try {
     const raw = fs.readFileSync(navigationConfigPath, 'utf-8');
     const parsed = parseNavigationContent(raw);
     if (parsed.length > 0) {
-      return parsed;
+      items = parsed;
+      return addEventsDropdownNextToServices(items);
     }
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.warn(`navigation: Could not parse navigation.json (${message}). Using defaults.`);
   }
 
-  return defaultNavigation;
+  return addEventsDropdownNextToServices(items);
 };
