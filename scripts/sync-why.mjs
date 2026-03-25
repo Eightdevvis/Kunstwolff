@@ -305,8 +305,8 @@ const buildBenefitsForTarget = (targetKey, defaultWhy) => {
     const targetFolder = path.join(whyImagesRoot, targetKey, folderName);
     const imageFileName = findFirstImageFileName(targetFolder);
 
-    // Kein hardcoded Fallback mehr – wenn kein Bild im Ordner liegt, leerer String.
-    // shouldReplaceImage in syncExistingWhyFileImages() greift bei leerem String.
+    // Nur Image-Pfad setzen – Title/Text/Alt bleiben leer damit die Website
+    // sie per Merge aus default.json bezieht. So propagieren Default-Änderungen.
     const nextImage = imageFileName
       ? `/img/why/${targetKey}/${folderName}/${imageFileName}`
       : typeof benefit.image === 'string' && benefit.image.trim().length > 0
@@ -314,15 +314,10 @@ const buildBenefitsForTarget = (targetKey, defaultWhy) => {
         : '';
 
     return {
-      title: typeof benefit.title === 'string' ? benefit.title : `Vorteil ${index + 1}`,
-      text: typeof benefit.text === 'string' ? benefit.text : '',
+      title: '',
+      text: '',
       image: nextImage,
-      alt:
-        typeof benefit.alt === 'string' && benefit.alt.trim().length > 0
-          ? benefit.alt
-          : typeof benefit.title === 'string'
-            ? benefit.title
-            : `Vorteil ${index + 1}`,
+      alt: '',
     };
   });
 };
@@ -353,8 +348,10 @@ const syncExistingWhyFileImages = (targetKey, defaultWhy) => {
   }
 
   const generated = buildBenefitsForTarget(targetKey, defaultWhy);
+  const isDefault = targetKey === 'default';
   const nextBenefits = generated.map((generatedBenefit, index) => {
     const current = existing.benefits[index] ?? {};
+    const defaultBenefit = defaultWhy.benefits[index] ?? {};
     const currentImage = typeof current.image === 'string' ? current.image.trim() : '';
     // Bild ersetzen wenn: leer, noch Sample/Default-Pfad, oder die Datei nicht mehr existiert (z.B. Extension geändert .jpeg → .webp)
     const currentImageAbsPath = currentImage ? path.join(projectRoot, 'public', currentImage) : '';
@@ -364,20 +361,21 @@ const syncExistingWhyFileImages = (targetKey, defaultWhy) => {
       currentImage.startsWith('/img/why/default/') ||
       (currentImageAbsPath.length > 0 && !fs.existsSync(currentImageAbsPath));
 
+    // Für nicht-default Files: Textfelder die identisch mit default sind leeren,
+    // damit Änderungen an default.json automatisch propagieren.
+    const clearIfMatchesDefault = (field, currentValue) => {
+      if (isDefault) return currentValue; // default.json selbst nicht bereinigen
+      const trimmed = typeof currentValue === 'string' ? currentValue.trim() : '';
+      if (trimmed.length === 0) return '';
+      const defaultValue = typeof defaultBenefit[field] === 'string' ? defaultBenefit[field].trim() : '';
+      return trimmed === defaultValue ? '' : trimmed;
+    };
+
     return {
-      title:
-        typeof current.title === 'string' && current.title.trim().length > 0
-          ? current.title
-          : generatedBenefit.title,
-      text:
-        typeof current.text === 'string' && current.text.trim().length > 0
-          ? current.text
-          : generatedBenefit.text,
+      title: clearIfMatchesDefault('title', current.title),
+      text: clearIfMatchesDefault('text', current.text),
       image: shouldReplaceImage ? generatedBenefit.image : currentImage,
-      alt:
-        typeof current.alt === 'string' && current.alt.trim().length > 0
-          ? current.alt
-          : generatedBenefit.alt,
+      alt: clearIfMatchesDefault('alt', current.alt),
     };
   });
 
