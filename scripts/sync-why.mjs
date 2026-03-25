@@ -305,18 +305,12 @@ const buildBenefitsForTarget = (targetKey, defaultWhy) => {
     const targetFolder = path.join(whyImagesRoot, targetKey, folderName);
     const imageFileName = findFirstImageFileName(targetFolder);
 
-    // Nur Image-Pfad setzen – Title/Text/Alt bleiben leer damit die Website
-    // sie per Merge aus default.json bezieht. So propagieren Default-Änderungen.
-    const nextImage = imageFileName
-      ? `/img/why/${targetKey}/${folderName}/${imageFileName}`
-      : typeof benefit.image === 'string' && benefit.image.trim().length > 0
-        ? benefit.image
-        : '';
-
+    // Alle Felder leer – Website merged komplett aus default.json.
+    // Eigene Werte entstehen nur durch Admin-Überschreibung.
     return {
       title: '',
       text: '',
-      image: nextImage,
+      image: '',
       alt: '',
     };
   });
@@ -353,15 +347,8 @@ const syncExistingWhyFileImages = (targetKey, defaultWhy) => {
     const current = existing.benefits[index] ?? {};
     const defaultBenefit = defaultWhy.benefits[index] ?? {};
     const currentImage = typeof current.image === 'string' ? current.image.trim() : '';
-    // Bild ersetzen wenn: leer, noch Sample/Default-Pfad, oder die Datei nicht mehr existiert (z.B. Extension geändert .jpeg → .webp)
-    const currentImageAbsPath = currentImage ? path.join(projectRoot, 'public', currentImage) : '';
-    const shouldReplaceImage =
-      currentImage.length === 0 ||
-      currentImage.startsWith('/img/samples/') ||
-      currentImage.startsWith('/img/why/default/') ||
-      (currentImageAbsPath.length > 0 && !fs.existsSync(currentImageAbsPath));
 
-    // Für nicht-default Files: Textfelder die identisch mit default sind leeren,
+    // Für nicht-default Files: Felder die identisch mit default sind leeren,
     // damit Änderungen an default.json automatisch propagieren.
     const clearIfMatchesDefault = (field, currentValue) => {
       if (isDefault) return currentValue; // default.json selbst nicht bereinigen
@@ -371,10 +358,31 @@ const syncExistingWhyFileImages = (targetKey, defaultWhy) => {
       return trimmed === defaultValue ? '' : trimmed;
     };
 
+    // Image leeren wenn es kein echter Custom-Upload ist.
+    // Sync-generierte Pfade erkennen:
+    // 1. Sample/Default-Pfade direkt
+    // 2. Gleicher Dateiname wie Default-Bild
+    // 3. Sample-Dateiname-Pattern (sample1.webp etc.) in einem City-Benefit-Ordner
+    const defaultImage = typeof defaultBenefit.image === 'string' ? defaultBenefit.image.trim() : '';
+    const currentFileName = currentImage ? path.basename(currentImage) : '';
+    const defaultFileName = defaultImage ? path.basename(defaultImage) : '';
+    const isSyncCopy = currentFileName.length > 0 && (
+      currentFileName === defaultFileName ||
+      /^sample\d+\.\w+$/.test(currentFileName)
+    );
+    const clearImage = isDefault
+      ? currentImage
+      : (currentImage.length === 0 ||
+         currentImage.startsWith('/img/samples/') ||
+         currentImage.startsWith('/img/why/default/') ||
+         isSyncCopy)
+        ? ''
+        : currentImage;
+
     return {
       title: clearIfMatchesDefault('title', current.title),
       text: clearIfMatchesDefault('text', current.text),
-      image: shouldReplaceImage ? generatedBenefit.image : currentImage,
+      image: clearImage,
       alt: clearIfMatchesDefault('alt', current.alt),
     };
   });

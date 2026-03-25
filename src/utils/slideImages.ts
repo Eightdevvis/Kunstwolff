@@ -29,6 +29,7 @@ export const MIN_LANDING_SLIDES = 6;
 const allowedExtensions = new Set(['.avif', '.gif', '.jpeg', '.jpg', '.png', '.webp']);
 const slidesRoot = path.resolve('./public/img/slides');
 const slidesMetadataPath = path.join(slidesRoot, 'slides.meta.json');
+const defaultSelectionPath = path.join(slidesRoot, 'default-selection.json');
 
 const encodePathSegment = (segment: string): string => encodeURIComponent(segment);
 
@@ -204,7 +205,46 @@ const readFolderSlides = (folderName: string): SlideItem[] => {
   return entries;
 };
 
-export const getDefaultSlides = (): SlideItem[] => readFolderSlides('default');
+const readDefaultSelection = (): string[] => {
+  if (!fs.existsSync(defaultSelectionPath)) {
+    return [];
+  }
+
+  try {
+    const raw = fs.readFileSync(defaultSelectionPath, 'utf-8');
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((item): item is string => typeof item === 'string');
+  } catch {
+    return [];
+  }
+};
+
+export const getDefaultSlides = (): SlideItem[] => {
+  const selection = readDefaultSelection();
+
+  // Fallback: wenn keine Auswahl getroffen wurde, altes Verhalten (default-Ordner)
+  if (selection.length === 0) {
+    return readFolderSlides('default');
+  }
+
+  const metadata = readSlidesMetadata();
+  const selectionSet = new Set(selection);
+
+  // Alle Ordner lesen und nur ausgewählte Slides zurückgeben
+  const allSlides = getAllSlidesFlat();
+  const selected = allSlides.filter((slide) => {
+    // Key aus src rekonstruieren: /img/slides/{key} → {key}
+    const key = decodeURIComponent(slide.src.replace('/img/slides/', ''));
+    return selectionSet.has(key);
+  });
+
+  // Reihenfolge der Auswahl beibehalten
+  const byKey = new Map(selected.map((s) => [decodeURIComponent(s.src.replace('/img/slides/', '')), s]));
+  const ordered = selection.map((key) => byKey.get(key)).filter((s): s is SlideItem => s !== undefined);
+
+  return ordered;
+};
 
 export const getCitySlides = (city: string): SlideItem[] => readFolderSlides(city);
 
@@ -223,11 +263,23 @@ export const getAllCitySlides = (): SlideItem[] => {
   return dedupeSlides(slides);
 };
 
-export const getHomepageSlides = (): SlideItem[] => {
-  const citySlides = getAllCitySlides();
-  const defaultSlides = getDefaultSlides();
-  return dedupeSlides([...citySlides, ...defaultSlides]);
+/** Alle Slides aus allen Ordnern (inkl. default) – flache Liste */
+const getAllSlidesFlat = (): SlideItem[] => {
+  if (!fs.existsSync(slidesRoot)) {
+    return [];
+  }
+
+  const allFolders = fs
+    .readdirSync(slidesRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort((a, b) => a.localeCompare(b));
+
+  const slides = allFolders.flatMap((folderName) => readFolderSlides(folderName));
+  return dedupeSlides(slides);
 };
+
+export const getHomepageSlides = (): SlideItem[] => getDefaultSlides();
 
 export const supplementWithDefaultSlides = (
   citySlides: SlideItem[],
