@@ -36,9 +36,8 @@ const readWhyFile = (filePath: string): WhyBenefit[] => {
         const image = item.image.trim();
         const alt = typeof item.alt === 'string' ? item.alt.trim() : title;
 
-        // Empty strings count as "not overridden"
-        if (title.length === 0 || text.length === 0 || image.length === 0) return null;
-
+        // Allow empty strings. They represent "not overridden" and will be
+        // merged field-by-field with default.json.
         return { title, text, image, alt: alt.length > 0 ? alt : title };
       })
       .filter((x: WhyBenefit | null): x is WhyBenefit => x !== null);
