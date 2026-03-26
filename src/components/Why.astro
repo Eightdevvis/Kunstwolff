@@ -21,17 +21,33 @@ const benefits = getWhyBenefits(skill, landing);
     </div>
 
     <div class="why-grid">
-      {benefits.map((benefit) => (
-        <div class="why-item">
-          <img
-            src={benefit.image}
-            alt={benefit.alt}
-            loading="lazy"
-          />
-          <h3>{benefit.title}</h3>
-          <p>{benefit.text}</p>
-        </div>
-      ))}
+      {benefits.map((benefit, i) => {
+        let href: string | null = null;
+        if (i === 0) {
+          if (skill && landing) href = `/${skill}/${landing}/why/benefit-1/`;
+          else if (landing) href = `/${landing}/why/benefit-1/`;
+          else if (skill) href = `/${skill}/why/benefit-1/`;
+          else href = `/why/benefit-1/`;
+        }
+
+        if (href) {
+          return (
+            <a class="why-item why-item--link" href={href} aria-label={`Mehr zu: ${benefit.title}`}>
+              <img src={benefit.image} alt={benefit.alt} loading="lazy" />
+              <h3>{benefit.title}</h3>
+              <p>{benefit.text}</p>
+            </a>
+          );
+        }
+
+        return (
+          <div class="why-item">
+            <img src={benefit.image} alt={benefit.alt} loading="lazy" />
+            <h3>{benefit.title}</h3>
+            <p>{benefit.text}</p>
+          </div>
+        );
+      })}
     </div>
 
   </div>
@@ -91,6 +107,12 @@ const benefits = getWhyBenefits(skill, landing);
   text-align: center;
   box-shadow: 0 10px 30px rgba(0,0,0,0.06);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.why-item--link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
 }
 
 .why-item:hover {

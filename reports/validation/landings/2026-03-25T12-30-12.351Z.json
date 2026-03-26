@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-03-25T10:57:45.131Z",
+  "createdAt": "2026-03-25T12:30:12.351Z",
   "selectedCities": [
     "belgique",
     "berlin",
@@ -4286,6 +4286,16 @@
       ]
     },
     {
+      "url": "/img/why/default/benefit-1/hochzeitsmaler.webp",
+      "relativeFromImgRoot": "why/default/benefit-1/hochzeitsmaler.webp",
+      "fileName": "hochzeitsmaler.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "hochzeitsmaler",
+      "normalizedImageSlug": "hochzeitsmaler",
+      "visibleOnPages": []
+    },
+    {
       "url": "/img/why/default/benefit-1/sample1.webp",
       "relativeFromImgRoot": "why/default/benefit-1/sample1.webp",
       "fileName": "sample1.webp",
@@ -4293,9 +4303,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/default/benefit-2/sample2.webp",
@@ -5913,6 +5921,26 @@
       "prefixIndex": null,
       "rawBaseName": "gast-sitzt-schnellzeichnerin-model-dnner-event-restaurant-zur-sim-trier",
       "normalizedImageSlug": "gast-sitzt-schnellzeichnerin-model-dnner-event-restaurant-zur-sim-trier",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/default/benefit-1/hochzeitsmaler.webp",
+      "relativeFromImgRoot": "why/default/benefit-1/hochzeitsmaler.webp",
+      "fileName": "hochzeitsmaler.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "hochzeitsmaler",
+      "normalizedImageSlug": "hochzeitsmaler",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/default/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/default/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
       "visibleOnPages": []
     }
   ]

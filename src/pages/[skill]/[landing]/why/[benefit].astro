@@ -1,0 +1,38 @@
+---
+import { getLandingSlugs } from '../../../../utils/landings';
+import { getSkillSlugs } from '../../../../utils/skills';
+import { getWhyBenefits } from '../../../../utils/why';
+import WhyBenefitDetail from '../../../../components/WhyBenefitDetail.astro';
+
+const BENEFIT_SLUGS = ['benefit-1', 'benefit-2', 'benefit-3', 'benefit-4'] as const;
+
+export function getStaticPaths() {
+  const skills = getSkillSlugs();
+  const landings = getLandingSlugs();
+
+  return skills.flatMap((skill) =>
+    landings.flatMap((landing) =>
+      BENEFIT_SLUGS.map((benefit) => ({
+        params: { skill, landing, benefit },
+      })),
+    ),
+  );
+}
+
+const { skill, landing, benefit } = Astro.params as {
+  skill?: string;
+  landing?: string;
+  benefit?: string;
+};
+
+const idx = benefit ? BENEFIT_SLUGS.indexOf(benefit as any) : -1;
+
+if (idx < 0 || !skill || !landing) {
+  return Astro.redirect('/404');
+}
+
+const benefits = getWhyBenefits(skill, landing);
+---
+
+<WhyBenefitDetail benefits={benefits} idx={idx} basePrefix={`/${skill}/${landing}/why`} />
+
