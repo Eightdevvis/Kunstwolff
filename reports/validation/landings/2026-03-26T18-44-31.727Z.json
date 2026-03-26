@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-03-25T12:30:04.153Z",
+  "createdAt": "2026-03-26T18:44:31.727Z",
   "selectedCities": [
     "belgique",
     "berlin",
@@ -4181,11 +4181,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/belgique/",
-        "/schnellzeichner/belgique/",
-        "/szenenmaler/belgique/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/belgique/benefit-2/sample2.webp",
@@ -4195,11 +4191,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/belgique/",
-        "/schnellzeichner/belgique/",
-        "/szenenmaler/belgique/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/belgique/benefit-3/sample3.webp",
@@ -4209,11 +4201,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/belgique/",
-        "/schnellzeichner/belgique/",
-        "/szenenmaler/belgique/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/belgique/benefit-4/sample4.webp",
@@ -4223,11 +4211,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/belgique/",
-        "/schnellzeichner/belgique/",
-        "/szenenmaler/belgique/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/berlin/benefit-1/sample1.webp",
@@ -4237,11 +4221,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/berlin/",
-        "/schnellzeichner/berlin/",
-        "/szenenmaler/berlin/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/berlin/benefit-2/sample2.webp",
@@ -4251,11 +4231,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/berlin/",
-        "/schnellzeichner/berlin/",
-        "/szenenmaler/berlin/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/berlin/benefit-3/sample3.webp",
@@ -4265,11 +4241,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/berlin/",
-        "/schnellzeichner/berlin/",
-        "/szenenmaler/berlin/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/berlin/benefit-4/sample4.webp",
@@ -4279,23 +4251,109 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/berlin/",
-        "/schnellzeichner/berlin/",
-        "/szenenmaler/berlin/"
-      ]
+      "visibleOnPages": []
     },
     {
-      "url": "/img/why/default/benefit-1/hochzeitsmaler.jpg",
-      "relativeFromImgRoot": "why/default/benefit-1/hochzeitsmaler.jpg",
-      "fileName": "hochzeitsmaler.jpg",
-      "extension": ".jpg",
+      "url": "/img/why/default/benefit-1/hochzeitsmaler.webp",
+      "relativeFromImgRoot": "why/default/benefit-1/hochzeitsmaler.webp",
+      "fileName": "hochzeitsmaler.webp",
+      "extension": ".webp",
       "prefixIndex": null,
       "rawBaseName": "hochzeitsmaler",
       "normalizedImageSlug": "hochzeitsmaler",
       "visibleOnPages": [
-        "/"
+        "/",
+        "/belgique/",
+        "/berlin/",
+        "/frankfurt/",
+        "/hamburg/",
+        "/heidelberg/",
+        "/hessen/",
+        "/kaiserslautern/",
+        "/karlsruhe/",
+        "/koblenz/",
+        "/koeln/",
+        "/ludwigshafen/",
+        "/luxembourg/",
+        "/main-taunus-kreis/",
+        "/mainz/",
+        "/mannheim/",
+        "/neuwied/",
+        "/nord-rhein-westfalen/",
+        "/rhein-main-gebiet/",
+        "/rheinland-pfalz/",
+        "/saarbruecken/",
+        "/saarland/",
+        "/schnellzeichner/",
+        "/schnellzeichner/belgique/",
+        "/schnellzeichner/berlin/",
+        "/schnellzeichner/frankfurt/",
+        "/schnellzeichner/hamburg/",
+        "/schnellzeichner/heidelberg/",
+        "/schnellzeichner/hessen/",
+        "/schnellzeichner/kaiserslautern/",
+        "/schnellzeichner/karlsruhe/",
+        "/schnellzeichner/koblenz/",
+        "/schnellzeichner/koeln/",
+        "/schnellzeichner/ludwigshafen/",
+        "/schnellzeichner/luxembourg/",
+        "/schnellzeichner/main-taunus-kreis/",
+        "/schnellzeichner/mainz/",
+        "/schnellzeichner/mannheim/",
+        "/schnellzeichner/neuwied/",
+        "/schnellzeichner/nord-rhein-westfalen/",
+        "/schnellzeichner/rhein-main-gebiet/",
+        "/schnellzeichner/rheinland-pfalz/",
+        "/schnellzeichner/saarbruecken/",
+        "/schnellzeichner/saarland/",
+        "/schnellzeichner/schweiz/",
+        "/schnellzeichner/trier/",
+        "/schnellzeichner/tuebingen/",
+        "/schnellzeichner/wiesbaden/",
+        "/schnellzeichner/wuppertal/",
+        "/schweiz/",
+        "/szenenmaler/",
+        "/szenenmaler/belgique/",
+        "/szenenmaler/berlin/",
+        "/szenenmaler/frankfurt/",
+        "/szenenmaler/hamburg/",
+        "/szenenmaler/heidelberg/",
+        "/szenenmaler/hessen/",
+        "/szenenmaler/kaiserslautern/",
+        "/szenenmaler/karlsruhe/",
+        "/szenenmaler/koblenz/",
+        "/szenenmaler/koeln/",
+        "/szenenmaler/ludwigshafen/",
+        "/szenenmaler/luxembourg/",
+        "/szenenmaler/main-taunus-kreis/",
+        "/szenenmaler/mainz/",
+        "/szenenmaler/mannheim/",
+        "/szenenmaler/neuwied/",
+        "/szenenmaler/nord-rhein-westfalen/",
+        "/szenenmaler/rhein-main-gebiet/",
+        "/szenenmaler/rheinland-pfalz/",
+        "/szenenmaler/saarbruecken/",
+        "/szenenmaler/saarland/",
+        "/szenenmaler/schweiz/",
+        "/szenenmaler/trier/",
+        "/szenenmaler/tuebingen/",
+        "/szenenmaler/wiesbaden/",
+        "/szenenmaler/wuppertal/",
+        "/trier/",
+        "/tuebingen/",
+        "/wiesbaden/",
+        "/wuppertal/"
       ]
+    },
+    {
+      "url": "/img/why/default/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/default/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/default/benefit-2/sample2.webp",
@@ -4306,7 +4364,87 @@
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
       "visibleOnPages": [
-        "/"
+        "/",
+        "/belgique/",
+        "/berlin/",
+        "/frankfurt/",
+        "/hamburg/",
+        "/heidelberg/",
+        "/hessen/",
+        "/kaiserslautern/",
+        "/karlsruhe/",
+        "/koblenz/",
+        "/koeln/",
+        "/ludwigshafen/",
+        "/luxembourg/",
+        "/main-taunus-kreis/",
+        "/mainz/",
+        "/mannheim/",
+        "/neuwied/",
+        "/nord-rhein-westfalen/",
+        "/rhein-main-gebiet/",
+        "/rheinland-pfalz/",
+        "/saarbruecken/",
+        "/saarland/",
+        "/schnellzeichner/",
+        "/schnellzeichner/belgique/",
+        "/schnellzeichner/berlin/",
+        "/schnellzeichner/frankfurt/",
+        "/schnellzeichner/hamburg/",
+        "/schnellzeichner/heidelberg/",
+        "/schnellzeichner/hessen/",
+        "/schnellzeichner/kaiserslautern/",
+        "/schnellzeichner/karlsruhe/",
+        "/schnellzeichner/koblenz/",
+        "/schnellzeichner/koeln/",
+        "/schnellzeichner/ludwigshafen/",
+        "/schnellzeichner/luxembourg/",
+        "/schnellzeichner/main-taunus-kreis/",
+        "/schnellzeichner/mainz/",
+        "/schnellzeichner/mannheim/",
+        "/schnellzeichner/neuwied/",
+        "/schnellzeichner/nord-rhein-westfalen/",
+        "/schnellzeichner/rhein-main-gebiet/",
+        "/schnellzeichner/rheinland-pfalz/",
+        "/schnellzeichner/saarbruecken/",
+        "/schnellzeichner/saarland/",
+        "/schnellzeichner/schweiz/",
+        "/schnellzeichner/trier/",
+        "/schnellzeichner/tuebingen/",
+        "/schnellzeichner/wiesbaden/",
+        "/schnellzeichner/wuppertal/",
+        "/schweiz/",
+        "/szenenmaler/",
+        "/szenenmaler/belgique/",
+        "/szenenmaler/berlin/",
+        "/szenenmaler/frankfurt/",
+        "/szenenmaler/hamburg/",
+        "/szenenmaler/heidelberg/",
+        "/szenenmaler/hessen/",
+        "/szenenmaler/kaiserslautern/",
+        "/szenenmaler/karlsruhe/",
+        "/szenenmaler/koblenz/",
+        "/szenenmaler/koeln/",
+        "/szenenmaler/ludwigshafen/",
+        "/szenenmaler/luxembourg/",
+        "/szenenmaler/main-taunus-kreis/",
+        "/szenenmaler/mainz/",
+        "/szenenmaler/mannheim/",
+        "/szenenmaler/neuwied/",
+        "/szenenmaler/nord-rhein-westfalen/",
+        "/szenenmaler/rhein-main-gebiet/",
+        "/szenenmaler/rheinland-pfalz/",
+        "/szenenmaler/saarbruecken/",
+        "/szenenmaler/saarland/",
+        "/szenenmaler/schweiz/",
+        "/szenenmaler/trier/",
+        "/szenenmaler/tuebingen/",
+        "/szenenmaler/wiesbaden/",
+        "/szenenmaler/wuppertal/",
+        "/trier/",
+        "/tuebingen/",
+        "/wiesbaden/",
+        "/wuppertal/"
       ]
     },
     {
@@ -4318,7 +4456,87 @@
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
       "visibleOnPages": [
-        "/"
+        "/",
+        "/belgique/",
+        "/berlin/",
+        "/frankfurt/",
+        "/hamburg/",
+        "/heidelberg/",
+        "/hessen/",
+        "/kaiserslautern/",
+        "/karlsruhe/",
+        "/koblenz/",
+        "/koeln/",
+        "/ludwigshafen/",
+        "/luxembourg/",
+        "/main-taunus-kreis/",
+        "/mainz/",
+        "/mannheim/",
+        "/neuwied/",
+        "/nord-rhein-westfalen/",
+        "/rhein-main-gebiet/",
+        "/rheinland-pfalz/",
+        "/saarbruecken/",
+        "/saarland/",
+        "/schnellzeichner/",
+        "/schnellzeichner/belgique/",
+        "/schnellzeichner/berlin/",
+        "/schnellzeichner/frankfurt/",
+        "/schnellzeichner/hamburg/",
+        "/schnellzeichner/heidelberg/",
+        "/schnellzeichner/hessen/",
+        "/schnellzeichner/kaiserslautern/",
+        "/schnellzeichner/karlsruhe/",
+        "/schnellzeichner/koblenz/",
+        "/schnellzeichner/koeln/",
+        "/schnellzeichner/ludwigshafen/",
+        "/schnellzeichner/luxembourg/",
+        "/schnellzeichner/main-taunus-kreis/",
+        "/schnellzeichner/mainz/",
+        "/schnellzeichner/mannheim/",
+        "/schnellzeichner/neuwied/",
+        "/schnellzeichner/nord-rhein-westfalen/",
+        "/schnellzeichner/rhein-main-gebiet/",
+        "/schnellzeichner/rheinland-pfalz/",
+        "/schnellzeichner/saarbruecken/",
+        "/schnellzeichner/saarland/",
+        "/schnellzeichner/schweiz/",
+        "/schnellzeichner/trier/",
+        "/schnellzeichner/tuebingen/",
+        "/schnellzeichner/wiesbaden/",
+        "/schnellzeichner/wuppertal/",
+        "/schweiz/",
+        "/szenenmaler/",
+        "/szenenmaler/belgique/",
+        "/szenenmaler/berlin/",
+        "/szenenmaler/frankfurt/",
+        "/szenenmaler/hamburg/",
+        "/szenenmaler/heidelberg/",
+        "/szenenmaler/hessen/",
+        "/szenenmaler/kaiserslautern/",
+        "/szenenmaler/karlsruhe/",
+        "/szenenmaler/koblenz/",
+        "/szenenmaler/koeln/",
+        "/szenenmaler/ludwigshafen/",
+        "/szenenmaler/luxembourg/",
+        "/szenenmaler/main-taunus-kreis/",
+        "/szenenmaler/mainz/",
+        "/szenenmaler/mannheim/",
+        "/szenenmaler/neuwied/",
+        "/szenenmaler/nord-rhein-westfalen/",
+        "/szenenmaler/rhein-main-gebiet/",
+        "/szenenmaler/rheinland-pfalz/",
+        "/szenenmaler/saarbruecken/",
+        "/szenenmaler/saarland/",
+        "/szenenmaler/schweiz/",
+        "/szenenmaler/trier/",
+        "/szenenmaler/tuebingen/",
+        "/szenenmaler/wiesbaden/",
+        "/szenenmaler/wuppertal/",
+        "/trier/",
+        "/tuebingen/",
+        "/wiesbaden/",
+        "/wuppertal/"
       ]
     },
     {
@@ -4330,7 +4548,87 @@
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
       "visibleOnPages": [
-        "/"
+        "/",
+        "/belgique/",
+        "/berlin/",
+        "/frankfurt/",
+        "/hamburg/",
+        "/heidelberg/",
+        "/hessen/",
+        "/kaiserslautern/",
+        "/karlsruhe/",
+        "/koblenz/",
+        "/koeln/",
+        "/ludwigshafen/",
+        "/luxembourg/",
+        "/main-taunus-kreis/",
+        "/mainz/",
+        "/mannheim/",
+        "/neuwied/",
+        "/nord-rhein-westfalen/",
+        "/rhein-main-gebiet/",
+        "/rheinland-pfalz/",
+        "/saarbruecken/",
+        "/saarland/",
+        "/schnellzeichner/",
+        "/schnellzeichner/belgique/",
+        "/schnellzeichner/berlin/",
+        "/schnellzeichner/frankfurt/",
+        "/schnellzeichner/hamburg/",
+        "/schnellzeichner/heidelberg/",
+        "/schnellzeichner/hessen/",
+        "/schnellzeichner/kaiserslautern/",
+        "/schnellzeichner/karlsruhe/",
+        "/schnellzeichner/koblenz/",
+        "/schnellzeichner/koeln/",
+        "/schnellzeichner/ludwigshafen/",
+        "/schnellzeichner/luxembourg/",
+        "/schnellzeichner/main-taunus-kreis/",
+        "/schnellzeichner/mainz/",
+        "/schnellzeichner/mannheim/",
+        "/schnellzeichner/neuwied/",
+        "/schnellzeichner/nord-rhein-westfalen/",
+        "/schnellzeichner/rhein-main-gebiet/",
+        "/schnellzeichner/rheinland-pfalz/",
+        "/schnellzeichner/saarbruecken/",
+        "/schnellzeichner/saarland/",
+        "/schnellzeichner/schweiz/",
+        "/schnellzeichner/trier/",
+        "/schnellzeichner/tuebingen/",
+        "/schnellzeichner/wiesbaden/",
+        "/schnellzeichner/wuppertal/",
+        "/schweiz/",
+        "/szenenmaler/",
+        "/szenenmaler/belgique/",
+        "/szenenmaler/berlin/",
+        "/szenenmaler/frankfurt/",
+        "/szenenmaler/hamburg/",
+        "/szenenmaler/heidelberg/",
+        "/szenenmaler/hessen/",
+        "/szenenmaler/kaiserslautern/",
+        "/szenenmaler/karlsruhe/",
+        "/szenenmaler/koblenz/",
+        "/szenenmaler/koeln/",
+        "/szenenmaler/ludwigshafen/",
+        "/szenenmaler/luxembourg/",
+        "/szenenmaler/main-taunus-kreis/",
+        "/szenenmaler/mainz/",
+        "/szenenmaler/mannheim/",
+        "/szenenmaler/neuwied/",
+        "/szenenmaler/nord-rhein-westfalen/",
+        "/szenenmaler/rhein-main-gebiet/",
+        "/szenenmaler/rheinland-pfalz/",
+        "/szenenmaler/saarbruecken/",
+        "/szenenmaler/saarland/",
+        "/szenenmaler/schweiz/",
+        "/szenenmaler/trier/",
+        "/szenenmaler/tuebingen/",
+        "/szenenmaler/wiesbaden/",
+        "/szenenmaler/wuppertal/",
+        "/trier/",
+        "/tuebingen/",
+        "/wiesbaden/",
+        "/wuppertal/"
       ]
     },
     {
@@ -4341,11 +4639,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/frankfurt/",
-        "/schnellzeichner/frankfurt/",
-        "/szenenmaler/frankfurt/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/frankfurt/benefit-2/sample2.webp",
@@ -4355,11 +4649,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/frankfurt/",
-        "/schnellzeichner/frankfurt/",
-        "/szenenmaler/frankfurt/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/frankfurt/benefit-3/sample3.webp",
@@ -4369,11 +4659,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/frankfurt/",
-        "/schnellzeichner/frankfurt/",
-        "/szenenmaler/frankfurt/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/frankfurt/benefit-4/sample4.webp",
@@ -4383,11 +4669,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/frankfurt/",
-        "/schnellzeichner/frankfurt/",
-        "/szenenmaler/frankfurt/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/hamburg/benefit-1/sample1.webp",
@@ -4397,11 +4679,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/hamburg/",
-        "/schnellzeichner/hamburg/",
-        "/szenenmaler/hamburg/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/hamburg/benefit-2/sample2.webp",
@@ -4411,11 +4689,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/hamburg/",
-        "/schnellzeichner/hamburg/",
-        "/szenenmaler/hamburg/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/hamburg/benefit-3/sample3.webp",
@@ -4425,11 +4699,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/hamburg/",
-        "/schnellzeichner/hamburg/",
-        "/szenenmaler/hamburg/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/hamburg/benefit-4/sample4.webp",
@@ -4439,11 +4709,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/hamburg/",
-        "/schnellzeichner/hamburg/",
-        "/szenenmaler/hamburg/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/heidelberg/benefit-1/sample1.webp",
@@ -4453,11 +4719,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/heidelberg/",
-        "/schnellzeichner/heidelberg/",
-        "/szenenmaler/heidelberg/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/heidelberg/benefit-2/sample2.webp",
@@ -4467,11 +4729,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/heidelberg/",
-        "/schnellzeichner/heidelberg/",
-        "/szenenmaler/heidelberg/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/heidelberg/benefit-3/sample3.webp",
@@ -4481,11 +4739,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/heidelberg/",
-        "/schnellzeichner/heidelberg/",
-        "/szenenmaler/heidelberg/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/heidelberg/benefit-4/sample4.webp",
@@ -4495,11 +4749,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/heidelberg/",
-        "/schnellzeichner/heidelberg/",
-        "/szenenmaler/heidelberg/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/hessen/benefit-1/sample1.webp",
@@ -4509,11 +4759,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/hessen/",
-        "/schnellzeichner/hessen/",
-        "/szenenmaler/hessen/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/hessen/benefit-2/sample2.webp",
@@ -4523,11 +4769,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/hessen/",
-        "/schnellzeichner/hessen/",
-        "/szenenmaler/hessen/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/hessen/benefit-3/sample3.webp",
@@ -4537,11 +4779,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/hessen/",
-        "/schnellzeichner/hessen/",
-        "/szenenmaler/hessen/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/hessen/benefit-4/sample4.webp",
@@ -4551,11 +4789,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/hessen/",
-        "/schnellzeichner/hessen/",
-        "/szenenmaler/hessen/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/kaiserslautern/benefit-1/sample1.webp",
@@ -4565,11 +4799,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/kaiserslautern/",
-        "/schnellzeichner/kaiserslautern/",
-        "/szenenmaler/kaiserslautern/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/kaiserslautern/benefit-2/sample2.webp",
@@ -4579,11 +4809,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/kaiserslautern/",
-        "/schnellzeichner/kaiserslautern/",
-        "/szenenmaler/kaiserslautern/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/kaiserslautern/benefit-3/sample3.webp",
@@ -4593,11 +4819,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/kaiserslautern/",
-        "/schnellzeichner/kaiserslautern/",
-        "/szenenmaler/kaiserslautern/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/kaiserslautern/benefit-4/sample4.webp",
@@ -4607,11 +4829,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/kaiserslautern/",
-        "/schnellzeichner/kaiserslautern/",
-        "/szenenmaler/kaiserslautern/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/karlsruhe/benefit-1/sample1.webp",
@@ -4621,11 +4839,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/karlsruhe/",
-        "/schnellzeichner/karlsruhe/",
-        "/szenenmaler/karlsruhe/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/karlsruhe/benefit-2/sample2.webp",
@@ -4635,11 +4849,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/karlsruhe/",
-        "/schnellzeichner/karlsruhe/",
-        "/szenenmaler/karlsruhe/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/karlsruhe/benefit-3/sample3.webp",
@@ -4649,11 +4859,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/karlsruhe/",
-        "/schnellzeichner/karlsruhe/",
-        "/szenenmaler/karlsruhe/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/karlsruhe/benefit-4/sample4.webp",
@@ -4663,11 +4869,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/karlsruhe/",
-        "/schnellzeichner/karlsruhe/",
-        "/szenenmaler/karlsruhe/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/koblenz/benefit-1/sample1.webp",
@@ -4677,11 +4879,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/koblenz/",
-        "/schnellzeichner/koblenz/",
-        "/szenenmaler/koblenz/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/koblenz/benefit-2/sample2.webp",
@@ -4691,11 +4889,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/koblenz/",
-        "/schnellzeichner/koblenz/",
-        "/szenenmaler/koblenz/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/koblenz/benefit-3/sample3.webp",
@@ -4705,11 +4899,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/koblenz/",
-        "/schnellzeichner/koblenz/",
-        "/szenenmaler/koblenz/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/koblenz/benefit-4/sample4.webp",
@@ -4719,11 +4909,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/koblenz/",
-        "/schnellzeichner/koblenz/",
-        "/szenenmaler/koblenz/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/koeln/benefit-1/sample1.webp",
@@ -4733,11 +4919,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/koeln/",
-        "/schnellzeichner/koeln/",
-        "/szenenmaler/koeln/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/koeln/benefit-2/sample2.webp",
@@ -4747,11 +4929,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/koeln/",
-        "/schnellzeichner/koeln/",
-        "/szenenmaler/koeln/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/koeln/benefit-3/sample3.webp",
@@ -4761,11 +4939,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/koeln/",
-        "/schnellzeichner/koeln/",
-        "/szenenmaler/koeln/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/koeln/benefit-4/sample4.webp",
@@ -4775,11 +4949,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/koeln/",
-        "/schnellzeichner/koeln/",
-        "/szenenmaler/koeln/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/ludwigshafen/benefit-1/sample1.webp",
@@ -4789,11 +4959,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/ludwigshafen/",
-        "/schnellzeichner/ludwigshafen/",
-        "/szenenmaler/ludwigshafen/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/ludwigshafen/benefit-2/sample2.webp",
@@ -4803,11 +4969,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/ludwigshafen/",
-        "/schnellzeichner/ludwigshafen/",
-        "/szenenmaler/ludwigshafen/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/ludwigshafen/benefit-3/sample3.webp",
@@ -4817,11 +4979,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/ludwigshafen/",
-        "/schnellzeichner/ludwigshafen/",
-        "/szenenmaler/ludwigshafen/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/ludwigshafen/benefit-4/sample4.webp",
@@ -4831,11 +4989,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/ludwigshafen/",
-        "/schnellzeichner/ludwigshafen/",
-        "/szenenmaler/ludwigshafen/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/luxembourg/benefit-1/sample1.webp",
@@ -4845,11 +4999,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/luxembourg/",
-        "/schnellzeichner/luxembourg/",
-        "/szenenmaler/luxembourg/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/luxembourg/benefit-2/sample2.webp",
@@ -4859,11 +5009,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/luxembourg/",
-        "/schnellzeichner/luxembourg/",
-        "/szenenmaler/luxembourg/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/luxembourg/benefit-3/sample3.webp",
@@ -4873,11 +5019,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/luxembourg/",
-        "/schnellzeichner/luxembourg/",
-        "/szenenmaler/luxembourg/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/luxembourg/benefit-4/sample4.webp",
@@ -4887,11 +5029,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/luxembourg/",
-        "/schnellzeichner/luxembourg/",
-        "/szenenmaler/luxembourg/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/main-taunus-kreis/benefit-1/sample1.webp",
@@ -4901,11 +5039,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/main-taunus-kreis/",
-        "/schnellzeichner/main-taunus-kreis/",
-        "/szenenmaler/main-taunus-kreis/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/main-taunus-kreis/benefit-2/sample2.webp",
@@ -4915,11 +5049,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/main-taunus-kreis/",
-        "/schnellzeichner/main-taunus-kreis/",
-        "/szenenmaler/main-taunus-kreis/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/main-taunus-kreis/benefit-3/sample3.webp",
@@ -4929,11 +5059,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/main-taunus-kreis/",
-        "/schnellzeichner/main-taunus-kreis/",
-        "/szenenmaler/main-taunus-kreis/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/main-taunus-kreis/benefit-4/sample4.webp",
@@ -4943,11 +5069,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/main-taunus-kreis/",
-        "/schnellzeichner/main-taunus-kreis/",
-        "/szenenmaler/main-taunus-kreis/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/mainz/benefit-1/sample1.webp",
@@ -4957,11 +5079,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/mainz/",
-        "/schnellzeichner/mainz/",
-        "/szenenmaler/mainz/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/mainz/benefit-2/sample2.webp",
@@ -4971,11 +5089,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/mainz/",
-        "/schnellzeichner/mainz/",
-        "/szenenmaler/mainz/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/mainz/benefit-3/sample3.webp",
@@ -4985,11 +5099,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/mainz/",
-        "/schnellzeichner/mainz/",
-        "/szenenmaler/mainz/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/mainz/benefit-4/sample4.webp",
@@ -4999,11 +5109,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/mainz/",
-        "/schnellzeichner/mainz/",
-        "/szenenmaler/mainz/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/mannheim/benefit-1/sample1.webp",
@@ -5013,11 +5119,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/mannheim/",
-        "/schnellzeichner/mannheim/",
-        "/szenenmaler/mannheim/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/mannheim/benefit-2/sample2.webp",
@@ -5027,11 +5129,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/mannheim/",
-        "/schnellzeichner/mannheim/",
-        "/szenenmaler/mannheim/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/mannheim/benefit-3/sample3.webp",
@@ -5041,11 +5139,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/mannheim/",
-        "/schnellzeichner/mannheim/",
-        "/szenenmaler/mannheim/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/mannheim/benefit-4/sample4.webp",
@@ -5055,11 +5149,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/mannheim/",
-        "/schnellzeichner/mannheim/",
-        "/szenenmaler/mannheim/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/neuwied/benefit-1/sample1.webp",
@@ -5069,11 +5159,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/neuwied/",
-        "/schnellzeichner/neuwied/",
-        "/szenenmaler/neuwied/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/neuwied/benefit-2/sample2.webp",
@@ -5083,11 +5169,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/neuwied/",
-        "/schnellzeichner/neuwied/",
-        "/szenenmaler/neuwied/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/neuwied/benefit-3/sample3.webp",
@@ -5097,11 +5179,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/neuwied/",
-        "/schnellzeichner/neuwied/",
-        "/szenenmaler/neuwied/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/neuwied/benefit-4/sample4.webp",
@@ -5111,11 +5189,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/neuwied/",
-        "/schnellzeichner/neuwied/",
-        "/szenenmaler/neuwied/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/nord-rhein-westfalen/benefit-1/sample1.webp",
@@ -5125,11 +5199,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/nord-rhein-westfalen/",
-        "/schnellzeichner/nord-rhein-westfalen/",
-        "/szenenmaler/nord-rhein-westfalen/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/nord-rhein-westfalen/benefit-2/sample2.webp",
@@ -5139,11 +5209,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/nord-rhein-westfalen/",
-        "/schnellzeichner/nord-rhein-westfalen/",
-        "/szenenmaler/nord-rhein-westfalen/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/nord-rhein-westfalen/benefit-3/sample3.webp",
@@ -5153,11 +5219,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/nord-rhein-westfalen/",
-        "/schnellzeichner/nord-rhein-westfalen/",
-        "/szenenmaler/nord-rhein-westfalen/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/nord-rhein-westfalen/benefit-4/sample4.webp",
@@ -5167,11 +5229,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/nord-rhein-westfalen/",
-        "/schnellzeichner/nord-rhein-westfalen/",
-        "/szenenmaler/nord-rhein-westfalen/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/rhein-main-gebiet/benefit-1/sample1.webp",
@@ -5181,11 +5239,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/rhein-main-gebiet/",
-        "/schnellzeichner/rhein-main-gebiet/",
-        "/szenenmaler/rhein-main-gebiet/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/rhein-main-gebiet/benefit-2/sample2.webp",
@@ -5195,11 +5249,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/rhein-main-gebiet/",
-        "/schnellzeichner/rhein-main-gebiet/",
-        "/szenenmaler/rhein-main-gebiet/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/rhein-main-gebiet/benefit-3/sample3.webp",
@@ -5209,11 +5259,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/rhein-main-gebiet/",
-        "/schnellzeichner/rhein-main-gebiet/",
-        "/szenenmaler/rhein-main-gebiet/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/rhein-main-gebiet/benefit-4/sample4.webp",
@@ -5223,11 +5269,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/rhein-main-gebiet/",
-        "/schnellzeichner/rhein-main-gebiet/",
-        "/szenenmaler/rhein-main-gebiet/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/rheinland-pfalz/benefit-1/sample1.webp",
@@ -5237,11 +5279,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/rheinland-pfalz/",
-        "/schnellzeichner/rheinland-pfalz/",
-        "/szenenmaler/rheinland-pfalz/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/rheinland-pfalz/benefit-2/sample2.webp",
@@ -5251,11 +5289,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/rheinland-pfalz/",
-        "/schnellzeichner/rheinland-pfalz/",
-        "/szenenmaler/rheinland-pfalz/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/rheinland-pfalz/benefit-3/sample3.webp",
@@ -5265,11 +5299,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/rheinland-pfalz/",
-        "/schnellzeichner/rheinland-pfalz/",
-        "/szenenmaler/rheinland-pfalz/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/rheinland-pfalz/benefit-4/sample4.webp",
@@ -5279,11 +5309,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/rheinland-pfalz/",
-        "/schnellzeichner/rheinland-pfalz/",
-        "/szenenmaler/rheinland-pfalz/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/saarbruecken/benefit-1/sample1.webp",
@@ -5293,11 +5319,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/saarbruecken/",
-        "/schnellzeichner/saarbruecken/",
-        "/szenenmaler/saarbruecken/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/saarbruecken/benefit-2/sample2.webp",
@@ -5307,11 +5329,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/saarbruecken/",
-        "/schnellzeichner/saarbruecken/",
-        "/szenenmaler/saarbruecken/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/saarbruecken/benefit-3/sample3.webp",
@@ -5321,11 +5339,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/saarbruecken/",
-        "/schnellzeichner/saarbruecken/",
-        "/szenenmaler/saarbruecken/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/saarbruecken/benefit-4/sample4.webp",
@@ -5335,11 +5349,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/saarbruecken/",
-        "/schnellzeichner/saarbruecken/",
-        "/szenenmaler/saarbruecken/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/saarland/benefit-1/sample1.webp",
@@ -5349,11 +5359,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/saarland/",
-        "/schnellzeichner/saarland/",
-        "/szenenmaler/saarland/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/saarland/benefit-2/sample2.webp",
@@ -5363,11 +5369,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/saarland/",
-        "/schnellzeichner/saarland/",
-        "/szenenmaler/saarland/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/saarland/benefit-3/sample3.webp",
@@ -5377,11 +5379,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/saarland/",
-        "/schnellzeichner/saarland/",
-        "/szenenmaler/saarland/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/saarland/benefit-4/sample4.webp",
@@ -5391,11 +5389,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/saarland/",
-        "/schnellzeichner/saarland/",
-        "/szenenmaler/saarland/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/schnellzeichner/benefit-1/sample1.webp",
@@ -5405,9 +5399,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/schnellzeichner/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/schnellzeichner/benefit-2/sample2.webp",
@@ -5417,9 +5409,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/schnellzeichner/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/schnellzeichner/benefit-3/sample3.webp",
@@ -5429,9 +5419,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/schnellzeichner/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/schnellzeichner/benefit-4/sample4.webp",
@@ -5441,9 +5429,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/schnellzeichner/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/schweiz/benefit-1/sample1.webp",
@@ -5453,11 +5439,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/schnellzeichner/schweiz/",
-        "/schweiz/",
-        "/szenenmaler/schweiz/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/schweiz/benefit-2/sample2.webp",
@@ -5467,11 +5449,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/schnellzeichner/schweiz/",
-        "/schweiz/",
-        "/szenenmaler/schweiz/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/schweiz/benefit-3/sample3.webp",
@@ -5481,11 +5459,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/schnellzeichner/schweiz/",
-        "/schweiz/",
-        "/szenenmaler/schweiz/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/schweiz/benefit-4/sample4.webp",
@@ -5495,11 +5469,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/schnellzeichner/schweiz/",
-        "/schweiz/",
-        "/szenenmaler/schweiz/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/szenenmaler/benefit-1/sample1.webp",
@@ -5509,9 +5479,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/szenenmaler/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/szenenmaler/benefit-2/sample2.webp",
@@ -5521,9 +5489,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/szenenmaler/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/szenenmaler/benefit-3/sample3.webp",
@@ -5533,9 +5499,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/szenenmaler/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/szenenmaler/benefit-4/sample4.webp",
@@ -5545,9 +5509,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/szenenmaler/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/trier/benefit-1/sample1.webp",
@@ -5557,11 +5519,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/schnellzeichner/trier/",
-        "/szenenmaler/trier/",
-        "/trier/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/trier/benefit-2/sample2.webp",
@@ -5571,11 +5529,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/schnellzeichner/trier/",
-        "/szenenmaler/trier/",
-        "/trier/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/trier/benefit-3/sample3.webp",
@@ -5585,11 +5539,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/schnellzeichner/trier/",
-        "/szenenmaler/trier/",
-        "/trier/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/trier/benefit-4/sample4.webp",
@@ -5599,11 +5549,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/schnellzeichner/trier/",
-        "/szenenmaler/trier/",
-        "/trier/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/tuebingen/benefit-1/sample1.webp",
@@ -5613,11 +5559,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/schnellzeichner/tuebingen/",
-        "/szenenmaler/tuebingen/",
-        "/tuebingen/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/tuebingen/benefit-2/sample2.webp",
@@ -5627,11 +5569,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/schnellzeichner/tuebingen/",
-        "/szenenmaler/tuebingen/",
-        "/tuebingen/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/tuebingen/benefit-3/sample3.webp",
@@ -5641,11 +5579,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/schnellzeichner/tuebingen/",
-        "/szenenmaler/tuebingen/",
-        "/tuebingen/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/tuebingen/benefit-4/sample4.webp",
@@ -5655,11 +5589,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/schnellzeichner/tuebingen/",
-        "/szenenmaler/tuebingen/",
-        "/tuebingen/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/wiesbaden/benefit-1/sample1.webp",
@@ -5669,11 +5599,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/schnellzeichner/wiesbaden/",
-        "/szenenmaler/wiesbaden/",
-        "/wiesbaden/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/wiesbaden/benefit-2/sample2.webp",
@@ -5683,11 +5609,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/schnellzeichner/wiesbaden/",
-        "/szenenmaler/wiesbaden/",
-        "/wiesbaden/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/wiesbaden/benefit-3/sample3.webp",
@@ -5697,11 +5619,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/schnellzeichner/wiesbaden/",
-        "/szenenmaler/wiesbaden/",
-        "/wiesbaden/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/wiesbaden/benefit-4/sample4.webp",
@@ -5711,11 +5629,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/schnellzeichner/wiesbaden/",
-        "/szenenmaler/wiesbaden/",
-        "/wiesbaden/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/wuppertal/benefit-1/sample1.webp",
@@ -5725,11 +5639,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample1",
       "normalizedImageSlug": "sample1",
-      "visibleOnPages": [
-        "/schnellzeichner/wuppertal/",
-        "/szenenmaler/wuppertal/",
-        "/wuppertal/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/wuppertal/benefit-2/sample2.webp",
@@ -5739,11 +5649,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample2",
       "normalizedImageSlug": "sample2",
-      "visibleOnPages": [
-        "/schnellzeichner/wuppertal/",
-        "/szenenmaler/wuppertal/",
-        "/wuppertal/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/wuppertal/benefit-3/sample3.webp",
@@ -5753,11 +5659,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample3",
       "normalizedImageSlug": "sample3",
-      "visibleOnPages": [
-        "/schnellzeichner/wuppertal/",
-        "/szenenmaler/wuppertal/",
-        "/wuppertal/"
-      ]
+      "visibleOnPages": []
     },
     {
       "url": "/img/why/wuppertal/benefit-4/sample4.webp",
@@ -5767,11 +5669,7 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
-      "visibleOnPages": [
-        "/schnellzeichner/wuppertal/",
-        "/szenenmaler/wuppertal/",
-        "/wuppertal/"
-      ]
+      "visibleOnPages": []
     }
   ],
   "unreferencedImages": [
@@ -5913,6 +5811,1136 @@
       "prefixIndex": null,
       "rawBaseName": "gast-sitzt-schnellzeichnerin-model-dnner-event-restaurant-zur-sim-trier",
       "normalizedImageSlug": "gast-sitzt-schnellzeichnerin-model-dnner-event-restaurant-zur-sim-trier",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/belgique/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/belgique/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/belgique/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/belgique/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/belgique/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/belgique/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/belgique/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/belgique/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/berlin/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/berlin/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/berlin/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/berlin/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/berlin/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/berlin/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/berlin/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/berlin/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/default/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/default/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/frankfurt/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/frankfurt/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/frankfurt/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/frankfurt/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/frankfurt/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/frankfurt/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/frankfurt/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/frankfurt/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/hamburg/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/hamburg/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/hamburg/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/hamburg/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/hamburg/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/hamburg/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/hamburg/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/hamburg/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/heidelberg/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/heidelberg/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/heidelberg/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/heidelberg/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/heidelberg/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/heidelberg/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/heidelberg/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/heidelberg/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/hessen/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/hessen/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/hessen/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/hessen/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/hessen/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/hessen/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/hessen/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/hessen/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/kaiserslautern/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/kaiserslautern/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/kaiserslautern/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/kaiserslautern/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/kaiserslautern/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/kaiserslautern/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/kaiserslautern/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/kaiserslautern/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/karlsruhe/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/karlsruhe/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/karlsruhe/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/karlsruhe/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/karlsruhe/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/karlsruhe/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/karlsruhe/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/karlsruhe/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/koblenz/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/koblenz/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/koblenz/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/koblenz/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/koblenz/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/koblenz/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/koblenz/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/koblenz/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/koeln/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/koeln/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/koeln/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/koeln/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/koeln/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/koeln/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/koeln/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/koeln/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/ludwigshafen/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/ludwigshafen/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/ludwigshafen/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/ludwigshafen/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/ludwigshafen/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/ludwigshafen/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/ludwigshafen/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/ludwigshafen/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/luxembourg/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/luxembourg/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/luxembourg/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/luxembourg/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/luxembourg/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/luxembourg/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/luxembourg/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/luxembourg/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/main-taunus-kreis/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/main-taunus-kreis/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/main-taunus-kreis/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/main-taunus-kreis/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/main-taunus-kreis/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/main-taunus-kreis/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/main-taunus-kreis/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/main-taunus-kreis/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/mainz/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/mainz/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/mainz/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/mainz/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/mainz/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/mainz/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/mainz/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/mainz/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/mannheim/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/mannheim/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/mannheim/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/mannheim/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/mannheim/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/mannheim/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/mannheim/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/mannheim/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/neuwied/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/neuwied/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/neuwied/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/neuwied/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/neuwied/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/neuwied/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/neuwied/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/neuwied/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/nord-rhein-westfalen/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/nord-rhein-westfalen/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/nord-rhein-westfalen/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/nord-rhein-westfalen/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/nord-rhein-westfalen/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/nord-rhein-westfalen/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/nord-rhein-westfalen/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/nord-rhein-westfalen/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/rhein-main-gebiet/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/rhein-main-gebiet/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/rhein-main-gebiet/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/rhein-main-gebiet/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/rhein-main-gebiet/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/rhein-main-gebiet/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/rhein-main-gebiet/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/rhein-main-gebiet/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/rheinland-pfalz/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/rheinland-pfalz/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/rheinland-pfalz/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/rheinland-pfalz/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/rheinland-pfalz/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/rheinland-pfalz/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/rheinland-pfalz/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/rheinland-pfalz/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/saarbruecken/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/saarbruecken/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/saarbruecken/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/saarbruecken/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/saarbruecken/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/saarbruecken/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/saarbruecken/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/saarbruecken/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/saarland/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/saarland/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/saarland/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/saarland/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/saarland/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/saarland/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/saarland/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/saarland/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/schnellzeichner/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/schnellzeichner/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/schnellzeichner/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/schnellzeichner/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/schnellzeichner/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/schnellzeichner/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/schnellzeichner/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/schnellzeichner/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/schweiz/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/schweiz/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/schweiz/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/schweiz/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/schweiz/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/schweiz/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/schweiz/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/schweiz/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/szenenmaler/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/szenenmaler/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/szenenmaler/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/szenenmaler/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/szenenmaler/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/szenenmaler/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/szenenmaler/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/szenenmaler/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/trier/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/trier/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/trier/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/trier/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/trier/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/trier/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/trier/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/trier/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/tuebingen/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/tuebingen/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/tuebingen/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/tuebingen/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/tuebingen/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/tuebingen/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/tuebingen/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/tuebingen/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/wiesbaden/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/wiesbaden/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/wiesbaden/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/wiesbaden/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/wiesbaden/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/wiesbaden/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/wiesbaden/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/wiesbaden/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/wuppertal/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/wuppertal/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/wuppertal/benefit-2/sample2.webp",
+      "relativeFromImgRoot": "why/wuppertal/benefit-2/sample2.webp",
+      "fileName": "sample2.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample2",
+      "normalizedImageSlug": "sample2",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/wuppertal/benefit-3/sample3.webp",
+      "relativeFromImgRoot": "why/wuppertal/benefit-3/sample3.webp",
+      "fileName": "sample3.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample3",
+      "normalizedImageSlug": "sample3",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/wuppertal/benefit-4/sample4.webp",
+      "relativeFromImgRoot": "why/wuppertal/benefit-4/sample4.webp",
+      "fileName": "sample4.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample4",
+      "normalizedImageSlug": "sample4",
       "visibleOnPages": []
     }
   ]

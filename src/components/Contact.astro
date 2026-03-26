@@ -1,110 +1,318 @@
-  <!-- =========================
-     CONTACT
+<!-- =========================
+  CONTACT
 ========================= -->
-  <section id="contact" class="section contact">
-    <div class="section-inner">
-      <h2>Kontakt</h2>
-
+<section id="contact" class="section contact">
+  <div class="section-inner contact-shell">
+    <div class="contact-head">
+      <p class="contact-kicker">Kontakt</p>
+      <h2>Erzählen Sie uns von Ihrem Event</h2>
       <p class="contact-intro">
-        Stellen Sie uns jetzt unverbindlich eine Anfrage. Auch Fragen oder Vorschläge nehmen wir gerne hier direkt entgegen. Für allgemeine Fragen werfen Sie zuerst einen Blick in unsere
-        <a href="#faq">FAQ's</a>, dort finden Sie auch einige Antworten. Wir freuen uns auf Ihre Nachricht!
+        Stellen Sie uns jetzt unverbindlich eine Anfrage. Fragen oder Vorschläge
+        nehmen wir gerne direkt entgegen. Für allgemeine Fragen hilft oft schon ein
+        Blick in die <a href="#faq">FAQ</a>.
       </p>
+    </div>
 
-      <!-- Formspree-Formular (mit JS) -->
-      <form id="contactForm" class="contact-form">
-        <input
-          type="hidden"
-          name="_subject"
-          value="Neue Anfrage von Kunstwolff Website"
-        />
+    <div class="contact-grid">
+      <aside class="contact-panel">
+        <h3>Direkt erreichbar</h3>
+        <p>Wir antworten in der Regel innerhalb von 24 Stunden.</p>
+        <a href="tel:+491736677229" class="contact-link">+49 (0)173 6677 229</a>
+        <a href="mailto:info@artelines.com" class="contact-link">info@artelines.com</a>
+      </aside>
 
-        <input type="text" name="name" placeholder="Name" required />
-        <input type="email" name="email" placeholder="E-Mail" required />
-        <input type="tel" name="phone" placeholder="Telefon" required />
-        <input
-          type="date"
-          name="date"
-          required
-          onfocus="this.showPicker()"
-          placeholder="Datum des Events"
-          style="color: #fff;"
-        />
+      <div class="contact-form-wrap">
+        <div id="cinemaContext" class="cinema-context" hidden>
+          <p class="cinema-context-kicker">Ihre Auswahl aus CinemaWelcome</p>
+          <p id="cinemaContextSummary" class="cinema-context-summary"></p>
+          <p id="cinemaContextOffer" class="cinema-context-offer"></p>
+        </div>
 
-        <textarea name="message" placeholder="Ihre Anfrage" required></textarea>
+        <form id="contactForm" class="contact-form">
+          <input
+            type="hidden"
+            name="_subject"
+            value="Neue Anfrage von Kunstwolff Website"
+          />
+          <input type="hidden" name="cinema_source" id="cinemaSource" />
+          <input type="hidden" name="cinema_title" id="cinemaTitle" />
+          <input type="hidden" name="cinema_summary" id="cinemaSummary" />
+          <input type="hidden" name="cinema_offer" id="cinemaOffer" />
+          <input type="hidden" name="cinema_event" id="cinemaEvent" />
+          <input type="hidden" name="cinema_muse" id="cinemaMuse" />
+          <input type="hidden" name="cinema_geschmack" id="cinemaGeschmack" />
 
-        <button type="submit">Anfrage senden</button>
-      </form>
+          <label class="field">
+            <span>Name</span>
+            <input type="text" name="name" placeholder="Ihr Name" required />
+          </label>
+          <label class="field">
+            <span>E-Mail</span>
+            <input type="email" name="email" placeholder="name@firma.de" required />
+          </label>
+          <label class="field">
+            <span>Telefon</span>
+            <input type="tel" name="phone" placeholder="+49 ..." required />
+          </label>
+          <label class="field">
+            <span>Datum des Events</span>
+            <input type="date" name="date" required onfocus="this.showPicker()" />
+          </label>
+          <label class="field field--full">
+            <span>Ihre Anfrage</span>
+            <textarea name="message" placeholder="Was planen Sie und wie können wir helfen?" required></textarea>
+          </label>
 
-      <div
-        id="formMessage"
-        style="display:none; color:#0f0; margin-top:10px; text-align:center; font-weight:700;"
-      >
-        Sent!
-      </div>
+          <button type="submit">Anfrage senden</button>
+        </form>
 
-      <!-- alternative Kontaktinfos -->
-      <div class="contact-info">
-        <p>Telefon: +49 (0)173 6677 229</p>
-        <p>E-Mail: info@artelines.com</p>
+        <div id="formMessage" class="form-message">Vielen Dank! Ihre Anfrage wurde gesendet.</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <style>
-    .contact {
-      background: #000;
-}
+<style>
+  .contact {
+    background:
+      radial-gradient(1200px 520px at 50% -10%, rgba(191, 155, 80, 0.12), transparent 70%),
+      #050505;
+  }
 
-    .contact-intro {
-      max-width: 860px;
-      margin: 0 0 16px;
-      text-align: left;
-      line-height: 1.7;
-      opacity: 0.9;
+  .contact-shell {
+    display: grid;
+    gap: clamp(30px, 5vw, 48px);
+  }
+
+  .contact-head h2 {
+    margin: 0 0 12px;
+  }
+
+  .contact-kicker {
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .contact-intro {
+    max-width: 820px;
+    margin: 0;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.86);
+  }
+
+  .contact-intro a {
+    color: #d7b96a;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(215, 185, 106, 0.65);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: clamp(18px, 3vw, 28px);
+    align-items: start;
+  }
+
+  .contact-panel {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 22px 18px;
+    display: grid;
+    gap: 10px;
+  }
+
+  .contact-panel h3 {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .contact-panel p {
+    margin: 0 0 4px;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.5;
+    font-size: 0.92rem;
+  }
+
+  .contact-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    width: fit-content;
+  }
+
+  .contact-form-wrap {
+    border: 1px solid rgba(191, 155, 80, 0.28);
+    border-radius: 20px;
+    background: linear-gradient(140deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+    padding: clamp(18px, 3vw, 30px);
+  }
+
+  .cinema-context {
+    margin-bottom: 18px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(191, 155, 80, 0.45);
+    background: rgba(191, 155, 80, 0.1);
+  }
+
+  .cinema-context-kicker {
+    margin: 0 0 6px;
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .cinema-context-summary {
+    margin: 0 0 6px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .cinema-context-offer {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1.6;
+  }
+
+  .contact-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .field {
+    display: grid;
+    gap: 8px;
+  }
+
+  .field--full {
+    grid-column: 1 / -1;
+  }
+
+  .field span {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 13px 14px;
+    background: rgba(8, 8, 8, 0.7);
+    color: #fff;
+    font-size: 0.95rem;
+  }
+
+  .contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    outline: none;
+    border-color: rgba(191, 155, 80, 0.8);
+    box-shadow: 0 0 0 3px rgba(191, 155, 80, 0.18);
+  }
+
+  .contact-form button {
+    grid-column: 1 / -1;
+    margin-top: 4px;
+    padding: 14px 18px;
+    border: 1px solid #d0ad54;
+    border-radius: 999px;
+    background: #d0ad54;
+    color: #0b0b0b;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+
+  .contact-form button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(191, 155, 80, 0.24);
+    background: #dfbe6f;
+  }
+
+  .form-message {
+    display: none;
+    margin-top: 14px;
+    text-align: center;
+    font-weight: 700;
+    color: #90e297;
+  }
+
+  @media (max-width: 920px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
     }
+  }
 
-    .contact-intro a {
-      color: inherit;
-      font-weight: 700;
-      text-decoration: underline;
-      text-underline-offset: 2px;
+  @media (max-width: 680px) {
+    .contact-form {
+      grid-template-columns: 1fr;
     }
+  }
+</style>
 
-.contact-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  max-width: 720px;
-}
+<script is:inline>
+  const CONTACT_PREFILL_KEY = "cinemaContactPrefill_v1";
+  const contextBox = document.getElementById("cinemaContext");
+  const contextSummary = document.getElementById("cinemaContextSummary");
+  const contextOffer = document.getElementById("cinemaContextOffer");
 
-.contact-form textarea {
-  grid-column: span 2;
-  min-height: 140px;
-}
+  function setHidden(id, value) {
+    const input = document.getElementById(id);
+    if (!input || !(input instanceof HTMLInputElement)) return;
+    input.value = value || "";
+  }
 
-.contact-form input,
-.contact-form textarea {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.2);
-  padding: 14px;
-  color: #fff;
-  font-size: 14px;
-}
+  try {
+    const raw = sessionStorage.getItem(CONTACT_PREFILL_KEY);
+    if (raw) {
+      const data = JSON.parse(raw);
+      const summary = typeof data?.summary === "string" ? data.summary : "";
+      const offer = typeof data?.offer === "string" ? data.offer : "";
+      const title = typeof data?.title === "string" ? data.title : "";
+      const source = typeof data?.source === "string" ? data.source : "cinema-welcome";
+      const selections = typeof data?.selections === "object" && data.selections ? data.selections : {};
 
-.contact-form button {
-  grid-column: span 2;
-  padding: 14px;
-  background: #fff;
-  color: #000;
-  border: none;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
+      if (summary || offer) {
+        if (contextSummary) contextSummary.textContent = summary || title;
+        if (contextOffer) contextOffer.textContent = offer;
+        if (contextBox) contextBox.hidden = false;
+      }
 
-.contact-info {
-  margin-top: 40px;
-  font-size: 14px;
-  opacity: 0.7;
-}
-  </style>
+      setHidden("cinemaSource", source);
+      setHidden("cinemaTitle", title);
+      setHidden("cinemaSummary", summary);
+      setHidden("cinemaOffer", offer);
+      setHidden("cinemaEvent", typeof selections.event === "string" ? selections.event : "");
+      setHidden("cinemaMuse", typeof selections.muse === "string" ? selections.muse : "");
+      setHidden("cinemaGeschmack", typeof selections.geschmack === "string" ? selections.geschmack : "");
+
+      const form = document.getElementById("contactForm");
+      const textarea = form?.querySelector('textarea[name="message"]');
+      if (textarea instanceof HTMLTextAreaElement && !textarea.value.trim() && summary) {
+        const msgPrefix = `CinemaWelcome Auswahl: ${summary}`;
+        const offerLine = offer ? `\nEmpfohlenes Paket: ${offer}` : "";
+        textarea.value = `${msgPrefix}${offerLine}\n\n`;
+      }
+    }
+  } catch (error) {
+    console.warn("[Contact] Cinema-Prefill konnte nicht geladen werden:", error);
+  }
+</script>

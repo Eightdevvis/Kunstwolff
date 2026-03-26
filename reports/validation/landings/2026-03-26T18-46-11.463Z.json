@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-03-25T14:06:57.546Z",
+  "createdAt": "2026-03-26T18:46:11.463Z",
   "selectedCities": [
     "belgique",
     "berlin",
@@ -4346,6 +4346,16 @@
       ]
     },
     {
+      "url": "/img/why/default/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/default/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
+      "visibleOnPages": []
+    },
+    {
       "url": "/img/why/default/benefit-2/sample2.webp",
       "relativeFromImgRoot": "why/default/benefit-2/sample2.webp",
       "fileName": "sample2.webp",
@@ -5881,6 +5891,16 @@
       "prefixIndex": null,
       "rawBaseName": "sample4",
       "normalizedImageSlug": "sample4",
+      "visibleOnPages": []
+    },
+    {
+      "url": "/img/why/default/benefit-1/sample1.webp",
+      "relativeFromImgRoot": "why/default/benefit-1/sample1.webp",
+      "fileName": "sample1.webp",
+      "extension": ".webp",
+      "prefixIndex": null,
+      "rawBaseName": "sample1",
+      "normalizedImageSlug": "sample1",
       "visibleOnPages": []
     },
     {

@@ -195,6 +195,18 @@ Das Ergebnis wird zur Laufzeit aus den 3 Auswahlen zusammengesetzt – jeder Sat
 **Admin:** PartnerManager – CRUD + Logo-Upload
 **Felder:** id, name, logo, description, url, enabled
 
+### Why-Detailseiten (statisch)
+
+Für einzelne Why-Gründe gibt es statische Detailseiten mit eigenem Content-JSON:
+
+- `/stimmung-durch-kunst/` → `public/stimmung-durch-kunst/content.json`
+- `/du-bist-kunst/` → `public/du-bist-kunst/content.json`
+- `/branding/` → `public/branding/content.json`
+- `/canvas/` → `public/canvas/content.json`
+
+**Admin:** Global Components Tab im `kunstwolff-admin` (eigene Manager pro Seite).
+**Hinweis:** Diese Seiten sind bewusst keine dynamischen `[param]`-Routen.
+
 ### Referenzlogos (BrandStripe)
 
 **Quelle:** `public/img/referenzenLogos/` – alle Bilder werden automatisch angezeigt

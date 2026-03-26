@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getBrandingContent } from '../utils/branding';
+import { getWhyDetailLinkByTitle } from '../utils/whyDetailLinks';
+
+const content = getBrandingContent();
+if (!content) {
+  return Astro.redirect('/404');
+}
+
+const { seo, hero, intro, examplesTitle, examples, otherSectionTitle, otherHighlights } = content;
+const heroImage = examples[0]?.image ?? '/img/samples/sample3.jpeg';
+---
+
+<Layout title={seo.title} description={seo.description} image={heroImage}>
+  <main class="branding-page">
+    <header class="branding-hero">
+      <div class="branding-inner">
+        <h1>{hero.title}</h1>
+        <p>{hero.subtitle}</p>
+      </div>
+    </header>
+
+    <section class="branding-intro">
+      <div class="branding-inner">
+        <p>{intro}</p>
+      </div>
+    </section>
+
+    <section class="branding-examples" aria-labelledby="branding-examples-title">
+      <div class="branding-inner">
+        <h2 id="branding-examples-title">{examplesTitle}</h2>
+        <div class="branding-grid">
+          {examples.map((item) => (
+            <article class="branding-card">
+              <img src={item.image} alt={item.imageAlt || item.title} loading="lazy" />
+              <div class="branding-card-body">
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+                {item.linkUrl?.trim() && (
+                  <a href={item.linkUrl} class="branding-link">
+                    {item.linkLabel?.trim() || 'Mehr erfahren'}
+                  </a>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="branding-other" aria-labelledby="branding-other-title">
+      <div class="branding-inner">
+        <h2 id="branding-other-title">{otherSectionTitle}</h2>
+        <div class="branding-other-grid">
+          {otherHighlights.map((item) => {
+            const autoLink = getWhyDetailLinkByTitle(item.title);
+            const targetLink = item.linkUrl?.trim() || autoLink;
+            const targetLabel = item.linkLabel?.trim() || 'Mehr erfahren';
+
+            return targetLink ? (
+              <a class="branding-other-card branding-other-card--link" href={targetLink} aria-label={`Mehr zu ${item.title}`}>
+                <img src={item.image} alt={item.alt || item.title} loading="lazy" />
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+                <span class="branding-link branding-link--small">{targetLabel}</span>
+              </a>
+            ) : (
+              <div class="branding-other-card">
+                <img src={item.image} alt={item.alt || item.title} loading="lazy" />
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .branding-page { padding-top: 72px; background: #f5f5f5; color: #111; }
+  .branding-inner { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  .branding-hero { padding: 72px 0 40px; text-align: center; background: linear-gradient(180deg, #fff 0%, #f5f5f5 100%); }
+  .branding-hero h1 { margin: 0 0 14px; font-family: "Mayonice", Georgia, serif; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 400; }
+  .branding-hero p { margin: 0 auto; max-width: 760px; color: #444; line-height: 1.7; }
+  .branding-intro { padding: 0 0 34px; }
+  .branding-intro p { margin: 0 auto; max-width: 860px; text-align: center; color: #333; line-height: 1.8; }
+  .branding-examples { padding: 24px 0 74px; background: #fff; }
+  .branding-examples h2, .branding-other h2 { margin: 0 0 28px; text-align: center; font-family: "Mayonice", Georgia, serif; font-size: clamp(1.9rem, 3.4vw, 2.7rem); font-weight: 400; }
+  .branding-grid { display: grid; grid-template-columns: repeat(3, minmax(240px, 1fr)); gap: 22px; }
+  .branding-card { background: #fff; border: 1px solid rgba(0,0,0,0.08); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+  .branding-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
+  .branding-card-body { padding: 16px; }
+  .branding-card-body h3 { margin: 0 0 10px; font-size: 1.05rem; }
+  .branding-card-body p { margin: 0; color: #3d3d3d; line-height: 1.65; }
+  .branding-link { display: inline-block; margin-top: 14px; padding: 10px 16px; border-radius: 999px; background: #000; color: #fff; text-decoration: none; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+  .branding-link--small { padding: 8px 14px; font-size: 0.72rem; }
+  .branding-other { padding: 62px 0 96px; background: #ececec; }
+  .branding-other-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .branding-other-card { background: #fff; border-radius: 12px; padding: 18px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+  .branding-other-card--link { display: block; text-decoration: none; color: inherit; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .branding-other-card--link:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(0,0,0,0.10); }
+  .branding-other-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
+  .branding-other-card h3 { margin: 0 0 8px; font-size: 1.05rem; }
+  .branding-other-card p { margin: 0; color: #444; line-height: 1.6; font-size: 0.92rem; }
+  @media (max-width: 980px) {
+    .branding-grid { grid-template-columns: 1fr; }
+    .branding-other-grid { grid-template-columns: 1fr; }
+  }
+</style>
+

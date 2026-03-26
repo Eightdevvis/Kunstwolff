@@ -1,0 +1,60 @@
+{
+  "seo": {
+    "title": "Stimmung durch Kunst | Kunstwolff",
+    "description": "Welche Kunstform passt zu Ihrem Event? Schnellzeichner für lockere Stimmung, Szenenmaler für exklusive Atmosphäre – und weitere Besonderheiten von Kunstwolff."
+  },
+  "hero": {
+    "title": "Stimmung durch Kunst",
+    "subtitle": "Die richtige Kunstform setzt die Atmosphäre Ihrer Veranstaltung – von locker und witzig bis kultiviert und exklusiv."
+  },
+  "intro": "Ob Konferenz, Gala oder private Feier: Nicht jedes Format passt zu jedem Anlass. Hier sehen Sie, was Schnellzeichner und Szenenmaler ausmachen – und welche Stimmung sie schaffen. Später können Sie hier weitere Kunstformen ergänzen; die Inhalte liegen zentral in dieser Datei und sind für das Admin-Tool vorbereitet.",
+  "artForms": [
+    {
+      "id": "schnellzeichner",
+      "name": "Schnellzeichner",
+      "whatIsIt": "Live gezeichnete Karikaturen und Portraits in kurzer Zeit – direkt vor den Gästen, oft digital oder auf Papier. Ideal, wenn viele Personen ein kleines, persönliches Mitbringsel bekommen sollen.",
+      "image": "/img/slides/default/1_schnellzeichner_hq.webp",
+      "imageAlt": "Schnellzeichner zeichnet live vor Publikum",
+      "atmosphere": "Lustig und locker: Die Stimmung wird aufgelockert, Gäste lachen zusammen, Eis wird gebrochen – perfekt für Events, bei denen Sie Nähe und Leichtigkeit wollen.",
+      "linkUrl": "/schnellzeichner/",
+      "linkLabel": "Schnellzeichner für Events"
+    },
+    {
+      "id": "szenenmaler",
+      "name": "Szenenmaler",
+      "whatIsIt": "Ausführlichere Live-Malerei und Szenenmalerei: ein Bild entsteht als echtes Kunstwerk vor den Augen der Gäste – mit mehr Tiefe und Aufwand als eine schnelle Karikatur.",
+      "image": "/img/slides/default/2_karikatur_stadtfest.webp",
+      "imageAlt": "Szenenmaler bei Live-Malerei",
+      "atmosphere": "Kultiviert und exklusiv: die Atmosphäre wirkt hochwertiger und feierlicher – ideal, wenn Sie ein künstlerisches Statement und ein bleibendes Werk wünschen.",
+      "linkUrl": "/szenenmaler/",
+      "linkLabel": "Szenenmaler für Events"
+    }
+  ],
+  "otherSectionTitle": "Andere Besonderheiten von Kunstwolff",
+  "otherHighlights": [
+    {
+      "title": "Kreativ & persönlich",
+      "text": "Hobbies, Vorlieben und Berufe – der ganz persönliche Charakter der Abgebildeten wird immer kreativ festgehalten.",
+      "image": "/img/why/default/benefit-2/sample2.webp",
+      "alt": "Gäste lachen während Schnellzeichner live zeichnet",
+      "linkUrl": "",
+      "linkLabel": ""
+    },
+    {
+      "title": "Branding möglich",
+      "text": "Logo, Hashtag oder Event-Motto integrieren wir direkt in jede Zeichnung – perfekt für Corporate Events.",
+      "image": "/img/why/default/benefit-3/sample3.webp",
+      "alt": "Gebrandete Karikatur mit Firmenlogo",
+      "linkUrl": "",
+      "linkLabel": ""
+    },
+    {
+      "title": "Das Format das sie brauchen",
+      "text": "Papier, Leinwand, Beamer, Tablet oder direkt auf großem Monitor – mit unserem Repertoire passen wir uns Ihrem Eventkonzept flexibel an.",
+      "image": "/img/why/default/benefit-4/sample4.webp",
+      "alt": "Digitaler Schnellzeichner zeichnet auf Tablet",
+      "linkUrl": "",
+      "linkLabel": ""
+    }
+  ]
+}

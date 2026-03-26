@@ -1,0 +1,65 @@
+{
+  "seo": {
+    "title": "Branding möglich | Kunstwolff",
+    "description": "Wie wir Logos, Claims und Markenbotschaften in Live-Kunst integrieren und daraus ein sichtbares Event-Branding machen."
+  },
+  "hero": {
+    "title": "Branding möglich",
+    "subtitle": "Ihre Marke wird Teil des Kunstwerks - sichtbar, charmant und erinnerbar."
+  },
+  "intro": "Branding in Live-Kunst bedeutet mehr als nur ein Logo in die Ecke zu setzen. Wir verbinden Ihre Marke mit Motiv, Szene und Stil, sodass das Ergebnis zu Ihrem Event passt und von Gästen positiv wahrgenommen wird.",
+  "examplesTitle": "So integrieren wir Logos in Kunst",
+  "examples": [
+    {
+      "title": "Logo direkt im Portrait-Hintergrund",
+      "description": "Bei Live-Portraits platzieren wir Ihr Firmenlogo dezent im Hintergrund oder auf einem grafischen Rahmen. Das Ergebnis bleibt persoenlich, bekommt aber klaren Markenbezug.",
+      "image": "/img/why/default/benefit-3/sample3.webp",
+      "imageAlt": "Portrait mit integriertem Firmenlogo",
+      "linkUrl": "/schnellzeichner/",
+      "linkLabel": "Schnellzeichner ansehen"
+    },
+    {
+      "title": "Motto und Hashtag als Gestaltungselement",
+      "description": "Event-Motto oder Hashtag werden als Teil der Komposition eingesetzt - etwa als Schriftband, Banner oder Schild im Bild. So wird Ihre Kampagne organisch eingebunden.",
+      "image": "/img/slides/default/1_schnellzeichner_hq.webp",
+      "imageAlt": "Live-Kunst mit Event-Hashtag",
+      "linkUrl": "/schnellzeichner/messe/",
+      "linkLabel": "Messe-Beispiele ansehen"
+    },
+    {
+      "title": "Markenfarben in der Szenenmalerei",
+      "description": "Bei groesseren Szenen koennen wir Ihre Markenfarben bewusst in Licht, Kleidung oder Hintergrundflaechen aufnehmen. Das erzeugt einen hochwertigen Corporate-Look.",
+      "image": "/img/why/default/benefit-1/hochzeitsmaler.webp",
+      "imageAlt": "Szenenmalerei mit Corporate Branding",
+      "linkUrl": "/szenenmaler/",
+      "linkLabel": "Szenenmaler ansehen"
+    }
+  ],
+  "otherSectionTitle": "Andere Besonderheiten von Kunstwolff",
+  "otherHighlights": [
+    {
+      "title": "Ihr Geschmack",
+      "text": "Ob gelacht werden soll oder eine elegante Stimmung gewuenscht ist, wir bringen die passende Kunstform mit.",
+      "image": "/img/why/default/benefit-1/hochzeitsmaler.webp",
+      "alt": "Ihr Geschmack - passende Kunstform",
+      "linkUrl": "/stimmung-durch-kunst/",
+      "linkLabel": "Mehr zu Stimmung durch Kunst"
+    },
+    {
+      "title": "Kreativ & persoenlich",
+      "text": "Merkmale, Hobbies und Berufe werden kreativ aufgegriffen und als individuelles Kunstwerk umgesetzt.",
+      "image": "/img/why/default/benefit-2/sample2.webp",
+      "alt": "Kreativ und persoenlich umgesetzt",
+      "linkUrl": "/du-bist-kunst/",
+      "linkLabel": "Mehr zu Du bist Kunst"
+    },
+    {
+      "title": "Das Format das sie brauchen",
+      "text": "Papier, Leinwand, Beamer, Tablet oder grosser Monitor - wir passen uns Ihrem Eventkonzept flexibel an.",
+      "image": "/img/why/default/benefit-4/sample4.webp",
+      "alt": "Flexible Formate fuer Live-Kunst",
+      "linkUrl": "",
+      "linkLabel": ""
+    }
+  ]
+}

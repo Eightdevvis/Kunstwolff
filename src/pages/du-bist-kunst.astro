@@ -1,0 +1,117 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getDuBistKunstContent } from '../utils/duBistKunst';
+import { getWhyDetailLinkByTitle } from '../utils/whyDetailLinks';
+
+const content = getDuBistKunstContent();
+if (!content) {
+  return Astro.redirect('/404');
+}
+
+const { seo, hero, intro, galleryTitle, examples, otherSectionTitle, otherHighlights } = content;
+const heroImage = examples[0]?.image ?? '/img/samples/sample2.jpeg';
+---
+
+<Layout title={seo.title} description={seo.description} image={heroImage}>
+  <main class="dbk-page">
+    <header class="dbk-hero">
+      <div class="dbk-inner">
+        <h1>{hero.title}</h1>
+        <p>{hero.subtitle}</p>
+      </div>
+    </header>
+
+    <section class="dbk-intro">
+      <div class="dbk-inner">
+        <p>{intro}</p>
+      </div>
+    </section>
+
+    <section class="dbk-gallery" aria-labelledby="dbk-gallery-title">
+      <div class="dbk-inner">
+        <h2 id="dbk-gallery-title">{galleryTitle}</h2>
+        <div class="dbk-grid">
+          {examples.map((item) => (
+            <article class="dbk-card">
+              <img src={item.image} alt={item.imageAlt || item.personTitle} loading="lazy" />
+              <div class="dbk-card-body">
+                <h3>{item.personTitle}</h3>
+                <p class="dbk-label">Person</p>
+                <p>{item.personDescription}</p>
+                <p class="dbk-label">Künstlerische Umsetzung</p>
+                <p>{item.artDescription}</p>
+                {item.linkUrl?.trim() && (
+                  <a href={item.linkUrl} class="dbk-link">
+                    {item.linkLabel?.trim() || 'Mehr erfahren'}
+                  </a>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="dbk-other" aria-labelledby="dbk-other-title">
+      <div class="dbk-inner">
+        <h2 id="dbk-other-title">{otherSectionTitle}</h2>
+        <div class="dbk-other-grid">
+          {otherHighlights.map((item) => {
+            const autoLink = getWhyDetailLinkByTitle(item.title);
+            const targetLink = item.linkUrl?.trim() || autoLink;
+            const targetLabel = item.linkLabel?.trim() || 'Mehr erfahren';
+
+            return targetLink ? (
+              <a class="dbk-other-card dbk-other-card--link" href={targetLink} aria-label={`Mehr zu ${item.title}`}>
+                <img src={item.image} alt={item.alt || item.title} loading="lazy" />
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+                <span class="dbk-link dbk-link--small">{targetLabel}</span>
+              </a>
+            ) : (
+              <div class="dbk-other-card">
+                <img src={item.image} alt={item.alt || item.title} loading="lazy" />
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .dbk-page { padding-top: 72px; background: #f6f6f6; color: #111; }
+  .dbk-inner { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  .dbk-hero { padding: 72px 0 40px; text-align: center; background: linear-gradient(180deg, #fff 0%, #f6f6f6 100%); }
+  .dbk-hero h1 { margin: 0 0 14px; font-family: "Mayonice", Georgia, serif; font-weight: 400; font-size: clamp(2.2rem, 5vw, 3.4rem); }
+  .dbk-hero p { margin: 0 auto; max-width: 760px; color: #444; line-height: 1.7; }
+  .dbk-intro { padding: 0 0 36px; }
+  .dbk-intro p { margin: 0 auto; max-width: 860px; color: #333; line-height: 1.8; text-align: center; }
+  .dbk-gallery { padding: 22px 0 72px; background: #fff; }
+  .dbk-gallery h2, .dbk-other h2 { margin: 0 0 28px; text-align: center; font-family: "Mayonice", Georgia, serif; font-weight: 400; font-size: clamp(1.9rem, 3.4vw, 2.7rem); }
+  .dbk-grid { display: grid; grid-template-columns: repeat(2, minmax(280px, 1fr)); gap: 24px; }
+  .dbk-card { background: #fff; border: 1px solid rgba(0,0,0,0.08); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+  .dbk-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
+  .dbk-card-body { padding: 18px; }
+  .dbk-card-body h3 { margin: 0 0 12px; font-size: 1.15rem; }
+  .dbk-label { margin: 0 0 6px; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: #666; font-weight: 600; }
+  .dbk-card-body p { margin: 0 0 14px; color: #3d3d3d; line-height: 1.65; }
+  .dbk-link { display: inline-block; margin-top: 4px; padding: 10px 18px; border-radius: 999px; background: #000; color: #fff; text-decoration: none; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+  .dbk-link--small { padding: 8px 14px; font-size: 0.72rem; }
+  .dbk-other { padding: 64px 0 96px; background: #ededed; }
+  .dbk-other-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .dbk-other-card { background: #fff; border-radius: 12px; padding: 18px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+  .dbk-other-card--link { display: block; text-decoration: none; color: inherit; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .dbk-other-card--link:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(0,0,0,0.10); }
+  .dbk-other-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
+  .dbk-other-card h3 { margin: 0 0 8px; font-size: 1.05rem; }
+  .dbk-other-card p { margin: 0; color: #444; line-height: 1.6; font-size: 0.92rem; }
+  @media (max-width: 980px) {
+    .dbk-grid { grid-template-columns: 1fr; }
+    .dbk-other-grid { grid-template-columns: 1fr; }
+  }
+</style>
+

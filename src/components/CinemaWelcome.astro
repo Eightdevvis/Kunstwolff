@@ -911,9 +911,11 @@ const satelliteData = {
   const resultDesc    = document.getElementById("cw-result-description");
   const resultSummary = document.getElementById("cw-result-summary");
   const resultOffer   = document.getElementById("cw-result-offer");
+  const resultCta     = document.getElementById("cw-result-cta") as HTMLAnchorElement | null;
 
   // Satellite-Titel für die Zusammenfassung merken
   const selectionTitles: Record<string, string> = {};
+  const CONTACT_PREFILL_KEY = "cinemaContactPrefill_v1";
 
   function checkAndShowResult() {
     if (!selections.event || !selections.muse || !selections.geschmack) return;
@@ -977,6 +979,55 @@ const satelliteData = {
       resultSummary.textContent = `\u201E${skillTitle}\u201C auf \u201E${eventTitle}\u201C f\u00fcr \u201E${museTitle}\u201C`;
     }
     if (resultOffer) resultOffer.textContent = offer;
+
+    // Ergebnis für Kontaktformular persistieren (z.B. nach Swipe/Scroll zu #contact)
+    try {
+      const contactPayload = {
+        source: "cinema-welcome",
+        createdAt: new Date().toISOString(),
+        title,
+        summary: `\u201E${skillTitle}\u201C auf \u201E${eventTitle}\u201C f\u00fcr \u201E${museTitle}\u201C`,
+        offer,
+        selections: {
+          event: selections.event,
+          muse: selections.muse,
+          geschmack: selections.geschmack,
+          eventTitle,
+          museTitle,
+          skillTitle,
+        },
+      };
+      sessionStorage.setItem(CONTACT_PREFILL_KEY, JSON.stringify(contactPayload));
+    } catch (error) {
+      console.warn("[CinemaWelcome] Konnte Kontakt-Prefill nicht speichern:", error);
+    }
+
+    if (resultCta && !resultCta.dataset.prefillBound) {
+      resultCta.dataset.prefillBound = "1";
+      resultCta.addEventListener("click", () => {
+        // Safety: beim Klick nochmal schreiben, falls Zustand zwischenzeitlich verändert wurde
+        try {
+          const contactPayload = {
+            source: "cinema-welcome",
+            createdAt: new Date().toISOString(),
+            title,
+            summary: `\u201E${skillTitle}\u201C auf \u201E${eventTitle}\u201C f\u00fcr \u201E${museTitle}\u201C`,
+            offer,
+            selections: {
+              event: selections.event,
+              muse: selections.muse,
+              geschmack: selections.geschmack,
+              eventTitle,
+              museTitle,
+              skillTitle,
+            },
+          };
+          sessionStorage.setItem(CONTACT_PREFILL_KEY, JSON.stringify(contactPayload));
+        } catch (error) {
+          console.warn("[CinemaWelcome] Konnte Kontakt-Prefill beim CTA nicht speichern:", error);
+        }
+      });
+    }
 
     // Karten aufdecken (linke Karte etwas früher)
     if (resultSection) {

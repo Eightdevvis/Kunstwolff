@@ -1,0 +1,228 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCanvasContent } from '../utils/canvas';
+import { getWhyDetailLinkByTitle } from '../utils/whyDetailLinks';
+
+const content = getCanvasContent();
+if (!content) {
+  return Astro.redirect('/404');
+}
+
+const { seo, hero, intro, sections, otherSectionTitle, otherHighlights } = content;
+const heroImage = sections[0]?.items?.[0]?.image ?? '/img/samples/sample4.jpeg';
+---
+
+<Layout title={seo.title} description={seo.description} image={heroImage}>
+  <main class="canvas-page">
+    <header class="canvas-hero">
+      <div class="canvas-inner">
+        <h1>{hero.title}</h1>
+        <p>{hero.subtitle}</p>
+      </div>
+    </header>
+
+    <section class="canvas-intro">
+      <div class="canvas-inner">
+        <p>{intro}</p>
+      </div>
+    </section>
+
+    <nav class="canvas-mini-nav" aria-label="Formate Navigation">
+      <div class="canvas-inner">
+        <p class="canvas-mini-nav-title">Schnellnavigation</p>
+        <div class="canvas-mini-nav-groups">
+          {sections.map((section) => (
+            <div class="canvas-mini-group">
+              <a class="canvas-mini-section-link" href={`#canvas-section-${section.id}`}>
+                {section.title}
+              </a>
+              <div class="canvas-mini-sub-links">
+                {section.items.map((item, idx) => (
+                  <a href={`#canvas-item-${section.id}-${idx}`}>{item.title}</a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </nav>
+
+    {sections.map((section) => (
+      <section class="canvas-section" aria-labelledby={`canvas-section-${section.id}`}>
+        <div class="canvas-inner">
+          <h2 id={`canvas-section-${section.id}`}>{section.title}</h2>
+          <p class="canvas-section-intro">{section.intro}</p>
+          <div class="canvas-grid">
+            {section.items.map((item, idx) => (
+              <article class="canvas-card" id={`canvas-item-${section.id}-${idx}`}>
+                <img src={item.image} alt={item.imageAlt || item.title} loading="lazy" />
+                <div class="canvas-card-body">
+                  <h3>{item.title}</h3>
+                  <p class="canvas-summary">{item.summary}</p>
+                  <details class="canvas-details">
+                    <summary>Details anzeigen</summary>
+                    <ul>
+                      {item.details.map((detail) => (
+                        <li>{detail}</li>
+                      ))}
+                    </ul>
+                  </details>
+                  {item.linkUrl?.trim() && (
+                    <a href={item.linkUrl} class="canvas-link">
+                      {item.linkLabel?.trim() || 'Mehr erfahren'}
+                    </a>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <section class="canvas-other" aria-labelledby="canvas-other-title">
+      <div class="canvas-inner">
+        <h2 id="canvas-other-title">{otherSectionTitle}</h2>
+        <div class="canvas-other-grid">
+          {otherHighlights.map((item) => {
+            const autoLink = getWhyDetailLinkByTitle(item.title);
+            const targetLink = item.linkUrl?.trim() || autoLink;
+            const targetLabel = item.linkLabel?.trim() || 'Mehr erfahren';
+
+            return targetLink ? (
+              <a class="canvas-other-card canvas-other-card--link" href={targetLink} aria-label={`Mehr zu ${item.title}`}>
+                <img src={item.image} alt={item.alt || item.title} loading="lazy" />
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+                <span class="canvas-link canvas-link--small">{targetLabel}</span>
+              </a>
+            ) : (
+              <div class="canvas-other-card">
+                <img src={item.image} alt={item.alt || item.title} loading="lazy" />
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .canvas-page { padding-top: 72px; background: #f5f5f5; color: #111; }
+  .canvas-inner { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  html { scroll-behavior: smooth; }
+  .canvas-hero { padding: 72px 0 40px; text-align: center; background: linear-gradient(180deg, #fff 0%, #f5f5f5 100%); }
+  .canvas-hero h1 { margin: 0 0 14px; font-family: "Mayonice", Georgia, serif; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 400; }
+  .canvas-hero p { margin: 0 auto; max-width: 760px; color: #444; line-height: 1.7; }
+  .canvas-intro { padding: 0 0 28px; }
+  .canvas-intro p { margin: 0 auto; max-width: 860px; text-align: center; color: #333; line-height: 1.8; }
+  .canvas-mini-nav {
+    position: sticky;
+    top: 68px;
+    z-index: 30;
+    background: rgba(255, 255, 255, 0.97);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(10px);
+  }
+  .canvas-mini-nav .canvas-inner { padding-top: 10px; padding-bottom: 10px; }
+  .canvas-mini-nav-title {
+    margin: 0 0 8px;
+    font-size: 0.7rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: #666;
+    font-weight: 600;
+  }
+  .canvas-mini-nav-groups {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+  .canvas-mini-group {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 999px;
+    padding: 6px 8px;
+  }
+  .canvas-mini-section-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #111;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .canvas-mini-sub-links { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+  .canvas-mini-sub-links a {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    text-decoration: none;
+    color: #222;
+    font-size: 0.72rem;
+    background: #fff;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .canvas-mini-sub-links a:hover,
+  .canvas-mini-sub-links a:focus-visible,
+  .canvas-mini-section-link:hover,
+  .canvas-mini-section-link:focus-visible {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+    outline: none;
+  }
+  .canvas-section { padding: 26px 0 54px; background: #fff; border-top: 1px solid rgba(0,0,0,0.06); }
+  .canvas-section:nth-of-type(even) { background: #fafafa; }
+  .canvas-section h2,
+  .canvas-card { scroll-margin-top: 168px; }
+  .canvas-section h2 { margin: 0 0 10px; text-align: center; font-family: "Mayonice", Georgia, serif; font-size: clamp(1.9rem, 3.4vw, 2.6rem); font-weight: 400; }
+  .canvas-section-intro { margin: 0 auto 22px; max-width: 860px; text-align: center; color: #444; line-height: 1.7; }
+  .canvas-grid { display: grid; grid-template-columns: repeat(2, minmax(280px, 1fr)); gap: 22px; }
+  .canvas-card { background: #fff; border: 1px solid rgba(0,0,0,0.08); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+  .canvas-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
+  .canvas-card-body { padding: 16px; }
+  .canvas-card-body h3 { margin: 0 0 10px; font-size: 1.05rem; }
+  .canvas-summary { margin: 0 0 12px; color: #3d3d3d; line-height: 1.65; }
+  .canvas-details { border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 10px 12px; background: #fafafa; }
+  .canvas-details summary { cursor: pointer; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #444; }
+  .canvas-details ul { margin: 10px 0 0; padding-left: 18px; color: #444; }
+  .canvas-details li { margin: 0 0 6px; line-height: 1.5; }
+  .canvas-link { display: inline-block; margin-top: 12px; padding: 10px 16px; border-radius: 999px; background: #000; color: #fff; text-decoration: none; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+  .canvas-link--small { padding: 8px 14px; font-size: 0.72rem; }
+  .canvas-other { padding: 60px 0 96px; background: #ececec; }
+  .canvas-other h2 { margin: 0 0 28px; text-align: center; font-family: "Mayonice", Georgia, serif; font-size: clamp(1.9rem, 3.4vw, 2.7rem); font-weight: 400; }
+  .canvas-other-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .canvas-other-card { background: #fff; border-radius: 12px; padding: 18px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+  .canvas-other-card--link { display: block; text-decoration: none; color: inherit; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .canvas-other-card--link:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(0,0,0,0.10); }
+  .canvas-other-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
+  .canvas-other-card h3 { margin: 0 0 8px; font-size: 1.05rem; }
+  .canvas-other-card p { margin: 0; color: #444; line-height: 1.6; font-size: 0.92rem; }
+  @media (max-width: 980px) {
+    .canvas-grid { grid-template-columns: 1fr; }
+    .canvas-other-grid { grid-template-columns: 1fr; }
+    .canvas-mini-nav-groups { display: grid; grid-template-columns: 1fr; gap: 8px; }
+    .canvas-mini-group { border-radius: 12px; }
+  }
+</style>
+

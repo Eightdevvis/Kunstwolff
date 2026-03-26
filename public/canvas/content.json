@@ -1,0 +1,161 @@
+{
+  "seo": {
+    "title": "Das Format das sie brauchen | Kunstwolff",
+    "description": "Von A5 bis 80x60 cm, von Tablet bis Samsung Flip: Wir bieten klassische und digitale Formate inkl. custom Loesungen."
+  },
+  "hero": {
+    "title": "Das Format das sie brauchen",
+    "subtitle": "Klassisch oder digital - wir bringen das Setup mit, das zu Ihrem Event passt."
+  },
+  "intro": "Bei Kunstwolff waehlen Sie nicht nur den Stil, sondern auch das passende Medium. Ob kleine Give-away-Portraits, große Leinwand-Inszenierung oder interaktive Live-Kunst auf Touchscreen: Wir passen das Format an Ablauf, Publikum und Raum an. Bei klassischen Formaten gilt immer: custom ist moeglich.",
+  "sections": [
+    {
+      "id": "klassisch",
+      "title": "Klassische Formate",
+      "intro": "Physische Originale mit echter Haptik. Die Formate gehen von klein und schnell bis gross und praesent.",
+      "items": [
+        {
+          "title": "Papierformate",
+          "summary": "Zeichnungen auf klassischem Papier - von A5 bis grossflaechig.",
+          "image": "/img/why/default/benefit-4/sample4.webp",
+          "imageAlt": "Live-Zeichnung auf Papier",
+          "details": [
+            "Kleine Formate: A5 (schnell, ideal fuer viele Gaeste)",
+            "Mittlere Formate: A4 / A3 (klassischer Event-Standard)",
+            "Grosse Formate: bis etwa 80x60 cm moeglich",
+            "Bei klassischen Formaten gilt immer: custom moeglich"
+          ],
+          "linkUrl": "",
+          "linkLabel": ""
+        },
+        {
+          "title": "Leinwandformate",
+          "summary": "Live-Malerei auf Leinwand in unterschiedlichen Groessen.",
+          "image": "/img/why/default/benefit-1/hochzeitsmaler.webp",
+          "imageAlt": "Live-Malerei auf Leinwand",
+          "details": [
+            "Kleine Leinwaende fuer intime Settings",
+            "Mittlere Leinwaende fuer Messe/Firmenevent",
+            "Grosse Leinwaende fuer Buehne und starke Fernwirkung",
+            "Leinwandgroessen koennen an Raum und Konzept angepasst werden"
+          ],
+          "linkUrl": "",
+          "linkLabel": ""
+        },
+        {
+          "title": "Aquarellpapier",
+          "summary": "Hochwertige Papierstruktur fuer malerische, feine Umsetzungen.",
+          "image": "/img/why/default/benefit-2/sample2.webp",
+          "imageAlt": "Aquarellpapier mit Live-Kunst",
+          "details": [
+            "Kleinere Formate fuer persoenliche Erinnerungsstuecke",
+            "Mittlere/grosse Formate fuer mehr Tiefe und Details",
+            "Besonders geeignet fuer elegante, kultivierte Bildwirkung",
+            "Format und Papierstaerke sind flexibel waehlbar"
+          ],
+          "linkUrl": "",
+          "linkLabel": ""
+        },
+        {
+          "title": "Spezielle Untergruende (z. B. Flaschen)",
+          "summary": "Neben Papier und Leinwand koennen wir auch auf Sonderuntergruenden arbeiten.",
+          "image": "/img/why/default/benefit-3/sample3.webp",
+          "imageAlt": "Kunst auf Flaschen und Sonderuntergruenden",
+          "details": [
+            "Malerei auf Flaschen ist moeglich",
+            "Ideal fuer besondere Geschenke und aufmerksamkeitsstarke Displays",
+            "Weitere Sonderuntergruende nach Briefing moeglich"
+          ],
+          "linkUrl": "",
+          "linkLabel": ""
+        }
+      ]
+    },
+    {
+      "id": "digital",
+      "title": "Digitale Formate",
+      "intro": "Digitale Setups fuer hohe Geschwindigkeit, grosse Sichtbarkeit und flexible Ausspielung.",
+      "items": [
+        {
+          "title": "Tablet",
+          "summary": "Direktes Zeichnen auf Tablet - schnell und praezise.",
+          "image": "/img/why/default/benefit-4/sample4.webp",
+          "imageAlt": "Live-Zeichnen auf Tablet",
+          "details": [
+            "Schneller Workflow fuer viele Gaeste",
+            "Digitale Daten sofort verfuegbar",
+            "Saubere, flexible Live-Umsetzung"
+          ],
+          "linkUrl": "",
+          "linkLabel": ""
+        },
+        {
+          "title": "Tablet + Drucker",
+          "summary": "Digital erstellen und direkt vor Ort als Erinnerung ausgeben.",
+          "image": "/img/slides/default/1_schnellzeichner_hq.webp",
+          "imageAlt": "Tablet mit Drucker-Ausgabe",
+          "details": [
+            "Sofort-Ausdruck fuer Gaeste",
+            "Ideal bei hohen Besucherzahlen",
+            "Optional auch mit Branding-Elementen kombinierbar"
+          ],
+          "linkUrl": "",
+          "linkLabel": ""
+        },
+        {
+          "title": "Tablet mit Beamer",
+          "summary": "Der Zeichenprozess wird live gross sichtbar projiziert.",
+          "image": "/img/slides/default/2_karikatur_stadtfest.webp",
+          "imageAlt": "Live-Zeichnung via Beamer projektiert",
+          "details": [
+            "Publikum verfolgt den Entstehungsprozess in Echtzeit",
+            "Sehr wirkungsvoll auf Buehne und in grossen Raeumen",
+            "Staerkt Interaktion und Show-Charakter"
+          ],
+          "linkUrl": "",
+          "linkLabel": ""
+        },
+        {
+          "title": "Samsung Flip (grosser Touch-Bildschirm)",
+          "summary": "Live-Kunst auf grossem Touchscreen fuer moderne Event-Inszenierung.",
+          "image": "/img/why/default/benefit-3/sample3.webp",
+          "imageAlt": "Live-Kunst auf grossem Touchscreen",
+          "details": [
+            "Zeichnen und Praesentieren auf grosser Touchflaeche",
+            "Sehr gute Sichtbarkeit fuer groessere Gruppen",
+            "Moderne, technische Wirkung im Raum"
+          ],
+          "linkUrl": "",
+          "linkLabel": ""
+        }
+      ]
+    }
+  ],
+  "otherSectionTitle": "Andere Besonderheiten von Kunstwolff",
+  "otherHighlights": [
+    {
+      "title": "Ihr Geschmack",
+      "text": "Ob gelacht werden soll oder eine elegante Stimmung gewuenscht ist, wir bringen die passende Kunstform mit.",
+      "image": "/img/why/default/benefit-1/hochzeitsmaler.webp",
+      "alt": "Ihr Geschmack - passende Kunstform",
+      "linkUrl": "/stimmung-durch-kunst/",
+      "linkLabel": "Mehr zu Stimmung durch Kunst"
+    },
+    {
+      "title": "Kreativ & persoenlich",
+      "text": "Merkmale, Hobbies und Berufe werden kreativ aufgegriffen und als individuelles Kunstwerk umgesetzt.",
+      "image": "/img/why/default/benefit-2/sample2.webp",
+      "alt": "Kreativ und persoenlich umgesetzt",
+      "linkUrl": "/du-bist-kunst/",
+      "linkLabel": "Mehr zu Du bist Kunst"
+    },
+    {
+      "title": "Branding moeglich",
+      "text": "Logo, Hashtag oder Event-Motto integrieren wir direkt in jede Zeichnung - perfekt fuer Corporate Events.",
+      "image": "/img/why/default/benefit-3/sample3.webp",
+      "alt": "Branding in Live-Kunst",
+      "linkUrl": "/branding/",
+      "linkLabel": "Mehr zu Branding"
+    }
+  ]
+}
