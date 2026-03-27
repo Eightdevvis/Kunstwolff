@@ -2,11 +2,146 @@
 
 import Layout from "../layouts/Layout.astro";
 
-
 ---
 
 <Layout>
-  
-zuerst host raussuchen, dann https://www.e-recht24.de/muster-datenschutzerklaerung.html
+  <div class="datenschutz-div">
+    <h1>Datenschutz</h1>
 
+    <p>
+      Wir freuen uns ueber Ihr Interesse an unserem Angebot. Der Schutz Ihrer
+      personenbezogenen Daten ist uns wichtig. Personenbezogene Daten werden
+      auf dieser Website nur im technisch notwendigen Umfang und zur Bearbeitung
+      Ihrer Anfrage verarbeitet.
+    </p>
+
+    <h2>1. Verantwortliche Stelle</h2>
+    <p>
+      Gabriele Wolff<br />
+      Birkenstr. 3<br />
+      66121 Saarbruecken<br />
+      E-Mail: info@artelines.com<br />
+      Telefon: +49 (0)173 6677 229
+    </p>
+
+    <h2>2. Hosting und Server-Logfiles</h2>
+    <p>
+      Beim Aufruf dieser Website werden durch den Hosting-Anbieter automatisch
+      Informationen in sogenannten Server-Logfiles erfasst (z. B. IP-Adresse,
+      Datum/Uhrzeit, aufgerufene Seite, Browser-Informationen). Diese Daten
+      dienen der technischen Bereitstellung und Sicherheit der Website.
+    </p>
+    <p>
+      Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an
+      einem sicheren und stabilen Betrieb).
+    </p>
+
+    <h2>3. Kontaktaufnahme</h2>
+    <p>
+      Wenn Sie uns per E-Mail oder Telefon kontaktieren, verarbeiten wir die
+      von Ihnen uebermittelten Daten (z. B. Name, Kontaktdaten, Inhalt der
+      Nachricht) zur Bearbeitung Ihrer Anfrage.
+    </p>
+    <p>
+      Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche
+      Massnahmen) sowie Art. 6 Abs. 1 lit. f DSGVO.
+    </p>
+
+    <h2>4. Cookies, Tracking und Analyse</h2>
+    <p>
+      Auf dieser Website werden derzeit keine Tracking- oder Analyse-Tools
+      eingesetzt (z. B. kein Google Analytics, kein Meta Pixel).
+    </p>
+    <p>
+      Es werden keine nicht-notwendigen Cookies zu Marketing- oder
+      Analysezwecken gesetzt.
+    </p>
+
+    <h2>5. Fotos &amp; Bildrechte</h2>
+    <p>
+      Auf dieser Website werden Fotos von Arbeiten und Veranstaltungen gezeigt.
+      Die rechtliche Absicherung erfolgt ueber folgende Wege:
+    </p>
+    <ul>
+      <li>
+        Veranstalter-Freigabe im Vertrag: Bei B2B-Buchungen enthaelt der Vertrag
+        einen Passus, der Kunstwolff das Recht gibt, Fotos vom Event fuer eigene
+        Marketingzwecke zu nutzen.
+      </li>
+      <li>
+        Aushang/Hinweis vor Ort: Bei oeffentlicheren Veranstaltungen wird am
+        Eingang oder im Programm darauf hingewiesen, dass Fotos fuer
+        Marketingzwecke entstehen (berechtigtes Interesse gem. Art. 6 Abs. 1
+        lit. f DSGVO).
+      </li>
+      <li>
+        Widerspruchsrecht: Personen koennen jederzeit die Entfernung eines Fotos
+        per E-Mail an datenschutz@kunstwolff.de verlangen. Die Entfernung
+        erfolgt innerhalb von 48 Stunden.
+      </li>
+    </ul>
+
+    <h2>6. Speicherdauer</h2>
+    <p>
+      Personenbezogene Daten werden nur so lange gespeichert, wie dies fuer die
+      jeweiligen Verarbeitungszwecke erforderlich ist oder gesetzliche
+      Aufbewahrungspflichten bestehen.
+    </p>
+
+    <h2>7. Ihre Rechte</h2>
+    <p>Sie haben insbesondere folgende Rechte nach DSGVO:</p>
+    <ul>
+      <li>Auskunft ueber gespeicherte Daten (Art. 15 DSGVO),</li>
+      <li>Berichtigung unrichtiger Daten (Art. 16 DSGVO),</li>
+      <li>Loeschung Ihrer Daten (Art. 17 DSGVO),</li>
+      <li>Einschraenkung der Verarbeitung (Art. 18 DSGVO),</li>
+      <li>Datenuebertragbarkeit (Art. 20 DSGVO),</li>
+      <li>Widerspruch gegen bestimmte Verarbeitungen (Art. 21 DSGVO).</li>
+    </ul>
+
+    <h2>8. Beschwerderecht</h2>
+    <p>
+      Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehoerde ueber
+      die Verarbeitung Ihrer personenbezogenen Daten zu beschweren.
+    </p>
+
+    <h2>9. Stand</h2>
+    <p>Stand dieser Datenschutzerklaerung: Maerz 2026.</p>
+  </div>
 </Layout>
+
+<style>
+  .datenschutz-div {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    line-height: 1.6;
+    padding-top: 70px;
+  }
+
+  .datenschutz-div h1 {
+    margin-bottom: 0.5em;
+    font-family: Mayonice;
+    font-weight: 400;
+    font-size: 4vw;
+  }
+
+  .datenschutz-div h2 {
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+  }
+
+  .datenschutz-div p,
+  .datenschutz-div li {
+    font-size: 1em;
+    margin-bottom: 0.8em;
+  }
+
+  .datenschutz-div ul {
+    padding-left: 1.2em;
+  }
+</style>
