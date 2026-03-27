@@ -106,6 +106,10 @@ const loopDurationSeconds = baseLoopDurationSeconds * loopSpeedMultiplier;
   filter: var(--brand-logo-filter);
 }
 
+:global(.brand-stripe[data-brand-theme="light-bg"]) {
+  --brand-logo-filter: invert(0) grayscale(1) brightness(0.72) contrast(1.08);
+}
+
 :global(body[data-nav-tone="light"]) .brand-stripe {
   --brand-logo-filter: invert(0) grayscale(1) brightness(0.72) contrast(1.08);
 }
@@ -164,9 +168,68 @@ const loopDurationSeconds = baseLoopDurationSeconds * loopSpeedMultiplier;
 </style>
 
 <script>
+  type RgbaColor = { r: number; g: number; b: number; a: number };
+
+  const parseRgba = (value?: string | null): RgbaColor | null => {
+    const match = value
+      ?.trim()
+      .match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([0-9.]+))?\)$/i);
+
+    if (!match) {
+      return null;
+    }
+
+    return {
+      r: Number(match[1]),
+      g: Number(match[2]),
+      b: Number(match[3]),
+      a: match[4] === undefined ? 1 : Number(match[4]),
+    };
+  };
+
+  const srgbToLinear = (channel: number): number => {
+    const normalized = channel / 255;
+    return normalized <= 0.03928
+      ? normalized / 12.92
+      : Math.pow((normalized + 0.055) / 1.055, 2.4);
+  };
+
+  const luminance = ({ r, g, b }: Pick<RgbaColor, "r" | "g" | "b">): number =>
+    0.2126 * srgbToLinear(r) + 0.7152 * srgbToLinear(g) + 0.0722 * srgbToLinear(b);
+
+  const resolveBackgroundSample = (element: Element): RgbaColor => {
+    let current: Element | null = element;
+
+    while (current && current !== document.documentElement) {
+      const styles = getComputedStyle(current);
+      const parsed = parseRgba(styles.backgroundColor);
+
+      if (parsed && parsed.a > 0.05) {
+        return parsed;
+      }
+
+      current = current.parentElement;
+    }
+
+    const bodyColor = parseRgba(getComputedStyle(document.body).backgroundColor);
+    if (bodyColor) {
+      return bodyColor;
+    }
+
+    return { r: 255, g: 255, b: 255, a: 1 };
+  };
+
+  const applyStripeTheme = (stripe: HTMLElement): void => {
+    const sample = resolveBackgroundSample(stripe);
+    const isDarkBackground = luminance(sample) < 0.5;
+    stripe.setAttribute("data-brand-theme", isDarkBackground ? "dark-bg" : "light-bg");
+  };
+
   const stripes = document.querySelectorAll('.brand-stripe');
 
   stripes.forEach((stripe) => {
+    applyStripeTheme(stripe as HTMLElement);
+
     const tooltip = stripe.querySelector<HTMLElement>('.brand-tooltip');
     const logos = stripe.querySelectorAll<HTMLElement>('.brand-slot');
 
@@ -190,5 +253,9 @@ const loopDurationSeconds = baseLoopDurationSeconds * loopSpeedMultiplier;
         tooltip.classList.remove('is-visible');
       });
     });
+  });
+
+  window.addEventListener("resize", () => {
+    stripes.forEach((stripe) => applyStripeTheme(stripe as HTMLElement));
   });
 </script>

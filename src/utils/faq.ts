@@ -7,6 +7,11 @@ export type FAQItem = {
   answer: string;
   categories?: string[];
   city?: string;
+  tags?: {
+    events?: string[];
+    skills?: string[];
+    landings?: string[];
+  };
 };
 
 const faqRoot = path.resolve('./public/faq');
@@ -39,6 +44,9 @@ const toStringArray = (value: unknown): string[] => {
     .filter((item) => item.length > 0);
 };
 
+const normalizeStringArray = (value: unknown): string[] =>
+  toStringArray(value).map((item) => normalize(item));
+
 const cityFromPath = (filePath: string): string => {
   const relative = path.relative(faqRoot, filePath);
   const segments = relative.split(path.sep);
@@ -57,6 +65,15 @@ const parseFaqFile = (filePath: string): FAQItem | null => {
   const cityFromFrontmatter =
     typeof parsed.data.city === 'string' ? parsed.data.city.trim() : '';
   const city = cityFromFrontmatter || fallbackCity;
+  const rawTags = parsed.data.tags && typeof parsed.data.tags === 'object'
+    ? (parsed.data.tags as Record<string, unknown>)
+    : {};
+  const tags = {
+    events: normalizeStringArray(rawTags.events),
+    skills: normalizeStringArray(rawTags.skills),
+    landings: normalizeStringArray(rawTags.landings),
+  };
+  const hasTags = tags.events.length > 0 || tags.skills.length > 0 || tags.landings.length > 0;
 
   if (!question || !answer) {
     return null;
@@ -67,7 +84,44 @@ const parseFaqFile = (filePath: string): FAQItem | null => {
     answer,
     categories: categories.length > 0 ? categories : undefined,
     city,
+    tags: hasTags ? tags : undefined,
   };
+};
+
+type FAQFilterContext = {
+  categories?: string[];
+  city?: string;
+};
+
+export const matchesFAQContext = (faq: FAQItem, context: FAQFilterContext): boolean => {
+  const categoryKeys = (context.categories ?? []).map(normalize).filter(Boolean);
+  const cityKey = normalize(context.city ?? '');
+  const isEventContext = cityKey.startsWith('events/');
+  const eventKey = isEventContext ? cityKey.replace(/^events\//, '') : '';
+  const landingKey = !isEventContext ? cityKey : '';
+  const skillKeys = categoryKeys;
+
+  const categoryMatch =
+    categoryKeys.length === 0
+      ? true
+      : !!faq.categories?.some((cat) => categoryKeys.includes(normalize(cat)));
+
+  const skillTagMatch =
+    skillKeys.length === 0
+      ? true
+      : !!faq.tags?.skills?.some((tag) => skillKeys.includes(normalize(tag)));
+
+  const eventTagMatch =
+    eventKey.length === 0
+      ? true
+      : !!faq.tags?.events?.some((tag) => normalize(tag) === eventKey);
+
+  const landingTagMatch =
+    landingKey.length === 0
+      ? true
+      : !!faq.tags?.landings?.some((tag) => normalize(tag) === landingKey);
+
+  return categoryMatch || skillTagMatch || eventTagMatch || landingTagMatch;
 };
 
 export const getAllFAQs = (): FAQItem[] => {

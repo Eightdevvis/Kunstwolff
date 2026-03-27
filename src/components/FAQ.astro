@@ -1,14 +1,18 @@
 ---
-import { getAllFAQs, getFAQsByCity, getFAQsByCategories, type FAQItem } from '../utils/faq';
+import { getAllFAQs, getFAQsByCity, getFAQsByCategories, matchesFAQContext, type FAQItem } from '../utils/faq';
 
 const { 
   categories = [],
   city = '',
   faqs = [],
+  interactive = false,
+  maxItems = 4,
 } = Astro.props as { 
   categories?: string[]; 
   city?: string;
   faqs?: FAQItem[]; 
+  interactive?: boolean;
+  maxItems?: number;
 };
 
 let list: FAQItem[];
@@ -19,22 +23,18 @@ if (faqs.length > 0) {
 } else if (categories.length > 0 && city) {
   // Wenn Stadt + Kategorien übergeben werden, zuerst nach Stadt filtern, dann nach Kategorien
   const cityFaqs = getFAQsByCity(city);
-  const categoryKeys = categories.map((value) => value.trim().toLowerCase());
-
-  list = cityFaqs.filter((faq) =>
-    faq.categories?.some((cat) => categoryKeys.includes(cat.trim().toLowerCase())),
-  );
+  list = cityFaqs.filter((faq) => matchesFAQContext(faq, { categories, city }));
 
   // Fallback: wenn in der Stadt keine Kategorie-FAQs gefunden wurden, zumindest Kategorie-FAQs anzeigen
   if (list.length === 0) {
-    list = getFAQsByCategories(categories);
+    list = getFAQsByCategories(categories).filter((faq) => matchesFAQContext(faq, { categories, city }));
   }
 } else if (categories.length > 0) {
   // Wenn Kategorien übergeben werden, filtere danach
-  list = getFAQsByCategories(categories);
+  list = getFAQsByCategories(categories).filter((faq) => matchesFAQContext(faq, { categories }));
 } else if (city) {
   // Wenn Stadt übergeben wird, filtere danach
-  list = getFAQsByCity(city);
+  list = getFAQsByCity(city).filter((faq) => matchesFAQContext(faq, { city }));
 } else {
   // Sonst alle FAQs laden
   list = getAllFAQs();
@@ -65,32 +65,23 @@ const DEFAULT_FAQS: FAQItem[] = [
 ];
 
 const finalList = list.length > 0 ? list : DEFAULT_FAQS;
-const dynamicSuggestedTags = Array.from(
-  new Set(
-    finalList
-      .flatMap((item) => item.categories ?? [])
-      .map((tag) => tag.trim())
-      .filter((tag) => tag.length > 0),
-  ),
-);
-const fallbackSuggestedTags = [
+const visibleFaqs = interactive ? finalList : finalList.slice(0, maxItems);
+const suggestedTags = [
   'Buchung',
+  'Preise',
   'Ablauf',
   'Firmenevent',
   'Hochzeit',
   'Branding',
   'International',
+  'Verfügbarkeit',
 ];
-const suggestedTags =
-  dynamicSuggestedTags.length > 0
-    ? dynamicSuggestedTags.slice(0, 8)
-    : fallbackSuggestedTags;
 
 // JSON-LD für FAQ Schema
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": finalList.map(item => ({
+  "mainEntity": visibleFaqs.map(item => ({
     "@type": "Question",
     "name": item.question,
     "acceptedAnswer": {
@@ -101,10 +92,10 @@ const faqSchema = {
 };
 ---
 
-<section id="faq" class="faq-section">
+<section id="faq" class:list={['faq-section', interactive && 'faq-section--interactive']} data-faq-component>
   <div class="faq-container">
     <h2>Häufige Fragen (FAQ)</h2>
-    <div class="faq-controls">
+    {interactive && <div class="faq-controls">
       <label class="faq-search-wrap" for="faq-search-input">
         <span>Schnell nach Antworten suchen</span>
         <input
@@ -123,13 +114,13 @@ const faqSchema = {
           </button>
         ))}
       </div>
-    </div>
+    </div>}
 
-    <div class="faq-grid" id="faq-grid">
-      {finalList.map((faq) => (
+    <div class="faq-grid" data-faq-grid>
+      {visibleFaqs.map((faq) => (
         <details
           class="faq-item"
-          data-faq-searchable={`${faq.question} ${faq.answer} ${(faq.categories ?? []).join(' ')}`.toLowerCase()}
+          data-faq-searchable={`${faq.question} ${faq.answer} ${(faq.categories ?? []).join(' ')} ${(faq.tags?.skills ?? []).join(' ')} ${(faq.tags?.events ?? []).join(' ')} ${(faq.tags?.landings ?? []).join(' ')}`.toLowerCase()}
         >
           <summary>{faq.question}</summary>
           <p>{faq.answer}</p>
@@ -137,67 +128,77 @@ const faqSchema = {
       ))}
     </div>
 
-    <p id="faq-empty-state" class="faq-empty-state" hidden>
+    <p data-faq-empty-state class="faq-empty-state" hidden>
       Keine passende Antwort gefunden?
       <a href="/contact">Kontaktieren Sie uns direkt</a>
       und wir helfen Ihnen gerne weiter.
     </p>
+
+    {!interactive && finalList.length > visibleFaqs.length && (
+      <p class="faq-more-link">
+        Weitere Fragen finden Sie auf der <a href="/FAQ">FAQ-Seite</a>.
+      </p>
+    )}
   </div>
 
-  <script type="application/ld+json">
-    {JSON.stringify(faqSchema)}
-  </script>
+  {interactive && (
+    <script type="application/ld+json">
+      {JSON.stringify(faqSchema)}
+    </script>
+  )}
 </section>
 
 <script is:inline>
-  const faqSearchInput = document.getElementById("faq-search-input");
-  const faqGrid = document.getElementById("faq-grid");
-  const faqEmptyState = document.getElementById("faq-empty-state");
-  const faqTagButtons = document.querySelectorAll("[data-faq-tag]");
+  const faqComponents = document.querySelectorAll("[data-faq-component]");
 
-  const normalizeFaqTerm = (value) => (value || "").toLowerCase().trim();
+  faqComponents.forEach((faqComponent) => {
+    const faqSearchInput = faqComponent.querySelector("#faq-search-input");
+    const faqGrid = faqComponent.querySelector("[data-faq-grid]");
+    const faqEmptyState = faqComponent.querySelector("[data-faq-empty-state]");
+    const faqTagButtons = faqComponent.querySelectorAll("[data-faq-tag]");
 
-  const filterFaqItems = (term) => {
-    if (!faqGrid) return;
+    if (!(faqSearchInput instanceof HTMLInputElement) || !faqGrid) return;
 
-    const normalizedTerm = normalizeFaqTerm(term);
-    const faqItems = Array.from(faqGrid.querySelectorAll(".faq-item"));
-    let visibleItems = 0;
+    const normalizeFaqTerm = (value) => (value || "").toLowerCase().trim();
 
-    faqItems.forEach((item) => {
-      const searchableText = item.getAttribute("data-faq-searchable") || "";
-      const isVisible =
-        normalizedTerm.length === 0 || searchableText.includes(normalizedTerm);
+    const filterFaqItems = (term) => {
+      const normalizedTerm = normalizeFaqTerm(term);
+      const faqItems = Array.from(faqGrid.querySelectorAll(".faq-item"));
+      let visibleItems = 0;
 
-      item.hidden = !isVisible;
-      if (isVisible) visibleItems += 1;
+      faqItems.forEach((item) => {
+        const searchableText = item.getAttribute("data-faq-searchable") || "";
+        const isVisible =
+          normalizedTerm.length === 0 || searchableText.includes(normalizedTerm);
+
+        item.hidden = !isVisible;
+        if (isVisible) visibleItems += 1;
+      });
+
+      if (faqEmptyState) {
+        faqEmptyState.hidden = visibleItems > 0;
+      }
+
+      faqTagButtons.forEach((button) => {
+        const tag = normalizeFaqTerm(button.getAttribute("data-faq-tag"));
+        button.classList.toggle("is-active", normalizedTerm.length > 0 && tag === normalizedTerm);
+      });
+    };
+
+    faqSearchInput.addEventListener("input", (event) => {
+      const input = event.target;
+      if (!(input instanceof HTMLInputElement)) return;
+      filterFaqItems(input.value);
     });
-
-    if (faqEmptyState) {
-      faqEmptyState.hidden = visibleItems > 0;
-    }
 
     faqTagButtons.forEach((button) => {
-      const tag = normalizeFaqTerm(button.getAttribute("data-faq-tag"));
-      button.classList.toggle("is-active", normalizedTerm.length > 0 && tag === normalizedTerm);
-    });
-  };
-
-  faqSearchInput?.addEventListener("input", (event) => {
-    const input = event.target;
-    if (!(input instanceof HTMLInputElement)) return;
-    filterFaqItems(input.value);
-  });
-
-  faqTagButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      if (!(button instanceof HTMLButtonElement)) return;
-      const tag = button.getAttribute("data-faq-tag") || "";
-      if (faqSearchInput instanceof HTMLInputElement) {
+      button.addEventListener("click", () => {
+        if (!(button instanceof HTMLButtonElement)) return;
+        const tag = button.getAttribute("data-faq-tag") || "";
         faqSearchInput.value = tag;
         faqSearchInput.focus();
-      }
-      filterFaqItems(tag);
+        filterFaqItems(tag);
+      });
     });
   });
 </script>
@@ -206,6 +207,10 @@ const faqSchema = {
 .faq-section {
   padding: 80px 20px;
   background: #000;
+}
+
+.faq-section:not(.faq-section--interactive) {
+  padding: 40px 20px;
 }
 
 .faq-container {
@@ -222,6 +227,11 @@ const faqSchema = {
   font-weight: 400;
   line-height: 1.25;
   letter-spacing: 0.01em;
+}
+
+.faq-section:not(.faq-section--interactive) .faq-container h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  margin-bottom: 24px;
 }
 
 .faq-controls {
@@ -324,6 +334,18 @@ const faqSchema = {
 }
 
 .faq-empty-state a {
+  color: #d7b96a;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(215, 185, 106, 0.65);
+}
+
+.faq-more-link {
+  margin-top: 16px;
+  color: #c7c7c7;
+  font-size: 0.95rem;
+}
+
+.faq-more-link a {
   color: #d7b96a;
   text-decoration: none;
   border-bottom: 1px solid rgba(215, 185, 106, 0.65);

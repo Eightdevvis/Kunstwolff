@@ -137,7 +137,8 @@ const filteredItems =
     --review-text-color: rgba(17, 17, 17, 0.92);
     --review-author-color: rgba(34, 34, 34, 0.9);
     --review-stars-color: #d4af37;
-    --review-stars-glow: 0 0 8px rgba(212, 175, 55, 0.28);
+    --review-stars-glow: 0 0 8px rgba(212, 175, 55, 0.35);
+    --review-stars-glow-strong: 0 0 18px rgba(212, 175, 55, 0.48);
     display: grid;
     max-width: 860px;
     margin: 0 auto;
@@ -148,6 +149,8 @@ const filteredItems =
     --review-text-color: rgba(255, 255, 255, 0.92);
     --review-author-color: rgba(255, 255, 255, 0.9);
     --review-stars-color: #d4af37;
+    --review-stars-glow: 0 0 10px rgba(212, 175, 55, 0.48);
+    --review-stars-glow-strong: 0 0 22px rgba(212, 175, 55, 0.65);
   }
 
   .review-slider .swiper-slide {
@@ -178,10 +181,18 @@ const filteredItems =
 
   .review-slider .review-stars {
     margin-top: 0;
-    font-size: 1.28rem;
+    font-size: clamp(1.45rem, 2.7vw, 1.8rem);
     letter-spacing: 0.2em;
     color: var(--review-stars-color);
     text-shadow: var(--review-stars-glow);
+    transform: scale(1);
+    transition: transform 380ms ease, text-shadow 380ms ease;
+  }
+
+  .review-slider .swiper-slide.is-active .review-stars {
+    transform: scale(1.08);
+    text-shadow: var(--review-stars-glow), var(--review-stars-glow-strong);
+    animation: review-star-pulse 2.1s ease-in-out infinite;
   }
 
   .review-slider .review-author {
@@ -208,6 +219,18 @@ const filteredItems =
     transform: translateY(24px);
   }
 
+  @keyframes review-star-pulse {
+    0%,
+    100% {
+      transform: scale(1.06);
+      text-shadow: var(--review-stars-glow), var(--review-stars-glow-strong);
+    }
+    50% {
+      transform: scale(1.12);
+      text-shadow: var(--review-stars-glow-strong), 0 0 30px rgba(212, 175, 55, 0.56);
+    }
+  }
+
   @media (max-width: 768px) {
     .review-slider {
       padding: 16px 14px;
@@ -218,7 +241,7 @@ const filteredItems =
     }
 
     .review-slider .review-stars {
-      font-size: 1.22rem;
+      font-size: clamp(1.3rem, 5.2vw, 1.65rem);
       letter-spacing: 0.15em;
     }
   }
@@ -226,6 +249,11 @@ const filteredItems =
   @media (prefers-reduced-motion: reduce) {
     .review-slider .swiper-slide {
       transition: none;
+    }
+
+    .review-slider .swiper-slide.is-active .review-stars {
+      animation: none;
+      transform: scale(1.05);
     }
   }
 </style>

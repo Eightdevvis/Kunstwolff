@@ -957,6 +957,7 @@ const satelliteData = {
   const activeSections = new Set<string>();
   const scrollShell = document.getElementById("cw-scroll-shell") as HTMLElement | null;
   const scrollViewport = document.getElementById("cw-scroll-viewport") as HTMLElement | null;
+  const firstSection = document.getElementById("cinema-welcome") as HTMLElement | null;
   const firstStepCta = document.getElementById("cw-first-step-cta") as HTMLButtonElement | null;
 
   // Externe Controls für Section 2 + 3 (werden nach Initialisierung gesetzt)
@@ -986,6 +987,7 @@ const satelliteData = {
   const selections: Record<string, string> = {};
   const sectionIds = ["event", "muse", "geschmack"];
   let firstStepTimer: number | null = null;
+  let shellInView = false;
 
   function hideFirstStepCta() {
     firstStepCta?.classList.remove("visible");
@@ -998,13 +1000,23 @@ const satelliteData = {
     }
   }
 
+  function isFirstSectionVisible() {
+    if (!firstSection) return false;
+    const sectionRect = firstSection.getBoundingClientRect();
+    const viewportRect = (scrollViewport ?? document.documentElement).getBoundingClientRect();
+    const overlap = Math.min(sectionRect.bottom, viewportRect.bottom) - Math.max(sectionRect.top, viewportRect.top);
+    const minHeight = Math.min(sectionRect.height || 1, viewportRect.height || 1);
+    return overlap > 0 && overlap / minHeight >= 0.35;
+  }
+
   function scheduleFirstStepCta() {
-    if (!scrollViewport || !firstStepCta) return;
+    if (!firstStepCta) return;
+    if (!shellInView) return;
     if (selections.event) return;
-    if (scrollViewport.scrollTop > 56) return;
+    if (!isFirstSectionVisible()) return;
     clearFirstStepTimer();
     firstStepTimer = window.setTimeout(() => {
-      if (!selections.event && scrollViewport.scrollTop <= 56) {
+      if (!selections.event && shellInView && isFirstSectionVisible()) {
         firstStepCta.classList.add("visible");
       }
     }, 2600);
@@ -1042,9 +1054,7 @@ const satelliteData = {
     scrollViewport.addEventListener("scroll", () => {
       hideFirstStepCta();
       clearFirstStepTimer();
-      if (scrollViewport.scrollTop <= 56 && !selections.event) {
-        scheduleFirstStepCta();
-      }
+      scheduleFirstStepCta();
     }, { passive: true });
   }
 
@@ -1053,13 +1063,13 @@ const satelliteData = {
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) {
+            shellInView = false;
             hideFirstStepCta();
             clearFirstStepTimer();
             return;
           }
-          if (scrollViewport.scrollTop <= 56 && !selections.event) {
-            scheduleFirstStepCta();
-          }
+          shellInView = true;
+          scheduleFirstStepCta();
         });
       },
       { threshold: 0.35 }
