@@ -39,23 +39,28 @@ const satelliteData = {
 };
 ---
 
-<!-- ══════════════════════════════════════════════════════════════════
-     INTRO – Cinematic Opener (reine Text-Begrüßung, zentriert)
-═══════════════════════════════════════════════════════════════════ -->
-<div class="cw-intro" id="cw-intro">
-  <p class="cw-title">{intro.title}</p>
-  <p class="cw-subtitle">{intro.subtitle}</p>
-</div>
+<div class="cw-scroll-shell" id="cw-scroll-shell">
+  <div class="cw-scroll-viewport" id="cw-scroll-viewport">
+    <!-- ══════════════════════════════════════════════════════════════════
+         INTRO – Cinematic Opener (reine Text-Begrüßung, zentriert)
+    ═══════════════════════════════════════════════════════════════════ -->
+    <div class="cw-intro" id="cw-intro">
+      <p class="cw-title">{intro.title}</p>
+      <p class="cw-subtitle">{intro.subtitle}</p>
+    </div>
 
-<!-- ══════════════════════════════════════════════════════════════════
-     SEKTION 1 – Ihr Event (Text links, Orbit rechts)
-═══════════════════════════════════════════════════════════════════ -->
-<section class="cw" id="cinema-welcome">
+    <!-- ══════════════════════════════════════════════════════════════════
+         SEKTION 1 – Ihr Event (Text links, Orbit rechts)
+    ═══════════════════════════════════════════════════════════════════ -->
+    <section class="cw" id="cinema-welcome">
   <div class="cw-inner">
 
     <div class="cw-text">
       <h2 class="cw-title">{sec1.title}</h2>
       <p class="cw-subtitle">{sec1.subtitle}</p>
+      <button class="cw-first-step-cta" id="cw-first-step-cta" type="button">
+        Welche Kunst passt zu Ihrem Event? &gt;
+      </button>
     </div>
 
     <div class="cw-orbit" id="cw-orbit">
@@ -82,12 +87,12 @@ const satelliteData = {
     </div>
 
   </div>
-</section>
+    </section>
 
-<!-- ══════════════════════════════════════════════════════════════════
-     SEKTION 2 – Ihre Muse (Orbit links, Text rechts) – Text-Kreise
-═══════════════════════════════════════════════════════════════════ -->
-<section class="cw cw--reversed" id="cinema-welcome-2">
+    <!-- ══════════════════════════════════════════════════════════════════
+         SEKTION 2 – Ihre Muse (Orbit links, Text rechts) – Text-Kreise
+    ═══════════════════════════════════════════════════════════════════ -->
+    <section class="cw cw--reversed" id="cinema-welcome-2">
   <div class="cw-inner">
 
     <div class="cw-orbit" id="cw-orbit-2">
@@ -119,12 +124,12 @@ const satelliteData = {
     </div>
 
   </div>
-</section>
+    </section>
 
-<!-- ══════════════════════════════════════════════════════════════════
-     SEKTION 3 – Ihr Geschmack (Text links, Orbit rechts)
-═══════════════════════════════════════════════════════════════════ -->
-<section class="cw" id="cinema-welcome-3">
+    <!-- ══════════════════════════════════════════════════════════════════
+         SEKTION 3 – Ihr Geschmack (Text links, Orbit rechts)
+    ═══════════════════════════════════════════════════════════════════ -->
+    <section class="cw" id="cinema-welcome-3">
   <div class="cw-inner">
 
     <div class="cw-text">
@@ -156,13 +161,13 @@ const satelliteData = {
     </div>
 
   </div>
-</section>
+    </section>
 
-<!-- ══════════════════════════════════════════════════════════════════
-     SEKTION 4 – Ergebnis (personalisiertes Angebot)
-     Wird per JS befüllt, sobald alle 3 Auswahlen getroffen sind.
-═══════════════════════════════════════════════════════════════════ -->
-<section class="cw cw-result" id="cinema-result">
+    <!-- ══════════════════════════════════════════════════════════════════
+         SEKTION 4 – Ergebnis (personalisiertes Angebot)
+         Wird per JS befüllt, sobald alle 3 Auswahlen getroffen sind.
+    ═══════════════════════════════════════════════════════════════════ -->
+    <section class="cw cw-result" id="cinema-result">
   <div class="cw-result-cards">
 
     <!-- Karte 1: Bild + Titel + Beschreibung -->
@@ -198,7 +203,9 @@ const satelliteData = {
     </div>
 
   </div>
-</section>
+    </section>
+  </div>
+</div>
 
 <!-- Satelliten-Daten + Overrides für Client-JS (Build-Time → Runtime) -->
 <script is:inline define:vars={{ satelliteData }}>
@@ -206,6 +213,25 @@ const satelliteData = {
 </script>
 
 <style>
+  .cw-scroll-shell {
+    position: relative;
+    background: #000;
+  }
+
+  .cw-scroll-viewport {
+    background: #000;
+  }
+
+  @media (min-width: 1001px) {
+    .cw-scroll-viewport {
+      max-height: 100vh;
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      scrollbar-gutter: stable both-edges;
+      scroll-behavior: smooth;
+    }
+  }
+
   /* ═══════════════════════════════════════════════════════════════════
      INTRO BLOCK
   ═══════════════════════════════════════════════════════════════════ */
@@ -258,6 +284,35 @@ const satelliteData = {
   .cw-text {
     flex:      1;
     min-width: 0;
+  }
+
+  .cw-first-step-cta {
+    margin-top: clamp(18px, 2.8vw, 32px);
+    padding: clamp(10px, 1.2vw, 14px) clamp(18px, 2vw, 28px);
+    border: 1px solid rgba(201, 168, 76, 0.9);
+    background: rgba(201, 168, 76, 0.08);
+    color: #c9a84c;
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: clamp(0.78rem, 1.05vw, 0.92rem);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease, background 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .cw-first-step-cta.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .cw-first-step-cta:hover {
+    background: rgba(201, 168, 76, 0.2);
+    box-shadow: 0 0 24px rgba(191, 155, 80, 0.28);
   }
 
   .cw-text--right {
@@ -751,6 +806,11 @@ const satelliteData = {
      RESPONSIVE
   ═══════════════════════════════════════════════════════════════════ */
   @media (max-width: 1000px) {
+    .cw-scroll-viewport {
+      max-height: none;
+      overflow: visible;
+    }
+
     .cw-intro {
       padding-left:  clamp(24px, 6vw, 60px);
       padding-right: clamp(24px, 6vw, 60px);
@@ -814,6 +874,7 @@ const satelliteData = {
     }
 
     .cw-result-cta { align-self: center; }
+    .cw-first-step-cta { margin-left: auto; margin-right: auto; }
   }
 
   @media (max-width: 600px) {
@@ -874,6 +935,9 @@ const satelliteData = {
   }
 
   const activeSections = new Set<string>();
+  const scrollShell = document.getElementById("cw-scroll-shell") as HTMLElement | null;
+  const scrollViewport = document.getElementById("cw-scroll-viewport") as HTMLElement | null;
+  const firstStepCta = document.getElementById("cw-first-step-cta") as HTMLButtonElement | null;
 
   // Externe Controls für Section 2 + 3 (werden nach Initialisierung gesetzt)
   type SectionControls = {
@@ -901,6 +965,30 @@ const satelliteData = {
   // ── Auswahl-State ───────────────────────────────────────────────────────
   const selections: Record<string, string> = {};
   const sectionIds = ["event", "muse", "geschmack"];
+  let firstStepTimer: number | null = null;
+
+  function hideFirstStepCta() {
+    firstStepCta?.classList.remove("visible");
+  }
+
+  function clearFirstStepTimer() {
+    if (firstStepTimer !== null) {
+      window.clearTimeout(firstStepTimer);
+      firstStepTimer = null;
+    }
+  }
+
+  function scheduleFirstStepCta() {
+    if (!scrollViewport || !firstStepCta) return;
+    if (selections.event) return;
+    if (scrollViewport.scrollTop > 56) return;
+    clearFirstStepTimer();
+    firstStepTimer = window.setTimeout(() => {
+      if (!selections.event && scrollViewport.scrollTop <= 56) {
+        firstStepCta.classList.add("visible");
+      }
+    }, 2600);
+  }
 
   // ── Ergebnis-Sektion ────────────────────────────────────────────────────
   const resultSection = document.getElementById("cinema-result");
@@ -916,6 +1004,48 @@ const satelliteData = {
   // Satellite-Titel für die Zusammenfassung merken
   const selectionTitles: Record<string, string> = {};
   const CONTACT_PREFILL_KEY = "cinemaContactPrefill_v1";
+
+  if (firstStepCta) {
+    firstStepCta.addEventListener("click", () => {
+      hideFirstStepCta();
+      clearFirstStepTimer();
+      const sec1 = document.getElementById("cinema-welcome");
+      sec1?.scrollIntoView({ behavior: "smooth", block: "center" });
+      window.setTimeout(() => {
+        const mainBtn = document.getElementById("cw-main") as HTMLButtonElement | null;
+        if (mainBtn && mainBtn.getAttribute("aria-expanded") !== "true") mainBtn.click();
+      }, 420);
+    });
+  }
+
+  if (scrollViewport) {
+    scrollViewport.addEventListener("scroll", () => {
+      hideFirstStepCta();
+      clearFirstStepTimer();
+      if (scrollViewport.scrollTop <= 56 && !selections.event) {
+        scheduleFirstStepCta();
+      }
+    }, { passive: true });
+  }
+
+  if (scrollShell && scrollViewport) {
+    const shellObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            hideFirstStepCta();
+            clearFirstStepTimer();
+            return;
+          }
+          if (scrollViewport.scrollTop <= 56 && !selections.event) {
+            scheduleFirstStepCta();
+          }
+        });
+      },
+      { threshold: 0.35 }
+    );
+    shellObserver.observe(scrollShell);
+  }
 
   function checkAndShowResult() {
     if (!selections.event || !selections.muse || !selections.geschmack) return;
