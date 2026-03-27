@@ -1,5 +1,5 @@
 ---
-import { getEvents, getEventSlides, resolveEventTitleImage } from "../utils/events";
+import { getVisibleEvents, getEventSlides, resolveEventTitleImage } from "../utils/events";
 
 type EventImageOverride = {
   slug?: string;
@@ -18,7 +18,7 @@ const imageOverrides = new Map(
     .map((item) => [item.slug as string, item.image as string]),
 );
 
-const list = getEvents().map((event) => {
+const list = getVisibleEvents().map((event) => {
   const firstSlide = getEventSlides(event.slug)[0]?.src;
   const titleImage = resolveEventTitleImage(event.slug);
   const image = imageOverrides.get(event.slug) ?? event.image ?? firstSlide ?? titleImage;

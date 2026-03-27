@@ -2,15 +2,18 @@
 import "../styles/global.css";
 import Header from "../components/header/Header.astro";
 import Footer from "../components/Footer.astro";
+import { isPageHiddenByPath } from "../utils/pageVisibility";
 
 const {
   title = "Kunstwolff – Eventkünstler seit über 20 Jahren",
   description = "Kunstwolff – Kreative Event-Kunst & Live-Performance für Ihr Event seit über 20 Jahren.",
   image,
+  noindex = false,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = image && Astro.site ? new URL(image, Astro.site).href : undefined;
+const shouldNoindex = noindex || isPageHiddenByPath(Astro.url.pathname);
 ---
 
 <!doctype html>
@@ -31,6 +34,7 @@ const ogImage = image && Astro.site ? new URL(image, Astro.site).href : undefine
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		<meta name="robots" content={shouldNoindex ? "noindex, nofollow" : "index, follow"} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonicalURL} />

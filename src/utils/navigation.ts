@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { getEvents } from './events';
+import { getVisibleEvents } from './events';
 
 export type NavigationLinkItem = {
   label: string;
@@ -41,7 +41,7 @@ const isDropdownItemWithLabel = (
 ): item is NavigationDropdownItem => 'children' in item && item.label === label;
 
 const buildEventsDropdownItem = (): NavigationDropdownItem | null => {
-  const events = getEvents();
+  const events = getVisibleEvents();
   if (events.length === 0) return null;
 
   const children = events.map((e) => ({

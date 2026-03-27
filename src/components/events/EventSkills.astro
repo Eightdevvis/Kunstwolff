@@ -14,7 +14,7 @@
  *                  Dieser Skill wird dann nicht als Link angezeigt sondern hervorgehoben.
  */
 
-import { getSharedSkills } from '../../utils/skills';
+import { getVisibleSharedSkills } from '../../utils/skills';
 import type { SkillItem } from '../../utils/skills';
 
 const {
@@ -30,7 +30,7 @@ const {
 };
 
 // Alle Skills laden
-const allSkills: SkillItem[] = getSharedSkills();
+const allSkills: SkillItem[] = getVisibleSharedSkills();
 
 // Nach categories filtern wenn angegeben – Vergleich case-insensitive
 const filteredSkills = categories.length > 0

@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-03-27T13:21:17.109Z",
+  "createdAt": "2026-03-27T14:02:35.211Z",
   "selectedCities": [
     "belgique",
     "berlin",
@@ -2261,8 +2261,8 @@
   ],
   "allImageVisibility": [
     {
-      "url": "/img/hero-bg/schnellzeichner/12a1272e-11e4-44e8-848d-d89a950a8bf7.avif",
-      "relativeFromImgRoot": "hero-bg/schnellzeichner/12a1272e-11e4-44e8-848d-d89a950a8bf7.avif",
+      "url": "/img/hero-bg/schnellzeichner-koeln/12a1272e-11e4-44e8-848d-d89a950a8bf7.avif",
+      "relativeFromImgRoot": "hero-bg/schnellzeichner-koeln/12a1272e-11e4-44e8-848d-d89a950a8bf7.avif",
       "fileName": "12a1272e-11e4-44e8-848d-d89a950a8bf7.avif",
       "extension": ".avif",
       "prefixIndex": null,
@@ -5674,8 +5674,8 @@
   ],
   "unreferencedImages": [
     {
-      "url": "/img/hero-bg/schnellzeichner/12a1272e-11e4-44e8-848d-d89a950a8bf7.avif",
-      "relativeFromImgRoot": "hero-bg/schnellzeichner/12a1272e-11e4-44e8-848d-d89a950a8bf7.avif",
+      "url": "/img/hero-bg/schnellzeichner-koeln/12a1272e-11e4-44e8-848d-d89a950a8bf7.avif",
+      "relativeFromImgRoot": "hero-bg/schnellzeichner-koeln/12a1272e-11e4-44e8-848d-d89a950a8bf7.avif",
       "fileName": "12a1272e-11e4-44e8-848d-d89a950a8bf7.avif",
       "extension": ".avif",
       "prefixIndex": null,

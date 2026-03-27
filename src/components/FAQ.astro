@@ -1,5 +1,5 @@
 ---
-import { getAllFAQs, getFAQsByCategory, getFAQsByCity, getFAQsByCategories, type FAQItem } from '../utils/faq';
+import { getAllFAQs, getFAQsByCity, getFAQsByCategories, type FAQItem } from '../utils/faq';
 
 const { 
   categories = [],
@@ -65,6 +65,26 @@ const DEFAULT_FAQS: FAQItem[] = [
 ];
 
 const finalList = list.length > 0 ? list : DEFAULT_FAQS;
+const dynamicSuggestedTags = Array.from(
+  new Set(
+    finalList
+      .flatMap((item) => item.categories ?? [])
+      .map((tag) => tag.trim())
+      .filter((tag) => tag.length > 0),
+  ),
+);
+const fallbackSuggestedTags = [
+  'Buchung',
+  'Ablauf',
+  'Firmenevent',
+  'Hochzeit',
+  'Branding',
+  'International',
+];
+const suggestedTags =
+  dynamicSuggestedTags.length > 0
+    ? dynamicSuggestedTags.slice(0, 8)
+    : fallbackSuggestedTags;
 
 // JSON-LD für FAQ Schema
 const faqSchema = {
@@ -84,21 +104,103 @@ const faqSchema = {
 <section id="faq" class="faq-section">
   <div class="faq-container">
     <h2>Häufige Fragen (FAQ)</h2>
+    <div class="faq-controls">
+      <label class="faq-search-wrap" for="faq-search-input">
+        <span>Schnell nach Antworten suchen</span>
+        <input
+          id="faq-search-input"
+          class="faq-search-input"
+          type="search"
+          placeholder="Suchbegriff eingeben, z. B. Buchung oder Hochzeit"
+          autocomplete="off"
+        />
+      </label>
 
-    <div class="faq-grid">
-      {finalList.map((faq, idx) => (
-        <details class="faq-item">
+      <div class="faq-tags" aria-label="Vorgeschlagene FAQ-Themen">
+        {suggestedTags.map((tag) => (
+          <button type="button" class="faq-tag" data-faq-tag={tag}>
+            {tag}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div class="faq-grid" id="faq-grid">
+      {finalList.map((faq) => (
+        <details
+          class="faq-item"
+          data-faq-searchable={`${faq.question} ${faq.answer} ${(faq.categories ?? []).join(' ')}`.toLowerCase()}
+        >
           <summary>{faq.question}</summary>
           <p>{faq.answer}</p>
         </details>
       ))}
     </div>
+
+    <p id="faq-empty-state" class="faq-empty-state" hidden>
+      Keine passende Antwort gefunden?
+      <a href="/contact">Kontaktieren Sie uns direkt</a>
+      und wir helfen Ihnen gerne weiter.
+    </p>
   </div>
 
   <script type="application/ld+json">
     {JSON.stringify(faqSchema)}
   </script>
 </section>
+
+<script is:inline>
+  const faqSearchInput = document.getElementById("faq-search-input");
+  const faqGrid = document.getElementById("faq-grid");
+  const faqEmptyState = document.getElementById("faq-empty-state");
+  const faqTagButtons = document.querySelectorAll("[data-faq-tag]");
+
+  const normalizeFaqTerm = (value) => (value || "").toLowerCase().trim();
+
+  const filterFaqItems = (term) => {
+    if (!faqGrid) return;
+
+    const normalizedTerm = normalizeFaqTerm(term);
+    const faqItems = Array.from(faqGrid.querySelectorAll(".faq-item"));
+    let visibleItems = 0;
+
+    faqItems.forEach((item) => {
+      const searchableText = item.getAttribute("data-faq-searchable") || "";
+      const isVisible =
+        normalizedTerm.length === 0 || searchableText.includes(normalizedTerm);
+
+      item.hidden = !isVisible;
+      if (isVisible) visibleItems += 1;
+    });
+
+    if (faqEmptyState) {
+      faqEmptyState.hidden = visibleItems > 0;
+    }
+
+    faqTagButtons.forEach((button) => {
+      const tag = normalizeFaqTerm(button.getAttribute("data-faq-tag"));
+      button.classList.toggle("is-active", normalizedTerm.length > 0 && tag === normalizedTerm);
+    });
+  };
+
+  faqSearchInput?.addEventListener("input", (event) => {
+    const input = event.target;
+    if (!(input instanceof HTMLInputElement)) return;
+    filterFaqItems(input.value);
+  });
+
+  faqTagButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!(button instanceof HTMLButtonElement)) return;
+      const tag = button.getAttribute("data-faq-tag") || "";
+      if (faqSearchInput instanceof HTMLInputElement) {
+        faqSearchInput.value = tag;
+        faqSearchInput.focus();
+      }
+      filterFaqItems(tag);
+    });
+  });
+</script>
 
 <style>
 .faq-section {
@@ -120,6 +222,64 @@ const faqSchema = {
   font-weight: 400;
   line-height: 1.25;
   letter-spacing: 0.01em;
+}
+
+.faq-controls {
+  margin-bottom: 26px;
+}
+
+.faq-search-wrap {
+  display: grid;
+  gap: 10px;
+}
+
+.faq-search-wrap span {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.faq-search-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #2e2e2e;
+  border-radius: 999px;
+  background: #141414;
+  color: #f5f5f5;
+  padding: 14px 18px;
+  font-size: 1rem;
+}
+
+.faq-search-input:focus {
+  outline: none;
+  border-color: rgba(191, 155, 80, 0.8);
+  box-shadow: 0 0 0 3px rgba(191, 155, 80, 0.18);
+}
+
+.faq-tags {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.faq-tag {
+  border: 1px solid #383838;
+  border-radius: 999px;
+  background: #111;
+  color: #d8d8d8;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.faq-tag:hover,
+.faq-tag.is-active {
+  border-color: rgba(191, 155, 80, 0.9);
+  color: #fff;
+  background: rgba(191, 155, 80, 0.18);
 }
 
 .faq-grid {
@@ -152,5 +312,20 @@ const faqSchema = {
   border: 1px solid #2b2b2b;
   border-top: none;
   border-radius: 0 0 8px 8px;
+}
+
+.faq-empty-state {
+  margin-top: 20px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(191, 155, 80, 0.4);
+  background: rgba(191, 155, 80, 0.08);
+  color: #ececec;
+}
+
+.faq-empty-state a {
+  color: #d7b96a;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(215, 185, 106, 0.65);
 }
 </style>

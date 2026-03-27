@@ -1,7 +1,7 @@
 ---
-import { getLandingSlugs } from "../utils/landings";
+import { getVisibleLandingSlugs } from "../utils/landings";
 
-const cities = getLandingSlugs();
+const cities = getVisibleLandingSlugs();
 
 const { site = "" } = Astro.props;
 const normalizedSite = String(site).replace(/^\/+|\/+$/g, "");

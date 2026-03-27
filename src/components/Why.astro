@@ -1,5 +1,6 @@
 ---
 import { getWhyBenefits } from '../utils/why';
+import { isPageHiddenByPath } from '../utils/pageVisibility';
 
 const { skill, landing } = Astro.props as {
   skill?: string;
@@ -7,6 +8,12 @@ const { skill, landing } = Astro.props as {
 };
 
 const benefits = getWhyBenefits(skill, landing);
+const detailLinks = [
+  '/stimmung-durch-kunst/',
+  '/du-bist-kunst/',
+  '/branding/',
+  '/canvas/',
+];
 ---
 
 <section class="why-section">
@@ -21,43 +28,11 @@ const benefits = getWhyBenefits(skill, landing);
     </div>
 
     <div class="why-grid">
-      {benefits.map((benefit, i) =>
-        i === 0 ? (
-          <a
-            class="why-item why-item--link"
-            href="/stimmung-durch-kunst/"
-            aria-label="Stimmung durch Kunst – mehr zu Ihr Geschmack"
-          >
-            <img src={benefit.image} alt={benefit.alt} loading="lazy" />
-            <h3>{benefit.title}</h3>
-            <p>{benefit.text}</p>
-          </a>
-        ) : i === 1 ? (
-          <a
-            class="why-item why-item--link"
-            href="/du-bist-kunst/"
-            aria-label="Du bist Kunst – mehr zu Kreativ und persönlich"
-          >
-            <img src={benefit.image} alt={benefit.alt} loading="lazy" />
-            <h3>{benefit.title}</h3>
-            <p>{benefit.text}</p>
-          </a>
-        ) : i === 2 ? (
-          <a
-            class="why-item why-item--link"
-            href="/branding/"
-            aria-label="Branding möglich – mehr zu Logo-Integration"
-          >
-            <img src={benefit.image} alt={benefit.alt} loading="lazy" />
-            <h3>{benefit.title}</h3>
-            <p>{benefit.text}</p>
-          </a>
-        ) : i === 3 ? (
-          <a
-            class="why-item why-item--link"
-            href="/canvas/"
-            aria-label="Das Format, das Sie brauchen – mehr zu Formaten"
-          >
+      {benefits.map((benefit, i) => {
+        const targetLink = detailLinks[i] ?? null;
+        const linkVisible = !!targetLink && !isPageHiddenByPath(targetLink);
+        return linkVisible && targetLink ? (
+          <a class="why-item why-item--link" href={targetLink}>
             <img src={benefit.image} alt={benefit.alt} loading="lazy" />
             <h3>{benefit.title}</h3>
             <p>{benefit.text}</p>
@@ -68,8 +43,8 @@ const benefits = getWhyBenefits(skill, landing);
             <h3>{benefit.title}</h3>
             <p>{benefit.text}</p>
           </div>
-        )
-      )}
+        );
+      })}
     </div>
 
   </div>

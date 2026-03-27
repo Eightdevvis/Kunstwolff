@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { isPageHiddenByPath } from './pageVisibility';
 
 export type SkillItem = {
   title: string;
@@ -160,3 +161,6 @@ export const getSkillBySlug = (slug: string): SkillItem | null => {
   const normalizedSlug = `/${slug}/`;
   return skills.find((skill) => skill.link === normalizedSlug) || null;
 };
+
+export const getVisibleSharedSkills = (): SkillItem[] =>
+  getSharedSkills().filter((skill) => !isPageHiddenByPath(skill.link));

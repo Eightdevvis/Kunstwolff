@@ -16,6 +16,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import { isPageHiddenByPath } from './pageVisibility';
 
 // ─── Pfad-Konstanten ──────────────────────────────────────────────────────────
 const eventsRoot = path.resolve('./public/events');
@@ -195,6 +196,12 @@ export const getEvents = (): EventItem[] => {
  * Wird in getStaticPaths() von [landing].astro und [skill]/[landing].astro genutzt.
  */
 export const getEventSlugs = (): string[] => getEvents().map((e) => e.slug);
+
+export const getVisibleEvents = (): EventItem[] =>
+  getEvents().filter((e) => !isPageHiddenByPath(e.link));
+
+export const getVisibleEventSlugs = (): string[] =>
+  getVisibleEvents().map((e) => e.slug);
 
 /**
  * Gibt ein einzelnes Event anhand seines Slugs zurück, oder null wenn nicht gefunden.

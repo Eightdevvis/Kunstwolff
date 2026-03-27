@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { resolveTitleImage } from './titleImages';
+import { isPageHiddenByPath } from './pageVisibility';
 
 export type LandingReference = {
   title: string;
@@ -182,3 +183,6 @@ export const getLandingBySlug = (slug: string): LandingMeta => {
     references: [],
   };
 };
+
+export const getVisibleLandingSlugs = (): string[] =>
+  getLandingSlugs().filter((slug) => !isPageHiddenByPath(`/${slug}/`));
