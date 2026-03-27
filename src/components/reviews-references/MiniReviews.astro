@@ -185,14 +185,11 @@ const filteredItems =
     letter-spacing: 0.2em;
     color: var(--review-stars-color);
     text-shadow: var(--review-stars-glow);
-    transform: scale(1);
-    transition: transform 380ms ease, text-shadow 380ms ease;
+    transition: text-shadow 380ms ease;
   }
 
   .review-slider .swiper-slide.is-active .review-stars {
-    transform: scale(1.08);
     text-shadow: var(--review-stars-glow), var(--review-stars-glow-strong);
-    animation: review-star-pulse 2.1s ease-in-out infinite;
   }
 
   .review-slider .review-author {
@@ -219,18 +216,6 @@ const filteredItems =
     transform: translateY(24px);
   }
 
-  @keyframes review-star-pulse {
-    0%,
-    100% {
-      transform: scale(1.06);
-      text-shadow: var(--review-stars-glow), var(--review-stars-glow-strong);
-    }
-    50% {
-      transform: scale(1.12);
-      text-shadow: var(--review-stars-glow-strong), 0 0 30px rgba(212, 175, 55, 0.56);
-    }
-  }
-
   @media (max-width: 768px) {
     .review-slider {
       padding: 16px 14px;
@@ -249,11 +234,6 @@ const filteredItems =
   @media (prefers-reduced-motion: reduce) {
     .review-slider .swiper-slide {
       transition: none;
-    }
-
-    .review-slider .swiper-slide.is-active .review-stars {
-      animation: none;
-      transform: scale(1.05);
     }
   }
 </style>
