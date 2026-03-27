@@ -137,6 +137,7 @@ const filteredItems =
     --review-text-color: rgba(17, 17, 17, 0.92);
     --review-author-color: rgba(34, 34, 34, 0.9);
     --review-stars-color: #d4af37;
+    --review-stars-glow: 0 0 8px rgba(212, 175, 55, 0.28);
     display: grid;
     max-width: 860px;
     margin: 0 auto;
@@ -177,9 +178,10 @@ const filteredItems =
 
   .review-slider .review-stars {
     margin-top: 0;
-    font-size: 1.15rem;
+    font-size: 1.28rem;
     letter-spacing: 0.2em;
     color: var(--review-stars-color);
+    text-shadow: var(--review-stars-glow);
   }
 
   .review-slider .review-author {
@@ -216,6 +218,7 @@ const filteredItems =
     }
 
     .review-slider .review-stars {
+      font-size: 1.22rem;
       letter-spacing: 0.15em;
     }
   }
