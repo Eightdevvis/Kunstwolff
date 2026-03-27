@@ -7,7 +7,7 @@
     {
       "id": "event",
       "title": "Ihr Event",
-      "subtitle": "auf welches Event dürfen\u00a0wir\u00a0Sie begleiten?",
+      "subtitle": "auf welches Event dürfen wir Sie begleiten?",
       "mainCircle": {
         "image": "/img/UnsereFähigkeitenBilder/Schnellzeichner/IMG_20240528_143426.webp",
         "alt": "Kunstwolff – Eventkünstler",
@@ -30,7 +30,9 @@
           "value": "messe",
           "image": "/img/slides/default/2_karikatur_stadtfest.webp",
           "alt": "Messe-Entertainment",
-          "autoSelect": { "muse": "stand-attraktion" },
+          "autoSelect": {
+            "muse": "stand-attraktion"
+          },
           "defaults": {
             "titlePart": "Messe",
             "text": "An Ihrem Messestand sorgt die Live-Kunst für Aufmerksamkeit und zieht Besucher magnetisch an.",
@@ -116,7 +118,7 @@
     {
       "id": "geschmack",
       "title": "Ihr Geschmack",
-      "subtitle": "Welche Kunst passt zu\u00a0Ihnen?",
+      "subtitle": "Welche Kunst passt zu Ihnen?",
       "mainCircle": {
         "image": "/img/UnsereFähigkeitenBilder/Schnellzeichner/IMG_20240528_143426.webp",
         "alt": "Kunstwolff – Eventkünstler",
@@ -131,7 +133,7 @@
           "defaults": {
             "titlePart": "Schnellzeichner",
             "text": "Unser Schnellzeichner fängt die Stimmung in Sekunden ein – mit lockerer, lebendiger Kunst, die Ihre Gäste begeistert.",
-            "offer": "Lassen Sie sich von unserem Schnellzeichner verzaubern. Persönliche Kunstwerke entstehen live vor den Augen Ihrer Gäste.",
+            "offer": "Lassen Sie sich von unseren Schnellzeichnerinnen verzaubern. Persönliche Kunstwerke entstehen live vor den Augen Ihrer Gäste.",
             "image": "/img/slides/default/1_schnellzeichner_hq.webp"
           }
         },
