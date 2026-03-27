@@ -7,6 +7,7 @@ import Slideshow from "../components/slideshows/Slideshow.astro";
 import Contact from "../components/Contact.astro";
 import Landingsection from "../components/Landingsection.astro";
 import Why from "../components/Why.astro";
+import Eventtypes from "../components/Eventtypes.astro";
 import FAQ from "../components/FAQ.astro";
 import Aboutsection from "../components/about/Aboutsection.astro";
 import { resolveTitleImage } from "../utils/titleImages";
@@ -53,6 +54,8 @@ const localBusinessSchema = {
   {show('homepageReviews') && <HomepageReviews />}
 
   {show('slideshow') && <Slideshow items={homepageSlides} />}
+
+  {show('eventtypes') && <Eventtypes />}
 
   {show('why') && <Why />}
 

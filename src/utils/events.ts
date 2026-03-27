@@ -36,6 +36,8 @@ export type EventItem = {
   slug: string;
   /** Kanonischer Link, z.B. "/firmenfeier/" */
   link: string;
+  /** Optionales Vorschaubild (z.B. fuer Homepage-Eventstripe) */
+  image?: string;
   /** Überschrift im Hero-Block */
   heroTitle?: string;
   /** Meta-Description für SEO */
@@ -174,6 +176,7 @@ export const getEvents = (): EventItem[] => {
           title,
           slug,
           link,
+          image: (item.image as string | undefined)?.trim() || undefined,
           heroTitle: (item.heroTitle as string | undefined)?.trim() || undefined,
           description: (item.description as string | undefined)?.trim() || undefined,
           categories: Array.isArray(item.categories)

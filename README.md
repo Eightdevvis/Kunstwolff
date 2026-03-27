@@ -75,7 +75,7 @@ Alle Inhalte werden über das Admin-Tool gepflegt. Hier die technische Übersich
 ### Städte
 
 **Quelle:** `public/landings/landings.md` (eine Stadt pro Zeile, Slugs lowercase)
-**Admin:** Tab "Städte" (CityManager)
+**Admin:** Quick-Add "Landing" im Header (Dashboard)
 **Automatik:** `sync:content` erstellt pro Stadt alle nötigen Ordner und Dateien.
 **Slug-Normalisierung:** `ä→ae`, `ö→oe`, `ü→ue`, `ß→ss`, Sonderzeichen → `-`
 
@@ -204,7 +204,7 @@ Für einzelne Why-Gründe gibt es statische Detailseiten mit eigenem Content-JSO
 - `/branding/` → `public/branding/content.json`
 - `/canvas/` → `public/canvas/content.json`
 
-**Admin:** Global Components Tab im `kunstwolff-admin` (eigene Manager pro Seite).
+**Admin:** Interface-Tab im `kunstwolff-admin`, Kategorie `Andere / Why` mit Branches `andere/why/...` (eigene Manager pro Seite).
 **Hinweis:** Diese Seiten sind bewusst keine dynamischen `[param]`-Routen.
 
 ### Referenzlogos (BrandStripe)
@@ -231,7 +231,7 @@ Vollständige Komponenten-IDs und JSON-Format: siehe `CLAUDE.md` → Sektion "Co
 
 ### Neue Stadt hinzufügen
 
-1. **Admin-Tool** → Tab "Städte" → Stadt hinzufügen (Slug wird automatisch normalisiert)
+1. **Admin-Tool** → Header-Button `+ Neu hinzufügen` → `Landing` (Slug wird automatisch normalisiert)
 2. **GitHub Action** `sync-landings.yml` triggert automatisch und erstellt:
    - `public/img/slides/<stadt>/`, `public/reviews/<stadt>/`, `public/faq/<stadt>/`
    - `public/img/Titelbild/<stadt>/`, `public/img/why/<stadt>/benefit-{1-4}/`

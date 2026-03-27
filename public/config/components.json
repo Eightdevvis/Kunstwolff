@@ -5,6 +5,7 @@
       "cinemaWelcome": true,
       "homepageReviews": true,
       "slideshow": true,
+      "eventtypes": true,
       "why": true,
       "contact": true,
       "faq": true,

@@ -1,5 +1,8 @@
 ---
+import { getEvents, getEventSlides, resolveEventTitleImage } from "../utils/events";
+
 type EventImageOverride = {
+  slug?: string;
   image?: string;
 };
 
@@ -8,62 +11,38 @@ const { events = [], items = [] } = Astro.props as {
   items?: EventImageOverride[];
 };
 
-const rawOverrides: EventImageOverride[] =
-  events && events.length ? events : items;
+const rawOverrides: EventImageOverride[] = events.length > 0 ? events : items;
+const imageOverrides = new Map(
+  rawOverrides
+    .filter((item) => !!item.slug && !!item.image)
+    .map((item) => [item.slug as string, item.image as string]),
+);
 
-/*
-  FEST DEFINIERTE EVENTTYPEN
-  → Titel, Link und ALT bleiben immer gleich (SEO-Kontrolle)
-  → Nur image darf überschrieben werden
-*/
+const list = getEvents().map((event) => {
+  const firstSlide = getEventSlides(event.slug)[0]?.src;
+  const titleImage = resolveEventTitleImage(event.slug);
+  const image = imageOverrides.get(event.slug) ?? event.image ?? firstSlide ?? titleImage;
+  const alt = `Eventseite ${event.title} von Kunstwolff`;
+  const text =
+    event.description ??
+    `Live-Kunst fuer ${event.title}: Schnellzeichner und Szenenmaler als unterhaltsames Highlight fuer dein Event.`;
 
-const DEFAULT_EVENTS = [
-  {
-    title: "Firmenfeiern & Corporate Events",
-    image: "/img/samples/sample1.jpeg",
-    link: "/schnellzeichner/firmenfeier/",
-    alt: "Schnellzeichner auf einer Firmenfeier zeichnet Gäste live",
-    text: "Ein Schnellzeichner bringt Energie in Corporate Events: Gäste werden live porträtiert, kommen ins Gespräch und nehmen eine persönliche Erinnerung mit.",
-  },
-  {
-    title: "Messen & Promotion",
-    image: "/img/samples/sample2.jpeg",
-    link: "/schnellzeichner/messe/",
-    alt: "Schnellzeichner als Besuchermagnet am Messestand",
-    text: "Auf Messen sorgt Live-Zeichnen für Aufmerksamkeit am Stand, längere Verweildauer und einen sympathischen Erstkontakt mit Ihrer Marke.",
-  },
-  {
-    title: "Hochzeiten",
-    image: "/img/samples/sample3.jpeg",
-    link: "/schnellzeichner/hochzeit/",
-    alt: "Schnellzeichner zeichnet Brautpaar live auf Hochzeit",
-    text: "Bei Hochzeiten entstehen charmante Live-Porträts von Brautpaar und Gästen – unterhaltsam während des Tages und ein besonderes Andenken.",
-  },
-  {
-    title: "Geburtstage & Private Feiern",
-    image: "/img/samples/sample4.jpeg",
-    link: "/schnellzeichner/private-feier/",
-    alt: "Live Karikaturist auf einer privaten Feier",
-    text: "Für private Feiern schafft ein Schnellzeichner lockere Stimmung, individuelle Erinnerungen und ein Highlight, über das noch lange gesprochen wird.",
-  },
-  
-];
-
-/*
-  Merge:
-  Nur image darf überschrieben werden.
-*/
-
-const list = DEFAULT_EVENTS.map((def, idx) => {
-  const override = rawOverrides[idx];
   return {
-    ...def,
-    image: override?.image ?? def.image,
+    title: event.title,
+    image,
+    link: event.link,
+    alt,
+    text,
   };
 });
 ---
 
+{list.length > 0 && (
 <section class="eventtypes-section">
+  <div class="eventtypes-headline">
+    <h2>Eventformate</h2>
+    <p>Waehle dein Event und klappe die Details direkt auf.</p>
+  </div>
   <div class="eventtypes-grid">
     {list.map((event) => (
       <details class="eventtype-item">
@@ -75,29 +54,54 @@ const list = DEFAULT_EVENTS.map((def, idx) => {
             loading="lazy"
           />
           <div class="eventtype-label">
+            <span class="eventtype-chip">Event</span>
             <h3>{event.title}</h3>
+            <span class="eventtype-toggle" aria-hidden="true">+</span>
           </div>
         </summary>
 
         <div class="eventtype-textbox">
           <p>{event.text}</p>
-          <a href={event.link}>Mehr erfahren</a>
+          <a href={event.link} class="eventtype-cta">Zur Eventseite</a>
         </div>
       </details>
     ))}
   </div>
 </section>
+)}
 
 <style>
 .eventtypes-section {
-  padding: 70px 20px;
-  background: #111;
+  padding: 84px 20px;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(251, 191, 36, 0.08), transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(56, 189, 248, 0.08), transparent 35%),
+    #0f0f11;
+}
+
+.eventtypes-headline {
+  max-width: 1200px;
+  margin: 0 auto 30px;
+  text-align: center;
+}
+
+.eventtypes-headline h2 {
+  color: #fff;
+  font-size: clamp(1.7rem, 2.6vw, 2.25rem);
+  letter-spacing: 0.02em;
+  margin: 0 0 10px;
+}
+
+.eventtypes-headline p {
+  color: #c7c7cb;
+  margin: 0;
+  font-size: clamp(0.98rem, 1.6vw, 1.08rem);
 }
 
 .eventtypes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 28px;
   max-width: 1200px;
   margin: 0 auto;
   justify-content: center;
@@ -105,11 +109,12 @@ const list = DEFAULT_EVENTS.map((def, idx) => {
 
 .eventtype-item {
   position: relative;
-  aspect-ratio: 1 / 1;
-  border-radius: 14px;
-  overflow: visible;
-  background: #161616;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  overflow: hidden;
+  background: #121214;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .eventtype-item summary {
@@ -123,11 +128,11 @@ const list = DEFAULT_EVENTS.map((def, idx) => {
 .eventtype-link {
   display: block;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1 / 1;
   position: relative;
   cursor: pointer;
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: 18px 18px 0 0;
 }
 
 .eventtype-image {
@@ -135,8 +140,8 @@ const list = DEFAULT_EVENTS.map((def, idx) => {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.75);
-  transition: transform 0.4s ease, filter 0.3s ease;
+  filter: brightness(0.68) saturate(1.04);
+  transition: transform 0.45s ease, filter 0.3s ease;
 }
 
 @media (max-width: 640px) {
@@ -150,64 +155,136 @@ const list = DEFAULT_EVENTS.map((def, idx) => {
   position: absolute;
   inset: 0;
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 25px;
-  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.1));
-  transition: background 0.3s ease;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 22px;
+  background: linear-gradient(to top, rgba(0,0,0,0.82), rgba(0,0,0,0.16));
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
 }
 
 .eventtype-label h3 {
   color: #fff;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
+  font-weight: 750;
+  margin: 0;
+  text-align: left;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+}
+
+.eventtype-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.17);
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  color: #fff;
+  font-size: 0.76rem;
   font-weight: 700;
-  text-align: center;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.eventtype-toggle {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.36);
+  border: 1px solid rgba(255, 255, 255, 0.36);
+  transition: transform 0.25s ease, background 0.25s ease;
 }
 
 .eventtype-textbox {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(100% + 10px);
-  z-index: 20;
-  background: #161616;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  position: relative;
+  background: linear-gradient(140deg, #18181b, #121214);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  padding: 0 20px;
-  transition: max-height 0.35s ease, padding 0.35s ease, opacity 0.25s ease;
+  padding: 0 18px;
+  transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.3s ease;
 }
 
 .eventtype-textbox p {
-  color: #e8e8e8;
-  line-height: 1.5;
+  color: #ececf0;
+  line-height: 1.6;
+  font-size: 0.96rem;
   margin: 0;
 }
 
-.eventtype-textbox a {
-  display: inline-block;
+.eventtype-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   margin-top: 14px;
-  color: #fff;
-  font-weight: 600;
-  text-decoration: underline;
+  color: #111;
+  background: #f8fafc;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.eventtype-cta::after {
+  content: "->";
 }
 
 .eventtype-item[open] .eventtype-textbox {
-  max-height: 220px;
-  padding: 18px 20px 20px;
+  max-height: 260px;
+  padding: 18px 18px 20px;
   opacity: 1;
 }
 
+.eventtype-item[open] .eventtype-toggle {
+  transform: rotate(45deg);
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.eventtype-item[open] {
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
 .eventtype-item:hover .eventtype-image {
-  transform: scale(1.07);
-  filter: brightness(0.45);
+  transform: scale(1.06);
+  filter: brightness(0.52) saturate(1.08);
 }
 
 .eventtype-item:hover .eventtype-label {
-  background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.2));
+  background: linear-gradient(to top, rgba(0,0,0,0.86), rgba(0,0,0,0.22));
+  backdrop-filter: blur(1px);
+}
+
+.eventtype-item:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.34);
+}
+
+.eventtype-cta:hover {
+  transform: translateY(-1px);
+  background: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .eventtypes-section {
+    padding: 70px 16px;
+  }
+
+  .eventtype-label h3 {
+    font-size: 1.1rem;
+  }
 }
 </style>
