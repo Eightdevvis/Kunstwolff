@@ -22,6 +22,9 @@ import EventLayout from '../layouts/EventLayout.astro';
 import Contact from '../components/Contact.astro';
 import FAQ from '../components/FAQ.astro';
 import Slideshow from '../components/slideshows/Slideshow.astro';
+import CinemaWelcome from '../components/CinemaWelcome.astro';
+import HomepageReviews from '../components/HomepageReviews.astro';
+import Eventtypes from '../components/Eventtypes.astro';
 import { isComponentEnabled, type PageType } from '../utils/componentConfig';
 import {
   MIN_LANDING_SLIDES,
@@ -31,13 +34,9 @@ import {
 } from '../utils/slideImages';
 
 // ── Landing-spezifische Imports ───────────────────────────────────────────────
-import Skills from '../components/SkillBanner.astro';
 import Opener from '../components/hero/Opener.astro';
 import Landingsection from '../components/Landingsection.astro';
 import Why from '../components/Why.astro';
-import LandingErinnerungen from '../components/LandingErinnerungen.astro';
-import { getSharedSkills } from '../utils/skills';
-import { getReviewsByLanding } from '../utils/reviews';
 import { getLandingBySlug, getLandingSlugs } from '../utils/landings';
 
 // ── Event-spezifische Imports ─────────────────────────────────────────────────
@@ -83,20 +82,16 @@ const show = (id: string) => isComponentEnabled(pt, landing ?? '', id);
 // LANDING-Seite: Bestehende Logik unverändert
 // ─────────────────────────────────────────────────────────────────────────────
 let landingData: Awaited<ReturnType<typeof getLandingBySlug>> | undefined;
-let skills: Awaited<ReturnType<typeof getSharedSkills>> | undefined;
 let landingSlides: Awaited<ReturnType<typeof supplementWithDefaultSlides>> | undefined;
-let reviews: unknown[] = [];
 let landingPageTitle = '';
 let landingPageDescription = '';
 let breadcrumbSchema: unknown;
 
 if (pageType === 'landing') {
   landingData = getLandingBySlug(landing ?? '');
-  skills = getSharedSkills();
   const citySlides = getCitySlides(landing ?? '');
   const defaultSlides = getDefaultSlides();
   landingSlides = supplementWithDefaultSlides(citySlides, defaultSlides, MIN_LANDING_SLIDES);
-  reviews = getReviewsByLanding(landing ?? '');
 
   const cityName = (landing ?? '').charAt(0).toUpperCase() + (landing ?? '').slice(1);
   landingPageTitle = `Eventkünstler ${cityName} – Live-Kunst & Performance | Kunstwolff`;
@@ -152,17 +147,18 @@ if (pageType === 'event') {
 }
 ---
 
-{pageType === 'landing' && landingData && skills && landingSlides && (
+{pageType === 'landing' && landingData && landingSlides && (
   <!-- ══════════════════════════════════════════════════
        STADTSEITE – bestehende Struktur unverändert
   ══════════════════════════════════════════════════ -->
   <Layout title={landingPageTitle} description={landingPageDescription} image={landingData.titleImage}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     {show('opener') && <Opener titleImage={landingData.titleImage} titleImageAlt={landingData.title} />}
-    {show('skillBanner') && <Skills skills={skills} reviews={reviews as any} currentLanding={landing} />}
+    {show('cinemaWelcome') && <CinemaWelcome />}
+    {show('homepageReviews') && <HomepageReviews />}
     {show('slideshow') && <Slideshow items={landingSlides} />}
+    {show('eventtypes') && <Eventtypes />}
     {show('why') && <Why landing={landing} />}
-    {show('erinnerungen') && <LandingErinnerungen landing={landing} />}
     {show('contact') && <Contact />}
     {show('faq') && <FAQ city={landing} />}
     {show('landingsection') && <Landingsection/>}

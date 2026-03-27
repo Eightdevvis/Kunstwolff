@@ -220,10 +220,20 @@ const satelliteData = {
     margin: 0 auto;
     border-radius: clamp(14px, 1.8vw, 24px);
     overflow: hidden;
-    border: 1px solid rgba(201, 168, 76, 0.42);
+  }
+
+  .cw-scroll-shell::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid rgba(201, 168, 76, 0.9);
     box-shadow:
-      inset 0 0 0 1px rgba(201, 168, 76, 0.14),
-      0 0 0 1px rgba(201, 168, 76, 0.1);
+      inset 0 0 0 1px rgba(201, 168, 76, 0.24),
+      0 0 0 1px rgba(201, 168, 76, 0.16),
+      0 0 14px rgba(191, 155, 80, 0.22);
+    pointer-events: none;
+    z-index: 1200;
   }
 
   .cw-scroll-viewport {

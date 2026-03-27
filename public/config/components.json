@@ -15,10 +15,11 @@
   "landing": {
     "_default": {
       "opener": true,
-      "skillBanner": true,
+      "cinemaWelcome": true,
+      "homepageReviews": true,
       "slideshow": true,
+      "eventtypes": true,
       "why": true,
-      "erinnerungen": true,
       "contact": true,
       "faq": true,
       "landingsection": true
