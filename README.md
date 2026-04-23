@@ -158,7 +158,7 @@ sections[0..2]                 Die 3 Orbit-Sektionen
     .defaults                  Text-Bausteine für Ergebnis-Komposition:
       .titlePart               Anteil am Titel (z.B. "Schnellzeichner", "Firmenfeier", "50–100 Gäste")
       .text                    Beschreibungs-Baustein
-      .offer                   Angebots-Baustein
+      .offerItems              string[] – Listenpunkte für die Angebots-Liste (rechte Karte)
       .image                   Ergebnis-Bild (nur bei Geschmack-Satelliten)
 overrides                      Vollständige Overrides für bestimmte Kombinationen
                                Key: "{geschmack}-{event}-{muse}" → CinemaResult
@@ -170,10 +170,10 @@ Das Ergebnis wird zur Laufzeit aus den 3 Auswahlen zusammengesetzt – jeder Sat
 
 - **Titel:** `"{geschmack.titlePart} auf {event.titlePart} für {muse.titlePart}"`
 - **Beschreibung:** `geschmack.text + muse.text + event.text` (feste Reihenfolge, damit Verbindungswörter wie „dazu" funktionieren)
-- **Angebot:** `geschmack.offer + muse.offer + event.offer`
+- **Angebots-Liste:** `[...event.offerItems, ...muse.offerItems, ...geschmack.offerItems]` – rechte Ergebnis-Karte rendert die zusammengeführte Liste als Bullet-Liste (Reihenfolge: Event → Wunsch → Geschmack).
 - **Bild:** `geschmack.defaults.image`
 
-**Overrides:** Für bestimmte Kombinationen kann das gesamte Ergebnis manuell überschrieben werden. Key = `"{geschmack_value}-{event_value}-{muse_value}"`, Wert = vollständiges `CinemaResult` (`image`, `imageAlt`, `title`, `description`, `offer`). Overrides ersetzen komplett, sind nicht partiell.
+**Overrides:** Für bestimmte Kombinationen kann das gesamte Ergebnis manuell überschrieben werden. Key = `"{geschmack_value}-{event_value}-{muse_value}"`, Wert = vollständiges `CinemaResult` (`image`, `imageAlt`, `title`, `description`, `offerItems`). Overrides ersetzen komplett – die `offerItems`-Liste ersetzt die komponierte Bullet-Liste.
 
 **Satelliten-Quellen:**
 - **Event:** Aus `events.json` – im Admin wählbar, nicht frei eingebbar

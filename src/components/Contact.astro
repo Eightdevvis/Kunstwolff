@@ -25,7 +25,7 @@
         <div id="cinemaContext" class="cinema-context" hidden>
           <p class="cinema-context-kicker">Ihre Auswahl aus CinemaWelcome</p>
           <p id="cinemaContextSummary" class="cinema-context-summary"></p>
-          <p id="cinemaContextOffer" class="cinema-context-offer"></p>
+          <ul id="cinemaContextOffer" class="cinema-context-offer" role="list"></ul>
         </div>
 
         <form id="contactForm" class="contact-form">
@@ -175,8 +175,34 @@
 
   .cinema-context-offer {
     margin: 0;
+    padding: 0;
+    list-style: none;
     color: rgba(255, 255, 255, 0.82);
-    line-height: 1.6;
+    line-height: 1.55;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .cinema-context-offer li {
+    position: relative;
+    padding-left: 18px;
+  }
+
+  .cinema-context-offer li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #c9a84c;
+    transform: translateY(-50%);
+  }
+
+  .cinema-context-offer:empty {
+    display: none;
   }
 
   .contact-form {
@@ -280,26 +306,47 @@
     input.value = value || "";
   }
 
+  function normalizeItems(raw) {
+    if (!Array.isArray(raw)) return [];
+    const out = [];
+    for (const entry of raw) {
+      if (typeof entry !== "string") continue;
+      const trimmed = entry.trim();
+      if (trimmed) out.push(trimmed);
+    }
+    return out;
+  }
+
   try {
     const raw = sessionStorage.getItem(CONTACT_PREFILL_KEY);
     if (raw) {
       const data = JSON.parse(raw);
       const summary = typeof data?.summary === "string" ? data.summary : "";
-      const offer = typeof data?.offer === "string" ? data.offer : "";
+      const offerItems = normalizeItems(data?.offerItems);
       const title = typeof data?.title === "string" ? data.title : "";
       const source = typeof data?.source === "string" ? data.source : "cinema-welcome";
       const selections = typeof data?.selections === "object" && data.selections ? data.selections : {};
 
-      if (summary || offer) {
+      if (summary || offerItems.length > 0) {
         if (contextSummary) contextSummary.textContent = summary || title;
-        if (contextOffer) contextOffer.textContent = offer;
+        if (contextOffer) {
+          contextOffer.innerHTML = "";
+          for (const item of offerItems) {
+            const li = document.createElement("li");
+            li.textContent = item;
+            contextOffer.appendChild(li);
+          }
+        }
         if (contextBox) contextBox.hidden = false;
       }
+
+      // Flache Textform für das Hidden-Feld (für Mail-Body o.ä.)
+      const offerFlat = offerItems.map((i) => `- ${i}`).join("\n");
 
       setHidden("cinemaSource", source);
       setHidden("cinemaTitle", title);
       setHidden("cinemaSummary", summary);
-      setHidden("cinemaOffer", offer);
+      setHidden("cinemaOffer", offerFlat);
       setHidden("cinemaEvent", typeof selections.event === "string" ? selections.event : "");
       setHidden("cinemaMuse", typeof selections.muse === "string" ? selections.muse : "");
       setHidden("cinemaGeschmack", typeof selections.geschmack === "string" ? selections.geschmack : "");
@@ -308,8 +355,10 @@
       const textarea = form?.querySelector('textarea[name="message"]');
       if (textarea instanceof HTMLTextAreaElement && !textarea.value.trim() && summary) {
         const msgPrefix = `CinemaWelcome Auswahl: ${summary}`;
-        const offerLine = offer ? `\nEmpfohlenes Paket: ${offer}` : "";
-        textarea.value = `${msgPrefix}${offerLine}\n\n`;
+        const offerBlock = offerItems.length > 0
+          ? `\n\nEnthaltenes Angebot:\n${offerItems.map((i) => `• ${i}`).join("\n")}`
+          : "";
+        textarea.value = `${msgPrefix}${offerBlock}\n\n`;
       }
     }
   } catch (error) {

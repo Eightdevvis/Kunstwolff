@@ -58,9 +58,6 @@ const satelliteData = {
     <div class="cw-text">
       <h2 class="cw-title">{sec1.title}</h2>
       <p class="cw-subtitle">{sec1.subtitle}</p>
-      <button class="cw-first-step-cta" id="cw-first-step-cta" type="button">
-        Welche Kunst passt zu Ihrem Event? &gt;
-      </button>
     </div>
 
     <div class="cw-orbit" id="cw-orbit">
@@ -84,6 +81,9 @@ const satelliteData = {
         <img src={sec1.mainCircle.image} alt={sec1.mainCircle.alt} />
         <span class="cw-main-hint">{sec1.mainCircle.hint ?? 'Entdecken'}</span>
       </button>
+      <button class="cw-reopen" type="button" aria-label="Optionen erneut anzeigen" title="Optionen erneut anzeigen">
+        ↻
+      </button>
     </div>
 
   </div>
@@ -92,7 +92,7 @@ const satelliteData = {
     <!-- ══════════════════════════════════════════════════════════════════
          SEKTION 2 – Ihre Muse (Orbit links, Text rechts) – Text-Kreise
     ═══════════════════════════════════════════════════════════════════ -->
-    <section class="cw cw--reversed" id="cinema-welcome-2">
+    <section class="cw cw--reversed cw--hidden" id="cinema-welcome-2">
   <div class="cw-inner">
 
     <div class="cw-orbit" id="cw-orbit-2">
@@ -116,6 +116,9 @@ const satelliteData = {
         <span class="cw-main-hint">{sec2.mainCircle.hint ?? 'Wählen'}</span>
         <span class="cw-main-selected-text" id="cw-main-2-text"></span>
       </button>
+      <button class="cw-reopen" type="button" aria-label="Optionen erneut anzeigen" title="Optionen erneut anzeigen">
+        ↻
+      </button>
     </div>
 
     <div class="cw-text cw-text--right">
@@ -129,7 +132,7 @@ const satelliteData = {
     <!-- ══════════════════════════════════════════════════════════════════
          SEKTION 3 – Ihr Geschmack (Text links, Orbit rechts)
     ═══════════════════════════════════════════════════════════════════ -->
-    <section class="cw" id="cinema-welcome-3">
+    <section class="cw cw--hidden" id="cinema-welcome-3">
   <div class="cw-inner">
 
     <div class="cw-text">
@@ -158,6 +161,9 @@ const satelliteData = {
         <img src={sec3.mainCircle.image} alt={sec3.mainCircle.alt} />
         <span class="cw-main-hint">{sec3.mainCircle.hint ?? 'Entdecken'}</span>
       </button>
+      <button class="cw-reopen" type="button" aria-label="Optionen erneut anzeigen" title="Optionen erneut anzeigen">
+        ↻
+      </button>
     </div>
 
   </div>
@@ -167,7 +173,7 @@ const satelliteData = {
          SEKTION 4 – Ergebnis (personalisiertes Angebot)
          Wird per JS befüllt, sobald alle 3 Auswahlen getroffen sind.
     ═══════════════════════════════════════════════════════════════════ -->
-    <section class="cw cw-result" id="cinema-result">
+    <section class="cw cw-result cw--hidden" id="cinema-result">
   <div class="cw-result-cards">
 
     <!-- Karte 1: Bild + Titel + Beschreibung -->
@@ -196,7 +202,7 @@ const satelliteData = {
         </div>
         <div class="cw-result-card-front">
           <p class="cw-result-summary" id="cw-result-summary"></p>
-          <p class="cw-result-offer" id="cw-result-offer"></p>
+          <ul class="cw-result-offer" id="cw-result-offer" role="list"></ul>
           <a href="#contact" class="cw-result-cta" id="cw-result-cta">Termin jetzt anfragen</a>
         </div>
       </div>
@@ -240,14 +246,8 @@ const satelliteData = {
     background: #000;
   }
 
-  @media (min-width: 1001px) {
-    .cw-scroll-viewport {
-      max-height: 100vh;
-      overflow-y: auto;
-      overscroll-behavior-y: auto;
-      scrollbar-gutter: stable both-edges;
-      scroll-behavior: smooth;
-    }
+  .cw--hidden {
+    display: none !important;
   }
 
   /* ═══════════════════════════════════════════════════════════════════
@@ -303,35 +303,6 @@ const satelliteData = {
   .cw-text {
     flex:      1;
     min-width: 0;
-  }
-
-  .cw-first-step-cta {
-    margin-top: clamp(18px, 2.8vw, 32px);
-    padding: clamp(10px, 1.2vw, 14px) clamp(18px, 2vw, 28px);
-    border: 1px solid rgba(201, 168, 76, 0.9);
-    background: rgba(201, 168, 76, 0.08);
-    color: #c9a84c;
-    font-family: var(--font-body, 'Inter', sans-serif);
-    font-size: clamp(0.78rem, 1.05vw, 0.92rem);
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    cursor: pointer;
-    opacity: 0;
-    transform: translateY(8px);
-    pointer-events: none;
-    transition: opacity 0.35s ease, transform 0.35s ease, background 0.25s ease, box-shadow 0.25s ease;
-  }
-
-  .cw-first-step-cta.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  .cw-first-step-cta:hover {
-    background: rgba(201, 168, 76, 0.2);
-    box-shadow: 0 0 24px rgba(191, 155, 80, 0.28);
   }
 
   .cw-text--right {
@@ -474,6 +445,40 @@ const satelliteData = {
   }
 
   .cw-main:hover .cw-main-hint { opacity: 0.85; }
+
+  .cw-reopen {
+    position: absolute;
+    left: 50%;
+    top: calc(50% + 126px);
+    transform: translateX(-50%);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 168, 76, 0.65);
+    background: rgba(8, 6, 4, 0.92);
+    color: #c9a84c;
+    font-size: 1rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    z-index: 6;
+  }
+
+  .cw-reopen.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .cw-reopen:hover {
+    border-color: rgba(201, 168, 76, 0.95);
+    box-shadow: 0 0 18px rgba(191, 155, 80, 0.3);
+    transform: translateX(-50%) scale(1.05);
+  }
 
   /* ═══════════════════════════════════════════════════════════════════
      SATELLITEN
@@ -794,8 +799,34 @@ const satelliteData = {
     font-size:   clamp(0.95rem, 1.5vw, 1.1rem);
     font-weight: 300;
     color:       rgba(255,255,255,0.85);
-    line-height: 1.75;
+    line-height: 1.65;
     margin:      0 0 clamp(28px, 4vw, 48px);
+    padding:     0;
+    list-style:  none;
+    display:     flex;
+    flex-direction: column;
+    gap:         clamp(8px, 1vw, 12px);
+  }
+
+  .cw-result-offer li {
+    position:       relative;
+    padding-left:   clamp(18px, 1.6vw, 22px);
+  }
+
+  .cw-result-offer li::before {
+    content:        "";
+    position:       absolute;
+    left:           0;
+    top:            0.75em;
+    width:          6px;
+    height:         6px;
+    border-radius:  50%;
+    background:     #c9a84c;
+    transform:      translateY(-50%);
+  }
+
+  .cw-result-offer:empty {
+    display: none;
   }
 
   .cw-result-cta {
@@ -853,6 +884,7 @@ const satelliteData = {
 
     .cw-orbit { width: 340px; height: 340px; }
     .cw-main  { width: 160px; height: 160px; }
+    .cw-reopen { top: calc(50% + 102px); }
     .cw-satellite { width: 76px; height: 76px; }
     .cw-satellite--text { width: 90px; height: 90px; }
     .cw-satellite-text { font-size: 0.7rem; padding: 8px; }
@@ -894,7 +926,6 @@ const satelliteData = {
     }
 
     .cw-result-cta { align-self: center; }
-    .cw-first-step-cta { margin-left: auto; margin-right: auto; }
   }
 
   @media (max-width: 600px) {
@@ -902,6 +933,7 @@ const satelliteData = {
 
     .cw-orbit     { width: 280px; height: 280px; }
     .cw-main      { width: 130px; height: 130px; }
+    .cw-reopen    { top: calc(50% + 84px); width: 30px; height: 30px; font-size: 0.92rem; }
     .cw-satellite { width: 62px;  height: 62px;  }
     .cw-satellite--text { width: 74px; height: 74px; }
     .cw-satellite-text { font-size: 0.58rem; padding: 6px; }
@@ -955,10 +987,6 @@ const satelliteData = {
   }
 
   const activeSections = new Set<string>();
-  const scrollShell = document.getElementById("cw-scroll-shell") as HTMLElement | null;
-  const scrollViewport = document.getElementById("cw-scroll-viewport") as HTMLElement | null;
-  const firstSection = document.getElementById("cinema-welcome") as HTMLElement | null;
-  const firstStepCta = document.getElementById("cw-first-step-cta") as HTMLButtonElement | null;
 
   // Externe Controls für Section 2 + 3 (werden nach Initialisierung gesetzt)
   type SectionControls = {
@@ -985,42 +1013,6 @@ const satelliteData = {
 
   // ── Auswahl-State ───────────────────────────────────────────────────────
   const selections: Record<string, string> = {};
-  const sectionIds = ["event", "muse", "geschmack"];
-  let firstStepTimer: number | null = null;
-  let shellInView = false;
-
-  function hideFirstStepCta() {
-    firstStepCta?.classList.remove("visible");
-  }
-
-  function clearFirstStepTimer() {
-    if (firstStepTimer !== null) {
-      window.clearTimeout(firstStepTimer);
-      firstStepTimer = null;
-    }
-  }
-
-  function isFirstSectionVisible() {
-    if (!firstSection) return false;
-    const sectionRect = firstSection.getBoundingClientRect();
-    const viewportRect = (scrollViewport ?? document.documentElement).getBoundingClientRect();
-    const overlap = Math.min(sectionRect.bottom, viewportRect.bottom) - Math.max(sectionRect.top, viewportRect.top);
-    const minHeight = Math.min(sectionRect.height || 1, viewportRect.height || 1);
-    return overlap > 0 && overlap / minHeight >= 0.35;
-  }
-
-  function scheduleFirstStepCta() {
-    if (!firstStepCta) return;
-    if (!shellInView) return;
-    if (selections.event) return;
-    if (!isFirstSectionVisible()) return;
-    clearFirstStepTimer();
-    firstStepTimer = window.setTimeout(() => {
-      if (!selections.event && shellInView && isFirstSectionVisible()) {
-        firstStepCta.classList.add("visible");
-      }
-    }, 2600);
-  }
 
   // ── Ergebnis-Sektion ────────────────────────────────────────────────────
   const resultSection = document.getElementById("cinema-result");
@@ -1036,46 +1028,6 @@ const satelliteData = {
   // Satellite-Titel für die Zusammenfassung merken
   const selectionTitles: Record<string, string> = {};
   const CONTACT_PREFILL_KEY = "cinemaContactPrefill_v1";
-
-  if (firstStepCta) {
-    firstStepCta.addEventListener("click", () => {
-      hideFirstStepCta();
-      clearFirstStepTimer();
-      const sec1 = document.getElementById("cinema-welcome");
-      sec1?.scrollIntoView({ behavior: "smooth", block: "center" });
-      window.setTimeout(() => {
-        const mainBtn = document.getElementById("cw-main") as HTMLButtonElement | null;
-        if (mainBtn && mainBtn.getAttribute("aria-expanded") !== "true") mainBtn.click();
-      }, 420);
-    });
-  }
-
-  if (scrollViewport) {
-    scrollViewport.addEventListener("scroll", () => {
-      hideFirstStepCta();
-      clearFirstStepTimer();
-      scheduleFirstStepCta();
-    }, { passive: true });
-  }
-
-  if (scrollShell && scrollViewport) {
-    const shellObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
-            shellInView = false;
-            hideFirstStepCta();
-            clearFirstStepTimer();
-            return;
-          }
-          shellInView = true;
-          scheduleFirstStepCta();
-        });
-      },
-      { threshold: 0.35 }
-    );
-    shellObserver.observe(scrollShell);
-  }
 
   function checkAndShowResult() {
     if (!selections.event || !selections.muse || !selections.geschmack) return;
@@ -1103,22 +1055,36 @@ const satelliteData = {
 
     let title: string;
     let description: string;
-    let offer: string;
+    let offerItems: string[];
     let image: string;
     let imageAlt: string;
 
+    // Helfer: stellt sicher, dass ein Wert ein String-Array mit getrimmten, nicht-leeren Einträgen ist
+    const normalizeItems = (raw: unknown): string[] => {
+      if (!Array.isArray(raw)) return [];
+      const out: string[] = [];
+      for (const entry of raw) {
+        if (typeof entry !== "string") continue;
+        const trimmed = entry.trim();
+        if (trimmed) out.push(trimmed);
+      }
+      return out;
+    };
+
     if (override) {
-      // Vollständiger Override ersetzt alles
       title       = override.title;
       description = override.description;
-      offer       = override.offer;
+      offerItems  = normalizeItems(override.offerItems);
       image       = override.image || geschmackDef.image || "";
       imageAlt    = override.imageAlt || title;
     } else {
-      // Komposition aus den 3 Auswahlen
       title       = `${geschmackDef.titlePart} auf ${eventDef.titlePart} für ${museDef.titlePart}`;
       description = [geschmackDef.text, museDef.text, eventDef.text].filter(Boolean).join(" ");
-      offer       = [geschmackDef.offer, museDef.offer, eventDef.offer].filter(Boolean).join(" ");
+      offerItems  = [
+        ...normalizeItems(eventDef.offerItems),
+        ...normalizeItems(museDef.offerItems),
+        ...normalizeItems(geschmackDef.offerItems),
+      ];
       image       = geschmackDef.image || "";
       imageAlt    = title;
     }
@@ -1138,26 +1104,33 @@ const satelliteData = {
     if (resultSummary) {
       resultSummary.textContent = `\u201E${skillTitle}\u201C auf \u201E${eventTitle}\u201C f\u00fcr \u201E${museTitle}\u201C`;
     }
-    if (resultOffer) resultOffer.textContent = offer;
+    if (resultOffer) {
+      resultOffer.innerHTML = "";
+      for (const item of offerItems) {
+        const li = document.createElement("li");
+        li.textContent = item;
+        resultOffer.appendChild(li);
+      }
+    }
 
-    // Ergebnis für Kontaktformular persistieren (z.B. nach Swipe/Scroll zu #contact)
+    const buildContactPayload = () => ({
+      source: "cinema-welcome",
+      createdAt: new Date().toISOString(),
+      title,
+      summary: `\u201E${skillTitle}\u201C auf \u201E${eventTitle}\u201C f\u00fcr \u201E${museTitle}\u201C`,
+      offerItems,
+      selections: {
+        event: selections.event,
+        muse: selections.muse,
+        geschmack: selections.geschmack,
+        eventTitle,
+        museTitle,
+        skillTitle,
+      },
+    });
+
     try {
-      const contactPayload = {
-        source: "cinema-welcome",
-        createdAt: new Date().toISOString(),
-        title,
-        summary: `\u201E${skillTitle}\u201C auf \u201E${eventTitle}\u201C f\u00fcr \u201E${museTitle}\u201C`,
-        offer,
-        selections: {
-          event: selections.event,
-          muse: selections.muse,
-          geschmack: selections.geschmack,
-          eventTitle,
-          museTitle,
-          skillTitle,
-        },
-      };
-      sessionStorage.setItem(CONTACT_PREFILL_KEY, JSON.stringify(contactPayload));
+      sessionStorage.setItem(CONTACT_PREFILL_KEY, JSON.stringify(buildContactPayload()));
     } catch (error) {
       console.warn("[CinemaWelcome] Konnte Kontakt-Prefill nicht speichern:", error);
     }
@@ -1165,30 +1138,16 @@ const satelliteData = {
     if (resultCta && !resultCta.dataset.prefillBound) {
       resultCta.dataset.prefillBound = "1";
       resultCta.addEventListener("click", () => {
-        // Safety: beim Klick nochmal schreiben, falls Zustand zwischenzeitlich verändert wurde
         try {
-          const contactPayload = {
-            source: "cinema-welcome",
-            createdAt: new Date().toISOString(),
-            title,
-            summary: `\u201E${skillTitle}\u201C auf \u201E${eventTitle}\u201C f\u00fcr \u201E${museTitle}\u201C`,
-            offer,
-            selections: {
-              event: selections.event,
-              muse: selections.muse,
-              geschmack: selections.geschmack,
-              eventTitle,
-              museTitle,
-              skillTitle,
-            },
-          };
-          sessionStorage.setItem(CONTACT_PREFILL_KEY, JSON.stringify(contactPayload));
+          sessionStorage.setItem(CONTACT_PREFILL_KEY, JSON.stringify(buildContactPayload()));
         } catch (error) {
           console.warn("[CinemaWelcome] Konnte Kontakt-Prefill beim CTA nicht speichern:", error);
         }
       });
     }
 
+    // Ergebnis-Sektion einblenden (vorher display:none, damit keine Page-Scroll-Fläche existierte)
+    resultSection.classList.remove("cw--hidden");
     // Karten aufdecken (linke Karte etwas früher)
     if (resultSection) {
       resultSection.style.position = "relative";
@@ -1265,6 +1224,7 @@ const satelliteData = {
     const mainBtn    = document.getElementById(mainBtnId)  as HTMLButtonElement | null;
     const titleEl    = section?.querySelector<HTMLElement>(".cw-title");
     const subtitleEl = section?.querySelector<HTMLElement>(".cw-subtitle");
+    const reopenBtn  = orbit?.querySelector<HTMLButtonElement>(".cw-reopen") ?? null;
     const satEls     = orbit
       ? Array.from(orbit.querySelectorAll<HTMLElement>(".cw-satellite"))
       : [];
@@ -1293,6 +1253,7 @@ const satelliteData = {
       if (satellitesOpen) return;
       satellitesOpen = true;
       btn.setAttribute("aria-expanded", "true");
+      reopenBtn?.classList.remove("visible");
       // Text-Satellit-Auswahl im Hauptkreis zurücksetzen
       const hint   = btn.querySelector<HTMLElement>(".cw-main-hint");
       const textEl = btn.querySelector<HTMLElement>(".cw-main-selected-text");
@@ -1304,11 +1265,11 @@ const satelliteData = {
       });
     }
 
-    function closeSatellites() {
-      if (!satellitesOpen) return;
-      satellitesOpen = false;
-      btn.setAttribute("aria-expanded", "false");
-      satEls.forEach(sat => sat.classList.remove("visible"));
+    function getSelectionHref(): string | null {
+      const value = selections[selectionKey];
+      if (!value) return null;
+      if (selectionKey === "muse") return null;
+      return `/${value}/`;
     }
 
     // ── Merge-Animation + Auswahl ─────────────────────────────────────
@@ -1417,6 +1378,7 @@ const satelliteData = {
 
         requestAnimationFrame(() => { clickedSat.style.transition = ""; });
         isAnimating = false;
+        reopenBtn?.classList.add("visible");
 
         // Nächste Sektion aktivieren (sequenziell statt via Observer)
         if (selectionKey === "event") {
@@ -1432,6 +1394,14 @@ const satelliteData = {
           }
         } else if (selectionKey === "muse" && sec3Controls) {
           sec3Controls.unlockAndActivate();
+        }
+
+        // Nach Auswahl immer automatisch zur nächsten Sektion.
+        if (selectionKey === "event") {
+          const nextSectionId = autoSelectMap?.muse ? "cinema-welcome-3" : "cinema-welcome-2";
+          document.getElementById(nextSectionId)?.scrollIntoView({ behavior: "smooth", block: "center" });
+        } else if (selectionKey === "muse") {
+          document.getElementById("cinema-welcome-3")?.scrollIntoView({ behavior: "smooth", block: "center" });
         }
 
         // Nach der Auswahl: Ergebnis prüfen
@@ -1459,12 +1429,30 @@ const satelliteData = {
       titleEl?.classList.add("instant");
       subtitleEl?.classList.add("instant");
       btn.classList.add("visible");
+      const selectedTitle = selectionTitles[selectionKey] || selections[selectionKey] || "";
+      const hasSelection = Boolean(selections[selectionKey]);
+      if (hasSelection) {
+        satellitesOpen = false;
+        btn.setAttribute("aria-expanded", "false");
+        const hint = btn.querySelector<HTMLElement>(".cw-main-hint");
+        const textEl = btn.querySelector<HTMLElement>(".cw-main-selected-text");
+        if (hint) hint.style.display = "none";
+        if (textEl && selectedTitle) {
+          textEl.textContent = selectedTitle;
+          textEl.classList.add("visible");
+        }
+        satEls.forEach(sat => sat.classList.remove("visible"));
+        reopenBtn?.classList.add("visible");
+        return;
+      }
       openSatellites(true);
     }
 
     // ── Von außen aufrufbar: Sektion entsperren + abspielen ──────────
     function unlockAndActivate() {
       locked = false;
+      // Sektion ggf. sichtbar machen (vorher display:none, damit vorher keine Page-Scroll-Fläche existierte)
+      sec.classList.remove("cw--hidden");
       if (currentlyIntersecting) {
         if (!cinemaActive) {
           cinemaActive = true;
@@ -1486,6 +1474,7 @@ const satelliteData = {
       locked      = false;
       cinemaActive = true;
 
+      sec.classList.remove("cw--hidden");
       raiseSectionAboveDimmer();
       activateDimmer(sectionId);
 
@@ -1506,8 +1495,14 @@ const satelliteData = {
     // ── Event-Listener ───────────────────────────────────────────────
     btn.addEventListener("click", () => {
       if (isAnimating) return;
-      if (satellitesOpen) closeSatellites();
-      else openSatellites(false);
+      const href = getSelectionHref();
+      if (!href) return;
+      window.location.href = href;
+    });
+
+    reopenBtn?.addEventListener("click", () => {
+      if (isAnimating || satellitesOpen) return;
+      openSatellites(false);
     });
 
     satEls.forEach((sat, idx) => {

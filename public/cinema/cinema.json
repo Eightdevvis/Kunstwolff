@@ -22,7 +22,11 @@
           "defaults": {
             "titlePart": "Firmenfeier",
             "text": "Mit dieser Kunst werden Sie in der Lage sein, in Ihrer Firma die Menschen zu ehren, die es wirklich verdienen.",
-            "offer": "Auf Ihrer Firmenfeier sorgen wir für den künstlerischen Höhepunkt, der noch lange in Erinnerung bleibt."
+            "offerItems": [
+              "Passend für Empfänge, Sommerfeste und Mitarbeiter-Events",
+              "Integrierter Auftritt ohne Bühne oder aufwendigen Aufbau",
+              "Auf Wunsch im Look & Feel Ihrer Corporate Identity"
+            ]
           }
         },
         {
@@ -36,7 +40,11 @@
           "defaults": {
             "titlePart": "Messe",
             "text": "An Ihrem Messestand sorgt die Live-Kunst für Aufmerksamkeit und zieht Besucher magnetisch an.",
-            "offer": "An Ihrem Messestand schaffen wir ein Erlebnis, das Besucher anzieht und Ihre Marke unvergesslich macht."
+            "offerItems": [
+              "Tägliche Präsenz an Ihrem Stand über die gesamte Messelaufzeit",
+              "Magnet, der Laufkundschaft aktiv zu Ihrem Stand zieht",
+              "Logo und Motive auf Wunsch im Corporate-Design"
+            ]
           }
         },
         {
@@ -47,7 +55,11 @@
           "defaults": {
             "titlePart": "Hochzeit",
             "text": "An Ihrem besonderen Tag entsteht so ein Kunstwerk, das die Liebe und Freude dieses Moments für immer einfängt.",
-            "offer": "Für Ihre Hochzeit schaffen wir ein persönliches Kunstwerk, das diesen besonderen Tag für immer festhält."
+            "offerItems": [
+              "Dezente Einbindung in Empfang, Dinner oder Abendprogramm",
+              "Persönliche Erinnerung für Brautpaar und Gäste",
+              "Auf Wunsch als Überraschung für das Brautpaar"
+            ]
           }
         },
         {
@@ -58,7 +70,11 @@
           "defaults": {
             "titlePart": "Private Feier",
             "text": "Auf Ihrer privaten Feier wird die Live-Kunst zum Gesprächsthema und schenkt Ihren Gästen ein einzigartiges Erlebnis.",
-            "offer": "Auf Ihrer privaten Feier überraschen wir Ihre Gäste mit Kunst, die den Abend unvergesslich macht."
+            "offerItems": [
+              "Passend für Geburtstage, Jubiläen und Familienfeste",
+              "Unkomplizierter Auftritt ohne großen Aufbau",
+              "Als roter Faden durch den Abend oder als kurzes Highlight"
+            ]
           }
         }
       ]
@@ -80,7 +96,11 @@
           "defaults": {
             "titlePart": "Live-Portraits",
             "text": "Jeder Gast erhält sein eigenes persönliches Kunstwerk – direkt vor seinen Augen entstanden, stundenweise gebucht.",
-            "offer": "Wir zeichnen Ihre Gäste live und stundenlang – jeder geht mit einem einzigartigen Portrait nach Hause."
+            "offerItems": [
+              "Jeder Gast erhält sein eigenes, persönliches Portrait",
+              "Stundenweise buchbar – Umfang und Dauer nach Ihrem Bedarf",
+              "Gäste nehmen ihr Werk direkt mit nach Hause"
+            ]
           }
         },
         {
@@ -90,7 +110,11 @@
           "defaults": {
             "titlePart": "Persönliches Geschenk",
             "text": "Ein aufwendiges, exklusives Portrait für eine oder zwei besondere Personen – als Überraschung oder Ehrung.",
-            "offer": "Wir schaffen ein bleibendes Kunstwerk als persönliches Geschenk – für den Jubilar, das Brautpaar oder eine geehrte Person."
+            "offerItems": [
+              "Ein aufwendiges Portrait für eine oder zwei Ehrenpersonen",
+              "Ideal als Überraschung für Jubilar:in, Brautpaar oder Geehrte",
+              "Feierliche Übergabe vor den Gästen nach der Fertigstellung"
+            ]
           }
         },
         {
@@ -100,7 +124,11 @@
           "defaults": {
             "titlePart": "Gruppenportrait",
             "text": "Ein gemeinsames Kunstwerk für Ihr Team oder Ihre Gesellschaft – etwas, das alle verbindet und lange hängen bleibt.",
-            "offer": "Wir malen Ihr Team oder Ihre Gesellschaft als gemeinsames Portrait – ein Erinnerungsstück, das bleibt."
+            "offerItems": [
+              "Ein gemeinsames Kunstwerk für Team oder Gesellschaft",
+              "Alle Anwesenden werden Teil des finalen Motivs",
+              "Bleibt nach dem Event als gerahmtes Erinnerungsstück"
+            ]
           }
         },
         {
@@ -110,7 +138,11 @@
           "defaults": {
             "titlePart": "Stand-Attraktion",
             "text": "Wir sind tagelang an Ihrem Stand präsent, zeichnen Besucher live und machen Ihren Auftritt unvergesslich.",
-            "offer": "Als Stand-Attraktion sind wir täglich für Sie da – Besucher werden gezeichnet, Gespräche entstehen, Ihr Stand bleibt in Erinnerung."
+            "offerItems": [
+              "Künstler-Präsenz über die gesamte Messelaufzeit",
+              "Besucher werden live porträtiert oder ins Motiv eingebunden",
+              "Jedes Portrait ein Gesprächsanker für Ihr Standpersonal"
+            ]
           }
         }
       ]
@@ -133,8 +165,12 @@
           "defaults": {
             "titlePart": "Schnellzeichner",
             "text": "Unser Schnellzeichner fängt die Stimmung in Sekunden ein – mit lockerer, lebendiger Kunst, die Ihre Gäste begeistert.",
-            "offer": "Lassen Sie sich von unseren Schnellzeichnerinnen verzaubern. Persönliche Kunstwerke entstehen live vor den Augen Ihrer Gäste.",
-            "image": "/img/slides/default/1_schnellzeichner_hq.webp"
+            "image": "/img/slides/default/1_schnellzeichner_hq.webp",
+            "offerItems": [
+              "Lebendiger, humorvoller Zeichenstil mit Wiedererkennungswert",
+              "Ca. 3–5 Minuten pro Portrait – hoher Durchsatz am Event",
+              "Auf hochwertigem Papier, sofort mitnehmbar"
+            ]
           }
         },
         {
@@ -145,8 +181,12 @@
           "defaults": {
             "titlePart": "Szenenmalerin",
             "text": "Unsere Szenenmalerin bereichert die Atmosphäre feierlich und lässt Ihnen ein wahres Kunstwerk als permanente und hochwertige Erinnerung.",
-            "offer": "Buchen Sie unsere Szenenmalerin für ein exklusives Live-Erlebnis. Erlesene Kunst entsteht direkt vor Ihren Augen.",
-            "image": "/img/slides/default/2_karikatur_stadtfest.webp"
+            "image": "/img/slides/default/2_karikatur_stadtfest.webp",
+            "offerItems": [
+              "Klassische Maltechnik mit feierlicher Anmutung",
+              "Aufwendiges Einzelwerk, das den Abend überdauert",
+              "Hochwertig ausgearbeitet – gerahmt oder als Wandarbeit"
+            ]
           }
         }
       ]

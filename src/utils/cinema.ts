@@ -4,12 +4,12 @@
  * Lädt die CinemaWelcome-Konfiguration aus public/cinema/cinema.json.
  *
  * Kompositions-Modell:
- * - Jeder Satellit hat eigene Default-Textbausteine (titlePart, text, offer)
+ * - Jeder Satellit hat eigene Default-Textbausteine (titlePart, text, offerItems)
  * - Das Ergebnis wird zur Laufzeit aus den 3 Auswahlen zusammengesetzt:
- *   Titel:  "{geschmack.titlePart} auf {event.titlePart} für {muse.titlePart}"
- *   Text:   geschmack.text + muse.text + event.text  (feste Reihenfolge)
- *   Offer:  geschmack.offer + muse.offer + event.offer
- *   Bild:   geschmack.defaults.image (Skill-Default)
+ *   Titel:       "{geschmack.titlePart} auf {event.titlePart} für {muse.titlePart}"
+ *   Text:        geschmack.text + muse.text + event.text  (feste Reihenfolge)
+ *   OfferItems:  [...event.offerItems, ...muse.offerItems, ...geschmack.offerItems]
+ *   Bild:        geschmack.defaults.image (Skill-Default)
  * - Overrides: Komplett-Ersatz für eine bestimmte Kombination
  *
  * Datenpfad: public/cinema/cinema.json
@@ -29,8 +29,8 @@ export type SatelliteDefaults = {
   titlePart: string;
   /** Text-Baustein für die Beschreibung (wird mit den anderen 2 Sektionen konkateniert) */
   text: string;
-  /** Text-Baustein für das Angebot (wird mit den anderen 2 Sektionen konkateniert) */
-  offer: string;
+  /** Listenpunkte für das Angebot (werden mit den anderen 2 Sektionen zu einer Bullet-Liste verkettet) */
+  offerItems: string[];
   /** Default-Bild – nur bei Geschmack-Satelliten (Skill-Default-Bild) */
   image?: string;
 };
@@ -85,7 +85,7 @@ export type CinemaResult = {
   imageAlt: string;
   title: string;
   description: string;
-  offer: string;
+  offerItems: string[];
 };
 
 /** Gesamtstruktur der cinema.json */
@@ -114,24 +114,24 @@ const FALLBACK_DATA: CinemaData = {
       id: 'event', title: 'Ihr Event', subtitle: 'auf welches Event dürfen\u00a0wir\u00a0Sie begleiten?',
       mainCircle: FALLBACK_MAIN,
       satellites: [
-        { title: 'Firmenfeier', value: 'firmenfeier', image: '/img/slides/default/1_schnellzeichner_hq.webp', alt: 'Firmenfeier', defaults: { titlePart: 'Firmenfeier', text: '', offer: '' } },
-        { title: 'Hochzeit', value: 'hochzeit', image: '/img/slides/default/3_schnellzeichner-schweiz.webp', alt: 'Hochzeit', defaults: { titlePart: 'Hochzeit', text: '', offer: '' } },
+        { title: 'Firmenfeier', value: 'firmenfeier', image: '/img/slides/default/1_schnellzeichner_hq.webp', alt: 'Firmenfeier', defaults: { titlePart: 'Firmenfeier', text: '', offerItems: [] } },
+        { title: 'Hochzeit', value: 'hochzeit', image: '/img/slides/default/3_schnellzeichner-schweiz.webp', alt: 'Hochzeit', defaults: { titlePart: 'Hochzeit', text: '', offerItems: [] } },
       ],
     },
     {
       id: 'muse', title: 'Ihre Muse', subtitle: 'Wie groß ist Ihre Gesellschaft?',
       mainCircle: FALLBACK_MAIN,
       satellites: [
-        { title: '<25 Gäste', value: 'unter-25', displayMode: 'text', defaults: { titlePart: '<25 Gäste', text: '', offer: '' } },
-        { title: '50–100 Gäste', value: '50-100', displayMode: 'text', defaults: { titlePart: '50–100 Gäste', text: '', offer: '' } },
+        { title: '<25 Gäste', value: 'unter-25', displayMode: 'text', defaults: { titlePart: '<25 Gäste', text: '', offerItems: [] } },
+        { title: '50–100 Gäste', value: '50-100', displayMode: 'text', defaults: { titlePart: '50–100 Gäste', text: '', offerItems: [] } },
       ],
     },
     {
       id: 'geschmack', title: 'Ihr Geschmack', subtitle: 'Welche Kunst passt zu\u00a0Ihnen?',
       mainCircle: FALLBACK_MAIN,
       satellites: [
-        { title: 'locker', value: 'schnellzeichner', image: '/img/slides/default/1_schnellzeichner_hq.webp', alt: 'lockerer Stil', defaults: { titlePart: 'Schnellzeichner', text: '', offer: '', image: '/img/slides/default/1_schnellzeichner_hq.webp' } },
-        { title: 'erlesen', value: 'szenenmaler', image: '/img/slides/default/2_karikatur_stadtfest.webp', alt: 'erlesener Stil', defaults: { titlePart: 'Szenenmalerin', text: '', offer: '', image: '/img/slides/default/2_karikatur_stadtfest.webp' } },
+        { title: 'locker', value: 'schnellzeichner', image: '/img/slides/default/1_schnellzeichner_hq.webp', alt: 'lockerer Stil', defaults: { titlePart: 'Schnellzeichner', text: '', offerItems: [], image: '/img/slides/default/1_schnellzeichner_hq.webp' } },
+        { title: 'erlesen', value: 'szenenmaler', image: '/img/slides/default/2_karikatur_stadtfest.webp', alt: 'erlesener Stil', defaults: { titlePart: 'Szenenmalerin', text: '', offerItems: [], image: '/img/slides/default/2_karikatur_stadtfest.webp' } },
       ],
     },
   ],
@@ -241,15 +241,27 @@ function parseSatellite(raw: unknown): CinemaSatellite | null {
 
 function parseSatelliteDefaults(raw: unknown, fallbackTitle: string): SatelliteDefaults {
   if (!raw || typeof raw !== 'object') {
-    return { titlePart: fallbackTitle, text: '', offer: '' };
+    return { titlePart: fallbackTitle, text: '', offerItems: [] };
   }
   const obj = raw as Record<string, unknown>;
   return {
     titlePart: typeof obj.titlePart === 'string' ? obj.titlePart.trim() : fallbackTitle,
     text: typeof obj.text === 'string' ? obj.text.trim() : '',
-    offer: typeof obj.offer === 'string' ? obj.offer.trim() : '',
+    offerItems: parseOfferItems(obj.offerItems),
     image: typeof obj.image === 'string' ? obj.image.trim() : undefined,
   };
+}
+
+/** Liest offerItems als Array nicht-leerer Strings; fremde Typen werden ignoriert. */
+function parseOfferItems(raw: unknown): string[] {
+  if (!Array.isArray(raw)) return [];
+  const items: string[] = [];
+  for (const entry of raw) {
+    if (typeof entry !== 'string') continue;
+    const trimmed = entry.trim();
+    if (trimmed) items.push(trimmed);
+  }
+  return items;
 }
 
 function parseOverrides(raw: unknown): Record<string, CinemaResult> | null {
@@ -269,7 +281,7 @@ function parseResult(raw: unknown): CinemaResult | null {
   const imageAlt = typeof obj.imageAlt === 'string' ? obj.imageAlt.trim() : '';
   const title = typeof obj.title === 'string' ? obj.title.trim() : '';
   const description = typeof obj.description === 'string' ? obj.description.trim() : '';
-  const offer = typeof obj.offer === 'string' ? obj.offer.trim() : '';
+  const offerItems = parseOfferItems(obj.offerItems);
   if (!title) return null;
-  return { image, imageAlt, title, description, offer };
+  return { image, imageAlt, title, description, offerItems };
 }
