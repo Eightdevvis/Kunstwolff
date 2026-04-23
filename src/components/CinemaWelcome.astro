@@ -201,7 +201,6 @@ const satelliteData = {
           <p class="cw-card-back-hint">Ihre Empfehlung</p>
         </div>
         <div class="cw-result-card-front">
-          <p class="cw-result-summary" id="cw-result-summary"></p>
           <ul class="cw-result-offer" id="cw-result-offer" role="list"></ul>
           <a href="#contact" class="cw-result-cta" id="cw-result-cta">Termin jetzt anfragen</a>
         </div>
@@ -784,16 +783,6 @@ const satelliteData = {
     justify-content: center;
   }
 
-  .cw-result-summary {
-    font-family:    'Mayonice', serif;
-    font-size:      clamp(1rem, 1.8vw, 1.4rem);
-    color:          rgba(255,255,255,0.45);
-    font-weight:    400;
-    letter-spacing: 0.01em;
-    margin:         0 0 clamp(20px, 2.5vw, 32px);
-    line-height:    1.4;
-  }
-
   .cw-result-offer {
     font-family: var(--font-body, 'Inter', sans-serif);
     font-size:   clamp(0.95rem, 1.5vw, 1.1rem);
@@ -1021,7 +1010,6 @@ const satelliteData = {
   const resultImg     = document.getElementById("cw-result-img") as HTMLImageElement | null;
   const resultTitle   = document.getElementById("cw-result-title");
   const resultDesc    = document.getElementById("cw-result-description");
-  const resultSummary = document.getElementById("cw-result-summary");
   const resultOffer   = document.getElementById("cw-result-offer");
   const resultCta     = document.getElementById("cw-result-cta") as HTMLAnchorElement | null;
 
@@ -1097,13 +1085,10 @@ const satelliteData = {
     if (resultTitle) resultTitle.textContent = title;
     if (resultDesc)  resultDesc.textContent  = description;
 
-    // Zusammenfassung: z.B. "„Szenenmalerin" auf „Firmenfeier" für „50–100 Gäste""
+    // Zusammenfassung weiterhin für das Kontakt-Prefill aufbauen (nicht mehr sichtbar auf der Karte)
     const skillTitle = selectionTitles.geschmack || selections.geschmack;
     const eventTitle = selectionTitles.event || selections.event;
     const museTitle  = selectionTitles.muse || selections.muse;
-    if (resultSummary) {
-      resultSummary.textContent = `\u201E${skillTitle}\u201C auf \u201E${eventTitle}\u201C f\u00fcr \u201E${museTitle}\u201C`;
-    }
     if (resultOffer) {
       resultOffer.innerHTML = "";
       for (const item of offerItems) {
