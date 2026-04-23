@@ -8,6 +8,11 @@
         { "label": "Szenenmaler", "url": "/szenenmaler/" }
       ]
     },
+    { "label": "Über uns", "children": [
+        { "label": "Referenzen", "url": "/referenzen/" },
+        { "label": "Partner", "url": "/partner/" }
+      ]
+    },
     { "label": "FAQ", "url": "#faq" },
     { "label": "Anfrage", "url": "#contact", "cta": true }
   ]

@@ -25,7 +25,7 @@
   margin-top: auto;
   width: 100%;
   background: #000;
-  padding: 24px 40px;
+  padding: 24px max(40px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(40px, env(safe-area-inset-left));
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -50,5 +50,23 @@
 
 .footer-right a:hover {
   opacity: 1;
+}
+
+@media (max-width: 560px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .footer-right {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+  }
+
+  .footer-right a {
+    margin-left: 0;
+  }
 }
 </style>

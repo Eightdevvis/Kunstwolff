@@ -5,7 +5,7 @@ const { titleImage = '/img/Titelbild/titelbild.avif', titleImageAlt = 'Kunstwolf
 <style>
 .hero {
   width: 100%;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100dvh - 60px);
   background: var(--hero-bg-image) center / cover no-repeat;
 
   display: flex;
@@ -53,15 +53,16 @@ const { titleImage = '/img/Titelbild/titelbild.avif', titleImageAlt = 'Kunstwolf
 .hero-band {
   transform: translateY(20vh);
   background: rgba(0, 0, 0, 0.55);
-  padding: 32px 48px;
-  max-width: 1000px;
+  padding: clamp(20px, 5vw, 32px) clamp(20px, 6vw, 48px);
+  max-width: min(1000px, 100%);
+  box-sizing: border-box;
   text-align: center;
 }
 
 
 .hero-band p {
-  font-size: 18px;
-  letter-spacing: 0.18em; 
+  font-size: clamp(0.75rem, 2.8vw, 18px);
+  letter-spacing: clamp(0.08em, 1.2vw, 0.18em);
   margin-top: 8px;
   font-weight: 10;
   /* Alternative (wirkte harmonischer mit Navigation):
@@ -74,7 +75,8 @@ const { titleImage = '/img/Titelbild/titelbild.avif', titleImageAlt = 'Kunstwolf
 .hero-band h1 {
   font-family: Mayonice;
   font-weight: 200;
-  font-size: 80px;
+  font-size: clamp(2.5rem, 14vw, 80px);
+  line-height: 1.05;
   margin-bottom: 16px;
 }
 </style>
