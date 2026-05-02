@@ -1,28 +1,28 @@
 {
   "benefits": [
     {
-      "title": "",
-      "text": "",
-      "image": "",
-      "alt": ""
+      "title": "Ihr Geschmack",
+      "text": "Für humorvolle Stimmung oder eine stilvolle Erinnerung - wählen Sie unsere passende Kunstform für Ihr live-Event!",
+      "image": "/img/why/default/benefit-1/hochzeitsmaler.webp",
+      "alt": "hochzeitsmaler.webp"
     },
     {
       "title": "Interaktiv & unvergesslich",
-      "text": "Ihre Gäste erleben Kunst live und nehmen eine individuelle Erinnerung mit nach Hause.",
-      "image": "",
-      "alt": ""
+      "text": "Ihre Gäste werden Teil der Kunst-Aktion und erhalten eine individuelle Erinnerung für ihr zuhause.",
+      "image": "/img/why/default/benefit-2/sample2.webp",
+      "alt": "Interaktiv & unvergesslich"
     },
     {
-      "title": "",
-      "text": "",
-      "image": "",
-      "alt": ""
+      "title": "Branding möglich",
+      "text": "Jedes Thema, Auto, Beruf oder Hobby kann mit in die Zeichnung fließen,\nsowie der vorherige Aufdruck des Firmen-Logos auf das Zeichenpapier, wie auch Widmungen, Namen etc.",
+      "image": "/img/why/default/benefit-3/sample3.webp",
+      "alt": "Gebrandete Karikatur mit Firmenlogo"
     },
     {
-      "title": "",
-      "text": "",
-      "image": "",
-      "alt": ""
+      "title": "Das Format das sie brauchen",
+      "text": "Die klassische Kohlezeichnung auf Papier, das Gemälde auf Leinwand, die digitale Beamer, Tablet oder direkt auf großem Monitor - mit unserem Repertoire finden Sie die passende Kunst für Ihr Event!",
+      "image": "/img/why/default/benefit-4/sample4.webp",
+      "alt": "Digitaler Schnellzeichner zeichnet auf Tablet"
     }
   ]
 }
