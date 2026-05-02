@@ -1,28 +1,28 @@
 {
   "benefits": [
     {
-      "title": "",
-      "text": "",
-      "image": "",
-      "alt": ""
+      "title": "Ihr Geschmack",
+      "text": "Für die auflockernde Unterhaltung oder wenn elegante Stimmung gewünscht ist, für Ihr Event bringen wir die passende Kunstform mit.\n",
+      "image": "/img/why/default/benefit-1/hochzeitsmaler.webp",
+      "alt": "hochzeitsmaler.webp"
     },
     {
       "title": "Interaktiv & unvergesslich",
-      "text": "Ihre Gäste erleben Kunst live und nehmen eine individuelle Erinnerung mit nach Hause.",
-      "image": "",
-      "alt": ""
+      "text": "Ihre Gäste werden Teil der live-Kunst und nehmen eine individuelle Erinnerung mit. Auf Wunsch kann jedes Thema, Motto oder Hobby mit in die Zeichnung integriert werden. Lassen Sie Ihre Mitarbeiter den Charakter des jeweils zu Zeichnenden beschreiben: Spaß garantiert!",
+      "image": "/img/why/default/benefit-2/sample2.webp",
+      "alt": "Interaktiv & unvergesslich"
     },
     {
-      "title": "",
-      "text": "",
-      "image": "",
-      "alt": ""
+      "title": "Branding möglich",
+      "text": "Ihr Firmen-Logo, Hashtag oder Event-Motto kann auf Wunsch vorab auf das Zeichenpapier gedruckt werden - perfekt für Corporate Events.",
+      "image": "/img/why/default/benefit-3/sample3.webp",
+      "alt": "Gebrandete Karikatur mit Firmenlogo"
     },
     {
-      "title": "",
-      "text": "",
-      "image": "",
-      "alt": ""
+      "title": "Das Format das sie brauchen",
+      "text": "Repertoire:\nKohlezeichnung auf Papier\nAcryl/Marker auf Leinwand\ndigitale Schnellzeichnung mit dem Tablet-PC und Beamer oder auf den digitalen Samsung Flip-Chart ",
+      "image": "/img/why/default/benefit-4/sample4.webp",
+      "alt": "Digitaler Schnellzeichner zeichnet auf Tablet"
     }
   ]
 }
