@@ -184,24 +184,29 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "priority": 1
+    "priority": 1,
+    "alt": "paar mit lustiger paarzeichnung im armstrongs club"
   },
   "kaiserslautern/2_colleagues-present-their-funny-quick-portrait-of-a-caricature-artist-at-a-party-pfalz.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "priority": 2
+    "priority": 2,
+    "alt": "2 kollegen paesentieren iher witzige karikatur als elfe und frosch"
   },
   "kaiserslautern/3_speedpainter-event-armstrong´s-club-kaiserslautern.webp": {
-    "categories": [],
-    "priority": 3
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 3,
+    "alt": "schnellzeichnerin zeichnet bei event im armstrongs club kaiserslautern"
   },
   "kaiserslautern/4_karikaturist-betriebsfeier-kleine-alm-landgasthaus-bremerhof-kaiserslautern.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
-    "priority": 4
+    "priority": 4,
+    "alt": "karikaturistin zeichnet surealistische zeichnung von mitarbeiter als kubus"
   },
   "kaiserslautern/5_live-artist-party-kaiserslautern.webp": {
     "categories": [],
