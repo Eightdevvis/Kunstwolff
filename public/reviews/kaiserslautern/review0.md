@@ -1,6 +1,6 @@
 ---
-author: "Max Mustermann"
+author: "Petrit Ismajli"
 categories:
   - Schnellzeichner
 ---
-kaiserslautern schnellzeichner
+Wundervolle Kunst von tollen Künstlerinnen!
