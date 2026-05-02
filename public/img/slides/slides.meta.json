@@ -542,5 +542,39 @@
       "Szenenmaler"
     ],
     "priority": 9
+  },
+  "saarland/zeichnung-als-harry-potter-von-illustratorin-saarland.jpg": {
+    "categories": [],
+    "priority": 1
+  },
+  "saarland/saarlouis-grosser-markt-karikaturist.jpg": {
+    "categories": [],
+    "priority": 15
+  },
+  "saarland/brautpaar-zeigt-hochzeits-zeichnung-von-schnellzeichner-bistro-bagatelle-saarland.jpg": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 1,
+    "alt": "brautpaar mit hochzeitskarikatur im bistro bagat"
+  },
+  "saarland/grosseltern-mit-baby-familien-portraet-hochzeitsfeier-linslerhof-saarland.jpg": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 1,
+    "alt": "grosseltern mit enkel und familienkarikatur bei hochzeit linslerhof"
+  },
+  "saarland/frau-zeigt-lachend-ihr-schnell-portrtraet-betriebsfest-saarland.jpg": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 1,
+    "alt": "lustiges frauenportrait saarland"
+  },
+  "saarland/frau-zeigt-zeichnung-von-karikaturistin-betriebsfeier-angelweiher-gresaubach-schmelz-saarland.jpg": {
+    "categories": [],
+    "priority": 1,
+    "alt": "witzige frauenkarikatur saarland"
   }
 }
