@@ -1,28 +1,28 @@
 {
   "benefits": [
     {
-      "title": "Ihr Geschmack",
+      "title": "",
       "text": "Für den Spaß oder eine elegante Stimmung, für Ihr Event bringen wir die passende Kunstform mit:\nKarikatur, Modezeichnung oder Szenenmalerei",
-      "image": "/img/why/default/benefit-1/hochzeitsmaler.webp",
-      "alt": "hochzeitsmaler.webp"
+      "image": "",
+      "alt": ""
     },
     {
       "title": "Interaktiv & unvergesslich",
       "text": "Ihre Gäste erleben live-Kunst  und bekommen eine individuelle Erinnerung mit.",
-      "image": "/img/why/default/benefit-2/sample2.webp",
+      "image": "",
       "alt": "Interaktiv & unvergesslich"
     },
     {
-      "title": "Branding möglich",
+      "title": "",
       "text": "Auf Wunsch kann das Firmen Logo vorab auf den Zeichen-Karton gedruckt werden, sowie Namen, Widmungen, Motto der Veranstaltung etc..",
-      "image": "/img/why/default/benefit-3/sample3.webp",
-      "alt": "Gebrandete Karikatur mit Firmenlogo"
+      "image": "",
+      "alt": ""
     },
     {
-      "title": "Das Format das sie brauchen",
-      "text": "Technik:\nKohlezeichnung auf Papier im Format-DIN A3\nAquarell-Zeichnung auf Aquarell-Karton im Format DIN A5'\nAcryl auf Leinwand\ndigitale Schnellzeichnungen mit dem Tablet und Beamer oder dem digitalen Flipchart Samsung Flip 2\n",
-      "image": "/img/why/default/benefit-4/sample4.webp",
-      "alt": "Digitaler Schnellzeichner zeichnet auf Tablet"
+      "title": "",
+      "text": "Technik:\nKohlezeichnung auf Papier im Format-DIN A3\nAquarell-Zeichnung auf Aquarell-Karton im Format DIN A5'\nAcryl auf Leinwand\ndigitale Schnellzeichnungen mit dem Tablet und Beamer oder dem digitalen Flipchart Samsung Flip 2",
+      "image": "",
+      "alt": ""
     }
   ]
 }

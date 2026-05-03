@@ -1,28 +1,28 @@
 {
   "benefits": [
     {
-      "title": "Ihr Geschmack",
+      "title": "",
       "text": "Für lustige Unterhaltung oder für die stilvolle Attraktion, wir bieten die passenden Kunstformate genau für Ihr Event.",
-      "image": "/img/why/default/benefit-1/hochzeitsmaler.webp",
-      "alt": "hochzeitsmaler.webp"
+      "image": "",
+      "alt": ""
     },
     {
       "title": "Interaktiv & unvergesslich",
       "text": "Ihre Gäste erleben live-Zeichnen oder ein live-Gemälde und erhalten gleichzeitig eine individuelles Give-Away.",
-      "image": "/img/why/default/benefit-2/sample2.webp",
+      "image": "",
       "alt": "Interaktiv & unvergesslich"
     },
     {
-      "title": "Branding möglich",
+      "title": "",
       "text": "Es ist möglich, das Zeichenpapier vorab zu bedrucken mit dem Thema der Veranstaltung, Firmenlogo, Namen, Datum oder Widmungen.",
-      "image": "/img/why/default/benefit-3/sample3.webp",
-      "alt": "Gebrandete Karikatur mit Firmenlogo"
+      "image": "",
+      "alt": ""
     },
     {
       "title": "Auswahl an Techniken:",
-      "text": "klassische karikatur auf Papier\nAquarell-Portraits auf Zeichenkarton\nAcryl auf Leinwand\ndigitale Karikaturen mit Beamer oder auf dem digital Flipchart\n",
-      "image": "/img/why/default/benefit-4/sample4.webp",
-      "alt": "Digitaler Schnellzeichner zeichnet auf Tablet"
+      "text": "klassische karikatur auf Papier\nAquarell-Portraits auf Zeichenkarton\nAcryl auf Leinwand\ndigitale Karikaturen mit Beamer oder auf dem digital Flipchart",
+      "image": "",
+      "alt": ""
     }
   ]
 }
