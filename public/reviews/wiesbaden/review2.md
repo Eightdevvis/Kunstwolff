@@ -1,5 +1,5 @@
 ---
-author: "Selina Ciaffoni"
+author: "Selina Ciaffoni, Äppelallee-Center"
 categories:
   - Schnellzeichner
 ---
