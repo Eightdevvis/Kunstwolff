@@ -378,26 +378,31 @@
   },
   "saarbruecken/1_live-karikatur-zeichnen-paar-sylvester-spielbank-saarbruecken-schnellzeichnerin.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
-    "priority": 1
+    "priority": 1,
+    "alt": "paerchen sitzt mit seiner sylvester karikatur in spielbank saarbruecken"
   },
   "saarbruecken/2_live-karikaturen-syvlvester-saarbruecken.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "priority": 2
+    "priority": 2,
+    "alt": "schnellzeichnung von paarr mit hintergrund von sylvester und roulette"
   },
   "saarbruecken/3_live-portraetzeichnen-im-forsthaus-neuhaus-kuenstlerin-zeichnet-gaeste.webp": {
-    "categories": [],
-    "priority": 3
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 3,
+    "alt": "schnellzeichnerin zeichnet 2 mitarbeiterinnen am tisch bei betriebsfeier in scheune neuhaus saarbruecken"
   },
   "saarbruecken/4_paarzeichnung-von-schnellzeichner-kunst-aktion-europa-galerie-saarbruecken.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "priority": 4
+    "priority": 4,
+    "alt": "paar zeigt seine lustigen schnellportraets in europa galerie saarbruecken"
   },
   "saarbruecken/5_schnellzeichner-weihnachtsfeier-saarlandtherme-saarbruecken-1.webp": {
     "categories": [
