@@ -1,5 +1,5 @@
 ---
-author: "Thomas Hoffmann"
+author: "Thomas Hoffmann, Hilton Gravenbruch"
 categories:
   - Schnellzeichner
   - Szenenmaler
