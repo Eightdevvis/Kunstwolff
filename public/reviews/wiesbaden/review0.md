@@ -1,5 +1,5 @@
 ---
-author: "Annette Maniere"
+author: "Annette Maniere, Domäne Mechthildshausen"
 categories:
   - Schnellzeichner
 ---
