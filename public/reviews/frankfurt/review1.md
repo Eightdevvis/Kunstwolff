@@ -1,5 +1,5 @@
 ---
-author: "Gabriele Frank"
+author: "Gabriele Frank, Hilton Gravenbruch"
 categories:
   - Schnellzeichner
 ---
