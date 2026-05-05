@@ -25,6 +25,12 @@ const siteUrl = process.env.SITE_URL ?? "https://kunstwolff.de";
 // `isPageHiddenByPath()` für `<meta robots noindex>`.
 const visibilityConfigPath = path.resolve('./public/config/page-visibility.json');
 
+/**
+ * Normalisiert einen Pfad-String: Query/Hash entfernen, trailing Slashes
+ * weg, leerer Pfad → "/". Gibt null zurück, wenn die Eingabe ungültig ist.
+ * @param {unknown} input
+ * @returns {string | null}
+ */
 const normalizePagePath = (input) => {
   const raw = String(input ?? '').trim();
   if (!raw) return null;
@@ -34,13 +40,19 @@ const normalizePagePath = (input) => {
   return trimmed === '' ? '/' : trimmed;
 };
 
+/**
+ * Liest die Liste der hidden Pfade aus page-visibility.json.
+ * Bei fehlender Datei oder Parse-Fehler: leeres Set (defensive).
+ * @returns {Set<string>}
+ */
 const readHiddenSet = () => {
-  if (!fs.existsSync(visibilityConfigPath)) return new Set();
+  /** @type {Set<string>} */
+  const out = new Set();
+  if (!fs.existsSync(visibilityConfigPath)) return out;
   try {
     const raw = fs.readFileSync(visibilityConfigPath, 'utf-8');
     const parsed = JSON.parse(raw);
     const hidden = Array.isArray(parsed?.hidden) ? parsed.hidden : [];
-    const out = new Set();
     for (const item of hidden) {
       if (typeof item !== 'string') continue;
       const normalized = normalizePagePath(item);
@@ -49,7 +61,7 @@ const readHiddenSet = () => {
     }
     return out;
   } catch {
-    return new Set();
+    return out;
   }
 };
 
@@ -61,7 +73,9 @@ export default defineConfig({
   integrations: [
     preact(),
     sitemap({
-      filter: (page) => {
+      // page kommt von @astrojs/sitemap als string ODER {url, …}-Objekt,
+      // je nach Astro-Version. Beide Formen unterstützen.
+      filter: (/** @type {string | { url?: string }} */ page) => {
         const url = typeof page === 'string' ? page : page?.url;
         if (!url) return true;
         try {
