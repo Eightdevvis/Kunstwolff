@@ -6,6 +6,23 @@ import path from 'path';
 import preact from "@astrojs/preact";
 import sitemap from "@astrojs/sitemap";
 
+// ─── Site-Host pro Umgebung ───────────────────────────────────────────────────
+// `site` wird zur BUILD-Zeit fest in Sitemap, Canonical-Links und OG-URLs
+// reingeschrieben. Damit der Build auf der Vercel-Stage NICHT auf die Wix-
+// Domain (kunstwolff.de) verweist (was Crawler in 404-Land schicken würde,
+// solange dort noch Wix läuft), liest die Konfig die Env-Variable SITE_URL.
+//
+// Vercel-Env (Project Settings → Environment Variables):
+//   SITE_URL=https://kunstwolff.vercel.app   (Stage)
+// Beim Cutover dann auf https://www.kunstwolff.de stellen, alternativ
+// Variable löschen → Fallback unten greift.
+const siteUrl = process.env.SITE_URL ?? "https://kunstwolff.de";
+
+// ─── Page-Visibility ──────────────────────────────────────────────────────────
+// `public/config/page-visibility.json` listet Pfade die aus der Sitemap
+// rausgefiltert werden sollen (vom Admin-Tool gepflegt). Wird zur Build-Zeit
+// einmal eingelesen. Layout.astro liest dieselbe Liste runtime via
+// `isPageHiddenByPath()` für `<meta robots noindex>`.
 const visibilityConfigPath = path.resolve('./public/config/page-visibility.json');
 
 const normalizePagePath = (input) => {
@@ -40,7 +57,7 @@ const hiddenPaths = readHiddenSet();
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://kunstwolff.de",
+  site: siteUrl,
   integrations: [
     preact(),
     sitemap({

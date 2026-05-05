@@ -13,7 +13,26 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = image && Astro.site ? new URL(image, Astro.site).href : undefined;
-const shouldNoindex = noindex || isPageHiddenByPath(Astro.url.pathname);
+
+// ─── Robots-Meta: Production-Host-Whitelist + Page-Visibility ────────────────
+// Eine Seite bekommt noindex/nofollow, wenn EINE der drei Bedingungen zutrifft:
+//   (1) explizite `noindex`-Prop vom aufrufenden Layout (z.B. EventLayout)
+//   (2) der Pfad ist in `public/config/page-visibility.json` als hidden
+//       markiert (Admin-Tool steuert das); Sitemap-Filter in astro.config.mjs
+//       blendet dieselben Pfade aus dem sitemap.xml aus
+//   (3) der aktuelle Host ist NICHT in der Production-Whitelist
+//       (kunstwolff.de + www.kunstwolff.de). Dadurch wird die Vercel-Stage
+//       (`kunstwolff.vercel.app`), Branch-Previews und der Dev-Server
+//       automatisch noindex – Crawler-Trap LIVE-3 entschärft, siehe
+//       memory/seo.md.
+// Wenn `Astro.site` undefined ist (defensive: jemand zerschießt die Konfig)
+// → ebenfalls noindex.
+const PRODUCTION_HOSTS = new Set(["kunstwolff.de", "www.kunstwolff.de"]);
+const isProductionHost =
+  !!Astro.site && PRODUCTION_HOSTS.has(Astro.site.host);
+const shouldNoindex =
+  noindex || isPageHiddenByPath(Astro.url.pathname) || !isProductionHost;
+const robotsContent = shouldNoindex ? "noindex, nofollow" : "index, follow";
 ---
 
 <!doctype html>
@@ -31,10 +50,10 @@ const shouldNoindex = noindex || isPageHiddenByPath(Astro.url.pathname);
 		<link rel="icon" type="image/webp" href="/img/logo/logo_transparent.webp" />
 		<link rel="apple-touch-icon" href="/img/logo/logo_transparent.webp" />
 		<link rel="canonical" href={canonicalURL} />
+		<meta name="robots" content={robotsContent} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<meta name="description" content={description} />
-		<meta name="robots" content={shouldNoindex ? "noindex, nofollow" : "index, follow"} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonicalURL} />
@@ -48,4 +67,3 @@ const shouldNoindex = noindex || isPageHiddenByPath(Astro.url.pathname);
 		<Footer />
 	</body>
 </html>
-

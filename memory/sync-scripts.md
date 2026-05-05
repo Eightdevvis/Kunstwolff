@@ -1,0 +1,67 @@
+# Sync-Scripts
+
+## Wann laufen sie?
+
+`sync:content:safe` läuft automatisch als `predev` und `prebuild` – also vor `npm run dev` und `npm run build`. Manuell:
+
+```bash
+npm run sync:content       # alle Syncs nacheinander (bricht bei Fehler ab)
+npm run sync:content:safe  # fehlertolerant (Teilfehler isoliert, Build/Dev läuft weiter)
+```
+
+**Wichtig:** Das automatische `predev`/`prebuild` nutzt `:safe`. `sync:content` (ohne `:safe`) ist nur für manuelle Aufrufe gedacht, wenn Fehler hart auffallen sollen.
+
+## Reihenfolge & Aufgabe pro Script
+
+`sync:content` führt **in dieser Reihenfolge** aus:
+
+| # | Script | Was es tut |
+| :-- | :-- | :-- |
+| 1 | `sync-landings.mjs` | Erstellt `public/img/slides/{city}/`, `public/reviews/{city}/`, `public/faq/{city}/`; merged Slug-Kollisionen; legt Validierungsreports in `reports/validation/` ab |
+| 2 | `sync-skills.mjs` | Erstellt `public/img/UnsereFähigkeitenBilder/{skill}/` |
+| 3 | `sync-title-images.mjs` | Erstellt `public/img/Titelbild/{city}/` |
+| 4 | `sync-slides-metadata.mjs` | Pflegt `slides.meta.json` (Priority-Prefix, Categories, Migration) |
+| 5 | `sync-why.mjs` | Erstellt `public/why/{city}.json`, `public/why/{skill}.json`, `public/img/why/{key}/benefit-{1-4}/` |
+| 6 | `sync-events.mjs` | Erstellt `public/img/slides/events/{event}/`, `public/img/Titelbild/events/{event}/`, `public/events/{event}/content.json` (bestehende NICHT überschreiben) |
+| 7 | `sync-erinnerungen.mjs` | Erstellt `public/erinnerungen/{city}.json`, `public/erinnerungen/{skill}.json` (bestehende NICHT überschreiben) |
+
+## Garantien
+
+- **Keine Datenverluste** – bestehende `content.json`/`why.json`/`erinnerungen.json` werden nie überschrieben
+- **Slug-Kollisions-Handling** in `sync-landings.mjs` – `Berlin` + `berlin` werden zu `berlin` gemerged, nichts wird gelöscht
+- **Priority-Schutz** – `sync-slides-metadata.mjs` überschreibt `priority` nicht
+
+## Einzelne Sync-Befehle
+
+```bash
+npm run sync:landings        # nur Stadtordner
+npm run sync:skills          # nur Skill-Bildordner
+npm run sync:title-images    # nur Titelbild-Ordner
+npm run sync:slides          # nur slides.meta.json
+npm run sync:why             # nur Why-JSONs + Bildordner
+npm run sync:events          # nur Events-Ordner
+npm run sync:erinnerungen    # nur Erinnerungen-JSONs
+```
+
+## GitHub Action: `sync-landings.yml`
+
+Liegt unter `.github/workflows/sync-landings.yml`.
+
+**Trigger:** Push zu `main` wenn `public/landings/landings.md` oder `public/skills/skills.json` geändert. Plus `workflow_dispatch` (manuell auslösbar).
+
+**Macht:**
+1. Checkout, Node 20 setup, `npm ci`
+2. `npm run sync:content` (volle Variante, nicht `:safe`)
+3. `git add` über die generierten Verzeichnisse (siehe Lücke unten), Commit `chore: sync content folders`, Push
+
+So müssen Endbenutzer nach Eintragen einer neuen Stadt nicht lokal builden – die Action macht alles.
+
+### Bekannte Lücken (Stand 2026-05-05, siehe `HEALTH_CHECK_2026-05-05.md` SYNC-1/2/3)
+
+- **Trigger ist unvollständig:** Reagiert nicht auf Änderungen an `public/events/events.json`. Wer einen Event eintragt, sieht den Sync erst beim nächsten Push einer triggernden Datei oder per `workflow_dispatch`.
+- **`git add` ist unvollständig:** Erfasst `public/img/slides`, `public/reviews`, `public/img/UnsereFähigkeitenBilder`, `public/img/Titelbild`, `public/img/why`, `public/why`, `public/faq`. Es **fehlen** `public/erinnerungen/` (von `sync:erinnerungen` erzeugt) und `public/events/` (von `sync:events` für Event-`content.json`-Defaults erzeugt). Folge: Stubs entstehen im CI-Workspace, kommen aber nicht ins Repo zurück.
+- **Kein Build/Typecheck im CI:** Die Action committet Sync-Output ohne `astro check` / `astro build`. Ein durch den Sync erzeugter kaputter JSON fällt erst lokal oder beim Vercel-Deploy auf.
+
+## Validierungsreports
+
+`sync:landings` schreibt nach jedem Lauf einen Report nach `reports/validation/landings/<timestamp>.json`. Details: `validierungsreports.md`.

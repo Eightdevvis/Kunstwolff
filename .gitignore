@@ -25,3 +25,4 @@ pnpm-debug.log*
 
 # VS Code Local History (auto-generated, should not be tracked)
 .history/
+.vercel

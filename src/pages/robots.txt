@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /admin/
-Disallow: /testseite/
-Sitemap: https://www.kunstwolff.de/sitemap.xml

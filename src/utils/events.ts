@@ -283,13 +283,26 @@ export const getEventSlides = (slug: string): EventSlideItem[] => {
       return !all.includes(`${path.basename(fileName, ext)}.webp`);
     });
 
+  // Interner Hilfstyp: priority ist intern IMMER gesetzt (Default 0), wird aber
+  // am Ende weggemappt. Außerdem: title/categories werden hier explizit als
+  // `T | undefined` modelliert (statt optional `T?`), damit der Type-Guard im
+  // .filter() unten ohne `exactOptionalPropertyTypes`-Reibung greift.
+  type InternalEventSlide = {
+    src: string;
+    alt: string;
+    title: string | undefined;
+    categories: string[] | undefined;
+    priority: number;
+  };
+
   return fileNames
-    .map((fileName) => {
+    .map((fileName): InternalEventSlide | null => {
       // Metadata-Key: "events/{slug}/dateiname.webp"
       const metaKey = normalizeMetadataKey(`${folderKey}/${fileName}`);
       const meta = metadata[metaKey] as Record<string, unknown> | undefined;
       const enabled = meta?.enabled !== false;
 
+      // enabled === false → Slide komplett ausblenden (per .filter unten weg)
       if (!enabled) return null;
 
       const categories = Array.isArray(meta?.categories)
@@ -310,11 +323,14 @@ export const getEventSlides = (slug: string): EventSlideItem[] => {
         title,
         categories: categories.length > 0 ? categories : undefined,
         priority,
-      } satisfies EventSlideItem;
+      };
     })
-    .filter((item): item is EventSlideItem => item !== null)
-    .sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0) || a.src.localeCompare(b.src))
-    .map(({ priority: _, ...slide }) => slide); // priority aus Rückgabe entfernen (intern only)
+    // Type-Guard greift jetzt sauber: Predicate-Typ === Map-Output-Typ
+    .filter((item): item is InternalEventSlide => item !== null)
+    // .priority ist hier garantiert number, kein `?? 0` nötig
+    .sort((a, b) => b.priority - a.priority || a.src.localeCompare(b.src))
+    // priority aus Rückgabe entfernen (intern only); Rest erfüllt EventSlideItem
+    .map(({ priority: _priority, ...slide }) => slide);
 };
 
 // ─── Event-Titelbild ──────────────────────────────────────────────────────────
