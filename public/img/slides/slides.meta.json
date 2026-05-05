@@ -366,31 +366,24 @@
     "categories": [],
     "priority": 9
   },
-  "mainz/cartoon-by-speed-painter-alte-lokhalle-mainz.jpg": {
+  "mainz/cartoon-by-speed-painter-alte-lokhalle-mainz.webp": {
+    "categories": []
+  },
+  "mainz/schnellzeichner-dinner-event-alte-lokhalle-mainz.webp": {
     "categories": [
       "Schnellzeichner"
-    ],
-    "priority": 4
+    ]
   },
-  "mainz/schnellzeichner-dinner-event-alte-lokhalle-mainz.jpg": {
+  "mainz/schnellzeichnerin-von-tisch-zu-tisch-betreibsfeier-alte-lokhalle-mainz.webp": {
     "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 1
+      "Schnellzeichner",
+      "Szenenmaler"
+    ]
   },
-  "mainz/schnellzeichnerin-von-tisch-zu-tisch-betreibsfeier-alte-lokhalle-mainz.jpg": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 1
+  "mainz/walking-act-company-party-mainz.webp": {
+    "categories": []
   },
-  "mainz/walking-act-company-party-mainz.jpg": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 2
-  },
-  "neunkirchen/kuenstlerin-zeichnet-paar-hochzeit-neunkirchen.jpg": {
+  "neunkirchen/kuenstlerin-zeichnet-paar-hochzeit-neunkirchen.webp": {
     "categories": []
   },
   "saarbruecken/1_live-karikatur-zeichnen-paar-sylvester-spielbank-saarbruecken-schnellzeichnerin.webp": {
@@ -442,81 +435,71 @@
     ],
     "priority": 8
   },
-  "saarland/brautpaar-zeigt-hochzeits-zeichnung-von-schnellzeichner-bistro-bagatelle-saarland.jpg": {
+  "saarland/brautpaar-zeigt-hochzeits-zeichnung-von-schnellzeichner-bistro-bagatelle-saarland.webp": {
     "categories": [
       "Schnellzeichner"
-    ],
-    "priority": 1
+    ]
   },
-  "saarland/frau-zeigt-lachend-ihr-schnell-portrtraet-betriebsfest-saarland.jpg": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 1
-  },
-  "saarland/frau-zeigt-zeichnung-von-karikaturistin-betriebsfeier-angelweiher-gresaubach-schmelz-saarland.jpg": {
-    "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
-    ],
-    "priority": 1
-  },
-  "saarland/grosseltern-mit-baby-familien-portraet-hochzeitsfeier-linslerhof-saarland.jpg": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 1
-  },
-  "saarland/hochzeits-kalerin-zeichnet-hochzeitspaar-menschenhaus-neunkirchen-saarland.jpg": {
+  "saarland/frau-zeigt-lachend-ihr-schnell-portrtraet-betriebsfest-saarland.webp": {
     "categories": []
   },
-  "saarland/karikatur-chef-de-la-cuisine-weihnachtsfest-annaheim-wiebelskirchen-saarland.jpg": {
+  "saarland/frau-zeigt-zeichnung-von-karikaturistin-betriebsfeier-angelweiher-gresaubach-schmelz-saarland.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ]
+  },
+  "saarland/grosseltern-mit-baby-familien-portraet-hochzeitsfeier-linslerhof-saarland.webp": {
+    "categories": []
+  },
+  "saarland/hochzeits-kalerin-zeichnet-hochzeitspaar-menschenhaus-neunkirchen-saarland.webp": {
+    "categories": []
+  },
+  "saarland/karikatur-chef-de-la-cuisine-weihnachtsfest-annaheim-wiebelskirchen-saarland.webp": {
     "categories": [
       "Schnellzeichner"
     ]
   },
-  "saarland/karikaturist-saarwellingen.jpg": {
+  "saarland/karikaturist-saarwellingen.webp": {
     "categories": [
       "Schnellzeichner",
       "Szenenmaler"
     ]
   },
-  "saarland/kolleginnen-zeigen-gemeinsame-karikatur-als-camper-sommerfeier-event-angelweiher-gresaubach.jpg": {
+  "saarland/kolleginnen-zeigen-gemeinsame-karikatur-als-camper-sommerfeier-event-angelweiher-gresaubach.webp": {
     "categories": [
       "Schnellzeichner"
     ]
   },
-  "saarland/lustige-portraetzeichnung-paar-saarparkcenter-neunkirchen.jpg": {
+  "saarland/lustige-portraetzeichnung-paar-saarparkcenter-neunkirchen.webp": {
     "categories": []
   },
-  "saarland/lustige-zeichnung-mutter-und-kind-von-speed-painter-saarparkxenter-neunkirchen.jpg": {
+  "saarland/lustige-zeichnung-mutter-und-kind-von-speed-painter-saarparkxenter-neunkirchen.webp": {
     "categories": []
   },
-  "saarland/mann-zeigt-zeichnung-von-karikaturisten-neon-party-eppelborn-saarland.jpg": {
+  "saarland/mann-zeigt-zeichnung-von-karikaturisten-neon-party-eppelborn-saarland.webp": {
     "categories": [
       "Schnellzeichner",
       "Szenenmaler"
     ]
   },
-  "saarland/mitarbeiterin-zeigt-ihr-schnell-portrait-weihnachtsfeier-annaheim-wiebelskirchen.jpg": {
+  "saarland/mitarbeiterin-zeigt-ihr-schnell-portrait-weihnachtsfeier-annaheim-wiebelskirchen.webp": {
     "categories": []
   },
-  "saarland/paae-mit-baby-familie-karikatur-von-schnellzeichnerin-hochzeitsparty-linslerhof-ueberherrn-saarland.jpg": {
+  "saarland/paae-mit-baby-familie-karikatur-von-schnellzeichnerin-hochzeitsparty-linslerhof-ueberherrn-saarland.webp": {
     "categories": [
       "Schnellzeichner",
       "Szenenmaler"
     ]
   },
-  "saarland/saarlouis-grosser-markt-karikaturist.jpg": {
+  "saarland/saarlouis-grosser-markt-karikaturist.webp": {
     "categories": [
       "Schnellzeichner",
       "Szenenmaler"
-    ],
-    "priority": 15
+    ]
   },
-  "saarland/zeichnung-als-harry-potter-von-illustratorin-saarland.jpg": {
-    "categories": [],
-    "priority": 1
+  "saarland/zeichnung-als-harry-potter-von-illustratorin-saarland.webp": {
+    "categories": []
   },
   "trier/1_2-kollegen-zeigen-froehlich-ihre-karikaturzeichnung-mit-bierglas-auf-der-weihnachtsfeier-in-tommys-teufelskueche-trier.webp": {
     "categories": [
@@ -642,38 +625,29 @@
     ],
     "priority": 9
   },
-  "wiesbaden/ehepaar-karikatur-von-schnellzeichner-geburtstag-feier-mainz.jpg": {
+  "wiesbaden/ehepaar-karikatur-von-schnellzeichner-geburtstag-feier-mainz.webp": {
     "categories": [
       "Schnellzeichner"
-    ],
-    "priority": 1
+    ]
   },
-  "wiesbaden/funny-cartoon-from-caricaturist-family-celebration-mainz.jpg": {
+  "wiesbaden/funny-cartoon-from-caricaturist-family-celebration-mainz.webp": {
     "categories": []
   },
-  "wiesbaden/karikatur-chef-und-zwei-engel-event-geburtstag-domaene-mechthildshausen.jpg": {
+  "wiesbaden/karikatur-chef-und-zwei-engel-event-geburtstag-domaene-mechthildshausen.webp": {
     "categories": [
       "Schnellzeichner"
-    ],
-    "priority": 1
+    ]
   },
-  "wiesbaden/lustige-zeichnung-familienportraet-familienfeier-wiesbaden.jpg": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 1
+  "wiesbaden/lustige-zeichnung-familienportraet-familienfeier-wiesbaden.webp": {
+    "categories": []
   },
-  "wiesbaden/mann-zeigt-froh-paar-zeichnung-von-karikaturist-event-mainz.jpg": {
+  "wiesbaden/mann-zeigt-froh-paar-zeichnung-von-karikaturist-event-mainz.webp": {
     "categories": [
       "Schnellzeichner",
       "Szenenmaler"
-    ],
-    "priority": 4
+    ]
   },
-  "wiesbaden/witziges-schnell-portrait-als-fussballer-und-cheerleader-von-event-zeichner-wiesbaden-domaene-mechthildshausen.jpg": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 1
+  "wiesbaden/witziges-schnell-portrait-als-fussballer-und-cheerleader-von-event-zeichner-wiesbaden-domaene-mechthildshausen.webp": {
+    "categories": []
   }
 }
