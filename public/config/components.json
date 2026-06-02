@@ -23,6 +23,9 @@
       "contact": true,
       "faq": true,
       "landingsection": true
+    },
+    "kaiserslautern": {
+      "faq": false
     }
   },
   "event": {
