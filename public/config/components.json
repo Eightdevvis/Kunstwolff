@@ -25,7 +25,7 @@
       "landingsection": true
     },
     "kaiserslautern": {
-      "faq": false
+      "faq": true
     }
   },
   "event": {
