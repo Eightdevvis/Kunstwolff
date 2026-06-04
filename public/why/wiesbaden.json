@@ -1,16 +1,16 @@
 {
   "benefits": [
     {
-      "title": "",
-      "text": "",
-      "image": "",
-      "alt": ""
+      "title": "Passende Unterhaltung für jeden Anlass",
+      "text": "Von herzhaftem Lachen bis zu einer edlen Atmosphäre: Wir sorgen mit der richtigen Kunstform für den gewünschten Rahmen.\n",
+      "image": "/img/why/default/benefit-1/hochzeitsmaler.webp",
+      "alt": "hochzeitsmaler.webp"
     },
     {
       "title": "Interaktiv & unvergesslich",
       "text": "Ihre Gäste erleben Kunst live und nehmen eine individuelle Erinnerung mit nach Hause.",
-      "image": "",
-      "alt": ""
+      "image": "/img/why/default/benefit-2/sample2.webp",
+      "alt": "Interaktiv & unvergesslich"
     },
     {
       "title": "",
