@@ -4,6 +4,10 @@ dist/
 # generated types
 .astro/
 
+# Validierungs-Reports: sync-landings.mjs schreibt bei jedem Lauf eine neue
+# timestamped JSON-Datei -> sollen nicht die Git-History zumüllen.
+reports/validation/landings/*.json
+
 # dependencies
 node_modules/
 
