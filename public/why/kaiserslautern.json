@@ -1,28 +1,28 @@
 {
   "benefits": [
     {
-      "title": "",
+      "title": "Ihr Geschmack",
       "text": "Für die lustigen Momente oder für die gediegene Stimmung, für Ihr Event bringen wir die passende Bild-Kunst.\nDie Schnellzeichner können in englisch kommunizieren, für begleitende Konversation auch französisch und spanisch, sowie chinesisch.",
-      "image": "",
-      "alt": ""
+      "image": "/img/why/default/benefit-1/hochzeitsmaler.webp",
+      "alt": "hochzeitsmaler.webp"
     },
     {
       "title": "Interaktiv & unvergesslich",
       "text": "Ihre Gäste erleben Kunst live und erhalten so eine bleibende individuelle Erinnerung an das Event.\nDie Bilder können auf Wunsch mit dem Motto des Events gestaltet werden, wie auch mit persönlichem Hobby, Beruf, Reise etc.\nWas passt zu Ihrem Gästen?",
-      "image": "",
+      "image": "/img/why/default/benefit-2/sample2.webp",
       "alt": "Interaktiv & unvergesslich"
     },
     {
-      "title": "",
+      "title": "Branding möglich",
       "text": "Bei Bedarf kann der Zeichen-Karton mit dem Firmenlogo gedrucjt werden, sowie Slogans, Datum und Namen, Widmungen. \nGenauso kann die Zeichnung kombiniert werden mit vorab gedruckten Firmen spezifischen Elementen, wie z.B: Fahrzeuge, Bauteile etc.",
-      "image": "",
-      "alt": ""
+      "image": "/img/why/default/benefit-3/sample3.webp",
+      "alt": "Gebrandete Karikatur mit Firmenlogo"
     },
     {
-      "title": "",
-      "text": "",
-      "image": "",
-      "alt": ""
+      "title": "Das Format das sie brauchen",
+      "text": "klassische Kohlezeichnung auf Zeichenkarton oder digitale Schnellzeichnung mit dem Tablet-PC und Beamer auf Leinwand. Teilen Sie uns Ihre Wünsche mit!",
+      "image": "/img/why/default/benefit-4/sample4.webp",
+      "alt": "Digitaler Schnellzeichner zeichnet auf Tablet"
     }
   ]
 }
