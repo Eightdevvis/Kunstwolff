@@ -8,6 +8,9 @@ const steps = [
   { name: 'sync:why', script: 'scripts/sync-why.mjs' },
   { name: 'sync:events', script: 'scripts/sync-events.mjs' },
   { name: 'sync:erinnerungen', script: 'scripts/sync-erinnerungen.mjs' },
+  // Guard läuft hier nur als Warnung (Script bleibt tolerant/exit 0); hart
+  // blockiert wird er über `sync:content` im pre-commit-Hook.
+  { name: 'validate:images', script: 'scripts/validate-image-refs.mjs' },
 ];
 
 const failures = [];
