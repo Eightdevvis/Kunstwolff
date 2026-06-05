@@ -1,38 +1,37 @@
-# CinemaWelcome (Startseiten-Orbit)
+# CinemaWelcome (Startseiten-Konfigurator)
 
-Die CinemaWelcome-Komponente auf der Startseite besteht aus einem Intro-Block + 3 Orbit-Sektionen, jeweils mit großem Hauptkreis und 1–6 Satelliten-Kreisen.
+Interaktiver Konfigurator auf der Startseite (und auf Landings, wenn `cinemaWelcome` in `components.json` aktiv). Der Besucher wählt nacheinander **Event → Wunsch (Muse) → Geschmack**; am Ende wird ein personalisiertes Angebot zusammengesetzt.
+
+Aufbau: Intro-Block + 3 Orbit-Sektionen (Hauptkreis + Satelliten-Buttons) + Ergebnis-Sektion (zwei Flip-Karten).
 
 ## Quelle
 
-`public/cinema/cinema.json`
+`public/cinema/cinema.json` — direkt zur Build-Zeit gelesen, **kein Sync-Script**.
 
 ## Struktur
 
 ```json
 {
-  "intro": {
-    "title": "Willkommen",
-    "subtitle": "Erzählen Sie uns doch etwas über sich."
-  },
+  "intro": { "title": "Willkommen", "subtitle": "…" },
   "sections": [
     {
+      "id": "event",
       "title": "Ihr Event",
-      "subtitle": "auf welches Event dürfen wir Sie begleiten?",
-      "mainCircle": {
-        "image": "/img/pfad/zum/bild.webp",
-        "alt": "Alt-Text",
-        "hint": "Entdecken"
-      },
+      "subtitle": "…",
+      "mainCircle": { "image": "/img/….webp", "alt": "…", "hint": "Entdecken" },
       "satellites": [
         {
-          "title": "Schnellzeichner",
-          "image": "/img/slides/default/1_schnellzeichner_hq.webp",
-          "link": "/schnellzeichner/",
-          "alt": "Live Schnellzeichner für Events"
+          "value": "messe",
+          "title": "Messe",
+          "image": "/img/….webp",
+          "alt": "…",
+          "defaults": { "titlePart": "Messe", "text": "…", "offerItems": ["…"] },
+          "autoSelect": { "muse": "stand-attraktion" }
         }
       ]
     }
-  ]
+  ],
+  "overrides": {}
 }
 ```
 
@@ -40,32 +39,53 @@ Die CinemaWelcome-Komponente auf der Startseite besteht aus einem Intro-Block + 
 
 | Ebene | Feld | Pflicht | Beschreibung |
 | :-- | :-- | :-- | :-- |
-| `intro` | `title` | ja | Titel Willkommen-Block (Mayonice-Font) |
-| `intro` | `subtitle` | ja | Untertitel Willkommen-Block |
-| `sections[]` | `title` | ja | Sektions-Überschrift (h2, Mayonice-Font) |
-| `sections[]` | `subtitle` | ja | Sektions-Untertitel |
-| `mainCircle` | `image` | ja | Pfad zum Bild des großen Kreises (relativ zu `public/`) |
-| `mainCircle` | `alt` | ja | Alt-Text Hauptkreis |
-| `mainCircle` | `hint` | nein | Text bei Hover (Default: "Entdecken") |
-| `satellites[]` | `title` | ja | Label-Text (erscheint bei Hover) |
-| `satellites[]` | `image` | ja | Pfad zum Bild |
-| `satellites[]` | `link` | ja | Ziel-URL beim Klick |
-| `satellites[]` | `alt` | nein | Alt-Text (Fallback: `title`) |
+| `sections[]` | `id` | ja | **`event` / `muse` / `geschmack`** – fest, von der Logik per ID gesucht |
+| `sections[]` | `title` / `subtitle` | ja/– | Überschrift / Untertitel |
+| `mainCircle` | `image` / `alt` / `hint` | ja/ja/nein | großer Mittelkreis |
+| `satellites[]` | `value` | ja | logischer Auswahl-Wert (z.B. `firmenfeier`, `stand-attraktion`, `schnellzeichner`) |
+| `satellites[]` | `title` | ja | Label / Hover-Text |
+| `satellites[]` | `image` | bedingt | Bild-Satellit. **Pflicht, außer** `displayMode:"text"` |
+| `satellites[]` | `displayMode` | nein | `"text"` = goldener Text-Kreis statt Bild (Muse-Sektion) |
+| `satellites[]` | `defaults` | ja | Bausteine für die Ergebnis-Komposition (s.u.) |
+| `satellites[]` | `autoSelect` | nein | `{ sektionsId: value }` – setzt andere Sektion automatisch + überspringt sie |
+| `defaults` | `titlePart` | ja | Anteil am zusammengesetzten Titel |
+| `defaults` | `text` | – | Beschreibungs-Baustein |
+| `defaults` | `offerItems` | – | Bullet-Punkte fürs Angebot |
+| `defaults` | `image` | nur Geschmack | Default-Ergebnisbild (Skill-Bild) |
+| `overrides` | Key `"{geschmack}-{event}-{muse}"` | – | Komplett-Ersatz-Ergebnis für eine exakte Kombination |
+
+## Ergebnis-Komposition (Laufzeit, im `<script>` der .astro)
+
+Ohne passenden `override`:
+- **Titel:** `{geschmack.titlePart} auf {event.titlePart} für {muse.titlePart}`
+- **Text:** `geschmack.text + muse.text + event.text` (feste Reihenfolge)
+- **Angebot:** `[...event.offerItems, ...muse.offerItems, ...geschmack.offerItems]`
+- **Bild:** `geschmack.defaults.image`
+
+Das Ergebnis füllt zusätzlich ein Kontakt-Prefill in `sessionStorage` (`cinemaContactPrefill_v1`), das `Contact.astro` ausliest.
+
+## autoSelect — "Messe überspringt die Wunsch-Sektion" ⚠️ STOLPERFALLE
+
+Wählt der Besucher einen Satelliten mit `autoSelect` (aktuell nur **Messe → `{muse: "stand-attraktion"}`**), wird die Muse-Sektion automatisch gesetzt und übersprungen → direkt zur Geschmack-Sektion.
+
+**Bug-Historie (Fix 2026-06-05):** `parseSatellite()` in `cinema.ts` hat `autoSelect` **nicht** mitgeparst, obwohl der Typ `CinemaSatellite` es deklariert. Folge: Feld kam nie im Client-Data an, der Skip-Flow griff nie, nach Messe erschien fälschlich die Muse-Sektion. **Lehre:** Jedes neue `satellites[]`-Feld muss in DREI Stellen leben, sonst fällt es still raus:
+1. Typ `CinemaSatellite` (`cinema.ts`)
+2. **Parser `parseSatellite()`** (`cinema.ts`) ← hier ging's verloren
+3. Client-Projektion `satelliteData` (im Frontmatter der `.astro`, baut das `window.__cinemaSatelliteData`)
 
 ## Regeln
 
-- `sections` muss **genau 3 Einträge** haben
-- Pro Sektion: **1–6 Satelliten** (CSS-Layout-Limit)
-- Hauptkreis (`mainCircle`) kann nicht entfernt werden – nur Bild/Alt/Hint editierbar
-- Layout (welche Sektion reversed ist, Positionierung) ist im Code fest – nicht in der JSON
+- `sections` = **genau 3** (`event`, `muse`, `geschmack`), sonst Fallback pro Slot
+- Pro Sektion **1–6 Satelliten** (CSS-Layout-Limit; Event/Geschmack nutzen 4 Positionen links, Muse 6 im Vollkreis)
+- Bei fehlender/kaputter JSON: Fallback-Daten in `cinema.ts` (`FALLBACK_DATA`)
 
 ## Technische Details
 
-- Geladen von `src/utils/cinema.ts` (`getCinemaData()`) zur Build-Zeit
-- Verwendet in `src/components/CinemaWelcome.astro`
-- **Robuste Validierung:** bei fehlender/kaputter JSON greift automatisch ein Fallback (Schnellzeichner + Szenenmaler)
-- **Kein Sync-Script** nötig – Datei wird direkt gelesen
+- Loader: `src/utils/cinema.ts` → `getCinemaData()` (Build-Zeit, robuste Parser pro Feld)
+- Komponente: `src/components/CinemaWelcome.astro` (CSS + Client-`<script>` orchestriert Intro/Sektionen/Ergebnis via IntersectionObserver)
+- Hauptkreis-Klick navigiert bei `event`/`geschmack` zu `/{value}/` (Event-Landing bzw. Skill-Seite); `muse` navigiert nicht
+- Browser-getestet via Playwright (Happy Path + Messe-Skip), s. Commit `a6d185c`
 
 ## Admin-Tool
 
-Kann `cinema.json` **nicht** verwalten (geplant).
+Kann `cinema.json` **nicht** verwalten (geplant) — Änderungen aktuell manuell.

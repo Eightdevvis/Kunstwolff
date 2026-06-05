@@ -25,7 +25,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [FAQs](content-faqs.md) – Markdown-Format, Filterung
 - [Why-Sektion](content-why.md) – JSON-Format, Fallback-Kette, Bilder
 - [Erinnerungen](content-erinnerungen.md) – Pinnwand-Fotos, Fallback-Kette
-- [CinemaWelcome](content-cinema.md) – Startseiten-Orbit, `cinema.json`
+- [CinemaWelcome](content-cinema.md) – Startseiten-Konfigurator (Event→Wunsch→Geschmack), `cinema.json`, autoSelect, Ergebnis-Komposition
 - [Navigation](content-navigation.md) – `navigation.json`
 - [Referenzlogos](content-referenzlogos.md) – Auto-Discovery aus `referenzenLogos/`
 
