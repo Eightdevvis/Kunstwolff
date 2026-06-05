@@ -235,8 +235,24 @@ function parseSatellite(raw: unknown): CinemaSatellite | null {
   if (!displayMode && !image) return null;
 
   const defaults = parseSatelliteDefaults(obj.defaults, title);
+  const autoSelect = parseAutoSelect(obj.autoSelect);
 
-  return { title, value, image, alt, displayMode, defaults };
+  return { title, value, image, alt, displayMode, defaults, ...(autoSelect ? { autoSelect } : {}) };
+}
+
+/**
+ * AutoSelect-Map { sektionsId: satellitenValue } – nur String→String-Paare.
+ * Muss hier explizit geparst werden, sonst fällt das Feld aus der cinema.json
+ * heraus und der "Messe überspringt Wunsch-Sektion"-Flow in CinemaWelcome
+ * greift nie (Client sieht autoSelect = undefined).
+ */
+function parseAutoSelect(raw: unknown): Record<string, string> | undefined {
+  if (!raw || typeof raw !== 'object') return undefined;
+  const out: Record<string, string> = {};
+  for (const [key, val] of Object.entries(raw as Record<string, unknown>)) {
+    if (typeof val === 'string' && val.trim()) out[key] = val.trim();
+  }
+  return Object.keys(out).length > 0 ? out : undefined;
 }
 
 function parseSatelliteDefaults(raw: unknown, fallbackTitle: string): SatelliteDefaults {
