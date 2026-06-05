@@ -10,11 +10,11 @@ const { references = [] } = Astro.props as { references?: Reference[] };
 
 // Default Referenzen / Logos + Bilder
 const DEFAULT_REFERENCES: Reference[] = [
-  { title: "BMW", image: "/img/samples/sample1.jpeg", alt: "BMW Event" },
-  { title: "Siemens", image: "/img/samples/sample2.jpeg", alt: "Siemens Event" },
-  { title: "Sony", image: "/img/samples/sample3.jpeg", alt: "Sony Event" },
-  { title: "Deutsche Bank", image: "/img/samples/sample4.jpeg", alt: "Deutsche Bank Event" },
-  { title: "Internationale Messen", image: "/img/samples/sample1.jpeg", alt: "Internationale Messe Auftritte" },
+  { title: "BMW", image: "/img/samples/sample1.webp", alt: "BMW Event" },
+  { title: "Siemens", image: "/img/samples/sample2.webp", alt: "Siemens Event" },
+  { title: "Sony", image: "/img/samples/sample3.webp", alt: "Sony Event" },
+  { title: "Deutsche Bank", image: "/img/samples/sample4.webp", alt: "Deutsche Bank Event" },
+  { title: "Internationale Messen", image: "/img/samples/sample1.webp", alt: "Internationale Messe Auftritte" },
 ];
 
 const list = references.length ? references : DEFAULT_REFERENCES;

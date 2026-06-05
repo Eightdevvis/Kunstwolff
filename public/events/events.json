@@ -3,7 +3,7 @@
     {
       "title": "Firmenfeier",
       "slug": "firmenfeier",
-      "image": "/img/samples/sample1.jpeg",
+      "image": "/img/samples/sample1.webp",
       "heroTitle": "Live-Kunst auf Ihrer Firmenfeier",
       "description": "Professionelle Eventkünstler für Corporate Events und Firmenfeiern. Live-Karikaturen und Szenenmalerei als Highlight für Ihr Team. Jetzt Kunstwolff buchen!",
       "categories": ["Schnellzeichner", "Szenenmaler"]
@@ -11,7 +11,7 @@
     {
       "title": "Messe",
       "slug": "messe",
-      "image": "/img/samples/sample2.jpeg",
+      "image": "/img/samples/sample2.webp",
       "heroTitle": "Live-Kunst an Ihrem Messestand",
       "description": "Kunstwolff auf Messen: Live-Zeichnen als Besuchermagnet. Mehr Verweildauer, mehr Kontakte, mehr Wirkung für Ihren Messeauftritt.",
       "categories": ["Schnellzeichner", "Szenenmaler"]
@@ -19,7 +19,7 @@
     {
       "title": "Hochzeit",
       "slug": "hochzeit",
-      "image": "/img/samples/sample3.jpeg",
+      "image": "/img/samples/sample3.webp",
       "heroTitle": "Live-Kunst auf Ihrer Hochzeit",
       "description": "Live-Karikaturen und Szenenmalerei auf Hochzeiten. Charmante Porträts von Brautpaar und Gästen – ein besonderes Andenken an Ihren schönsten Tag.",
       "categories": ["Schnellzeichner", "Szenenmaler"]
@@ -27,7 +27,7 @@
     {
       "title": "Private Feier",
       "slug": "private-feier",
-      "image": "/img/samples/sample4.jpeg",
+      "image": "/img/samples/sample4.webp",
       "heroTitle": "Live-Kunst für Ihre private Feier",
       "description": "Live-Kunst für Geburtstage, Jubiläen und private Feiern. Ein Schnellzeichner oder Szenenmaler sorgt für lockere Stimmung und individuelle Erinnerungen.",
       "categories": ["Schnellzeichner", "Szenenmaler"]

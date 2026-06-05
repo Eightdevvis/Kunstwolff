@@ -56,25 +56,25 @@ export const getWhyBenefits = (skill?: string, landing?: string): WhyBenefit[] =
     {
       title: 'Echte Künstler - keine Agentur',
       text: 'Sie buchen uns direkt - ohne Vermittlung. Persönlicher Kontakt, klare Absprachen und professionelle Umsetzung.',
-      image: '/img/samples/sample1.jpeg',
+      image: '/img/samples/sample1.webp',
       alt: 'Live Künstler von Kunstwolff beim Zeichnen',
     },
     {
       title: 'Interaktiv & unvergesslich',
       text: 'Ihre Gäste erleben Kunst live und nehmen eine individuelle Erinnerung mit nach Hause.',
-      image: '/img/samples/sample2.jpeg',
+      image: '/img/samples/sample2.webp',
       alt: 'Gäste lachen während Schnellzeichner live zeichnet',
     },
     {
       title: 'Branding möglich',
       text: 'Logo, Hashtag oder Event-Motto integrieren wir direkt in jede Zeichnung - perfekt für Corporate Events.',
-      image: '/img/samples/sample3.jpeg',
+      image: '/img/samples/sample3.webp',
       alt: 'Gebrandete Karikatur mit Firmenlogo',
     },
     {
       title: 'Digital & klassisch',
       text: 'Ob Papier, iPad oder auch großem Monitor - wir passen uns Ihrem Eventkonzept flexibel an.',
-      image: '/img/samples/sample4.jpeg',
+      image: '/img/samples/sample4.webp',
       alt: 'Digitaler Schnellzeichner zeichnet auf Tablet',
     },
   ];

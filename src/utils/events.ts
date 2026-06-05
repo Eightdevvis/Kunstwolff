@@ -26,7 +26,7 @@ const eventTitelbildRoot = path.resolve('./public/img/Titelbild/events');
 const slidesMetadataPath = path.resolve('./public/img/slides/slides.meta.json');
 
 const allowedImageExtensions = new Set(['.avif', '.gif', '.jpeg', '.jpg', '.png', '.webp']);
-const fallbackImage = '/img/samples/sample1.jpeg';
+const fallbackImage = '/img/samples/sample1.webp';
 
 // ─── Typen ────────────────────────────────────────────────────────────────────
 
@@ -339,7 +339,7 @@ export const getEventSlides = (slug: string): EventSlideItem[] => {
  * Gibt das Titelbild eines Events zurück.
  *
  * Sucht in public/img/Titelbild/events/{slug}/ nach dem ersten verfügbaren Bild.
- * Fallback: /img/samples/sample1.jpeg
+ * Fallback: /img/samples/sample1.webp
  */
 export const resolveEventTitleImage = (slug: string): string => {
   const folderPath = path.join(eventTitelbildRoot, slug);

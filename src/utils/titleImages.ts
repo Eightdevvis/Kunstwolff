@@ -4,7 +4,7 @@ import path from 'path';
 const titleRoot = path.resolve('./public/img/Titelbild');
 const titleMetadataPath = path.join(titleRoot, 'title.meta.json');
 const allowedExtensions = new Set(['.avif', '.webp', '.png', '.jpg', '.jpeg', '.gif']);
-const fallbackImage = '/img/samples/sample1.jpeg';
+const fallbackImage = '/img/samples/sample1.webp';
 
 const transliterateGerman = (value: string): string =>
   String(value)
