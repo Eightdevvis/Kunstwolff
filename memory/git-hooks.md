@@ -39,4 +39,8 @@ Konvertiert alle Bilder in `public/img/` zu WebP (einmalig/manuell). Sinnvoll f�
 
 ## Wichtig fürs Admin-Tool
 
-Das Admin-Tool **bypassed** die Pre-Push-Hooks (es schreibt direkt via GitHub API). Das heißt: Bilder, die das Admin-Tool hochlädt, werden **nicht** automatisch zu WebP konvertiert. Siehe `admin-tool.md`.
+Das Admin-Tool **bypassed** die Pre-Push-Hooks (es schreibt direkt via GitHub API). Früher hieß das: Admin-Uploads blieben unkonvertiert als `.jpg`/`.png` im Repo.
+
+**Seit 2026-06-05 geschlossen:** Das Admin-Tool konvertiert Bilder jetzt **browser-seitig vor dem Upload** zu WebP (`Kunstwolff-admin/src/utils/imageWebp.ts`, genutzt von allen 4 Bild-Managern). Konvertiert nur jpg/png; svg/gif/webp/avif bleiben. Damit landen Admin-Uploads bereits als WebP im Repo, auch ohne Hook. Details: `Kunstwolff-admin/memory/publish-workflow.md`.
+
+Der Pre-Push-Hook (`optimize-all-images`) bleibt als zweites Netz: ein lokaler Push konvertiert nachträglich alle verbliebenen Nicht-WebP-Bilder im gesamten `public/img/`-Baum. Siehe auch `admin-tool.md`.
