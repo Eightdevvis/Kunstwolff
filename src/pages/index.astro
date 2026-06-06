@@ -22,12 +22,16 @@ const show = (id: string) => isComponentEnabled('homepage', '', id);
 const homepageSlides = getHomepageSlides();
 const titleImage = resolveTitleImage();
 
+// WEB-012: Schema-URLs aus Astro.site (= SITE_URL) statt hardcoded kunstwolff.de,
+// konsistent zu Canonical/OG im Layout (Stage → vercel.app, Cutover → kunstwolff.de).
+const site = Astro.site?.origin ?? 'https://kunstwolff.de';
+
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Kunstwolff",
   "description": "Eventkünstler seit über 20 Jahren – Schnellzeichner, Szenenmaler & Live-Performance für Firmenfeiern, Messen und Hochzeiten.",
-  "url": "https://kunstwolff.de",
+  "url": site,
   "telephone": "+491736677229",
   "address": {
     "@type": "PostalAddress",
@@ -37,7 +41,7 @@ const localBusinessSchema = {
     "addressCountry": "DE"
   },
   "areaServed": ["DE", "AT", "CH", "LU", "BE"],
-  "image": "https://kunstwolff.de/img/logo/logo_transparent.webp",
+  "image": `${site}/img/logo/logo_transparent.webp`,
   "priceRange": "€€"
 };
 
