@@ -31,3 +31,4 @@ heidelberg
 giessen
 dortmund
 neunkirchen
+fulda
