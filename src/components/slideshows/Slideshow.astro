@@ -352,6 +352,18 @@ const filteredItems =
         });
     };
 
+    // WEB-005: EIN globaler resize-Handler (einmal pro Window) statt einer pro
+    // Slider – sonst akkumulieren die Listener bei Astro-View-Transitions und
+    // referenzieren detachten DOM. Recalc für alle aktuell vorhandenen Slider.
+    if (!(window as unknown as { __kwSlideshowResizeBound?: boolean }).__kwSlideshowResizeBound) {
+        (window as unknown as { __kwSlideshowResizeBound?: boolean }).__kwSlideshowResizeBound = true;
+        window.addEventListener("resize", () => {
+            document.querySelectorAll<HTMLElement>(".mySwiper").forEach((host) =>
+                syncUniformImageHeights(host),
+            );
+        });
+    }
+
     // =====================================================================
     // SLIDER INIT
     // =====================================================================
@@ -407,7 +419,7 @@ const filteredItems =
             });
 
             recalcUniformHeight();
-            window.addEventListener("resize", recalcUniformHeight);
+            // (resize wird global gebunden, s.o. – nicht pro Slider, sonst Leak)
 
             new Swiper(host, {
                 modules: [Autoplay, Navigation, Pagination],
