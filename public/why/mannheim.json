@@ -2,9 +2,9 @@
   "benefits": [
     {
       "title": "Die passende Kunst für Ihre Gäste",
-      "text": "Ob ausgelassene Stimmung oder stilvolle Eleganz – wir schaffen den richtigen Rahmen für besondere Momente.\n",
+      "text": "Ob ausgelassene Stimmung oder stilvolle Eleganz – wir schaffen den richtigen Rahmen für besondere Momente.",
       "image": "",
-      "alt": "hochzeitsmaler.webp"
+      "alt": ""
     },
     {
       "title": "Eine einzigartige Erinnerung",
@@ -16,13 +16,13 @@
       "title": "Dezentes Branding im Bild",
       "text": "Das Firmenlogo wird elegant in den Hintergrund oder einen grafischen Rahmen eingebettet. So verbinden sich Persönlichkeit und Unternehmensauftritt.",
       "image": "",
-      "alt": "Gebrandete Karikatur mit Firmenlogo"
+      "alt": ""
     },
     {
-      "title": "Das Format das sie brauchen",
-      "text": "Papier, Leinwand, Beamer, Tablet oder direkt auf großem Monitor - mit unserem Repertoire passen wir uns Ihrem Eventkonzept flexibel an.",
+      "title": "",
+      "text": "",
       "image": "",
-      "alt": "Digitaler Schnellzeichner zeichnet auf Tablet"
+      "alt": ""
     }
   ]
 }

@@ -5,6 +5,12 @@
     ],
     "priority": 2
   },
+  "belgique/caricaturiste-belgique.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 2
+  },
   "default/1_schnellzeichner_hq.webp": {
     "categories": [
       "Schnellzeichner"
@@ -371,6 +377,19 @@
   "mainz/walking-act-company-party-mainz.webp": {
     "categories": []
   },
+  "mannheim/karikaturist-mannheim-q6q7.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "priority": 1
+  },
+  "mannheim/vater-zeigt-witzige-familien-zeichnungvon-schnellzeichner-eroeffnungsfeier-mr.-wash-mannheim.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 2
+  },
   "neunkirchen/kuenstlerin-zeichnet-paar-hochzeit-neunkirchen.webp": {
     "categories": []
   },
@@ -634,17 +653,5 @@
   },
   "wiesbaden/witziges-schnell-portrait-als-fussballer-und-cheerleader-von-event-zeichner-wiesbaden-domaene-mechthildshausen.webp": {
     "categories": []
-  },
-  "mannheim/karikaturist-mannheim-q6q7.webp": {
-    "categories": [],
-    "priority": 1
-  },
-  "mannheim/vater-zeigt-witzige-familien-zeichnungvon-schnellzeichner-eroeffnungsfeier-mr.-wash-mannheim.webp": {
-    "categories": [],
-    "priority": 2
-  },
-  "belgique/caricaturiste-belgique.webp": {
-    "categories": [],
-    "priority": 2
   }
 }

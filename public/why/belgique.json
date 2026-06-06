@@ -2,9 +2,9 @@
   "benefits": [
     {
       "title": "Une prestation artistique au diapason de votre humeur",
-      "text": "Vous souhaitez faire sourire vos invités ou créer une atmosphère élégante ? Nous vous proposons la prestation idéale.\n",
+      "text": "Vous souhaitez faire sourire vos invités ou créer une atmosphère élégante ? Nous vous proposons la prestation idéale.",
       "image": "",
-      "alt": "hochzeitsmaler.webp"
+      "alt": ""
     },
     {
       "title": "Interaktiv & unvergesslich",
@@ -13,16 +13,16 @@
       "alt": "Interaktiv & unvergesslich"
     },
     {
-      "title": "Branding möglich",
-      "text": "Logo, Hashtag oder Event-Motto integrieren wir direkt in jede Zeichnung - perfekt für Corporate Events.",
+      "title": "",
+      "text": "",
       "image": "",
-      "alt": "Gebrandete Karikatur mit Firmenlogo"
+      "alt": ""
     },
     {
-      "title": "Das Format das sie brauchen",
-      "text": "Papier, Leinwand, Beamer, Tablet oder direkt auf großem Monitor - mit unserem Repertoire passen wir uns Ihrem Eventkonzept flexibel an.",
+      "title": "",
+      "text": "",
       "image": "",
-      "alt": "Digitaler Schnellzeichner zeichnet auf Tablet"
+      "alt": ""
     }
   ]
 }
