@@ -40,6 +40,12 @@ const normalizeAlt = (fileName: string): string =>
     .replace(/[_-]+/g, ' ')
     .trim();
 
+// WEB-011: normalizeAlt liefert bei rein numerischen Dateinamen (z.B.
+// "1000018280.webp" → "1000018280" oder "123_.webp" → "") einen wertlosen
+// Alt-Text. Dann ein sinnvoller, generischer Default für A11y/SEO.
+export const slideAltFallback = (alt: string): string =>
+  alt && !/^\d+$/.test(alt) ? alt : 'Live-Kunst von Kunstwolff';
+
 const normalizeMetadataKey = (value: string): string => value.replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
 
 const metadataExtensionFallbacks = ['.webp', '.jpg', '.jpeg', '.png', '.avif', '.gif'];
@@ -187,7 +193,7 @@ const readFolderSlides = (folderName: string): SlideItem[] => {
 
       return {
         src: `/img/slides/${encodePathSegment(folderName)}/${encodePathSegment(entry)}`,
-        alt: itemMetadata?.altOverride || normalizeAlt(entry),
+        alt: itemMetadata?.altOverride || slideAltFallback(normalizeAlt(entry)),
         title: itemMetadata?.title,
         categories: categories.length > 0 ? categories : undefined,
         priority,
