@@ -226,6 +226,17 @@ const readDefaultSelection = (): string[] => {
   }
 };
 
+/**
+ * Slides für die Startseite (WEB-010 – Verhalten bewusst dokumentiert):
+ * - `default-selection.json` LEER  → kompletter `default/`-Ordner (Standard).
+ * - `default-selection.json` GEFÜLLT → GENAU diese Auswahl, aus allen Ordnern, in
+ *   Auswahl-Reihenfolge. Die Auswahl **ersetzt** den default-Ordner, sie ergänzt
+ *   ihn NICHT. So kuratiert der Admin das exakte Startseiten-Set; wer „default +
+ *   Extra" will, nimmt die default-Bilder mit in die Auswahl auf.
+ *
+ * Ein Wechsel auf „ergänzen statt ersetzen" wäre eine Design-Entscheidung (offen,
+ * siehe MAINTENANCE_PLAN P3-8) – hier absichtlich nicht geändert.
+ */
 export const getDefaultSlides = (): SlideItem[] => {
   const selection = readDefaultSelection();
 
