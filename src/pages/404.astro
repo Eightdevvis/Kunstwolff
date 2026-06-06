@@ -1,0 +1,67 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Seite nicht gefunden – Kunstwolff" noindex={true}>
+  <div class="notfound">
+    <p class="notfound-code">404</p>
+    <h1>Diese Seite gibt es nicht (mehr)</h1>
+    <p class="notfound-text">
+      Vielleicht hat sich ein Tippfehler eingeschlichen oder die Seite ist umgezogen.
+    </p>
+    <div class="notfound-actions">
+      <a class="notfound-btn" href="/">Zur Startseite</a>
+      <a class="notfound-btn notfound-btn-ghost" href="/contact">Kontakt aufnehmen</a>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .notfound {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 80px 20px 120px;
+    text-align: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .notfound-code {
+    font-size: 5rem;
+    font-weight: 800;
+    line-height: 1;
+    margin: 0 0 0.25em;
+    color: #c9a227;
+  }
+  .notfound h1 {
+    font-size: 1.6rem;
+    margin: 0 0 0.5em;
+  }
+  .notfound-text {
+    color: #555;
+    line-height: 1.6;
+    margin: 0 0 2em;
+  }
+  .notfound-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .notfound-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 8px;
+    background: #c9a227;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.2s;
+  }
+  .notfound-btn:hover {
+    opacity: 0.85;
+  }
+  .notfound-btn-ghost {
+    background: transparent;
+    color: #c9a227;
+    border: 1px solid #c9a227;
+  }
+</style>
