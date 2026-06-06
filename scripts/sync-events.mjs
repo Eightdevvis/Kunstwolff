@@ -117,8 +117,11 @@ const run = () => {
     const parsed = JSON.parse(raw);
     events = Array.isArray(parsed) ? parsed : (parsed.events ?? []);
   } catch (err) {
-    console.error(`sync-events: Fehler beim Lesen von events.json: ${err.message}`);
-    process.exit(1);
+    // WEB-003: tolerant wie der Rest des Scripts (fehlende Datei → return).
+    // Ein kaputtes events.json soll Sync/Build/Commit NICHT hart abbrechen,
+    // sondern sichtbar warnen und den letzten gültigen Stand behalten.
+    console.warn(`sync-events: events.json unlesbar/kaputt (${err.message}) – überspringe Event-Sync, behalte letzten Stand.`);
+    return;
   }
 
   if (events.length === 0) {
