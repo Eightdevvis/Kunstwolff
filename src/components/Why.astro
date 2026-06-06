@@ -1,19 +1,17 @@
 ---
 import { getWhyBenefits } from '../utils/why';
 import { isPageHiddenByPath } from '../utils/pageVisibility';
+import { WHY_DETAIL_LINKS } from '../utils/whyDetailLinks';
 
 const { skill, landing } = Astro.props as {
   skill?: string;
   landing?: string;
 };
 
+// Positions-zu-Detailseite-Liste zentral in whyDetailLinks.ts (per Test gegen
+// die titelbasierte Auflösung + default.json abgesichert, siehe WEB-007/P3-2).
 const benefits = getWhyBenefits(skill, landing);
-const detailLinks = [
-  '/stimmung-durch-kunst/',
-  '/du-bist-kunst/',
-  '/branding/',
-  '/canvas/',
-];
+const detailLinks = WHY_DETAIL_LINKS;
 ---
 
 <section class="why-section">
