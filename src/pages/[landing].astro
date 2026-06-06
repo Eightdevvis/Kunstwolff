@@ -165,7 +165,7 @@ if (pageType === 'event') {
     {show('contact') && <Contact />}
     {show('faq') && <FAQ city={landing} />}
     {show('landingsection') && <Landingsection/>}
-    <script src="../scripts/formspree.js"></script>
+    <script>import "../scripts/formspree.js";</script>
   </Layout>
 )}
 
@@ -229,6 +229,6 @@ if (pageType === 'event') {
     <!-- Kontaktformular -->
     {show('contact') && <Contact />}
 
-    <script src="../scripts/formspree.js"></script>
+    <script>import "../scripts/formspree.js";</script>
   </EventLayout>
 )}
