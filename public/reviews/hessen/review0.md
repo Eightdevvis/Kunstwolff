@@ -1,5 +1,5 @@
 ---
-author: "Tanja Reich"
+author: "Tanja Reich, Gasthaus \"Zum Adler\" - Gießen"
 categories:
   - Schnellzeichner
 ---
