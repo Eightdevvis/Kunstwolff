@@ -705,5 +705,17 @@
   "schweiz/zeichner-betriebsfeier-bern.webp": {
     "categories": [],
     "priority": 7
+  },
+  "rheinland-pfalz/karikaturist-schloss-auel-lohmar-rheinland-pfalz.webp": {
+    "categories": [],
+    "priority": 1
+  },
+  "rheinland-pfalz/kollegen-lachen-mit-ihrer-karikatur-von-karikaturist-weihnachtsfeier-gasthaus-kaut-leidenborn-rheinland-pfalz.webp": {
+    "categories": [],
+    "priority": 2
+  },
+  "rheinland-pfalz/street-artist-veitsrodt-rheinland-pfalz.webp": {
+    "categories": [],
+    "priority": 3
   }
 }
