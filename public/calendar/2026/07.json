@@ -1,0 +1,38 @@
+[
+  {
+    "id": "mq9bb96477ip",
+    "title": "Altstadtfest",
+    "description": "Du machst den Stand allein am Freitag,\nSamstag Sonntag können wir uns teilen",
+    "date": "2026-07-03",
+    "time": 10,
+    "location": "Saarbrücken",
+    "categoryId": "volksfest",
+    "actors": [
+      "Jenny"
+    ]
+  },
+  {
+    "id": "mq9be46p6opn",
+    "title": "Altstadtfest",
+    "date": "2026-07-04",
+    "time": 10,
+    "location": "Saarbrücken",
+    "categoryId": "volksfest",
+    "actors": [
+      "Jenny",
+      "Gaby"
+    ]
+  },
+  {
+    "id": "mq9berhvvfyk",
+    "title": "Altstadtfest",
+    "date": "2026-07-05",
+    "time": 10,
+    "location": "Saarbrücken",
+    "categoryId": "volksfest",
+    "actors": [
+      "Jenny",
+      "Gaby"
+    ]
+  }
+]
