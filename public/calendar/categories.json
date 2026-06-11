@@ -1,0 +1,22 @@
+[
+  {
+    "id": "auftrag",
+    "title": "Auftrag",
+    "color": "#3b82f6"
+  },
+  {
+    "id": "babysitter",
+    "title": "Babysitter",
+    "color": "#10b981"
+  },
+  {
+    "id": "turnier",
+    "title": "Turnier",
+    "color": "#f59e0b"
+  },
+  {
+    "id": "volksfest",
+    "title": "Volksfest",
+    "color": "#f59e0b"
+  }
+]
