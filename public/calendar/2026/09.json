@@ -1,0 +1,47 @@
+[
+  {
+    "id": "mq9az3t8kc62",
+    "title": "Wurstmarkt",
+    "description": "Ich komme je abends dazu.",
+    "date": "2026-09-18",
+    "time": 11,
+    "location": "Bad Dürkheim",
+    "categoryId": "volksfest",
+    "actors": [
+      "Jenny"
+    ]
+  },
+  {
+    "id": "mq9b0nq2tx0m",
+    "title": "Wurstmarkt",
+    "date": "2026-09-19",
+    "time": 10,
+    "location": "Bad Dürkheim",
+    "categoryId": "volksfest",
+    "actors": [
+      "Jenny"
+    ]
+  },
+  {
+    "id": "mq9b1dd8ttta",
+    "title": "Wurstmarkt",
+    "date": "2026-09-21",
+    "time": 10,
+    "location": "Bad Dürkheim",
+    "categoryId": "volksfest",
+    "actors": [
+      "Jenny"
+    ]
+  },
+  {
+    "id": "mq9b5be0s2nt",
+    "title": "Wurstmarkt",
+    "date": "2026-09-20",
+    "time": 11,
+    "location": "Bad Dürkheim",
+    "categoryId": "volksfest",
+    "actors": [
+      "Gaby"
+    ]
+  }
+]
