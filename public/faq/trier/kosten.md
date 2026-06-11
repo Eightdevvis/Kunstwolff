@@ -1,6 +1,6 @@
 ---
-question: "Was kostet es, den Karikaturisten zu buchen?"
-answer: "Schreiben Sie uns Ihre Anfrage mit Ort, Zeit und Größe des Events. Sie werden umgehend ein für Sie passendes Angebot bekommen."
+question: "Was kostet der Schnellzeichner-Service von Kunstwolff?"
+answer: "Die Preise variieren je nach Termin, Ort und gewünschtem Leistungsumfang. Kontaktieren Sie uns gerne für ein individuelles Angebot."
 categories:
   - Schnellzeichner
 ---
