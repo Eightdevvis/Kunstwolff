@@ -717,5 +717,21 @@
   "rheinland-pfalz/street-artist-veitsrodt-rheinland-pfalz.webp": {
     "categories": [],
     "priority": 3
+  },
+  "default/digital-artist-live.webp": {
+    "categories": [],
+    "priority": 143
+  },
+  "default/digital-caricaturist--ludwigshafen---kopie.webp": {
+    "categories": [],
+    "priority": 144
+  },
+  "default/digital-caricaturist--ludwigshafen.webp": {
+    "categories": [],
+    "priority": 145
+  },
+  "default/digitale-schnellzeichnerin-ludwigshafen---kopie.webp": {
+    "categories": [],
+    "priority": 146
   }
 }
