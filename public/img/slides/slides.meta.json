@@ -253,6 +253,26 @@
     ],
     "priority": 7
   },
+  "karlsruhe/brautpaar-hochzeitsmaler-karlsruhe.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 1
+  },
+  "karlsruhe/hochzeitsfeier-event-illustratorin-heitlinger-genusswelten.webp": {
+    "categories": [],
+    "priority": 2
+  },
+  "karlsruhe/hochzeitsmalerin-landkreis-karlsruhe.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 3
+  },
+  "karlsruhe/live-event-kuenstlerin-oestringen-bw.webp": {
+    "categories": [],
+    "priority": 4
+  },
   "koblenz/besucherin-laesst-sich-portraetieren-von-schnellzeichner-betriebsfeier-novelis-koblenz.webp": {
     "categories": [
       "Schnellzeichner"
@@ -798,22 +818,6 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "priority": 4
-  },
-  "karlsruhe/brautpaar-hochzeitsmaler-karlsruhe.webp": {
-    "categories": [],
-    "priority": 1
-  },
-  "karlsruhe/hochzeitsfeier-event-illustratorin-heitlinger-genusswelten.webp": {
-    "categories": [],
-    "priority": 2
-  },
-  "karlsruhe/hochzeitsmalerin-landkreis-karlsruhe.webp": {
-    "categories": [],
-    "priority": 3
-  },
-  "karlsruhe/live-event-kuenstlerin-oestringen-bw.webp": {
-    "categories": [],
     "priority": 4
   }
 }
