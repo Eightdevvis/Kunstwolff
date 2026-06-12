@@ -33,3 +33,4 @@ dortmund
 neunkirchen
 fulda
 bw
+hanau
