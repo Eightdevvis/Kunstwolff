@@ -1,10 +1,10 @@
 {
   "benefits": [
     {
-      "title": "Ihr Geschmack",
-      "text": "Für die auflockernde Unterhaltung oder wenn elegante Stimmung gewünscht ist, für Ihr Event bringen wir die passende Kunstform mit. ",
+      "title": "",
+      "text": "Für die auflockernde Unterhaltung oder wenn elegante Stimmung gewünscht ist, für Ihr Event bringen wir die passende Kunstform mit.",
       "image": "/img/why/frankfurt/benefit-1/zeichner-fertigt-hunde-zeichnung-bei-shop-event-bulgarifrankfurt.webp",
-      "alt": "hochzeitsmaler.webp"
+      "alt": ""
     },
     {
       "title": "Für jedes Event die richtige Inszenierung",
@@ -16,13 +16,13 @@
       "title": "Logo dezent in Szene gesetzt",
       "text": "Mit einer Platzierung Ihres Logos auf dem Zeichenpapier entsteht ein authentisches Porträt, das zugleich Ihre Marke transportiert.",
       "image": "",
-      "alt": "Gebrandete Karikatur mit Firmenlogo"
+      "alt": ""
     },
     {
       "title": "Von der klassischen Kunst bis zur digitalen Live-Performance",
       "text": "- Kohlezeichnung auf Papier für ein authentisches Kunsterlebnis.\n- Markerzeichnung auf Leinwand mit besonderem Eventcharakter.\n- Digitale Schnellzeichnung mit Live-Darstellung auf Großbild.",
       "image": "",
-      "alt": "Digitaler Schnellzeichner zeichnet auf Tablet"
+      "alt": ""
     }
   ]
 }
