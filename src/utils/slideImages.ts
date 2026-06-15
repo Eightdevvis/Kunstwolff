@@ -12,6 +12,7 @@ export type SlideItem = {
 type SlideMetadataEntry = {
   categories?: string[];
   altOverride?: string;
+  alt?: string;         // vom Admin geschriebenes Alt-Feld (Alias für altOverride)
   title?: string;       // Anzeigetitel für Lightbox (optional, unabhängig von altOverride)
   priority?: number;
   enabled?: boolean;
@@ -140,10 +141,15 @@ const readSlidesMetadata = (): SlideMetadataMap => {
 
       const metadata = value as Record<string, unknown>;
       const categories = toStringArray(metadata.categories);
+      // altOverride hat Vorrang; fällt zurück auf das vom Admin geschriebene `alt`
+      // (behebt den alt/altOverride-Feldnamen-Mismatch, durch den Admin-Alt-Texte
+      // bisher nicht auf der Website ankamen).
       const altOverride =
         typeof metadata.altOverride === 'string' && metadata.altOverride.trim().length > 0
           ? metadata.altOverride.trim()
-          : undefined;
+          : typeof metadata.alt === 'string' && metadata.alt.trim().length > 0
+            ? metadata.alt.trim()
+            : undefined;
       const title =
         typeof metadata.title === 'string' && metadata.title.trim().length > 0
           ? metadata.title.trim()

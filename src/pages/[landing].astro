@@ -88,6 +88,7 @@ let landingData: Awaited<ReturnType<typeof getLandingBySlug>> | undefined;
 let landingSlides: Awaited<ReturnType<typeof supplementWithDefaultSlides>> | undefined;
 let landingPageTitle = '';
 let landingPageDescription = '';
+let landingHeading = '';
 let breadcrumbSchema: unknown;
 
 if (pageType === 'landing') {
@@ -97,6 +98,7 @@ if (pageType === 'landing') {
   landingSlides = supplementWithDefaultSlides(citySlides, defaultSlides, MIN_LANDING_SLIDES);
 
   const cityName = (landing ?? '').charAt(0).toUpperCase() + (landing ?? '').slice(1);
+  landingHeading = `Eventkünstler in ${cityName}`;
   landingPageTitle = `Eventkünstler ${cityName} – Live-Kunst & Performance | Kunstwolff`;
   landingPageDescription = `Kunstwolff in ${cityName}: Professionelle Eventkünstler für Firmenfeiern, Messen & Hochzeiten. Schnellzeichner, Szenenmaler & mehr.`;
 
@@ -156,7 +158,7 @@ if (pageType === 'event') {
   ══════════════════════════════════════════════════ -->
   <Layout title={landingPageTitle} description={landingPageDescription} image={landingData.titleImage}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-    {show('opener') && <Opener titleImage={landingData.titleImage} titleImageAlt={landingData.title} titleImagePosition={landingData.titleImagePosition} />}
+    {show('opener') && <Opener titleImage={landingData.titleImage} titleImageAlt={landingData.title} titleImagePosition={landingData.titleImagePosition} heading={landingHeading} />}
     {show('homepageReviews') && <HomepageReviews />}
     {show('slideshow') && <Slideshow items={landingSlides} />}
     {show('cinemaWelcome') && <CinemaWelcome />}

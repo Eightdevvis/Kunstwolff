@@ -1,6 +1,6 @@
 ---
 import BrandStripe from "../reviews-references/BrandStripe.astro";
-const { titleImage = '/img/Titelbild/default/titelbild.avif', titleImageAlt = 'Kunstwolff - Eventkünstler seit über 20 Jahren', titleImagePosition = 'center' } = Astro.props;
+const { titleImage = '/img/Titelbild/default/titelbild.avif', titleImageAlt = 'Kunstwolff - Eventkünstler seit über 20 Jahren', titleImagePosition = 'center', heading = 'Event- und Showkünstler seit über 25 Jahren' } = Astro.props;
 ---
 <style>
 .hero {
@@ -60,24 +60,31 @@ const { titleImage = '/img/Titelbild/default/titelbild.avif', titleImageAlt = 'K
 }
 
 
-.hero-band p {
-  font-size: clamp(0.75rem, 2.8vw, 18px);
-  letter-spacing: clamp(0.08em, 1.2vw, 0.18em);
-  margin-top: 8px;
-  font-weight: 10;
-  /* Alternative (wirkte harmonischer mit Navigation):
-  font-family: var(--font-body);
-  font-weight: 400;
-  */
-  opacity: 0.75;
-}
-
-.hero-band h1 {
+/* Marken-Wortmarke (visuell groß, aber semantisch KEINE Überschrift) */
+.hero-brand {
   font-family: Mayonice;
   font-weight: 200;
   font-size: clamp(2.5rem, 14vw, 80px);
   line-height: 1.05;
   margin-bottom: 16px;
+}
+
+/* H1 = keyword-/ortsrelevante Überschrift pro Seite (optisch wie alter Untertitel) */
+.hero-band h1 {
+  font-size: clamp(0.75rem, 2.8vw, 18px);
+  letter-spacing: clamp(0.08em, 1.2vw, 0.18em);
+  margin-top: 8px;
+  font-weight: 100;
+  opacity: 0.85;
+  text-transform: uppercase;
+}
+
+.hero-band p {
+  font-size: clamp(0.75rem, 2.8vw, 18px);
+  letter-spacing: clamp(0.08em, 1.2vw, 0.18em);
+  margin-top: 8px;
+  font-weight: 100;
+  opacity: 0.75;
 }
 </style>
 
@@ -94,8 +101,8 @@ const { titleImage = '/img/Titelbild/default/titelbild.avif', titleImageAlt = 'K
 
     <!-- Overlay-Streifen für Text -->
     <div class="hero-band">
-      <h1>Kunstwolff</h1>
-      <p>SEIT ÜBER 25 JAHREN IHRE EVENT- UND SHOWKÜNSTLER</p>
+      <p class="hero-brand">Kunstwolff</p>
+      <h1>{heading}</h1>
     </div>
   </section>
 
