@@ -11,6 +11,26 @@
     ],
     "priority": 2
   },
+  "bw/karikaturistin-messe-event-stuttgart.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "priority": 1
+  },
+  "bw/mitarbeiter-event-karikaturisten-bw.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "priority": 2
+  },
+  "bw/schnellzeichner-toyota-messe-bw.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 3
+  },
   "default/1_schnellzeichner_hq.webp": {
     "categories": [
       "Schnellzeichner"
@@ -1004,17 +1024,5 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
-  },
-  "bw/karikaturistin-messe-event-stuttgart.webp": {
-    "categories": [],
-    "priority": 1
-  },
-  "bw/mitarbeiter-event-karikaturisten-bw.webp": {
-    "categories": [],
-    "priority": 2
-  },
-  "bw/schnellzeichner-toyota-messe-bw.webp": {
-    "categories": [],
-    "priority": 3
   }
 }
