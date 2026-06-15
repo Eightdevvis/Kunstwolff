@@ -201,7 +201,9 @@ const satelliteData = {
           <p class="cw-card-back-hint">Ihre Empfehlung</p>
         </div>
         <div class="cw-result-card-front">
-          <ul class="cw-result-offer" id="cw-result-offer" role="list"></ul>
+          <div class="cw-result-offer-wrap">
+            <ul class="cw-result-offer" id="cw-result-offer" role="list"></ul>
+          </div>
           <a href="#contact" class="cw-result-cta" id="cw-result-cta">Termin jetzt anfragen</a>
         </div>
       </div>
@@ -668,15 +670,22 @@ const satelliteData = {
   .cw-result-card {
     flex:            1;
     perspective:     1200px;
-    min-height:      520px;
+    /* Keine Fixed-Height mehr – Karte wächst mit Inhalt (siehe Grid-Stack unten). */
   }
 
+  /*
+    Beide Faces liegen in derselben Grid-Cell übereinander.
+    So wächst die Karte mit dem tatsächlichen Front-Inhalt (kein Clipping mehr),
+    der 3D-Flip funktioniert weiter über transform-style + backface-visibility.
+  */
   .cw-result-card-inner {
-    position:         relative;
-    width:            100%;
-    height:           100%;
-    transform-style:  preserve-3d;
-    transition:       transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+    position:             relative;
+    width:                100%;
+    min-height:           520px;
+    display:              grid;
+    grid-template-areas:  "face";
+    transform-style:      preserve-3d;
+    transition:           transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .cw-result-card.flipped .cw-result-card-inner {
@@ -685,12 +694,12 @@ const satelliteData = {
 
   .cw-result-card-back,
   .cw-result-card-front {
-    position:            absolute;
-    inset:               0;
-    backface-visibility: hidden;
-    border-radius:       8px;
-    border:              1px solid rgba(191, 155, 80, 0.3);
-    overflow:            hidden;
+    grid-area:                   face;
+    backface-visibility:         hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius:               8px;
+    border:                      1px solid rgba(191, 155, 80, 0.3);
+    overflow:                    hidden;
   }
 
   /* ── Rückseite ── */
@@ -739,7 +748,7 @@ const satelliteData = {
     transform:      rotateY(180deg);
     display:        flex;
     flex-direction: column;
-    padding:        clamp(24px, 3vw, 36px);
+    padding:        clamp(28px, 3.5vw, 44px);
   }
 
   /* ── Inhalt links ── */
@@ -780,38 +789,47 @@ const satelliteData = {
 
   /* ── Inhalt rechts ── */
   #cw-card-right .cw-result-card-front {
-    justify-content: center;
+    justify-content: flex-start;
+  }
+
+  .cw-result-offer-wrap {
+    width: 100%;
+    margin: 0 0 clamp(26px, 3.5vw, 40px);
   }
 
   .cw-result-offer {
-    font-family: var(--font-body, 'Inter', sans-serif);
-    font-size:   clamp(0.95rem, 1.5vw, 1.1rem);
-    font-weight: 300;
-    color:       rgba(255,255,255,0.85);
-    line-height: 1.65;
-    margin:      0 0 clamp(28px, 4vw, 48px);
-    padding:     0;
-    list-style:  none;
-    display:     flex;
-    flex-direction: column;
-    gap:         clamp(8px, 1vw, 12px);
+    font-family:     var(--font-body, 'Inter', sans-serif);
+    font-size:       clamp(0.7rem, 0.95vw, 0.82rem);
+    font-weight:     400;
+    color:           rgba(201, 168, 76, 0.82);
+    letter-spacing:  0.14em;
+    text-transform:  uppercase;
+    line-height:     1.55;
+    margin:          0;
+    padding:         0;
+    list-style:      none;
+    display:         flex;
+    flex-direction:  column;
+    gap:             clamp(8px, 1vw, 12px);
   }
 
   .cw-result-offer li {
-    position:       relative;
-    padding-left:   clamp(18px, 1.6vw, 22px);
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(8px, 1vw, 12px);
   }
 
-  .cw-result-offer li::before {
-    content:        "";
-    position:       absolute;
-    left:           0;
-    top:            0.75em;
-    width:          6px;
-    height:         6px;
-    border-radius:  50%;
-    background:     #c9a84c;
-    transform:      translateY(-50%);
+  .cw-result-offer-bullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #c9a84c;
+    flex: 0 0 auto;
+    margin-top: 0.5em;
+  }
+
+  .cw-result-offer-text {
+    display: block;
   }
 
   .cw-result-offer:empty {
@@ -896,25 +914,21 @@ const satelliteData = {
     #cw-orbit-2 .cw-satellite[data-sat-index="4"] { --sx:  -76px; --sy: -132px; }
     #cw-orbit-2 .cw-satellite[data-sat-index="5"] { --sx:   76px; --sy: -132px; }
 
-    /* Ergebnis */
-    .cw-result-inner {
+    /* Ergebnis – Karten untereinander stapeln */
+    .cw-result-cards {
       flex-direction: column;
-      align-items:    center;
+      align-items:    stretch;
+      padding:        0 clamp(20px, 6vw, 48px);
+      gap:            clamp(20px, 3vw, 32px);
     }
 
-    .cw-result-left {
-      flex:      none;
-      max-width: 320px;
-      width:     100%;
+    .cw-result-card {
+      width: 100%;
     }
 
-    .cw-result-right {
-      padding-top: 0;
-      align-items: center;
-      text-align:  center;
+    .cw-result-card-inner {
+      min-height: 0;
     }
-
-    .cw-result-cta { align-self: center; }
   }
 
   @media (max-width: 600px) {
@@ -945,9 +959,9 @@ const satelliteData = {
     #cw-orbit-2 .cw-satellite[data-sat-index="4"] { --sx:  -62px; --sy: -107px; }
     #cw-orbit-2 .cw-satellite[data-sat-index="5"] { --sx:   62px; --sy: -107px; }
 
-    /* Ergebnis */
-    .cw-result-left { max-width: 100%; }
-    .cw-result-image-wrap { aspect-ratio: 3 / 4; }
+    /* Ergebnis – engere Paddings und etwas kleinere Bildfläche auf sehr kleinen Screens */
+    .cw-result-card-front { padding: clamp(22px, 6vw, 30px); }
+    .cw-result-image-wrap { aspect-ratio: 4 / 3; }
   }
 </style>
 
@@ -1093,7 +1107,16 @@ const satelliteData = {
       resultOffer.innerHTML = "";
       for (const item of offerItems) {
         const li = document.createElement("li");
-        li.textContent = item;
+        const bullet = document.createElement("span");
+        bullet.className = "cw-result-offer-bullet";
+        bullet.setAttribute("aria-hidden", "true");
+
+        const text = document.createElement("span");
+        text.className = "cw-result-offer-text";
+        text.textContent = item;
+
+        li.appendChild(bullet);
+        li.appendChild(text);
         resultOffer.appendChild(li);
       }
     }

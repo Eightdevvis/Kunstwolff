@@ -525,7 +525,7 @@ const resolveReportTitleImage = ({ skillSlug, landingSlug }) => {
   const defaultImages = readTitleFolderImages('default', metadata);
   const pool = cityImages.length > 0 ? [...cityImages, ...defaultImages] : defaultImages;
 
-  return pickReportTitleImage(pool, skillSlug) ?? '/img/samples/sample1.jpeg';
+  return pickReportTitleImage(pool, skillSlug) ?? '/img/samples/sample1.webp';
 };
 
 const listAllPublicImages = () => {
