@@ -10,7 +10,7 @@ import Why from "../components/Why.astro";
 import Eventtypes from "../components/Eventtypes.astro";
 import FAQ from "../components/FAQ.astro";
 import Aboutsection from "../components/about/Aboutsection.astro";
-import { resolveTitleImage } from "../utils/titleImages";
+import { resolveTitleImage, resolveTitleImageFocus } from "../utils/titleImages";
 import {
   getHomepageSlides,
 } from "../utils/slideImages";
@@ -21,6 +21,7 @@ const show = (id: string) => isComponentEnabled('homepage', '', id);
 // Slideshow-Items nur aus Ordnern zusammenführen
 const homepageSlides = getHomepageSlides();
 const titleImage = resolveTitleImage();
+const titleImagePosition = resolveTitleImageFocus();
 
 // WEB-012: Schema-URLs aus Astro.site (= SITE_URL) statt hardcoded kunstwolff.de,
 // konsistent zu Canonical/OG im Layout (Stage → vercel.app, Cutover → kunstwolff.de).
@@ -51,7 +52,7 @@ const localBusinessSchema = {
 <Layout image={titleImage}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   
-  {show('opener') && <Opener titleImage={titleImage} />}
+  {show('opener') && <Opener titleImage={titleImage} titleImagePosition={titleImagePosition} />}
 
   {show('homepageReviews') && <HomepageReviews />}
 

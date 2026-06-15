@@ -2,7 +2,7 @@
   "homepage": {
     "_default": {
       "opener": true,
-      "cinemaWelcome": true,
+      "cinemaWelcome": false,
       "homepageReviews": true,
       "slideshow": true,
       "eventtypes": true,
@@ -15,7 +15,7 @@
   "landing": {
     "_default": {
       "opener": true,
-      "cinemaWelcome": true,
+      "cinemaWelcome": false,
       "homepageReviews": true,
       "slideshow": true,
       "eventtypes": true,

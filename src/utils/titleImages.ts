@@ -29,6 +29,8 @@ type TitleMetadataEntry = {
   categories?: string[];
   priority?: number;
   enabled?: boolean;
+  /** CSS object-position / background-position, z.B. "50% 30%". Steuert den Bildausschnitt im Hero. */
+  focus?: string;
 };
 
 type TitleMetadataMap = Record<string, TitleMetadataEntry>;
@@ -37,7 +39,11 @@ type TitleImageItem = {
   src: string;
   categories: string[];
   priority: number;
+  focus: string;
 };
+
+/** Default-Fokuspunkt (Bildmitte), falls keiner gesetzt ist. */
+export const DEFAULT_TITLE_FOCUS = '50% 50%';
 
 const normalizeMetadataKey = (value: string): string => value.replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
 
@@ -91,8 +97,9 @@ const readTitleMetadata = (): TitleMetadataMap => {
       const categories = toStringArray(entry.categories);
       const priority = typeof entry.priority === 'number' && !Number.isNaN(entry.priority) ? entry.priority : undefined;
       const enabled = typeof entry.enabled === 'boolean' ? entry.enabled : undefined;
+      const focus = typeof entry.focus === 'string' && entry.focus.trim() ? entry.focus.trim() : undefined;
 
-      return [key, { categories, priority, enabled }] as const;
+      return [key, { categories, priority, enabled, focus }] as const;
     });
 
     metadataCache = Object.fromEntries(entries);
@@ -128,6 +135,7 @@ const readFolderTitleImages = (folderName: string): TitleImageItem[] => {
         src: `/img/${encodeUrlPath(['Titelbild', folderName, fileName])}`,
         categories: toStringArray(itemMetadata.categories),
         priority: toNumberOrDefault(itemMetadata.priority, index + 1),
+        focus: itemMetadata.focus ?? DEFAULT_TITLE_FOCUS,
       };
     })
     .filter((entry): entry is TitleImageItem => entry !== null)
@@ -142,7 +150,7 @@ const categoryMatchesSkill = (categories: string[], skillSlug: string): boolean 
   return categories.some((category) => normalizeSlug(category) === skillSlug);
 };
 
-const pickTitleImageFromPool = (pool: TitleImageItem[], skillSlug: string): string | undefined => {
+const pickTitleImageFromPool = (pool: TitleImageItem[], skillSlug: string): TitleImageItem | undefined => {
   if (pool.length === 0) {
     return undefined;
   }
@@ -150,14 +158,19 @@ const pickTitleImageFromPool = (pool: TitleImageItem[], skillSlug: string): stri
   if (skillSlug) {
     const categorized = pool.filter((item) => categoryMatchesSkill(item.categories, skillSlug));
     if (categorized.length > 0) {
-      return categorized[0].src;
+      return categorized[0];
     }
   }
 
-  return pool[0].src;
+  return pool[0];
 };
 
-export const resolveTitleImage = (params?: { skill?: string; landing?: string }): string => {
+/**
+ * Liefert das gewählte Titelbild inkl. Fokuspunkt. Beide öffentlichen Helfer
+ * (resolveTitleImage / resolveTitleImageFocus) bauen darauf auf, damit src und
+ * focus garantiert zum selben Bild gehören.
+ */
+export const resolveTitleImageItem = (params?: { skill?: string; landing?: string }): { src: string; focus: string } => {
   const skillSlug = params?.skill ? normalizeSlug(params.skill) : '';
   const landingSlug = params?.landing ? normalizeSlug(params.landing) : '';
 
@@ -165,5 +178,15 @@ export const resolveTitleImage = (params?: { skill?: string; landing?: string })
   const defaultImages = readFolderTitleImages('default');
   const pool = cityImages.length > 0 ? [...cityImages, ...defaultImages] : defaultImages;
 
-  return pickTitleImageFromPool(pool, skillSlug) ?? fallbackImage;
+  const picked = pickTitleImageFromPool(pool, skillSlug);
+  return {
+    src: picked?.src ?? fallbackImage,
+    focus: picked?.focus ?? DEFAULT_TITLE_FOCUS,
+  };
 };
+
+export const resolveTitleImage = (params?: { skill?: string; landing?: string }): string =>
+  resolveTitleImageItem(params).src;
+
+export const resolveTitleImageFocus = (params?: { skill?: string; landing?: string }): string =>
+  resolveTitleImageItem(params).focus;

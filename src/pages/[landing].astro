@@ -156,7 +156,7 @@ if (pageType === 'event') {
   ══════════════════════════════════════════════════ -->
   <Layout title={landingPageTitle} description={landingPageDescription} image={landingData.titleImage}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-    {show('opener') && <Opener titleImage={landingData.titleImage} titleImageAlt={landingData.title} />}
+    {show('opener') && <Opener titleImage={landingData.titleImage} titleImageAlt={landingData.title} titleImagePosition={landingData.titleImagePosition} />}
     {show('homepageReviews') && <HomepageReviews />}
     {show('slideshow') && <Slideshow items={landingSlides} />}
     {show('cinemaWelcome') && <CinemaWelcome />}

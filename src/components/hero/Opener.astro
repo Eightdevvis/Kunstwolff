@@ -1,12 +1,12 @@
 ---
 import BrandStripe from "../reviews-references/BrandStripe.astro";
-const { titleImage = '/img/Titelbild/default/titelbild.avif', titleImageAlt = 'Kunstwolff - Eventkünstler seit über 20 Jahren' } = Astro.props;
+const { titleImage = '/img/Titelbild/default/titelbild.avif', titleImageAlt = 'Kunstwolff - Eventkünstler seit über 20 Jahren', titleImagePosition = 'center' } = Astro.props;
 ---
 <style>
 .hero {
   width: 100%;
   min-height: calc(100dvh - 60px);
-  background: var(--hero-bg-image) center / cover no-repeat;
+  background: var(--hero-bg-image) var(--hero-bg-pos, center) / cover no-repeat;
 
   display: flex;
   justify-content: center;
@@ -84,7 +84,7 @@ const { titleImage = '/img/Titelbild/default/titelbild.avif', titleImageAlt = 'K
 
 
 <!-- Hero Section -->
-  <section class="hero" style={`--hero-bg-image: url('${titleImage}')`}>
+  <section class="hero" style={`--hero-bg-image: url('${titleImage}'); --hero-bg-pos: ${titleImagePosition}`}>
     <!-- Unsichtbares Bild für SEO / Alt-Text ECHTES BILD LIEGT IN CSSstartpage.css!!!!-->
     <img
       src={titleImage}

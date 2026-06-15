@@ -20,11 +20,12 @@ const {
   subtitle = 'Professionelle Eventkünstler für unvergessliche Momente.',
   eventLabel = '',
   ctaLink = '#contact',
+  titleImagePosition = 'center',
 } = Astro.props;
 ---
 
 <!-- Hero Section -->
-<section class="event-hero" style={`--hero-bg-image: url('${titleImage}')`}>
+<section class="event-hero" style={`--hero-bg-image: url('${titleImage}'); --hero-bg-pos: ${titleImagePosition}`}>
   <!-- Verstecktes Bild für SEO / Alt-Text -->
   <img src={titleImage} alt={title} style="display:none;" />
 
@@ -55,7 +56,7 @@ const {
     min-height: 100vh;
 
     /* Titelbild als CSS-Custom-Property – gesetzt im style-Attribut */
-    background: var(--hero-bg-image) center / cover no-repeat;
+    background: var(--hero-bg-image) var(--hero-bg-pos, center) / cover no-repeat;
 
     display: flex;
     align-items: center;
