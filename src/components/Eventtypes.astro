@@ -1,5 +1,8 @@
 ---
 import { getVisibleEvents, getEventSlides, resolveEventTitleImage } from "../utils/events";
+import { getSiteTexts } from "../utils/siteTexts";
+
+const et = getSiteTexts().eventtypes;
 
 type EventImageOverride = {
   slug?: string;
@@ -40,8 +43,8 @@ const list = getVisibleEvents().map((event) => {
 {list.length > 0 && (
 <section class="eventtypes-section">
   <div class="eventtypes-headline">
-    <h2>Eventformate</h2>
-    <p>Waehle dein Event und klappe die Details direkt auf.</p>
+    <h2>{et.heading}</h2>
+    <p>{et.subtitle}</p>
   </div>
   <div class="eventtypes-grid">
     {list.map((event) => (

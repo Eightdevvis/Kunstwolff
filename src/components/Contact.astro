@@ -1,22 +1,22 @@
+---
+import { getSiteTexts } from '../utils/siteTexts';
+const t = getSiteTexts().contact;
+---
 <!-- =========================
   CONTACT
 ========================= -->
 <section id="contact" class="section contact">
   <div class="section-inner contact-shell">
     <div class="contact-head">
-      <p class="contact-kicker">Kontakt</p>
-      <h2>Erzählen Sie uns von Ihrem Event</h2>
-      <p class="contact-intro">
-        Stellen Sie uns jetzt unverbindlich eine Anfrage. Fragen oder Vorschläge
-        nehmen wir gerne direkt entgegen. Für allgemeine Fragen hilft oft schon ein
-        Blick in die <a href="#faq">FAQ</a>.
-      </p>
+      <p class="contact-kicker">{t.kicker}</p>
+      <h2>{t.heading}</h2>
+      <p class="contact-intro">{t.intro}</p>
     </div>
 
     <div class="contact-grid">
       <aside class="contact-panel">
-        <h3>Direkt erreichbar</h3>
-        <p>Wir antworten in der Regel innerhalb von 24 Stunden.</p>
+        <h3>{t.panelTitle}</h3>
+        <p>{t.panelText}</p>
         <a href="tel:+491736677229" class="contact-link">+49 (0)173 6677 229</a>
         <a href="mailto:info@artelines.com" class="contact-link">info@artelines.com</a>
       </aside>

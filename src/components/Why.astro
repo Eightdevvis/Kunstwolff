@@ -2,6 +2,7 @@
 import { getWhyBenefits } from '../utils/why';
 import { isPageHiddenByPath } from '../utils/pageVisibility';
 import { WHY_DETAIL_LINKS } from '../utils/whyDetailLinks';
+import { getSiteTexts } from '../utils/siteTexts';
 
 const { skill, landing } = Astro.props as {
   skill?: string;
@@ -12,17 +13,15 @@ const { skill, landing } = Astro.props as {
 // die titelbasierte Auflösung + default.json abgesichert, siehe WEB-007/P3-2).
 const benefits = getWhyBenefits(skill, landing);
 const detailLinks = WHY_DETAIL_LINKS;
+const whyText = getSiteTexts().why;
 ---
 
 <section class="why-section">
   <div class="why-container">
 
     <div class="why-header">
-      <h2>Warum Kunstwolff?</h2>
-      <p>
-        Wir verbinden künstlerische Qualität mit Event-Erfahrung –
-        für Veranstaltungen, die im Gedächtnis bleiben.
-      </p>
+      <h2>{whyText.heading}</h2>
+      <p>{whyText.intro}</p>
     </div>
 
     <div class="why-grid">
