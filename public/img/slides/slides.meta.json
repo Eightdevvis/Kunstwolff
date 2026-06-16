@@ -1056,5 +1056,21 @@
   "stuttgart/karikatur-gabelstabler-messe-event-stuttgart---kopie.webp": {
     "categories": [],
     "priority": 8
+  },
+  "events/hochzeit/schnellzeichnerin-zeichnet-paar-hochzei--hessen.webp": {
+    "categories": [],
+    "priority": 1
+  },
+  "events/hochzeit/karikatur-hochzeit-einladungskarte.webp": {
+    "categories": [],
+    "priority": 2
+  },
+  "events/hochzeit/karikaturist-hochzeit.webp": {
+    "categories": [],
+    "priority": 3
+  },
+  "events/hochzeit/hochzeit-einladungskarte-cartoon.webp": {
+    "categories": [],
+    "priority": 4
   }
 }
