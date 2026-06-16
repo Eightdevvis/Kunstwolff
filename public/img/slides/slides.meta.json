@@ -1029,12 +1029,32 @@
     "categories": [],
     "priority": 1
   },
-  "stuttgart/funny-picture-speed-painting-trade-fair---kopie.webp": {
-    "categories": [],
-    "priority": 2
-  },
   "stuttgart/schnellzeichnerin-messe-stuttgart.webp": {
     "categories": [],
     "priority": 4
+  },
+  "stuttgart/schnellzeichnung-messe-stuttgart.webp": {
+    "categories": [],
+    "priority": 3
+  },
+  "stuttgart/live-painting-party-event-stuttgart.webp": {
+    "categories": [],
+    "priority": 4
+  },
+  "stuttgart/live-sketching-event-trade-fair-baden-wuerttemberg.webp": {
+    "categories": [],
+    "priority": 5
+  },
+  "stuttgart/funny-picture-speed-painting-trade-fair---kopie.webp": {
+    "categories": [],
+    "priority": 6
+  },
+  "stuttgart/schnellzeichnerin-stuttgart.webp": {
+    "categories": [],
+    "priority": 7
+  },
+  "stuttgart/karikatur-gabelstabler-messe-event-stuttgart---kopie.webp": {
+    "categories": [],
+    "priority": 8
   }
 }
