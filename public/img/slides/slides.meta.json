@@ -1088,5 +1088,37 @@
   "events/messe/karikaturist-messe-rai-amsterdam.webp": {
     "categories": [],
     "priority": 1
+  },
+  "events/messe/schnellzeichner-messe-koeln.webp": {
+    "categories": [],
+    "priority": 2
+  },
+  "events/messe/digital-speedpainter-cologne.webp": {
+    "categories": [],
+    "priority": 3
+  },
+  "events/messe/digital-caricature.webp": {
+    "categories": [],
+    "priority": 4
+  },
+  "events/messe/schnellzeichner-messe-nrw.webp": {
+    "categories": [],
+    "priority": 5
+  },
+  "events/messe/schnellzeichner-messe.webp": {
+    "categories": [],
+    "priority": 6
+  },
+  "events/messe/digital-speedpainter-trade-show.webp": {
+    "categories": [],
+    "priority": 7
+  },
+  "events/messe/digitale-live-portraits.webp": {
+    "categories": [],
+    "priority": 8
+  },
+  "events/messe/digital-artist.webp": {
+    "categories": [],
+    "priority": 9
   }
 }
