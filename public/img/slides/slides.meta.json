@@ -1037,8 +1037,20 @@
     "categories": [],
     "priority": 3
   },
-  "stuttgart/live-painter-trade-fair.webp": {
+  "stuttgart/schnellzeichnerin-messe-stuttgart.webp": {
     "categories": [],
     "priority": 4
+  },
+  "stuttgart/live-sketching-event-trade-fair-baden-wuerttemberg.webp": {
+    "categories": [],
+    "priority": 5
+  },
+  "stuttgart/schnellzeichnung-messe-stuttgart.webp": {
+    "categories": [],
+    "priority": 6
+  },
+  "stuttgart/zeichnung-karikaturist-veranstaltung-stuttgart.webp": {
+    "categories": [],
+    "priority": 7
   }
 }
