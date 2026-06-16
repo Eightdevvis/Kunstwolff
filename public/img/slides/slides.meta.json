@@ -1084,5 +1084,9 @@
   "events/hochzeit/img_20240316_182602.webp": {
     "categories": [],
     "priority": 7
+  },
+  "events/messe/karikaturist-messe-rai-amsterdam.webp": {
+    "categories": [],
+    "priority": 1
   }
 }
