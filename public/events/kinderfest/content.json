@@ -1,0 +1,64 @@
+{
+  "ablauf": {
+    "enabled": true,
+    "title": "So läuft Ihr Kinderfest mit uns ab",
+    "steps": [
+      {
+        "title": "Anfrage & Planung",
+        "text": "Sie kontaktieren uns mit Datum, Ort und Gästeanzahl. Wir besprechen gemeinsam das beste Format.",
+        "icon": "chat"
+      },
+      {
+        "title": "Aufbau vor Ort",
+        "text": "Wir kommen rechtzeitig an und stimmen uns mit Ihrem Team ab.",
+        "icon": "setup"
+      },
+      {
+        "title": "Live-Kunst",
+        "text": "Während Ihre Gäste feiern, zeichnen oder malen wir live.",
+        "icon": "star"
+      },
+      {
+        "title": "Persönliche Erinnerungen",
+        "text": "Jeder Gast nimmt ein individuelles Kunstwerk mit nach Hause.",
+        "icon": "gift"
+      }
+    ]
+  },
+  "pakete": {
+    "enabled": true,
+    "title": "Unsere Pakete für Ihr Kinderfest",
+    "items": [
+      {
+        "title": "Starter",
+        "duration": "2 Stunden",
+        "price": "Auf Anfrage",
+        "features": [
+          "1 Künstler",
+          "Live-Karikaturen oder Szenenmalerei",
+          "Material inklusive"
+        ]
+      },
+      {
+        "title": "Standard",
+        "duration": "4 Stunden",
+        "price": "Auf Anfrage",
+        "features": [
+          "1–2 Künstler",
+          "Live-Karikaturen und/oder Szenenmalerei",
+          "Material inklusive"
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "enabled": true,
+    "title": "Passende Künstler für Ihr Kinderfest"
+  },
+  "referenzen": {
+    "enabled": false,
+    "title": "",
+    "text": "",
+    "logos": []
+  }
+}
