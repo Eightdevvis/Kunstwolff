@@ -808,6 +808,52 @@
     "categories": [],
     "priority": 7
   },
+  "stuttgart/company-party-live-sketching-stuttgart---kopie.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 1
+  },
+  "stuttgart/funny-picture-speed-painting-trade-fair---kopie.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 6
+  },
+  "stuttgart/karikatur-gabelstabler-messe-event-stuttgart---kopie.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 8
+  },
+  "stuttgart/live-painting-party-event-stuttgart.webp": {
+    "categories": [],
+    "priority": 4
+  },
+  "stuttgart/live-sketching-event-trade-fair-baden-wuerttemberg.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 5
+  },
+  "stuttgart/schnellzeichnerin-messe-stuttgart.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "priority": 4
+  },
+  "stuttgart/schnellzeichnerin-stuttgart.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "priority": 7
+  },
+  "stuttgart/schnellzeichnung-messe-stuttgart.webp": {
+    "categories": [],
+    "priority": 3
+  },
   "trier/1_2-kollegen-zeigen-froehlich-ihre-karikaturzeichnung-mit-bierglas-auf-der-weihnachtsfeier-in-tommys-teufelskueche-trier.webp": {
     "categories": [
       "Schnellzeichner"
@@ -1024,105 +1070,5 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
-  },
-  "stuttgart/company-party-live-sketching-stuttgart---kopie.webp": {
-    "categories": [],
-    "priority": 1
-  },
-  "stuttgart/schnellzeichnerin-messe-stuttgart.webp": {
-    "categories": [],
-    "priority": 4
-  },
-  "stuttgart/schnellzeichnung-messe-stuttgart.webp": {
-    "categories": [],
-    "priority": 3
-  },
-  "stuttgart/live-painting-party-event-stuttgart.webp": {
-    "categories": [],
-    "priority": 4
-  },
-  "stuttgart/live-sketching-event-trade-fair-baden-wuerttemberg.webp": {
-    "categories": [],
-    "priority": 5
-  },
-  "stuttgart/funny-picture-speed-painting-trade-fair---kopie.webp": {
-    "categories": [],
-    "priority": 6
-  },
-  "stuttgart/schnellzeichnerin-stuttgart.webp": {
-    "categories": [],
-    "priority": 7
-  },
-  "stuttgart/karikatur-gabelstabler-messe-event-stuttgart---kopie.webp": {
-    "categories": [],
-    "priority": 8
-  },
-  "events/hochzeit/schnellzeichnerin-zeichnet-paar-hochzei--hessen.webp": {
-    "categories": [],
-    "priority": 1
-  },
-  "events/hochzeit/karikatur-hochzeit-einladungskarte.webp": {
-    "categories": [],
-    "priority": 2
-  },
-  "events/hochzeit/karikaturist-hochzeit.webp": {
-    "categories": [],
-    "priority": 3
-  },
-  "events/hochzeit/hochzeit-einladungskarte-cartoon.webp": {
-    "categories": [],
-    "priority": 4
-  },
-  "events/hochzeit/img_20250913_211812.webp": {
-    "categories": [],
-    "priority": 5
-  },
-  "events/hochzeit/goldene-hochzeit-karikatur.webp": {
-    "categories": [],
-    "priority": 6
-  },
-  "events/hochzeit/img_20240316_182602.webp": {
-    "categories": [],
-    "priority": 7
-  },
-  "events/messe/karikaturist-messe-rai-amsterdam.webp": {
-    "categories": [],
-    "priority": 1
-  },
-  "events/messe/schnellzeichner-messe-koeln.webp": {
-    "categories": [],
-    "priority": 2
-  },
-  "events/messe/digital-speedpainter-cologne.webp": {
-    "categories": [],
-    "priority": 3
-  },
-  "events/messe/digital-caricature.webp": {
-    "categories": [],
-    "priority": 4
-  },
-  "events/messe/schnellzeichner-messe-nrw.webp": {
-    "categories": [],
-    "priority": 5
-  },
-  "events/messe/schnellzeichner-messe.webp": {
-    "categories": [],
-    "priority": 6
-  },
-  "events/messe/digital-speedpainter-trade-show.webp": {
-    "categories": [],
-    "priority": 7
-  },
-  "events/messe/digitale-live-portraits.webp": {
-    "categories": [],
-    "priority": 8
-  },
-  "events/messe/digital-artist.webp": {
-    "categories": [],
-    "priority": 9
-  },
-  "events/firmenfeier/walking-act-company-party-mainz.webp": {
-    "categories": [],
-    "priority": 1
   }
 }
