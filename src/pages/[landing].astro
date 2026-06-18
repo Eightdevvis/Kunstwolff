@@ -38,6 +38,7 @@ import Opener from '../components/hero/Opener.astro';
 import Landingsection from '../components/Landingsection.astro';
 import Why from '../components/Why.astro';
 import { getLandingBySlug, getLandingSlugs } from '../utils/landings';
+import { getLandingHeading } from '../utils/siteTexts';
 
 // ── Event-spezifische Imports ─────────────────────────────────────────────────
 import EventHero from '../components/events/EventHero.astro';
@@ -98,7 +99,7 @@ if (pageType === 'landing') {
   landingSlides = supplementWithDefaultSlides(citySlides, defaultSlides, MIN_LANDING_SLIDES);
 
   const cityName = (landing ?? '').charAt(0).toUpperCase() + (landing ?? '').slice(1);
-  landingHeading = `Eventkünstler in ${cityName}`;
+  landingHeading = getLandingHeading(landing ?? '', `Eventkünstler in ${cityName}`);
   landingPageTitle = `Eventkünstler ${cityName} – Live-Kunst & Performance | Kunstwolff`;
   landingPageDescription = `Kunstwolff in ${cityName}: Professionelle Eventkünstler für Firmenfeiern, Messen & Hochzeiten. Schnellzeichner, Szenenmaler & mehr.`;
 
