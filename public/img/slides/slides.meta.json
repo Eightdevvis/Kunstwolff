@@ -264,6 +264,12 @@
     "categories": [],
     "priority": 9
   },
+  "frankfurt/eintracht-frankfurt-karikatur-fussball-club.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 29
+  },
   "fulda/1000018053.webp": {
     "categories": [],
     "priority": 3
@@ -292,6 +298,46 @@
       "Schnellzeichner"
     ],
     "priority": 2
+  },
+  "hessen/event-illustratorin-malt-tier-portrait-frankfurt.webp": {
+    "categories": [],
+    "priority": 2
+  },
+  "hessen/familienportraet-schnellzeichnerin-wiesbaden.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "priority": 7
+  },
+  "hessen/karikaturen-schnellzeichner-dömaene-mechthild-wiesbaden.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 6
+  },
+  "hessen/karikaturistin-hanau-druckhaus-am-main.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "priority": 5
+  },
+  "hessen/portraitmalerin-malt-aquarell-portraets-muttertagsaktion-bulgar-frankfurt.webp": {
+    "categories": [],
+    "priority": 3
+  },
+  "hessen/schnellzeichner-dinner-event-alte-lokhalle-mainz.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 1
+  },
+  "hessen/team-karikatur-digitale-flipchart-sommerfest-frankfurt.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 4
   },
   "kaiserslautern/1_caricature-of-a-couple-by-speedpainter-event-umgc-rheinland-pfalz.webp": {
     "categories": [
@@ -1078,37 +1124,5 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
-  },
-  "hessen/schnellzeichner-dinner-event-alte-lokhalle-mainz.webp": {
-    "categories": [],
-    "priority": 1
-  },
-  "hessen/event-illustratorin-malt-tier-portrait-frankfurt.webp": {
-    "categories": [],
-    "priority": 2
-  },
-  "hessen/portraitmalerin-malt-aquarell-portraets-muttertagsaktion-bulgar-frankfurt.webp": {
-    "categories": [],
-    "priority": 3
-  },
-  "hessen/team-karikatur-digitale-flipchart-sommerfest-frankfurt.webp": {
-    "categories": [],
-    "priority": 4
-  },
-  "hessen/karikaturistin-hanau-druckhaus-am-main.webp": {
-    "categories": [],
-    "priority": 5
-  },
-  "hessen/karikaturen-schnellzeichner-dömaene-mechthild-wiesbaden.webp": {
-    "categories": [],
-    "priority": 6
-  },
-  "hessen/familienportraet-schnellzeichnerin-wiesbaden.webp": {
-    "categories": [],
-    "priority": 7
-  },
-  "frankfurt/eintracht-frankfurt-karikatur-fussball-club.webp": {
-    "categories": [],
-    "priority": 29
   }
 }
