@@ -874,13 +874,18 @@
     "title": "Schnellzeichner Trier"
   },
   "trier/11_kuenstlerin-zeichnet-die-gaeste-im-gasthaus-schornstein-zur-hochzeit.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler",
+      "Schnellzeichner"
+    ],
     "priority": 11,
     "altOverride": "Kuenstlerin zeichnet die gaeste im gasthaus schornstein zur hochzeit",
     "title": "Live-Kunst Trier"
   },
   "trier/12_lustige-zeichnung-von-paar-mit-hund.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner"
+    ],
     "priority": 12
   },
   "trier/13_paar-betrachtet-ueberrascht-seine-portraitzeichnung-von-hand-des-schnellzeichner-event.webp": {
