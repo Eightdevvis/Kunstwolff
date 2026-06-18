@@ -79,19 +79,28 @@
     "priority": 146
   },
   "frankfurt/10_digitale-schnellzeichnung-auf-leinwand-projiziert-mit-beamer-comoany-event-allianz-frankfurt.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
     "priority": 10,
     "altOverride": "Digitale schnellzeichnung auf leinwand projiziert mit beamer comoany event allianz frankfurt",
     "title": "Live-Kunst Frankfurt"
   },
   "frankfurt/11_event-zeichner-zeichnet-an-staffelei-shop-eroeffnung-frankfurt.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
     "priority": 11,
     "altOverride": "Event zeichner zeichnet an staffelei shop eroeffnung frankfurt",
     "title": "Live-Kunst Frankfurt"
   },
   "frankfurt/12_eventzeichnerin-sitzt-an-staffelei-und-portraitiert-kunden-bulgari-frankfurt.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler",
+      "Schnellzeichner"
+    ],
     "priority": 12,
     "altOverride": "Eventzeichnerin sitzt an staffelei und portraitiert kunden bulgari frankfurt",
     "title": "Live-Kunst Frankfurt"
