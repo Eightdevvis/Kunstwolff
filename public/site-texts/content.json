@@ -1,6 +1,6 @@
 {
   "contact": {
-    "kicker": "Kontakt",
+    "kicker": "Kontaktm",
     "heading": "Erzählen Sie uns von Ihrem Event",
     "intro": "Stellen Sie uns jetzt unverbindlich eine Anfrage. Fragen oder Vorschläge nehmen wir gerne direkt entgegen. Für allgemeine Fragen hilft oft schon ein Blick in die FAQ.",
     "panelTitle": "Direkt erreichbar",
@@ -13,6 +13,5 @@
   "why": {
     "heading": "Warum Kunstwolff?",
     "intro": "Wir verbinden künstlerische Qualität mit Event-Erfahrung – für Veranstaltungen, die im Gedächtnis bleiben."
-  },
-  "landingHeadings": {}
+  }
 }
