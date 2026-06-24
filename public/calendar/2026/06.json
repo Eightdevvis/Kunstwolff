@@ -43,5 +43,16 @@
     "actors": [
       "Gaby"
     ]
+  },
+  {
+    "id": "mqrx7aduabue",
+    "title": "Geige Vorspiel",
+    "date": "2026-06-26",
+    "time": 18,
+    "location": "SB",
+    "categoryId": "turnier",
+    "actors": [
+      "Jenny"
+    ]
   }
 ]
