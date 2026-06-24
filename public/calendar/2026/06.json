@@ -54,5 +54,29 @@
     "actors": [
       "Jenny"
     ]
+  },
+  {
+    "id": "mqrx8a88zbqp",
+    "title": "bei Schwesterchen",
+    "description": "Serafin kann uns fahren",
+    "date": "2026-06-26",
+    "time": 14,
+    "location": "Jenny Wohnung",
+    "categoryId": "babysitter",
+    "actors": [
+      "Jenny"
+    ]
+  },
+  {
+    "id": "mqrx91c9xrgm",
+    "title": "Sophia Turnier SB",
+    "date": "2026-06-27",
+    "time": 12,
+    "location": "SB",
+    "categoryId": "turnier",
+    "actors": [
+      "Jenny",
+      "Gaby"
+    ]
   }
 ]
