@@ -14,6 +14,19 @@
         ]
       },
       "enabled": true
+    },
+    {
+      "id": "trauredner-thomas-hoffmann",
+      "name": "Trauredner Thomas Hoffmann",
+      "logo": "/img/partners/trauredner-thomas-hoffmann.avif",
+      "description": "",
+      "url": "https://www.trauredner.eu/",
+      "tags": {
+        "events": [],
+        "skills": [],
+        "landings": []
+      },
+      "enabled": true
     }
   ]
 }
