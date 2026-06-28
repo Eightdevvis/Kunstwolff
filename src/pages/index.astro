@@ -1,5 +1,6 @@
 ---
 import Opener from "../components/hero/Opener.astro";
+import LandingIntro from "../components/LandingIntro.astro";
 import CinemaWelcome from "../components/CinemaWelcome.astro";
 import HomepageReviews from "../components/HomepageReviews.astro";
 import Layout from "../layouts/Layout.astro";
@@ -15,8 +16,11 @@ import {
   getHomepageSlides,
 } from "../utils/slideImages";
 import { isComponentEnabled } from "../utils/componentConfig";
+import { getHomeIntro } from "../utils/siteTexts";
 
 const show = (id: string) => isComponentEnabled('homepage', '', id);
+
+const homeIntro = getHomeIntro();
 
 // Slideshow-Items nur aus Ordnern zusammenführen
 const homepageSlides = getHomepageSlides();
@@ -31,7 +35,7 @@ const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Kunstwolff",
-  "description": "Eventkünstler seit über 20 Jahren – Schnellzeichner, Szenenmaler & Live-Performance für Firmenfeiern, Messen und Hochzeiten.",
+  "description": "Eventkünstler seit über 25 Jahren – Schnellzeichner, Szenenmaler & Live-Performance für Firmenfeiern, Messen und Hochzeiten.",
   "url": site,
   "telephone": "+491736677229",
   "address": {
@@ -53,6 +57,8 @@ const localBusinessSchema = {
   <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   
   {show('opener') && <Opener titleImage={titleImage} titleImagePosition={titleImagePosition} />}
+
+  {show('landingIntro') && <LandingIntro text={homeIntro} />}
 
   {show('homepageReviews') && <HomepageReviews />}
 

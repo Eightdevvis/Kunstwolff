@@ -13,5 +13,9 @@
   "why": {
     "heading": "Warum Kunstwolff?",
     "intro": "Wir verbinden künstlerische Qualität mit Event-Erfahrung – für Veranstaltungen, die im Gedächtnis bleiben."
+  },
+  "landingIntros": {
+    "_home": "Live-Kunst, die Ihre Gäste nicht mehr vergessen. Seit über 25 Jahren bringen wir Schnellzeichner, Szenenmaler und Live-Performance auf Firmenfeiern, Messen und Hochzeiten – Kunst, die direkt vor Ihren Augen entsteht.",
+    "_default": "Live-Kunst für Ihr Event in {stadt}. Von Schnellzeichnern bis Szenenmalern verwandeln wir Firmenfeiern, Messen und Hochzeiten in {stadt} in unvergessliche Momente – Kunst, die direkt vor Ihren Gästen entsteht."
   }
 }

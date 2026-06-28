@@ -37,8 +37,9 @@ import {
 import Opener from '../components/hero/Opener.astro';
 import Landingsection from '../components/Landingsection.astro';
 import Why from '../components/Why.astro';
+import LandingIntro from '../components/LandingIntro.astro';
 import { getLandingBySlug, getLandingSlugs } from '../utils/landings';
-import { getLandingHeading } from '../utils/siteTexts';
+import { getLandingHeading, getLandingIntro } from '../utils/siteTexts';
 
 // ── Event-spezifische Imports ─────────────────────────────────────────────────
 import EventHero from '../components/events/EventHero.astro';
@@ -90,6 +91,7 @@ let landingSlides: Awaited<ReturnType<typeof supplementWithDefaultSlides>> | und
 let landingPageTitle = '';
 let landingPageDescription = '';
 let landingHeading = '';
+let landingIntro = '';
 let breadcrumbSchema: unknown;
 
 if (pageType === 'landing') {
@@ -100,6 +102,7 @@ if (pageType === 'landing') {
 
   const cityName = (landing ?? '').charAt(0).toUpperCase() + (landing ?? '').slice(1);
   landingHeading = getLandingHeading(landing ?? '', `Eventkünstler in ${cityName}`);
+  landingIntro = getLandingIntro(landing ?? '', cityName);
   landingPageTitle = `Eventkünstler ${cityName} – Live-Kunst & Performance | Kunstwolff`;
   landingPageDescription = `Kunstwolff in ${cityName}: Professionelle Eventkünstler für Firmenfeiern, Messen & Hochzeiten. Schnellzeichner, Szenenmaler & mehr.`;
 
@@ -160,6 +163,7 @@ if (pageType === 'event') {
   <Layout title={landingPageTitle} description={landingPageDescription} image={landingData.titleImage}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     {show('opener') && <Opener titleImage={landingData.titleImage} titleImageAlt={landingData.title} titleImagePosition={landingData.titleImagePosition} heading={landingHeading} />}
+    {show('landingIntro') && <LandingIntro text={landingIntro} />}
     {show('homepageReviews') && <HomepageReviews />}
     {show('slideshow') && <Slideshow items={landingSlides} />}
     {show('cinemaWelcome') && <CinemaWelcome />}

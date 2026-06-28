@@ -76,3 +76,60 @@ export const getLandingHeading = (slug: string, fallback: string): string => {
   }
   return fallback;
 };
+
+/**
+ * Kleiner Einführungstext direkt unter dem Hero/BrandStripe der Stadtseiten.
+ * Quelle: content.json -> "landingIntros": { "_default": "…", "<slug>": "…" }.
+ *
+ * Auflösung: stadtspezifischer Text → `_default`-Text. KEIN hartcodierter Fallback –
+ * steht nichts in der content.json, rendert die Komponente nichts (leerer String).
+ * Der Default-Text lebt als ganz normaler `_default`-Eintrag in der content.json
+ * (siehe site-texts/content.json) und ist damit voll im Admin editierbar.
+ * Der Platzhalter {stadt} wird durch den (formatierten) Stadtnamen ersetzt.
+ */
+const fillCity = (text: string, cityName: string): string =>
+  text.replace(/\{stadt\}/gi, cityName);
+
+export const getLandingIntro = (slug: string, cityName: string): string => {
+  try {
+    const raw = JSON.parse(fs.readFileSync(FILE, 'utf-8')) as Record<string, unknown>;
+    const map = raw.landingIntros;
+    if (map && typeof map === 'object') {
+      const cityText = (map as Record<string, unknown>)[slug];
+      if (typeof cityText === 'string') {
+        // Leerer (getrimmter) String = bewusst kein Intro auf dieser Stadt.
+        if (cityText.trim().length === 0) return '';
+        return fillCity(cityText.trim(), cityName);
+      }
+
+      const defaultText = (map as Record<string, unknown>)['_default'];
+      if (typeof defaultText === 'string') {
+        if (defaultText.trim().length === 0) return '';
+        return fillCity(defaultText.trim(), cityName);
+      }
+    }
+  } catch {
+    /* ignore – kein Eintrag → nichts rendern */
+  }
+  return '';
+};
+
+/**
+ * Einführungstext der Startseite (eigener Eintrag, da ohne Stadt-Bezug).
+ * Quelle: content.json -> "landingIntros._home". KEIN hartcodierter Fallback.
+ */
+export const getHomeIntro = (): string => {
+  try {
+    const raw = JSON.parse(fs.readFileSync(FILE, 'utf-8')) as Record<string, unknown>;
+    const map = raw.landingIntros;
+    if (map && typeof map === 'object') {
+      const homeText = (map as Record<string, unknown>)['_home'];
+      if (typeof homeText === 'string') {
+        return homeText.trim();
+      }
+    }
+  } catch {
+    /* ignore – kein Eintrag → nichts rendern */
+  }
+  return '';
+};

@@ -1,0 +1,79 @@
+---
+/**
+ * LandingIntro – kleiner Einführungstext direkt unter dem Hero/BrandStripe der
+ * Stadtseiten. Text kommt aus site-texts/content.json (siehe utils/siteTexts.ts,
+ * getLandingIntro) und ist pro Stadt im Admin überschreibbar.
+ *
+ * Rendert nichts, wenn `text` leer ist (bewusst geleert oder nicht konfiguriert).
+ * Mehrere Absätze: Leerzeilen im Text trennen Paragraphen.
+ */
+const { text = '' } = Astro.props;
+
+const paragraphs = String(text)
+  .split(/\n{2,}/)
+  .map((p) => p.trim())
+  .filter((p) => p.length > 0);
+---
+
+{paragraphs.length > 0 && (
+  <section class="landing-intro section">
+    <div class="landing-intro-inner section-inner">
+      {paragraphs.map((p) => (
+        <p>{p}</p>
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  /* Schwarz, damit es nahtlos in den Review-Streifen (ebenfalls schwarz) übergeht. */
+  .landing-intro {
+    width: 100%;
+    padding: clamp(48px, 7vw, 88px) 0 clamp(36px, 5vw, 60px);
+    background: #000;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .landing-intro-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+
+  /* dezenter Gold-Akzent, passend zu den Review-Sternen */
+  .landing-intro-inner::before {
+    content: "";
+    display: block;
+    width: 44px;
+    height: 2px;
+    margin: 0 auto clamp(20px, 3vw, 30px);
+    background: #d4af37;
+    opacity: 0.85;
+  }
+
+  .landing-intro p {
+    font-family: var(--font-body);
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+  }
+
+  .landing-intro p + p {
+    margin-top: 18px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: clamp(1rem, 1.7vw, 1.15rem);
+  }
+
+  @media (max-width: 768px) {
+    .landing-intro {
+      padding: clamp(36px, 9vw, 56px) 0 clamp(24px, 6vw, 40px);
+    }
+
+    .landing-intro-inner {
+      padding: 0 18px;
+    }
+  }
+</style>

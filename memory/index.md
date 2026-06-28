@@ -21,7 +21,8 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [Events](content-events.md) – `events.json`, content.json, Event-Bilder
 - [Slides](content-slides.md) – Bilder, `slides.meta.json`, Lightbox, Fallback-Logik
 - [Titelbild](content-titelbild.md) – Pfad, Metadaten, Fallback-Kette
-- [Reviews](content-reviews.md) – Markdown-Format, Fallback
+- [Reviews](content-reviews.md) – Markdown-Format, Fallback, MiniReviews-Anzeige
+- [Allgemeine Texte](content-site-texts.md) – `site-texts/content.json`, Startseiten-Texte, `landingIntros` (Einführungstext)
 - [FAQs](content-faqs.md) – Markdown-Format, Filterung
 - [Why-Sektion](content-why.md) – JSON-Format, Fallback-Kette, Bilder
 - [Erinnerungen](content-erinnerungen.md) – Pinnwand-Fotos, Fallback-Kette
