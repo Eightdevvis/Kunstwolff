@@ -126,7 +126,8 @@ const filteredItems =
     // kompakt, egal ob 3 oder 45 Reviews drinstecken – kein Riesen-Blank, kein Sprung.
     const syncHeight = (): void => {
       if (track) {
-        track.style.height = `${slides[activeIndex].offsetHeight}px`;
+        // +2px Puffer gegen Sub-Pixel-Rundung, damit overflow:hidden nichts abschneidet.
+        track.style.height = `${slides[activeIndex].offsetHeight + 2}px`;
       }
     };
 
@@ -134,6 +135,8 @@ const filteredItems =
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(syncHeight);
     }
+    // Nach Webfont-/Layout-Settling nochmal nachmessen (Höhe ändert sich mit der Schrift).
+    window.addEventListener("load", syncHeight);
     window.addEventListener("resize", syncHeight);
 
     if (slides.length <= 1) {
@@ -211,6 +214,9 @@ const filteredItems =
     /* Höhe wird per JS auf das aktive Review gesetzt und weich animiert
        → kompakt (kein Riesen-Blank) und trotzdem ohne harten Sprung. */
     transition: height 420ms ease;
+    /* verhindert, dass ein großes Review während des Höhen-Übergangs
+       aus dem Track quillt und die Pfeile darunter überlappt. */
+    overflow: hidden;
   }
 
   .review-slider .swiper-slide {

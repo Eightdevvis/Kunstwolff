@@ -41,15 +41,23 @@ const paragraphs = String(text)
     text-align: center;
   }
 
-  /* dezenter Gold-Akzent, passend zu den Review-Sternen */
-  .landing-intro-inner::before {
+  /* dezenter Gold-Akzent, passend zu den Review-Sternen – über UND unter dem Text */
+  .landing-intro-inner::before,
+  .landing-intro-inner::after {
     content: "";
     display: block;
     width: 44px;
     height: 2px;
-    margin: 0 auto clamp(20px, 3vw, 30px);
     background: #d4af37;
     opacity: 0.85;
+  }
+
+  .landing-intro-inner::before {
+    margin: 0 auto clamp(20px, 3vw, 30px);
+  }
+
+  .landing-intro-inner::after {
+    margin: clamp(20px, 3vw, 30px) auto 0;
   }
 
   .landing-intro p {
