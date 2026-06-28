@@ -15,10 +15,7 @@
   "landing": {
     "_default": {
       "opener": true,
-      "cinemaWelcome": false,
-      "homepageReviews": true,
       "slideshow": true,
-      "eventtypes": true,
       "why": true,
       "contact": true,
       "faq": true,
