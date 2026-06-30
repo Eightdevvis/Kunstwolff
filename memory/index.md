@@ -13,6 +13,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [Architektur](architektur.md) – SSG-Logik, dateibasiertes CMS, public/-Prinzip
 - [Pfadstruktur](pfadstruktur.md) – Vollständiger Baum von `public/` mit Zweck pro Pfad
 - [Routing & URL-Generierung](routing.md) – Wie URLs aus landings.md/skills.json/events.json entstehen
+- [Komponenten-Stack](komponenten-stack.md) – `components.json` `_order` als EINE Quelle für Sektions-Reihenfolge+Sichtbarkeit (Website rendert daraus, Admin liest dasselbe), Build-Guardrail
 - [Admin-Tool / Cross-Repo](admin-tool.md) – Was Admin schreibt, was nicht, Cross-Repo-Workflow
 
 ### Content-Systeme (lade nur was zur Aufgabe passt)
@@ -64,6 +65,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 | "Bildoptimierung / Pre-Push-Probleme" | `git-hooks.md` |
 | "SEO / Meta-Tags / Sitemap" | `seo.md` |
 | "Routing / URL passt nicht" | `routing.md` |
+| "Sektion ein-/ausblenden, Reihenfolge ändern, Sektion taucht falsch auf" | `komponenten-stack.md` |
 | "Admin-Tool schreibt falsch" | `admin-tool.md` |
 | "Hosting / Vercel / Cutover-Stand" | `projekt.md` (Hosting-Section) + `seo.md` + `HEALTH_CHECK_2026-05-05.md` + `CUTOVER_PLAN.md` |
 | "Cross-Repo / Admin-Tool" | `admin-tool.md` + Admin-Memory `Kunstwolff-admin/kunstwolff-admin/memory/index.md` |

@@ -52,7 +52,7 @@ import {
   getEventSlides,
   resolveEventTitleImage,
 } from '../../utils/events';
-import { isComponentEnabled, type PageType } from '../../utils/componentConfig';
+import { isComponentEnabled, resolveSectionOrder, type PageType } from '../../utils/componentConfig';
 
 // ── getStaticPaths: alle Skill+Stadt + Skill+Event Kombinationen ──────────────
 export async function getStaticPaths() {
@@ -84,7 +84,6 @@ const { skill, landing } = Astro.params;
 const { pageType } = Astro.props as { pageType: 'landing' | 'event' };
 
 const pt: PageType = pageType === 'event' ? 'skill-event' : 'skill-landing';
-const show = (id: string) => isComponentEnabled(pt, landing ?? '', id);
 
 // Skill ist für beide Typen nötig
 const skillData = getSkillBySlug(skill ?? '');
@@ -178,6 +177,86 @@ const finalHeroTitle =
   pageType === 'landing'
     ? (skillData.heroTitle || `Live ${skillData.title} für Events`)
     : (eventData ? `${skillData.title} für ${eventData.title}` : skillData.title);
+
+// ── Sektions-Stack: Reihenfolge + Sichtbarkeit aus components.json, Props von
+//    hier. Pro Branch (Skill+Stadt vs. Skill+Event) eigene Registry.
+let sectionOrder: string[] = [];
+let registry: Record<string, any> = {};
+let sectionProps: Record<string, Record<string, any> | false> = {};
+
+if (pageType === 'landing' && landingSlides) {
+  registry = {
+    skillHero: SkillHero,
+    slideshow: Slideshow,
+    why: Why,
+    erinnerungen: LandingErinnerungen,
+    contact: Contact,
+    faq: FAQ,
+    landingsection: Landingsection,
+  };
+  sectionProps = {
+    skillHero: {
+      title: finalHeroTitle,
+      reviews: reviews as any,
+      titleImage: skillCityTitleImage,
+      skillName: skillData.title,
+      backgroundImage: skillCityHeroBg,
+    },
+    slideshow: { items: landingSlides, filteredCategories: [skillData.title] },
+    why: { skill, landing },
+    erinnerungen: { skill, landing },
+    contact: {},
+    faq: { city: landing, categories: [skillData.title] },
+    landingsection: { site: skill },
+  };
+  sectionOrder = resolveSectionOrder('skill-landing', landing ?? '', registry);
+} else if (pageType === 'event' && eventData && eventContent && eventSlides) {
+  registry = {
+    eventHero: EventHero,
+    slideshow: Slideshow,
+    eventAblauf: EventAblauf,
+    eventPakete: EventPakete,
+    eventSkills: EventSkills,
+    eventReferenzen: EventReferenzen,
+    faq: FAQ,
+    contact: Contact,
+  };
+  sectionProps = {
+    eventHero: {
+      titleImage: eventTitleImage,
+      title: finalHeroTitle,
+      subtitle: eventPageDescription,
+      eventLabel: `${skillData.title} · ${eventData.title}`,
+    },
+    slideshow: { items: eventSlides, filteredCategories: [skillData.title] },
+    eventAblauf:
+      eventContent.ablauf?.enabled && eventContent.ablauf.steps.length > 0
+        ? { title: eventContent.ablauf.title, steps: eventContent.ablauf.steps }
+        : false,
+    eventPakete:
+      eventContent.pakete?.enabled && eventContent.pakete.items.length > 0
+        ? { title: eventContent.pakete.title, items: eventContent.pakete.items }
+        : false,
+    eventSkills: eventContent.skills?.enabled
+      ? {
+          title: eventContent.skills.title,
+          eventSlug: landing ?? '',
+          categories: eventData.categories,
+          currentSkill: skill ?? '',
+        }
+      : false,
+    eventReferenzen: eventContent.referenzen?.enabled
+      ? {
+          title: eventContent.referenzen.title,
+          text: eventContent.referenzen.text,
+          logos: eventContent.referenzen.logos,
+        }
+      : false,
+    faq: { categories: [skillData.title] },
+    contact: {},
+  };
+  sectionOrder = resolveSectionOrder('skill-event', landing ?? '', registry);
+}
 ---
 
 {pageType === 'landing' && landingSlides && (
@@ -186,25 +265,13 @@ const finalHeroTitle =
   ══════════════════════════════════════════════════ -->
   <SkillLayout title={skillCityPageTitle} description={skillCityDescription} image={skillCityTitleImage}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(skillCityBreadcrumb)} />
-    {show('skillHero') && <SkillHero
-      title={finalHeroTitle}
-      reviews={reviews as any}
-      titleImage={skillCityTitleImage}
-      skillName={skillData.title}
-      backgroundImage={skillCityHeroBg}
-    />}
-
-    {show('slideshow') && <Slideshow items={landingSlides} filteredCategories={[skillData.title]} />}
-
-    {show('why') && <Why skill={skill} landing={landing} />}
-
-    {show('erinnerungen') && <LandingErinnerungen skill={skill} landing={landing} />}
-
-    {show('contact') && <Contact />}
-
-    {show('faq') && <FAQ city={landing} categories={[skillData.title]} />}
-
-    {show('landingsection') && <Landingsection site={skill}/>}
+    {sectionOrder.map((id) => {
+      if (!isComponentEnabled(pt, landing ?? '', id)) return null;
+      const props = sectionProps[id];
+      if (props === false) return null;
+      const Section = registry[id];
+      return <Section {...props} />;
+    })}
 
     <script>import "../../scripts/formspree.js";</script>
   </SkillLayout>
@@ -217,52 +284,13 @@ const finalHeroTitle =
   <EventLayout title={eventPageTitle} description={eventPageDescription} image={eventTitleImage}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(eventBreadcrumb)} />
 
-    <!-- Hero: Skill + Event kombiniert -->
-    {show('eventHero') && (
-      <EventHero
-        titleImage={eventTitleImage}
-        title={finalHeroTitle}
-        subtitle={eventPageDescription}
-        eventLabel={`${skillData.title} · ${eventData.title}`}
-      />
-    )}
-
-    {show('slideshow') && <Slideshow items={eventSlides} filteredCategories={[skillData.title]} />}
-
-    {show('eventAblauf') && eventContent.ablauf?.enabled && eventContent.ablauf.steps.length > 0 && (
-      <EventAblauf
-        title={eventContent.ablauf.title}
-        steps={eventContent.ablauf.steps}
-      />
-    )}
-
-    {show('eventPakete') && eventContent.pakete?.enabled && eventContent.pakete.items.length > 0 && (
-      <EventPakete
-        title={eventContent.pakete.title}
-        items={eventContent.pakete.items}
-      />
-    )}
-
-    {show('eventSkills') && eventContent.skills?.enabled && (
-      <EventSkills
-        title={eventContent.skills.title}
-        eventSlug={landing ?? ''}
-        categories={eventData.categories}
-        currentSkill={skill ?? ''}
-      />
-    )}
-
-    {show('eventReferenzen') && eventContent.referenzen?.enabled && (
-      <EventReferenzen
-        title={eventContent.referenzen.title}
-        text={eventContent.referenzen.text}
-        logos={eventContent.referenzen.logos}
-      />
-    )}
-
-    {show('faq') && <FAQ categories={[skillData.title]} />}
-
-    {show('contact') && <Contact />}
+    {sectionOrder.map((id) => {
+      if (!isComponentEnabled(pt, landing ?? '', id)) return null;
+      const props = sectionProps[id];
+      if (props === false) return null;
+      const Section = registry[id];
+      return <Section {...props} />;
+    })}
 
     <script>import "../../scripts/formspree.js";</script>
   </EventLayout>

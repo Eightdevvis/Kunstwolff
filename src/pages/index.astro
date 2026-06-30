@@ -15,10 +15,8 @@ import { resolveTitleImage, resolveTitleImageFocus } from "../utils/titleImages"
 import {
   getHomepageSlides,
 } from "../utils/slideImages";
-import { isComponentEnabled } from "../utils/componentConfig";
+import { isComponentEnabled, resolveSectionOrder, type PageType } from "../utils/componentConfig";
 import { getHomeIntro } from "../utils/siteTexts";
-
-const show = (id: string) => isComponentEnabled('homepage', '', id);
 
 const homeIntro = getHomeIntro();
 
@@ -26,6 +24,36 @@ const homeIntro = getHomeIntro();
 const homepageSlides = getHomepageSlides();
 const titleImage = resolveTitleImage();
 const titleImagePosition = resolveTitleImageFocus();
+
+// ── Sektions-Stack: Reihenfolge + Sichtbarkeit kommen aus components.json
+//    (homepage.order), die Props pro Sektion von hier. Registry mappt ID →
+//    Komponente; resolveSectionOrder validiert beides gegeneinander beim Build.
+const PAGE_TYPE: PageType = 'homepage';
+const registry: Record<string, any> = {
+  opener: Opener,
+  landingIntro: LandingIntro,
+  homepageReviews: HomepageReviews,
+  slideshow: Slideshow,
+  cinemaWelcome: CinemaWelcome,
+  eventtypes: Eventtypes,
+  why: Why,
+  contact: Contact,
+  faq: FAQ,
+  landingsection: Landingsection,
+};
+const sectionProps: Record<string, Record<string, any> | false> = {
+  opener: { titleImage, titleImagePosition },
+  landingIntro: { text: homeIntro },
+  homepageReviews: {},
+  slideshow: { items: homepageSlides },
+  cinemaWelcome: {},
+  eventtypes: {},
+  why: {},
+  contact: {},
+  faq: {},
+  landingsection: {},
+};
+const sectionOrder = resolveSectionOrder(PAGE_TYPE, '', registry);
 
 // WEB-012: Schema-URLs aus Astro.site (= SITE_URL) statt hardcoded kunstwolff.de,
 // konsistent zu Canonical/OG im Layout (Stage → vercel.app, Cutover → kunstwolff.de).
@@ -55,26 +83,14 @@ const localBusinessSchema = {
 
 <Layout image={titleImage}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
-  
-  {show('opener') && <Opener titleImage={titleImage} titleImagePosition={titleImagePosition} />}
 
-  {show('landingIntro') && <LandingIntro text={homeIntro} />}
-
-  {show('homepageReviews') && <HomepageReviews />}
-
-  {show('slideshow') && <Slideshow items={homepageSlides} />}
-
-  {show('cinemaWelcome') && <CinemaWelcome />}
-
-  {show('eventtypes') && <Eventtypes />}
-
-  {show('why') && <Why />}
-
-  {show('contact') && <Contact />}
-
-  {show('faq') && <FAQ />}
-
-  {show('landingsection') && <Landingsection />}
+  {sectionOrder.map((id) => {
+    if (!isComponentEnabled(PAGE_TYPE, '', id)) return null;
+    const props = sectionProps[id];
+    if (props === false) return null;
+    const Section = registry[id];
+    return <Section {...props} />;
+  })}
 
   <script>import "../scripts/formspree.js";</script>
 </Layout>

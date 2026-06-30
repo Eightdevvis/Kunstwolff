@@ -18,7 +18,7 @@ const filteredItems =
 <div class="review-slider" data-review-rotator>
   <div class="review-track">
     {filteredItems.map((review: Review, index: number) => (
-      <div class={`swiper-slide ${index === 0 ? "is-active" : ""}`}>
+      <div class={`review-slide ${index === 0 ? "is-active" : ""}`}>
         <p class="review-text">&ldquo;{review.text}&rdquo;</p>
         <p class="review-stars" aria-label="5 von 5 Sternen">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
         <span class="review-author">&mdash; {review.author}</span>
@@ -110,61 +110,28 @@ const filteredItems =
   reviewRotators.forEach((rotator) => {
     applyReviewTheme(rotator);
 
-    const track = rotator.querySelector<HTMLElement>(".review-track");
-    const slides = Array.from(rotator.querySelectorAll<HTMLElement>(".swiper-slide"));
+    // Manuelles Durchklicken: immer genau EIN Review sichtbar (display:flex),
+    // der Rest display:none. Die Höhe ergibt sich aus dem sichtbaren Review im
+    // normalen Fluss – kein Stapeln, kein Messen, nichts schneidet ab.
+    const slides = Array.from(rotator.querySelectorAll<HTMLElement>(".review-slide"));
     const prevBtn = rotator.querySelector<HTMLButtonElement>(".review-prev");
     const nextBtn = rotator.querySelector<HTMLButtonElement>(".review-next");
-
-    if (slides.length === 0) {
-      return;
-    }
-
-    let activeIndex = 0;
-    const transitionDuration = 650;
-
-    // Track-Höhe = Höhe des aktiven Reviews (per CSS weich animiert). Hält das Band
-    // kompakt, egal ob 3 oder 45 Reviews drinstecken – kein Riesen-Blank, kein Sprung.
-    const syncHeight = (): void => {
-      if (track) {
-        // +2px Puffer gegen Sub-Pixel-Rundung, damit overflow:hidden nichts abschneidet.
-        track.style.height = `${slides[activeIndex].offsetHeight + 2}px`;
-      }
-    };
-
-    syncHeight();
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(syncHeight);
-    }
-    // Nach Webfont-/Layout-Settling nochmal nachmessen (Höhe ändert sich mit der Schrift).
-    window.addEventListener("load", syncHeight);
-    window.addEventListener("resize", syncHeight);
 
     if (slides.length <= 1) {
       return;
     }
 
-    // Manuelles Durchklicken – kein Autoplay. Besucher steuert per Pfeil/Punkt/Tastatur.
+    let activeIndex = 0;
+
     const goTo = (nextIndex: number): void => {
       const target = (nextIndex + slides.length) % slides.length;
       if (target === activeIndex) {
         return;
       }
 
-      const currentSlide = slides[activeIndex];
-      currentSlide.classList.remove("is-active");
-      currentSlide.classList.add("is-leaving");
-
+      slides[activeIndex].classList.remove("is-active");
       activeIndex = target;
-
-      const nextSlide = slides[activeIndex];
-      nextSlide.classList.remove("is-leaving");
-      nextSlide.classList.add("is-active");
-
-      syncHeight();
-
-      setTimeout(() => {
-        currentSlide.classList.remove("is-leaving");
-      }, transitionDuration);
+      slides[activeIndex].classList.add("is-active");
     };
 
     prevBtn?.addEventListener("click", () => goTo(activeIndex - 1));
@@ -208,34 +175,32 @@ const filteredItems =
   }
 
   .review-track {
-    position: relative;
     width: 100%;
-    min-height: 96px;
-    /* Höhe wird per JS auf das aktive Review gesetzt und weich animiert
-       → kompakt (kein Riesen-Blank) und trotzdem ohne harten Sprung. */
-    transition: height 420ms ease;
-    /* verhindert, dass ein großes Review während des Höhen-Übergangs
-       aus dem Track quillt und die Pfeile darunter überlappt. */
-    overflow: hidden;
   }
 
-  .review-slider .swiper-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
+  /* Genau ein Review sichtbar, ganz normal im Fluss gestapelt: Text, Sterne,
+     Autor untereinander. Der Rest ist display:none und nimmt keinen Platz weg. */
+  .review-slide {
+    display: none;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 4px;
+    gap: 6px;
     text-align: center;
     padding: 18px 22px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-24px);
-    transition: opacity 650ms ease, transform 650ms ease, visibility 650ms;
-    pointer-events: none;
+  }
+
+  .review-slide.is-active {
+    display: flex;
+    animation: review-fade-in 380ms ease;
+  }
+
+  @keyframes review-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   .review-slider .review-text {
@@ -253,11 +218,6 @@ const filteredItems =
     font-size: clamp(1.45rem, 2.7vw, 1.8rem);
     letter-spacing: 0.2em;
     color: var(--review-stars-color);
-    text-shadow: var(--review-stars-glow);
-    transition: text-shadow 380ms ease;
-  }
-
-  .review-slider .swiper-slide.is-active .review-stars {
     text-shadow: var(--review-stars-glow), var(--review-stars-glow-strong);
   }
 
@@ -270,19 +230,6 @@ const filteredItems =
     color: var(--review-author-color);
     letter-spacing: 0.18em;
     opacity: 0.8;
-  }
-
-  .review-slider .swiper-slide.is-active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  .review-slider .swiper-slide.is-leaving {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(24px);
   }
 
   /* Navigation: nur Pfeile, direkt unter dem Review */
@@ -318,7 +265,7 @@ const filteredItems =
       padding: 16px 14px;
     }
 
-    .review-slider .swiper-slide {
+    .review-slide {
       padding: 14px 12px;
     }
 
@@ -329,12 +276,8 @@ const filteredItems =
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .review-slider .swiper-slide {
-      transition: none;
-    }
-
-    .review-track {
-      transition: none;
+    .review-slide.is-active {
+      animation: none;
     }
   }
 </style>
