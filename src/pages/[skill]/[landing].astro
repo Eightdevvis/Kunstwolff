@@ -41,10 +41,11 @@ import { getReviewsByLandingAndSkill } from '../../utils/reviews';
 
 // ── Event-spezifische Imports ─────────────────────────────────────────────────
 import EventHero from '../../components/events/EventHero.astro';
-import EventAblauf from '../../components/events/EventAblauf.astro';
-import EventPakete from '../../components/events/EventPakete.astro';
 import EventSkills from '../../components/events/EventSkills.astro';
-import EventReferenzen from '../../components/events/EventReferenzen.astro';
+import LandingIntro from '../../components/LandingIntro.astro';
+import ComboBenefits from '../../components/combo/ComboBenefits.astro';
+import EventTeaser from '../../components/combo/EventTeaser.astro';
+import { getSkillEventContent } from '../../utils/comboContent';
 import {
   getEventSlugs,
   getEventBySlug,
@@ -211,13 +212,17 @@ if (pageType === 'landing' && landingSlides) {
   };
   sectionOrder = resolveSectionOrder('skill-landing', landing ?? '', registry);
 } else if (pageType === 'event' && eventData && eventContent && eventSlides) {
+  // Skill-zentrische Kombiseite: eigener Lead + „Warum"-Block statt der voll
+  // duplizierten Event-Sektionen (Ablauf/Pakete/Referenzen) → kein Duplicate
+  // Content. Event-Details verlinken wir per EventTeaser auf /<event>.
+  const combo = getSkillEventContent(skill ?? '', landing ?? '', skillData.title, eventData.title);
   registry = {
     eventHero: EventHero,
+    comboLead: LandingIntro,
+    comboBenefits: ComboBenefits,
     slideshow: Slideshow,
-    eventAblauf: EventAblauf,
-    eventPakete: EventPakete,
     eventSkills: EventSkills,
-    eventReferenzen: EventReferenzen,
+    eventTeaser: EventTeaser,
     faq: FAQ,
     contact: Contact,
   };
@@ -228,15 +233,9 @@ if (pageType === 'landing' && landingSlides) {
       subtitle: eventPageDescription,
       eventLabel: `${skillData.title} · ${eventData.title}`,
     },
+    comboLead: { text: combo.lead },
+    comboBenefits: { title: combo.benefitsTitle, benefits: combo.benefits },
     slideshow: { items: eventSlides, filteredCategories: [skillData.title] },
-    eventAblauf:
-      eventContent.ablauf?.enabled && eventContent.ablauf.steps.length > 0
-        ? { title: eventContent.ablauf.title, steps: eventContent.ablauf.steps }
-        : false,
-    eventPakete:
-      eventContent.pakete?.enabled && eventContent.pakete.items.length > 0
-        ? { title: eventContent.pakete.title, items: eventContent.pakete.items }
-        : false,
     eventSkills: eventContent.skills?.enabled
       ? {
           title: eventContent.skills.title,
@@ -245,13 +244,7 @@ if (pageType === 'landing' && landingSlides) {
           currentSkill: skill ?? '',
         }
       : false,
-    eventReferenzen: eventContent.referenzen?.enabled
-      ? {
-          title: eventContent.referenzen.title,
-          text: eventContent.referenzen.text,
-          logos: eventContent.referenzen.logos,
-        }
-      : false,
+    eventTeaser: { eventTitle: eventData.title, eventSlug: landing ?? '' },
     faq: { categories: [skillData.title] },
     contact: {},
   };

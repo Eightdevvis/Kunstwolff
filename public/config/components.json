@@ -76,11 +76,11 @@
     "_default": {
       "_order": [
         "eventHero",
+        "comboLead",
+        "comboBenefits",
         "slideshow",
-        "eventAblauf",
-        "eventPakete",
         "eventSkills",
-        "eventReferenzen",
+        "eventTeaser",
         "faq",
         "contact"
       ]

@@ -627,6 +627,29 @@
   "neunkirchen/kuenstlerin-zeichnet-paar-hochzeit-neunkirchen.webp": {
     "categories": []
   },
+  "rhein-main-gebiet/karikaturist-firmen-event-hanau.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "priority": 2
+  },
+  "rhein-main-gebiet/karikaturist-geburtstag-domaene-mechthildshausen.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ]
+  },
+  "rhein-main-gebiet/karikaturistin-messe-frankfurt.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "priority": 1
+  },
+  "rhein-main-gebiet/zeichnung-stammbaum-weinrebe-aschaffenburg.webp": {
+    "categories": []
+  },
   "rheinland-pfalz/karikaturist-schloss-auel-lohmar-rheinland-pfalz.webp": {
     "categories": [
       "Schnellzeichner",
@@ -1120,13 +1143,5 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
-  },
-  "rhein-main-gebiet/karikaturistin-messe-frankfurt.webp": {
-    "categories": [],
-    "priority": 1
-  },
-  "rhein-main-gebiet/karikaturist-firmen-event-hanau.webp": {
-    "categories": [],
-    "priority": 2
   }
 }

@@ -1,0 +1,67 @@
+---
+/**
+ * EventTeaser – ersetzt auf Skill×Event-Kombiseiten die voll duplizierten
+ * Event-Sektionen (Ablauf/Pakete/Referenzen). Statt den Event-Inhalt zu
+ * wiederholen, gibt es einen kurzen Verweis + Link auf die eigentliche
+ * Event-Seite (/<eventSlug>). So bleibt der Kontext, ohne Duplicate Content.
+ */
+const { eventTitle = '', eventSlug = '' } = Astro.props as { eventTitle: string; eventSlug: string };
+---
+
+{eventSlug && (
+  <section class="event-teaser section">
+    <div class="event-teaser-inner section-inner">
+      <p class="event-teaser-text">
+        Ablauf, Pakete und Referenzen für Ihre {eventTitle} haben wir gebündelt auf der Eventseite – inklusive aller Details zur Planung.
+      </p>
+      <a class="event-teaser-cta" href={`/${eventSlug}`}>Alles zu {eventTitle} ansehen &rarr;</a>
+    </div>
+  </section>
+)}
+
+<style>
+  .event-teaser {
+    background: #000;
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(40px, 6vw, 72px);
+  }
+
+  .event-teaser-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    border-radius: 14px;
+    padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 40px);
+  }
+
+  .event-teaser-text {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 0 22px;
+    max-width: 620px;
+    margin-inline: auto;
+  }
+
+  .event-teaser-cta {
+    display: inline-block;
+    font-family: var(--font-headings);
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    letter-spacing: 0.04em;
+    color: #0a0a0a;
+    background: #d4af37;
+    padding: 12px 26px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: transform 180ms ease, background 180ms ease;
+  }
+
+  .event-teaser-cta:hover,
+  .event-teaser-cta:focus-visible {
+    background: #e6c552;
+    transform: translateY(-1px);
+    outline: none;
+  }
+</style>

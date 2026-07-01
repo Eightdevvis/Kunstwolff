@@ -1,0 +1,81 @@
+---
+/**
+ * ComboBenefits – „Warum [Skill] auf [Event]?"-Block für Skill×Event-Kombiseiten.
+ * Einzigartiger, skill-/anlass-spezifischer Text (aus utils/comboContent.ts),
+ * der die Kombiseite gegenüber der generischen Event-Seite differenziert.
+ */
+interface Benefit {
+  title: string;
+  text: string;
+}
+const { title = '', benefits = [] } = Astro.props as { title: string; benefits: Benefit[] };
+---
+
+{benefits.length > 0 && (
+  <section class="combo-benefits section">
+    <div class="combo-benefits-inner section-inner">
+      {title && <h2>{title}</h2>}
+      <div class="combo-benefits-grid">
+        {benefits.map((b) => (
+          <article class="combo-benefit">
+            <h3>{b.title}</h3>
+            <p>{b.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .combo-benefits {
+    background: #0a0a0a;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .combo-benefits-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .combo-benefits h2 {
+    text-transform: none;
+    text-align: center;
+    color: #fff;
+    margin-bottom: clamp(28px, 4vw, 48px);
+  }
+
+  .combo-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: clamp(22px, 3vw, 40px);
+  }
+
+  .combo-benefit {
+    border-top: 2px solid #d4af37;
+    padding-top: 18px;
+  }
+
+  .combo-benefit h3 {
+    font-family: var(--font-headings);
+    font-size: clamp(1.05rem, 1.7vw, 1.28rem);
+    letter-spacing: 0.01em;
+    color: #fff;
+    margin: 0 0 10px;
+  }
+
+  .combo-benefit p {
+    font-family: var(--font-body);
+    font-size: clamp(0.98rem, 1.4vw, 1.08rem);
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.74);
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .combo-benefits-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+</style>
