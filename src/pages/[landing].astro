@@ -211,28 +211,29 @@ if (pageType === 'landing' && landingData && landingSlides) {
       eventLabel: eventData.title,
     },
     slideshow: { items: eventSlides },
+    // Sichtbarkeit = allein der Stack (_order) + Inhalt. Kein separates
+    // `enabled`-Flag mehr (fiel im Admin weg, damit „im Stack" = „auf der Seite").
     eventAblauf:
-      eventContent.ablauf?.enabled && eventContent.ablauf.steps.length > 0
+      (eventContent.ablauf?.steps?.length ?? 0) > 0
         ? { title: eventContent.ablauf.title, steps: eventContent.ablauf.steps }
         : false,
     eventPakete:
-      eventContent.pakete?.enabled && eventContent.pakete.items.length > 0
+      (eventContent.pakete?.items?.length ?? 0) > 0
         ? { title: eventContent.pakete.title, items: eventContent.pakete.items }
         : false,
-    eventSkills: eventContent.skills?.enabled
-      ? {
-          title: eventContent.skills.title,
-          eventSlug: landing ?? '',
-          categories: eventData.categories,
-        }
-      : false,
-    eventReferenzen: eventContent.referenzen?.enabled
-      ? {
-          title: eventContent.referenzen.title,
-          text: eventContent.referenzen.text,
-          logos: eventContent.referenzen.logos,
-        }
-      : false,
+    eventSkills: {
+      title: eventContent.skills?.title ?? '',
+      eventSlug: landing ?? '',
+      categories: eventData.categories,
+    },
+    eventReferenzen:
+      (eventContent.referenzen?.logos?.length ?? 0) > 0
+        ? {
+            title: eventContent.referenzen.title,
+            text: eventContent.referenzen.text,
+            logos: eventContent.referenzen.logos,
+          }
+        : false,
     faq: {},
     contact: {},
   };
