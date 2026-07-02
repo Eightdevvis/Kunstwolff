@@ -1,0 +1,87 @@
+---
+import { getBrandLogos } from '../../utils/brandLogos';
+
+const logoItems = getBrandLogos();
+---
+
+<!-- =========================
+     BRAND GRID / LOGOS (statisch, alle Referenzen)
+========================= -->
+<section class="brand-grid">
+  <div class="brand-grid-inner">
+    {logoItems.map((logo) => (
+      <div class="brand-cell" data-logo-name={logo.label}>
+        <img
+          class="brand-cell-item"
+          src={logo.src}
+          alt={`Referenzlogo ${logo.label}`}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .brand-grid {
+    --brand-logo-filter: invert(1) grayscale(1) brightness(0.92) contrast(1.36);
+    width: 100%;
+  }
+
+  .brand-grid-inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .brand-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    padding: 24px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    transition: background 0.25s ease, border-color 0.25s ease;
+  }
+
+  .brand-cell:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(212, 175, 55, 0.4);
+  }
+
+  .brand-cell-item {
+    display: block;
+    max-width: 100%;
+    max-height: 64px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: var(--brand-logo-filter);
+    transition: filter 0.25s ease, transform 0.25s ease;
+  }
+
+  .brand-cell:hover .brand-cell-item {
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 768px) {
+    .brand-grid-inner {
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 14px;
+    }
+
+    .brand-cell {
+      min-height: 100px;
+      padding: 18px;
+    }
+
+    .brand-cell-item {
+      max-height: 52px;
+    }
+  }
+</style>

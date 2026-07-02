@@ -6,7 +6,14 @@
 
 ## Auto-Discovery
 
-Alle Bilder in diesem Ordner werden automatisch in der Referenz-Sektion (`BrandStripe`-Komponente) angezeigt.
+Alle Bilder in diesem Ordner werden automatisch in der Referenz-Sektion angezeigt. Zwei Darstellungen aus **derselben** Datenquelle (`getBrandLogos()` in `src/utils/brandLogos.ts`):
+
+| Komponente | Darstellung | Verwendet in |
+| :-- | :-- | :-- |
+| `BrandStripe.astro` | animierter Endlos-Streifen (Marquee) mit Hover-Tooltip | Heros (`SchnellzeichnerHero`, `SkillHero`, `Opener`), Landing-/Skill-Seiten |
+| `BrandGrid.astro` | statisches Grid – zeigt **alle** Logos gleichzeitig, ohne Animation | Referenzen-Seite (`src/pages/referenzen.astro`) |
+
+Beide liegen in `src/components/reviews-references/`. Ändert sich das Logo-Verzeichnis oder `getBrandLogos()`, betrifft das beide Komponenten.
 
 ## Label-Generierung
 
