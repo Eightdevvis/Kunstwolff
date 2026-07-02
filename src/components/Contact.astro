@@ -1,6 +1,9 @@
 ---
 import { getSiteTexts } from '../utils/siteTexts';
-const t = getSiteTexts().contact;
+import { DEFAULT_LOCALE, type Locale } from '../i18n/config';
+// i18n (Phase 1): optionaler locale-Prop. Default `de` = Bestandsverhalten.
+const { locale = DEFAULT_LOCALE } = Astro.props as { locale?: Locale };
+const t = getSiteTexts(locale).contact;
 ---
 <!-- =========================
   CONTACT

@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { DEFAULT_LOCALE, resolveLocalizedFile, type Locale } from '../i18n/config';
 
 /**
  * Editierbare Abschnitts-Texte (mom-Feedback #7: "allg. Textfelder fehlen").
@@ -32,6 +33,16 @@ export type SiteTexts = typeof SITE_TEXT_DEFAULTS;
 
 const FILE = path.resolve('./public/site-texts/content.json');
 
+/**
+ * i18n (Phase 1): Auflösung der content.json je Locale. Default (`de`) liest
+ * unverändert die deutsche Datei; Fremdsprachen lesen ihr Overlay
+ * (`public/i18n/<locale>/site-texts/content.json`) mit Fallback aufs Deutsche.
+ * Alle Reader unten bekommen einen optionalen `locale`-Parameter mit Default
+ * `de` – dadurch bleibt jedes bestehende deutsche Call-Site byte-identisch.
+ */
+const contentFileFor = (locale: Locale): string =>
+  locale === DEFAULT_LOCALE ? FILE : resolveLocalizedFile(locale, 'site-texts/content.json');
+
 const mergeSection = <T extends Record<string, string>>(def: T, raw: unknown): T => {
   if (!raw || typeof raw !== 'object') return def;
   const out = { ...def };
@@ -44,9 +55,9 @@ const mergeSection = <T extends Record<string, string>>(def: T, raw: unknown): T
   return out;
 };
 
-export const getSiteTexts = (): SiteTexts => {
+export const getSiteTexts = (locale: Locale = DEFAULT_LOCALE): SiteTexts => {
   try {
-    const raw = JSON.parse(fs.readFileSync(FILE, 'utf-8')) as Record<string, unknown>;
+    const raw = JSON.parse(fs.readFileSync(contentFileFor(locale), 'utf-8')) as Record<string, unknown>;
     return {
       contact: mergeSection(SITE_TEXT_DEFAULTS.contact, raw.contact),
       eventtypes: mergeSection(SITE_TEXT_DEFAULTS.eventtypes, raw.eventtypes),
@@ -63,9 +74,9 @@ export const getSiteTexts = (): SiteTexts => {
  * Fehlt ein Eintrag, gilt der übergebene Default ("Eventkünstler in {Stadt}").
  * So kann die H1 ohne Code-Änderung gepflegt werden (vom KI-Chat / Admin).
  */
-export const getLandingHeading = (slug: string, fallback: string): string => {
+export const getLandingHeading = (slug: string, fallback: string, locale: Locale = DEFAULT_LOCALE): string => {
   try {
-    const raw = JSON.parse(fs.readFileSync(FILE, 'utf-8')) as Record<string, unknown>;
+    const raw = JSON.parse(fs.readFileSync(contentFileFor(locale), 'utf-8')) as Record<string, unknown>;
     const map = raw.landingHeadings;
     if (map && typeof map === 'object') {
       const v = (map as Record<string, unknown>)[slug];
@@ -90,9 +101,9 @@ export const getLandingHeading = (slug: string, fallback: string): string => {
 const fillCity = (text: string, cityName: string): string =>
   text.replace(/\{stadt\}/gi, cityName);
 
-export const getLandingIntro = (slug: string, cityName: string): string => {
+export const getLandingIntro = (slug: string, cityName: string, locale: Locale = DEFAULT_LOCALE): string => {
   try {
-    const raw = JSON.parse(fs.readFileSync(FILE, 'utf-8')) as Record<string, unknown>;
+    const raw = JSON.parse(fs.readFileSync(contentFileFor(locale), 'utf-8')) as Record<string, unknown>;
     const map = raw.landingIntros;
     if (map && typeof map === 'object') {
       const cityText = (map as Record<string, unknown>)[slug];

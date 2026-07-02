@@ -3,17 +3,19 @@ import { getWhyBenefits } from '../utils/why';
 import { isPageHiddenByPath } from '../utils/pageVisibility';
 import { WHY_DETAIL_LINKS } from '../utils/whyDetailLinks';
 import { getSiteTexts } from '../utils/siteTexts';
+import { DEFAULT_LOCALE, type Locale } from '../i18n/config';
 
-const { skill, landing } = Astro.props as {
+const { skill, landing, locale = DEFAULT_LOCALE } = Astro.props as {
   skill?: string;
   landing?: string;
+  locale?: Locale;
 };
 
 // Positions-zu-Detailseite-Liste zentral in whyDetailLinks.ts (per Test gegen
 // die titelbasierte Auflösung + default.json abgesichert, siehe WEB-007/P3-2).
-const benefits = getWhyBenefits(skill, landing);
+const benefits = getWhyBenefits(skill, landing, locale);
 const detailLinks = WHY_DETAIL_LINKS;
-const whyText = getSiteTexts().why;
+const whyText = getSiteTexts(locale).why;
 ---
 
 <section class="why-section">

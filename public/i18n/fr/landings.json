@@ -1,0 +1,4 @@
+{
+  "_comment": "i18n Phase 1 – Slugs, die auf Franzoesisch unter /fr/<slug>/ gebaut werden. Phase 2/Admin: hier Slug eintragen + Overlay-Inhalte (site-texts, why, faq, ...) anlegen. Kein Code noetig.",
+  "landings": ["belgique"]
+}

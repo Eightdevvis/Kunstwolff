@@ -40,6 +40,7 @@ import Why from '../components/Why.astro';
 import LandingIntro from '../components/LandingIntro.astro';
 import { getLandingBySlug, getLandingSlugs } from '../utils/landings';
 import { getLandingHeading, getLandingIntro } from '../utils/siteTexts';
+import { getAvailableLocalesForSlug, localizePath, LOCALE_META, DEFAULT_LOCALE } from '../i18n/config';
 
 // ── Event-spezifische Imports ─────────────────────────────────────────────────
 import EventHero from '../components/events/EventHero.astro';
@@ -240,13 +241,23 @@ if (pageType === 'landing' && landingData && landingSlides) {
   };
   sectionOrder = resolveSectionOrder('event', landing ?? '', registry);
 }
+
+// i18n (Phase 1): Sprach-Alternativen dieses Slugs. Nur wenn eine Übersetzung
+// existiert (z.B. /fr/belgique), enthält das >1 Eintrag → Layout zeigt den
+// Umschalter + hreflang. Sonst leer/1 → deutsche Seiten bleiben unverändert.
+const langAlternates = getAvailableLocalesForSlug(landing ?? '').map((loc) => ({
+  locale: loc,
+  href: localizePath(loc, landing ?? ''),
+  label: LOCALE_META[loc].label,
+  current: loc === DEFAULT_LOCALE,
+}));
 ---
 
 {pageType === 'landing' && landingData && landingSlides && (
   <!-- ══════════════════════════════════════════════════
        STADTSEITE – bestehende Struktur unverändert
   ══════════════════════════════════════════════════ -->
-  <Layout title={landingPageTitle} description={landingPageDescription} image={landingData.titleImage}>
+  <Layout title={landingPageTitle} description={landingPageDescription} image={landingData.titleImage} alternates={langAlternates}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     {sectionOrder.map((id) => {
       if (!isComponentEnabled(pt, landing ?? '', id)) return null;

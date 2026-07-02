@@ -1,0 +1,28 @@
+{
+  "benefits": [
+    {
+      "title": "Une prestation artistique au diapason de votre humeur",
+      "text": "Vous souhaitez faire sourire vos invités ou créer une atmosphère élégante ? Nous vous proposons la prestation idéale.",
+      "image": "",
+      "alt": "Une prestation artistique au diapason de votre humeur"
+    },
+    {
+      "title": "Interactif & inoubliable",
+      "text": "Vos invités vivent l'art en direct et repartent avec un souvenir personnel et unique.",
+      "image": "",
+      "alt": "Interactif et inoubliable"
+    },
+    {
+      "title": "Personnalisation de l'événement",
+      "text": "Nous personnalisons votre événement : logos, hashtags ou messages de campagne sont intégrés directement dans les dessins – parfait pour les caricaturistes et les peintres de scène lors d'événements d'entreprise.",
+      "image": "",
+      "alt": "Personnalisation de l'événement"
+    },
+    {
+      "title": "",
+      "text": "",
+      "image": "",
+      "alt": ""
+    }
+  ]
+}

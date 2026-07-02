@@ -1,0 +1,142 @@
+---
+/**
+ * fr/[landing].astro — Französische Landing-Route (i18n Phase 1, POC).
+ * ============================================================================
+ * Liefert Stadt-/Regionsseiten unter `/fr/<slug>/` in Französisch aus, ohne die
+ * deutschen Seiten (`/<slug>/`, `src/pages/[landing].astro`) anzufassen.
+ *
+ * WELCHE Slugs gebaut werden, steht in `public/i18n/fr/landings.json`
+ * (getTranslatedLandingSlugs). Das ist der Phase-2-Schalter: neue übersetzte
+ * Seite = Slug dort eintragen + Overlay-Inhalte anlegen, KEINE Code-Änderung.
+ *
+ * Struktur/Reihenfolge kommt aus derselben `components.json`-Quelle wie die
+ * deutsche Seite (resolveSectionOrder). Sektionen, deren Inhalt noch nicht
+ * lokalisiert ist (z.B. Eventtypes/Reviews = deutsche Datenquellen), werden über
+ * LOCALE_READY_SECTIONS vorerst ausgeblendet – Phase 2 lokalisiert sie und
+ * entfernt sie aus der Sperrliste.
+ */
+import Layout from '../../layouts/Layout.astro';
+import Contact from '../../components/Contact.astro';
+import FAQ from '../../components/FAQ.astro';
+import Slideshow from '../../components/slideshows/Slideshow.astro';
+import Opener from '../../components/hero/Opener.astro';
+import Why from '../../components/Why.astro';
+import LandingIntro from '../../components/LandingIntro.astro';
+
+import { isComponentEnabled, getSectionOrder, type PageType } from '../../utils/componentConfig';
+import {
+  MIN_LANDING_SLIDES,
+  getCitySlides,
+  getDefaultSlides,
+  supplementWithDefaultSlides,
+} from '../../utils/slideImages';
+import { getLandingBySlug } from '../../utils/landings';
+import { getLandingHeading, getLandingIntro } from '../../utils/siteTexts';
+import {
+  DEFAULT_LOCALE,
+  LOCALE_META,
+  getTranslatedLandingSlugs,
+  getAvailableLocalesForSlug,
+  localizePath,
+} from '../../i18n/config';
+import type { LangAlternate } from '../../components/LangSwitcher.astro';
+
+const LOCALE = 'fr' as const;
+
+// Sektionen, die für Fremdsprachen bereits echten (übersetzten) Inhalt liefern.
+// Phase 2: erweitern, wenn Reviews/Eventtypes/Landingsection lokalisiert sind.
+const LOCALE_READY_SECTIONS = new Set(['opener', 'landingIntro', 'slideshow', 'why', 'contact', 'faq']);
+
+export async function getStaticPaths() {
+  // Astro hebt getStaticPaths über die Frontmatter-Consts → `LOCALE` ist hier
+  // NICHT sichtbar. Deshalb das Literal 'fr' (deckt sich mit LOCALE unten).
+  return getTranslatedLandingSlugs('fr').map((slug) => ({
+    params: { landing: slug },
+  }));
+}
+
+const { landing } = Astro.params;
+const slug = landing ?? '';
+const pt: PageType = 'landing';
+
+const site = Astro.site?.origin ?? 'https://kunstwolff.de';
+
+// Bild-/Slide-Assets sind sprachneutral → dieselben Loader wie die de-Seite.
+const landingData = getLandingBySlug(slug);
+const citySlides = getCitySlides(slug);
+const defaultSlides = getDefaultSlides();
+const landingSlides = supplementWithDefaultSlides(citySlides, defaultSlides, MIN_LANDING_SLIDES);
+
+// FR-Texte aus dem Overlay (public/i18n/fr/site-texts/content.json).
+const regionName = slug.charAt(0).toUpperCase() + slug.slice(1);
+const landingHeading = getLandingHeading(slug, `Artistes événementiels en ${regionName}`, LOCALE);
+const landingIntro = getLandingIntro(slug, regionName, LOCALE);
+const pageTitle = `Artistes événementiels ${regionName} – Art live & performance | Kunstwolff`;
+const pageDescription = `Kunstwolff en ${regionName} : des artistes événementiels professionnels pour vos fêtes d'entreprise, salons et mariages. Caricaturistes, peintres de scène et bien plus.`;
+
+// hreflang / Sprach-Umschalter: nur echte Alternativen dieses Slugs.
+const alternates: LangAlternate[] = getAvailableLocalesForSlug(slug).map((loc) => ({
+  locale: loc,
+  href: localizePath(loc, slug),
+  label: LOCALE_META[loc].label,
+  current: loc === LOCALE,
+}));
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${site}${localizePath(DEFAULT_LOCALE, '')}` },
+    { '@type': 'ListItem', position: 2, name: `Artistes événementiels ${regionName}`, item: `${site}${localizePath(LOCALE, slug)}` },
+  ],
+};
+
+// ── Sektions-Stack: identische Quelle (components.json) wie die de-Seite ─────────
+const registry: Record<string, any> = {
+  opener: Opener,
+  landingIntro: LandingIntro,
+  slideshow: Slideshow,
+  why: Why,
+  contact: Contact,
+  faq: FAQ,
+};
+const sectionProps: Record<string, Record<string, any> | false> = {
+  opener: {
+    titleImage: landingData.titleImage,
+    titleImageAlt: landingData.title,
+    titleImagePosition: landingData.titleImagePosition,
+    titleImageFrame: landingData.titleImageFrame,
+    heading: landingHeading,
+  },
+  landingIntro: { text: landingIntro },
+  slideshow: { items: landingSlides },
+  why: { landing: slug, locale: LOCALE },
+  contact: { locale: LOCALE },
+  faq: { city: slug, locale: LOCALE },
+};
+
+// Reihenfolge aus components.json (dieselbe wie de). KEIN Registry-Guardrail
+// hier, weil die FR-Seite bewusst nur die lokalisierten Sektionen rendert
+// (Filter unten via LOCALE_READY_SECTIONS + registry-Präsenz).
+const sectionOrder = getSectionOrder('landing', slug);
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  image={landingData.titleImage}
+  lang={LOCALE_META[LOCALE].htmlLang}
+  alternates={alternates}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  {sectionOrder.map((id) => {
+    if (!LOCALE_READY_SECTIONS.has(id)) return null;
+    if (!isComponentEnabled(pt, slug, id)) return null;
+    const props = sectionProps[id];
+    if (props === false || props === undefined) return null;
+    const Section = registry[id];
+    if (!Section) return null;
+    return <Section {...props} />;
+  })}
+  <script>import "../../scripts/formspree.js";</script>
+</Layout>

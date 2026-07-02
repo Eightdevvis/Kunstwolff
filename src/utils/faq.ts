@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { DEFAULT_LOCALE, resolveLocalizedDir, type Locale } from '../i18n/config';
 
 export type FAQItem = {
   question: string;
@@ -16,6 +17,14 @@ export type FAQItem = {
 
 const faqRoot = path.resolve('./public/faq');
 const defaultCityKey = 'default';
+
+/**
+ * i18n (Phase 1): FAQ-Wurzel je Locale. de = public/faq (unverändert), sonst
+ * public/i18n/<locale>/faq (mit Fallback aufs deutsche Verzeichnis, falls das
+ * Overlay fehlt). Der Stadt-Slug wird relativ zu DIESER Wurzel abgeleitet.
+ */
+const faqRootFor = (locale: Locale): string =>
+  locale === DEFAULT_LOCALE ? faqRoot : resolveLocalizedDir(locale, 'faq');
 
 const normalize = (value: string): string => value.trim().toLowerCase();
 
@@ -47,21 +56,21 @@ const toStringArray = (value: unknown): string[] => {
 const normalizeStringArray = (value: unknown): string[] =>
   toStringArray(value).map((item) => normalize(item));
 
-const cityFromPath = (filePath: string): string => {
-  const relative = path.relative(faqRoot, filePath);
+const cityFromPath = (filePath: string, rootDir: string): string => {
+  const relative = path.relative(rootDir, filePath);
   const segments = relative.split(path.sep);
   const firstSegment = segments.length > 1 ? segments[0] : '';
   return (firstSegment ?? '').trim();
 };
 
-const parseFaqFile = (filePath: string): FAQItem | null => {
+const parseFaqFile = (filePath: string, rootDir: string): FAQItem | null => {
   const raw = fs.readFileSync(filePath, 'utf-8');
   const parsed = matter(raw);
 
   const question = typeof parsed.data.question === 'string' ? parsed.data.question.trim() : '';
   const answer = typeof parsed.data.answer === 'string' ? parsed.data.answer.trim() : '';
   const categories = toStringArray(parsed.data.categories);
-  const fallbackCity = cityFromPath(filePath);
+  const fallbackCity = cityFromPath(filePath, rootDir);
   const cityFromFrontmatter =
     typeof parsed.data.city === 'string' ? parsed.data.city.trim() : '';
   const city = cityFromFrontmatter || fallbackCity;
@@ -124,13 +133,14 @@ export const matchesFAQContext = (faq: FAQItem, context: FAQFilterContext): bool
   return categoryMatch || skillTagMatch || eventTagMatch || landingTagMatch;
 };
 
-export const getAllFAQs = (): FAQItem[] => {
-  if (!fs.existsSync(faqRoot)) {
+export const getAllFAQs = (locale: Locale = DEFAULT_LOCALE): FAQItem[] => {
+  const root = faqRootFor(locale);
+  if (!fs.existsSync(root)) {
     return [];
   }
 
-  const parsed = readMarkdownFiles(faqRoot)
-    .map(parseFaqFile)
+  const parsed = readMarkdownFiles(root)
+    .map((file) => parseFaqFile(file, root))
     .filter((item): item is FAQItem => item !== null);
 
   return parsed;
@@ -145,8 +155,8 @@ export const getFAQsByCategory = (category: string): FAQItem[] => {
   );
 };
 
-export const getFAQsByCity = (city: string): FAQItem[] => {
-  const all = getAllFAQs();
+export const getFAQsByCity = (city: string, locale: Locale = DEFAULT_LOCALE): FAQItem[] => {
+  const all = getAllFAQs(locale);
   const cityKey = normalize(city);
 
   const cityFaqs = all.filter((faq) => normalize(faq.city || '') === cityKey);

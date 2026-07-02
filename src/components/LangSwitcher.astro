@@ -1,0 +1,62 @@
+---
+/**
+ * LangSwitcher – Sprach-Umschalter-Stub (i18n Phase 1).
+ * ============================================================================
+ * Rendert NUR etwas, wenn echte Alternativen übergeben werden (`alternates`).
+ * Auf allen bestehenden (rein deutschen) Seiten bleibt `alternates` leer →
+ * die Komponente rendert nichts → HTML dieser Seiten unverändert.
+ *
+ * PHASE 2: Optik/Position final in die Navigation integrieren (Header.astro),
+ * ggf. Cookie/Redirect-Logik. Hier bewusst minimal als sichtbarer Beweis.
+ */
+import type { Locale } from '../i18n/config';
+
+export type LangAlternate = {
+  locale: Locale;
+  href: string;
+  label: string;
+  current: boolean;
+};
+
+const { alternates = [] } = Astro.props as { alternates?: LangAlternate[] };
+---
+
+{alternates.length > 1 && (
+  <nav class="lang-switcher" aria-label="Sprache / Langue">
+    {alternates.map((a) => (
+      <a
+        href={a.href}
+        class={a.current ? 'lang-link is-current' : 'lang-link'}
+        aria-current={a.current ? 'true' : undefined}
+        lang={a.locale}
+      >{a.label}</a>
+    ))}
+  </nav>
+)}
+
+<style>
+  .lang-switcher {
+    position: fixed;
+    top: max(24px, env(safe-area-inset-top));
+    right: max(96px, env(safe-area-inset-right));
+    z-index: 1200;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .lang-link {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    opacity: 0.65;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+  .lang-link:hover { opacity: 1; }
+  .lang-link.is-current { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+
+  @media (max-width: 768px) {
+    .lang-switcher { top: 30px; right: 84px; }
+  }
+</style>

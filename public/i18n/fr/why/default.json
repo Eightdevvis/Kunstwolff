@@ -1,0 +1,28 @@
+{
+  "benefits": [
+    {
+      "title": "De vrais artistes – pas une agence",
+      "text": "Vous nous réservez en direct, sans intermédiaire. Contact personnel, accords clairs et réalisation professionnelle.",
+      "image": "/img/samples/sample1.webp",
+      "alt": "Artiste live de Kunstwolff en train de dessiner"
+    },
+    {
+      "title": "Interactif & inoubliable",
+      "text": "Vos invités vivent l'art en direct et repartent avec un souvenir personnel.",
+      "image": "/img/samples/sample2.webp",
+      "alt": "Des invités rient pendant qu'un caricaturiste dessine en direct"
+    },
+    {
+      "title": "Personnalisation possible",
+      "text": "Logo, hashtag ou slogan de l'événement : nous les intégrons directement dans chaque dessin – idéal pour les événements d'entreprise.",
+      "image": "/img/samples/sample3.webp",
+      "alt": "Caricature personnalisée avec le logo de l'entreprise"
+    },
+    {
+      "title": "Numérique & classique",
+      "text": "Sur papier, iPad ou grand écran – nous nous adaptons avec souplesse à votre concept d'événement.",
+      "image": "/img/samples/sample4.webp",
+      "alt": "Caricaturiste numérique dessinant sur tablette"
+    }
+  ]
+}

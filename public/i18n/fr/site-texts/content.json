@@ -1,0 +1,24 @@
+{
+  "_comment": "i18n Phase 1 – FR-Overlay von public/site-texts/content.json. Nur uebersetzte Felder noetig; fehlende Felder fallen im Code auf die deutschen Defaults zurueck.",
+  "contact": {
+    "kicker": "Contact",
+    "heading": "Parlez-nous de votre événement",
+    "intro": "Envoyez-nous dès maintenant une demande sans engagement. Nous répondons volontiers à vos questions et à vos suggestions. Pour les questions générales, un coup d'œil à la FAQ suffit souvent.",
+    "panelTitle": "Joignable directement",
+    "panelText": "Nous répondons en général sous 24 heures."
+  },
+  "eventtypes": {
+    "heading": "Formats d'événement",
+    "subtitle": "Choisissez votre événement et dépliez les détails."
+  },
+  "why": {
+    "heading": "Pourquoi Kunstwolff ?",
+    "intro": "Nous allions qualité artistique et expérience de l'événementiel – pour des moments qui restent gravés dans les mémoires."
+  },
+  "landingHeadings": {
+    "belgique": "Artistes événementiels en Belgique"
+  },
+  "landingIntros": {
+    "belgique": "De l'art en direct pour votre événement en {stadt}. Du caricaturiste au peintre de scène, nous transformons fêtes d'entreprise, salons et mariages en {stadt} en moments inoubliables – un art qui prend vie sous les yeux de vos invités."
+  }
+}

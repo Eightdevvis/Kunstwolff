@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { DEFAULT_LOCALE, localeContentRoot, type Locale } from '../i18n/config';
 
 export type WhyBenefit = {
   title: string;
@@ -8,7 +9,6 @@ export type WhyBenefit = {
   alt: string;
 };
 
-const whyRoot = path.resolve('./public/why');
 const defaultKey = 'default';
 
 const normalize = (value: string): string => value.trim().toLowerCase();
@@ -48,9 +48,16 @@ const readWhyFile = (filePath: string): WhyBenefit[] => {
   }
 };
 
-export const getWhyBenefits = (skill?: string, landing?: string): WhyBenefit[] => {
+export const getWhyBenefits = (skill?: string, landing?: string, locale: Locale = DEFAULT_LOCALE): WhyBenefit[] => {
   const skillKey = skill ? normalize(skill) : '';
   const landingKey = landing ? normalize(landing) : '';
+
+  // i18n (Phase 1): Für Fremdsprachen zeigt whyRoot auf das Overlay
+  // (public/i18n/<locale>/why). Fehlt dort eine Datei, greift readWhyFile('')
+  // = leer und die Kette fällt am Ende auf die (deutsche) default/fallback zurück.
+  // de bleibt exakt beim bisherigen Verhalten.
+  const whyRoot =
+    locale === DEFAULT_LOCALE ? path.resolve('./public/why') : path.join(localeContentRoot(locale), 'why');
 
   const fallbackDefault: WhyBenefit[] = [
     {
