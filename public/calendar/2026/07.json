@@ -34,5 +34,27 @@
       "Jenny",
       "Gaby"
     ]
+  },
+  {
+    "id": "mr3i7pp0g1p3",
+    "title": "Höhlenforschungslager",
+    "date": "2026-07-18",
+    "time": 9,
+    "location": "Mudershausen",
+    "categoryId": "auftrag",
+    "actors": [
+      "Jenny"
+    ]
+  },
+  {
+    "id": "mr3i8g0d74ug",
+    "title": "Höhlenforschungslager",
+    "date": "2026-07-19",
+    "time": 9,
+    "location": "Mudershausen",
+    "categoryId": "auftrag",
+    "actors": [
+      "Jenny"
+    ]
   }
 ]
