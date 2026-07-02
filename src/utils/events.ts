@@ -339,25 +339,29 @@ export const getEventSlides = (slug: string): EventSlideItem[] => {
  * Gibt das Titelbild eines Events zurück.
  *
  * Sucht in public/img/Titelbild/events/{slug}/ nach dem ersten verfügbaren Bild.
- * Fallback: /img/samples/sample1.webp
+ * Fehlt ein Event-Titelbild, wird das STANDARD-Titelbild der Default-Seite genutzt
+ * (weniger „Magie": kein zufälliges Sample als Hero). Erst wenn auch das fehlt,
+ * greift der harte Sample-Fallback.
  */
+const firstImageInDir = (dir: string): string | undefined =>
+  fs.existsSync(dir)
+    ? fs
+        .readdirSync(dir, { withFileTypes: true })
+        .filter((entry) => entry.isFile())
+        .map((entry) => entry.name)
+        .filter((name) => allowedImageExtensions.has(path.extname(name).toLowerCase()))
+        .sort((a, b) => a.localeCompare(b))[0]
+    : undefined;
+
+// Standard-Titelbild der Default-Seite (public/img/Titelbild/default/).
+export const resolveDefaultTitleImage = (): string => {
+  const image = firstImageInDir(path.resolve('./public/img/Titelbild/default'));
+  return image ? `/img/Titelbild/default/${encodePathSegment(image)}` : fallbackImage;
+};
+
 export const resolveEventTitleImage = (slug: string): string => {
-  const folderPath = path.join(eventTitelbildRoot, slug);
-
-  if (!fs.existsSync(folderPath)) {
-    return fallbackImage;
-  }
-
-  const image = fs
-    .readdirSync(folderPath, { withFileTypes: true })
-    .filter((entry) => entry.isFile())
-    .map((entry) => entry.name)
-    .filter((name) => allowedImageExtensions.has(path.extname(name).toLowerCase()))
-    .sort((a, b) => a.localeCompare(b))[0];
-
-  if (!image) {
-    return fallbackImage;
-  }
-
-  return `/img/Titelbild/events/${encodePathSegment(slug)}/${encodePathSegment(image)}`;
+  const image = firstImageInDir(path.join(eventTitelbildRoot, slug));
+  return image
+    ? `/img/Titelbild/events/${encodePathSegment(slug)}/${encodePathSegment(image)}`
+    : resolveDefaultTitleImage();
 };
