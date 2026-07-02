@@ -31,6 +31,13 @@ type TitleMetadataEntry = {
   enabled?: boolean;
   /** CSS object-position / background-position, z.B. "50% 30%". Steuert den Bildausschnitt im Hero. */
   focus?: string;
+  /**
+   * Dicke des weißen Rahmens um das Titelbild in px. 0/fehlt = kein Rahmen (Bild füllt
+   * den Hero via `cover`). > 0 = weißer Rahmen dieser Dicke UND das Bild wird via
+   * `contain` komplett sichtbar (nicht mehr beschnitten), sodass abweichend skalierte
+   * Bilder automatisch mit weißer Matte eingefasst werden.
+   */
+  frame?: number;
 };
 
 type TitleMetadataMap = Record<string, TitleMetadataEntry>;
@@ -40,10 +47,14 @@ type TitleImageItem = {
   categories: string[];
   priority: number;
   focus: string;
+  frame: number;
 };
 
 /** Default-Fokuspunkt (Bildmitte), falls keiner gesetzt ist. */
 export const DEFAULT_TITLE_FOCUS = '50% 50%';
+
+/** Default-Rahmendicke (kein Rahmen), falls keine gesetzt ist. */
+export const DEFAULT_TITLE_FRAME = 0;
 
 const normalizeMetadataKey = (value: string): string => value.replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
 
@@ -98,8 +109,12 @@ const readTitleMetadata = (): TitleMetadataMap => {
       const priority = typeof entry.priority === 'number' && !Number.isNaN(entry.priority) ? entry.priority : undefined;
       const enabled = typeof entry.enabled === 'boolean' ? entry.enabled : undefined;
       const focus = typeof entry.focus === 'string' && entry.focus.trim() ? entry.focus.trim() : undefined;
+      const frame =
+        typeof entry.frame === 'number' && Number.isFinite(entry.frame) && entry.frame >= 0
+          ? entry.frame
+          : undefined;
 
-      return [key, { categories, priority, enabled, focus }] as const;
+      return [key, { categories, priority, enabled, focus, frame }] as const;
     });
 
     metadataCache = Object.fromEntries(entries);
@@ -136,6 +151,7 @@ const readFolderTitleImages = (folderName: string): TitleImageItem[] => {
         categories: toStringArray(itemMetadata.categories),
         priority: toNumberOrDefault(itemMetadata.priority, index + 1),
         focus: itemMetadata.focus ?? DEFAULT_TITLE_FOCUS,
+        frame: itemMetadata.frame ?? DEFAULT_TITLE_FRAME,
       };
     })
     .filter((entry): entry is TitleImageItem => entry !== null)
@@ -170,7 +186,9 @@ const pickTitleImageFromPool = (pool: TitleImageItem[], skillSlug: string): Titl
  * (resolveTitleImage / resolveTitleImageFocus) bauen darauf auf, damit src und
  * focus garantiert zum selben Bild gehören.
  */
-export const resolveTitleImageItem = (params?: { skill?: string; landing?: string }): { src: string; focus: string } => {
+export const resolveTitleImageItem = (
+  params?: { skill?: string; landing?: string },
+): { src: string; focus: string; frame: number } => {
   const skillSlug = params?.skill ? normalizeSlug(params.skill) : '';
   const landingSlug = params?.landing ? normalizeSlug(params.landing) : '';
 
@@ -182,6 +200,7 @@ export const resolveTitleImageItem = (params?: { skill?: string; landing?: strin
   return {
     src: picked?.src ?? fallbackImage,
     focus: picked?.focus ?? DEFAULT_TITLE_FOCUS,
+    frame: picked?.frame ?? DEFAULT_TITLE_FRAME,
   };
 };
 
@@ -190,3 +209,6 @@ export const resolveTitleImage = (params?: { skill?: string; landing?: string })
 
 export const resolveTitleImageFocus = (params?: { skill?: string; landing?: string }): string =>
   resolveTitleImageItem(params).focus;
+
+export const resolveTitleImageFrame = (params?: { skill?: string; landing?: string }): number =>
+  resolveTitleImageItem(params).frame;

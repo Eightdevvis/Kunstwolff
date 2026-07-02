@@ -1,12 +1,32 @@
 ---
 import BrandStripe from "../reviews-references/BrandStripe.astro";
-const { titleImage = '/img/Titelbild/default/titelbild.avif', titleImageAlt = 'Kunstwolff - Eventkünstler seit über 25 Jahren', titleImagePosition = 'center', heading = 'Event- und Showkünstler seit über 25 Jahren' } = Astro.props;
+const { titleImage = '/img/Titelbild/default/titelbild.avif', titleImageAlt = 'Kunstwolff - Eventkünstler seit über 25 Jahren', titleImagePosition = 'center', titleImageFrame = 0, heading = 'Event- und Showkünstler seit über 25 Jahren' } = Astro.props;
+
+// Weißer Rahmen: bei frame > 0 wird das Bild via `contain` komplett gezeigt
+// (nichts wird beschnitten) und mit einem weißen Rand dieser Dicke eingefasst.
+// So legt sich der Rahmen bei abweichenden Bildmaßen automatisch drumherum.
+const frameThickness = Number(titleImageFrame);
+const framed = Number.isFinite(frameThickness) && frameThickness > 0;
+const heroFit = framed ? 'contain' : 'cover';
+const heroFrame = framed ? `${frameThickness}px` : '0px';
+const heroStyle = `--hero-bg-image: url('${titleImage}'); --hero-bg-pos: ${titleImagePosition}; --hero-fit: ${heroFit}; --hero-frame: ${heroFrame};`;
 ---
 <style>
 .hero {
   width: 100%;
   min-height: calc(100dvh - 60px);
-  background: var(--hero-bg-image) var(--hero-bg-pos, center) / cover no-repeat;
+  /* Longhand statt Shorthand, damit der weiße Rahmen (Padding + weißer Grund)
+     und der Fit-Modus (cover/contain) per CSS-Variable steuerbar sind.
+     background-origin/-clip = content-box → das Bild sitzt INNERHALB des
+     Paddings, die Paddingfläche zeigt den weißen Grund = der Rahmen. */
+  background-color: #fff;
+  background-image: var(--hero-bg-image);
+  background-position: var(--hero-bg-pos, center);
+  background-repeat: no-repeat;
+  background-size: var(--hero-fit, cover);
+  background-origin: content-box;
+  background-clip: content-box;
+  padding: var(--hero-frame, 0px);
 
   display: flex;
   justify-content: center;
@@ -20,9 +40,10 @@ const { titleImage = '/img/Titelbild/default/titelbild.avif', titleImageAlt = 'K
 .hero::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  /* innerhalb des weißen Rahmens bleiben (frame = 0 → bündig wie bisher) */
+  left: var(--hero-frame, 0px);
+  right: var(--hero-frame, 0px);
+  bottom: var(--hero-frame, 0px);
   height: 120px;
   background: linear-gradient(
     to top,
@@ -91,7 +112,7 @@ const { titleImage = '/img/Titelbild/default/titelbild.avif', titleImageAlt = 'K
 
 
 <!-- Hero Section -->
-  <section class="hero" style={`--hero-bg-image: url('${titleImage}'); --hero-bg-pos: ${titleImagePosition}`}>
+  <section class="hero" style={heroStyle}>
     <!-- Unsichtbares Bild für SEO / Alt-Text ECHTES BILD LIEGT IN CSSstartpage.css!!!!-->
     <img
       src={titleImage}

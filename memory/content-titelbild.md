@@ -27,7 +27,9 @@ Selbes Format wie `slides.meta.json`:
   "berlin/titelbild.webp": {
     "categories": ["Schnellzeichner"],
     "priority": 1,
-    "enabled": true
+    "enabled": true,
+    "focus": "50% 30%",
+    "frame": 24
   }
 }
 ```
@@ -35,6 +37,8 @@ Selbes Format wie `slides.meta.json`:
 - `categories` – steuert welches Bild bei Skill-Seiten verwendet wird
 - `priority` – höhere Zahl = bevorzugt
 - `enabled: false` – Bild ausblenden ohne zu löschen
+- `focus` – CSS-`background-position` (z.B. `"50% 30%"`) = Bildausschnitt im Hero bei `cover`. Default `50% 50%`.
+- `frame` – Dicke des weißen Rahmens in **px** (Default `0` = kein Rahmen). `> 0` legt einen weißen Rand dieser Dicke um das Titelbild UND schaltet den Hero von `cover` auf `contain`, sodass das ganze Bild sichtbar ist (nichts wird beschnitten). So fassen sich kleinere/anders skalierte Bilder automatisch mit weißer Matte ein. Gelesen von `resolveTitleImageFrame()` in `titleImages.ts`, gerendert in `Opener.astro` (CSS-Var `--hero-frame`/`--hero-fit`, `padding` + `background-clip: content-box`). Verdrahtet über `index.astro` (Homepage) und `landings.ts` → `[landing].astro` (Stadt-Seiten).
 
 ## Fallback-Kette
 
@@ -54,4 +58,4 @@ Selbes Format wie `slides.meta.json`:
 
 ## Admin-Tool
 
-ImageManager schreibt nach `public/img/Titelbild/<stadt>/`. Aber: `title.meta.json` (Categories/Priority) wird vom Admin **nicht** verwaltet – manuell pflegen.
+ImageManager schreibt nach `public/img/Titelbild/<stadt>/`. Der Admin verwaltet in `title.meta.json` inzwischen den **Fokuspunkt** (Klick-Picker) und die **weiße Rahmendicke** (Schieber, `frame`, 0–120 px) je Titelbild – Vorschau spiegelt cover/contain + Rahmen. `categories`/`priority` weiterhin manuell pflegen.
