@@ -21,6 +21,7 @@ import Contact from '../../components/Contact.astro';
 import FAQ from '../../components/FAQ.astro';
 import Slideshow from '../../components/slideshows/Slideshow.astro';
 import { getLandingSlugs } from '../../utils/landings';
+import { getCityDisplayName } from '../../utils/cityNames';
 import { getSkillBySlug, getSkillSlugs } from '../../utils/skills';
 import {
   MIN_LANDING_SLIDES,
@@ -103,6 +104,7 @@ let skillCityHeroBg: string | null = null;
 let skillCityPageTitle = '';
 let skillCityDescription = '';
 let skillCityBreadcrumb: unknown;
+let cityName = '';
 
 // WEB-012: Schema-URLs aus Astro.site (= SITE_URL) statt hardcoded kunstwolff.de.
 const site = Astro.site?.origin ?? 'https://kunstwolff.de';
@@ -115,11 +117,12 @@ if (pageType === 'landing') {
   skillCityTitleImage = resolveTitleImage({ skill, landing });
   skillCityHeroBg = resolveHeroBg({ skill, landing });
 
-  const cityName = (landing ?? '').charAt(0).toUpperCase() + (landing ?? '').slice(1);
+  cityName = getCityDisplayName(landing ?? '');
   skillCityPageTitle = `${skillData.title} ${cityName} buchen | Kunstwolff`;
+  // Pro Stadt individualisierte Description (kein Duplicate über 35 Städte,
+  // ≤ 155 Zeichen). Löst das Doorway-Page-Signal der identischen Skill-Description.
   skillCityDescription =
-    skillData.description ||
-    `${skillData.title} in ${cityName} für Firmenfeiern, Messen & Hochzeiten buchen. Jetzt Kunstwolff anfragen!`;
+    `${skillData.title} in ${cityName} buchen – Live-Kunst als Highlight für Firmenfeier, Messe & Hochzeit. Jetzt bei Kunstwolff anfragen.`;
 
   skillCityBreadcrumb = {
     '@context': 'https://schema.org',
@@ -176,7 +179,7 @@ if (pageType === 'event') {
 // Seitenspezifische Variable aus dem jeweiligen Zweig zusammenführen
 const finalHeroTitle =
   pageType === 'landing'
-    ? (skillData.heroTitle || `Live ${skillData.title} für Events`)
+    ? `Live ${skillData.title} in ${cityName}`
     : (eventData ? `${skillData.title} für ${eventData.title}` : skillData.title);
 
 // ── Sektions-Stack: Reihenfolge + Sichtbarkeit aus components.json, Props von

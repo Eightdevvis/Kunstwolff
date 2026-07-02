@@ -1,15 +1,29 @@
 ---
-
 import Layout from "../layouts/Layout.astro";
-
 import Frage from "../components/FAQ.astro";
-
 ---
 
-<Layout>
-  
-
-  <Frage interactive={true} />
-
-
+<Layout
+  title="Häufige Fragen (FAQ) | Kunstwolff"
+  description="Antworten auf häufige Fragen zu Buchung, Ablauf und Preisen von Schnellzeichner & Szenenmaler für Ihr Event bei Kunstwolff."
+>
+  <div class="faq-page">
+    <h1>Häufige Fragen zu Kunstwolff</h1>
+    <Frage interactive={true} />
+  </div>
 </Layout>
+
+<style>
+  .faq-page {
+    padding-top: 70px;
+  }
+  .faq-page > h1 {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 0.3em;
+    font-family: Mayonice;
+    font-weight: 500;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    text-align: center;
+  }
+</style>

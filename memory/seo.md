@@ -59,17 +59,29 @@ Pro Seitentyp automatisch generiert:
 | Homepage | `Kunstwolff – Eventkünstler seit über 20 Jahren` | Generisch (aus `Layout.astro`) |
 | Stadtseite `/berlin/` | `Eventkünstler Berlin – Live-Kunst & Performance \| Kunstwolff` | Stadtspezifisch |
 | Skill-Seite `/schnellzeichner/` | `Schnellzeichner für Events buchen \| Kunstwolff` | `skills.json` (`description`) |
-| Skill+Stadt `/schnellzeichner/berlin/` | `Schnellzeichner Berlin buchen \| Kunstwolff` | `skills.json` (`description`) |
+| Skill+Stadt `/schnellzeichner/berlin/` | `Schnellzeichner Berlin buchen \| Kunstwolff` | pro Stadt individualisiert (nicht mehr `skills.json`) |
 
 Auf jeder Seite wird ein `<link rel="canonical">` gesetzt (gegen Duplicate-Content-Strafen).
+
+**Stadt-Anzeigenamen (Umlaute) – `src/utils/cityNames.ts`:** Slugs in `landings.md`
+sind ASCII-transliteriert (`duesseldorf`, `koeln`). Für Titel/H1/Breadcrumb liefert
+`getCityDisplayName(slug)` den korrekten Namen (`Düsseldorf`, `Köln`,
+`Nordrhein-Westfalen`, `Belgien` …). Map dort pflegen; Fallback = jedes
+Bindestrich-Wort großgeschrieben. **Nur für Anzeige, nie für URLs/Slugs.**
+
+**Title-Längen:** Stadt-Titel bewusst kurz (`Eventkünstler {Stadt} – Live-Kunst | Kunstwolff`,
+≤ 60 Zeichen) gegen SERP-Truncation. `skills.json`-`description` ≤ 155 Zeichen halten.
 
 **Wo Title/Description anpassen:**
 
 | Was | Wo |
 | :-- | :-- |
-| Skill-Description (Meta) | `public/skills/skills.json` Feld `description` |
+| Skill-Description (Meta) | `public/skills/skills.json` Feld `description` (≤ 155 Zeichen) |
 | Skill-Hero-Title | `public/skills/skills.json` Feld `heroTitle` |
-| Stadtseiten-Texte | direkt in `src/pages/[landing].astro` |
+| Stadtseiten-Texte + Titel-Template | `src/pages/[landing].astro` |
+| Skill+Stadt-Description/H1 (pro Stadt) | `src/pages/[skill]/[landing].astro` |
+| Stadt-Anzeigename (Umlaut) | `src/utils/cityNames.ts` |
+| Kontakt/FAQ/Impressum/Datenschutz-Titel | jeweilige `src/pages/*.astro` (`<Layout title=… description=…>`) |
 
 ## HTML-Sprache
 
@@ -112,10 +124,19 @@ Vollautomatisch beim Build generiert. Keine manuelle Pflege.
 
 | Seitentyp | Schema-Typen |
 | :-- | :-- |
-| Homepage `/` | `LocalBusiness` + `FAQPage` |
-| Skill-Seite `/schnellzeichner/` | `Service` + `FAQPage` |
-| Stadtseite `/berlin/` | `BreadcrumbList` + `FAQPage` |
-| Skill+Stadt `/schnellzeichner/berlin/` | `BreadcrumbList` + `FAQPage` |
+| Homepage `/` | `LocalBusiness` |
+| Skill-Seite `/schnellzeichner/` | `Service` |
+| Stadtseite `/berlin/` | `BreadcrumbList` |
+| Skill+Stadt `/schnellzeichner/berlin/` | `BreadcrumbList` |
+| FAQ-Seite `/faq/` | `FAQPage` |
+
+> ⚠ **FAQPage nur auf `/faq/`.** `FAQ.astro` emittiert das FAQPage-Schema nur bei
+> `interactive={true}` (= nur die `/faq/`-Seite). Die eingebetteten FAQ-Blöcke auf
+> Home/Stadt/Skill/Kombi haben **kein** Schema. Frühere Doku behauptete FAQPage
+> überall – das war nie live (bis 2026-07-02 war es sogar auf `/faq/` kaputt:
+> `{JSON.stringify(faqSchema)}` wurde wörtlich ausgegeben; Fix = `set:html`).
+> Wer FAQ-Rich-Results breiter will, muss das Schema bewusst auf den Landingpages
+> mit-emittieren.
 
 ### Was die Schemas bringen
 

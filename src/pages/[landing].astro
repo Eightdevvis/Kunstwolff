@@ -39,6 +39,7 @@ import Landingsection from '../components/Landingsection.astro';
 import Why from '../components/Why.astro';
 import LandingIntro from '../components/LandingIntro.astro';
 import { getLandingBySlug, getLandingSlugs } from '../utils/landings';
+import { getCityDisplayName } from '../utils/cityNames';
 import { getLandingHeading, getLandingIntro } from '../utils/siteTexts';
 import { getAvailableLocalesForSlug, localizePath, LOCALE_META, DEFAULT_LOCALE } from '../i18n/config';
 
@@ -92,6 +93,7 @@ let landingPageTitle = '';
 let landingPageDescription = '';
 let landingHeading = '';
 let landingIntro = '';
+let cityName = '';
 let breadcrumbSchema: unknown;
 
 if (pageType === 'landing') {
@@ -100,10 +102,12 @@ if (pageType === 'landing') {
   const defaultSlides = getDefaultSlides();
   landingSlides = supplementWithDefaultSlides(citySlides, defaultSlides, MIN_LANDING_SLIDES);
 
-  const cityName = (landing ?? '').charAt(0).toUpperCase() + (landing ?? '').slice(1);
+  cityName = getCityDisplayName(landing ?? '');
   landingHeading = getLandingHeading(landing ?? '', `Eventkünstler in ${cityName}`);
   landingIntro = getLandingIntro(landing ?? '', cityName);
-  landingPageTitle = `Eventkünstler ${cityName} – Live-Kunst & Performance | Kunstwolff`;
+  // Titel ≤ 60 Zeichen halten (sonst SERP-Truncation). Longster Fall
+  // „Nordrhein-Westfalen" → 59 Zeichen.
+  landingPageTitle = `Eventkünstler ${cityName} – Live-Kunst | Kunstwolff`;
   landingPageDescription = `Kunstwolff in ${cityName}: Professionelle Eventkünstler für Firmenfeiern, Messen & Hochzeiten. Schnellzeichner, Szenenmaler & mehr.`;
 
   breadcrumbSchema = {
@@ -178,7 +182,7 @@ if (pageType === 'landing' && landingData && landingSlides) {
   sectionProps = {
     opener: {
       titleImage: landingData.titleImage,
-      titleImageAlt: landingData.title,
+      titleImageAlt: `Live-Eventkünstler von Kunstwolff in ${cityName}`,
       titleImagePosition: landingData.titleImagePosition,
       titleImageFrame: landingData.titleImageFrame,
       heading: landingHeading,
