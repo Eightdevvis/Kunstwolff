@@ -30,3 +30,10 @@ pnpm-debug.log*
 # VS Code Local History (auto-generated, should not be tracked)
 .history/
 .vercel
+
+# Claude Code Worktree-Checkouts (transient, nie committen)
+.claude/worktrees/
+
+# Sync-generierte leere Why-Bildordner-Platzhalter (sync:why legt sie bei jedem
+# Build neu an → sonst dauerhaft untracked). Echte Bilder bleiben sichtbar.
+public/img/why/**/.gitkeep
