@@ -216,28 +216,14 @@ const findSampleFile = (baseName) => {
 const ensureDefaultWhyImageSeed = (created) => {
   ensureDirectory(defaultWhyImagesDir);
 
-  // Seed-Ordner und zugehörige Sample-Basisnamen (ohne Extension!)
-  // findSampleFile() sucht dann nach der tatsächlich vorhandenen Datei, egal ob .webp, .jpeg, etc.
-  const seeds = [
-    { folder: 'benefit-1', sampleBase: 'sample1' },
-    { folder: 'benefit-2', sampleBase: 'sample2' },
-    { folder: 'benefit-3', sampleBase: 'sample3' },
-    { folder: 'benefit-4', sampleBase: 'sample4' },
-  ];
-
-  for (const seed of seeds) {
-    const folderPath = path.join(defaultWhyImagesDir, seed.folder);
+  // KEIN Sample-Seeding mehr: leere Benefit-Ordner bleiben leer (nur .gitkeep).
+  // Früher wurden sample1-4.webp hineinkopiert – die tauchten dann im Admin auf,
+  // obwohl die Website sie nie nutzt (why.json referenziert sie nicht) → Admin
+  // zeigte Platzhalter, live erschienen die Default-Bilder. Verwirrend, daher raus.
+  for (const folder of ['benefit-1', 'benefit-2', 'benefit-3', 'benefit-4']) {
+    const folderPath = path.join(defaultWhyImagesDir, folder);
     ensureDirectory(folderPath);
-
-    const sourcePath = findSampleFile(seed.sampleBase);
-
-    if (sourcePath) {
-      const target = path.join(folderPath, path.basename(sourcePath));
-      if (!fs.existsSync(target)) {
-        fs.copyFileSync(sourcePath, target);
-        created.push(`+ ${path.relative(projectRoot, target)}`);
-      }
-    } else {
+    if (!findFirstImageFileName(folderPath)) {
       const keepPath = path.join(folderPath, '.gitkeep');
       if (!fs.existsSync(keepPath)) {
         fs.writeFileSync(keepPath, '');
@@ -266,30 +252,17 @@ const ensureTargetImageFoldersFromDefault = (targetKey, created) => {
   const targetDir = path.join(whyImagesRoot, targetKey);
   ensureDirectory(targetDir);
 
-  const folders = getDefaultBenefitFolders();
-
-  for (const folder of folders) {
-    const sourceFolder = path.join(defaultWhyImagesDir, folder);
+  // Nur die Ordnerstruktur sicherstellen – KEINE Default-/Sample-Bilder mehr in
+  // Stadt-Ordner kopieren. Leerer Ordner bedeutet „nutzt Default" (why.json ist
+  // leer). Eigene Stadt-Bilder entstehen ausschließlich durch Admin-Upload.
+  for (const folder of getDefaultBenefitFolders()) {
     const targetFolder = path.join(targetDir, folder);
-
-    if (!fs.existsSync(targetFolder)) {
-      fs.cpSync(sourceFolder, targetFolder, { recursive: true });
-      created.push(`+ ${path.relative(projectRoot, targetFolder)}`);
-      continue;
-    }
-
-    const targetImage = findFirstImageFileName(targetFolder);
-    if (targetImage) {
-      continue;
-    }
-
-    const sourceImage = findFirstImageFileName(sourceFolder);
-    if (sourceImage) {
-      const sourcePath = path.join(sourceFolder, sourceImage);
-      const targetPath = path.join(targetFolder, sourceImage);
-      if (!fs.existsSync(targetPath)) {
-        fs.copyFileSync(sourcePath, targetPath);
-        created.push(`+ ${path.relative(projectRoot, targetPath)}`);
+    ensureDirectory(targetFolder);
+    if (!findFirstImageFileName(targetFolder)) {
+      const keepPath = path.join(targetFolder, '.gitkeep');
+      if (!fs.existsSync(keepPath)) {
+        fs.writeFileSync(keepPath, '');
+        created.push(`+ ${path.relative(projectRoot, keepPath)}`);
       }
     }
   }
