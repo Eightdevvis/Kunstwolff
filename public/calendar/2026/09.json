@@ -43,5 +43,29 @@
     "actors": [
       "Gaby"
     ]
+  },
+  {
+    "id": "mreqbjf7vfwl",
+    "title": "Betriebsfeier",
+    "description": "14-17 Mannheim\n660 €",
+    "date": "2026-09-12",
+    "time": 14,
+    "location": "Mannheim",
+    "categoryId": "auftrag",
+    "actors": [
+      "Jenny"
+    ]
+  },
+  {
+    "id": "mreqea5kdujo",
+    "title": "Geburtstag ganztags unterwegs",
+    "description": "Mittelalter Thema\nganztags unterwegs\n17:00 - 21;00",
+    "date": "2026-09-12",
+    "time": 13,
+    "location": "Lörrach",
+    "categoryId": "auftrag",
+    "actors": [
+      "Gaby"
+    ]
   }
 ]
