@@ -10,16 +10,16 @@ Alle Bilder in diesem Ordner werden automatisch in der Referenz-Sektion (`BrandS
 
 ## Label-Generierung
 
-Der Dateiname (ohne Extension) wird als Label genutzt – Unterstriche werden zu Leerzeichen.
+Der Dateiname (ohne Extension) wird als Label genutzt – Unterstriche **und** Bindestriche werden zu Leerzeichen (`.replace(/[_-]+/g, ' ')`), Mehrfach-Trenner werden zusammengefasst.
 
 | Dateiname | Label |
 | :-- | :-- |
 | `acme_gmbh.webp` | "acme gmbh" |
-| `kunde-xyz.png` | "kunde-xyz" |
+| `kunde-xyz.png` | "kunde xyz" |
 
 ## Erlaubte Formate
 
-`.webp`, `.png`, `.jpg`, `.avif`
+`.avif`, `.gif`, `.jpeg`, `.jpg`, `.png`, `.svg`, `.webp` (siehe `allowedExtensions` in `src/utils/brandLogos.ts`). `.svg` wird häufig genutzt (viele Logos im Ordner liegen als SVG vor).
 
 ## Partner-Seite (verwandt, aber separat)
 

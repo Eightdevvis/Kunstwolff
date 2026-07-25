@@ -192,9 +192,14 @@ export const resolveTitleImageItem = (
   const skillSlug = params?.skill ? normalizeSlug(params.skill) : '';
   const landingSlug = params?.landing ? normalizeSlug(params.landing) : '';
 
-  const cityImages = landingSlug ? readFolderTitleImages(landingSlug) : [];
+  // "Eigener" Bild-Ordner der Seite: Stadt-Seiten (und Skill+Stadt) nutzen den
+  // Landing-Ordner, reine Skill-Seiten den Skill-Ordner. Das spiegelt exakt den
+  // Ordner, in den der Admin für diese Seite hochlädt (Titelbild/{slug}) – ohne
+  // diesen Zweig „erbt" die Skill-Seite still das Default-/Homepage-Bild.
+  const ownSlug = landingSlug || skillSlug;
+  const ownImages = ownSlug ? readFolderTitleImages(ownSlug) : [];
   const defaultImages = readFolderTitleImages('default');
-  const pool = cityImages.length > 0 ? [...cityImages, ...defaultImages] : defaultImages;
+  const pool = ownImages.length > 0 ? [...ownImages, ...defaultImages] : defaultImages;
 
   const picked = pickTitleImageFromPool(pool, skillSlug);
   return {

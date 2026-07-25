@@ -45,7 +45,6 @@ So wird `Berlín` zu `berlin`, `Köln` zu `koeln` etc. Bei Slug-Kollisionen merg
    - Erstellt automatisch:
      - `public/img/slides/<stadt>/`
      - `public/reviews/<stadt>/`
-     - `public/faq/<stadt>/`
      - `public/img/Titelbild/<stadt>/`
      - `public/img/why/<stadt>/benefit-{1-4}/`
      - `public/why/<stadt>.json` (Default-Texte)
@@ -68,11 +67,14 @@ npm run remove:landing -- <stadtslug>
 - `public/reviews/<stadt>/`
 - `public/faq/<stadt>/`
 - `public/img/why/<stadt>/`
+- `public/img/Titelbild/<stadt>/` (inkl. Legacy-Strukturen `Titelbild/landings/` und `Titelbild/skills/`, via `collectMatchingTitleImageTargets`)
 - `public/why/<stadt>.json` und alle `public/why/*-<stadt>.json` Dateien
 
-**Was NICHT archiviert wird (manuell aufräumen):**
-- `public/img/Titelbild/<stadt>/`
-- Einträge in `slides.meta.json` und `title.meta.json` – bleiben als verwaiste Metadaten
+**Was zusätzlich bereinigt wird (nicht archiviert):**
+- `title.meta.json` – passende Einträge werden von `cleanTitleMetadataForLanding` entfernt und die Datei neu geschrieben
+
+**Was NICHT bereinigt wird (manuell aufräumen):**
+- Einträge in `slides.meta.json` – bleiben als verwaiste Metadaten
 
 **Nach dem Script:**
 - Stadt wird automatisch aus `landings.md` entfernt

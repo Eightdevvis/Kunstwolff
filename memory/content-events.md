@@ -17,6 +17,7 @@ public/img/Titelbild/events/<slug>/    # Event-Titelbilder
     {
       "title": "Firmenfeier",
       "slug": "firmenfeier",
+      "image": "/img/slides/events/firmenfeier/walking-act-company-party-mainz.webp",
       "heroTitle": "Live-Kunst auf Ihrer Firmenfeier",
       "description": "Professionelle Eventkünstler für Corporate Events...",
       "categories": ["Schnellzeichner", "Szenenmaler"]
@@ -27,7 +28,8 @@ public/img/Titelbild/events/<slug>/    # Event-Titelbilder
 
 ## Workflow: Neuen Event hinzufügen
 
-1. Eintrag in `public/events/events.json` (`title`, `slug`, `heroTitle`, `description`, `categories`)
+1. Eintrag in `public/events/events.json` (`title`, `slug`, `heroTitle`, `description`, `categories`, optional `image`)
+   - `image` (optional): Pfad zum Hero-/Vorschaubild. Fehlt es, nimmt die Website automatisch das erste Slide bzw. Titelbild (`image = events.json ?? erstes Slide ?? Titelbild`, s. `Eventtypes.astro`).
 2. `npm run sync:events` (oder `npm run dev`)
    - Erstellt: `public/img/slides/events/<slug>/`, `public/img/Titelbild/events/<slug>/`, `public/events/<slug>/content.json`
 3. Bilder hochladen: Slides nach `public/img/slides/events/<slug>/`, Titelbild nach `public/img/Titelbild/events/<slug>/`
@@ -110,4 +112,4 @@ Jede Sektion hat ein `enabled`-Flag. Vollständiges Format:
 
 ## Admin-Tool
 
-Kann Events **nicht** verwalten (geplant).
+Verwaltet Events vollständig via `EventManager.tsx` (im Admin-Repo `kunstwolff-admin/src/components/`): schreibt sowohl `public/events/events.json` (`EVENTS_PATH`) als auch pro Event `public/events/<slug>/content.json` über den Draft-State (`pendingFiles`) und published als atomaren Batch-Commit. Neue Events legt `createEvent()` mit default-`content.json` an; `image`/Slides/Titelbild werden über den `StripeImagePicker` bzw. `ImageManager` gesetzt.

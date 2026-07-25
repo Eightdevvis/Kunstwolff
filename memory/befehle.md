@@ -29,7 +29,10 @@ npm run preview         # Build lokal prüfen
 | `npm run sync:events` | Event-Ordner anlegen, default `content.json` (bestehende NICHT überschreiben) |
 | `npm run sync:erinnerungen` | `public/erinnerungen/{city\|skill}.json` (bestehende NICHT überschreiben) |
 | `npm run remove:landing -- <stadt> [archivpfad]` | Archiviert alle Landing-Daten und entfernt Stadt aus `landings.md` |
+| `npm run validate:images` | Bild-Referenzen prüfen (`scripts/validate-image-refs.mjs`); letzter Schritt von `sync:content` |
+| `npm run optimize:images` | Nur gestagte Bilder zu WebP konvertieren (`scripts/optimize-staged-images.mjs`) |
 | `npm run optimize:all` | Alle Bilder in `public/img/` zu WebP konvertieren (manuell) |
+| `npm run test:unit` | Unit-Tests ausführen (`vitest run`) |
 | `npm run setup:hooks` | Git-Hooks aktivieren (einmalig) |
 
 ## Automatik-Reihenfolge
@@ -42,6 +45,7 @@ npm run preview         # Build lokal prüfen
 5. `sync:why`
 6. `sync:events`
 7. `sync:erinnerungen`
+8. `sync:content`, aber auch `sync:content:safe`, hängen `validate:images` als letzten Schritt an (Bild-Referenzen prüfen). In `:safe` läuft er nur als Warnung (bleibt exit 0), hart blockiert er über `sync:content` im pre-commit-Hook.
 
 ## VS Code
 

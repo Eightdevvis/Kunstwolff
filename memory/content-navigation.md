@@ -41,10 +41,6 @@
 
 `navigation.ts` hat einen eingebauten Default mit "Home" (mit Children), "Services", "Work", "Anfrage" (cta) – greift falls die JSON fehlt oder kaputt ist.
 
-## Endbenutzer-Anleitung
-
-`ANLEITUNGEN/Wie?_NAVIGATION.md` – ausführliche, nicht-technische Anleitung für Endbenutzer.
-
 ## Admin-Tool
 
 Kann Navigation **nicht** verwalten – manuell per Git pflegen.

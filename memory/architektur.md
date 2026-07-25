@@ -51,7 +51,7 @@ Fast jedes Content-System hat eine Fallback-Kette, damit eine Seite nie "leer" i
 - **Slides:** Stadt → `default/` (mind. 6)
 - **Reviews:** Stadt → `default/` → andere Städte zirkulär (mind. 7)
 - **Why/Erinnerungen:** `{skill}-{stadt}` → `{stadt}` → `{skill}` → `default`
-- **Titelbild:** Stadt → `default/` → System-Fallback (`/img/samples/sample1.jpeg`)
+- **Titelbild:** Stadt → `default/` → System-Fallback (`/img/samples/sample1.webp`)
 - **FAQs:** Stadt-spezifisch bevorzugt, sonst Default
 
 Jeder Content-File-Memory beschreibt seine eigene Fallback-Logik. Edge Cases zentral in `ANLEITUNGEN/UNDEFINED_BEHAVIOR_TIDY_UPS.md`.
@@ -62,4 +62,4 @@ Slugs sind immer **lowercase, ohne Leerzeichen, ohne Sonderzeichen**. Bei Slug-K
 
 ## Cross-Repo
 
-Das Admin-Tool (separates Preact-Repo) schreibt via GitHub REST API direkt in dieses Repo. Pfadänderungen in `public/` können das Admin-Tool brechen. Details: `admin-tool.md`.
+Das Admin-Tool (separates Preact-Repo, Frontend auf Vercel) schreibt in dieses Repo über einen eigenen Backend-Stack: einen Cloudflare Worker (hono) + Express-Backend, das den GitHub-PAT server-seitig hält und Sessions per JWT vergibt (Routing über `/api/github`). Nur als Legacy-Fallback läuft ein direkter Call an `api.github.com` mit browser-seitig verschlüsseltem PAT. Pfadänderungen in `public/` können das Admin-Tool brechen. Details: `admin-tool.md`.

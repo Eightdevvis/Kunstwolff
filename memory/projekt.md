@@ -34,7 +34,7 @@ npm install
 npm run dev
 ```
 
-Vor `dev` und `build` läuft automatisch `npm run sync:content` (siehe `sync-scripts.md`).
+Vor `dev` und `build` läuft automatisch `npm run sync:content:safe` (als `predev`/`prebuild`, siehe `sync-scripts.md`).
 
 ## Projekt-Layout (Top-Level)
 
@@ -62,4 +62,4 @@ Vor `dev` und `build` läuft automatisch `npm run sync:content` (siehe `sync-scr
 
 ## Verwandte Repos
 
-Das **Admin-Tool** (`/home/sasha/codicus/Kunstwolff/Kunstwolff-admin/kunstwolff-admin/`) ist ein eigenständiges Preact-Projekt, das via GitHub REST API direkt in dieses Repo schreibt. Details: `admin-tool.md`. Eigene Memory-Struktur: `Kunstwolff-admin/kunstwolff-admin/memory/index.md`.
+Das **Admin-Tool** (`/home/sasha/codicus/Kunstwolff/kunstwolff-admin/`) ist ein eigenständiges Preact-Projekt, das via GitHub REST API direkt in dieses Repo schreibt. Das Frontend läuft auf **Vercel**; die Auth/Schreib-Vorgänge gehen über ein Backend – Cloudflare **Worker** (hono, `worker/`) + **Express**-Server (`server/`) –, das den `GITHUB_PAT` server-seitig hält und JWT-Sessions ausgibt (Legacy-Fallback: PAT verschlüsselt im Browser gegen `api.github.com`). Kein GitHub Pages/Actions. Details: `admin-tool.md`. Eigene Memory-Struktur: `/home/sasha/codicus/Kunstwolff/kunstwolff-admin/memory/index.md`.

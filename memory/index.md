@@ -44,8 +44,6 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 ### Status & offene Punkte (außerhalb von `memory/`)
 - `HEALTH_CHECK_2026-05-05.md` (Repo-Root) – aktueller Audit: Vercel-Stage vs. Wix-Production, Cutover-Tickets, GitHub-Action-Lücken, TS-/SEO-Findings.
 - `CUTOVER_PLAN.md` (Repo-Root) – Schritt-für-Schritt-Plan Wix → Astro/Vercel: URL-Mapping, DNS, Vercel-Settings, Cutover-Tag, Rollback.
-- `BUGS_TODO.md` (`/home/sasha/codicus/Kunstwolff/BUGS_TODO.md`) – Bug-Log Admin-Tool + Lücken (LÜCKE-1 bis 6).
-- `human_doc_bugs.md` (`/home/sasha/codicus/Kunstwolff/human_doc_bugs.md`) – User-/Mom-gemeldete UX-Issues, oft anekdotisch formuliert.
 
 ---
 
@@ -68,6 +66,6 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 | "Sektion ein-/ausblenden, Reihenfolge ändern, Sektion taucht falsch auf" | `komponenten-stack.md` |
 | "Admin-Tool schreibt falsch" | `admin-tool.md` |
 | "Hosting / Vercel / Cutover-Stand" | `projekt.md` (Hosting-Section) + `seo.md` + `HEALTH_CHECK_2026-05-05.md` + `CUTOVER_PLAN.md` |
-| "Cross-Repo / Admin-Tool" | `admin-tool.md` + Admin-Memory `Kunstwolff-admin/kunstwolff-admin/memory/index.md` |
+| "Cross-Repo / Admin-Tool" | `admin-tool.md` + Admin-Memory `/home/sasha/codicus/Kunstwolff/kunstwolff-admin/memory/index.md` |
 
 Wenn unklar: erst `projekt.md` + `architektur.md` als Einstieg, dann gezielt nachladen.

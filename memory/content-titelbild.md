@@ -44,9 +44,9 @@ Selbes Format wie `slides.meta.json`:
 
 1. Page-spezifischer Top-Level-Ordner (`<stadt>/`, `<skill>/`, oder `events/<slug>/`)
 2. `default/`
-3. System-Fallback `/img/samples/sample1.jpeg` (wenn auch `default/` leer ist)
+3. System-Fallback `/img/samples/sample1.webp` (wenn auch `default/` leer ist)
 
-⚠ **Bekannter Pfad-Mismatch (HEALTH_CHECK §VAL-3):** Die `fallbackImage`-Konstante in `titleImages.ts` zeigt auf `.jpeg`, aber im Verzeichnis `public/img/samples/` liegt nur `sample1.webp`. Bei einem echten Fallback-Trigger gibt es daher ein 404-Bild. Fix: entweder Konstante auf `.webp` ändern oder eine `.jpeg`-Datei anlegen.
+Die `fallbackImage`-Konstante in `titleImages.ts` (Zeile 7) zeigt auf `/img/samples/sample1.webp`; die Datei liegt in `public/img/samples/` vor. Kein 404 mehr (früherer §VAL-3-Mismatch behoben).
 
 ## Artefakt-Unterordner (NICHT befüllen, NICHT löschen)
 

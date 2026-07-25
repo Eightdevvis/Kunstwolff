@@ -624,6 +624,67 @@
     "altOverride": "Vater zeigt witzige familien zeichnungvon schnellzeichner eroeffnungsfeier mr. wash mannheim",
     "title": "Schnellzeichner Mannheim"
   },
+  "mediathek/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
+    "categories": []
+  },
+  "mediathek/acrylgemaelde-brautpaar-hochzeitsmaler-event-karlsruhe.webp": {
+    "categories": [
+      "Szenenmaler"
+    ]
+  },
+  "mediathek/brautpaar-hochzeitsmaler-bw.webp": {
+    "categories": [
+      "Szenenmaler"
+    ]
+  },
+  "mediathek/gemaelde-hochzeitsfeier-brautpaar-mit-torte-von-event-illustratorin-heitlinger-genusswelten-landkreis-karlsruhe.webp": {
+    "categories": []
+  },
+  "mediathek/hochzeitsmalerin-praesentiert-hochtzeitsgemaelde-mit-tanzendem-brautpaar-heitlinger-genusswelten-landkreis-karlsruhe.webp": {
+    "categories": [
+      "Szenenmaler"
+    ]
+  },
+  "mediathek/img_20251019_003048.webp": {
+    "categories": []
+  },
+  "mediathek/live-event-kuenstlerin-malt-szenen-hochzeit-heitlinger-genusswelten-baden-wuertemberg.webp": {
+    "categories": []
+  },
+  "mediathek/live-wedding-painter.webp": {
+    "categories": [
+      "Szenenmaler"
+    ]
+  },
+  "mediathek/live-zeichner-frankfurt.webp": {
+    "categories": [
+      "Szenenmaler"
+    ]
+  },
+  "mediathek/szenenmalerei-hotel-leidinger-saarbruecken.webp": {
+    "categories": [
+      "Szenenmaler"
+    ]
+  },
+  "mediathek/szenenmalerei-schloss-kronberg.webp": {
+    "categories": [
+      "Szenenmaler"
+    ]
+  },
+  "mediathek/szenenmalerin-malt-live-brautpaar-mit-hochzeitstorte-hochzeit-restaurant-albatros-landkreis-karlsruhe.webp": {
+    "categories": [
+      "Szenenmaler"
+    ]
+  },
+  "mediathek/szenenzeichnung.webp": {
+    "categories": []
+  },
+  "mediathek/wedding-live-painter.webp": {
+    "categories": []
+  },
+  "mediathek/wedding-painting.webp": {
+    "categories": []
+  },
   "neunkirchen/kuenstlerin-zeichnet-paar-hochzeit-neunkirchen.webp": {
     "categories": []
   },
@@ -1143,9 +1204,5 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
-  },
-  "events/hochzeit/grosseltern-mit-baby-familien-portraet-hochzeitsfeier-linslerhof-saarland.webp": {
-    "categories": [],
-    "priority": 8
   }
 }

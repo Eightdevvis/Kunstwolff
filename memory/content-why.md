@@ -55,9 +55,10 @@ public/img/why/<key>/benefit-{1-4}/     # Bilder, key = <stadt> ODER <skill>
 - `{skill}.json` für alle Skills aus `skills.json`
 - `public/img/why/<key>/benefit-{1-4}/` Ordner
 
-Basis: `default.json`. Bildpfade werden auf den jeweiligen Key angepasst. Manuell anlegen muss man nur `{skill}-{stadt}.json` Kombis.
+Basis: `default.json`. Die generierten Stadt-/Skill-Dateien enthalten **leere Felder** (`title`/`text`/`image`/`alt`); die Website merged fehlende Felder zur Laufzeit aus `default.json` (`why.ts`). Eigene Bilder/Texte entstehen nur durch Admin-Überschreibung. Manuell anlegen muss man nur `{skill}-{stadt}.json` Kombis.
 
 ## Admin-Tool
 
-- ImageManager schreibt **Bilder** nach `public/img/why/<city>/benefit-{1-4}/`
-- **Texte** in `public/why/<key>.json` werden vom Admin **nicht** verwaltet – manuell pflegen
+- Der Why-Editor (`ImageManager`, `editorType: 'why'`) verwaltet **Bilder UND Texte**.
+- **Bilder** landen unter `public/img/why/<city>/benefit-{1-4}/`.
+- **Texte** (`title`/`text`/`alt`) schreibt `saveWhyBenefits()` als Per-Feld-Overrides nach `public/why/<city>.json` (Commit `admin: Why-Texte aktualisiert (<city>)`). Nicht-überschriebene Felder bleiben leer und werden von der Website aus `default.json` gemerged.

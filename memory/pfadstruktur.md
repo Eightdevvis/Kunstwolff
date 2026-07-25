@@ -75,19 +75,20 @@ public/img/Titelbild/
 ```
 public/reviews/
 ├── _vorlage.md
-├── default/
 └── <stadt>/*.md
 ```
+
+Es gibt **kein** `public/reviews/default/`-Verzeichnis. `default` bleibt in `reviews.ts` (`defaultCityKey = 'default'`) ein unterstützter City-Key (per Ordnername oder `city:`-Frontmatter), ist aktuell aber leer/ungenutzt.
 
 ## FAQs
 
 ```
 public/faq/
-├── default/*.md           # aktuell die einzige genutzte Quelle
-└── <stadt>/*.md           # vom Loader unterstützt, aktuell NICHT angelegt
+├── default/*.md           # generische Fallback-FAQs
+└── <stadt>/*.md           # stadt-spezifische FAQs (aktuell für ~21 Städte angelegt)
 ```
 
-Stand jetzt: nur `public/faq/default/` existiert. Der Loader (`faq.ts`) liest auch stadt-spezifische FAQs, sobald welche angelegt sind.
+Neben `default/` existieren bereits Stadt-Ordner (u.a. belgique, bw, duesseldorf, frankfurt, heidelberg, kaiserslautern, karlsruhe, koblenz, koeln, ludwigshafen, luxembourg, mainz, mannheim, rheinland-pfalz, saarbruecken, saarland, schweiz, trier, wiesbaden, wuppertal) mit eigenen `.md`-Dateien. Der Loader (`faq.ts`, `getFAQsByCity`) filtert nach Stadt und fällt nur auf `default/` zurück, wenn eine Stadt keine eigenen FAQs hat.
 
 ## Why-Sektion
 

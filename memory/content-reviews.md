@@ -4,8 +4,9 @@
 
 ```
 public/reviews/_vorlage.md              # Vorlage
-public/reviews/default/*.md             # generische Reviews (Fallback)
 public/reviews/<stadt>/*.md             # stadtspezifische Reviews
+# 'default' bleibt als Fallback-Stadt-Key im Code unterstützt (Ordnername ODER
+# city:-Frontmatter), aktuell existiert aber KEIN public/reviews/default/-Ordner.
 ```
 
 ## Format
@@ -45,13 +46,13 @@ Auf Skill-Seiten werden nur Reviews mit passender `categories` angezeigt.
 
 ## Anzeige (MiniReviews.astro)
 
-`src/components/reviews-references/MiniReviews.astro` zeigt immer **einen** Review als
-Slide; alle Slides liegen absolut übereinander im `.review-track`. **Die Track-Höhe wird per
-JS auf das aktive Review gesetzt** (`syncHeight()` → `track.style.height`) und per CSS weich
-animiert (`transition: height`). Grund: bei `HomepageReviews` liegen ALLE ~45 Reviews drin –
-ein Grid-Stack (Höhe = höchstes Review) erzeugte ein riesiges schwarzes Blank-Band. Jetzt
-kompakt + kein harter Sprung. `syncHeight` läuft initial, bei `document.fonts.ready`, bei
-`resize` und nach jedem Slide-Wechsel.
+`src/components/reviews-references/MiniReviews.astro` zeigt immer genau **einen** Review als
+Slide: Das aktive `.review-slide` ist `display:flex` (`.is-active`), alle anderen sind
+`display:none` und nehmen keinen Platz weg (kein absolutes Stapeln). Die Höhe ergibt sich
+allein aus dem sichtbaren Review im normalen Fluss – **kein JS-Höhenmessen, kein
+`track.style.height`, keine `transition: height`**. `.review-track` hat nur `width:100%`.
+Slide-Wechsel togglet lediglich die `is-active`-Klasse (mit `review-fade-in`-Opacity-Animation),
+`applyReviewTheme` (Hell/Dunkel aus dem Hintergrund) läuft initial und bei `resize`.
 
 **Seit Umbau: manuelles Durchklicken, KEIN Autoplay mehr** (vorher `setInterval` alle 4,5 s).
 Steuerung pro Rotator via zwei Pfeilen (`.review-prev`/`.review-next`, direkt unter dem Review)

@@ -2,32 +2,36 @@
 
 ## Wo liegt das Admin-Tool?
 
-`/home/sasha/codicus/Kunstwolff/Kunstwolff-admin/kunstwolff-admin/`
+`/home/sasha/codicus/Kunstwolff/kunstwolff-admin/`
 
-> Das äußere Verzeichnis `Kunstwolff-admin/` ist nur der Repo-Wrapper – die App lebt eine Ebene tiefer in `kunstwolff-admin/`.
+> Flaches Repo, ein Level – kein Wrapper-Verzeichnis. `package.json`, `src/`, `README.md`, `CLAUDE.md` liegen direkt im Repo-Root.
 
-Eigenständige Vite + Preact + TypeScript + Tailwind-App, die via **GitHub REST API direkt in dieses Repo schreibt**. Schnittstelle:
+Eigenständige Vite + Preact + TypeScript + Tailwind-App, die **in dieses Repo schreibt**. Schnittstelle:
 
 ```
-Browser → GitHub REST API → Kunstwolffwebsite-Repo → Vercel-Build → Stage/Production
+Browser → Server-Backend (GITHUB_PAT server-seitig) → GitHub REST API → Kunstwolffwebsite-Repo → Vercel-Build → Stage/Production
 ```
 
-Auth: GitHub Personal Access Token (Fine-grained, **Contents – Read and write**) im `localStorage`. Kein Backend, rein statisch.
+Auth: **zwei Modi.**
+- **Server-Auth (Standard):** Frontend loggt sich per Login gegen ein Backend ein und bekommt ein **JWT-Session-Token** (`src/services/auth.ts`, `isServerAuthEnabled()`). Der eigentliche **GitHub-PAT liegt server-seitig** im Backend (`worker/src/index.ts:12` `GITHUB_PAT`, Auth über `Bearer ${GITHUB_PAT}`). `github.ts:10` routet dann über `${apiBaseUrl()}/api/github` statt direkt auf `api.github.com`.
+- **Legacy-Fallback:** Ohne Server-Auth kann ein PAT im Browser gehalten werden – dann verschlüsselt in einem Vault (`src/utils/authVault.ts` `storeTokenVault`), **nicht** im Klartext-`localStorage` – und die App ruft `api.github.com` direkt.
 
-**Remote:** `git@github.com:Eightdevvis/kunstwolff-admin.git` – Default-Branch und Live-Deploy-Quelle ist **`master`** (nicht `main`). `main` existiert parallel und hat nur Bugfixes; `master` enthält zusätzliche Features (Cloudflare-Worker, Multi-User, EventManager-WIP). Lokal kann HEAD trotzdem auf `main` sein – das ist nur die lokale Setup-Default.
+**Backend:** Cloudflare-Worker (**hono**, `worker/wrangler.toml` name `kunstwolff-admin-api`, deploy via `wrangler`) plus Express-Backend (`server/index.mjs`: express + `jsonwebtoken` + `bcryptjs` + `@libsql/client`).
 
-**Deployment:** GitHub Pages → `admin.kunstwolff.de` (CNAME im Repo).
+**Remote:** `git@github.com:Eightdevvis/kunstwolff-admin.git` – Default-Branch und Live-Deploy-Quelle ist **`master`** (nicht `main`). `main` existiert parallel und hat nur Bugfixes; `master` enthält zusätzliche Features (Cloudflare-Worker, Multi-User, EventManager). Lokal kann HEAD trotzdem auf `main` sein – das ist nur die lokale Setup-Default.
+
+**Deployment:** Admin-Frontend als Vite-SPA auf **Vercel** (`kunstwolff-admin.vercel.app`, s. `ADMIN_ALLOWED_ORIGIN` in `worker/wrangler.toml`); Backend-Worker via `wrangler` auf Cloudflare. Kein GitHub Pages / keine gh-actions.
 
 > **Hosting-Stand 2026-05-05:** Der Vercel-Build der Website läuft als Stage auf `kunstwolff.vercel.app`. Die echte Domain `kunstwolff.de` zeigt noch auf Wix – Admin-Edits erreichen also aktuell **die Stage**, nicht den Production-Traffic. Dieser Zustand ist gewollt bis zum Cutover. Befunde: `HEALTH_CHECK_2026-05-05.md`. Cutover-Ablauf (URL-Mapping, DNS, Vercel-Settings, Rollback): `CUTOVER_PLAN.md` – beide im Website-Repo-Root.
 
 ## Cross-Repo-Doku
 
-Bei jeder Cross-Repo-Arbeit alle drei lesen:
+Bei jeder Cross-Repo-Arbeit beide lesen (liegen flach im Admin-Repo-Root):
 
-- `Kunstwolff-admin/kunstwolff-admin/README.md` – vollständige Funktions- und Format-Doku
-- `Kunstwolff-admin/kunstwolff-admin/CLAUDE.md` – Claude-spezifische Kurzübersicht + Cross-Repo-Workflow
-- `BUGS_TODO.md` (`/home/sasha/codicus/Kunstwolff/BUGS_TODO.md`) – aktueller Bug-/Lücken-Stand des Admin-Tools (Single Source of Truth für offene Tickets, inklusive der LÜCKEN-Liste; das verdrängt die alte "noch nicht implementiert"-Sektion in der Admin-README)
-- `human_doc_bugs.md` (`/home/sasha/codicus/Kunstwolff/human_doc_bugs.md`) – User-/Endnutzer-Feedback (kurze Notizen, weniger formal als BUGS_TODO)
+- `kunstwolff-admin/README.md` – vollständige Funktions- und Format-Doku
+- `kunstwolff-admin/CLAUDE.md` – Claude-spezifische Kurzübersicht + Cross-Repo-Workflow
+
+> Die früher hier verlinkten `BUGS_TODO.md` und `human_doc_bugs.md` (im Website-Repo-Root) existieren **nicht mehr** – nicht mehr referenzieren. Offene Lücken stehen direkt in der Admin-README bzw. im Admin-`memory/`.
 
 ## Was das Admin-Tool aktuell schreibt
 
@@ -35,32 +39,35 @@ Bei jeder Cross-Repo-Arbeit alle drei lesen:
 | :-- | :-- |
 | `public/img/slides/{city}/` + `slides.meta.json` | `ImageManager.tsx` (slides-Modus) |
 | `public/img/Titelbild/{city}/` | `ImageManager.tsx` (titelbild-Modus) |
-| `public/img/why/{city}/benefit-{1-4}/` | `ImageManager.tsx` (why-Modus) |
+| `public/img/why/{city}/benefit-{1-4}/` (Bilder) | `ImageManager.tsx` (why-Modus) |
+| `public/why/{city}.json` (Why-Texte: Titel/Text/Alt) | `ImageManager.tsx` (why-Modus, `saveWhyBenefits`) |
+| `public/img/Titelbild/title.meta.json` (Categories/Priority) | `ImageManager.tsx` (titelbild-Modus) |
 | `public/reviews/{city}/review*.md` | `ReviewManager.tsx` |
 | `public/faq/default/*.md` + `public/faq/{city}/*.md` | `FaqManager.tsx` |
 | `public/landings/landings.md` | `CityManager.tsx` |
+| `public/events/events.json` + `public/events/{slug}/content.json` | `EventManager.tsx` (Dashboard-Quick-Add schreibt `events.json` mit) |
+| `public/cinema/cinema.json` | `CinemaManager.tsx` |
+| `public/skills/skills.json` | `Dashboard.tsx` |
+| `public/partners/partners.json` | `PartnerManager.tsx` |
 | `public/calendar/{jahr}/{monat}.json` | `CalendarView.tsx` (+ `EventModal.tsx` als Editor) |
 | Bereinigung: löscht doppelte/kaputte Bilder, putzt zugehörige `slides.meta.json`-Einträge mit | `CleanupManager.tsx` |
 
-Alle Änderungen sammeln sich als **Draft-State** (`@preact/signals` in `src/services/state.ts`) und gehen erst beim Klick auf "Veröffentlichen" als sequenzielle PUT/DELETE-Calls ans Repo. So debounced sich der Vercel-Build pro Klick auf einen Build statt N.
+Alle Änderungen sammeln sich als **Draft-State** (`pendingFiles`-Signal, `@preact/signals` in `src/services/state.ts`) und gehen erst beim Klick auf "Veröffentlichen" ans Repo. Der Publish ist **EIN atomarer Commit** über die Git-Data-API (`src/services/github.ts:230` `commitFilesBatch`, aufgerufen aus `src/services/publish.ts` `publishPending`): base_tree → `git/trees` (Text inline, Binär als Blob, Löschung via `sha:null`) → Commit → Branch-Ref bewegen, mit Retry bei Fremd-Commit dazwischen. Löst das frühere „ein Commit / eine PUT-DELETE pro Datei" ab – kein sekundäres Rate-Limit bei vielen Dateien, keine per-Datei-SHA-Konflikte, alles-oder-nichts. Der Vercel-Build läuft so pro Klick genau einmal.
 
 ## Was das Admin-Tool NICHT kann (manuell per Git pflegen)
 
-Vollständige Lückenliste mit Status: `BUGS_TODO.md` Abschnitt "Lücken im Admin-Tool". Kurzfassung:
+Die früher hier gelisteten LÜCKE-1/2/4/5/6 (Events, Cinema, Why-Texte, `title.meta.json`, Skills) sowie `partners.json` sind **geschlossen** – s. die Schreib-Tabelle oben. Offen bleiben:
 
-- `public/why/{key}.json` – Texte der Why-Sektion (Titel, Text, Alt) — LÜCKE-4
-- `public/img/Titelbild/title.meta.json` – Categories/Priority für Titelbilder — LÜCKE-5
-- `public/skills/skills.json` – Skills-Liste — LÜCKE-6
-- `public/events/events.json` + per-Event `content.json` — LÜCKE-1
-- `public/cinema/cinema.json` — LÜCKE-2
-- `public/erinnerungen/{key}.json` — LÜCKE-3
-- `public/navigation/navigation.json` — kein eigenes Ticket, manuell
-- `public/partners/partners.json` — kein eigenes Ticket, manuell
-- WebP-Konvertierung — der Pre-Push-Hook des Website-Repos greift nur bei lokalem `git push`. Admin-Uploads landen unkomprimiert. Workaround: nach Bulk-Upload lokal `npm run optimize:all` + Push (siehe `git-hooks.md`).
+- `public/erinnerungen/{key}.json` – Erinnerungen/Pinnwand-Texte. Die `erinnerungen`-Sektion existiert im Stack, hat aber `editorType: null` (`src/components/interface/pageTypes.ts:73`) → kein Editor, kein Schreibpfad im Admin.
+- `public/navigation/navigation.json` – kein Manager, kein Schreibpfad im Admin (grep auf `navigation` in `kunstwolff-admin/src/` = leer). Manuell pflegen.
+
+> Aktuelle Restlücken werden nicht mehr in einer separaten Bug-Datei geführt (`BUGS_TODO.md` existiert nicht mehr), sondern direkt in der Admin-README bzw. im Admin-`memory/`.
+
+WebP-Konvertierung ist **keine Lücke mehr**: das Admin-Tool konvertiert Uploads browser-seitig (`src/utils/imageWebp.ts` `imageToWebpUpload`, genutzt von `ImageManager`, `CinemaManager`, `PartnerManager`, `BrandStripeManager`, `MediaLibrary`), lädt also bereits `.webp` hoch (siehe `git-hooks.md`).
 
 ## Vor Änderungen an `public/`-Strukturen ZWINGEND prüfen
 
-1. **Schreibt das Admin-Tool in diese Pfade?** → Check `src/components/` im Admin-Repo: `ImageManager.tsx`, `ReviewManager.tsx`, `CityManager.tsx`, `FaqManager.tsx`, `CalendarView.tsx`, `EventModal.tsx`, `CleanupManager.tsx`. Die Schreib-Logik sitzt in `src/services/github.ts` (`putFile`, `deleteFile`).
+1. **Schreibt das Admin-Tool in diese Pfade?** → Check `src/components/` im Admin-Repo: `ImageManager.tsx`, `ReviewManager.tsx`, `CityManager.tsx`, `FaqManager.tsx`, `EventManager.tsx`, `CinemaManager.tsx`, `PartnerManager.tsx`, `Dashboard.tsx` (Skills/Quick-Add), `CalendarView.tsx`, `EventModal.tsx`, `CleanupManager.tsx`. Die Schreib-Logik sammelt Drafts in `src/services/state.ts` (`pendingFiles`) und committet über `src/services/publish.ts`/`github.ts` (`commitFilesBatch`, `putFile`, `deleteFile`).
 2. **Liest die Website diese Pfade?** → Check `src/utils/*.ts` im Website-Repo.
 3. **Beide Repos aktualisieren** – Admin-README/CLAUDE.md + Website-Memory (`pfadstruktur.md`, betroffene `content-*.md`, ggf. `admin-tool.md` hier).
 
@@ -72,4 +79,4 @@ Wenn neue Admin-Felder + Website-Konsumierung gleichzeitig gebaut werden:
 2. **Website zuerst** – Utils in `src/utils/` erweitern, Astro-Page konsumiert das neue Format
 3. **Admin danach** – neuen Tab/Manager im Admin-Tool bauen der in das Format schreibt (Pattern: `src/components/<Name>Manager.tsx` + ggf. Service-Funktion in `src/services/`)
 4. **Sync-Scripts prüfen** – muss `sync-landings.mjs` o.ä. angepasst werden? (siehe `sync-scripts.md`)
-5. **Beide Doku-Sets aktualisieren** – Admin-README/CLAUDE.md + Website-Memory + ggf. `BUGS_TODO.md` als Lücke schließen
+5. **Beide Doku-Sets aktualisieren** – Admin-README/CLAUDE.md + Website-Memory (`admin-tool.md`, `pfadstruktur.md`, betroffene `content-*.md`); Restlücken stehen in der Admin-README bzw. im Admin-`memory/`, nicht in einer separaten Bug-Datei.

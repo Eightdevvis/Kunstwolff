@@ -88,4 +88,4 @@ Wählt der Besucher einen Satelliten mit `autoSelect` (aktuell nur **Messe → `
 
 ## Admin-Tool
 
-Kann `cinema.json` **nicht** verwalten (geplant) — Änderungen aktuell manuell.
+Verwaltet `cinema.json` über `CinemaManager.tsx` (draft-aware): `CINEMA_PATH = 'public/cinema/cinema.json'`, `save()` schreibt via `addPendingFile` mit Commit-Message `admin: Cinema-Willkommen aktualisiert – cinema.json`. Satelliten-Bilder werden nach `public/img/cinema` hochgeladen. Doku im Admin-Repo: `kunstwolff-admin/memory/manager-cinema.md`.

@@ -17,7 +17,7 @@ Welche Sektionen eine Seite in welcher Reihenfolge rendert, kommt **vollständig
 ```
 - Kategorien: `homepage`, `landing`, `event`, `skill`, `skill-landing`, `skill-event`.
 - `_order` = der Stack. Sichtbarkeit pro Sektion: page-Override → `_default` → `true`.
-- **Identisches Format wie das Admin-Tool** (`interface/InterfaceView.tsx` liest/schreibt denselben
+- **Identisches Format wie das Admin-Tool** (`src/components/interface/InterfaceView.tsx` liest/schreibt denselben
   `_order`-Key inkl. drag&drop-Reorder + Toggle). Admin und Website lesen denselben File →
   kein Drift mehr. Siehe Admin-Memory `interface-system.md`.
 
@@ -45,6 +45,6 @@ im Admin entfernt. Jetzt unmöglich, weil nur noch `_order`-IDs gerendert werden
 ## Beim Hinzufügen/Entfernen einer Sektion
 1. Komponente importieren + in `registry` (+ `sectionProps`) der betroffenen Seite eintragen.
 2. ID in `components.json` `<kategorie>._default._order` an die richtige Stelle setzen.
-3. Admin: `COMP`-Eintrag in `interface/pageTypes.ts` muss existieren (Editor-Metadaten), und
+3. Admin: `COMP`-Eintrag in `src/components/interface/pageTypes.ts` muss existieren (Editor-Metadaten), und
    `PAGE_STACKS` (Seed/Fallback) an die neue `_order` angleichen.
 Vergisst man (1)+(2) synchron, schlägt der Build via `resolveSectionOrder` fehl (gewollt).

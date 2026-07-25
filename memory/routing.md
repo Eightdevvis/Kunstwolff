@@ -14,6 +14,7 @@ Alle Seiten sind statisch (SSG). URLs entstehen automatisch aus `landings.md`, `
 | `/<skill>/<stadt>/` | `skills.json` × `landings.md` | `src/pages/[skill]/[landing].astro` |
 | `/<event>/` | `events.json` | `src/pages/[landing].astro` (mit `pageType: 'event'`) |
 | `/<skill>/<event>/` | `skills.json` × `events.json` | `src/pages/[skill]/[landing].astro` (mit `pageType: 'event'`) |
+| `/fr/<stadt>/` | FR-Overlay (`public/i18n/fr/landings.json`) | `src/pages/fr/[landing].astro` (Mehrsprachen-Fundament, siehe `i18n_foundation.md`) |
 
 ### Statische Standalone-Pages
 
@@ -21,9 +22,15 @@ Alle Seiten sind statisch (SSG). URLs entstehen automatisch aus `landings.md`, `
 | :-- | :-- |
 | `/partner/` | `src/pages/partner.astro` |
 | `/contact/` | `src/pages/contact.astro` |
-| `/FAQ/` | `src/pages/FAQ.astro` |
+| `/faq/` | `src/pages/faq.astro` |
 | `/datenschutz/` | `src/pages/datenschutz.astro` |
 | `/impressum/` | `src/pages/impressum.astro` |
+| `/branding/` | `src/pages/branding.astro` |
+| `/canvas/` | `src/pages/canvas.astro` |
+| `/du-bist-kunst/` | `src/pages/du-bist-kunst.astro` |
+| `/referenzen/` | `src/pages/referenzen.astro` |
+| `/stimmung-durch-kunst/` | `src/pages/stimmung-durch-kunst.astro` |
+| `/404` | `src/pages/404.astro` (Fehlerseite) |
 
 `robots.txt` liegt in `public/robots.txt` (statisch kopiert, nicht als Page geroutet) – siehe `seo.md`.
 

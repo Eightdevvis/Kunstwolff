@@ -27,14 +27,18 @@ gemerged – fehlt die Datei oder ein Feld, rendert die Seite unverändert weite
 ## landingIntros (Einführungstext)
 
 Kleiner Text **direkt unter dem Hero/BrandStripe** auf den reinen Stadtseiten
-(`src/pages/[landing].astro`, Komponente `src/components/LandingIntro.astro`,
-gegated über `show('landingIntro')`).
+(`src/pages/[landing].astro`, Komponente `src/components/LandingIntro.astro`).
+Sichtbarkeit läuft über den **Sektions-Stack**: die Registry-ID `landingIntro`
+wird via `resolveSectionOrder`/`isComponentEnabled` aus `componentConfig`
+(`public/config/components.json`) gerendert – kein `show()`-Helper mehr.
 
 **Wichtig:** Die BrandStripe steckt **im `Opener`** (`hero/Opener.astro` → `<BrandStripe />`),
 deshalb tragen die Stadtseiten den Logo-Streifen, obwohl sie kein `SkillHero` nutzen.
 
-Auch auf der **Startseite** (`src/pages/index.astro`, eigener Eintrag `_home`, ohne Stadt-Bezug)
-via `getHomeIntro()` → `{show('landingIntro') && <LandingIntro text={homeIntro} />}`.
+Auch auf der **Startseite** (`src/pages/index.astro`, eigener Eintrag `_home`, ohne Stadt-Bezug):
+`getHomeIntro()` liefert `homeIntro`, das als Registry-Eintrag
+`landingIntro: { text: homeIntro }` gerendert wird – sichtbar, wenn
+`isComponentEnabled(PAGE_TYPE, '', 'landingIntro')` true ist (Sektions-Stack).
 
 Format:
 
