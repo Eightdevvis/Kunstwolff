@@ -16,6 +16,7 @@
   },
   "landingIntros": {
     "_home": "Live-Kunst, die Ihre Gäste nicht mehr vergessen. Seit über 25 Jahren bringen wir Schnellzeichner, Szenenmaler und Live-Performance auf Firmenfeiern, Messen und Hochzeiten – Kunst, die direkt vor Ihren Augen entsteht.",
-    "_default": "Live-Kunst für Ihr Event in {stadt}. Von Schnellzeichnern bis Szenenmalern verwandeln wir Firmenfeiern, Messen und Hochzeiten in {stadt} in unvergessliche Momente – Kunst, die direkt vor Ihren Gästen entsteht."
+    "_default": "Live-Kunst für Ihr Event in {stadt}. Von Schnellzeichnern bis Szenenmalern verwandeln wir Firmenfeiern, Messen und Hochzeiten in {stadt} in unvergessliche Momente – Kunst, die direkt vor Ihren Gästen entsteht.",
+    "berlin": "Bereichern Sie Ihre Messe, Betriebsfeier, Shop-Event in Berlin mit einem Schnellzeichner! Gute Stimmung und Spaß garantiert!"
   }
 }
