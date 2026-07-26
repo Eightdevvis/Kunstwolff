@@ -1,0 +1,248 @@
+{
+  "skills": [
+    {
+      "slug": "schnellzeichner",
+      "label": "Schnellzeichner",
+      "source": "skills.json"
+    },
+    {
+      "slug": "szenenmaler",
+      "label": "Szenenmaler",
+      "source": "skills.json"
+    }
+  ],
+  "anlaesse": [
+    {
+      "slug": "firmenfeier",
+      "label": "Firmenfeier",
+      "source": "events.json"
+    },
+    {
+      "slug": "messe",
+      "label": "Messe",
+      "source": "events.json"
+    },
+    {
+      "slug": "hochzeit",
+      "label": "Hochzeit",
+      "source": "events.json"
+    },
+    {
+      "slug": "private-feier",
+      "label": "Private Feier",
+      "source": "events.json"
+    },
+    {
+      "slug": "weihnachtsfeier",
+      "label": "Weihnachtsfeier",
+      "source": "extra"
+    },
+    {
+      "slug": "geburtstag",
+      "label": "Geburtstag",
+      "source": "extra"
+    },
+    {
+      "slug": "jubilaum",
+      "label": "Jubiläum",
+      "source": "extra"
+    },
+    {
+      "slug": "silvester",
+      "label": "Silvester",
+      "source": "extra"
+    },
+    {
+      "slug": "gartenparty",
+      "label": "Gartenparty",
+      "source": "extra"
+    },
+    {
+      "slug": "stadtfest",
+      "label": "Stadtfest",
+      "source": "extra"
+    },
+    {
+      "slug": "gala",
+      "label": "Gala",
+      "source": "extra"
+    },
+    {
+      "slug": "sommerfest",
+      "label": "Sommerfest",
+      "source": "extra"
+    }
+  ],
+  "orte": [
+    {
+      "slug": "berlin",
+      "label": "berlin",
+      "source": "landings.md"
+    },
+    {
+      "slug": "frankfurt",
+      "label": "frankfurt",
+      "source": "landings.md"
+    },
+    {
+      "slug": "hamburg",
+      "label": "hamburg",
+      "source": "landings.md"
+    },
+    {
+      "slug": "schweiz",
+      "label": "schweiz",
+      "source": "landings.md"
+    },
+    {
+      "slug": "kaiserslautern",
+      "label": "kaiserslautern",
+      "source": "landings.md"
+    },
+    {
+      "slug": "trier",
+      "label": "trier",
+      "source": "landings.md"
+    },
+    {
+      "slug": "wiesbaden",
+      "label": "wiesbaden",
+      "source": "landings.md"
+    },
+    {
+      "slug": "mainz",
+      "label": "mainz",
+      "source": "landings.md"
+    },
+    {
+      "slug": "luxembourg",
+      "label": "luxembourg",
+      "source": "landings.md"
+    },
+    {
+      "slug": "koeln",
+      "label": "koeln",
+      "source": "landings.md"
+    },
+    {
+      "slug": "ludwigshafen",
+      "label": "ludwigshafen",
+      "source": "landings.md"
+    },
+    {
+      "slug": "mannheim",
+      "label": "mannheim",
+      "source": "landings.md"
+    },
+    {
+      "slug": "saarbruecken",
+      "label": "saarbruecken",
+      "source": "landings.md"
+    },
+    {
+      "slug": "belgique",
+      "label": "belgique",
+      "source": "landings.md"
+    },
+    {
+      "slug": "saarland",
+      "label": "saarland",
+      "source": "landings.md"
+    },
+    {
+      "slug": "hessen",
+      "label": "hessen",
+      "source": "landings.md"
+    },
+    {
+      "slug": "rhein-main-gebiet",
+      "label": "rhein-main-gebiet",
+      "source": "landings.md"
+    },
+    {
+      "slug": "rheinland-pfalz",
+      "label": "rheinland-pfalz",
+      "source": "landings.md"
+    },
+    {
+      "slug": "wuppertal",
+      "label": "wuppertal",
+      "source": "landings.md"
+    },
+    {
+      "slug": "nord-rhein-westfalen",
+      "label": "nord-rhein-westfalen",
+      "source": "landings.md"
+    },
+    {
+      "slug": "main-taunus-kreis",
+      "label": "main-taunus-kreis",
+      "source": "landings.md"
+    },
+    {
+      "slug": "koblenz",
+      "label": "koblenz",
+      "source": "landings.md"
+    },
+    {
+      "slug": "neuwied",
+      "label": "neuwied",
+      "source": "landings.md"
+    },
+    {
+      "slug": "tuebingen",
+      "label": "tuebingen",
+      "source": "landings.md"
+    },
+    {
+      "slug": "karlsruhe",
+      "label": "karlsruhe",
+      "source": "landings.md"
+    },
+    {
+      "slug": "heidelberg",
+      "label": "heidelberg",
+      "source": "landings.md"
+    },
+    {
+      "slug": "giessen",
+      "label": "giessen",
+      "source": "landings.md"
+    },
+    {
+      "slug": "dortmund",
+      "label": "dortmund",
+      "source": "landings.md"
+    },
+    {
+      "slug": "neunkirchen",
+      "label": "neunkirchen",
+      "source": "landings.md"
+    },
+    {
+      "slug": "fulda",
+      "label": "fulda",
+      "source": "landings.md"
+    },
+    {
+      "slug": "bw",
+      "label": "bw",
+      "source": "landings.md"
+    },
+    {
+      "slug": "hanau",
+      "label": "hanau",
+      "source": "landings.md"
+    },
+    {
+      "slug": "stuttgart",
+      "label": "stuttgart",
+      "source": "landings.md"
+    },
+    {
+      "slug": "duesseldorf",
+      "label": "duesseldorf",
+      "source": "landings.md"
+    }
+  ]
+}

@@ -1,8 +1,25 @@
 import fs from 'fs';
 import path from 'path';
+import {
+  normalizeTagList,
+  inferOrteFromKey,
+  inferAnlaesseFromKey,
+  slugSet,
+} from './tags.mjs';
 
 const projectRoot = process.cwd();
 const slidesRoot = path.join(projectRoot, 'public', 'img', 'slides');
+const tagsConfigPath = path.join(projectRoot, 'public', 'config', 'tags.json');
+
+/** Bekannte Ort-Slugs aus dem Vokabular – ohne die würde `mediathek` zum Ort. */
+const knownOrte = (() => {
+  try {
+    return slugSet(JSON.parse(fs.readFileSync(tagsConfigPath, 'utf-8')).orte);
+  } catch {
+    // Kein/kaputtes tags.json: dann eben ohne Filter, sync-tags läuft davor.
+    return new Set();
+  }
+})();
 const metadataPath = path.join(slidesRoot, 'slides.meta.json');
 const matchingRulesPath = path.join(slidesRoot, 'category-matching.md');
 const skillsRoot = path.join(projectRoot, 'public', 'skills');
@@ -296,21 +313,52 @@ const getSlideFolders = () => {
     .sort((a, b) => a.localeCompare(b));
 };
 
+/**
+ * Sammelt Bild-Keys REKURSIV unterhalb eines Slide-Ordners.
+ *
+ * Bis 2026-07-26 ging der Walk genau eine Ebene tief (`readdirSync` → Ordner,
+ * dann nur `isFile()`). `slides/events/` enthält aber ausschließlich
+ * Unterordner (firmenfeier, hochzeit, messe, private-feier) – die 18 dort
+ * liegenden Event-Slides bekamen deshalb NIE einen Metadaten-Eintrag. Folge:
+ * keine Skill-Tags, keine Alt-Texte, keine Priorität. Das in
+ * `memory/content-slides.md` dokumentierte Key-Format `events/<slug>/datei.webp`
+ * existierte faktisch nicht.
+ *
+ * MAX_DEPTH 2 reicht für `events/<slug>/` und deckelt zugleich Ausreißer.
+ */
+const MAX_DEPTH = 2;
+
+const collectImageKeys = (absDir, relPrefix, depth = 0) => {
+  const keys = [];
+  const entries = fs.readdirSync(absDir, { withFileTypes: true });
+
+  const files = entries
+    .filter((entry) => entry.isFile() && isAllowedImage(entry.name))
+    .map((entry) => entry.name)
+    .sort((a, b) => a.localeCompare(b));
+  for (const file of files) {
+    keys.push(path.posix.join(relPrefix, file));
+  }
+
+  if (depth >= MAX_DEPTH) return keys;
+
+  const dirs = entries
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort((a, b) => a.localeCompare(b));
+  for (const dir of dirs) {
+    keys.push(...collectImageKeys(path.join(absDir, dir), path.posix.join(relPrefix, dir), depth + 1));
+  }
+
+  return keys;
+};
+
 const getImageKeys = () => {
   const folders = getSlideFolders();
   const keys = [];
 
   for (const folder of folders) {
-    const folderPath = path.join(slidesRoot, folder);
-    const files = fs
-      .readdirSync(folderPath, { withFileTypes: true })
-      .filter((entry) => entry.isFile() && isAllowedImage(entry.name))
-      .map((entry) => entry.name)
-      .sort((a, b) => a.localeCompare(b));
-
-    for (const file of files) {
-      keys.push(path.posix.join(folder, file));
-    }
+    keys.push(...collectImageKeys(path.join(slidesRoot, folder), folder));
   }
 
   return keys;
@@ -426,8 +474,22 @@ for (const key of imageKeys) {
   const categories =
     existingCategories.length > 0 ? existingCategories : inferCategoriesFromFileName(fileName, rules);
 
+  // Phase 5a: Anlass + Ort als eigene Dimensionen. Bisher steckte der Ort im
+  // Ordnernamen und der Anlass gar nirgends – beide konkurrierten um denselben
+  // Platz, weshalb ein Bild nie zugleich „Trier" und „Hochzeit" sein konnte.
+  // Beide werden EINMAL vorbelegt und danach nie wieder überschrieben; ab dann
+  // gilt, was im Admin steht (gleiche Haltung wie bei `priority`).
+  const orte = Array.isArray(existing.orte)
+    ? normalizeTagList(existing.orte)
+    : inferOrteFromKey(key, knownOrte);
+  const anlaesse = Array.isArray(existing.anlaesse)
+    ? normalizeTagList(existing.anlaesse)
+    : inferAnlaesseFromKey(key);
+
   const nextEntry = {
     categories,
+    ...(anlaesse.length > 0 ? { anlaesse } : {}),
+    ...(orte.length > 0 ? { orte } : {}),
     // Priority aus JSON preserved – wird nur noch vom Admin-Tool gesetzt, nicht mehr aus Dateinamen gelesen
     ...(typeof existing.priority === 'number' ? { priority: existing.priority } : {}),
     ...(typeof existing.altOverride === 'string' && existing.altOverride.trim()

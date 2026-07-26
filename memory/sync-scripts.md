@@ -11,6 +11,12 @@ npm run sync:content:safe  # fehlertolerant (Teilfehler isoliert, Build/Dev läu
 
 **Wichtig:** Das automatische `predev`/`prebuild` nutzt `:safe`. `sync:content` (ohne `:safe`) ist nur für manuelle Aufrufe gedacht, wenn Fehler hart auffallen sollen.
 
+> **Seit 2026-07-26 neu in der Kette:** `sync:tags` (erzeugt
+> `public/config/tags.json`) läuft **nach** `sync:skills` und **vor**
+> `sync:title-images`/`sync:slides` – letzteres liest die Ort-Slugs, um bei der
+> Tag-Vorbelegung Sammelordner wie `mediathek` nicht als Ort zu werten. Details:
+> `tag-system.md`.
+
 ## Reihenfolge & Aufgabe pro Script
 
 `sync:content` führt **in dieser Reihenfolge** aus:

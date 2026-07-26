@@ -55,13 +55,21 @@ Eigene Implementierung (kein externes Package):
 
 | Feld | Typ | Zweck |
 | :-- | :-- | :-- |
-| `categories` | array | Skill-Filter (z.B. für Schnellzeichner-Slideshow) |
+| `categories` | array | Skill-Filter (z.B. für Schnellzeichner-Slideshow) = **Skill-Dimension** des Tag-Systems |
+| `anlaesse` | array | **Anlass-Dimension** (Slugs, z.B. `["firmenfeier","weihnachtsfeier"]`) – siehe `tag-system.md` |
+| `orte` | array | **Ort-Dimension** (Slugs, z.B. `["hessen","frankfurt"]`) – siehe `tag-system.md` |
 | `altOverride` | string | Alt-Text für `<img>` (Accessibility + Google Bild-SEO) |
 | `title` | string | Anzeigetitel in Lightbox-Caption (unabhängig von altOverride; Fallback: altOverride) |
 | `priority` | number | Sortierreihenfolge, höher = weiter vorne |
 | `enabled` | boolean | `false` blendet Bild aus |
 
 **Key-Format für Events:** `events/<slug>/dateiname.webp`
+
+⚠️ Dieses Format war bis 2026-07-26 **reine Theorie**: `getImageKeys()` ging nur
+eine Ebene tief, `slides/events/` enthält aber nur Unterordner. Die 18
+Event-Slides hatten deshalb nie einen Eintrag – keine Skill-Tags, keine
+Alt-Texte, keine Priorität. Seit dem rekursiven Walk (`MAX_DEPTH = 2`) sind sie
+erfasst: 194 → 234 Einträge.
 
 ## Kategorie-Matching
 
