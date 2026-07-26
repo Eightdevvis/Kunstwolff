@@ -5,8 +5,8 @@
 **Anlass:** (1) Fotos laden langsam auf der Astro-Site, (2) Jenny wird beim Hochladen
 von GitHub gedrosselt obwohl das „schon gefixt" war, (3) der Umbau auf das
 Tag-System steht noch aus.
-**Status:** Phase 1 und 2 **umgesetzt** (2026-07-26, lokal verifiziert, noch nicht
-deployed). Phase 3–6 offen. Fortschritt je Phase unten.
+**Status:** Phase 1, 2 und 3 **erledigt und live** (2026-07-26). Phase 4–6 offen.
+Fortschritt je Phase unten.
 
 ---
 
@@ -300,7 +300,33 @@ Publish, das unter das Limit passt, bleibt ein Commit.
 **Ergebnis:** Massen-Uploads gehen als ein Request raus. Rate-Limit als Thema
 erledigt, nicht nur abgefedert.
 
-## Phase 3 — Bestand sanieren (einmalig, lokal)
+## Phase 3 — Bestand sanieren ✅ ERLEDIGT 2026-07-26
+
+**Durchgeführt:** Backup nach `/home/sasha/codicus/Kunstwolff/bilder-backup-2026-07-26`
+(575 Dateien, 60 MB, außerhalb beider Repos), dann
+`node scripts/optimize-all-images.mjs --shrink-existing`, dann lokal committet
+und gepusht (Commit `72fb746`) — **nicht** über das Admin-Tool.
+
+**Ergebnis, live gemessen auf `kunstwolff.vercel.app`:**
+
+| Seite | vorher | nachher | |
+| :-- | --: | --: | --: |
+| `/trier/` | 14,48 MB | **4,24 MB** | −71 % |
+| `/frankfurt/` | 10,22 MB | **4,20 MB** | −59 % |
+| `/` | 7,54 MB | **4,77 MB** | −37 % |
+| `/schnellzeichner/` | 3,69 MB | **2,29 MB** | −38 % |
+
+139 von 295 Bildern verkleinert, `webp`+`avif` von 55,7 auf 30,5 MB. Danach alle
+295 lesbar, 0 defekt, 0 über dem Deckel; `validate-image-refs` 330 Dateien
+gültig; Astro-Build 129 Seiten; Stichprobe visuell geprüft (Strichzeichnungen
+bleiben scharf).
+
+**Beobachtung fürs nächste Mal:** Der pre-commit-Hook staged `public/img/*` und
+`public/why` pauschal. Ein sauber getrennter Commit ist damit nicht möglich —
+in `72fb746` liegt deshalb `public/why/berlin.json` mit drin (harmlose
+`sync-why`-Normalisierung, siehe Commit-Text).
+
+### Ursprünglicher Plan (zur Nachvollziehbarkeit)
 
 **Warum nach 1+2:** der Deckel steht, also bleibt es beim einen Durchgang.
 
