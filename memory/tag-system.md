@@ -28,17 +28,17 @@ Erzeugt und gepflegt von `scripts/sync-tags.mjs` (läuft in `sync:content`
 ```json
 {
   "skills":   [{ "slug": "schnellzeichner", "label": "Schnellzeichner", "source": "skills.json" }],
-  "anlaesse": [{ "slug": "hochzeit", "label": "Hochzeit", "source": "events.json" },
+  "events": [{ "slug": "hochzeit", "label": "Hochzeit", "source": "events.json" },
                { "slug": "weihnachtsfeier", "label": "Weihnachtsfeier", "source": "extra" }],
-  "orte":     [{ "slug": "trier", "label": "Trier", "source": "landings.md" }]
+  "landings":     [{ "slug": "trier", "label": "Trier", "source": "landings.md" }]
 }
 ```
 
 | Dimension | Seed-Quelle | Stand 2026-07-26 |
 | :-- | :-- | --: |
 | `skills` | `skills.json` (Titel) | 2 |
-| `anlaesse` | `events.json` (Slugs) + `EXTRA_ANLAESSE` | 12 |
-| `orte` | `landings.md` | 34 |
+| `tags.events` | `events.json` (Slugs) + `EXTRA_ANLAESSE` | 12 |
+| `tags.landings` | `landings.md` | 34 |
 
 `source` unterscheidet Herkunft: `events.json`/`skills.json`/`landings.md` sind
 geseedet, `extra` sind Anlässe ohne eigene Seite (kommen in den Inhalten vor),
@@ -69,8 +69,8 @@ Zwei neue Felder neben dem bestehenden `categories` (= Skill-Dimension):
 ```json
 "trier/1_2-kollegen-...-weihnachtsfeier-...webp": {
   "categories": ["Schnellzeichner"],
-  "anlaesse": ["firmenfeier", "weihnachtsfeier"],
-  "orte": ["trier"],
+  "events": ["firmenfeier", "weihnachtsfeier"],
+  "landings": ["trier"],
   "priority": 1
 }
 ```
@@ -78,8 +78,8 @@ Zwei neue Felder neben dem bestehenden `categories` (= Skill-Dimension):
 | Feld | Dimension | Vorbelegung |
 | :-- | :-- | :-- |
 | `categories` | Skill | bestand schon, aus Dateinamen-Regeln |
-| `anlaesse` | Anlass | `events/<slug>/`-Ordner + Stichwörter im Dateinamen |
-| `orte` | Ort | Ordnername + bekannte Ort-Slugs im Dateinamen |
+| `tags.events` | Anlass | `events/<slug>/`-Ordner + Stichwörter im Dateinamen |
+| `tags.landings` | Ort | Ordnername + bekannte Ort-Slugs im Dateinamen |
 
 Beide werden **einmalig** vorbelegt und danach nie überschrieben — gleiche
 Haltung wie bei `priority`. Ab dann gilt, was im Admin steht.
@@ -105,7 +105,7 @@ Seit 2026-07-26 läuft der Walk rekursiv (`MAX_DEPTH = 2`): 194 → 234 Einträg
   lassen sich die 33 Duplikate gefahrlos auflösen — heute halten sie das
   Ordner-Rendering am Leben.
 - **5b:** Reviews haben Skill (`categories`) + Ort (Ordner), aber noch keine
-  `anlaesse`.
+  `tags.events`.
 - **5c:** `srcset` im selben Aufwasch, weil 5b dieselben Dateien anfasst.
 - **6:** KI-Auto-Tagging auf diesem Vokabular.
 

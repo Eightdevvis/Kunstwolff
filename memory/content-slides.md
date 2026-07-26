@@ -56,8 +56,8 @@ Eigene Implementierung (kein externes Package):
 | Feld | Typ | Zweck |
 | :-- | :-- | :-- |
 | `categories` | array | Skill-Filter (z.B. für Schnellzeichner-Slideshow) = **Skill-Dimension** des Tag-Systems |
-| `anlaesse` | array | **Anlass-Dimension** (Slugs, z.B. `["firmenfeier","weihnachtsfeier"]`) – siehe `tag-system.md` |
-| `orte` | array | **Ort-Dimension** (Slugs, z.B. `["hessen","frankfurt"]`) – siehe `tag-system.md` |
+| `tags.events` | array | **Anlass-Dimension** (Slugs, z.B. `["firmenfeier","weihnachtsfeier"]`) – siehe `tag-system.md` |
+| `tags.landings` | array | **Ort-Dimension** (Slugs, z.B. `["hessen","frankfurt"]`) – siehe `tag-system.md` |
 | `altOverride` | string | Alt-Text für `<img>` (Accessibility + Google Bild-SEO) |
 | `title` | string | Anzeigetitel in Lightbox-Caption (unabhängig von altOverride; Fallback: altOverride) |
 | `priority` | number | Sortierreihenfolge, höher = weiter vorne |

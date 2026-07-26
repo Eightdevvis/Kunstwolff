@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 // @ts-expect-error – reines JS-Modul ohne Typen, wie die übrigen scripts/
-import { slugifyTag, mergeVocabulary, normalizeTagList, EXTRA_ANLAESSE, inferOrteFromKey, inferAnlaesseFromKey } from '../scripts/tags.mjs';
+import { slugifyTag, mergeVocabulary, normalizeTagList, EXTRA_EVENTS, inferLandingsFromKey, inferEventsFromKey } from '../scripts/tags.mjs';
 
 // Phase 5a: Tag-Vokabular Skill × Anlass × Ort.
 
@@ -138,17 +138,17 @@ describe('sync-tags.mjs', () => {
     });
     expect(res.status).toBe(0);
     expect(tags.skills.map((s: any) => s.slug)).toEqual(['schnellzeichner']);
-    expect(tags.orte.map((o: any) => o.slug)).toEqual(['trier', 'berlin']);
-    expect(tags.anlaesse[0].slug).toBe('messe');
+    expect(tags.landings.map((o: any) => o.slug)).toEqual(['trier', 'berlin']);
+    expect(tags.events[0].slug).toBe('messe');
     // Die Extras haengen hinten dran und sind als solche gekennzeichnet.
-    expect(tags.anlaesse.filter((a: any) => a.source === 'extra')).toHaveLength(EXTRA_ANLAESSE.length);
+    expect(tags.events.filter((a: any) => a.source === 'extra')).toHaveLength(EXTRA_EVENTS.length);
   });
 
   it('laeuft ohne jede Quelle durch, statt den Build zu sprengen', () => {
     const { res, tags } = run({});
     expect(res.status).toBe(0);
     expect(tags.skills).toEqual([]);
-    expect(tags.orte).toEqual([]);
+    expect(tags.landings).toEqual([]);
   });
 
   it('bricht ab, wenn ein Event-Slug keinen Anlass-Tag bekaeme', () => {
@@ -187,51 +187,100 @@ describe('Vorbelegung aus vorhandenen Pfaden (einmalige Migration)', () => {
   const ORTE = new Set(['trier', 'frankfurt', 'hessen', 'mainz', 'bw', 'stuttgart', 'koeln']);
 
   it('nimmt den Ordner als Ort', () => {
-    expect(inferOrteFromKey('trier/foto.webp', ORTE)).toEqual(['trier']);
+    expect(inferLandingsFromKey('trier/foto.webp', ORTE)).toEqual(['trier']);
   });
 
   it('haelt Sammelordner von Orten fern', () => {
-    expect(inferOrteFromKey('default/foto.webp', ORTE)).toEqual([]);
-    expect(inferOrteFromKey('mediathek/foto.webp', ORTE)).toEqual([]);
+    expect(inferLandingsFromKey('default/foto.webp', ORTE)).toEqual([]);
+    expect(inferLandingsFromKey('mediathek/foto.webp', ORTE)).toEqual([]);
   });
 
   // Der Fall, der im Ordnermodell unmoeglich war: Anlass UND Ort am selben Bild.
   it('holt den Ort auch aus dem Dateinamen eines Event-Slides', () => {
-    expect(inferOrteFromKey('events/firmenfeier/walking-act-company-party-mainz.webp', ORTE)).toEqual(['mainz']);
+    expect(inferLandingsFromKey('events/firmenfeier/walking-act-company-party-mainz.webp', ORTE)).toEqual(['mainz']);
   });
 
   it('erkennt Region UND Stadt zugleich', () => {
-    expect(inferOrteFromKey('hessen/illustratorin-frankfurt.webp', ORTE)).toEqual(['hessen', 'frankfurt']);
-    expect(inferOrteFromKey('bw/karikaturistin-messe-stuttgart.webp', ORTE)).toEqual(['bw', 'stuttgart']);
+    expect(inferLandingsFromKey('hessen/illustratorin-frankfurt.webp', ORTE)).toEqual(['hessen', 'frankfurt']);
+    expect(inferLandingsFromKey('bw/karikaturistin-messe-stuttgart.webp', ORTE)).toEqual(['bw', 'stuttgart']);
   });
 
   // Ohne Wortgrenzen wuerde das kurze "bw" in beliebigen Namen zuenden.
   it('zuendet nicht auf Teilwoertern', () => {
-    expect(inferOrteFromKey('trier/abwasser-und-bwl-motive.webp', ORTE)).toEqual(['trier']);
-    expect(inferOrteFromKey('trier/frankfurter-wuerstchen.webp', ORTE)).toEqual(['trier']);
+    expect(inferLandingsFromKey('trier/abwasser-und-bwl-motive.webp', ORTE)).toEqual(['trier']);
+    expect(inferLandingsFromKey('trier/frankfurter-wuerstchen.webp', ORTE)).toEqual(['trier']);
   });
 
   it('erfindet ohne bekanntes Vokabular keine Orte aus Dateinamen', () => {
-    expect(inferOrteFromKey('trier/etwas-mainz.webp', new Set())).toEqual(['trier']);
+    expect(inferLandingsFromKey('trier/etwas-mainz.webp', new Set())).toEqual(['trier']);
   });
 
   it('liest den Anlass aus dem events-Ordner', () => {
-    expect(inferAnlaesseFromKey('events/private-feier/foto.webp')).toContain('private-feier');
+    expect(inferEventsFromKey('events/private-feier/foto.webp')).toContain('private-feier');
   });
 
   it('liest Anlaesse aus dem Dateinamen, auch mehrere', () => {
-    expect(inferAnlaesseFromKey('trier/kollegen-auf-der-weihnachtsfeier.webp').sort()).toEqual([
+    expect(inferEventsFromKey('trier/kollegen-auf-der-weihnachtsfeier.webp').sort()).toEqual([
       'firmenfeier',
       'weihnachtsfeier',
     ]);
   });
 
   it('versteht die englischen Schreibweisen aus dem Bestand', () => {
-    expect(inferAnlaesseFromKey('koeln/wedding-portrait.webp')).toContain('hochzeit');
-    expect(inferAnlaesseFromKey('bw/schnellzeichner-toyota-trade-show.webp')).toContain('messe');
+    expect(inferEventsFromKey('koeln/wedding-portrait.webp')).toContain('hochzeit');
+    expect(inferEventsFromKey('bw/schnellzeichner-toyota-trade-show.webp')).toContain('messe');
   });
 
   it('erfindet nichts, wenn kein Anlass erkennbar ist', () => {
-    expect(inferAnlaesseFromKey('trier/portrait-einer-frau.webp')).toEqual([]);
+    expect(inferEventsFromKey('trier/portrait-einer-frau.webp')).toEqual([]);
+  });
+});
+
+describe('slides.meta.json – Tag-Block bleibt erhalten', () => {
+  const scriptPath = path.resolve('./scripts/sync-slides-metadata.mjs');
+
+  function runSync(meta: unknown) {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sync-slides-'));
+    const slides = path.join(dir, 'public', 'img', 'slides', 'trier');
+    fs.mkdirSync(slides, { recursive: true });
+    fs.writeFileSync(path.join(slides, 'hochzeit-in-trier.webp'), 'x');
+    fs.mkdirSync(path.join(dir, 'public', 'config'), { recursive: true });
+    fs.writeFileSync(
+      path.join(dir, 'public', 'config', 'tags.json'),
+      JSON.stringify({ skills: [], events: [], landings: [{ slug: 'trier', label: 'Trier' }] })
+    );
+    const metaPath = path.join(dir, 'public', 'img', 'slides', 'slides.meta.json');
+    if (meta !== null) fs.writeFileSync(metaPath, JSON.stringify(meta, null, 2));
+    spawnSync('node', [scriptPath], { cwd: dir, encoding: 'utf-8' });
+    return JSON.parse(fs.readFileSync(metaPath, 'utf-8'))['trier/hochzeit-in-trier.webp'];
+  }
+
+  it('belegt Skill, Event und Ort beim ersten Lauf vor', () => {
+    const entry = runSync(null);
+    expect(entry.tags.events).toEqual(['hochzeit']);
+    expect(entry.tags.landings).toEqual(['trier']);
+  });
+
+  // DER Regressionsschutz: readMetadata() normalisiert Eintraege und wirft
+  // Unbekanntes weg. Waere `tags` dort nicht durchgereicht, wuerde der Sync sie
+  // bei JEDEM Lauf neu aus dem Dateinamen raten und jede Admin-Zuordnung
+  // ueberschreiben.
+  it('ueberschreibt eine Zuordnung aus dem Admin NICHT', () => {
+    const entry = runSync({
+      'trier/hochzeit-in-trier.webp': {
+        categories: [],
+        tags: { skills: ['szenenmaler'], events: ['gala'], landings: ['berlin'] },
+      },
+    });
+    expect(entry.tags).toEqual({ skills: ['szenenmaler'], events: ['gala'], landings: ['berlin'] });
+  });
+
+  // Ein leeres Array heisst "gehoert bewusst nirgends hin" und ist etwas
+  // anderes als "noch nie getaggt".
+  it('unterscheidet leer von nicht gesetzt', () => {
+    const entry = runSync({
+      'trier/hochzeit-in-trier.webp': { categories: [], tags: { skills: [], events: [], landings: [] } },
+    });
+    expect(entry.tags).toEqual({ skills: [], events: [], landings: [] });
   });
 });

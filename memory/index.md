@@ -21,7 +21,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [Skills](content-skills.md) – `skills.json`, automatische Seiten-Generierung
 - [Events](content-events.md) – `events.json`, content.json, Event-Bilder
 - [Slides](content-slides.md) – Bilder, `slides.meta.json`, Lightbox, Fallback-Logik
-- [Tag-System](tag-system.md) – Skill × Anlass × Ort: `config/tags.json`, `anlaesse`/`orte` an Bildern, Migration; **Phase 5a fertig, Rendering liest noch nicht danach**
+- [Tag-System](tag-system.md) – Skill × Anlass × Ort: `config/tags.json`, `tags.events`/`tags.landings` an Bildern, Migration; **Phase 5a fertig, Rendering liest noch nicht danach**
 - [Titelbild](content-titelbild.md) – Pfad, Metadaten, Fallback-Kette
 - [Reviews](content-reviews.md) – Markdown-Format, Fallback, MiniReviews-Anzeige
 - [Allgemeine Texte](content-site-texts.md) – `site-texts/content.json`, Startseiten-Texte, `landingIntros` (Einführungstext)

@@ -3,18 +3,30 @@
     "categories": [
       "Szenenmaler"
     ],
-    "orte": [
-      "belgique"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "belgique"
+      ]
+    },
     "priority": 2
   },
   "belgique/caricaturiste-belgique.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "orte": [
-      "belgique"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "belgique"
+      ]
+    },
     "priority": 2
   },
   "bw/karikaturistin-messe-event-stuttgart.webp": {
@@ -22,13 +34,19 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "bw",
-      "stuttgart"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "bw",
+        "stuttgart"
+      ]
+    },
     "priority": 1
   },
   "bw/mitarbeiter-event-karikaturisten-bw.webp": {
@@ -36,72 +54,122 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "bw"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "bw"
+      ]
+    },
     "priority": 2
   },
   "bw/schnellzeichner-toyota-messe-bw.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "bw"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "bw"
+      ]
+    },
     "priority": 3
   },
   "default/1_schnellzeichner_hq.webp": {
     "categories": [
       "Schnellzeichner"
     ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": []
+    },
     "priority": 1
   },
   "default/2_karikatur_stadtfest.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "stadtfest"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "stadtfest"
+      ],
+      "landings": []
+    },
     "priority": 2
   },
   "default/3_schnellzeichner-schweiz.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "schweiz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "schweiz"
+      ]
+    },
     "priority": 3
   },
   "default/4_Hochzeit_schnellzeichner_maler.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    },
     "priority": 4
   },
   "default/5_flip.webp": {
     "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    },
     "priority": 5
   },
   "default/digital-artist-live.webp": {
     "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    },
     "priority": 143
   },
   "default/digital-caricaturist--ludwigshafen.webp": {
     "categories": [],
-    "orte": [
-      "ludwigshafen"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "ludwigshafen"
+      ]
+    },
     "priority": 145
   },
   "default/digitale-schnellzeichnerin-ludwigshafen---kopie.webp": {
@@ -109,160 +177,263 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "ludwigshafen"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "ludwigshafen"
+      ]
+    },
     "priority": 146
   },
   "events/firmenfeier/walking-act-company-party-mainz.webp": {
     "categories": [],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "mainz"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "mainz"
+      ]
+    }
   },
   "events/hochzeit/goldene-hochzeit-karikatur.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ]
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    }
   },
   "events/hochzeit/grosseltern-mit-baby-familien-portraet-hochzeitsfeier-linslerhof-saarland.webp": {
     "categories": [],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "saarland"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "saarland"
+      ]
+    }
   },
   "events/hochzeit/hochzeit-einladungskarte-cartoon.webp": {
     "categories": [],
-    "anlaesse": [
-      "hochzeit"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    }
   },
   "events/hochzeit/img_20240316_182602.webp": {
     "categories": [],
-    "anlaesse": [
-      "hochzeit"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    }
   },
   "events/hochzeit/img_20250913_211812.webp": {
     "categories": [],
-    "anlaesse": [
-      "hochzeit"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    }
   },
   "events/hochzeit/karikatur-hochzeit-einladungskarte.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ]
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    }
   },
   "events/hochzeit/karikaturist-hochzeit.webp": {
     "categories": [
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ]
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    }
   },
   "events/hochzeit/schnellzeichnerin-zeichnet-paar-hochzei--hessen.webp": {
     "categories": [
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "hessen"
-    ]
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "hessen"
+      ]
+    }
   },
   "events/messe/digital-artist.webp": {
     "categories": [],
-    "anlaesse": [
-      "messe"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [
+        "messe"
+      ],
+      "landings": []
+    }
   },
   "events/messe/digital-caricature.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "messe"
-    ]
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": []
+    }
   },
   "events/messe/digital-speedpainter-cologne.webp": {
     "categories": [],
-    "anlaesse": [
-      "messe"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [
+        "messe"
+      ],
+      "landings": []
+    }
   },
   "events/messe/digital-speedpainter-trade-show.webp": {
     "categories": [],
-    "anlaesse": [
-      "messe"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [
+        "messe"
+      ],
+      "landings": []
+    }
   },
   "events/messe/digitale-live-portraits.webp": {
     "categories": [],
-    "anlaesse": [
-      "messe"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [
+        "messe"
+      ],
+      "landings": []
+    }
   },
   "events/messe/karikaturist-messe-rai-amsterdam.webp": {
     "categories": [
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "messe"
-    ]
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": []
+    }
   },
   "events/messe/schnellzeichner-messe-koeln.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "koeln"
-    ]
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "koeln"
+      ]
+    }
   },
   "events/messe/schnellzeichner-messe-nrw.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "messe"
-    ]
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": []
+    }
   },
   "events/messe/schnellzeichner-messe.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "messe"
-    ]
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": []
+    }
   },
   "frankfurt/10_digitale-schnellzeichnung-auf-leinwand-projiziert-mit-beamer-comoany-event-allianz-frankfurt.webp": {
     "categories": [
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 10,
     "altOverride": "Digitale schnellzeichnung auf leinwand projiziert mit beamer comoany event allianz frankfurt",
     "title": "Live-Kunst Frankfurt"
@@ -272,9 +443,16 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 11,
     "altOverride": "Event zeichner zeichnet an staffelei shop eroeffnung frankfurt",
     "title": "Live-Kunst Frankfurt"
@@ -284,9 +462,16 @@
       "Szenenmaler",
       "Schnellzeichner"
     ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler",
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 12,
     "altOverride": "Eventzeichnerin sitzt an staffelei und portraitiert kunden bulgari frankfurt",
     "title": "Live-Kunst Frankfurt"
@@ -295,12 +480,17 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 13,
     "altOverride": "Gaeste schauen auf lustige team karikatur auf leinwand von kuensterlin mit ipad digital gezeichnet firmenparty frankfurt",
     "title": "Schnellzeichner Frankfurt"
@@ -309,9 +499,15 @@
     "categories": [
       "Szenenmaler"
     ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 14,
     "altOverride": "Illustratorin zeichnet event illustration fuer kunden als muttertag geschenk frankfurt",
     "title": "Szenenmaler Frankfurt"
@@ -320,13 +516,18 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "firmenfeier",
-      "weihnachtsfeier"
-    ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier",
+        "weihnachtsfeier"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 15,
     "altOverride": "Karikaturen der mitarbeiter zur weihnachtsfeier im neue kaiser frankfurt",
     "title": "Schnellzeichner Frankfurt"
@@ -336,23 +537,32 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 16
   },
   "frankfurt/17_kuenstlerin-zeichnet-an-staffelei-bei-hochzeitsmesse-im-hilton-frankfurt-gravenbruch.webp": {
     "categories": [],
-    "anlaesse": [
-      "messe",
-      "hochzeit"
-    ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [
+        "messe",
+        "hochzeit"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 17,
     "altOverride": "Kuenstlerin zeichnet an staffelei bei hochzeitsmesse im hilton frankfurt gravenbruch",
     "title": "Live-Kunst Frankfurt"
@@ -361,9 +571,15 @@
     "categories": [
       "Szenenmaler"
     ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 18,
     "altOverride": "Live zeichner malt portraits fuer kunden aktion bulgari frankfurt",
     "title": "Szenenmaler Frankfurt"
@@ -373,9 +589,16 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 19,
     "altOverride": "Mann haelt ergriffen seine schnellzeichnung hoch von karikaturist im hilton frankfurt gravenbruch",
     "title": "Schnellzeichner Frankfurt"
@@ -384,33 +607,47 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 2
   },
   "frankfurt/20_mann-zeigt-seine-karikatur-vom-schnellzeichner-im-hilton-frankfurt-gravenbruch.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 20,
     "altOverride": "Mann zeigt seine karikatur vom schnellzeichner im hilton frankfurt gravenbruch",
     "title": "Schnellzeichner Frankfurt"
   },
   "frankfurt/21_messezeichnerin-zeichnet-auf-staffelei-im-hilton-frankfurt.webp": {
     "categories": [],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 21,
     "altOverride": "Messezeichnerin zeichnet auf staffelei im hilton frankfurt",
     "title": "Live-Kunst Frankfurt"
@@ -420,33 +657,46 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 22,
     "altOverride": "Paar lacht ueber digitale karikatur auf samsung flip von karikaturistin gezeichnet auf betriebsfeier frankfurt",
     "title": "Schnellzeichner Frankfurt"
   },
   "frankfurt/23_portraitmalerin-malt-aquarell-portraets-muttertagsaktion-bulgar-frankfurt.webp": {
     "categories": [],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 23,
     "altOverride": "Portraitmalerin malt aquarell portraets muttertagsaktion bulgar frankfurt",
     "title": "Live-Kunst Frankfurt"
   },
   "frankfurt/24_schnell-portraets-zur-weihnachtsparty-im-restaurant-neue-kaiser-frankfurt.webp": {
     "categories": [],
-    "anlaesse": [
-      "weihnachtsfeier"
-    ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [
+        "weihnachtsfeier"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 24,
     "altOverride": "Schnell portraets zur weihnachtsparty im restaurant neue kaiser frankfurt",
     "title": "Live-Kunst Frankfurt"
@@ -455,40 +705,56 @@
     "categories": [
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 25,
     "altOverride": "Szenenmalerin malt auf zeichenbrett bei frankfurt messe",
     "title": "Szenenmaler Frankfurt"
   },
   "frankfurt/26_szenentmaler-malt-fuer-promotion-bulgari-frankfurt.webp": {
     "categories": [],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 26
   },
   "frankfurt/27_zeichner-fertigt-hunde-zeichnung-bei-shop-event-bulgarifrankfurt.webp": {
     "categories": [],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 27,
     "altOverride": "Zeichner fertigt hunde zeichnung bei shop event bulgarifrankfurt",
     "title": "Live-Kunst Frankfurt"
   },
   "frankfurt/28_zeichnerin-zeichnet-3-frauen-bei-messe-frankfurt.webp": {
     "categories": [],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 28,
     "altOverride": "Zeichnerin zeichnet 3 frauen bei messe frankfurt",
     "title": "Live-Kunst Frankfurt"
@@ -497,119 +763,173 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 29,
     "altOverride": "4 kollegen stehen vor ihrer team karikatur auf dem digitalen flipchart auf firmen event frankfurt",
     "title": "Schnellzeichner Frankfurt"
   },
   "frankfurt/3_markt-frankfurt-am-main.webp": {
     "categories": [],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 3
   },
   "frankfurt/4_messezeichnerin-frankfurt.webp": {
     "categories": [],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 4
   },
   "frankfurt/5_schnellportraits-messe.webp": {
     "categories": [],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 5
   },
   "frankfurt/6_szenenmalerin-frankfurt-messe.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 6
   },
   "frankfurt/7_zeichnerin-messe-frankfurt.webp": {
     "categories": [],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 7
   },
   "frankfurt/8_event-illustration-frankfurt.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 8
   },
   "frankfurt/9_digital-artist-business-event-allianz-frankfurt.webp": {
     "categories": [],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 9
   },
   "frankfurt/eintracht-frankfurt-karikatur-fussball-club.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    },
     "priority": 29
   },
   "fulda/1000018053.webp": {
     "categories": [],
-    "orte": [
-      "fulda"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "fulda"
+      ]
+    },
     "priority": 3
   },
   "fulda/1000018054.webp": {
     "categories": [],
-    "orte": [
-      "fulda"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "fulda"
+      ]
+    },
     "priority": 1
   },
   "fulda/1000018273.webp": {
     "categories": [],
-    "orte": [
-      "fulda"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "fulda"
+      ]
+    },
     "priority": 5
   },
   "fulda/1000018280.webp": {
     "categories": [],
-    "orte": [
-      "fulda"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "fulda"
+      ]
+    },
     "priority": 6
   },
   "hanau/karikaturist-betriebsfeier-druckhaus-am-main.webp": {
@@ -617,32 +937,47 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "hanau"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "hanau"
+      ]
+    },
     "priority": 1
   },
   "hanau/schnellzeichner-mitarbeiter-schulung-hanau.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "hanau"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "hanau"
+      ]
+    },
     "priority": 2
   },
   "hessen/event-illustratorin-malt-tier-portrait-frankfurt.webp": {
     "categories": [],
-    "orte": [
-      "hessen",
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "hessen",
+        "frankfurt"
+      ]
+    },
     "priority": 2
   },
   "hessen/familienportraet-schnellzeichnerin-wiesbaden.webp": {
@@ -650,20 +985,33 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "hessen",
-      "wiesbaden"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "hessen",
+        "wiesbaden"
+      ]
+    },
     "priority": 7
   },
   "hessen/karikaturen-schnellzeichner-dömaene-mechthild-wiesbaden.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "hessen",
-      "wiesbaden"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "hessen",
+        "wiesbaden"
+      ]
+    },
     "priority": 6
   },
   "hessen/karikaturistin-hanau-druckhaus-am-main.webp": {
@@ -671,51 +1019,79 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "hessen",
-      "hanau"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "hessen",
+        "hanau"
+      ]
+    },
     "priority": 5
   },
   "hessen/portraitmalerin-malt-aquarell-portraets-muttertagsaktion-bulgar-frankfurt.webp": {
     "categories": [],
-    "orte": [
-      "hessen",
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "hessen",
+        "frankfurt"
+      ]
+    },
     "priority": 3
   },
   "hessen/schnellzeichner-dinner-event-alte-lokhalle-mainz.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "hessen",
-      "mainz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "hessen",
+        "mainz"
+      ]
+    },
     "priority": 1
   },
   "hessen/team-karikatur-digitale-flipchart-sommerfest-frankfurt.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "sommerfest"
-    ],
-    "orte": [
-      "hessen",
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "sommerfest"
+      ],
+      "landings": [
+        "hessen",
+        "frankfurt"
+      ]
+    },
     "priority": 4
   },
   "kaiserslautern/1_caricature-of-a-couple-by-speedpainter-event-umgc-rheinland-pfalz.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "kaiserslautern",
-      "rheinland-pfalz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "kaiserslautern",
+        "rheinland-pfalz"
+      ]
+    },
     "priority": 1,
     "altOverride": "Caricature of a couple by speedpainter event umgc rheinland pfalz",
     "title": "Schnellzeichner Kaiserslautern"
@@ -724,9 +1100,15 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "kaiserslautern"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "kaiserslautern"
+      ]
+    },
     "priority": 2,
     "altOverride": "Colleagues present their funny quick portrait of a caricature artist at a party pfalz",
     "title": "Schnellzeichner Kaiserslautern"
@@ -735,90 +1117,134 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "kaiserslautern"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "kaiserslautern"
+      ]
+    },
     "priority": 3
   },
   "kaiserslautern/4_karikaturist-betriebsfeier-kleine-alm-landgasthaus-bremerhof-kaiserslautern.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "kaiserslautern"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "kaiserslautern"
+      ]
+    },
     "priority": 4,
     "altOverride": "Karikaturist betriebsfeier kleine alm landgasthaus bremerhof kaiserslautern",
     "title": "Schnellzeichner Kaiserslautern"
   },
   "kaiserslautern/5_live-artist-party-kaiserslautern.webp": {
     "categories": [],
-    "orte": [
-      "kaiserslautern"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "kaiserslautern"
+      ]
+    },
     "priority": 5
   },
   "kaiserslautern/6_live-painter-event-kmc-kaiserslautern.webp": {
     "categories": [],
-    "orte": [
-      "kaiserslautern"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "kaiserslautern"
+      ]
+    },
     "priority": 6
   },
   "kaiserslautern/7_man-shows-speedpainting-by-caricaturist-kaiserslautern.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "orte": [
-      "kaiserslautern"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "kaiserslautern"
+      ]
+    },
     "priority": 7
   },
   "karlsruhe/brautpaar-hochzeitsmaler-karlsruhe.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "karlsruhe"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "karlsruhe"
+      ]
+    },
     "priority": 1
   },
   "karlsruhe/hochzeitsmalerin-landkreis-karlsruhe.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "karlsruhe"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "karlsruhe"
+      ]
+    },
     "priority": 3
   },
   "karlsruhe/live-event-kuenstlerin-oestringen-bw.webp": {
     "categories": [],
-    "orte": [
-      "karlsruhe",
-      "bw"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "karlsruhe",
+        "bw"
+      ]
+    },
     "priority": 4
   },
   "koblenz/besucherin-laesst-sich-portraetieren-von-schnellzeichner-betriebsfeier-novelis-koblenz.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "koblenz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "koblenz"
+      ]
+    },
     "priority": 1,
     "altOverride": "Besucherin laesst sich portraetieren von schnellzeichner betriebsfeier novelis koblenz",
     "title": "Schnellzeichner Koblenz"
@@ -827,12 +1253,17 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "koblenz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "koblenz"
+      ]
+    },
     "priority": 2,
     "altOverride": "Betriebsfeier pro contur koblenz karikatur fussball europameisterschaft img 20240705",
     "title": "Schnellzeichner Koblenz"
@@ -841,12 +1272,17 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "weihnachtsfeier"
-    ],
-    "orte": [
-      "koblenz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "weihnachtsfeier"
+      ],
+      "landings": [
+        "koblenz"
+      ]
+    },
     "priority": 3,
     "altOverride": "Karikatur aerztin weihnachtsfeier bauern und winzer verband koblenz",
     "title": "Schnellzeichner Koblenz"
@@ -856,171 +1292,248 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "koblenz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "koblenz"
+      ]
+    },
     "priority": 4,
     "altOverride": "Karikaturist fussball wm betriebsfeier pro contur koblenz",
     "title": "Schnellzeichner Koblenz"
   },
   "koeln/1_IMG_20240129_120914.webp": {
     "categories": [],
-    "orte": [
-      "koeln"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "koeln"
+      ]
+    },
     "priority": 1
   },
   "koeln/10_digitale-live-portraits.webp": {
     "categories": [],
-    "orte": [
-      "koeln"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "koeln"
+      ]
+    },
     "priority": 10
   },
   "koeln/11_digitale-schnellzeichnung.webp": {
     "categories": [],
-    "orte": [
-      "koeln"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "koeln"
+      ]
+    },
     "priority": 11
   },
   "koeln/12_digitaler-schnellzeichner-messe-koeln.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "koeln"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "koeln"
+      ]
+    },
     "priority": 12
   },
   "koeln/13_schnellzeichner-messe-koeln.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "koeln"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "koeln"
+      ]
+    },
     "priority": 13
   },
   "koeln/14_schnellzeichner-messe-nrw.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "koeln"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "koeln"
+      ]
+    },
     "priority": 14
   },
   "koeln/15_schnellzeichner-messe.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "koeln"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "koeln"
+      ]
+    },
     "priority": 15
   },
   "koeln/2_digital-art.webp": {
     "categories": [],
-    "orte": [
-      "koeln"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "koeln"
+      ]
+    },
     "priority": 2
   },
   "koeln/3_digital-artist.webp": {
     "categories": [],
-    "orte": [
-      "koeln"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "koeln"
+      ]
+    },
     "priority": 3
   },
   "koeln/4_digital-caricature.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "koeln"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "koeln"
+      ]
+    },
     "priority": 4
   },
   "koeln/5_digital-caricatures-trade-show.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "koeln"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "koeln"
+      ]
+    },
     "priority": 5
   },
   "koeln/6_digital-speed-painting-trade-show.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "koeln"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "koeln"
+      ]
+    },
     "priority": 6
   },
   "koeln/7_the-customer-is-delighted-with-her-portrait-on-digital-display-event-cologne.webp": {
     "categories": [],
-    "orte": [
-      "koeln"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "koeln"
+      ]
+    },
     "priority": 7,
     "altOverride": "The customer is delighted with her portrait on digital display event cologne",
     "title": "Live-Kunst Koeln"
   },
   "koeln/8_digital-speedpainter-trade-show-cologne.webp": {
     "categories": [],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "koeln"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "koeln"
+      ]
+    },
     "priority": 8
   },
   "koeln/9_digital-speedpainter-trade-show.webp": {
     "categories": [],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "koeln"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "koeln"
+      ]
+    },
     "priority": 9
   },
   "ludwigshafen/1_digital-artist-zeichnet-live-auf-buehne-mit-tabelt-pc-und-beamer-karikaturen-betriebsfeier-cinema-paradiso-ludwigshafen.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "ludwigshafen"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "ludwigshafen"
+      ]
+    },
     "priority": 1,
     "altOverride": "Digital artist zeichnet live auf buehne mit tabelt pc und beamer karikaturen betriebsfeier cinema paradiso ludwigshafen",
     "title": "Schnellzeichner Ludwigshafen"
@@ -1029,9 +1542,15 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "ludwigshafen"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "ludwigshafen"
+      ]
+    },
     "priority": 2
   },
   "ludwigshafen/3_digitale-schnellzeichnerin-ludwigshafen.webp": {
@@ -1039,36 +1558,57 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "ludwigshafen"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "ludwigshafen"
+      ]
+    },
     "priority": 3
   },
   "ludwigshafen/4_live-digital-caricature-funny-picture-projected-on-canvas.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "ludwigshafen"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "ludwigshafen"
+      ]
+    },
     "priority": 4,
     "altOverride": "Live digital caricature funny picture projected on canvas",
     "title": "Schnellzeichner Ludwigshafen"
   },
   "ludwigshafen/5_speed-painter-drawing-with-tablet-pc-beamer-ludwigshafen.webp": {
     "categories": [],
-    "orte": [
-      "ludwigshafen"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "ludwigshafen"
+      ]
+    },
     "priority": 5,
     "altOverride": "Speed painter drawing with tablet pc beamer ludwigshafen",
     "title": "Live-Kunst Ludwigshafen"
   },
   "ludwigshafen/6_zeichnung-mann-als-bowlingkugel-mit-bramer-auf-leinwand-von-digital-caricaturist-ludwigshafen.webp": {
     "categories": [],
-    "orte": [
-      "ludwigshafen"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "ludwigshafen"
+      ]
+    },
     "priority": 6,
     "altOverride": "Zeichnung mann als bowlingkugel mit bramer auf leinwand von digital caricaturist ludwigshafen",
     "title": "Live-Kunst Ludwigshafen"
@@ -1077,9 +1617,15 @@
     "categories": [
       "Szenenmaler"
     ],
-    "orte": [
-      "luxembourg"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "luxembourg"
+      ]
+    },
     "priority": 1,
     "altOverride": "Caricaturiste assise à un chevalet dessinant en luxembourg",
     "title": "Szenenmaler Luxembourg"
@@ -1089,9 +1635,16 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "luxembourg"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "luxembourg"
+      ]
+    },
     "priority": 2,
     "altOverride": "Caricaturiste evenementiel luxembourg couple portrait caricature 1",
     "title": "Schnellzeichner Luxembourg"
@@ -1100,62 +1653,93 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "luxembourg"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "luxembourg"
+      ]
+    },
     "priority": 3
   },
   "luxembourg/4_schnellzeichner-sommerfest-cipa-howald-caricature-couple.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "sommerfest"
-    ],
-    "orte": [
-      "luxembourg"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "sommerfest"
+      ],
+      "landings": [
+        "luxembourg"
+      ]
+    },
     "priority": 4,
     "altOverride": "Schnellzeichner sommerfest cipa howald caricature couple",
     "title": "Schnellzeichner Luxembourg"
   },
   "luxembourg/5_un-couple-heureux-montre-fièrement-son-portrait-caricatural-personnalisé-lors-d-une-foire-d-art-au-luxembourg-entouré-d-autres-oeuvres-de-bande-dessinée.webp": {
     "categories": [],
-    "orte": [
-      "luxembourg"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "luxembourg"
+      ]
+    },
     "priority": 5,
     "altOverride": "Un couple heureux montre fièrement son portrait caricatural personnalisé lors d une foire d art au luxembourg entouré d autres oeuvres de bande dessinée",
     "title": "Live-Kunst Luxembourg"
   },
   "luxembourg/7_dessins-caricaturaux-lors-d'un-mariage.webp": {
     "categories": [],
-    "orte": [
-      "luxembourg"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "luxembourg"
+      ]
+    },
     "priority": 7
   },
   "luxembourg/8_dessins-caricaturaux-luxembourg.webp": {
     "categories": [],
-    "orte": [
-      "luxembourg"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "luxembourg"
+      ]
+    },
     "priority": 8
   },
   "luxembourg/9_une-portraitiste-souriante-est-assise-devant-un-chevalet-en-luxembourg-et-dessine-un-portrait.webp": {
     "categories": [],
-    "orte": [
-      "luxembourg"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "luxembourg"
+      ]
+    },
     "priority": 9,
     "altOverride": "Une portraitiste souriante est assise devant un chevalet en luxembourg et dessine un portrait",
     "title": "Live-Kunst Luxembourg"
   },
   "mainz/cartoon-by-speed-painter-alte-lokhalle-mainz.webp": {
     "categories": [],
-    "orte": [
-      "mainz"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "mainz"
+      ]
+    },
     "altOverride": "Cartoon by speed painter alte lokhalle mainz",
     "title": "Live-Kunst Mainz"
   },
@@ -1163,242 +1747,460 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "mainz"
-    ]
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "mainz"
+      ]
+    }
   },
   "mainz/walking-act-company-party-mainz.webp": {
     "categories": [],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "mainz"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "mainz"
+      ]
+    }
   },
   "mannheim/karikaturist-mannheim-q6q7.webp": {
     "categories": [
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "mannheim"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "mannheim"
+      ]
+    },
     "priority": 1
   },
   "mannheim/vater-zeigt-witzige-familien-zeichnungvon-schnellzeichner-eroeffnungsfeier-mr.-wash-mannheim.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "mannheim"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "mannheim"
+      ]
+    },
     "priority": 2,
     "altOverride": "Vater zeigt witzige familien zeichnungvon schnellzeichner eroeffnungsfeier mr. wash mannheim",
     "title": "Schnellzeichner Mannheim"
   },
   "mediathek/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
     "categories": [],
-    "anlaesse": [
-      "hochzeit"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    }
   },
   "mediathek/acrylgemaelde-brautpaar-hochzeitsmaler-event-karlsruhe.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "karlsruhe"
-    ]
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "karlsruhe"
+      ]
+    }
   },
   "mediathek/brautpaar-hochzeitsmaler-bw.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "bw"
-    ]
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "bw"
+      ]
+    }
   },
   "mediathek/gemaelde-hochzeitsfeier-brautpaar-mit-torte-von-event-illustratorin-heitlinger-genusswelten-landkreis-karlsruhe.webp": {
     "categories": [],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "karlsruhe"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "karlsruhe"
+      ]
+    }
   },
   "mediathek/hochzeitsmalerin-praesentiert-hochtzeitsgemaelde-mit-tanzendem-brautpaar-heitlinger-genusswelten-landkreis-karlsruhe.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "karlsruhe"
-    ]
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "karlsruhe"
+      ]
+    }
   },
   "mediathek/img_20251019_003048.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/live-event-kuenstlerin-malt-szenen-hochzeit-heitlinger-genusswelten-baden-wuertemberg.webp": {
     "categories": [],
-    "anlaesse": [
-      "hochzeit"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    }
   },
   "mediathek/live-wedding-painter.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ]
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    }
   },
   "mediathek/live-zeichner-frankfurt.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "orte": [
-      "frankfurt"
-    ]
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    }
   },
   "mediathek/somfot/0cc83458-5868-449b-98f0-a043690091ee.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/925842464s.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/afcc9d9e-1ab1-4625-910f-e12bfea47f15.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/design-ohne-titel-(1).webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/img_20230617_201329.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/img_20231206_210655.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/obi_logo.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/pxl_20231124_161010559-(1).webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/pxl_20240217_172707391.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/pxl_20240228_135030071.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/pxl_20240228_135102163.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/pxl_20240228_135312164.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/pxl_20240228_135347406.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/saarlandtherme-logo-150px.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/samsung-logo-1993.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/schnellzeichnerin_edited.webp": {
     "categories": [
       "Schnellzeichner",
       "Szenenmaler"
-    ]
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/w1209_h930_x604_y307_dpa_bfunk_dpa_5fa628007597bec9-435805e46e27f0b0.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/whatsapp-image-2024-01-10-at-5.16.18-pm.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/whatsapp-image-2024-01-10-at-6.58.33-pm.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/whatsapp-image-2024-02-09-at-8.02.10-pm.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/whatsapp-image-2024-02-18-at-9.14_edited-(1).webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/somfot/whatsapp-image-2024-02-18-at-9.14_edited.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/szenenmalerei-hotel-leidinger-saarbruecken.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "orte": [
-      "saarbruecken"
-    ]
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "saarbruecken"
+      ]
+    }
   },
   "mediathek/szenenmalerei-schloss-kronberg.webp": {
     "categories": [
       "Szenenmaler"
-    ]
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/szenenmalerin-malt-live-brautpaar-mit-hochzeitstorte-hochzeit-restaurant-albatros-landkreis-karlsruhe.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "karlsruhe"
-    ]
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "karlsruhe"
+      ]
+    }
   },
   "mediathek/szenenzeichnung.webp": {
-    "categories": []
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    }
   },
   "mediathek/wedding-live-painter.webp": {
     "categories": [],
-    "anlaesse": [
-      "hochzeit"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    }
   },
   "mediathek/wedding-painting.webp": {
     "categories": [],
-    "anlaesse": [
-      "hochzeit"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    }
   },
   "neunkirchen/kuenstlerin-zeichnet-paar-hochzeit-neunkirchen.webp": {
     "categories": [],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "neunkirchen"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "neunkirchen"
+      ]
+    }
   },
   "rhein-main-gebiet/karikaturist-firmen-event-hanau.webp": {
     "categories": [
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "rhein-main-gebiet",
-      "hanau"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "rhein-main-gebiet",
+        "hanau"
+      ]
+    },
     "priority": 2
   },
   "rhein-main-gebiet/karikaturist-geburtstag-domaene-mechthildshausen.webp": {
@@ -1406,41 +2208,64 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "geburtstag"
-    ],
-    "orte": [
-      "rhein-main-gebiet"
-    ]
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "geburtstag"
+      ],
+      "landings": [
+        "rhein-main-gebiet"
+      ]
+    }
   },
   "rhein-main-gebiet/karikaturistin-messe-frankfurt.webp": {
     "categories": [
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "rhein-main-gebiet",
-      "frankfurt"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "rhein-main-gebiet",
+        "frankfurt"
+      ]
+    },
     "priority": 1
   },
   "rhein-main-gebiet/zeichnung-stammbaum-weinrebe-aschaffenburg.webp": {
     "categories": [],
-    "orte": [
-      "rhein-main-gebiet"
-    ]
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "rhein-main-gebiet"
+      ]
+    }
   },
   "rheinland-pfalz/karikaturist-schloss-auel-lohmar-rheinland-pfalz.webp": {
     "categories": [
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "rheinland-pfalz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "rheinland-pfalz"
+      ]
+    },
     "priority": 1
   },
   "rheinland-pfalz/kollegen-lachen-mit-ihrer-karikatur-von-karikaturist-weihnachtsfeier-gasthaus-kaut-leidenborn-rheinland-pfalz.webp": {
@@ -1448,34 +2273,49 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "firmenfeier",
-      "weihnachtsfeier"
-    ],
-    "orte": [
-      "rheinland-pfalz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "firmenfeier",
+        "weihnachtsfeier"
+      ],
+      "landings": [
+        "rheinland-pfalz"
+      ]
+    },
     "priority": 2,
     "altOverride": "Kollegen lachen mit ihrer karikatur von karikaturist weihnachtsfeier gasthaus kaut leidenborn rheinland pfalz",
     "title": "Schnellzeichner Rheinland Pfalz"
   },
   "rheinland-pfalz/street-artist-veitsrodt-rheinland-pfalz.webp": {
     "categories": [],
-    "orte": [
-      "rheinland-pfalz"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "rheinland-pfalz"
+      ]
+    },
     "priority": 3
   },
   "saarbruecken/1_live-karikatur-zeichnen-paar-sylvester-spielbank-saarbruecken-schnellzeichnerin.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "silvester"
-    ],
-    "orte": [
-      "saarbruecken"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "silvester"
+      ],
+      "landings": [
+        "saarbruecken"
+      ]
+    },
     "priority": 1,
     "altOverride": "Live karikatur zeichnen paar sylvester spielbank saarbruecken schnellzeichnerin",
     "title": "Schnellzeichner Saarbruecken"
@@ -1484,18 +2324,30 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "saarbruecken"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "saarbruecken"
+      ]
+    },
     "priority": 2
   },
   "saarbruecken/3_live-portraetzeichnen-im-forsthaus-neuhaus-kuenstlerin-zeichnet-gaeste.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "saarbruecken"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "saarbruecken"
+      ]
+    },
     "priority": 3,
     "altOverride": "Live portraetzeichnen im forsthaus neuhaus kuenstlerin zeichnet gaeste",
     "title": "Schnellzeichner Saarbruecken"
@@ -1504,9 +2356,15 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "saarbruecken"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "saarbruecken"
+      ]
+    },
     "priority": 4,
     "altOverride": "Paarzeichnung von schnellzeichner kunst aktion europa galerie saarbruecken",
     "title": "Schnellzeichner Saarbruecken"
@@ -1515,12 +2373,17 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "weihnachtsfeier"
-    ],
-    "orte": [
-      "saarbruecken"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "weihnachtsfeier"
+      ],
+      "landings": [
+        "saarbruecken"
+      ]
+    },
     "priority": 5,
     "altOverride": "Schnellzeichner weihnachtsfeier saarlandtherme saarbruecken 1",
     "title": "Schnellzeichner Saarbruecken"
@@ -1529,12 +2392,17 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "weihnachtsfeier"
-    ],
-    "orte": [
-      "saarbruecken"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "weihnachtsfeier"
+      ],
+      "landings": [
+        "saarbruecken"
+      ]
+    },
     "priority": 6,
     "altOverride": "Schnellzeichner weihnachtsfeier saarlandtherme saarbruecken 2",
     "title": "Schnellzeichner Saarbruecken"
@@ -1544,13 +2412,19 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "silvester"
-    ],
-    "orte": [
-      "saarbruecken",
-      "saarland"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "silvester"
+      ],
+      "landings": [
+        "saarbruecken",
+        "saarland"
+      ]
+    },
     "priority": 7,
     "altOverride": "Schnellzeichnerin saarland sylvester event spielbanken saarbruecken",
     "title": "Schnellzeichner Saarbruecken"
@@ -1559,29 +2433,44 @@
     "categories": [
       "Szenenmaler"
     ],
-    "orte": [
-      "saarbruecken"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "saarbruecken"
+      ]
+    },
     "priority": 8
   },
   "saarland/brautpaar-zeigt-hochzeits-zeichnung-von-schnellzeichner-bistro-bagatelle-saarland.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "saarland"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "saarland"
+      ]
+    },
     "altOverride": "Brautpaar zeigt hochzeits zeichnung von schnellzeichner bistro bagatelle saarland",
     "title": "Schnellzeichner Saarland"
   },
   "saarland/frau-zeigt-lachend-ihr-schnell-portrtraet-betriebsfest-saarland.webp": {
     "categories": [],
-    "orte": [
-      "saarland"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "saarland"
+      ]
+    },
     "altOverride": "Frau zeigt lachend ihr schnell portrtraet betriebsfest saarland",
     "title": "Live-Kunst Saarland"
   },
@@ -1590,35 +2479,47 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "saarland"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "saarland"
+      ]
+    },
     "altOverride": "Frau zeigt zeichnung von karikaturistin betriebsfeier angelweiher gresaubach schmelz saarland",
     "title": "Schnellzeichner Saarland"
   },
   "saarland/grosseltern-mit-baby-familien-portraet-hochzeitsfeier-linslerhof-saarland.webp": {
     "categories": [],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "saarland"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "saarland"
+      ]
+    },
     "altOverride": "Grosseltern mit baby familien portraet hochzeitsfeier linslerhof saarland",
     "title": "Live-Kunst Saarland"
   },
   "saarland/hochzeits-kalerin-zeichnet-hochzeitspaar-menschenhaus-neunkirchen-saarland.webp": {
     "categories": [],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "saarland",
-      "neunkirchen"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "saarland",
+        "neunkirchen"
+      ]
+    },
     "altOverride": "Hochzeits kalerin zeichnet hochzeitspaar menschenhaus neunkirchen saarland",
     "title": "Live-Kunst Saarland"
   },
@@ -1626,12 +2527,17 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "weihnachtsfeier"
-    ],
-    "orte": [
-      "saarland"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "weihnachtsfeier"
+      ],
+      "landings": [
+        "saarland"
+      ]
+    },
     "altOverride": "Karikatur chef de la cuisine weihnachtsfest annaheim wiebelskirchen saarland",
     "title": "Schnellzeichner Saarland"
   },
@@ -1640,35 +2546,56 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "saarland"
-    ]
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "saarland"
+      ]
+    }
   },
   "saarland/kolleginnen-zeigen-gemeinsame-karikatur-als-camper-sommerfeier-event-angelweiher-gresaubach.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "saarland"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "saarland"
+      ]
+    },
     "altOverride": "Kolleginnen zeigen gemeinsame karikatur als camper sommerfeier event angelweiher gresaubach",
     "title": "Schnellzeichner Saarland"
   },
   "saarland/lustige-portraetzeichnung-paar-saarparkcenter-neunkirchen.webp": {
     "categories": [],
-    "orte": [
-      "saarland",
-      "neunkirchen"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "saarland",
+        "neunkirchen"
+      ]
+    },
     "altOverride": "Lustige portraetzeichnung paar saarparkcenter neunkirchen",
     "title": "Live-Kunst Saarland"
   },
   "saarland/lustige-zeichnung-mutter-und-kind-von-speed-painter-saarparkxenter-neunkirchen.webp": {
     "categories": [],
-    "orte": [
-      "saarland",
-      "neunkirchen"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "saarland",
+        "neunkirchen"
+      ]
+    },
     "altOverride": "Lustige zeichnung mutter und kind von speed painter saarparkxenter neunkirchen",
     "title": "Live-Kunst Saarland"
   },
@@ -1677,21 +2604,31 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "saarland"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "saarland"
+      ]
+    },
     "altOverride": "Mann zeigt zeichnung von karikaturisten neon party eppelborn saarland",
     "title": "Schnellzeichner Saarland"
   },
   "saarland/mitarbeiterin-zeigt-ihr-schnell-portrait-weihnachtsfeier-annaheim-wiebelskirchen.webp": {
     "categories": [],
-    "anlaesse": [
-      "firmenfeier",
-      "weihnachtsfeier"
-    ],
-    "orte": [
-      "saarland"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [
+        "firmenfeier",
+        "weihnachtsfeier"
+      ],
+      "landings": [
+        "saarland"
+      ]
+    },
     "altOverride": "Mitarbeiterin zeigt ihr schnell portrait weihnachtsfeier annaheim wiebelskirchen",
     "title": "Live-Kunst Saarland"
   },
@@ -1700,12 +2637,18 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "saarland"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "saarland"
+      ]
+    },
     "altOverride": "Paae mit baby familie karikatur von schnellzeichnerin hochzeitsparty linslerhof ueberherrn saarland",
     "title": "Schnellzeichner Saarland"
   },
@@ -1714,15 +2657,26 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "saarland"
-    ]
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "saarland"
+      ]
+    }
   },
   "saarland/zeichnung-als-harry-potter-von-illustratorin-saarland.webp": {
     "categories": [],
-    "orte": [
-      "saarland"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "saarland"
+      ]
+    },
     "altOverride": "Zeichnung als harry potter von illustratorin saarland",
     "title": "Live-Kunst Saarland"
   },
@@ -1730,12 +2684,17 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "schweiz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "schweiz"
+      ]
+    },
     "priority": 1,
     "altOverride": "Elektriker zeigt seine karikatur von portrait kuenstler betriebsfeier schweiz",
     "title": "Schnellzeichner Schweiz"
@@ -1745,12 +2704,18 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "schweiz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "schweiz"
+      ]
+    },
     "priority": 2,
     "altOverride": "Junger mann zeigt seine karikatur zeichnung karikaturist betriebsfeieractemium schweiz ag arlesheim",
     "title": "Schnellzeichner Schweiz"
@@ -1759,9 +2724,15 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "schweiz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "schweiz"
+      ]
+    },
     "priority": 3,
     "altOverride": "Karikaturischti zeiget ihri zeichnig am betriebsfäscht basel schweiz",
     "title": "Schnellzeichner Schweiz"
@@ -1770,12 +2741,17 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "schweiz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "schweiz"
+      ]
+    },
     "priority": 5,
     "altOverride": "Man shows his caricature by cartoonist business event switzerland",
     "title": "Schnellzeichner Schweiz"
@@ -1785,12 +2761,18 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "schweiz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "schweiz"
+      ]
+    },
     "priority": 4,
     "altOverride": "Mann zeigt seine karikaturzeichnung von karikaturistin firmen event basel schweiz",
     "title": "Schnellzeichner Schweiz"
@@ -1800,68 +2782,104 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "schweiz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "schweiz"
+      ]
+    },
     "priority": 6
   },
   "schweiz/zeichner-betriebsfeier-bern.webp": {
     "categories": [],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "schweiz"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "schweiz"
+      ]
+    },
     "priority": 7
   },
   "stuttgart/company-party-live-sketching-stuttgart---kopie.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "stuttgart"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "stuttgart"
+      ]
+    },
     "priority": 1
   },
   "stuttgart/funny-picture-speed-painting-trade-fair---kopie.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "orte": [
-      "stuttgart"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "stuttgart"
+      ]
+    },
     "priority": 6
   },
   "stuttgart/karikatur-gabelstabler-messe-event-stuttgart---kopie.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "stuttgart"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "stuttgart"
+      ]
+    },
     "priority": 8
   },
   "stuttgart/live-painting-party-event-stuttgart.webp": {
     "categories": [],
-    "orte": [
-      "stuttgart"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "stuttgart"
+      ]
+    },
     "priority": 4
   },
   "stuttgart/live-sketching-event-trade-fair-baden-wuerttemberg.webp": {
     "categories": [
       "Szenenmaler"
     ],
-    "orte": [
-      "stuttgart"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "stuttgart"
+      ]
+    },
     "priority": 5
   },
   "stuttgart/schnellzeichnerin-messe-stuttgart.webp": {
@@ -1869,12 +2887,18 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "stuttgart"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "stuttgart"
+      ]
+    },
     "priority": 4
   },
   "stuttgart/schnellzeichnerin-stuttgart.webp": {
@@ -1882,32 +2906,47 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "stuttgart"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "stuttgart"
+      ]
+    },
     "priority": 7
   },
   "stuttgart/schnellzeichnung-messe-stuttgart.webp": {
     "categories": [],
-    "anlaesse": [
-      "messe"
-    ],
-    "orte": [
-      "stuttgart"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "stuttgart"
+      ]
+    },
     "priority": 3
   },
   "trier/1_2-kollegen-zeigen-froehlich-ihre-karikaturzeichnung-mit-bierglas-auf-der-weihnachtsfeier-in-tommys-teufelskueche-trier.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "firmenfeier",
-      "weihnachtsfeier"
-    ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier",
+        "weihnachtsfeier"
+      ],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 1,
     "altOverride": "2 kollegen zeigen froehlich ihre karikaturzeichnung mit bierglas auf der weihnachtsfeier in tommys teufelskueche trier",
     "title": "Schnellzeichner Trier"
@@ -1916,12 +2955,17 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 10,
     "altOverride": "Kohlezeichnung mutter des braeutigams katze karikatur hochzeit trier",
     "title": "Schnellzeichner Trier"
@@ -1931,12 +2975,18 @@
       "Szenenmaler",
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler",
+        "schnellzeichner"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 11,
     "altOverride": "Kuenstlerin zeichnet die gaeste im gasthaus schornstein zur hochzeit",
     "title": "Live-Kunst Trier"
@@ -1945,27 +2995,43 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 12
   },
   "trier/13_paar-betrachtet-ueberrascht-seine-portraitzeichnung-von-hand-des-schnellzeichner-event.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 13,
     "altOverride": "Paar betrachtet ueberrascht seine portraitzeichnung von hand des schnellzeichner event",
     "title": "Schnellzeichner Trier"
   },
   "trier/14_portraetmalerin-portraitiert-paar-feier-in-gasthaus-schornstein.webp": {
     "categories": [],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 14,
     "altOverride": "Portraetmalerin portraitiert paar feier in gasthaus schornstein",
     "title": "Live-Kunst Trier"
@@ -1975,12 +3041,18 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "gartenparty"
-    ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "gartenparty"
+      ],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 15
   },
   "trier/16_schnellzeichnerin-zeichnet-paar-hochzeit-trier-saarburg.webp": {
@@ -1988,21 +3060,33 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 16
   },
   "trier/17_zwei-junge-maenner-zeigen-zufrieden-karikatur-mit-hobby-veranstaltung.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 17,
     "altOverride": "Zwei junge maenner zeigen zufrieden karikatur mit hobby veranstaltung",
     "title": "Schnellzeichner Trier"
@@ -2011,33 +3095,49 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 18
   },
   "trier/19_schnellzeichner-trier.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 19
   },
   "trier/2_braut-und-braeutigam-fliegen-mit-herz-luftballon-hochzeit-karikatur-osburg.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 2,
     "altOverride": "Braut und braeutigam fliegen mit herz luftballon hochzeit karikatur osburg",
     "title": "Schnellzeichner Trier"
@@ -2047,9 +3147,16 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 20
   },
   "trier/21_schnellzeichnerin-restaurant-zur-sim-trier.webp": {
@@ -2057,18 +3164,31 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 21
   },
   "trier/3_freundliche-karikatur-von-frau-mit-thema-finanzen.webp": {
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 3,
     "altOverride": "Freundliche karikatur von frau mit thema finanzen",
     "title": "Schnellzeichner Trier"
@@ -2078,9 +3198,16 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 4,
     "altOverride": "Gast sitzt schnellzeichnerin model dnner event restaurant zur sim trier",
     "title": "Schnellzeichner Trier"
@@ -2089,24 +3216,32 @@
     "categories": [
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 5,
     "altOverride": "Hochzeitsmaler mal bild bei hochzeit trier saarburg",
     "title": "Szenenmaler Trier"
   },
   "trier/6_hochzeitszeichner-zeichnet-lustiges-familien-portraet-hochzeit-trier-ruwer.webp": {
     "categories": [],
-    "anlaesse": [
-      "hochzeit"
-    ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 6,
     "altOverride": "Hochzeitszeichner zeichnet lustiges familien portraet hochzeit trier ruwer",
     "title": "Live-Kunst Trier"
@@ -2115,9 +3250,15 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 7,
     "altOverride": "Junge frau zeigt gluecklich ihre schnellkarikatur im restaurant zur sim trier",
     "title": "Schnellzeichner Trier"
@@ -2126,12 +3267,17 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "weihnachtsfeier"
-    ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "weihnachtsfeier"
+      ],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 8,
     "altOverride": "Junger mann zeigt freudig seine karikatur zur weihnachtsfeier in tommys teufelskueche trier",
     "title": "Schnellzeichner Trier"
@@ -2141,12 +3287,18 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "anlaesse": [
-      "firmenfeier"
-    ],
-    "orte": [
-      "trier"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "trier"
+      ]
+    },
     "priority": 9,
     "altOverride": "Karikaturistin portraitiert gast bei betriebsfeier in restaurant zur sim trier",
     "title": "Schnellzeichner Trier"
@@ -2155,13 +3307,18 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "geburtstag"
-    ],
-    "orte": [
-      "wiesbaden",
-      "mainz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "geburtstag"
+      ],
+      "landings": [
+        "wiesbaden",
+        "mainz"
+      ]
+    },
     "altOverride": "Ehepaar karikatur von schnellzeichner geburtstag feier mainz",
     "title": "Schnellzeichner Wiesbaden"
   },
@@ -2169,20 +3326,29 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "anlaesse": [
-      "geburtstag"
-    ],
-    "orte": [
-      "wiesbaden"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "geburtstag"
+      ],
+      "landings": [
+        "wiesbaden"
+      ]
+    },
     "altOverride": "Karikatur chef und zwei engel event geburtstag domaene mechthildshausen",
     "title": "Schnellzeichner Wiesbaden"
   },
   "wiesbaden/lustige-zeichnung-familienportraet-familienfeier-wiesbaden.webp": {
     "categories": [],
-    "orte": [
-      "wiesbaden"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "wiesbaden"
+      ]
+    },
     "altOverride": "Lustige zeichnung familienportraet familienfeier wiesbaden",
     "title": "Live-Kunst Wiesbaden"
   },
@@ -2191,18 +3357,29 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "wiesbaden",
-      "mainz"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "wiesbaden",
+        "mainz"
+      ]
+    },
     "altOverride": "Mann zeigt froh paar zeichnung von karikaturist event mainz",
     "title": "Schnellzeichner Wiesbaden"
   },
   "wiesbaden/witziges-schnell-portrait-als-fussballer-und-cheerleader-von-event-zeichner-wiesbaden-domaene-mechthildshausen.webp": {
     "categories": [],
-    "orte": [
-      "wiesbaden"
-    ],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "wiesbaden"
+      ]
+    },
     "altOverride": "Witziges schnell portrait als fussballer und cheerleader von event zeichner wiesbaden domaene mechthildshausen",
     "title": "Live-Kunst Wiesbaden"
   },
@@ -2210,9 +3387,15 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "wuppertal"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "wuppertal"
+      ]
+    },
     "priority": 1,
     "altOverride": "Mann.mit weißem bart haelt seine karikatur als poseidon von event illustrator wuppertal",
     "title": "Schnellzeichner Wuppertal"
@@ -2221,9 +3404,15 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "wuppertal"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "wuppertal"
+      ]
+    },
     "priority": 2,
     "altOverride": "Mutter und tochter dancer caricature by speed drawer wuppertal",
     "title": "Schnellzeichner Wuppertal"
@@ -2232,10 +3421,16 @@
     "categories": [
       "Schnellzeichner"
     ],
-    "orte": [
-      "wuppertal",
-      "wiesbaden"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "wuppertal",
+        "wiesbaden"
+      ]
+    },
     "priority": 3,
     "altOverride": "Paar lachend mit seiner karikatur zeichnung von schnellzeichner veranstaltung wiesbaden",
     "title": "Schnellzeichner Wuppertal"
@@ -2245,9 +3440,16 @@
       "Schnellzeichner",
       "Szenenmaler"
     ],
-    "orte": [
-      "wuppertal"
-    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "wuppertal"
+      ]
+    },
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"

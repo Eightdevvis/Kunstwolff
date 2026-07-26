@@ -11,7 +11,7 @@
       "source": "skills.json"
     }
   ],
-  "anlaesse": [
+  "events": [
     {
       "slug": "firmenfeier",
       "label": "Firmenfeier",
@@ -73,7 +73,7 @@
       "source": "extra"
     }
   ],
-  "orte": [
+  "landings": [
     {
       "slug": "berlin",
       "label": "berlin",

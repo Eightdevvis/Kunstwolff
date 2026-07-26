@@ -2,9 +2,9 @@
 //
 // Gespeist wird es automatisch aus den Quellen, die es ohnehin schon gibt:
 //   skills.json   → Dimension `skills`
-//   events.json   → Dimension `anlaesse` (die vier Event-Slugs)
-//   landings.md   → Dimension `orte`
-// Dazu die Anlässe aus EXTRA_ANLAESSE, die in den Inhalten vorkommen, aber
+//   events.json   → Dimension `events` (die vier Event-Slugs)
+//   landings.md   → Dimension `landings`
+// Dazu die Anlässe aus EXTRA_EVENTS, die in den Inhalten vorkommen, aber
 // (noch) keine eigene Seite haben.
 //
 // Jenny kann im Admin eigene Tags anlegen; die tragen `source: "custom"` und
@@ -13,7 +13,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import { EXTRA_ANLAESSE, mergeVocabulary, slugifyTag } from './tags.mjs';
+import { EXTRA_EVENTS, mergeVocabulary, slugifyTag } from './tags.mjs';
 
 const projectRoot = process.cwd();
 const configDir = path.join(projectRoot, 'public', 'config');
@@ -63,25 +63,25 @@ const existing = readJson(tagsPath) ?? {};
 
 const next = {
   skills: mergeVocabulary(existing.skills, readSkillLabels(), 'skills.json'),
-  anlaesse: mergeVocabulary(
-    existing.anlaesse,
+  events: mergeVocabulary(
+    existing.events,
     [
       ...readEventLabels().map((label) => ({ label, source: 'events.json' })),
       // Herkunft getrennt halten: diese stammen NICHT aus events.json, es gibt
       // für sie (noch) keine Seite. Wer später aufräumt, muss das unterscheiden
       // können.
-      ...EXTRA_ANLAESSE.map((label) => ({ label, source: 'extra' })),
+      ...EXTRA_EVENTS.map((label) => ({ label, source: 'extra' })),
     ],
     'extra'
   ),
-  orte: mergeVocabulary(existing.orte, readCityLabels(), 'landings.md'),
+  landings: mergeVocabulary(existing.landings, readCityLabels(), 'landings.md'),
 };
 
 // Event-Slugs müssen zeichengleich mit den Seiten-Slugs sein, sonst findet eine
 // Event-Seite ihre getaggten Bilder nicht. Das ist die eine Stelle, an der ein
 // abweichendes Label echten Schaden anrichtet – deshalb hier ein harter Check.
 const eventSlugs = (readJson(eventsJsonPath)?.events ?? []).map((e) => e?.slug).filter(Boolean);
-const anlassSlugs = new Set(next.anlaesse.map((a) => a.slug));
+const anlassSlugs = new Set(next.events.map((a) => a.slug));
 const missing = eventSlugs.filter((s) => !anlassSlugs.has(slugifyTag(s)));
 if (missing.length > 0) {
   console.error(`sync-tags: FEHLER - Event-Slugs ohne passenden Anlass-Tag: ${missing.join(', ')}`);
@@ -96,6 +96,6 @@ if (before === serialized) {
 } else {
   fs.mkdirSync(configDir, { recursive: true });
   fs.writeFileSync(tagsPath, serialized, 'utf-8');
-  const counts = `${next.skills.length} Skills, ${next.anlaesse.length} Anlässe, ${next.orte.length} Orte`;
+  const counts = `${next.skills.length} Skills, ${next.events.length} Anlässe, ${next.landings.length} Orte`;
   console.log(`sync-tags: ${before ? 'aktualisiert' : 'angelegt'} - ${counts}.`);
 }

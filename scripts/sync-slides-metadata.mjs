@@ -2,9 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import {
   normalizeTagList,
-  inferOrteFromKey,
-  inferAnlaesseFromKey,
+  inferLandingsFromKey,
+  inferEventsFromKey,
   slugSet,
+  DIMENSIONS as TAG_DIMENSIONS,
 } from './tags.mjs';
 
 const projectRoot = process.cwd();
@@ -12,9 +13,9 @@ const slidesRoot = path.join(projectRoot, 'public', 'img', 'slides');
 const tagsConfigPath = path.join(projectRoot, 'public', 'config', 'tags.json');
 
 /** Bekannte Ort-Slugs aus dem Vokabular – ohne die würde `mediathek` zum Ort. */
-const knownOrte = (() => {
+const knownLandings = (() => {
   try {
-    return slugSet(JSON.parse(fs.readFileSync(tagsConfigPath, 'utf-8')).orte);
+    return slugSet(JSON.parse(fs.readFileSync(tagsConfigPath, 'utf-8')).landings);
   } catch {
     // Kein/kaputtes tags.json: dann eben ohne Filter, sync-tags läuft davor.
     return new Set();
@@ -276,10 +277,26 @@ const readMetadata = () => {
         const priority = typeof value.priority === 'number' && !Number.isNaN(value.priority) ? value.priority : undefined;
         const enabled = typeof value.enabled === 'boolean' ? value.enabled : undefined;
 
+        // Tag-Block MUSS hier durchgereicht werden. Diese Funktion normalisiert
+        // und wirft dabei alles Unbekannte weg – bliebe `tags` unerwähnt, läse
+        // der Sync sie nie, würde sie bei jedem Lauf neu aus Pfad/Dateiname
+        // erraten und damit jede Zuordnung überschreiben, die Jenny im Admin
+        // gesetzt hat. Ein leeres Array ist eine bewusste Aussage („gehört
+        // nirgends hin") und muss ebenfalls erhalten bleiben – deshalb wird auf
+        // Array-Existenz geprüft, nicht auf Länge.
+        const rawTags = value.tags && typeof value.tags === 'object' && !Array.isArray(value.tags)
+          ? value.tags
+          : {};
+        const tags = {};
+        for (const dim of TAG_DIMENSIONS) {
+          if (Array.isArray(rawTags[dim])) tags[dim] = normalizeTagList(rawTags[dim]);
+        }
+
         return [
           normalizedKey,
           {
             categories,
+            ...(Object.keys(tags).length > 0 ? { tags } : {}),
             ...(altOverride ? { altOverride } : {}),
             ...(title ? { title } : {}),
             ...(typeof priority === 'number' ? { priority } : {}),
@@ -477,19 +494,31 @@ for (const key of imageKeys) {
   // Phase 5a: Anlass + Ort als eigene Dimensionen. Bisher steckte der Ort im
   // Ordnernamen und der Anlass gar nirgends – beide konkurrierten um denselben
   // Platz, weshalb ein Bild nie zugleich „Trier" und „Hochzeit" sein konnte.
-  // Beide werden EINMAL vorbelegt und danach nie wieder überschrieben; ab dann
-  // gilt, was im Admin steht (gleiche Haltung wie bei `priority`).
-  const orte = Array.isArray(existing.orte)
-    ? normalizeTagList(existing.orte)
-    : inferOrteFromKey(key, knownOrte);
-  const anlaesse = Array.isArray(existing.anlaesse)
-    ? normalizeTagList(existing.anlaesse)
-    : inferAnlaesseFromKey(key);
+  //
+  // Form und Benennung folgen dem, was FAQs seit jeher benutzen
+  // (`src/utils/faq.ts` FAQItem.tags, konsumiert von `matchesFAQContext`):
+  // ein verschachtelter Block mit den Dimensionen `skills` / `events` /
+  // `landings`. Bilder bekommen KEINE zweite, parallele Schreibweise – eine
+  // Konvention für alle Inhaltstypen.
+  //
+  // Vorbelegung greift EINMAL; steht der Block schon da, gilt er unverändert
+  // (gleiche Haltung wie bei `priority`).
+  const existingTags = existing.tags && typeof existing.tags === 'object' ? existing.tags : {};
+  const tags = {
+    skills: Array.isArray(existingTags.skills)
+      ? normalizeTagList(existingTags.skills)
+      : normalizeTagList(categories),
+    events: Array.isArray(existingTags.events)
+      ? normalizeTagList(existingTags.events)
+      : inferEventsFromKey(key),
+    landings: Array.isArray(existingTags.landings)
+      ? normalizeTagList(existingTags.landings)
+      : inferLandingsFromKey(key, knownLandings),
+  };
 
   const nextEntry = {
     categories,
-    ...(anlaesse.length > 0 ? { anlaesse } : {}),
-    ...(orte.length > 0 ? { orte } : {}),
+    tags,
     // Priority aus JSON preserved – wird nur noch vom Admin-Tool gesetzt, nicht mehr aus Dateinamen gelesen
     ...(typeof existing.priority === 'number' ? { priority: existing.priority } : {}),
     ...(typeof existing.altOverride === 'string' && existing.altOverride.trim()

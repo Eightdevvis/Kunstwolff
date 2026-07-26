@@ -31,7 +31,7 @@ export const slugifyTag = (value) =>
     .replace(/^-+|-+$/g, '');
 
 /** Die drei Dimensionen. Reihenfolge = Anzeigereihenfolge im Admin. */
-export const DIMENSIONS = ['skills', 'anlaesse', 'orte'];
+export const DIMENSIONS = ['skills', 'events', 'landings'];
 
 /**
  * Anlässe, die es in den Inhalten faktisch gibt, aber (noch) nicht als eigene
@@ -40,7 +40,7 @@ export const DIMENSIONS = ['skills', 'anlaesse', 'orte'];
  * solange keine Seite sie abfragt – und machen das KI-Auto-Tagging in Phase 6
  * deutlich brauchbarer, weil es mehr als vier Schubladen hat.
  */
-export const EXTRA_ANLAESSE = [
+export const EXTRA_EVENTS = [
   'Weihnachtsfeier',
   'Geburtstag',
   'Jubiläum',
@@ -142,7 +142,7 @@ export const slugSet = (vocabulary) =>
  * redaktionelle Annahme. Steht „kollegen" oder „mitarbeiter" im Namen, greift
  * die firmenfeier-Regel ohnehin zusätzlich.
  */
-export const ANLASS_KEYWORDS = {
+export const EVENT_KEYWORDS = {
   firmenfeier: ['firmenfeier', 'firmen', 'betriebsfeier', 'mitarbeiter', 'corporate', 'business', 'kollegen', 'company-party', 'firmenevent'],
   messe: ['messe', 'trade-show', 'tradeshow'],
   hochzeit: ['hochzeit', 'wedding', 'braut', 'braeutigam'],
@@ -164,7 +164,7 @@ const NON_PLACE_FOLDERS = new Set(['default', 'mediathek', 'events']);
  * Ort aus dem Ordner ableiten – aber nur, wenn der Ordner auch wirklich ein
  * bekannter Ort ist. Sonst würde aus dem Sammelordner `mediathek` ein „Ort".
  */
-export function inferOrteFromKey(key, knownOrte) {
+export function inferLandingsFromKey(key, knownOrte) {
   const raw = String(key ?? '');
   const found = [];
 
@@ -198,7 +198,7 @@ export function inferOrteFromKey(key, knownOrte) {
  * verlässliche Quelle, die Dateinamen-Stichwörter ergänzen sie – ein Bild in
  * `trier/` kann so „hochzeit" werden, was im Ordnermodell unmöglich war.
  */
-export function inferAnlaesseFromKey(key) {
+export function inferEventsFromKey(key) {
   const raw = String(key ?? '');
   const parts = raw.split('/');
   const found = [];
@@ -209,7 +209,7 @@ export function inferAnlaesseFromKey(key) {
   }
 
   const haystack = normalize(raw).replace(/[^a-z0-9]+/g, '-');
-  for (const [slug, keywords] of Object.entries(ANLASS_KEYWORDS)) {
+  for (const [slug, keywords] of Object.entries(EVENT_KEYWORDS)) {
     if (keywords.some((kw) => haystack.includes(kw))) found.push(slug);
   }
 
