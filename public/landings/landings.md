@@ -36,3 +36,4 @@ bw
 hanau
 stuttgart
 duesseldorf
+schnellzeichner-duesseldorf
