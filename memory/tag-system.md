@@ -56,7 +56,27 @@ geseedet, `extra` sind Anlässe ohne eigene Seite (kommen in den Inhalten vor),
 **Tag-Identität ist immer der Slug, nie das Label** (`slugifyTag()`). Das
 Vokabular wird im Admin gepflegt, also getippt — ohne Normalisierung wären
 „Weihnachtsfeier" und „weihnachtsfeier" zwei Tags und die Auto-Einsortierung
-fiele auseinander. Umlaute werden aufgelöst (`Jubiläum` → `jubilaum`).
+fiele auseinander.
+
+**Deutsche Umlaute werden AUSGESCHRIEBEN** (`Jubiläum` → `jubilaeum`, `Köln` →
+`koeln`, `Straßenfest` → `strassenfest`). Korrigiert 2026-07-28; vorher lief nur
+NFD-Zerlegung, mit zwei Folgen:
+
+- `Zürich` wurde `zurich`, während die Orte im Repo der ue-Konvention folgen
+  (`koeln`, `saarbruecken`, `duesseldorf`). Ein getippter Ort hätte den
+  vorhandenen Tag verfehlt und lautlos einen zweiten angelegt.
+- `ß` hat gar keine NFD-Zerlegung und fiel komplett heraus: `Straßenfest` wurde
+  `stra-enfest`, `Größere Gala` wurde `gro-ere-gala`.
+
+Das war vorher folgenlos, weil nur der Sync Slugs erzeugte. Mit der Chip-
+Oberfläche tippt Jenny sie — ab da entscheidet die Funktion über Treffer oder
+Dublette. Einzige betroffene Vokabel war `jubilaum` (in keinem Inhalt
+referenziert); sie wurde durch `jubilaeum` ersetzt.
+
+⚠️ `slugifyTag()` muss **zeichengleich** zu `src/utils/tagSlug.ts` im Admin-Repo
+bleiben. Beide Repos vergleichen dieselben Tags gegeneinander; eine Abweichung
+trennt sie lautlos. Der Admin hat dafür einen Test, der die erwarteten Slugs
+fest verdrahtet.
 
 **Harte Prüfung:** `sync-tags` bricht ab, wenn ein Event-Slug keinen passenden
 Anlass-Tag hätte — sonst fände die Event-Seite ihre Bilder nicht, und das fiele
@@ -143,8 +163,18 @@ ergänzt, muss dasselbe prüfen.
 
 ## Cross-Repo
 
-Das Admin-Tool muss die neuen Felder als Chips anbieten und `tags.json` lesen —
-inklusive „neuen Tag anlegen" (`source: "custom"`). Siehe `admin-tool.md`.
+**Erledigt 2026-07-28.** Das Admin-Tool bietet die Tags als Chips an (Bilder und
+Reviews), liest `tags.json` und kann eigene Tags anlegen (`source: "custom"`).
+Siehe `admin-tool.md`.
+
+Zwei Punkte, die dabei wichtig waren:
+
+- Solange das Rendering noch über `categories` einsortiert (Phase 5b steht aus),
+  führt der Admin `categories` beim Setzen von Skill-Tags **mit**. Sonst wählt
+  Jenny einen Skill und auf der Seite ändert sich nichts.
+- Neue Uploads bekommen eine Startbelegung aus ihrem Ablageort (Ordner → Ort,
+  `events/<slug>/` → Anlass). Ohne sie lägen sie ungetaggt herum und wären nach
+  der Umstellung auf keiner Seite mehr zu sehen.
 
 ## Bekannte Kosmetik
 

@@ -25,8 +25,35 @@ export const normalize = (value) =>
  * die Auto-Einsortierung. Das ist wichtig, weil das Vokabular im Admin gepflegt
  * wird und dort getippt statt ausgewählt werden kann.
  */
+/**
+ * Deutsche Umlaute AUSSCHREIBEN, bevor die Akzente fallen.
+ *
+ * Ohne diesen Schritt entstehen falsche Slugs, und zwar auf zwei Arten:
+ * NFD zerlegt „ü“ zu u+Akzent – „Zürich“ wurde damit „zurich“, wahrend die
+ * Orte im Repo der ue-Konvention folgen (`koeln`, `saarbruecken`,
+ * `duesseldorf`). Und „ß“ hat gar keine NFD-Zerlegung, fiel also komplett
+ * heraus: „Straßenfest“ wurde zu „stra-enfest“, „Größere Gala“ zu
+ * „gro-ere-gala“.
+ *
+ * Das ist kein Schönheitsfehler: sobald Jenny im Admin einen Tag TIPPT statt
+ * ihn auszuwählen, entscheidet diese Funktion, ob sie den vorhandenen Tag
+ * trifft oder lautlos einen zweiten anlegt.
+ */
+const GERMAN_MAP = [
+  [/ä/g, 'ae'], [/ö/g, 'oe'], [/ü/g, 'ue'],
+  [/Ä/g, 'ae'], [/Ö/g, 'oe'], [/Ü/g, 'ue'],
+  [/ß/g, 'ss'],
+];
+
+const transliterateGerman = (value) =>
+  GERMAN_MAP.reduce((acc, [re, ersatz]) => acc.replace(re, ersatz), String(value ?? ''));
+
+/**
+ * Muss zeichengleich zu `src/utils/tagSlug.ts` im Admin-Repo bleiben – beide
+ * Repos vergleichen Tags gegeneinander, eine Abweichung trennt sie lautlos.
+ */
 export const slugifyTag = (value) =>
-  normalize(value)
+  normalize(transliterateGerman(value))
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 

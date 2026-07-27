@@ -17,10 +17,29 @@ describe('slugifyTag – Tag-Identität', () => {
     expect(slugifyTag('  WEIHNACHTSFEIER  ')).toBe('weihnachtsfeier');
   });
 
-  it('loest Umlaute und Akzente auf', () => {
-    expect(slugifyTag('Jubiläum')).toBe('jubilaum');
+  // Deutsche Umlaute werden AUSGESCHRIEBEN, nicht auf den Grundbuchstaben
+  // reduziert – sonst verfehlt ein getippter Tag den vorhandenen Ortsslug.
+  it('schreibt deutsche Umlaute aus, passend zu den Ortsslugs im Repo', () => {
+    expect(slugifyTag('Jubiläum')).toBe('jubilaeum');
+    expect(slugifyTag('Zürich')).toBe('zuerich');
+    // Diese drei Orte existieren so im Repo (landings.md) – tippt jemand den
+    // Klarnamen, MUSS derselbe Slug herauskommen.
+    expect(slugifyTag('Köln')).toBe('koeln');
+    expect(slugifyTag('Saarbrücken')).toBe('saarbruecken');
+    expect(slugifyTag('Düsseldorf')).toBe('duesseldorf');
+  });
+
+  it('behandelt ß als ss statt es verschwinden zu lassen', () => {
+    // NFD zerlegt ß nicht – ohne eigene Regel wurde daraus ein Trennzeichen:
+    // "Straßenfest" ergab "stra-enfest".
+    expect(slugifyTag('Straßenfest')).toBe('strassenfest');
+    expect(slugifyTag('Größere Gala')).toBe('groessere-gala');
+  });
+
+  it('loest fremde Akzente weiterhin auf den Grundbuchstaben auf', () => {
+    // Nur Deutsch wird ausgeschrieben; franzoesische Akzente fallen wie bisher.
     expect(slugifyTag('Liège')).toBe('liege');
-    expect(slugifyTag('Zürich')).toBe('zurich');
+    expect(slugifyTag('Café')).toBe('cafe');
   });
 
   it('macht aus Trennern genau einen Bindestrich', () => {
