@@ -8,6 +8,21 @@ export type ReviewItem = {
   categories: string[];
   city: string;
   rating?: number;
+  /**
+   * Tag-System (Skill × Anlass × Ort). Gleiche Form wie bei FAQs
+   * (`FAQItem.tags` in faq.ts) und bei Bildern (`slides.meta.json`) – EINE
+   * Konvention für alle Inhaltstypen, damit sich Inhalte nach denselben Regeln
+   * einsortieren lassen statt nach ihrem Ablageort.
+   *
+   * `categories` (Skill) und `city` (Ort) bleiben daneben bestehen: sie werden
+   * heute vom Rendering benutzt. Der Tag-Block ist die Zukunft, nicht der
+   * sofortige Ersatz.
+   */
+  tags?: {
+    skills?: string[];
+    events?: string[];
+    landings?: string[];
+  };
 };
 
 const reviewsRoot = path.resolve('./public/reviews');
@@ -72,6 +87,17 @@ const parseReviewFile = (filePath: string): ReviewItem | null => {
       ? parsed.data.rating
       : undefined;
 
+  const rawTags =
+    parsed.data.tags && typeof parsed.data.tags === 'object' && !Array.isArray(parsed.data.tags)
+      ? (parsed.data.tags as Record<string, unknown>)
+      : {};
+  const tags = {
+    skills: toStringArray(rawTags.skills),
+    events: toStringArray(rawTags.events),
+    landings: toStringArray(rawTags.landings),
+  };
+  const hasTags = tags.skills.length > 0 || tags.events.length > 0 || tags.landings.length > 0;
+
   if (!author || !text || !city) {
     return null;
   }
@@ -82,6 +108,7 @@ const parseReviewFile = (filePath: string): ReviewItem | null => {
     categories,
     city,
     rating,
+    tags: hasTags ? tags : undefined,
   };
 };
 

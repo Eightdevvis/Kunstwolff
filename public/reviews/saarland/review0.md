@@ -2,6 +2,13 @@
 author: "Michael Pawletta"
 categories:
   - Schnellzeichner
+tags:
+  skills:
+    - schnellzeichner
+  events:
+    - hochzeit
+  landings:
+    - saarland
 ---
 Wir hatten Jenny als Karikaturistin auf unserer Hochzeit – und was sollen wir sagen? Sie war ein absoluter Publikumsliebling! Ihre Zeichnungen waren nicht nur unglaublich treffend und kreativ, sondern sorgten auch für jede Menge Spaß und Gesprächsstoff unter den Gästen.
 

@@ -104,10 +104,42 @@ Seit 2026-07-26 läuft der Walk rekursiv (`MAX_DEPTH = 2`): 194 → 234 Einträg
 - **5b:** `readFolderSlides()` durch eine Tag-Abfrage ersetzen. Erst danach
   lassen sich die 33 Duplikate gefahrlos auflösen — heute halten sie das
   Ordner-Rendering am Leben.
-- **5b:** Reviews haben Skill (`categories`) + Ort (Ordner), aber noch keine
-  `tags.events`.
+- **5b:** Rendering von Reviews/Bildern auf Tag-Abfrage umstellen (FAQs machen
+  es in `matchesFAQContext` schon vor).
 - **5c:** `srcset` im selben Aufwasch, weil 5b dieselben Dateien anfasst.
 - **6:** KI-Auto-Tagging auf diesem Vokabular.
+
+## Abdeckung je Inhaltstyp
+
+| Typ | | Stand |
+| :-- | --: | :-- |
+| FAQs | 71 | ✅ trugen `tags` schon immer, `matchesFAQContext` sortiert danach |
+| Bilder / Slides | 234 | ✅ `tags` in `slides.meta.json`, 87 mit Anlass UND Ort |
+| Reviews | 38 | ✅ `tags` im Frontmatter (35 weitere Dateien sind Vorlagen) |
+| Erinnerungen | 37 | erben über Bildpfade – eigene Tags unnötig |
+| Why | 37 | erben über Bildpfade – eigene Tags unnötig |
+
+Erinnerungen und Why referenzieren Bilder per Pfad (`"image": "/img/slides/…"`)
+und erben deren Zuordnung, sobald das Rendering danach fragt.
+
+### Reviews
+
+`scripts/sync-reviews-tags.mjs` (in `sync:content` nach `sync:tags`) ergänzt den
+Block **textuell** vor dem schließenden `---`, statt die Datei über gray-matter
+neu zu serialisieren: sonst würden alle Dateien umformatiert (Anführungszeichen,
+Feldreihenfolge) – ein riesiger Diff ohne Wert und ein unnötiges Risiko für den
+eigenen Frontmatter-Parser des Admin-Tools. Die Migration war entsprechend
+**+247/−0 Zeilen**, reine Einfügungen.
+
+Vorbelegung: `skills` aus `categories`, `landings` aus dem Ordner, `events` aus
+dem Fließtext (dieselbe `EVENT_KEYWORDS`-Tabelle wie bei Bildern). Vorhandene
+Blöcke werden nie angefasst. Vorlagen (`_vorlage.md`) bleiben außen vor.
+
+⚠️ **Cross-Repo-Vorbedingung, die dafür nötig war:** `ReviewManager.saveReview()`
+im Admin baute das Frontmatter aus `author` + `categories` NEU und hätte jeden
+`tags`-Block bei der ersten Bearbeitung gelöscht. Der Manager trägt jetzt das
+vollständige gelesene Frontmatter mit und schreibt es zurück. Wer dort ein Feld
+ergänzt, muss dasselbe prüfen.
 
 ## Cross-Repo
 

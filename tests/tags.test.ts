@@ -284,3 +284,78 @@ describe('slides.meta.json – Tag-Block bleibt erhalten', () => {
     expect(entry.tags).toEqual({ skills: [], events: [], landings: [] });
   });
 });
+
+describe('sync-reviews-tags.mjs', () => {
+  const scriptPath = path.resolve('./scripts/sync-reviews-tags.mjs');
+
+  function run(files: Record<string, string>, twice = false) {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sync-rev-'));
+    fs.mkdirSync(path.join(dir, 'public', 'config'), { recursive: true });
+    fs.writeFileSync(
+      path.join(dir, 'public', 'config', 'tags.json'),
+      JSON.stringify({ skills: [], events: [], landings: [{ slug: 'trier', label: 'Trier' }] })
+    );
+    for (const [rel, content] of Object.entries(files)) {
+      const full = path.join(dir, 'public', 'reviews', rel);
+      fs.mkdirSync(path.dirname(full), { recursive: true });
+      fs.writeFileSync(full, content);
+    }
+    spawnSync('node', [scriptPath], { cwd: dir, encoding: 'utf-8' });
+    if (twice) spawnSync('node', [scriptPath], { cwd: dir, encoding: 'utf-8' });
+    const out: Record<string, string> = {};
+    for (const rel of Object.keys(files)) {
+      out[rel] = fs.readFileSync(path.join(dir, 'public', 'reviews', rel), 'utf-8');
+    }
+    return out;
+  }
+
+  const review = (body: string, cats = '  - Szenenmaler') =>
+    `---\nauthor: "Test"\ncategories:\n${cats}\n---\n${body}\n`;
+
+  it('leitet Skill aus categories, Ort aus dem Ordner und Anlass aus dem Text ab', () => {
+    const out = run({ 'trier/review0.md': review('Wir hatten sie fuer unsere Hochzeit gebucht.') });
+    expect(out['trier/review0.md']).toContain('tags:');
+    expect(out['trier/review0.md']).toMatch(/skills:\n\s+- szenenmaler/);
+    expect(out['trier/review0.md']).toMatch(/events:\n\s+- hochzeit/);
+    expect(out['trier/review0.md']).toMatch(/landings:\n\s+- trier/);
+  });
+
+  it('schreibt leere Listen, wenn nichts erkennbar ist', () => {
+    const out = run({ 'trier/review0.md': review('Sehr schoen war es.', '  - Szenenmaler') });
+    expect(out['trier/review0.md']).toContain('events: []');
+  });
+
+  // Der Text darf NICHT umformatiert werden - sonst erzeugt die Migration einen
+  // riesigen Diff und riskiert den eigenen Frontmatter-Parser des Admin-Tools.
+  it('fuegt nur ein und formatiert nichts um', () => {
+    const original = review('Text bleibt.', '  - Szenenmaler');
+    const out = run({ 'trier/review0.md': original })['trier/review0.md'];
+    expect(out).toContain('author: "Test"');
+    for (const line of original.split('\n').filter(Boolean)) {
+      expect(out).toContain(line);
+    }
+  });
+
+  it('ruehrt einen vorhandenen tags-Block nicht an', () => {
+    const withTags = `---\nauthor: "T"\ntags:\n  skills:\n    - handgemacht\n---\nHochzeit!\n`;
+    const out = run({ 'trier/review0.md': withTags });
+    expect(out['trier/review0.md']).toBe(withTags);
+  });
+
+  it('laesst Vorlagen aus', () => {
+    const tpl = review('Vorlage');
+    expect(run({ 'trier/_vorlage.md': tpl })['trier/_vorlage.md']).toBe(tpl);
+  });
+
+  it('ist idempotent', () => {
+    const once = run({ 'trier/review0.md': review('Hochzeit') });
+    const twice = run({ 'trier/review0.md': review('Hochzeit') }, true);
+    expect(twice['trier/review0.md']).toBe(once['trier/review0.md']);
+  });
+
+  it('vergibt fuer den default-Ordner keinen Ort', () => {
+    const out = run({ 'default/review0.md': review('Messe war toll.') });
+    expect(out['default/review0.md']).toContain('landings: []');
+    expect(out['default/review0.md']).toMatch(/events:\n\s+- messe/);
+  });
+});
