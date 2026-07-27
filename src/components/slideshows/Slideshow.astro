@@ -5,7 +5,10 @@ type Slide = {
     alt?: string;
     title?: string;
     categories?: string[];
+    width?: number;
 };
+
+import { buildSrcSet, SLIDESHOW_SIZES } from '../../utils/responsiveImages';
 
 const { items = [], filteredCategories = [] } = Astro.props;
 
@@ -32,7 +35,14 @@ const filteredItems =
                 filteredItems.map((slide: Slide) => (
                     <div class="swiper-slide">
                         <a class="lg-item" href={slide.src} data-title={slide.title ?? ""}>
-                            <img src={slide.src} alt={slide.alt ?? ""} loading="lazy" decoding="async" />
+                            <img
+                                src={slide.src}
+                                srcset={buildSrcSet(slide.src, slide.width)}
+                                sizes={SLIDESHOW_SIZES}
+                                alt={slide.alt ?? ""}
+                                loading="lazy"
+                                decoding="async"
+                            />
                         </a>
                     </div>
                 ))

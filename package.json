@@ -22,10 +22,11 @@
     "predev": "npm run sync:content:safe",
     "dev": "astro dev",
     "prebuild": "npm run sync:content:safe",
-    "build": "astro build",
+    "build": "astro build && node scripts/generate-image-variants.mjs",
     "preview": "astro preview",
     "astro": "astro",
-    "test:unit": "vitest run"
+    "test:unit": "vitest run",
+    "variants": "node scripts/generate-image-variants.mjs"
   },
   "dependencies": {
     "@astrojs/preact": "^4.1.3",

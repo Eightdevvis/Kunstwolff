@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { readWebpWidth } from './webpSize';
 
 export type SlideItem = {
   src: string;
@@ -7,6 +8,12 @@ export type SlideItem = {
   title?: string;       // Optionaler Anzeigetitel (Lightbox) – unabhängig vom alt-Text
   categories?: string[];
   priority?: number;
+  /**
+   * Originalbreite in Pixeln. Nötig für `srcset`: angeboten werden dürfen nur
+   * Varianten, die auch erzeugt wurden – ein fehlender Kandidat lässt das Bild
+   * leer, ohne zweiten Versuch.
+   */
+  width?: number;
 };
 
 type SlideMetadataEntry = {
@@ -237,6 +244,7 @@ const readFolderSlides = (folderName: string): SlideItem[] => {
         categories: categories.length > 0 ? categories : undefined,
         priority,
         enabled,
+        width: readWebpWidth(path.join(folderPath, entry)) ?? undefined,
       };
     })
     .filter((entry) => entry.enabled)
