@@ -1,8 +1,39 @@
 # Tag-System (Skill × Anlass × Ort)
 
-**Stand:** Phase 5a umgesetzt 2026-07-26 — Datenmodell, Vokabular und Migration
-stehen. Das **Rendering liest noch nicht danach** (Phase 5b), die Tags sind
-also vorhanden, aber noch ohne Wirkung auf der Website.
+**Stand:** Phase 5a (Datenmodell/Vokabular/Migration) 2026-07-26, Phase 5b
+(**Rendering liest die Tags**) 2026-07-28. Die Tags wirken jetzt auf der
+Website.
+
+## Phase 5b: Umstellung des Renderings (2026-07-28)
+
+Geändert wurden genau zwei Stellen:
+
+| vorher | nachher |
+| :-- | :-- |
+| `getCitySlides(city)` = `readFolderSlides(city)` | `getSlidesByTag('landings', city)` |
+| `getEventSlides(slug)` = eigener Ordner-Reader (~80 Zeilen) | `getSlidesByTag('events', slug)` |
+
+**Harter Schnitt ohne Ordner-Fallback** — zwei parallele Modelle wären genau die
+Doppelrealität, die das Tag-System beseitigen soll. Abgesichert durch
+`scripts/tag-parity-check.mjs`: die Prüfung vergleicht für jede Seite das
+Ordner-Ergebnis gegen das Tag-Ergebnis und meldet, was verschwinden würde. Vor
+der Umstellung stand sie auf **0 Lücken bei 39 Seiten**.
+
+Nachher am gebauten `dist/` gegengeprüft (44 Seiten mit Slideshow):
+
+- **0 Seiten leer**, **0 echte Bildverluste**, **108 Bilder neu sichtbar**
+- Die scheinbaren „Verluste" auf `firmenfeier` und `mainz` waren
+  **Füllbilder** aus `default-selection.json`: `supplementWithDefaultSlides`
+  füllt auf `MIN_LANDING_SLIDES` (6) auf. Firmenfeier hatte **ein** eigenes Bild
+  und ist jetzt bei 28 — die Füllung entfällt zu Recht.
+
+**Der Gewinn ist bei Event-Seiten am größten**, weil dort der Ordnerzwang am
+härtesten war: Firmenfeier 1 → 28, Hochzeit 8 → 33, Messe 9 → 33. Die Bilder
+lagen längst im Repo, nur eben in Stadtordnern.
+
+**Preis:** Event-Seiten wiegen jetzt so viel wie Stadtseiten schon vorher
+(~0,7 MB → ~3 MB Slide-Gesamtgewicht, `loading="lazy"`, also Obergrenze statt
+Erstlast). Das macht `srcset` dringlicher, nicht optional.
 
 Gesamtplan: `reports/plan-bilder-upload-tags-2026-07-26.md`.
 

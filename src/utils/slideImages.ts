@@ -16,7 +16,17 @@ type SlideMetadataEntry = {
   title?: string;       // Anzeigetitel für Lightbox (optional, unabhängig von altOverride)
   priority?: number;
   enabled?: boolean;
+  tags?: SlideTags;
 };
+
+/** Die drei Tag-Dimensionen – kanonische Form, identisch zu FAQs und Reviews. */
+export type SlideTags = {
+  skills?: string[];
+  events?: string[];
+  landings?: string[];
+};
+
+export type TagDimension = 'skills' | 'events' | 'landings';
 
 type SlideMetadataMap = Record<string, SlideMetadataEntry>;
 
@@ -68,6 +78,28 @@ const toStringArray = (value: unknown): string[] => {
     .filter((item): item is string => typeof item === 'string')
     .map((item) => item.trim())
     .filter(Boolean);
+};
+
+/**
+ * Tag-Block aus den Metadaten lesen.
+ *
+ * Eine FEHLENDE Dimension und eine LEERE Liste sind nicht dasselbe: leer heißt
+ * „bewusst ohne", fehlend heißt „nie zugeordnet". `sync-slides-metadata.mjs`
+ * verlässt sich darauf, um Admin-Zuweisungen nicht bei jedem Lauf zu
+ * überschreiben – deshalb wird hier nichts aufgefüllt.
+ */
+const readTagBlock = (value: unknown): SlideTags | undefined => {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return undefined;
+  const raw = value as Record<string, unknown>;
+  const out: SlideTags = {};
+  let gefunden = false;
+  for (const dim of ['skills', 'events', 'landings'] as const) {
+    if (Array.isArray(raw[dim])) {
+      out[dim] = toStringArray(raw[dim]).map((t) => t.toLowerCase());
+      gefunden = true;
+    }
+  }
+  return gefunden ? out : undefined;
 };
 
 const isAllowedImage = (fileName: string): boolean => {
@@ -156,8 +188,9 @@ const readSlidesMetadata = (): SlideMetadataMap => {
           : undefined;
       const priority = toNumberOrUndefined(metadata.priority);
       const enabled = typeof metadata.enabled === 'boolean' ? metadata.enabled : undefined;
+      const tags = readTagBlock(metadata.tags);
 
-      return [key, { categories, altOverride, title, priority, enabled }] as const;
+      return [key, { categories, altOverride, title, priority, enabled, tags }] as const;
     });
 
     metadataCache = Object.fromEntries(entries);
@@ -269,7 +302,84 @@ export const getDefaultSlides = (): SlideItem[] => {
   return ordered;
 };
 
-export const getCitySlides = (city: string): SlideItem[] => readFolderSlides(city);
+/**
+ * Alle Slides – unabhängig vom Ordner, in dem sie liegen.
+ *
+ * Grundlage der Tag-Abfrage. Liest jeden Ordner (inkl. `events/<slug>/`, also
+ * eine Ebene tiefer) und hängt an jeden Slide seinen Metadaten-Key, damit
+ * Aufrufer die Tags nachschlagen können.
+ */
+const collectAllSlidesWithKeys = (): Array<{ slide: SlideItem; key: string }> => {
+  if (!fs.existsSync(slidesRoot)) return [];
+
+  const ordner: string[] = [];
+  for (const eintrag of fs.readdirSync(slidesRoot, { withFileTypes: true })) {
+    if (!eintrag.isDirectory()) continue;
+    ordner.push(eintrag.name);
+    // Event-Slides liegen eine Ebene tiefer (events/<anlass>/…) und wären
+    // sonst für jede Tag-Abfrage unsichtbar.
+    const tiefer = path.join(slidesRoot, eintrag.name);
+    for (const unter of fs.readdirSync(tiefer, { withFileTypes: true })) {
+      if (unter.isDirectory()) ordner.push(path.posix.join(eintrag.name, unter.name));
+    }
+  }
+  ordner.sort((a, b) => a.localeCompare(b));
+
+  const raus: Array<{ slide: SlideItem; key: string }> = [];
+  const gesehen = new Set<string>();
+  for (const ordnerName of ordner) {
+    for (const slide of readFolderSlides(ordnerName)) {
+      if (gesehen.has(slide.src)) continue;
+      gesehen.add(slide.src);
+      raus.push({ slide, key: decodeURIComponent(slide.src.replace('/img/slides/', '')) });
+    }
+  }
+  return raus;
+};
+
+/**
+ * Slides über einen Tag statt über den Ablageort finden.
+ *
+ * Der Unterschied zum Ordner-Modell: ein Bild kann Ort UND Anlass tragen und
+ * damit auf beiden Seiten erscheinen, ohne als Byte-Kopie ein zweites Mal im
+ * Repo zu liegen. Genau daher stammen die 33 Duplikate.
+ *
+ * Reihenfolge wie bisher: höhere `priority` zuerst, dann alphabetisch nach
+ * Pfad – damit der Wechsel die sichtbare Reihenfolge nicht durcheinanderwirft.
+ */
+export const getSlidesByTag = (dimension: TagDimension, slug: string): SlideItem[] => {
+  const gesucht = String(slug ?? '').toLowerCase();
+  if (!gesucht) return [];
+
+  const metadata = readSlidesMetadata();
+  const treffer = collectAllSlidesWithKeys().filter(({ key }) => {
+    const tags = metadata[key]?.tags;
+    return Array.isArray(tags?.[dimension]) && tags[dimension]!.includes(gesucht);
+  });
+
+  return treffer
+    .map(({ slide }) => slide)
+    .sort((a, b) => {
+      const nachPrio = (b.priority ?? 0) - (a.priority ?? 0);
+      if (nachPrio !== 0) return nachPrio;
+      return a.src.localeCompare(b.src);
+    });
+};
+
+/**
+ * Slides einer Stadtseite.
+ *
+ * Seit 2026-07-28 über den TAG, nicht mehr über den Ordner. Der Unterschied ist
+ * kein Detail: im Ordnermodell konnte ein Bild nur an EINER Seite hängen, weil
+ * es nur in einem Ordner liegen kann. Ort und Anlass schlossen sich damit
+ * gegenseitig aus, und wer ein Motiv auf beiden Seiten wollte, musste es als
+ * Byte-Kopie zweimal ins Repo legen.
+ *
+ * Vor der Umstellung mit `scripts/tag-parity-check.mjs` nachgewiesen: für alle
+ * 39 Seiten liefert die Tag-Abfrage mindestens das, was der Ordner lieferte –
+ * kein einziges Bild verschwindet, 110 kommen hinzu.
+ */
+export const getCitySlides = (city: string): SlideItem[] => getSlidesByTag('landings', city);
 
 export const getAllCitySlides = (): SlideItem[] => {
   if (!fs.existsSync(slidesRoot)) {

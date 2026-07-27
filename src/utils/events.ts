@@ -17,6 +17,7 @@
 import fs from 'fs';
 import path from 'path';
 import { isPageHiddenByPath } from './pageVisibility';
+import { getSlidesByTag } from './slideImages';
 
 // ─── Pfad-Konstanten ──────────────────────────────────────────────────────────
 const eventsRoot = path.resolve('./public/events');
@@ -247,91 +248,18 @@ export const getEventContent = (slug: string): EventContent => {
  * Die slides.meta.json wird ebenfalls ausgewertet – Metadaten-Key-Format:
  * "events/{slug}/dateiname.webp"
  */
-export const getEventSlides = (slug: string): EventSlideItem[] => {
-  const folderPath = path.join(eventSlidesRoot, slug);
-
-  if (!fs.existsSync(folderPath)) {
-    return [];
-  }
-
-  // slides.meta.json lesen (geteilte Datei mit Stadt-Slides)
-  let metadata: Record<string, Record<string, unknown>> = {};
-  if (fs.existsSync(slidesMetadataPath)) {
-    try {
-      const raw = fs.readFileSync(slidesMetadataPath, 'utf-8');
-      const parsed = JSON.parse(raw) as unknown;
-      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
-        metadata = parsed as Record<string, Record<string, unknown>>;
-      }
-    } catch {
-      // Fehler ignorieren, leeres Metadata-Objekt bleibt
-    }
-  }
-
-  // Ordner-Pfad relativ zur slides.meta.json: "events/{slug}"
-  const folderKey = `events/${slug}`;
-
-  const fileNames = fs
-    .readdirSync(folderPath, { withFileTypes: true })
-    .filter((entry) => entry.isFile())
-    .map((entry) => entry.name)
-    .filter((name) => allowedImageExtensions.has(path.extname(name).toLowerCase()))
-    // WebP-Deduplication: wenn .webp vorhanden ist, andere Formate rausfiltern
-    .filter((fileName, _, all) => {
-      const ext = path.extname(fileName).toLowerCase();
-      if (ext === '.webp') return true;
-      return !all.includes(`${path.basename(fileName, ext)}.webp`);
-    });
-
-  // Interner Hilfstyp: priority ist intern IMMER gesetzt (Default 0), wird aber
-  // am Ende weggemappt. Außerdem: title/categories werden hier explizit als
-  // `T | undefined` modelliert (statt optional `T?`), damit der Type-Guard im
-  // .filter() unten ohne `exactOptionalPropertyTypes`-Reibung greift.
-  type InternalEventSlide = {
-    src: string;
-    alt: string;
-    title: string | undefined;
-    categories: string[] | undefined;
-    priority: number;
-  };
-
-  return fileNames
-    .map((fileName): InternalEventSlide | null => {
-      // Metadata-Key: "events/{slug}/dateiname.webp"
-      const metaKey = normalizeMetadataKey(`${folderKey}/${fileName}`);
-      const meta = metadata[metaKey] as Record<string, unknown> | undefined;
-      const enabled = meta?.enabled !== false;
-
-      // enabled === false → Slide komplett ausblenden (per .filter unten weg)
-      if (!enabled) return null;
-
-      const categories = Array.isArray(meta?.categories)
-        ? (meta.categories as string[]).filter((c): c is string => typeof c === 'string')
-        : [];
-      const priority = typeof meta?.priority === 'number' ? meta.priority : 0;
-      const alt = typeof meta?.altOverride === 'string' && meta.altOverride.trim()
-        ? meta.altOverride.trim()
-        : normalizeAlt(fileName);
-      const title = typeof meta?.title === 'string' && meta.title.trim()
-        ? meta.title.trim()
-        : undefined;
-
-      return {
-        // Öffentlicher URL-Pfad: /img/slides/events/{slug}/{dateiname}
-        src: `/img/slides/events/${encodePathSegment(slug)}/${encodePathSegment(fileName)}`,
-        alt,
-        title,
-        categories: categories.length > 0 ? categories : undefined,
-        priority,
-      };
-    })
-    // Type-Guard greift jetzt sauber: Predicate-Typ === Map-Output-Typ
-    .filter((item): item is InternalEventSlide => item !== null)
-    // .priority ist hier garantiert number, kein `?? 0` nötig
-    .sort((a, b) => b.priority - a.priority || a.src.localeCompare(b.src))
-    // priority aus Rückgabe entfernen (intern only); Rest erfüllt EventSlideItem
-    .map(({ priority: _priority, ...slide }) => slide);
-};
+export const getEventSlides = (slug: string): EventSlideItem[] =>
+  // Seit 2026-07-28 über den TAG statt über den Ordner `events/{slug}/`.
+  //
+  // Der Gewinn ist hier am größten: die Firmenfeier-Seite hatte GENAU EIN
+  // eigenes Bild, obwohl 27 weitere Firmenfeier-Motive im Repo lagen – nur eben
+  // in Stadtordnern, weil ein Bild nicht in zwei Ordnern liegen kann. Mit Tags
+  // trägt dasselbe Bild Ort UND Anlass und erscheint auf beiden Seiten, ohne
+  // dass eine Kopie im Repo dafür nötig wäre.
+  //
+  // EventSlideItem ist strukturgleich zu SlideItem; die frühere Eigenimplementierung
+  // hat nur dieselbe Metadaten-Auswertung ein zweites Mal nachgebaut.
+  getSlidesByTag('events', slug);
 
 // ─── Event-Titelbild ──────────────────────────────────────────────────────────
 
