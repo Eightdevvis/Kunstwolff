@@ -215,18 +215,6 @@
       "landings": []
     }
   },
-  "events/hochzeit/grosseltern-mit-baby-familien-portraet-hochzeitsfeier-linslerhof-saarland.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [
-        "hochzeit"
-      ],
-      "landings": [
-        "saarland"
-      ]
-    }
-  },
   "events/hochzeit/hochzeit-einladungskarte-cartoon.webp": {
     "categories": [],
     "tags": {
@@ -329,16 +317,6 @@
       "landings": []
     }
   },
-  "events/messe/digital-speedpainter-cologne.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [
-        "messe"
-      ],
-      "landings": []
-    }
-  },
   "events/messe/digital-speedpainter-trade-show.webp": {
     "categories": [],
     "tags": {
@@ -373,22 +351,6 @@
         "messe"
       ],
       "landings": []
-    }
-  },
-  "events/messe/schnellzeichner-messe-koeln.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "tags": {
-      "skills": [
-        "schnellzeichner"
-      ],
-      "events": [
-        "messe"
-      ],
-      "landings": [
-        "koeln"
-      ]
     }
   },
   "events/messe/schnellzeichner-messe-nrw.webp": {
@@ -546,7 +508,8 @@
         "messe"
       ],
       "landings": [
-        "frankfurt"
+        "frankfurt",
+        "rhein-main-gebiet"
       ]
     },
     "priority": 16
@@ -679,7 +642,8 @@
       "skills": [],
       "events": [],
       "landings": [
-        "frankfurt"
+        "frankfurt",
+        "hessen"
       ]
     },
     "priority": 23,
@@ -1031,18 +995,6 @@
       ]
     },
     "priority": 5
-  },
-  "hessen/portraitmalerin-malt-aquarell-portraets-muttertagsaktion-bulgar-frankfurt.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": [
-        "hessen",
-        "frankfurt"
-      ]
-    },
-    "priority": 3
   },
   "hessen/schnellzeichner-dinner-event-alte-lokhalle-mainz.webp": {
     "categories": [
@@ -1484,7 +1436,9 @@
     "categories": [],
     "tags": {
       "skills": [],
-      "events": [],
+      "events": [
+        "messe"
+      ],
       "landings": [
         "koeln"
       ]
@@ -1825,22 +1779,7 @@
         "hochzeit"
       ],
       "landings": [
-        "karlsruhe"
-      ]
-    }
-  },
-  "mediathek/brautpaar-hochzeitsmaler-bw.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
-      "events": [
-        "hochzeit"
-      ],
-      "landings": [
+        "karlsruhe",
         "bw"
       ]
     }
@@ -1885,14 +1824,6 @@
       "landings": [
         "karlsruhe"
       ]
-    }
-  },
-  "mediathek/img_20251019_003048.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": []
     }
   },
   "mediathek/live-event-kuenstlerin-malt-szenen-hochzeit-heitlinger-genusswelten-baden-wuertemberg.webp": {
@@ -2234,26 +2165,6 @@
         "rhein-main-gebiet"
       ]
     }
-  },
-  "rhein-main-gebiet/karikaturistin-messe-frankfurt.webp": {
-    "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
-    ],
-    "tags": {
-      "skills": [
-        "schnellzeichner",
-        "szenenmaler"
-      ],
-      "events": [
-        "messe"
-      ],
-      "landings": [
-        "rhein-main-gebiet",
-        "frankfurt"
-      ]
-    },
-    "priority": 1
   },
   "rhein-main-gebiet/zeichnung-stammbaum-weinrebe-aschaffenburg.webp": {
     "categories": [],
