@@ -23,6 +23,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [Slides](content-slides.md) – Bilder, `slides.meta.json`, Lightbox, Fallback-Logik
 - [Tag-System](tag-system.md) – Skill × Anlass × Ort: `config/tags.json`, `tags.events`/`tags.landings` an Bildern, Migration; **Phase 5a+5b fertig – das Rendering liest die Tags**
 - [Responsive Bilder](responsive-images.md) – `srcset`/`sizes`, Varianten-Erzeugung nach dem Build, warum nicht `astro:assets`
+- [Vercel-Header](vercel-headers.md) – Cache-Control für `/img/*`, warum bewusst kein `immutable`
 - [Titelbild](content-titelbild.md) – Pfad, Metadaten, Fallback-Kette
 - [Reviews](content-reviews.md) – Markdown-Format, Fallback, MiniReviews-Anzeige
 - [Allgemeine Texte](content-site-texts.md) – `site-texts/content.json`, Startseiten-Texte, `landingIntros` (Einführungstext)
