@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { buildSrcSet, variantSrc, VARIANT_WIDTHS, SLIDESHOW_SIZES } from '../src/utils/responsiveImages';
+import { buildSrcSet, variantSrc, VARIANT_WIDTHS, SLIDESHOW_SIZES, SRCSET_AKTIV } from '../src/utils/responsiveImages';
 // @ts-expect-error – reines JS-Modul ohne Typen, wie die übrigen scripts/
 import { variantPath, VARIANT_WIDTHS as SKRIPT_WIDTHS } from '../scripts/generate-image-variants.mjs';
 import { readWebpWidth } from '../src/utils/webpSize';
@@ -28,7 +28,7 @@ describe('Varianten-Pfade – Markup und Build-Skript müssen sich treffen', () 
 });
 
 describe('buildSrcSet', () => {
-  it('bietet nur Stufen unterhalb des Originals an', () => {
+  it.runIf(SRCSET_AKTIV)('bietet nur Stufen unterhalb des Originals an', () => {
     // Das Build-Skript ueberspringt jede Breite >= Original (kein Hochskalieren).
     const set = buildSrcSet('/img/slides/trier/bild.webp', 1000);
     expect(set).toContain('-400.webp 400w');
@@ -36,6 +36,14 @@ describe('buildSrcSet', () => {
     expect(set).not.toContain('-1200.webp');
     // Das Original bleibt als groesste Stufe drin.
     expect(set).toContain('/img/slides/trier/bild.webp 1000w');
+  });
+
+  it.runIf(!SRCSET_AKTIV)('liefert bei gezogener Notbremse gar nichts', () => {
+    // SRCSET_AKTIV = false ist ein bewusster Zustand, kein Versehen: solange
+    // nicht bewiesen ist, dass die Varianten in der PRODUKTION ankommen, ist
+    // "nur das Original" die einzig sichere Auslieferung. Ein fehlender
+    // srcset-Kandidat zeigt gar kein Bild.
+    expect(buildSrcSet('/img/slides/trier/bild.webp', 1000)).toBe('');
   });
 
   it('liefert gar nichts, wenn die Breite unbekannt ist', () => {

@@ -25,7 +25,7 @@ const VARIANT_ROOT = '/img/variants';
  * Varianten in der Produktion ankommen, ist „nur das Original" die einzig
  * sichere Auslieferung.
  */
-const SRCSET_AKTIV = false;
+export const SRCSET_AKTIV = false;
 
 /**
  * Pfad einer Variante. Spiegelt `variantPath()` im Build-Skript – weichen die
