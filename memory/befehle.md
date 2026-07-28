@@ -23,6 +23,9 @@ npm run preview         # Build lokal prüfen
 | `npm run sync:content:safe` | Fehlertolerant (Teilfehler isoliert, Build/Dev läuft weiter) |
 | `npm run sync:landings` | Stadtordner für Slides und Reviews anlegen |
 | `npm run sync:skills` | Skill-Bildordner anlegen |
+| `npm run sync:tags` | Tag-Vokabular `public/config/tags.json` erzeugen/pflegen |
+| `npm run sync:reviews-tags` | Fehlende `tags:`-Blöcke in `public/reviews/**` ergänzen |
+| `npm run sync:faq-tags` | Fehlende `tags:`-Blöcke in `public/faq/**` ergänzen |
 | `npm run sync:title-images` | Titelbild-Ordner anlegen, `title.meta.json` initialisieren |
 | `npm run sync:slides` | Slide-Dateien und `slides.meta.json` synchronisieren |
 | `npm run sync:why` | `public/why/` JSON-Dateien und Why-Bildordner synchronisieren |
@@ -40,12 +43,15 @@ npm run preview         # Build lokal prüfen
 `sync:content` führt aus (siehe `sync-scripts.md` für Details):
 1. `sync:landings`
 2. `sync:skills`
-3. `sync:title-images`
-4. `sync:slides`
-5. `sync:why`
-6. `sync:events`
-7. `sync:erinnerungen`
-8. `sync:content`, aber auch `sync:content:safe`, hängen `validate:images` als letzten Schritt an (Bild-Referenzen prüfen). In `:safe` läuft er nur als Warnung (bleibt exit 0), hart blockiert er über `sync:content` im pre-commit-Hook.
+3. `sync:tags`
+4. `sync:reviews-tags`
+5. `sync:faq-tags`
+6. `sync:title-images`
+7. `sync:slides`
+8. `sync:why`
+9. `sync:events`
+10. `sync:erinnerungen`
+11. `sync:content`, aber auch `sync:content:safe`, hängen `validate:images` als letzten Schritt an (Bild-Referenzen prüfen). In `:safe` läuft er nur als Warnung (bleibt exit 0), hart blockiert er über `sync:content` im pre-commit-Hook.
 
 ## VS Code
 

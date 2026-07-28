@@ -4,4 +4,11 @@ answer: "Eine feste Frist gibt es nicht. Frühzeitige Anfragen erhöhen die Chan
 categories:
   - Schnellzeichner
   - Szenenmaler
+tags:
+  skills:
+    - schnellzeichner
+    - szenenmaler
+  events: []
+  landings:
+    - koblenz
 ---

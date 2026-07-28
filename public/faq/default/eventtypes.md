@@ -4,4 +4,10 @@ answer: "Wir arbeiten auf Firmenfeiern, Messen, Promotion, Shop-Events, Hochzeit
 categories:
   - Schnellzeichner
   - Szenenmaler
+tags:
+  skills:
+    - schnellzeichner
+    - szenenmaler
+  events: []
+  landings: []
 ---

@@ -4,4 +4,10 @@ answer: "Ja, wir integrieren Logos, Hashtags oder Event-Mottos direkt in die Zei
 categories:
   - Schnellzeichner
   - Szenenmaler
+tags:
+  skills:
+    - schnellzeichner
+    - szenenmaler
+  events: []
+  landings: []
 ---

@@ -4,4 +4,11 @@ answer: "Der Termin wird im Kalender nur für Sie reserviert. Buchen Sie daher b
 categories:
   - Schnellzeichner
   - Szenenmaler
+tags:
+  skills:
+    - schnellzeichner
+    - szenenmaler
+  events: []
+  landings:
+    - kaiserslautern
 ---

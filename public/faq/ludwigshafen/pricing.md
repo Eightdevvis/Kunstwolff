@@ -5,5 +5,8 @@ categories:
   - Schnellzeichner
 tags:
   skills:
-    - Schnellzeichner
+    - schnellzeichner
+  events: []
+  landings:
+    - ludwigshafen
 ---

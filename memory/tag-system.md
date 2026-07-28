@@ -1,8 +1,9 @@
 # Tag-System (Skill × Anlass × Ort)
 
 **Stand:** Phase 5a (Datenmodell/Vokabular/Migration) 2026-07-26, Phase 5b
-(**Rendering liest die Tags**) 2026-07-28. Die Tags wirken jetzt auf der
-Website.
+(Bilder-Rendering) und Phase 5d (Reviews + FAQs) 2026-07-28. **Alle drei
+Inhaltstypen wählen jetzt über Tags aus – der Ordner ist nur noch Ablage.**
+Offen ist nur noch Phase 6 (KI-Auto-Tagging).
 
 ## Phase 5b: Umstellung des Renderings (2026-07-28)
 
@@ -150,21 +151,35 @@ Alt-Texte, keine Priorität. Das in `content-slides.md` dokumentierte Key-Format
 
 Seit 2026-07-26 läuft der Walk rekursiv (`MAX_DEPTH = 2`): 194 → 234 Einträge.
 
-## Was noch fehlt (Phase 5b/5c/6)
+## Phase 5d: Reviews und FAQs (2026-07-28)
 
-- **5b:** `readFolderSlides()` durch eine Tag-Abfrage ersetzen. Erst danach
-  lassen sich die 33 Duplikate gefahrlos auflösen — heute halten sie das
-  Ordner-Rendering am Leben.
-- **5b:** Rendering von Reviews/Bildern auf Tag-Abfrage umstellen (FAQs machen
-  es in `matchesFAQContext` schon vor).
-- **5c:** `srcset` im selben Aufwasch, weil 5b dieselben Dateien anfasst.
+Damit wählt **jeder** Inhaltstyp über Tags aus. Details in `content-reviews.md`
+und `content-faqs.md`; hier nur, was am Tag-System selbst hängt:
+
+- **Reviews:** `reviewsForLanding` fragt `tags.landings` ab statt `review.city`.
+  Parität vorher bewiesen (jedes Review trägt den Ort-Tag seines Ordners) und als
+  Test festgenagelt; nach dem Build 39 Landing-Seiten gegen die Live-Seite
+  verglichen – kein Autor verschwunden.
+- **FAQs:** die Annahme in der Tabelle unten war **falsch**. FAQs trugen `tags`
+  eben NICHT „schon immer": am 2026-07-28 gemessen hatte von 71 Dateien keine
+  einzige einen Ort-Tag und nur eine einen Skill-Tag. `matchesFAQContext` las
+  Tags, die es nicht gab, und die Auswahl lief zu 100 % über den Ordner. Neu:
+  `scripts/sync-faq-tags.mjs` füllt sie, `matchesFAQContext` verknüpft die
+  Dimensionen mit UND statt ODER, `getFAQsForContext` ersetzt das Ordner-Gate.
+- **Lücke geschlossen:** `sync:tags`, `sync:reviews-tags` und `sync:faq-tags`
+  liefen nur in der manuellen Vollvariante, nicht in `sync:content:safe` – also
+  nicht im Vercel-Build. Ein im Admin neu angelegter Inhalt wäre ungetaggt und
+  damit unsichtbar geblieben. Jetzt in beiden Ketten.
+
+## Was noch fehlt (Phase 6)
+
 - **6:** KI-Auto-Tagging auf diesem Vokabular.
 
 ## Abdeckung je Inhaltstyp
 
 | Typ | | Stand |
 | :-- | --: | :-- |
-| FAQs | 71 | ✅ trugen `tags` schon immer, `matchesFAQContext` sortiert danach |
+| FAQs | 71 | ✅ seit 2026-07-28 vollständig getaggt (`sync-faq-tags.mjs`); 15 bewusst ohne Ort-Tag = gelten überall |
 | Bilder / Slides | 234 | ✅ `tags` in `slides.meta.json`, 87 mit Anlass UND Ort |
 | Reviews | 38 | ✅ `tags` im Frontmatter (35 weitere Dateien sind Vorlagen) |
 | Erinnerungen | 37 | erben über Bildpfade – eigene Tags unnötig |

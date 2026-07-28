@@ -4,4 +4,11 @@ answer: "Ja, denn so sichern Sie sich die größte Auswahl an verfügbaren Termi
 categories:
   - Schnellzeichner
   - Szenenmaler
+tags:
+  skills:
+    - schnellzeichner
+    - szenenmaler
+  events: []
+  landings:
+    - rheinland-pfalz
 ---

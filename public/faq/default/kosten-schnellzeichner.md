@@ -4,4 +4,9 @@ answer: "Der Preis für den Schnellzeichner richtet sich nach Ort, Zeit und Grö
 Wenn Sie für mehrere Events buchen, wird der Schnellzeichner günstiger."
 categories:
   - Schnellzeichner
+tags:
+  skills:
+    - schnellzeichner
+  events: []
+  landings: []
 ---

@@ -3,6 +3,14 @@ import { spawnSync } from 'child_process';
 const steps = [
   { name: 'sync:landings', script: 'scripts/sync-landings.mjs' },
   { name: 'sync:skills', script: 'scripts/sync-skills.mjs' },
+  // Das Tag-Vokabular MUSS vor den Inhalts-Tags laufen: sync-reviews-tags und
+  // sync-faq-tags verwerfen einen Ort, den tags.json nicht kennt. Ohne diesen
+  // Schritt bekäme eine neu angelegte Stadt nie Tags – die Inhalte lägen im
+  // Ordner und wären auf der Seite unsichtbar, weil die Auswahl seit
+  // 2026-07-28 allein über Tags läuft.
+  { name: 'sync:tags', script: 'scripts/sync-tags.mjs' },
+  { name: 'sync:reviews-tags', script: 'scripts/sync-reviews-tags.mjs' },
+  { name: 'sync:faq-tags', script: 'scripts/sync-faq-tags.mjs' },
   { name: 'sync:title-images', script: 'scripts/sync-title-images.mjs' },
   { name: 'sync:slides', script: 'scripts/sync-slides-metadata.mjs' },
   { name: 'sync:why', script: 'scripts/sync-why.mjs' },

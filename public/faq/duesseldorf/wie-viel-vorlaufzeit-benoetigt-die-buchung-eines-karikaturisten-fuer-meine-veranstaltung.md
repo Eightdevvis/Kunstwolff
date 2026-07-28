@@ -3,4 +3,10 @@ question: "Wie viel Vorlaufzeit benötigt die Buchung eines Karikaturisten für 
 answer: "Es gibt keine feste Vorlaufzeit. Für beliebte Termine empfehlen wir eine frühzeitige Buchung, kurzfristige Event-Anfragen sind jedoch jederzeit möglich."
 categories:
   - Schnellzeichner
+tags:
+  skills:
+    - schnellzeichner
+  events: []
+  landings:
+    - duesseldorf
 ---

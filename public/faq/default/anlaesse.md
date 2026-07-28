@@ -4,4 +4,10 @@ answer: "Kunstwolff tritt bei den unterschiedlichsten Veranstaltungen auf – da
 categories:
   - Schnellzeichner
   - Szenenmaler
+tags:
+  skills:
+    - schnellzeichner
+    - szenenmaler
+  events: []
+  landings: []
 ---

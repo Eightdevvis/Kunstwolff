@@ -3,11 +3,18 @@
 ## Ablage
 
 ```
-public/reviews/_vorlage.md              # Vorlage
-public/reviews/<stadt>/*.md             # stadtspezifische Reviews
-# 'default' bleibt als Fallback-Stadt-Key im Code unterstützt (Ordnername ODER
-# city:-Frontmatter), aktuell existiert aber KEIN public/reviews/default/-Ordner.
+public/reviews/_vorlage.md              # Vorlage (wird beim Einlesen übersprungen)
+public/reviews/<stadt>/*.md             # Reviews, nach Stadt abgelegt
 ```
+
+**Der Ordner entscheidet seit 2026-07-28 nichts mehr.** Er liefert beim Anlegen den
+Ort-Tag (`scripts/sync-reviews-tags.mjs`), danach ist er reine Ablage – die Auswahl läuft
+über `tags.landings`. Ein Review kann damit an **mehreren** Städten hängen, ohne als
+Kopie zweimal im Repo zu liegen (gleiche Umstellung wie bei Bildern und FAQs).
+
+Einen `public/reviews/default/`-Ordner gibt es nicht und gab es nie – der alte
+Default-Zweig im Code lief also ins Leere und die Auffüllung sprang direkt zu fremden
+Städten. „Allgemein" heißt jetzt: **kein** Ort-Tag.
 
 ## Format
 
@@ -32,17 +39,29 @@ Das war ein großartiges Event.
 
 **Body:** Der Review-Text – Pflicht.
 
-## Fallback-Logik
+## Auswahl- und Auffüll-Logik (`reviewsForLanding`, `src/utils/reviews.ts`)
 
 - Die Website zeigt **mindestens 7 Reviews** pro Seite
 - Reihenfolge der Quellen:
-  1. Stadt-Reviews
-  2. `default/`-Reviews
-  3. Reviews anderer Städte (alphabetisch zirkulär um die aktuelle Stadt)
+  1. Reviews mit passendem **`tags.landings`** (früher: passender Ordner)
+  2. Reviews **ohne** Ort-Tag (= allgemein; ersetzt den nie existierenden `default/`-Ordner)
+  3. Reviews anderer Orte (alphabetisch zirkulär um den aktuellen Ort, aus den
+     **vergebenen Ort-Tags** statt aus den Ordnernamen – sonst käme ein Ort, den es nur
+     per Tag gibt, in der Auffüllung nie vor)
 
 ## Filter
 
-Auf Skill-Seiten werden nur Reviews mit passender `categories` angezeigt.
+Auf Skill-Seiten zählen `categories` **oder** `tags.skills`. Beide zu prüfen kostet nichts
+und verhindert, dass ein Review durchfällt, dessen Tag-Block noch fehlt.
+
+## Warum die Umstellung nichts verlieren konnte
+
+Vorher gemessen und als Test festgehalten (`tests/content-tags.test.ts`): **alle 38 Reviews**
+tragen den Ort-Tag ihres Ordners, keine Datei weicht ab. Die Tag-Auswahl ist damit eine
+Obermenge der Ordner-Auswahl. Zusätzlich nach dem Build geprüft: über **39 Landing-Seiten**
+`dist` gegen die Live-Seite verglichen – kein einziger Review-Autor verschwunden.
+
+(Die früher notierten „74 Review-Dateien" waren inklusive 36 `_vorlage.md`; echte Reviews: 38.)
 
 ## Anzeige (MiniReviews.astro)
 

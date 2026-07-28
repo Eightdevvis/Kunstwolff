@@ -3,4 +3,10 @@ question: "Wie lange im Voraus sollte ich einen Schnellzeichner für mein Event 
 answer: "Je früher Sie Ihren Schnellzeichner buchen, desto größer sind die Chancen auf einen freien Termin. Für kurzfristige Events können Sie uns aber jederzeit anfragen – manchmal sind auch spontane Einsätze möglich."
 categories:
   - Schnellzeichner
+tags:
+  skills:
+    - schnellzeichner
+  events: []
+  landings:
+    - karlsruhe
 ---

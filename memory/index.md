@@ -21,13 +21,13 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [Skills](content-skills.md) – `skills.json`, automatische Seiten-Generierung
 - [Events](content-events.md) – `events.json`, content.json, Event-Bilder
 - [Slides](content-slides.md) – Bilder, `slides.meta.json`, Lightbox, Fallback-Logik
-- [Tag-System](tag-system.md) – Skill × Anlass × Ort: `config/tags.json`, `tags.events`/`tags.landings` an Bildern, Migration; **Phase 5a+5b fertig – das Rendering liest die Tags**
+- [Tag-System](tag-system.md) – Skill × Anlass × Ort: `config/tags.json`, Tag-Blöcke an Bildern/Reviews/FAQs, Migration; **Phase 5a+5b+5d fertig – Bilder, Reviews UND FAQs wählen über Tags aus, der Ordner ist nur noch Ablage**
 - [Responsive Bilder](responsive-images.md) – `srcset`/`sizes`, Varianten-Erzeugung nach dem Build, warum nicht `astro:assets`
 - [Vercel-Header](vercel-headers.md) – Cache-Control für `/img/*`, warum bewusst kein `immutable`
 - [Titelbild](content-titelbild.md) – Pfad, Metadaten, Fallback-Kette
-- [Reviews](content-reviews.md) – Markdown-Format, Fallback, MiniReviews-Anzeige
+- [Reviews](content-reviews.md) – Markdown-Format, **Auswahl über `tags.landings`**, Auffüll-Logik, MiniReviews-Anzeige
 - [Allgemeine Texte](content-site-texts.md) – `site-texts/content.json`, Startseiten-Texte, `landingIntros` (Einführungstext)
-- [FAQs](content-faqs.md) – Markdown-Format, Filterung
+- [FAQs](content-faqs.md) – Markdown-Format, **Auswahl über Tags (UND je Dimension, leer = gilt überall)**, `getFAQsForContext`
 - [Why-Sektion](content-why.md) – JSON-Format, Fallback-Kette, Bilder
 - [Erinnerungen](content-erinnerungen.md) – Pinnwand-Fotos, Fallback-Kette
 - [CinemaWelcome](content-cinema.md) – Startseiten-Konfigurator (Event→Wunsch→Geschmack), `cinema.json`, autoSelect, Ergebnis-Komposition

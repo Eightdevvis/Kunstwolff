@@ -4,4 +4,11 @@ answer: "Viele Kunden buchen mehrere Wochen oder Monate im Voraus. Dennoch nehme
 categories:
   - Schnellzeichner
   - Szenenmaler
+tags:
+  skills:
+    - schnellzeichner
+    - szenenmaler
+  events: []
+  landings:
+    - luxembourg
 ---

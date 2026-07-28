@@ -3,4 +3,10 @@ question: "Was kostet ein Karikaturist für eine Betriebsfeier, Messe oder ein F
 answer: "Die Preise richten sich nach Datum, PLZ und Veranstaltungsgröße. Gerne beraten wir Sie unverbindlich."
 categories:
   - Schnellzeichner
+tags:
+  skills:
+    - schnellzeichner
+  events: []
+  landings:
+    - duesseldorf
 ---

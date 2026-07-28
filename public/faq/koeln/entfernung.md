@@ -3,4 +3,10 @@ question: "Kann ich den schnellzeichner und Karikaturist nur in köln oder NRW b
 answer: "Sie können den Schnellzeichner und Karikaturist für Ihre Feier deutschlandweit buchen. Je nach Entfernung,, kommt dazu eine Pauschale dazu."
 categories:
   - Schnellzeichner
+tags:
+  skills:
+    - schnellzeichner
+  events: []
+  landings:
+    - koeln
 ---

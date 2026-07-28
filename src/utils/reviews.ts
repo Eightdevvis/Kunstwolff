@@ -147,36 +147,40 @@ const uniqueReviews = (reviews: ReviewItem[]): ReviewItem[] => {
   });
 };
 
-const getCityDirectoryKeys = (): string[] => {
-  if (!fs.existsSync(reviewsRoot)) {
-    return [];
-  }
+/**
+ * Ort-Treffer über den TAG, nicht über den Ablageort.
+ *
+ * Seit 2026-07-28 die einzige Ortsprüfung. Vorher entschied `review.city` –
+ * also der Ordner, in dem die Datei liegt. Ein Review konnte damit an genau
+ * EINER Stadt hängen, obwohl derselbe Kunde oft für mehrere Regionen spricht.
+ * Über Tags kann es an mehreren hängen, ohne als Kopie zweimal im Repo zu
+ * liegen (gleiche Umstellung wie bei den Bildern, `getSlidesByTag`).
+ *
+ * Nachgewiesen vor der Umstellung: alle 38 Reviews tragen den Ort-Tag ihres
+ * Ordners, keine Datei weicht ab (`tests/reviews-tags.test.ts` hält das fest).
+ * Die Umstellung kann also nichts verlieren, nur hinzufügen.
+ */
+const hatOrtTag = (review: ReviewItem, landingKey: string): boolean =>
+  (review.tags?.landings ?? []).some((tag) => normalize(tag) === landingKey);
 
-  return fs
-    .readdirSync(reviewsRoot, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => normalize(entry.name))
-    .sort((a, b) => a.localeCompare(b));
-};
+/**
+ * Reviews ohne Ort-Tag gelten überall.
+ *
+ * Das ersetzt den früheren `default`-Ordner, den es unter `public/reviews/` gar
+ * nicht (mehr) gab – der Default-Zweig lief also jahrelang ins Leere und die
+ * Auffüllung sprang direkt zu fremden Städten. "Allgemein" ist ab jetzt eine
+ * Eigenschaft des Inhalts statt seines Ablageorts.
+ */
+const istAllgemein = (review: ReviewItem): boolean =>
+  (review.tags?.landings ?? []).length === 0;
 
-const getSupplementCityOrder = (cityKey: string): string[] => {
-  const cityDirs = getCityDirectoryKeys().filter(
-    (key) => key !== defaultCityKey && key !== cityKey,
-  );
-
-  const allCities = [cityKey, ...cityDirs].sort((a, b) => a.localeCompare(b));
-  const currentIndex = allCities.indexOf(cityKey);
-
-  if (currentIndex === -1) {
-    return cityDirs;
-  }
-
-  const after = allCities.slice(currentIndex + 1).filter((key) => key !== cityKey);
-  const before = allCities.slice(0, currentIndex).filter((key) => key !== cityKey);
-
-  return [...after, ...before].filter((key) => key !== defaultCityKey);
-};
-
+/**
+ * Skill-Treffer aus Tag ODER `categories`.
+ *
+ * `categories` bleibt gültig, weil es das Feld ist, das Jenny im Admin sieht;
+ * der Tag ist die normalisierte Form davon. Beide zu prüfen kostet nichts und
+ * verhindert, dass ein Review durchfällt, dessen Tag-Block noch fehlt.
+ */
 const filterBySkill = (reviews: ReviewItem[], skill?: string): ReviewItem[] => {
   if (!skill) {
     return reviews;
@@ -184,40 +188,53 @@ const filterBySkill = (reviews: ReviewItem[], skill?: string): ReviewItem[] => {
 
   const skillKey = normalize(skill);
 
-  return reviews.filter((review) =>
-    review.categories.some((category) => normalize(category) === skillKey),
+  return reviews.filter(
+    (review) =>
+      review.categories.some((category) => normalize(category) === skillKey) ||
+      (review.tags?.skills ?? []).some((tag) => normalize(tag) === skillKey),
   );
 };
 
+/**
+ * Auffüll-Reihenfolge: alphabetisch ab der eigenen Stadt, dann von vorn.
+ *
+ * Gleiche Rotation wie vorher, nur speist sie sich jetzt aus den vergebenen
+ * Ort-TAGS statt aus den Ordnernamen. Sonst käme eine Stadt, die nur noch per
+ * Tag existiert, in der Auffüllung nie vor.
+ */
+const auffuellReihenfolge = (landingKey: string, all: ReviewItem[]): string[] => {
+  const vergeben = [
+    ...new Set(all.flatMap((review) => (review.tags?.landings ?? []).map(normalize))),
+  ].filter(Boolean);
+
+  const alle = [...new Set([landingKey, ...vergeben])].sort((a, b) => a.localeCompare(b));
+  const index = alle.indexOf(landingKey);
+
+  return [...alle.slice(index + 1), ...alle.slice(0, index)].filter((key) => key !== landingKey);
+};
+
 const reviewsForLanding = (city: string, skill?: string): ReviewItem[] => {
-  const cityKey = normalize(city);
+  const landingKey = normalize(city);
   const all = getAllReviews();
 
-  const cityReviews = filterBySkill(
-    all.filter((review) => normalize(review.city) === cityKey),
+  let combined = filterBySkill(
+    all.filter((review) => hatOrtTag(review, landingKey)),
     skill,
   );
 
-  let combined = [...cityReviews];
-
   if (combined.length < minLandingReviews) {
-    const defaultReviews = filterBySkill(
-      all.filter((review) => normalize(review.city) === defaultCityKey),
-      skill,
-    );
-    combined = uniqueReviews([...combined, ...defaultReviews]);
+    combined = uniqueReviews([...combined, ...filterBySkill(all.filter(istAllgemein), skill)]);
   }
 
   if (combined.length < minLandingReviews) {
-    const supplementCityKeys = getSupplementCityOrder(cityKey);
-
-    for (const supplementCity of supplementCityKeys) {
-      const citySupplement = filterBySkill(
-        all.filter((review) => normalize(review.city) === supplementCity),
-        skill,
-      );
-
-      combined = uniqueReviews([...combined, ...citySupplement]);
+    for (const fremderOrt of auffuellReihenfolge(landingKey, all)) {
+      combined = uniqueReviews([
+        ...combined,
+        ...filterBySkill(
+          all.filter((review) => hatOrtTag(review, fremderOrt)),
+          skill,
+        ),
+      ]);
 
       if (combined.length >= minLandingReviews) {
         break;

@@ -4,4 +4,11 @@ answer: "Je früher, desto besser. Dennoch lohnt sich auch bei kurzfristigem Bed
 categories:
   - Szenenmaler
   - Schnellzeichner
+tags:
+  skills:
+    - szenenmaler
+    - schnellzeichner
+  events: []
+  landings:
+    - ludwigshafen
 ---

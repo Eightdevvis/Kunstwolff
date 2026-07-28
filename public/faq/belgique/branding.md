@@ -4,4 +4,11 @@ answer: "Ja, ein individuelles Event-Branding ist möglich. Ob Logo, Slogan oder
 categories:
   - Schnellzeichner
   - Szenenmaler
+tags:
+  skills:
+    - schnellzeichner
+    - szenenmaler
+  events: []
+  landings:
+    - belgique
 ---

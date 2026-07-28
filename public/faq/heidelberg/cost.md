@@ -3,4 +3,10 @@ question: "Wie viel kostet der Schnellzeichner von Kunstwolff für Firmenfeiern,
 answer: "Der Preis wird individuell nach Ort, Termin und Umfang der Veranstaltung kalkuliert. Gerne erstellen wir Ihnen ein unverbindliches Angebot."
 categories:
   - Schnellzeichner
+tags:
+  skills:
+    - schnellzeichner
+  events: []
+  landings:
+    - heidelberg
 ---

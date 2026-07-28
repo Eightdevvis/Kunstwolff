@@ -3,4 +3,10 @@ question: "Gibt es eine empfohlene Vorlaufzeit für die Buchung des Schnellzeich
 answer: "Eine feste Frist gibt es nicht. Frühzeitige Anfragen erhöhen die Chancen auf einen freien Termin, kurzfristige Buchungen sind aber ebenfalls möglich."
 categories:
   - Schnellzeichner
+tags:
+  skills:
+    - schnellzeichner
+  events: []
+  landings:
+    - saarbruecken
 ---

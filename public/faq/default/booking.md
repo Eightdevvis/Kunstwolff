@@ -4,4 +4,10 @@ answer: "Gerne erstellen wir Ihnen ein unverbindliches Angebot. Senden Sie uns e
 categories:
   - Schnellzeichner
   - Szenenmaler
+tags:
+  skills:
+    - schnellzeichner
+    - szenenmaler
+  events: []
+  landings: []
 ---

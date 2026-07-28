@@ -4,4 +4,11 @@ answer: "Am besten so früh wie möglich. Falls es einmal spontan sein muss, kö
 categories:
   - Schnellzeichner
   - Szenenmaler
+tags:
+  skills:
+    - schnellzeichner
+    - szenenmaler
+  events: []
+  landings:
+    - schweiz
 ---

@@ -4,4 +4,11 @@ answer: "Unsere Künstler passen die Zeichnungen an Ihr Event an. Logos, Unterne
 categories:
   - Szenenmaler
   - Schnellzeichner
+tags:
+  skills:
+    - szenenmaler
+    - schnellzeichner
+  events: []
+  landings:
+    - saarland
 ---

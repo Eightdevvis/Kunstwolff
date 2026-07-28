@@ -4,4 +4,9 @@ answer: "Die Dauer hängt vom Event ab. In der Regel zeichnen wir 3–5 Minuten 
 Bei großen Events oder mehrstündigen Engagements stimmen wir vorher ein flexibles Timing ab."
 categories:
   - Schnellzeichner
+tags:
+  skills:
+    - schnellzeichner
+  events: []
+  landings: []
 ---

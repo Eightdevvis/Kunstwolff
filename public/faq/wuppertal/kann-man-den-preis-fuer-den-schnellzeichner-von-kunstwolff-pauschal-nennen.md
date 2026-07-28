@@ -3,4 +3,10 @@ question: "Kann man den Preis für den Schnellzeichner von Kunstwolff pauschal n
 answer: "Da jede Veranstaltung individuell ist, hängt der Preis von mehreren Faktoren wie Datum, Ort und Größe des Events ab. Gerne erstellen wir Ihnen ein maßgeschneidertes Angebot."
 categories:
   - Schnellzeichner
+tags:
+  skills:
+    - schnellzeichner
+  events: []
+  landings:
+    - wuppertal
 ---

@@ -16,7 +16,6 @@ export type FAQItem = {
 };
 
 const faqRoot = path.resolve('./public/faq');
-const defaultCityKey = 'default';
 
 /**
  * i18n (Phase 1): FAQ-Wurzel je Locale. de = public/faq (unverändert), sonst
@@ -102,35 +101,80 @@ type FAQFilterContext = {
   city?: string;
 };
 
-export const matchesFAQContext = (faq: FAQItem, context: FAQFilterContext): boolean => {
-  const categoryKeys = (context.categories ?? []).map(normalize).filter(Boolean);
+/**
+ * Eine Tag-Dimension prüfen.
+ *
+ * Zwei Regeln, mehr nicht:
+ * - Fragt der Kontext diese Dimension nicht ab (kein Ort, kein Skill), passt jede FAQ.
+ * - Trägt die FAQ in dieser Dimension KEINEN Tag, gilt sie überall. Genau das
+ *   ersetzt den früheren `default`-Ordner: "allgemein" ist ab jetzt eine
+ *   Eigenschaft des Inhalts, keine Eigenschaft seines Ablageorts.
+ *
+ * Sonst muss der Tag sitzen.
+ */
+const dimensionPasst = (faqTags: string[] | undefined, gesucht: string[]): boolean => {
+  if (gesucht.length === 0) return true;
+  const vorhanden = (faqTags ?? []).map(normalize).filter(Boolean);
+  if (vorhanden.length === 0) return true;
+  return vorhanden.some((tag) => gesucht.includes(tag));
+};
+
+const kontextSchluessel = (context: FAQFilterContext) => {
   const cityKey = normalize(context.city ?? '');
-  const isEventContext = cityKey.startsWith('events/');
-  const eventKey = isEventContext ? cityKey.replace(/^events\//, '') : '';
-  const landingKey = !isEventContext ? cityKey : '';
-  const skillKeys = categoryKeys;
+  const istEvent = cityKey.startsWith('events/');
+  return {
+    skillKeys: (context.categories ?? []).map(normalize).filter(Boolean),
+    eventKeys: istEvent ? [cityKey.replace(/^events\//, '')].filter(Boolean) : [],
+    landingKeys: !istEvent && cityKey ? [cityKey] : [],
+  };
+};
 
-  const categoryMatch =
-    categoryKeys.length === 0
-      ? true
-      : !!faq.categories?.some((cat) => categoryKeys.includes(normalize(cat)));
+/**
+ * Passt eine FAQ zu Ort UND Skill?
+ *
+ * Vorher waren die vier Teilprüfungen mit ODER verknüpft. Das klang harmlos,
+ * bedeutete aber: eine FAQ mit passendem Skill erschien auf JEDER Stadtseite,
+ * egal wo sie hingehört. Deshalb musste FAQ.astro vorher über den Ordner
+ * filtern – und deshalb war der Tag-Teil faktisch wirkungslos. Mit UND über
+ * die Dimensionen (und "leer gilt überall" innerhalb einer Dimension) trägt
+ * die Auswahl allein, das Ordner-Gate kann weg.
+ */
+export const matchesFAQContext = (faq: FAQItem, context: FAQFilterContext): boolean => {
+  const { skillKeys, eventKeys, landingKeys } = kontextSchluessel(context);
 
-  const skillTagMatch =
-    skillKeys.length === 0
-      ? true
-      : !!faq.tags?.skills?.some((tag) => skillKeys.includes(normalize(tag)));
+  // Skill steht bei FAQs an zwei Stellen: im Tag-Block und im alten
+  // `categories`-Feld. Beide zählen, sonst verlöre eine ungetaggte FAQ
+  // ihre Skill-Zuordnung.
+  const skillTags = [...(faq.tags?.skills ?? []), ...(faq.categories ?? [])];
 
-  const eventTagMatch =
-    eventKey.length === 0
-      ? true
-      : !!faq.tags?.events?.some((tag) => normalize(tag) === eventKey);
+  return (
+    dimensionPasst(skillTags, skillKeys) &&
+    dimensionPasst(faq.tags?.events, eventKeys) &&
+    dimensionPasst(faq.tags?.landings, landingKeys)
+  );
+};
 
-  const landingTagMatch =
-    landingKey.length === 0
-      ? true
-      : !!faq.tags?.landings?.some((tag) => normalize(tag) === landingKey);
+/**
+ * Wie viele der abgefragten Dimensionen trifft die FAQ ausdrücklich?
+ *
+ * Nur für die Reihenfolge: die FAQ, die den Ort wirklich nennt, gehört vor die
+ * allgemeine. Ohne das entschiede die Lesereihenfolge der Dateien darüber,
+ * was in den ersten `maxItems` landet – und die Stadtseite zeigte ausgerechnet
+ * ihre eigenen Fragen nicht.
+ */
+const trefferGenauigkeit = (faq: FAQItem, context: FAQFilterContext): number => {
+  const { skillKeys, eventKeys, landingKeys } = kontextSchluessel(context);
+  const trifft = (faqTags: string[] | undefined, gesucht: string[]): number => {
+    if (gesucht.length === 0) return 0;
+    const vorhanden = (faqTags ?? []).map(normalize).filter(Boolean);
+    return vorhanden.some((tag) => gesucht.includes(tag)) ? 1 : 0;
+  };
 
-  return categoryMatch || skillTagMatch || eventTagMatch || landingTagMatch;
+  return (
+    trifft(faq.tags?.landings, landingKeys) +
+    trifft(faq.tags?.events, eventKeys) +
+    trifft([...(faq.tags?.skills ?? []), ...(faq.categories ?? [])], skillKeys)
+  );
 };
 
 export const getAllFAQs = (locale: Locale = DEFAULT_LOCALE): FAQItem[] => {
@@ -146,34 +190,30 @@ export const getAllFAQs = (locale: Locale = DEFAULT_LOCALE): FAQItem[] => {
   return parsed;
 };
 
-export const getFAQsByCategory = (category: string): FAQItem[] => {
-  const all = getAllFAQs();
-  const categoryKey = normalize(category);
+/**
+ * DIE Auswahlfunktion für FAQs – seit 2026-07-28 die einzige.
+ *
+ * Vorher entschied `getFAQsByCity` über den ORDNER, welche FAQs überhaupt in
+ * Frage kamen; die Tags durften danach nur noch aussieben. Eine FAQ, die per
+ * Tag nach Trier gehörte, aber woanders lag, erschien deshalb nie – und Jenny
+ * konnte im Admin Tags vergeben, die nichts bewirkten.
+ *
+ * Jetzt entscheiden die Tags, und zwar allein. Der Ordner bestimmt beim Anlegen
+ * noch den Start-Tag (`scripts/sync-faq-tags.mjs`), danach ist er nur noch
+ * Ablage. Dieselbe Umstellung wie bei den Bildern (`getSlidesByTag`) und den
+ * Reviews (`reviewsForLanding`).
+ *
+ * Sortierung: erst die FAQs, die den Kontext ausdrücklich nennen, dann die
+ * allgemeinen. Die Lesereihenfolge innerhalb einer Gruppe bleibt erhalten.
+ */
+export const getFAQsForContext = (
+  context: FAQFilterContext,
+  locale: Locale = DEFAULT_LOCALE,
+): FAQItem[] => {
+  const passend = getAllFAQs(locale).filter((faq) => matchesFAQContext(faq, context));
 
-  return all.filter((faq) =>
-    faq.categories?.some((cat) => normalize(cat) === categoryKey)
-  );
-};
-
-export const getFAQsByCity = (city: string, locale: Locale = DEFAULT_LOCALE): FAQItem[] => {
-  const all = getAllFAQs(locale);
-  const cityKey = normalize(city);
-
-  const cityFaqs = all.filter((faq) => normalize(faq.city || '') === cityKey);
-  
-  // Falls nicht genug FAQs für die Stadt, default-FAQs hinzufügen
-  if (cityFaqs.length === 0) {
-    return all.filter((faq) => normalize(faq.city || '') === defaultCityKey);
-  }
-
-  return cityFaqs;
-};
-
-export const getFAQsByCategories = (categories: string[]): FAQItem[] => {
-  const all = getAllFAQs();
-  const categoryKeys = categories.map(normalize);
-
-  return all.filter((faq) =>
-    faq.categories?.some((cat) => categoryKeys.includes(normalize(cat)))
-  );
+  return passend
+    .map((faq, index) => ({ faq, index, genauigkeit: trefferGenauigkeit(faq, context) }))
+    .sort((a, b) => b.genauigkeit - a.genauigkeit || a.index - b.index)
+    .map((eintrag) => eintrag.faq);
 };

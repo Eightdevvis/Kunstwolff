@@ -1,44 +1,32 @@
 ---
-import { getAllFAQs, getFAQsByCity, getFAQsByCategories, matchesFAQContext, type FAQItem } from '../utils/faq';
+import { getFAQsForContext, type FAQItem } from '../utils/faq';
+import { DEFAULT_LOCALE, type Locale } from '../i18n/config';
 
-const { 
+const {
   categories = [],
   city = '',
   faqs = [],
   interactive = false,
   maxItems = 4,
-} = Astro.props as { 
-  categories?: string[]; 
+  locale = DEFAULT_LOCALE,
+} = Astro.props as {
+  categories?: string[];
   city?: string;
-  faqs?: FAQItem[]; 
+  faqs?: FAQItem[];
   interactive?: boolean;
   maxItems?: number;
+  locale?: Locale;
 };
 
-let list: FAQItem[];
-
-if (faqs.length > 0) {
-  // Wenn FAQs explizit übergeben werden, nutze diese
-  list = faqs;
-} else if (categories.length > 0 && city) {
-  // Wenn Stadt + Kategorien übergeben werden, zuerst nach Stadt filtern, dann nach Kategorien
-  const cityFaqs = getFAQsByCity(city);
-  list = cityFaqs.filter((faq) => matchesFAQContext(faq, { categories, city }));
-
-  // Fallback: wenn in der Stadt keine Kategorie-FAQs gefunden wurden, zumindest Kategorie-FAQs anzeigen
-  if (list.length === 0) {
-    list = getFAQsByCategories(categories).filter((faq) => matchesFAQContext(faq, { categories, city }));
-  }
-} else if (categories.length > 0) {
-  // Wenn Kategorien übergeben werden, filtere danach
-  list = getFAQsByCategories(categories).filter((faq) => matchesFAQContext(faq, { categories }));
-} else if (city) {
-  // Wenn Stadt übergeben wird, filtere danach
-  list = getFAQsByCity(city).filter((faq) => matchesFAQContext(faq, { city }));
-} else {
-  // Sonst alle FAQs laden
-  list = getAllFAQs();
-}
+// Eine Auswahl statt vier Zweigen: `getFAQsForContext` prüft Ort und Skill je
+// als eigene Tag-Dimension, "kein Tag" heisst "gilt überall". Damit braucht es
+// weder das Ordner-Gate noch die Fallback-Treppe von vorher – beides existierte
+// nur, weil die alte ODER-Prüfung zu viel durchliess.
+//
+// `locale` wurde bisher NICHT angenommen: `src/pages/fr/[landing].astro` reicht
+// es seit dem i18n-Fundament durch, die Komponente ignorierte es, und die
+// französischen Seiten zeigten deutsche FAQs.
+const list: FAQItem[] = faqs.length > 0 ? faqs : getFAQsForContext({ categories, city }, locale);
 
 // Fallback auf Default-FAQs wenn keine FAQs gefunden
 const DEFAULT_FAQS: FAQItem[] = [

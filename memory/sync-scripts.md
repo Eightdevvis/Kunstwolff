@@ -25,12 +25,23 @@ npm run sync:content:safe  # fehlertolerant (Teilfehler isoliert, Build/Dev läu
 | :-- | :-- | :-- |
 | 1 | `sync-landings.mjs` | Erstellt `public/img/slides/{city}/`, `public/reviews/{city}/`, `public/faq/{city}/`; merged Slug-Kollisionen; legt Validierungsreports in `reports/validation/` ab |
 | 2 | `sync-skills.mjs` | Erstellt `public/img/UnsereFähigkeitenBilder/{skill}/` |
-| 3 | `sync-title-images.mjs` | Erstellt `public/img/Titelbild/{city}/` |
-| 4 | `sync-slides-metadata.mjs` | Pflegt `slides.meta.json` (Priority-Prefix, Categories, Migration) |
-| 5 | `sync-why.mjs` | Erstellt `public/why/{city}.json`, `public/why/{skill}.json`, `public/img/why/{key}/benefit-{1-4}/` |
-| 6 | `sync-events.mjs` | Erstellt `public/img/slides/events/{event}/`, `public/img/Titelbild/events/{event}/`, `public/events/{event}/content.json` (bestehende NICHT überschreiben) |
-| 7 | `sync-erinnerungen.mjs` | Erstellt `public/erinnerungen/{city}.json`, `public/erinnerungen/{skill}.json` (bestehende NICHT überschreiben) |
-| 8 | `validate-image-refs.mjs` | **Guard:** scannt alle literalen `/img/…`-Verweise in `src/` + `public/` (json/md/astro/ts) und prüft, ob die Zieldatei existiert. **Exit 1 bei totem Verweis** → bricht `sync:content` ab |
+| 3 | `sync-tags.mjs` | Erzeugt/pflegt `public/config/tags.json` (Vokabular Skill × Anlass × Ort) |
+| 4 | `sync-reviews-tags.mjs` | Ergänzt fehlende `tags:`-Blöcke in `public/reviews/**` (Ort aus Ordner, Skills aus `categories`, Anlass aus dem Text) |
+| 5 | `sync-faq-tags.mjs` | Ergänzt fehlende `tags:`-Blöcke in `public/faq/**` (Ort aus Ordner, Skills aus `categories`; Anlass wird **nicht** geraten) |
+| 6 | `sync-title-images.mjs` | Erstellt `public/img/Titelbild/{city}/` |
+| 7 | `sync-slides-metadata.mjs` | Pflegt `slides.meta.json` (Priority-Prefix, Categories, Migration) |
+| 8 | `sync-why.mjs` | Erstellt `public/why/{city}.json`, `public/why/{skill}.json`, `public/img/why/{key}/benefit-{1-4}/` |
+| 9 | `sync-events.mjs` | Erstellt `public/img/slides/events/{event}/`, `public/img/Titelbild/events/{event}/`, `public/events/{event}/content.json` (bestehende NICHT überschreiben) |
+| 10 | `sync-erinnerungen.mjs` | Erstellt `public/erinnerungen/{city}.json`, `public/erinnerungen/{skill}.json` (bestehende NICHT überschreiben) |
+| 11 | `validate-image-refs.mjs` | **Guard:** scannt alle literalen `/img/…`-Verweise in `src/` + `public/` (json/md/astro/ts) und prüft, ob die Zieldatei existiert. **Exit 1 bei totem Verweis** → bricht `sync:content` ab |
+
+> **Schritte 3–5 sind seit 2026-07-28 auch in `sync:content:safe`** – vorher liefen sie
+> NUR in der manuellen Vollvariante. Das war eine echte Lücke: seit Reviews und FAQs über
+> Tags ausgewählt werden, wäre ein im Admin neu angelegter Inhalt ohne Tag-Block auf der
+> Seite unsichtbar geblieben, weil der Vercel-Build nur `:safe` ausführt.
+>
+> Die Reihenfolge ist zwingend: `sync:tags` **vor** `sync:reviews-tags`/`sync:faq-tags`,
+> denn beide verwerfen einen Ort, den `tags.json` nicht kennt.
 
 > **Step 8 (`validate:images`) – warum:** Der pre-push-Hook konvertiert Bilder zu `.webp` und löscht Originale, aktualisiert aber keine Verweise → tote `.jpg`-Pfade (404). Der Guard fängt das vor Commit (hart in `sync:content`) bzw. warnt bei dev/build (tolerant in `sync:content:safe`, das immer exit 0 macht). Eingeführt 2026-06-05 nachdem mehrfach jpg→webp-Leichen auf Live gingen (Samples, frankfurt.json, Luxembourg-Stub, Hochzeitsmaler, Opener-avif-Typo). Grenze: nur **literale** Pfade, keine dynamisch konkatenierten.
 

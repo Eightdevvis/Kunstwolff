@@ -4,4 +4,10 @@ answer: "Ja! Wir haben bereits Events weltweit betreut. Fragen Sie einfach nach 
 categories:
   - Schnellzeichner
   - Szenenmaler
+tags:
+  skills:
+    - schnellzeichner
+    - szenenmaler
+  events: []
+  landings: []
 ---

@@ -4,4 +4,10 @@ answer: "Ein Schnellzeichner fertigt schnelle, persönliche Karikaturen und Port
 categories:
   - Schnellzeichner
   - Szenenmaler
+tags:
+  skills:
+    - schnellzeichner
+    - szenenmaler
+  events: []
+  landings: []
 ---
