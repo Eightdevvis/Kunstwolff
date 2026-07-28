@@ -22,7 +22,7 @@
     "predev": "npm run sync:content:safe",
     "dev": "astro dev",
     "prebuild": "npm run sync:content:safe",
-    "build": "astro build && node scripts/generate-image-variants.mjs",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "test:unit": "vitest run",

@@ -63,7 +63,7 @@ async function inHaeppchen(items, arbeit) {
   await Promise.all(laeufer);
 }
 
-async function main() {
+export async function generateVariants() {
   if (!fs.existsSync(distRoot)) {
     console.error('bild-varianten: dist/ fehlt – erst bauen, dann Varianten erzeugen.');
     process.exitCode = 1;
@@ -119,7 +119,8 @@ async function main() {
   if (fehler > 0) process.exitCode = 1;
 }
 
-// Nur ausführen, wenn direkt aufgerufen – die Helfer sind auch importierbar.
+// Nur ausführen, wenn direkt aufgerufen – im Build ruft die Astro-Integration
+// `generateVariants()` an `astro:build:done` (siehe astro.config.mjs).
 if (import.meta.url === `file://${process.argv[1]}`) {
-  await main();
+  await generateVariants();
 }

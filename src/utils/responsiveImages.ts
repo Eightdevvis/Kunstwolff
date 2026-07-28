@@ -17,6 +17,17 @@ export const VARIANT_WIDTHS = [400, 800, 1200] as const;
 const VARIANT_ROOT = '/img/variants';
 
 /**
+ * Schalter für die Auslieferung von `srcset`.
+ *
+ * Bewusst ein Schalter statt eines Rückbaus: `srcset` verzeiht keinen fehlenden
+ * Kandidaten – wählt der Browser eine Variante, die es nicht gibt, bleibt das
+ * Bild leer, ohne zweiten Versuch. Solange nicht bewiesen ist, dass die
+ * Varianten in der Produktion ankommen, ist „nur das Original" die einzig
+ * sichere Auslieferung.
+ */
+const SRCSET_AKTIV = false;
+
+/**
  * Pfad einer Variante. Spiegelt `variantPath()` im Build-Skript – weichen die
  * beiden ab, zeigt das `srcset` auf Dateien, die es nicht gibt.
  */
@@ -36,6 +47,11 @@ export function variantSrc(src: string, width: number): string {
  * ausliefern als ein kaputtes Bild riskieren.
  */
 export function buildSrcSet(src: string, originalWidth?: number): string {
+  // NOTBREMSE (2026-07-28): erst wieder aktivieren, wenn die Varianten in der
+  // PRODUKTION nachweislich ausgeliefert werden. Sie fehlten dort, weil der
+  // Build-Schritt nicht lief – und ein srcset, dessen Kandidat 404 liefert,
+  // zeigt gar kein Bild. Siehe SRCSET_AKTIV unten.
+  if (!SRCSET_AKTIV) return '';
   if (!src.startsWith('/img/') || !originalWidth || originalWidth <= 0) return '';
   // Nur Stufen, die das Build-Skript auch erzeugt: es überspringt jede Breite
   // >= Original (kein Hochskalieren). Die Bedingung MUSS dieselbe sein.

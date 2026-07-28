@@ -67,11 +67,34 @@ const readHiddenSet = () => {
 
 const hiddenPaths = readHiddenSet();
 
+/**
+ * Responsive Bildvarianten als INTEGRATION statt als nachgelagerter Befehl.
+ *
+ * Vorgeschichte (2026-07-28): das Skript hing als `astro build && node …` am
+ * Build-Befehl. Lokal lief es, in der PRODUKTION nicht – Vercel führt seinen
+ * eigenen Astro-Build aus und übersprang den zweiten Teil. Ergebnis: das
+ * ausgelieferte Markup versprach Varianten, die es dort nie gab, und srcset
+ * kennt keinen Rückfall. Es war live und zeigte leere Bilder.
+ *
+ * Als Integration hängt die Erzeugung am Build selbst und kann nicht mehr
+ * abgeschnitten werden – egal, wer den Build anstößt und wie.
+ */
+const bildVarianten = () => ({
+  name: 'kunstwolff-bild-varianten',
+  hooks: {
+    'astro:build:done': async () => {
+      const { generateVariants } = await import('./scripts/generate-image-variants.mjs');
+      await generateVariants();
+    },
+  },
+});
+
 // https://astro.build/config
 export default defineConfig({
   site: siteUrl,
   integrations: [
     preact(),
+    bildVarianten(),
     sitemap({
       // page kommt von @astrojs/sitemap als string ODER {url, …}-Objekt,
       // je nach Astro-Version. Beide Formen unterstützen.
