@@ -19,13 +19,17 @@ const VARIANT_ROOT = '/img/variants';
 /**
  * Schalter für die Auslieferung von `srcset`.
  *
- * Bewusst ein Schalter statt eines Rückbaus: `srcset` verzeiht keinen fehlenden
- * Kandidaten – wählt der Browser eine Variante, die es nicht gibt, bleibt das
- * Bild leer, ohne zweiten Versuch. Solange nicht bewiesen ist, dass die
- * Varianten in der Produktion ankommen, ist „nur das Original" die einzig
- * sichere Auslieferung.
+ * `srcset` verzeiht keinen fehlenden Kandidaten – wählt der Browser eine
+ * Variante, die es nicht gibt, bleibt das Bild leer, ohne zweiten Versuch.
+ * Deshalb dieser Schalter statt eines Rückbaus, und deshalb gilt: **erst
+ * einschalten, wenn die Varianten in der PRODUKTION nachweislich ankommen.**
+ *
+ * Chronik: am 2026-07-28 stand er kurz auf `false`, weil die Varianten live
+ * fehlten (die Erzeugung hing am Build-BEFEHL, den Vercel abschnitt). Seit die
+ * Erzeugung als Astro-Integration am Hook `astro:build:done` hängt, liefert die
+ * Produktion sie aus – am echten Ziel geprüft, nicht angenommen.
  */
-export const SRCSET_AKTIV = false;
+export const SRCSET_AKTIV = true;
 
 /**
  * Pfad einer Variante. Spiegelt `variantPath()` im Build-Skript – weichen die

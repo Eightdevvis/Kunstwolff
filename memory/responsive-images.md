@@ -28,6 +28,27 @@ direkt in `dist/`. Lägen sie in `public/`, würden sie
 
 Breiten: **400 / 800 / 1200**, dazu das Original als grösste Stufe.
 
+## Die Erzeugung haengt am Astro-Build, nicht am Build-Befehl
+
+`astro.config.mjs` bindet eine kleine Integration ein, die an
+`astro:build:done` `generateVariants()` ruft.
+
+**Nicht** als `astro build && node scripts/…` am Build-Befehl. Genau so stand es
+zuerst da, und es ging schief: lokal lief es, auf **Vercel nicht** – dort läuft
+der eigene Astro-Build, der zweite Teil wurde abgeschnitten. Ergebnis: das
+ausgelieferte Markup versprach Varianten, die es in der Produktion nie gab, und
+`srcset` kennt keinen Rückfall. Es war live, 20 von 20 geprüften Kandidaten auf
+`/trier/` lieferten 404.
+
+Als Integration kann der Schritt nicht mehr übersprungen werden – egal, wer den
+Build anstösst und wie.
+
+## Der Schalter `SRCSET_AKTIV`
+
+In `responsiveImages.ts`. **Erst einschalten, wenn die Varianten in der
+PRODUKTION nachweislich ankommen** – nicht, wenn `dist/` lokal gut aussieht.
+Die Testsuite deckt beide Zustände ab und bleibt in beiden grün.
+
 ## Die Falle, die hier lauert
 
 **`srcset` verzeiht keinen fehlenden Kandidaten.** Wählt der Browser eine
