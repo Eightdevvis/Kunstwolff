@@ -3387,5 +3387,32 @@
         "schnellzeichner-duesseldorf"
       ]
     }
+  },
+  "events/hochzeit/img_20240316_154730.webp": {
+    "categories": [],
+    "priority": 8,
+    "tags": {
+      "events": [
+        "hochzeit"
+      ]
+    }
+  },
+  "events/hochzeit/img_20240316_154802.webp": {
+    "categories": [],
+    "priority": 9,
+    "tags": {
+      "events": [
+        "hochzeit"
+      ]
+    }
+  },
+  "events/hochzeit/img_20240316_180247~3.webp": {
+    "categories": [],
+    "priority": 10,
+    "tags": {
+      "events": [
+        "hochzeit"
+      ]
+    }
   }
 }
