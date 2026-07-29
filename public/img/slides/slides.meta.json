@@ -3378,5 +3378,14 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
+  },
+  "schnellzeichner-duesseldorf/karikaturist-rheinkirmes-duesseldorf.webp": {
+    "categories": [],
+    "priority": 1,
+    "tags": {
+      "landings": [
+        "schnellzeichner-duesseldorf"
+      ]
+    }
   }
 }
