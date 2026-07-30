@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { getVisibleEvents } from './events';
+import { getVisibleSharedSkills } from './skills';
 
 export type NavigationLinkItem = {
   label: string;
@@ -53,6 +54,36 @@ const buildEventsDropdownItem = (): NavigationDropdownItem | null => {
     label: 'Events',
     children,
   };
+};
+
+/**
+ * Services-Dropdown IMMER aus `skills.json` füllen.
+ *
+ * Vorher war die Liste unter „Services" in `navigation.json` von Hand gepflegt.
+ * Ein im Admin angelegter Skill bekam damit zwar eine Seite (`/aquarelle/`), war
+ * aber von nirgendwo aus erreichbar – die Navigation kannte ihn nicht, und
+ * `navigation.json` kann der Admin nicht bearbeiten. Genau dieselbe Auflösung
+ * macht `addEventsDropdownNextToServices` schon für Events.
+ *
+ * Bewusst ERSETZEN statt ergänzen: sonst bliebe ein gelöschter oder umbenannter
+ * Skill für immer als toter Link stehen. `skills.json` ist die eine Quelle.
+ * Ausgeblendete Seiten (`page-visibility.json`) filtert `getVisibleSharedSkills`.
+ */
+const fillServicesWithSkills = (items: NavigationItem[]): NavigationItem[] => {
+  const index = items.findIndex((item) => isDropdownItemWithLabel(item, 'Services'));
+  if (index < 0) return items; // kein Services-Dropdown (z.B. Default-Nav mit „#skills"-Link)
+
+  const children = getVisibleSharedSkills().map((skill) => ({
+    label: skill.title,
+    url: skill.link,
+  }));
+
+  // Keine Skills lesbar → lieber die Hand-Liste stehen lassen als ein leeres Menü.
+  if (children.length === 0) return items;
+
+  const next = [...items];
+  next[index] = { label: items[index].label, children };
+  return next;
 };
 
 const addEventsDropdownNextToServices = (items: NavigationItem[]): NavigationItem[] => {
@@ -152,11 +183,15 @@ const parseNavigationContent = (raw: string): NavigationItem[] => {
   return normalizeItems(source);
 };
 
+/** Die abgeleiteten Teile der Navigation: Skills unter „Services", Events daneben. */
+const withAbgeleitetenEintraegen = (items: NavigationItem[]): NavigationItem[] =>
+  addEventsDropdownNextToServices(fillServicesWithSkills(items));
+
 export const getNavigationItems = (): NavigationItem[] => {
   let items: NavigationItem[] = defaultNavigation;
 
   if (!fs.existsSync(navigationConfigPath)) {
-    return addEventsDropdownNextToServices(items);
+    return withAbgeleitetenEintraegen(items);
   }
 
   try {
@@ -164,12 +199,12 @@ export const getNavigationItems = (): NavigationItem[] => {
     const parsed = parseNavigationContent(raw);
     if (parsed.length > 0) {
       items = parsed;
-      return addEventsDropdownNextToServices(items);
+      return withAbgeleitetenEintraegen(items);
     }
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.warn(`navigation: Could not parse navigation.json (${message}). Using defaults.`);
   }
 
-  return addEventsDropdownNextToServices(items);
+  return withAbgeleitetenEintraegen(items);
 };

@@ -9,6 +9,11 @@
       "slug": "szenenmaler",
       "label": "Szenenmaler",
       "source": "skills.json"
+    },
+    {
+      "slug": "aquarelle",
+      "label": "Aquarelle",
+      "source": "skills.json"
     }
   ],
   "events": [

@@ -43,6 +43,15 @@ npm run sync:content:safe  # fehlertolerant (Teilfehler isoliert, Build/Dev läu
 > Die Reihenfolge ist zwingend: `sync:tags` **vor** `sync:reviews-tags`/`sync:faq-tags`,
 > denn beide verwerfen einen Ort, den `tags.json` nicht kennt.
 
+> ⚠️ **Was im Build erzeugt wird, existiert im Repo nicht.** Läuft `sync:tags` als
+> `prebuild`, landet das erweiterte `public/config/tags.json` im Build-Output – **nicht**
+> in einem Commit. Für die Website ist das folgenlos, fürs **Admin-Tool nicht: es liest
+> das Repo.** Ein per Hand ergänzter Skill/Anlass/Ort ist dort sonst nicht auswählbar,
+> obwohl die Seite live ist (Fall „Aquarelle", 2026-07-30). Wer eine Seed-Quelle
+> (`skills.json`, `events.json`, `landings.md`) per Hand ändert: `npm run sync:tags`
+> laufen lassen **und das Ergebnis committen**. Details: `tag-system.md`.
+> Dasselbe Muster gilt für jedes Sync-Script, dessen Ergebnis der Admin liest.
+
 > **Step 8 (`validate:images`) – warum:** Der pre-push-Hook konvertiert Bilder zu `.webp` und löscht Originale, aktualisiert aber keine Verweise → tote `.jpg`-Pfade (404). Der Guard fängt das vor Commit (hart in `sync:content`) bzw. warnt bei dev/build (tolerant in `sync:content:safe`, das immer exit 0 macht). Eingeführt 2026-06-05 nachdem mehrfach jpg→webp-Leichen auf Live gingen (Samples, frankfurt.json, Luxembourg-Stub, Hochzeitsmaler, Opener-avif-Typo). Grenze: nur **literale** Pfade, keine dynamisch konkatenierten.
 
 ## Garantien

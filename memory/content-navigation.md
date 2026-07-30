@@ -23,6 +23,27 @@
 }
 ```
 
+## Zwei Menüs kommen NICHT aus der JSON
+
+`getNavigationItems()` schreibt zwei Einträge selbst – beides in `navigation.ts`:
+
+| Menü | Quelle | Funktion |
+| :-- | :-- | :-- |
+| **Services** → children | `public/skills/skills.json` (via `getVisibleSharedSkills`) | `fillServicesWithSkills` – **ersetzt** die children komplett |
+| **Events** (neben Services) | `public/events/events.json` (via `getVisibleEvents`) | `addEventsDropdownNextToServices` – fügt ein/ersetzt das Dropdown |
+
+⚠️ Bis 2026-07-30 stand die Services-Liste von Hand in der JSON. Ein im Admin
+angelegter Skill bekam damit zwar seine Seite (`/aquarelle/`), war aber von
+nirgendwo erreichbar – und weil der Admin `navigation.json` nicht bearbeiten
+kann, konnte mom das auch nicht selbst reparieren. Ersetzen statt Ergänzen ist
+Absicht: sonst bliebe ein gelöschter Skill als toter Link stehen.
+Test: `tests/nav-services-skills.test.ts`.
+
+⚠️ Die children unter „Services" in der JSON müssen trotzdem **nicht leer**
+sein: ein Dropdown ohne gültige children fliegt schon beim Parsen raus
+(`isValidDropdownItem`), dann findet `fillServicesWithSkills` nichts zum Füllen.
+Sie dienen nur noch als Platzhalter – gezeigt wird immer `skills.json`.
+
 ## Strukturen
 
 - **Einfacher Link:** `label` + `url` (+ optional `cta: true` für Gold-Pill-Button)

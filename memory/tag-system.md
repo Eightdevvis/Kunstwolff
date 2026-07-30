@@ -116,20 +116,27 @@ erst live auf.
 
 ## Tags an Bildern: `slides.meta.json`
 
-Zwei neue Felder neben dem bestehenden `categories` (= Skill-Dimension):
+Ein `tags`-BLOCK mit allen drei Dimensionen, neben dem bestehenden `categories`
+(korrigiert 2026-07-30: hier standen die drei Listen früher fälschlich auf
+oberster Ebene – so liest sie niemand, `getSlidesByTag` greift auf
+`metadata[key].tags[dimension]` zu):
 
 ```json
 "trier/1_2-kollegen-...-weihnachtsfeier-...webp": {
   "categories": ["Schnellzeichner"],
-  "events": ["firmenfeier", "weihnachtsfeier"],
-  "landings": ["trier"],
+  "tags": {
+    "skills": ["schnellzeichner"],
+    "events": ["firmenfeier", "weihnachtsfeier"],
+    "landings": ["trier"]
+  },
   "priority": 1
 }
 ```
 
 | Feld | Dimension | Vorbelegung |
 | :-- | :-- | :-- |
-| `categories` | Skill | bestand schon, aus Dateinamen-Regeln |
+| `categories` | Skill (als **Label**) | bestand schon, aus Dateinamen-Regeln; noch von den Skill-Seiten abgefragt |
+| `tags.skills` | Skill (als **Slug**) | aus `categories` |
 | `tags.events` | Anlass | `events/<slug>/`-Ordner + Stichwörter im Dateinamen |
 | `tags.landings` | Ort | Ordnername + bekannte Ort-Slugs im Dateinamen |
 
@@ -215,12 +222,40 @@ Siehe `admin-tool.md`.
 
 Zwei Punkte, die dabei wichtig waren:
 
-- Solange das Rendering noch über `categories` einsortiert (Phase 5b steht aus),
-  führt der Admin `categories` beim Setzen von Skill-Tags **mit**. Sonst wählt
-  Jenny einen Skill und auf der Seite ändert sich nichts.
+- Der Admin führt `categories` beim Setzen von Skill-Tags **mit**. Das bleibt
+  auch nach Phase 5b nötig, aber aus einem engeren Grund: Stadt- und
+  Event-Seiten fragen inzwischen Tags ab, die **Skill-Seiten** filtern die
+  Slideshow aber weiter über `categories` (`[skill].astro` →
+  `filteredCategories: [skillData.title]`). Ohne die Spiegelung wählt Jenny
+  einen Skill und auf `/<skill>/` ändert sich nichts.
 - Neue Uploads bekommen eine Startbelegung aus ihrem Ablageort (Ordner → Ort,
   `events/<slug>/` → Anlass). Ohne sie lägen sie ungetaggt herum und wären nach
   der Umstellung auf keiner Seite mehr zu sehen.
+
+### ⚠️ `tags.json` muss COMMITTED werden (2026-07-30)
+
+`sync-tags.mjs` läuft als `prebuild`/`predev`. Es schreibt `tags.json` damit in
+den **Build-Output** – aber **nie zurück ins Repo**. Für die Website ist das
+folgenlos (sie baut die Datei ja gerade neu), für das Admin-Tool nicht: **es
+liest das Repo.** Steht der neue Skill/Anlass/Ort dort nicht, ist er im Admin
+nicht auswählbar, obwohl die Seite längst live ist.
+
+Genau so entstand der Fall „Aquarelle": Skill über den Admin angelegt, Seite da,
+aufrufbar – in der Mediathek nicht filterbar. Wer eine Seed-Quelle per Hand
+ändert, muss `npm run sync:tags` laufen lassen und das Ergebnis **committen**.
+
+Die Admin-Seite ist ab 2026-07-30 dagegen abgesichert (Details in Admin-Memory
+`mediathek-tags.md`):
+
+- **Lesen:** der Admin mischt fehlende Seeds aus `skills.json`, `events.json` und
+  `landings.md` selbst dazu – ein neuer Skill ist dort sofort wählbar.
+- **Schreiben:** Quick-Add (Skill/Event/Landing), `CityManager` und die Mediathek
+  schreiben den Tag mit `source` der Seed-Quelle nach `tags.json`. Der nächste
+  Sync-Lauf erzeugt denselben Eintrag, es entsteht also kein Diff.
+
+Zusätzlich kann die Mediathek Tags jetzt **mengenweise** setzen (Zieltag wählen,
+Kacheln an-/abhaken) und schreibt dabei in `slides.meta.json` – bisher ging das
+nur Bild für Bild im ImageManager und nur innerhalb einer Stadt.
 
 ## Bekannte Kosmetik
 

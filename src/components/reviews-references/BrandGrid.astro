@@ -1,0 +1,144 @@
+---
+import { getBrandLogos } from '../../utils/brandLogos';
+
+/**
+ * BrandGrid – alle Referenz-Firmen als ruhiges Gitter.
+ *
+ * Der Gegenentwurf zum `BrandStripe`: der Laufstreifen ist ein Teaser im Hero,
+ * bei dem man warten muss, bis die gesuchte Firma vorbeikommt. Auf `/referenzen/`
+ * ist genau das falsch – dort ist die Liste selbst der Inhalt. Also: alle Logos
+ * auf einen Blick, mit Namen darunter (im Streifen gibt es den Namen nur als
+ * Tooltip beim Drüberfahren, auf dem Handy also gar nicht).
+ *
+ * Quelle ist derselbe Ordner-Scan wie beim Streifen (`getBrandLogos`), damit ein
+ * neues Logo in `public/img/referenzenLogos/` weiterhin überall auftaucht.
+ */
+const logoItems = getBrandLogos();
+---
+
+{logoItems.length > 0 && (
+  <section class="brand-grid" aria-label="Referenzen">
+    <ul class="brand-grid-list">
+      {logoItems.map((logo) => (
+        <li class="brand-card">
+          <div class="brand-card-logo">
+            <img
+              src={logo.src}
+              alt=""
+              width="160"
+              height="48"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <span class="brand-card-name">{logo.label}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+
+<style>
+  .brand-grid {
+    width: 100%;
+  }
+
+  .brand-grid-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .brand-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 32px 20px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .brand-card-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 52px;
+  }
+
+  .brand-card-logo img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    /* Gleiche Behandlung wie im Laufstreifen: die Logos liegen dunkel vor und
+       werden auf dem schwarzen Hintergrund invertiert. */
+    filter: invert(1) grayscale(1) brightness(0.92) contrast(1.36);
+    opacity: 0.82;
+    transition: opacity 0.2s ease;
+  }
+
+  .brand-card-name {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.42);
+    line-height: 1.4;
+    transition: color 0.2s ease;
+  }
+
+  .brand-card:hover {
+    border-color: rgba(212, 175, 55, 0.5);
+    background: rgba(255, 255, 255, 0.04);
+    transform: translateY(-2px);
+  }
+
+  .brand-card:hover .brand-card-logo img {
+    opacity: 1;
+  }
+
+  .brand-card:hover .brand-card-name {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  @media (max-width: 600px) {
+    .brand-grid-list {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 14px;
+    }
+
+    .brand-card {
+      padding: 24px 14px 18px;
+      gap: 14px;
+    }
+
+    .brand-card-logo {
+      height: 40px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brand-card,
+    .brand-card-logo img,
+    .brand-card-name {
+      transition: none;
+    }
+
+    .brand-card:hover {
+      transform: none;
+    }
+  }
+</style>
