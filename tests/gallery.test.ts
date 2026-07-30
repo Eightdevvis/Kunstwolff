@@ -154,6 +154,72 @@ describe('getGalleryData', () => {
   });
 });
 
+describe('Mosaik: Bildmasse', () => {
+  const bilder = getGalleryData().bilder;
+
+  it('kennt zu praktisch jedem Bild Breite UND Höhe', () => {
+    // Das Mosaik zeigt jedes Bild in seinem eigenen Seitenverhältnis. Ohne
+    // beide Masse am <img> kennt der Browser das erst nach dem Laden – bei ~230
+    // lazy geladenen Bildern in Spalten springt die Seite beim Scrollen.
+    const ohneMass = bilder.filter((b) => !b.width || !b.height);
+    expect(ohneMass.map((b) => b.key)).toEqual([]);
+  });
+
+  it('liefert Masse nur paarweise', () => {
+    // Ein `height` ohne `width` (oder umgekehrt) ergäbe ein falsches
+    // Seitenverhältnis – schlimmer als gar keine Angabe.
+    for (const bild of bilder) {
+      expect(Boolean(bild.width), bild.key).toBe(Boolean(bild.height));
+    }
+  });
+
+  it('liest plausible Seitenverhältnisse', () => {
+    for (const bild of bilder) {
+      const verhaeltnis = bild.width! / bild.height!;
+      expect(verhaeltnis, `${bild.key} (${bild.width}x${bild.height})`).toBeGreaterThan(0.2);
+      expect(verhaeltnis, `${bild.key} (${bild.width}x${bild.height})`).toBeLessThan(5);
+    }
+  });
+
+  it('findet sowohl Hoch- als auch Querformate', () => {
+    // Wäre alles gleich proportioniert, wäre das Mosaik sinnlos – und ein
+    // Fehler im Header-Leser (Höhe = Breite) sähe genau so aus.
+    const hoch = bilder.filter((b) => b.height! > b.width!).length;
+    const quer = bilder.filter((b) => b.width! > b.height!).length;
+    expect(hoch).toBeGreaterThan(0);
+    expect(quer).toBeGreaterThan(0);
+  });
+});
+
+describe('Mosaik: Markup', () => {
+  const quelle = fs.readFileSync(path.resolve('./src/components/Gallery.astro'), 'utf-8');
+
+  it('schneidet keine Bilder zu', () => {
+    // `object-fit: cover` mit fester `aspect-ratio` war die alte Gitter-Lösung
+    // und hat bei jedem Hochformat oben oder unten abgeschnitten.
+    //
+    // Auf die DEKLARATION prüfen (mit Semikolon), nicht auf das Wort: der
+    // Kommentar in Gallery.astro erklärt genau diese Entscheidung und würde
+    // sonst selbst als Verstoss gelten.
+    expect(quelle).not.toMatch(/object-fit:\s*cover\s*;/);
+    expect(quelle).not.toMatch(/aspect-ratio:\s*4\s*\/\s*3\s*;/);
+  });
+
+  it('gibt die Bildmasse ins Markup', () => {
+    expect(quelle).toContain('width={bild.width}');
+    expect(quelle).toContain('height={bild.height}');
+  });
+
+  it('klappt Suche und alle Tag-Dimensionen ein', () => {
+    // Ausgeklappt füllten sie den kompletten ersten Viewport – man landete auf
+    // einer Bilder-Seite, ohne ein Bild zu sehen.
+    const panels = [...quelle.matchAll(/<details[^>]*data-gallery-panel/g)];
+    expect(panels.length).toBeGreaterThanOrEqual(2);
+    // Kein `open` – alle starten zu.
+    expect(quelle).not.toMatch(/<details[^>]*\sopen[\s>]/);
+  });
+});
+
 describe('tagLabel', () => {
   it('nimmt ein gepflegtes Label aus dem Vokabular', () => {
     expect(tagLabel('private-feier', 'Private Feier')).toBe('Private Feier');
@@ -184,10 +250,11 @@ describe('tagLabel', () => {
 });
 
 describe('sizes-Angaben', () => {
-  it('unterscheiden Gitter und Bühne', () => {
+  it('unterscheiden Mosaik und Bühne', () => {
     // Mit SLIDESHOW_SIZES ('...700px') lüde jede der ~230 Kacheln die grosse
     // Variante. Ein Copy-Paste hier ist teuer und fällt visuell nicht auf.
     expect(GALLERY_SIZES).not.toBe(SLIDESHOW_SIZES);
-    expect(GALLERY_SIZES).toContain('300px');
+    // Eine Mosaik-Spalte ist bei 1200px Container rund 390px breit.
+    expect(GALLERY_SIZES).toContain('400px');
   });
 });

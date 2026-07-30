@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { readWebpWidth } from './webpSize';
+import { readWebpSize } from './webpSize';
 
 export type SlideItem = {
   src: string;
@@ -14,6 +14,13 @@ export type SlideItem = {
    * leer, ohne zweiten Versuch.
    */
   width?: number;
+  /**
+   * Originalhöhe in Pixeln. Nur die Galerie braucht sie: das Mosaik zeigt jedes
+   * Bild in seinem eigenen Seitenverhältnis, und ohne `width`/`height` am `<img>`
+   * kennt der Browser das erst nach dem Laden – die Seite springt dann beim
+   * Scrollen. Die Slideshow kommt ohne aus, sie skaliert auf eine feste Höhe.
+   */
+  height?: number;
 };
 
 type SlideMetadataEntry = {
@@ -236,6 +243,7 @@ const readFolderSlides = (folderName: string): SlideItem[] => {
       const categories = itemMetadata?.categories ?? [];
       const priority = itemMetadata?.priority ?? 0;
       const enabled = itemMetadata?.enabled !== false;
+      const groesse = readWebpSize(path.join(folderPath, entry));
 
       return {
         src: `/img/slides/${encodePathSegment(folderName)}/${encodePathSegment(entry)}`,
@@ -244,7 +252,8 @@ const readFolderSlides = (folderName: string): SlideItem[] => {
         categories: categories.length > 0 ? categories : undefined,
         priority,
         enabled,
-        width: readWebpWidth(path.join(folderPath, entry)) ?? undefined,
+        width: groesse?.width,
+        height: groesse?.height,
       };
     })
     .filter((entry) => entry.enabled)

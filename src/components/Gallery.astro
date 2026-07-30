@@ -20,51 +20,81 @@ const { bilder, facets, ohneTags } = data ?? getGalleryData();
       Anlass und Ort.
     </p>
 
+    {/* Suche und die drei Tag-Dimensionen liegen EINGEKLAPPT als schmale Reihe
+        oben. Ausgeklappt füllten sie (Ort allein hat 20+ Chips) den kompletten
+        ersten Viewport – man landete auf einer Bilder-Seite ohne ein Bild zu
+        sehen.
+
+        `<details>` statt eigenem Auf-/Zuklapp-Zustand: das Verhalten steckt im
+        Browser, funktioniert ohne JS und ist über Tastatur bedienbar. Bewusst
+        OHNE `name`-Attribut – ein exklusives Akkordeon würde beim Öffnen eines
+        Tag-Panels die gerade getippte Suche zuklappen. */}
     <div class="gallery-controls">
-      <label class="gallery-search-wrap" for="gallery-search-input">
-        <span>Bilder durchsuchen</span>
-        <input
-          id="gallery-search-input"
-          class="gallery-search-input"
-          type="search"
-          placeholder="Suchbegriff eingeben, z. B. Karikatur, Hochzeit oder Trier"
-          autocomplete="off"
-        />
-      </label>
+      <details class="gallery-filter" data-gallery-panel="search">
+        <summary>
+          <span class="gallery-filter-name">Suche</span>
+          <span class="gallery-filter-value" data-gallery-summary="search"></span>
+        </summary>
+        <div class="gallery-filter-body">
+          <label class="gallery-search-wrap" for="gallery-search-input">
+            <span>Bilder durchsuchen</span>
+            <input
+              id="gallery-search-input"
+              class="gallery-search-input"
+              type="search"
+              placeholder="Suchbegriff eingeben, z. B. Karikatur, Hochzeit oder Trier"
+              autocomplete="off"
+            />
+          </label>
+        </div>
+      </details>
 
       {facets.map((facet) => (
-        <div class="gallery-facet">
-          <span class="gallery-facet-label" id={`gallery-facet-${facet.dimension}`}>
-            {facet.label}
-          </span>
-          <div class="gallery-tags" role="group" aria-labelledby={`gallery-facet-${facet.dimension}`}>
-            {/* "Alle" ist der Ausgangszustand und gleichzeitig der Weg zurück –
-                ohne diesen Chip käme man aus einem Filter nur über die Suche
-                oder einen Reload heraus. */}
-            <button
-              type="button"
-              class="gallery-tag is-active"
-              data-gallery-dimension={facet.dimension}
-              data-gallery-tag=""
-              aria-pressed="true"
-            >
-              Alle
-            </button>
-            {facet.tags.map((tag) => (
+        <details class="gallery-filter" data-gallery-panel={facet.dimension}>
+          <summary>
+            <span class="gallery-filter-name">{facet.label}</span>
+            {/* Zeigt im zugeklappten Zustand, WAS gerade filtert. Ohne das wäre
+                ein aktiver Filter unsichtbar und die Galerie sähe schlicht
+                unvollständig aus. */}
+            <span class="gallery-filter-value" data-gallery-summary={facet.dimension}></span>
+          </summary>
+          <div class="gallery-filter-body">
+            <div class="gallery-tags" role="group" aria-label={facet.label}>
+              {/* "Alle" ist der Ausgangszustand und gleichzeitig der Weg zurück –
+                  ohne diesen Chip käme man aus einem Filter nur über die Suche
+                  oder einen Reload heraus. */}
               <button
                 type="button"
-                class="gallery-tag"
+                class="gallery-tag is-active"
                 data-gallery-dimension={facet.dimension}
-                data-gallery-tag={tag.slug}
-                aria-pressed="false"
+                data-gallery-tag=""
+                aria-pressed="true"
               >
-                {tag.label}
-                <span class="gallery-tag-count">{tag.count}</span>
+                Alle
               </button>
-            ))}
+              {facet.tags.map((tag) => (
+                <button
+                  type="button"
+                  class="gallery-tag"
+                  data-gallery-dimension={facet.dimension}
+                  data-gallery-tag={tag.slug}
+                  data-gallery-label={tag.label}
+                  aria-pressed="false"
+                >
+                  {tag.label}
+                  <span class="gallery-tag-count">{tag.count}</span>
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        </details>
       ))}
+
+      {/* Erscheint erst, wenn etwas filtert. Bei eingeklappten Panels ist der
+          Weg zurück sonst: jedes Panel einzeln aufklappen und "Alle" suchen. */}
+      <button type="button" class="gallery-reset" data-gallery-reset hidden>
+        Zurücksetzen
+      </button>
     </div>
 
     <p class="gallery-count" data-gallery-count aria-live="polite">
@@ -83,11 +113,19 @@ const { bilder, facets, ohneTags } = data ?? getGalleryData();
             data-lb-title={bild.title ?? ''}
             aria-label={`${bild.title || bild.alt} – gross ansehen`}
           >
+            {/* `width`/`height` sind hier keine Kosmetik: das Mosaik gibt jedem
+                Bild sein eigenes Seitenverhältnis, und ohne die beiden Angaben
+                kennt der Browser es erst, wenn die Datei geladen ist. Bei ~230
+                lazy geladenen Bildern in Spalten springt die Seite dann beim
+                Scrollen dauernd. Fehlt die Angabe (kein lesbarer WebP-Header),
+                bleibt sie weg statt geraten zu werden. */}
             <img
               src={bild.src}
               srcset={buildSrcSet(bild.src, bild.width)}
               sizes={GALLERY_SIZES}
               alt={bild.alt}
+              width={bild.width}
+              height={bild.height}
               loading="lazy"
               decoding="async"
             />
@@ -125,6 +163,26 @@ const { bilder, facets, ohneTags } = data ?? getGalleryData();
     const zaehler = galerie.querySelector<HTMLElement>('[data-gallery-count]');
     const chips = Array.from(galerie.querySelectorAll<HTMLButtonElement>('[data-gallery-tag]'));
     const kacheln = Array.from(galerie.querySelectorAll<HTMLElement>('[data-gallery-tile]'));
+    const zuruecksetzen = galerie.querySelector<HTMLButtonElement>('[data-gallery-reset]');
+
+    /**
+     * Zugeklappte Pille beschriften.
+     *
+     * Die Panels sind zu, also ist ein aktiver Filter sonst unsichtbar – die
+     * Galerie sähe schlicht unvollständig aus, ohne dass der Grund zu sehen
+     * wäre. Deshalb steht die Auswahl in der Pille und die Pille wird golden.
+     */
+    const pilleAktualisieren = (schluessel: string, wert: string) => {
+      const ziel = galerie.querySelector<HTMLElement>(`[data-gallery-summary="${schluessel}"]`);
+      if (ziel) ziel.textContent = wert;
+      ziel?.closest('[data-gallery-panel]')?.classList.toggle('is-set', wert.length > 0);
+
+      if (zuruecksetzen) {
+        const etwasAktiv =
+          aktiv.size > 0 || suchbegriff.length > 0;
+        zuruecksetzen.hidden = !etwasAktiv;
+      }
+    };
 
     // Ein aktiver Tag pro Dimension, Dimensionen mit UND verknüpft – dieselbe
     // Semantik, mit der der Server auswählt (matchesFAQContext, getSlidesByTag).
@@ -180,20 +238,43 @@ const { bilder, facets, ohneTags } = data ?? getGalleryData();
         }
 
         const gewaehlt = aktiv.get(dimension) ?? '';
+        let gewaehltesLabel = '';
         chips
           .filter((c) => c.dataset.galleryDimension === dimension)
           .forEach((c) => {
             const istAktiv = (c.dataset.galleryTag || '') === gewaehlt;
             c.classList.toggle('is-active', istAktiv);
             c.setAttribute('aria-pressed', String(istAktiv));
+            if (istAktiv) gewaehltesLabel = c.dataset.galleryLabel || '';
           });
 
+        pilleAktualisieren(dimension, gewaehltesLabel);
         filtern();
       });
     });
 
+    zuruecksetzen?.addEventListener('click', () => {
+      aktiv.clear();
+      suchbegriff = '';
+      if (suchfeld) suchfeld.value = '';
+
+      // Jede Dimension zurück auf "Alle" – der Chip mit leerem Slug.
+      chips.forEach((c) => {
+        const istAlle = (c.dataset.galleryTag || '') === '';
+        c.classList.toggle('is-active', istAlle);
+        c.setAttribute('aria-pressed', String(istAlle));
+      });
+
+      galerie
+        .querySelectorAll<HTMLElement>('[data-gallery-summary]')
+        .forEach((el) => pilleAktualisieren(el.dataset.gallerySummary || '', ''));
+
+      filtern();
+    });
+
     suchfeld?.addEventListener('input', () => {
       suchbegriff = suchfeld.value.toLowerCase().trim();
+      pilleAktualisieren('search', suchfeld.value.trim());
       filtern();
     });
 
@@ -252,10 +333,114 @@ const { bilder, facets, ohneTags } = data ?? getGalleryData();
     line-height: 1.6;
   }
 
-  /* ── Suche + Filter ─────────────────────────────────────────────────── */
+  /* ── Suche + Filter: eingeklappte Reihe ─────────────────────────────── */
   .gallery-controls {
-    max-width: 900px;
-    margin: 0 auto 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0 auto 18px;
+  }
+
+  .gallery-filter {
+    border: 1px solid #2e2e2e;
+    border-radius: 999px;
+    background: #0f0f0f;
+  }
+
+  /* Aufgeklappt nimmt das Panel die volle Breite und rutscht damit unter die
+     Reihe – sonst wäre der Inhalt auf die Breite der Pille eingesperrt. */
+  .gallery-filter[open] {
+    flex: 1 0 100%;
+    border-radius: 14px;
+    background: #0b0b0b;
+    border-color: #333;
+  }
+
+  .gallery-filter summary {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 15px;
+    font-size: 0.88rem;
+    color: #cfcfcf;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  /* Das Standard-Dreieck weg – wir setzen einen eigenen Chevron. */
+  .gallery-filter summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .gallery-filter summary::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg) translateY(-2px);
+    opacity: 0.6;
+    transition: transform 0.18s ease;
+  }
+
+  .gallery-filter[open] summary::after {
+    transform: rotate(225deg) translateY(-2px);
+  }
+
+  .gallery-filter summary:hover,
+  .gallery-filter[open] summary {
+    color: #fff;
+  }
+
+  /* Aktiver Filter bleibt im eingeklappten Zustand sichtbar – sonst wirkt die
+     Galerie einfach unvollständig, ohne dass der Grund zu sehen ist. */
+  .gallery-filter.is-set {
+    border-color: rgba(191, 155, 80, 0.9);
+    background: rgba(191, 155, 80, 0.14);
+  }
+
+  .gallery-filter.is-set summary {
+    color: #fff;
+  }
+
+  .gallery-filter-value {
+    color: #d7b96a;
+    max-width: 22ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .gallery-filter-value:empty {
+    display: none;
+  }
+
+  .gallery-filter-body {
+    padding: 4px 16px 16px;
+  }
+
+  .gallery-reset {
+    border: 1px solid #383838;
+    border-radius: 999px;
+    background: transparent;
+    color: #9a9a9a;
+    padding: 8px 15px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .gallery-reset:hover {
+    color: #fff;
+    border-color: #666;
+  }
+
+  .gallery-reset[hidden] {
+    display: none;
   }
 
   .gallery-search-wrap {
@@ -285,19 +470,6 @@ const { bilder, facets, ohneTags } = data ?? getGalleryData();
     outline: none;
     border-color: rgba(191, 155, 80, 0.8);
     box-shadow: 0 0 0 3px rgba(191, 155, 80, 0.18);
-  }
-
-  .gallery-facet {
-    margin-top: 20px;
-  }
-
-  .gallery-facet-label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.72);
   }
 
   .gallery-tags {
@@ -345,15 +517,29 @@ const { bilder, facets, ohneTags } = data ?? getGalleryData();
     text-transform: uppercase;
   }
 
-  /* ── Gitter ─────────────────────────────────────────────────────────── */
+  /* ── Mosaik ─────────────────────────────────────────────────────────── */
+  /* Spalten statt Grid: jedes Bild behält sein eigenes Seitenverhältnis und wird
+     NICHT beschnitten – Hoch- und Querformate puzzeln sich ineinander. Ein Grid
+     mit fester Kachelhöhe (vorher 4:3 + `cover`) hätte bei jedem Hochformat den
+     Kopf oder die Signatur abgeschnitten.
+
+     Bewusst `column-count` und nicht `grid-template-rows: masonry`: letzteres
+     ist noch nicht überall da, und ein Fallback wäre wieder das beschnittene
+     Gitter. Preis der Spalten: die Reihenfolge läuft spaltenweise von oben nach
+     unten statt zeilenweise. Für eine Galerie ohne Rangfolge ist das kein
+     Verlust. */
   .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 14px;
+    column-count: 3;
+    column-gap: 14px;
   }
 
   .gallery-tile {
-    margin: 0;
+    /* `inline-block` + volle Breite: verhindert, dass eine Kachel am
+       Spaltenumbruch auseinandergerissen wird. */
+    display: inline-block;
+    width: 100%;
+    margin: 0 0 14px;
+    break-inside: avoid;
   }
 
   .gallery-tile[hidden] {
@@ -379,14 +565,13 @@ const { bilder, facets, ohneTags } = data ?? getGalleryData();
     outline: none;
   }
 
-  /* Einheitliche Kachelhöhe per aspect-ratio statt per JS: die Slideshow muss
-     ihre Höhe messen, weil dort eine Reihe nebeneinander liegt – im Gitter
-     genügt CSS, und ohne Messung gibt es auch keinen Sprung beim Nachladen. */
+  /* Kein `aspect-ratio`, kein `object-fit: cover` – das Bild bestimmt seine
+     Höhe selbst. `height: auto` zusammen mit den `width`/`height`-Attributen
+     am `<img>` reserviert den richtigen Platz schon vor dem Laden. */
   .gallery-tile-button img {
     display: block;
     width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
+    height: auto;
   }
 
   .gallery-tile figcaption {
@@ -424,14 +609,25 @@ const { bilder, facets, ohneTags } = data ?? getGalleryData();
     line-height: 1.5;
   }
 
+  /* Weniger Spalten = grössere Bilder. Bei 1200 px Container sind drei Spalten
+     rund 390 px breit; das war der Grund für den Umbau, vorher waren es ~220. */
+  @media (max-width: 900px) {
+    .gallery-grid {
+      column-count: 2;
+    }
+  }
+
   @media (max-width: 520px) {
     .gallery-page {
       padding: 56px 14px;
     }
 
     .gallery-grid {
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 10px;
+      column-gap: 10px;
+    }
+
+    .gallery-tile {
+      margin-bottom: 10px;
     }
   }
 </style>
