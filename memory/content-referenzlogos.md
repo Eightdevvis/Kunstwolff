@@ -6,16 +6,37 @@
 
 ## Auto-Discovery
 
-Alle Bilder in diesem Ordner werden automatisch in der Referenz-Sektion (`BrandStripe`-Komponente) angezeigt.
+Alle Bilder in diesem Ordner werden automatisch angezeigt – `getBrandLogos()` scannt
+den Ordner, beide Darstellungen hängen daran:
+
+| Komponente | Wo | Form |
+| :-- | :-- | :-- |
+| `BrandStripe.astro` | Hero (`Opener`, `SkillHero`, `SchnellzeichnerHero`) | laufender Logo-Streifen, Name nur als Tooltip |
+| `BrandGrid.astro` | `/referenzen/` | Gitter mit allen Firmen, **Name sichtbar** unter dem Logo |
+
+⚠️ Auf `/referenzen/` lief bis 2026-07-30 derselbe Laufstreifen. Das war falsch:
+dort ist die Firmenliste der Inhalt der Seite, kein Teaser – man musste warten,
+bis die gesuchte Firma vorbeikam, und auf dem Handy gab es mangels Hover gar
+keinen Namen. Test dagegen: `tests/brand-referenzen.test.ts`.
 
 ## Label-Generierung
 
-Der Dateiname (ohne Extension) wird als Label genutzt – Unterstriche **und** Bindestriche werden zu Leerzeichen (`.replace(/[_-]+/g, ' ')`), Mehrfach-Trenner werden zusammengefasst.
+`buildBrandLabel()` in `src/utils/brandLogos.ts` (exportiert, getestet):
+Endung weg → Unterstriche **und** Bindestriche zu Leerzeichen → Mehrfach-Trenner
+zusammengefasst → ein angehängtes „logo" entfernt. Groß-/Kleinschreibung bleibt
+wie im Dateinamen, damit `CDU` nicht zu „Cdu" wird.
 
 | Dateiname | Label |
 | :-- | :-- |
 | `acme_gmbh.webp` | "acme gmbh" |
 | `kunde-xyz.png` | "kunde xyz" |
+| `Deutsche_Bundesbank_logo.svg` | "Deutsche Bundesbank" |
+
+**Ausnahmen:** `NAME_KORREKTUREN` (gleiche Datei) überschreibt einzelne Namen,
+die der Dateiname nicht ausdrücken kann – aktuell `SAmsung.svg` → „Samsung" und
+`Europäische_Zentral_Bank.svg` → „Europäische Zentralbank". Bewusst klein
+halten: Quelle ist der Dateiname. Seit das Gitter die Namen anzeigt, fällt ein
+Tippfehler im Dateinamen sofort auf.
 
 ## Erlaubte Formate
 
@@ -27,5 +48,5 @@ Die `/partner/`-Seite (`src/pages/partner.astro`) nutzt `public/partners/partner
 
 | Konzept | Pfad | Verwendung |
 | :-- | :-- | :-- |
-| Referenzlogos (BrandStripe) | `public/img/referenzenLogos/` | Auf Landings/Skill-Seiten als Logo-Streifen |
+| Referenzlogos | `public/img/referenzenLogos/` | Logo-Streifen im Hero + Gitter auf `/referenzen/` |
 | Partner | `public/partners/partners.json` + `public/img/partners/` | Eigene Seite `/partner/` |
