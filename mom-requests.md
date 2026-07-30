@@ -13,3 +13,9 @@ Status: offen
 mom möchte, dass das Titelbild auf der Fulda-Seite (Landing-Seite) heller dargestellt wird. Bitte die Helligkeit des Bildes anpassen oder eine hellere Version des Bildes hochladen, sodass es optimal im Rahmen angezeigt wird.
 
 Status: offen
+
+## [2026-07-30] Mehr Fotos in der Slideshow-Vorschau anzeigen
+
+mom möchte in der Vorschau der Slideshow mehr als die aktuellen 4 Fotos sehen. Bitte die Anzahl der angezeigten Fotos in der Vorschau erhöhen.
+
+Status: offen
