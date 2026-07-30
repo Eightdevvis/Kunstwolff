@@ -374,6 +374,38 @@ export const getSlidesByTag = (dimension: TagDimension, slug: string): SlideItem
     });
 };
 
+/** Ein Slide samt Metadaten-Key und Tag-Block. Grundlage der Galerie. */
+export type TaggedSlide = SlideItem & { key: string; tags: SlideTags };
+
+/**
+ * ALLE Slides, jeder mit seinen Tags – der Bestand ohne jede Auswahl.
+ *
+ * Der Gegenentwurf zu `getSlidesByTag`: dort filtert der Server auf einen Tag,
+ * hier bekommt der Client den ganzen Bestand und filtert selbst. Für die
+ * Galerie ist das der richtige Schnitt, weil sonst 3 Dimensionen × ~50 Tags als
+ * je eigene Seite gebaut werden müssten, nur damit jemand zwei Chips klicken
+ * kann.
+ *
+ * Ein FEHLENDER Tag-Block wird zu `{}` – für die Anzeige ist "nie zugeordnet"
+ * dasselbe wie "keine Zuordnung". Die Unterscheidung braucht nur der Sync, der
+ * hier nicht mitliest.
+ *
+ * `enabled: false` ist bereits in `readFolderSlides` ausgesiebt: ein im Admin
+ * ausgeblendetes Bild darf auch in der Galerie nicht auftauchen, sonst wäre der
+ * Schalter wirkungslos.
+ */
+export const getAllSlidesWithTags = (): TaggedSlide[] => {
+  const metadata = readSlidesMetadata();
+
+  return collectAllSlidesWithKeys()
+    .map(({ slide, key }) => ({ ...slide, key, tags: metadata[key]?.tags ?? {} }))
+    .sort((a, b) => {
+      const nachPrio = (b.priority ?? 0) - (a.priority ?? 0);
+      if (nachPrio !== 0) return nachPrio;
+      return a.src.localeCompare(b.src);
+    });
+};
+
 /**
  * Slides einer Stadtseite.
  *

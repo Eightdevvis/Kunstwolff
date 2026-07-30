@@ -92,6 +92,13 @@ const bildVarianten = () => ({
 // https://astro.build/config
 export default defineConfig({
   site: siteUrl,
+  // Die Galerie liegt unter `/galerie/` – deutsche Schreibweise, weil die URL
+  // öffentlich sichtbar ist und in der Suche steht. `/gallerie/` (doppeltes l)
+  // ist die naheliegende Fehlschreibung und landet per Weiterleitung am Ziel,
+  // statt auf der 404-Seite.
+  redirects: {
+    '/gallerie': '/galerie/',
+  },
   integrations: [
     preact(),
     bildVarianten(),

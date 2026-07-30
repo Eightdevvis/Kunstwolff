@@ -20,7 +20,9 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [Cities / Landings](content-landings.md) – `landings.md`, Slugs, neue Stadt anlegen/entfernen
 - [Skills](content-skills.md) – `skills.json`, automatische Seiten-Generierung
 - [Events](content-events.md) – `events.json`, content.json, Event-Bilder
-- [Slides](content-slides.md) – Bilder, `slides.meta.json`, Lightbox, Fallback-Logik
+- [Slides](content-slides.md) – Bilder, `slides.meta.json`, Lightbox (gemeinsam mit der Galerie), Fallback-Logik
+- [Galerie](content-galerie.md) – `/galerie/`: **alle** Bilder auf einer Seite, Chips je Tag-Dimension (UND-verknüpft) + Suche, Client-Filter, verlinkt unter jedem „Unsere Kunst"-Banner
+- [Team](content-team.md) – `/team/`: zwei Profile (Gabriele zuerst), Portraits als Zuschnitte aus Event-Fotos, **kein `srcset`** für `img/team`
 - [Tag-System](tag-system.md) – Skill × Anlass × Ort: `config/tags.json`, Tag-Blöcke an Bildern/Reviews/FAQs, Migration; **Phase 5a+5b+5d fertig – Bilder, Reviews UND FAQs wählen über Tags aus, der Ordner ist nur noch Ablage**
 - [Responsive Bilder](responsive-images.md) – `srcset`/`sizes`, Varianten-Erzeugung nach dem Build, warum nicht `astro:assets`
 - [Vercel-Header](vercel-headers.md) – Cache-Control für `/img/*`, warum bewusst kein `immutable`
@@ -56,6 +58,8 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 | :-- | :-- |
 | "Neue Stadt hinzufügen" | `content-landings.md` |
 | "Slide hochladen / Reihenfolge ändern" | `content-slides.md` |
+| "Galerie / alle Bilder / Bild-Filter / Bild-Suche" | `content-galerie.md` (+ `tag-system.md`) |
+| "Team / Profile / Portraitfotos" | `content-team.md` |
 | "Tags / Anlass / automatische Einsortierung" | `tag-system.md` |
 | "Review pflegen" | `content-reviews.md` |
 | "FAQ pflegen" | `content-faqs.md` |

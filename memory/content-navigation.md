@@ -41,6 +41,16 @@
 
 `navigation.ts` hat einen eingebauten Default mit "Home" (mit Children), "Services", "Work", "Anfrage" (cta) – greift falls die JSON fehlt oder kaputt ist.
 
+## Aktueller Stand (2026-07-30)
+
+Home · Services (Schnellzeichner, Szenenmaler) · **Über uns (Team, Referenzen,
+Partner)** · FAQ (`#faq`) · Anfrage (`#contact`, cta)
+
+`Team` → `/team/` kam am 2026-07-30 dazu, siehe `content-team.md`.
+
+Die Galerie (`/galerie/`) steht **absichtlich nicht** im Menü: sie ist unter
+jedem „Unsere Kunst"-Banner verlinkt (`content-galerie.md`).
+
 ## Admin-Tool
 
 Kann Navigation **nicht** verwalten – manuell per Git pflegen.

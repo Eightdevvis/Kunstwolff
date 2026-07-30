@@ -82,6 +82,30 @@ Gegen `sharp` an allen 228 Slides geprüft: 228/228 identisch.
 
 Site-weit: 2983 `srcset`-Kandidaten auf 118 Seiten, **0 fehlend**.
 
+## `sizes` je Bühne
+
+| Konstante | Für | Wert |
+| :-- | :-- | :-- |
+| `SLIDESHOW_SIZES` | eine Bühne, ~700 px | `(max-width: 640px) 100vw, (max-width: 1200px) 60vw, 700px` |
+| `GALLERY_SIZES` | Galerie-Gitter, Kacheln ~220–300 px | `(max-width: 480px) 50vw, (max-width: 900px) 33vw, 300px` |
+
+Die zweite gibt es seit der Galerie (2026-07-30). Mit den Slideshow-Werten lüde
+das Gitter für **jede** der ~230 Kacheln die große Variante – der teuerste
+Copy-Paste-Fehler in diesem Bereich, weil er visuell nicht auffällt. Ein Test
+hält die beiden auseinander.
+
+## ⚠️ Welche Ordner Varianten bekommen
+
+`quellen` in `scripts/generate-image-variants.mjs`: **nur** `img/slides`,
+`img/Titelbild`, `img/why`.
+
+Alles andere unter `public/img/` hat **keine** Varianten – dort darf kein
+`srcset` ausgeliefert werden, sonst zeigt der Browser gar kein Bild. Betrifft
+aktuell `img/team` (siehe `content-team.md`): die beiden Portraits liegen
+stattdessen fertig zugeschnitten im Repo, und `tests/team.test.ts` prüft, dass
+niemand dort ein `srcset` ergänzt, ohne den Ordner vorher in `quellen`
+aufzunehmen.
+
 ## Kosten
 
 Der Build dauert länger (671 Varianten, ~25 s zusätzlich). Das trifft nur den

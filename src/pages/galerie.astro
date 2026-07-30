@@ -1,0 +1,47 @@
+---
+/**
+ * Galerie – der vollständige Bildbestand, filterbar und durchsuchbar.
+ *
+ * Aufbau wie `faq.astro`: eine schlanke Seite, die eine Komponente im
+ * interaktiven Vollmodus rendert. Die Auswahl-Logik steckt in
+ * `src/utils/gallery.ts`, die Oberfläche in `src/components/Gallery.astro`.
+ *
+ * Verlinkt ist sie unter jedem "Unsere Kunst"-Banner (in `Slideshow.astro`,
+ * also auf Startseite, Skill-, Stadt- und Event-Seiten).
+ */
+import Layout from "../layouts/Layout.astro";
+import Gallery from "../components/Gallery.astro";
+import { getGalleryData } from "../utils/gallery";
+
+const gallery = getGalleryData();
+
+// OG-Bild: das erste Bild des Bestands (höchste `priority`) – ein sprechendes
+// Vorschaubild ohne eine zweite Stelle, die pflegebedürftig wird.
+const ogBild = gallery.bilder[0]?.src;
+
+const site = Astro.site?.origin ?? "https://kunstwolff.de";
+
+// ImageGallery statt CollectionPage: der Seiteninhalt IST eine Bildsammlung.
+// Bewusst ohne die 230 Einzelbilder als `associatedMedia` – das wären ~40 kB
+// JSON-LD im Head für eine Angabe, die Google sich aus dem Markup ohnehin holt.
+const gallerySchema = {
+  "@context": "https://schema.org",
+  "@type": "ImageGallery",
+  name: "Galerie – Live-Kunst von Kunstwolff",
+  description:
+    "Alle Arbeiten von Kunstwolff: Schnellzeichnen und Szenenmalerei von Firmenfeiern, Messen, Hochzeiten und privaten Festen.",
+  url: `${site}/galerie/`,
+  numberOfItems: gallery.bilder.length,
+  ...(ogBild ? { thumbnailUrl: `${site}${ogBild}` } : {}),
+};
+---
+
+<Layout
+  title="Galerie – alle Bilder von Kunstwolff"
+  description="Alle Arbeiten von Kunstwolff auf einer Seite: Schnellzeichnen und Szenenmalerei von Firmenfeiern, Messen, Hochzeiten und privaten Festen – nach Kunstform, Anlass und Ort filterbar."
+  image={ogBild}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(gallerySchema)} />
+
+  <Gallery data={gallery} />
+</Layout>

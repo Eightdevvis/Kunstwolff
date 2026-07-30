@@ -9,6 +9,7 @@
       ]
     },
     { "label": "Über uns", "children": [
+        { "label": "Team", "url": "/team/" },
         { "label": "Referenzen", "url": "/referenzen/" },
         { "label": "Partner", "url": "/partner/" }
       ]

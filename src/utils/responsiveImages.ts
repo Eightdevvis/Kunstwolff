@@ -75,3 +75,14 @@ export function buildSrcSet(src: string, originalWidth?: number): string {
  * Angabe wird beim nächsten Layout-Umbau falsch, ohne dass es jemand merkt.
  */
 export const SLIDESHOW_SIZES = '(max-width: 640px) 100vw, (max-width: 1200px) 60vw, 700px';
+
+/**
+ * `sizes` für das Galerie-Gitter.
+ *
+ * Andere Werte als in der Slideshow, weil das Gitter ein anderes Bild ausliefert:
+ * dort EINE Bühne von ~700px, hier Kacheln von ~220–300px, auf schmalen Geräten
+ * zwei pro Reihe. Mit `SLIDESHOW_SIZES` lüde die Galerie für jede Kachel die
+ * grosse Variante – bei 230 Bildern auf einer Seite ist das der teuerste
+ * Copy-Paste-Fehler, den man hier machen kann.
+ */
+export const GALLERY_SIZES = '(max-width: 480px) 50vw, (max-width: 900px) 33vw, 300px';

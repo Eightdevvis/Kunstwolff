@@ -1,0 +1,437 @@
+---
+import { getGalleryData, type GalleryData } from '../utils/gallery';
+import { buildSrcSet, GALLERY_SIZES } from '../utils/responsiveImages';
+
+// Wie FAQ.astro: die Komponente holt sich die Daten selbst, nimmt sie aber als
+// Prop, wenn die Seite sie ohnehin schon gelesen hat (`galerie.astro` braucht die
+// Anzahl fürs JSON-LD). Zweimal denselben Ordnerbaum lesen wäre nur Build-Zeit,
+// aber eben auch zwei Wahrheiten, wenn eine Seite mal filtert.
+const { data } = Astro.props as { data?: GalleryData };
+const { bilder, facets, ohneTags } = data ?? getGalleryData();
+---
+
+<section id="galerie" class="gallery-page" data-gallery>
+  <div class="gallery-container">
+    <h2>Unsere Kunst – alle Bilder</h2>
+
+    <p class="gallery-intro">
+      Über 25 Jahre Live-Kunst auf Firmenfeiern, Messen, Hochzeiten und privaten
+      Festen. Suchen Sie nach einem Stichwort oder filtern Sie nach Kunstform,
+      Anlass und Ort.
+    </p>
+
+    <div class="gallery-controls">
+      <label class="gallery-search-wrap" for="gallery-search-input">
+        <span>Bilder durchsuchen</span>
+        <input
+          id="gallery-search-input"
+          class="gallery-search-input"
+          type="search"
+          placeholder="Suchbegriff eingeben, z. B. Karikatur, Hochzeit oder Trier"
+          autocomplete="off"
+        />
+      </label>
+
+      {facets.map((facet) => (
+        <div class="gallery-facet">
+          <span class="gallery-facet-label" id={`gallery-facet-${facet.dimension}`}>
+            {facet.label}
+          </span>
+          <div class="gallery-tags" role="group" aria-labelledby={`gallery-facet-${facet.dimension}`}>
+            {/* "Alle" ist der Ausgangszustand und gleichzeitig der Weg zurück –
+                ohne diesen Chip käme man aus einem Filter nur über die Suche
+                oder einen Reload heraus. */}
+            <button
+              type="button"
+              class="gallery-tag is-active"
+              data-gallery-dimension={facet.dimension}
+              data-gallery-tag=""
+              aria-pressed="true"
+            >
+              Alle
+            </button>
+            {facet.tags.map((tag) => (
+              <button
+                type="button"
+                class="gallery-tag"
+                data-gallery-dimension={facet.dimension}
+                data-gallery-tag={tag.slug}
+                aria-pressed="false"
+              >
+                {tag.label}
+                <span class="gallery-tag-count">{tag.count}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <p class="gallery-count" data-gallery-count aria-live="polite">
+      {bilder.length} Bilder
+    </p>
+
+    <div class="gallery-grid" data-gallery-grid>
+      {bilder.map((bild, index) => (
+        <figure class="gallery-tile" data-gallery-tile data-search={bild.suchtext} data-tags={bild.tagListe.join(' ')}>
+          <button
+            type="button"
+            class="gallery-tile-button"
+            data-gallery-index={index}
+            data-lb-src={bild.src}
+            data-lb-alt={bild.alt}
+            data-lb-title={bild.title ?? ''}
+            aria-label={`${bild.title || bild.alt} – gross ansehen`}
+          >
+            <img
+              src={bild.src}
+              srcset={buildSrcSet(bild.src, bild.width)}
+              sizes={GALLERY_SIZES}
+              alt={bild.alt}
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
+          {bild.title && <figcaption>{bild.title}</figcaption>}
+        </figure>
+      ))}
+    </div>
+
+    <p data-gallery-empty class="gallery-empty-state" hidden>
+      Zu dieser Auswahl haben wir kein Bild.
+      <a href="/contact">Schreiben Sie uns</a>
+      – wir zeigen Ihnen gerne Arbeiten, die zu Ihrem Event passen.
+    </p>
+
+    {ohneTags > 0 && (
+      <p class="gallery-note">
+        {ohneTags} {ohneTags === 1 ? 'Bild ist' : 'Bilder sind'} noch keinem Anlass, keiner
+        Kunstform und keinem Ort zugeordnet – {ohneTags === 1 ? 'es ist' : 'sie sind'} nur
+        über „Alle“ und die Suche zu finden.
+      </p>
+    )}
+  </div>
+</section>
+
+<script>
+  import { openLightbox, type LbSlide } from '../scripts/lightbox';
+
+  const galerie = document.querySelector<HTMLElement>('[data-gallery]');
+
+  if (galerie) {
+    const suchfeld = galerie.querySelector<HTMLInputElement>('#gallery-search-input');
+    const gitter = galerie.querySelector<HTMLElement>('[data-gallery-grid]');
+    const leerHinweis = galerie.querySelector<HTMLElement>('[data-gallery-empty]');
+    const zaehler = galerie.querySelector<HTMLElement>('[data-gallery-count]');
+    const chips = Array.from(galerie.querySelectorAll<HTMLButtonElement>('[data-gallery-tag]'));
+    const kacheln = Array.from(galerie.querySelectorAll<HTMLElement>('[data-gallery-tile]'));
+
+    // Ein aktiver Tag pro Dimension, Dimensionen mit UND verknüpft – dieselbe
+    // Semantik, mit der der Server auswählt (matchesFAQContext, getSlidesByTag).
+    // Eine ODER-Verknüpfung wäre die bequemere Implementierung und die falsche
+    // Antwort: "Szenenmaler" + "Trier" würde dann alles zeigen, was eines von
+    // beiden trägt.
+    const aktiv = new Map<string, string>();
+    let suchbegriff = '';
+
+    const filtern = () => {
+      let sichtbar = 0;
+
+      kacheln.forEach((kachel) => {
+        const tags = (kachel.dataset.tags || '').split(' ');
+        const text = kachel.dataset.search || '';
+
+        let passt = suchbegriff.length === 0 || text.includes(suchbegriff);
+        if (passt) {
+          for (const [dimension, slug] of aktiv) {
+            if (!tags.includes(`${dimension}:${slug}`)) {
+              passt = false;
+              break;
+            }
+          }
+        }
+
+        kachel.hidden = !passt;
+        if (passt) sichtbar += 1;
+      });
+
+      if (leerHinweis) leerHinweis.hidden = sichtbar > 0;
+      if (zaehler) {
+        zaehler.textContent =
+          sichtbar === kacheln.length
+            ? `${kacheln.length} Bilder`
+            : `${sichtbar} von ${kacheln.length} Bildern`;
+      }
+    };
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const dimension = chip.dataset.galleryDimension || '';
+        const slug = chip.dataset.galleryTag || '';
+
+        // Klick auf den aktiven Chip hebt den Filter auf. Ohne das müsste man
+        // erst "Alle" finden, um eine Dimension wieder loszuwerden.
+        if (slug && aktiv.get(dimension) === slug) {
+          aktiv.delete(dimension);
+        } else if (slug) {
+          aktiv.set(dimension, slug);
+        } else {
+          aktiv.delete(dimension);
+        }
+
+        const gewaehlt = aktiv.get(dimension) ?? '';
+        chips
+          .filter((c) => c.dataset.galleryDimension === dimension)
+          .forEach((c) => {
+            const istAktiv = (c.dataset.galleryTag || '') === gewaehlt;
+            c.classList.toggle('is-active', istAktiv);
+            c.setAttribute('aria-pressed', String(istAktiv));
+          });
+
+        filtern();
+      });
+    });
+
+    suchfeld?.addEventListener('input', () => {
+      suchbegriff = suchfeld.value.toLowerCase().trim();
+      filtern();
+    });
+
+    // Die Lightbox bekommt nur die SICHTBAREN Bilder. Sonst blättert man aus
+    // einem Filter heraus in Bilder, die man gerade weggefiltert hat.
+    gitter?.addEventListener('click', (event) => {
+      const knopf = (event.target as HTMLElement).closest<HTMLElement>('[data-lb-src]');
+      if (!knopf) return;
+
+      const sichtbare = kacheln.filter((kachel) => !kachel.hidden);
+      const slides: LbSlide[] = sichtbare.map((kachel) => {
+        const b = kachel.querySelector<HTMLElement>('[data-lb-src]');
+        return {
+          src: b?.dataset.lbSrc || '',
+          alt: b?.dataset.lbAlt || '',
+          title: b?.dataset.lbTitle || '',
+        };
+      });
+
+      const index = slides.findIndex((s) => s.src === knopf.dataset.lbSrc);
+      openLightbox(slides, index >= 0 ? index : 0);
+    });
+
+    filtern();
+  }
+</script>
+
+<style>
+  .gallery-page {
+    padding: 80px 20px;
+    background: #000;
+  }
+
+  .gallery-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .gallery-container h2 {
+    text-align: center;
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    margin-bottom: 16px;
+    color: #fff;
+    font-family: "Mayonice", Georgia, serif;
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+  }
+
+  .gallery-intro {
+    max-width: 640px;
+    margin: 0 auto 34px;
+    text-align: center;
+    color: #b9b9b9;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* ── Suche + Filter ─────────────────────────────────────────────────── */
+  .gallery-controls {
+    max-width: 900px;
+    margin: 0 auto 24px;
+  }
+
+  .gallery-search-wrap {
+    display: grid;
+    gap: 10px;
+  }
+
+  .gallery-search-wrap span {
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .gallery-search-input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #2e2e2e;
+    border-radius: 999px;
+    background: #141414;
+    color: #f5f5f5;
+    padding: 14px 18px;
+    font-size: 1rem;
+  }
+
+  .gallery-search-input:focus {
+    outline: none;
+    border-color: rgba(191, 155, 80, 0.8);
+    box-shadow: 0 0 0 3px rgba(191, 155, 80, 0.18);
+  }
+
+  .gallery-facet {
+    margin-top: 20px;
+  }
+
+  .gallery-facet-label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .gallery-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .gallery-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #383838;
+    border-radius: 999px;
+    background: #111;
+    color: #d8d8d8;
+    padding: 7px 13px;
+    font-size: 0.88rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+
+  .gallery-tag:hover,
+  .gallery-tag.is-active {
+    border-color: rgba(191, 155, 80, 0.9);
+    color: #fff;
+    background: rgba(191, 155, 80, 0.18);
+  }
+
+  .gallery-tag-count {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .gallery-tag.is-active .gallery-tag-count {
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .gallery-count {
+    margin: 0 0 18px;
+    color: #8f8f8f;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ── Gitter ─────────────────────────────────────────────────────────── */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+  }
+
+  .gallery-tile {
+    margin: 0;
+  }
+
+  .gallery-tile[hidden] {
+    display: none;
+  }
+
+  .gallery-tile-button {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 1px solid #1f1f1f;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #0c0c0c;
+    cursor: zoom-in;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .gallery-tile-button:hover,
+  .gallery-tile-button:focus-visible {
+    border-color: rgba(191, 155, 80, 0.8);
+    transform: translateY(-2px);
+    outline: none;
+  }
+
+  /* Einheitliche Kachelhöhe per aspect-ratio statt per JS: die Slideshow muss
+     ihre Höhe messen, weil dort eine Reihe nebeneinander liegt – im Gitter
+     genügt CSS, und ohne Messung gibt es auch keinen Sprung beim Nachladen. */
+  .gallery-tile-button img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .gallery-tile figcaption {
+    margin-top: 6px;
+    color: #9a9a9a;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    /* Zwei Zeilen reichen; ein langer Titel darf das Gitter nicht auseinanderziehen. */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ── Hinweise ───────────────────────────────────────────────────────── */
+  .gallery-empty-state {
+    margin-top: 24px;
+    padding: 18px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(191, 155, 80, 0.4);
+    background: rgba(191, 155, 80, 0.08);
+    color: #ececec;
+  }
+
+  .gallery-empty-state a {
+    color: #d7b96a;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(215, 185, 106, 0.65);
+  }
+
+  .gallery-note {
+    margin-top: 28px;
+    color: #7c7c7c;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 520px) {
+    .gallery-page {
+      padding: 56px 14px;
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+    }
+  }
+</style>

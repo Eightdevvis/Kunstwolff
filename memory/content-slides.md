@@ -39,6 +39,32 @@ Eigene Implementierung (kein externes Package):
 - **Mobile:** Pinch-Zoom (1–4×), Swipe navigiert (wenn nicht gezoomt)
 - **Tastatur:** Pfeiltasten navigieren, ESC schließt
 
+**Seit 2026-07-30 geteilt** (vorher inline im `<script>` von `Slideshow.astro`):
+
+| Datei | Inhalt |
+| :-- | :-- |
+| `src/scripts/lightbox.ts` | Logik, exportiert `openLightbox(slides, idx)` |
+| `src/styles/lightbox.css` | Styles, per `@import` in `global.css` – also auf **jeder** Seite |
+
+Grund für den Umzug: die Galerie (`content-galerie.md`) ist ein **zweiter**
+Aufrufer. Zwei Kopien derselben ~200 Zeilen wären bei der nächsten Änderung
+auseinandergelaufen – Fix in der einen Bühne, unbemerkt fehlend in der anderen.
+
+⚠️ Das CSS **muss** global liegen, nicht als `<style is:global>` in
+`Slideshow.astro`: ein Komponenten-Style wird nur ausgeliefert, wenn die
+Komponente auf der Seite vorkommt. Auf `/galerie/` gibt es keine Slideshow – die
+Lightbox wäre dort ohne Backdrop und Positionierung aufgegangen.
+
+Das DOM (`#kw-lightbox`) injiziert das Skript einmal pro Seite in `<body>`, beide
+Aufrufer nutzen dasselbe Element.
+
+## Alle Slides samt Tags
+
+`getAllSlidesWithTags()` in `src/utils/slideImages.ts` liefert den **gesamten**
+Bestand, jeden Slide mit Metadaten-Key und Tag-Block, sortiert nach `priority`
+und Pfad. `enabled: false` bleibt ausgesiebt. Grundlage der Galerie – Details
+dort.
+
 ## Metadaten: `slides.meta.json`
 
 ```json

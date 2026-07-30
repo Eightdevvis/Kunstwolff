@@ -9,6 +9,7 @@ type Slide = {
 };
 
 import { buildSrcSet, SLIDESHOW_SIZES } from '../../utils/responsiveImages';
+import { GALERIE_URL } from '../../utils/gallery';
 
 const { items = [], filteredCategories = [] } = Astro.props;
 
@@ -53,283 +54,25 @@ const filteredItems =
         <div class="swiper-button-prev"></div>
         <div class="swiper-pagination"></div>
     </div>
+
+    {/* Die Slideshow zeigt immer nur einen Ausschnitt (Startseite: die kuratierte
+        Auswahl, Landing/Event: die Bilder mit dem passenden Tag). Der Link führt
+        auf den vollständigen Bestand – gleiche Rolle wie der FAQ-Link unter der
+        gekürzten FAQ-Liste. Steht in der Komponente und damit unter JEDEM
+        "Unsere Kunst"-Banner, auf allen Seitentypen. */}
+    <p class="gallery-all-link">
+        <a href={GALERIE_URL}>Alle Bilder in der Galerie ansehen</a>
+    </p>
 </section>
 
 <script>
     import Swiper from "swiper";
     import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
-    // =====================================================================
-    // LIGHTBOX STATE
-    // =====================================================================
-    type LbSlide = { src: string; alt: string; title: string };
-
-    let lb: HTMLElement | null = null;
-    let lbImg: HTMLImageElement | null = null;
-    let lbCounter: HTMLElement | null = null;
-    let lbCaption: HTMLElement | null = null;
-    let lbSlides: LbSlide[] = [];
-    let lbIdx = 0;
-
-    // Zoom + Pan
-    let lbZoom = 1;
-    let lbPanX = 0;
-    let lbPanY = 0;
-    const LB_MAX_ZOOM = 4;
-
-    // Touch tracking
-    let touchCount = 0;
-    let swipeStartX = 0;
-    let swipeStartY = 0;
-    let lastTouchX = 0;
-    let lastTouchY = 0;
-    let pinchStartDist = 0;
-    let pinchStartZoom = 1;
-
-    // Maus-Drag tracking (Pan mit Maus wenn gezoomt)
-    let mouseDownX = 0;
-    let mouseDownY = 0;
-    let mouseIsDragging = false; // true sobald Maus >= 5px bewegt wurde
-
-    // =====================================================================
-    // LIGHTBOX DOM SETUP (einmalig für die gesamte Seite)
-    // =====================================================================
-    function createLightbox() {
-        if (document.getElementById("kw-lightbox")) {
-            lb = document.getElementById("kw-lightbox");
-            lbImg = lb!.querySelector(".lb-img");
-            lbCounter = lb!.querySelector(".lb-counter");
-            lbCaption = lb!.querySelector(".lb-caption");
-            return;
-        }
-
-        const el = document.createElement("div");
-        el.id = "kw-lightbox";
-        el.setAttribute("hidden", "");
-        el.setAttribute("role", "dialog");
-        el.setAttribute("aria-modal", "true");
-        el.setAttribute("aria-label", "Bildvorschau");
-        el.innerHTML = `
-            <div class="lb-backdrop"></div>
-            <div class="lb-wrap">
-                <img class="lb-img" src="" alt="" draggable="false" />
-            </div>
-            <button class="lb-close" aria-label="Schließen">✕</button>
-            <button class="lb-prev" aria-label="Vorheriges Bild">&#8249;</button>
-            <button class="lb-next" aria-label="Nächstes Bild">&#8250;</button>
-            <div class="lb-footer">
-                <span class="lb-caption"></span>
-                <span class="lb-counter"></span>
-            </div>
-        `;
-        document.body.appendChild(el);
-
-        lb = el;
-        lbImg = el.querySelector(".lb-img");
-        lbCounter = el.querySelector(".lb-counter");
-        lbCaption = el.querySelector(".lb-caption");
-
-        el.querySelector(".lb-backdrop")!.addEventListener("click", closeLightbox);
-        el.querySelector(".lb-close")!.addEventListener("click", closeLightbox);
-        el.querySelector(".lb-prev")!.addEventListener("click", () => navigate(-1));
-        el.querySelector(".lb-next")!.addEventListener("click", () => navigate(1));
-
-        // Keyboard
-        document.addEventListener("keydown", onKeydown);
-
-        // Touch (Swipe, Pinch, Pan)
-        const wrap = el.querySelector(".lb-wrap") as HTMLElement;
-        wrap.addEventListener("touchstart", onTouchStart, { passive: true });
-        wrap.addEventListener("touchmove", onTouchMove, { passive: false });
-        wrap.addEventListener("touchend", onTouchEnd, { passive: true });
-
-        // Maus-Drag-Panning (Desktop)
-        wrap.addEventListener("mousedown", onMouseDown);
-        window.addEventListener("mousemove", onMouseMove);
-        window.addEventListener("mouseup", onMouseUp);
-
-        // Einfacher Klick = Zoom-Toggle (Desktop)
-        lbImg!.addEventListener("click", onImgClick);
-    }
-
-    // =====================================================================
-    // OPEN / CLOSE / NAVIGATE
-    // =====================================================================
-    function openLightbox(slides: LbSlide[], idx: number) {
-        if (!lb) createLightbox();
-        lbSlides = slides;
-        lbIdx = idx;
-        resetZoom();
-        showSlide();
-        lb!.removeAttribute("hidden");
-        document.body.style.overflow = "hidden";
-    }
-
-    function closeLightbox() {
-        lb?.setAttribute("hidden", "");
-        document.body.style.overflow = "";
-        resetZoom();
-    }
-
-    function navigate(dir: number) {
-        if (lbSlides.length < 2) return;
-        lbIdx = (lbIdx + dir + lbSlides.length) % lbSlides.length;
-        resetZoom();
-        showSlide();
-    }
-
-    function showSlide() {
-        if (!lbImg || !lbCounter) return;
-        const slide = lbSlides[lbIdx];
-        lbImg.src = slide.src;
-        lbImg.alt = slide.alt;
-        lbCounter.textContent = `${lbIdx + 1} / ${lbSlides.length}`;
-        // title hat Vorrang, Fallback auf alt – Caption ausblenden wenn beides leer
-        if (lbCaption) {
-            const caption = slide.title || slide.alt || "";
-            lbCaption.textContent = caption;
-            lbCaption.style.display = caption ? "" : "none";
-        }
-
-        const prevBtn = lb?.querySelector(".lb-prev") as HTMLElement | null;
-        const nextBtn = lb?.querySelector(".lb-next") as HTMLElement | null;
-        const hidden = lbSlides.length <= 1;
-        if (prevBtn) prevBtn.style.display = hidden ? "none" : "";
-        if (nextBtn) nextBtn.style.display = hidden ? "none" : "";
-    }
-
-    // =====================================================================
-    // ZOOM + PAN
-    // =====================================================================
-    function resetZoom() {
-        lbZoom = 1;
-        lbPanX = 0;
-        lbPanY = 0;
-        applyTransform();
-    }
-
-    function applyTransform() {
-        if (!lbImg) return;
-        // translate vor scale, damit Pan in Bildkoordinaten arbeitet
-        lbImg.style.transform = `scale(${lbZoom}) translate(${lbPanX / lbZoom}px, ${lbPanY / lbZoom}px)`;
-        lbImg.style.cursor = lbZoom > 1 ? "grab" : "zoom-in"; // "grabbing" wird beim Drag direkt gesetzt
-    }
-
-    // Einfacher Klick: rein- oder rauszoomen.
-    // Guard: wenn Maus vorher gezogen wurde, ist es kein Zoom-Klick.
-    function onImgClick(e: MouseEvent) {
-        if (mouseIsDragging) return;
-        if (lbZoom > 1) {
-            resetZoom();
-        } else {
-            // Zoom zur Klick-Position hin (2.5× reicht für eine gute Detailansicht)
-            const rect = lbImg!.getBoundingClientRect();
-            const offsetX = e.clientX - (rect.left + rect.width / 2);
-            const offsetY = e.clientY - (rect.top + rect.height / 2);
-            lbZoom = 2.5;
-            lbPanX = -offsetX;
-            lbPanY = -offsetY;
-            applyTransform();
-        }
-    }
-
-    // Maus gedrückt: Startposition merken, Drag noch nicht aktiv
-    function onMouseDown(e: MouseEvent) {
-        if (e.button !== 0) return; // nur linke Maustaste
-        mouseDownX = e.clientX;
-        mouseDownY = e.clientY;
-        mouseIsDragging = false;
-    }
-
-    // Maus bewegt: ab 5px Delta → Pan (nur wenn gezoomt)
-    function onMouseMove(e: MouseEvent) {
-        if (e.buttons !== 1) return; // linke Taste muss gehalten sein
-        const dx = e.clientX - mouseDownX;
-        const dy = e.clientY - mouseDownY;
-        if (!mouseIsDragging && Math.hypot(dx, dy) < 5) return;
-        if (lbZoom <= 1) return;
-
-        mouseIsDragging = true;
-        lbPanX += e.movementX;
-        lbPanY += e.movementY;
-        applyTransform();
-        if (lbImg) lbImg.style.cursor = "grabbing";
-    }
-
-    // Maus losgelassen: Drag beenden, Cursor zurücksetzen
-    function onMouseUp() {
-        if (mouseIsDragging) {
-            applyTransform(); // setzt cursor zurück auf "grab"
-        }
-        // mouseIsDragging erst beim nächsten Frame zurücksetzen,
-        // damit der click-Handler es noch lesen kann
-        requestAnimationFrame(() => { mouseIsDragging = false; });
-    }
-
-    // =====================================================================
-    // KEYBOARD
-    // =====================================================================
-    function onKeydown(e: KeyboardEvent) {
-        if (lb?.hasAttribute("hidden")) return;
-        if (e.key === "Escape") closeLightbox();
-        if (e.key === "ArrowRight") navigate(1);
-        if (e.key === "ArrowLeft") navigate(-1);
-    }
-
-    // =====================================================================
-    // TOUCH: Swipe (zoom=1) | Pan (zoom>1) | Pinch-Zoom
-    // =====================================================================
-    function getTouchDist(t: TouchList): number {
-        const dx = t[0].clientX - t[1].clientX;
-        const dy = t[0].clientY - t[1].clientY;
-        return Math.sqrt(dx * dx + dy * dy);
-    }
-
-    function onTouchStart(e: TouchEvent) {
-        touchCount = e.touches.length;
-        if (touchCount === 1) {
-            swipeStartX = e.touches[0].clientX;
-            swipeStartY = e.touches[0].clientY;
-            lastTouchX = swipeStartX;
-            lastTouchY = swipeStartY;
-        } else if (touchCount === 2) {
-            pinchStartDist = getTouchDist(e.touches);
-            pinchStartZoom = lbZoom;
-        }
-    }
-
-    function onTouchMove(e: TouchEvent) {
-        if (e.touches.length === 2) {
-            // Pinch-Zoom
-            const dist = getTouchDist(e.touches);
-            lbZoom = Math.max(1, Math.min(LB_MAX_ZOOM, pinchStartZoom * (dist / pinchStartDist)));
-            applyTransform();
-            e.preventDefault();
-        } else if (e.touches.length === 1 && lbZoom > 1) {
-            // Pan (nur wenn gezoomt)
-            const dx = e.touches[0].clientX - lastTouchX;
-            const dy = e.touches[0].clientY - lastTouchY;
-            lbPanX += dx;
-            lbPanY += dy;
-            lastTouchX = e.touches[0].clientX;
-            lastTouchY = e.touches[0].clientY;
-            applyTransform();
-            e.preventDefault();
-        }
-    }
-
-    function onTouchEnd(e: TouchEvent) {
-        // Swipe-Navigation nur wenn nicht gezoomt und single-touch
-        if (touchCount === 1 && lbZoom <= 1) {
-            const dx = e.changedTouches[0].clientX - swipeStartX;
-            const dy = e.changedTouches[0].clientY - swipeStartY;
-            // Horizontal-Swipe: Mindest-Delta 50px, mehr horizontal als vertikal
-            if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-                navigate(dx < 0 ? 1 : -1);
-            }
-        }
-        touchCount = e.touches.length;
-    }
+    // Lightbox: gemeinsame Implementierung, siehe src/scripts/lightbox.ts.
+    // Lag bis zur Galerie hier inline – mit einem zweiten Aufrufer waeren daraus
+    // zwei Kopien geworden, die bei der naechsten Aenderung auseinanderlaufen.
+    import { openLightbox, type LbSlide } from "../../scripts/lightbox";
 
     // =====================================================================
     // UNIFORM IMAGE HEIGHT
@@ -537,150 +280,26 @@ const filteredItems =
         font-size: 24px;
         font-weight: 700;
     }
-</style>
 
-<style is:global>
-    /* =====================================================================
-       LIGHTBOX – global, da das Element direkt in <body> injiziert wird
-    ===================================================================== */
-    #kw-lightbox {
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    #kw-lightbox[hidden] {
-        display: none;
-    }
-
-    .lb-backdrop {
-        position: absolute;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.92);
-    }
-
-    .lb-wrap {
-        position: relative;
-        z-index: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        max-width: 90vw;
-        max-height: 90vh;
-        overflow: hidden;
-        touch-action: none; /* Pinch-Zoom via JS steuern */
-    }
-
-    .lb-img {
-        max-width: 90vw;
-        max-height: 90vh;
-        object-fit: contain;
-        user-select: none;
-        -webkit-user-drag: none;
-        transition: transform 0.08s ease-out;
-        will-change: transform;
-    }
-
-    .lb-close {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        z-index: 2;
-        background: rgba(0, 0, 0, 0.55);
-        color: #fff;
-        border: none;
-        border-radius: 50%;
-        width: 42px;
-        height: 42px;
-        font-size: 20px;
-        line-height: 1;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.15s;
-    }
-
-    .lb-close:hover {
-        background: rgba(255, 255, 255, 0.2);
-    }
-
-    .lb-prev,
-    .lb-next {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 2;
-        background: rgba(0, 0, 0, 0.4);
-        color: #fff;
-        border: none;
-        font-size: 48px;
-        line-height: 1;
-        cursor: pointer;
-        padding: 8px 18px;
-        border-radius: 4px;
-        transition: background 0.15s;
-        user-select: none;
-    }
-
-    .lb-prev:hover,
-    .lb-next:hover {
-        background: rgba(255, 255, 255, 0.15);
-    }
-
-    .lb-prev {
-        left: 16px;
-    }
-
-    .lb-next {
-        right: 16px;
-    }
-
-    /* Footer-Bereich: Caption + Counter, zentriert am unteren Rand */
-    .lb-footer {
-        position: absolute;
-        bottom: 16px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 2;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 4px;
-        max-width: min(90vw, 700px);
-    }
-
-    /* Sichtbarer Bildtitel in der Lightbox */
-    .lb-caption {
-        color: rgba(255, 255, 255, 0.85);
-        font-size: 14px;
-        font-family: sans-serif;
-        font-style: italic;
+    /* Verweis auf die Galerie – Gold-Unterstrich wie der FAQ-Weiterlink,
+       damit "hier geht es weiter" seitenweit gleich aussieht. */
+    .gallery-all-link {
+        margin-top: 18px;
         text-align: center;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-        white-space: normal;
-        word-break: break-word;
+        font-size: 0.95rem;
     }
 
-    /* Zähler "2 / 8" */
-    .lb-counter {
+    .gallery-all-link a {
+        color: #d7b96a;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(215, 185, 106, 0.65);
+        padding-bottom: 2px;
+        transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .gallery-all-link a:hover,
+    .gallery-all-link a:focus-visible {
         color: #fff;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 4px 14px;
-        border-radius: 12px;
-        font-size: 13px;
-        font-family: sans-serif;
-        white-space: nowrap;
-    }
-
-    @media (max-width: 600px) {
-        .lb-prev,
-        .lb-next {
-            font-size: 36px;
-            padding: 6px 12px;
-        }
+        border-color: #fff;
     }
 </style>

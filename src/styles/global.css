@@ -1,6 +1,9 @@
 @import "swiper/css";
 @import "swiper/css/navigation";
 @import "swiper/css/pagination";
+/* Lightbox: global, weil das Element per JS in <body> injiziert wird – und weil
+   es zwei Aufrufer hat (Slideshow + Galerie). Details in lightbox.css. */
+@import "./lightbox.css";
 
 *{
     margin: 0;
