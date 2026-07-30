@@ -1,5 +1,7 @@
 import fs from 'fs';
 import path from 'path';
+import { aufloesenBildpfad } from './bildAufloesung';
+import { aufgeloesteHighlights } from './whyHighlights';
 
 export type DuBistKunstExample = {
   personTitle: string;
@@ -45,11 +47,14 @@ export const getDuBistKunstContent = (): DuBistKunstContent | null => {
     const hero = o.hero as DuBistKunstContent['hero'] | undefined;
     const intro = typeof o.intro === 'string' ? o.intro : '';
     const galleryTitle = typeof o.galleryTitle === 'string' ? o.galleryTitle : '';
-    const examples = Array.isArray(o.examples) ? (o.examples as DuBistKunstExample[]) : [];
+    // Bildpfade sind Kopien aus gepflegten Ordnern – siehe `bildAufloesung.ts`.
+    const examples = (Array.isArray(o.examples) ? (o.examples as DuBistKunstExample[]) : []).map(
+      (item) => ({ ...item, image: aufloesenBildpfad(item.image) }),
+    );
     const otherSectionTitle = typeof o.otherSectionTitle === 'string' ? o.otherSectionTitle : '';
-    const otherHighlights = Array.isArray(o.otherHighlights)
-      ? (o.otherHighlights as DuBistKunstOtherHighlight[])
-      : [];
+    const otherHighlights = aufgeloesteHighlights(
+      Array.isArray(o.otherHighlights) ? (o.otherHighlights as DuBistKunstOtherHighlight[]) : [],
+    );
 
     if (!seo?.title || !hero?.title) return null;
     return { seo, hero, intro, galleryTitle, examples, otherSectionTitle, otherHighlights };

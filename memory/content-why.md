@@ -62,3 +62,34 @@ Basis: `default.json`. Die generierten Stadt-/Skill-Dateien enthalten **leere Fe
 - Der Why-Editor (`ImageManager`, `editorType: 'why'`) verwaltet **Bilder UND Texte**.
 - **Bilder** landen unter `public/img/why/<city>/benefit-{1-4}/`.
 - **Texte** (`title`/`text`/`alt`) schreibt `saveWhyBenefits()` als Per-Feld-Overrides nach `public/why/<city>.json` (Commit `admin: Why-Texte aktualisiert (<city>)`). Nicht-überschriebene Felder bleiben leer und werden von der Website aus `default.json` gemerged.
+
+## Die vier Why-Detailseiten holen ihre Bilder hier ab (seit 2026-07-30)
+
+`/branding/`, `/canvas/`, `/du-bist-kunst/`, `/stimmung-durch-kunst/` zeigen am
+Seitenfuss den Abschnitt „Andere Besonderheiten von Kunstwolff". Das **sind** die
+Why-Karten, nur ohne die eigene.
+
+Ihre Bildpfade standen bis 2026-07-30 als **Kopie** in jeder der vier
+`public/<slug>/content.json`. Vier Kopien von etwas, das der Admin an einer
+einzigen Stelle austauscht: Mom tauschte das Bild der vierten Why-Karte, die alte
+Datei wurde gelöscht – und vier Seiten zeigten kaputte Bilder. Gemerkt hat es
+niemand, weil diese Seiten selten aufgerufen werden.
+
+Jetzt liefert `src/utils/whyHighlights.ts` → `aufgeloesteHighlights()` das Bild
+aus `getWhyBenefits()`, also aus derselben Quelle wie die Startseite. Zuordnung
+über `WHY_DETAIL_LINKS[i]` ↔ Karte `i` (`whyDetailLinks.ts`). **Texte** bleiben,
+was in der `content.json` steht – die sind dort bewusst gekürzt.
+
+⚠️ Wer `WHY_DETAIL_LINKS` umsortiert, verschiebt damit auch die Bilder dieser
+Karten. Der Test `tests/why-detail-bilder.test.ts` schlägt dann an.
+
+Alle übrigen Bildpfade dieser vier `content.json` (Beispiele/Sektionen/Kunstformen)
+laufen durch `src/utils/bildAufloesung.ts` → `aufloesenBildpfad()`: existiert die
+Datei nicht mehr, nimmt der Build das Bild, das **jetzt** im selben Ordner liegt
+(der Ordner ist die gepflegte Einheit, die Datei nur ihr aktueller Inhalt). Ist
+auch der Ordner weg, kommt `''` zurück und die Seite lässt das `<img>` weg – ein
+`src=""` wäre schlimmer, der Browser lädt damit die Seite selbst nochmal.
+
+**Warum der Build selbst heilen muss:** `validate:images` hängt im
+Pre-Commit-Hook. Mom veröffentlicht über den Admin, also ganz ohne Hook. Der
+Hook fängt nur, was lokal committet wird.

@@ -1,5 +1,7 @@
 import fs from 'fs';
 import path from 'path';
+import { aufloesenBildpfad } from './bildAufloesung';
+import { aufgeloesteHighlights } from './whyHighlights';
 
 export type CanvasItem = {
   title: string;
@@ -50,11 +52,20 @@ export const getCanvasContent = (): CanvasContent | null => {
     const seo = o.seo as CanvasContent['seo'] | undefined;
     const hero = o.hero as CanvasContent['hero'] | undefined;
     const intro = typeof o.intro === 'string' ? o.intro : '';
-    const sections = Array.isArray(o.sections) ? (o.sections as CanvasSection[]) : [];
+    // Bildpfade sind Kopien aus gepflegten Ordnern – siehe `bildAufloesung.ts`.
+    const sections = (Array.isArray(o.sections) ? (o.sections as CanvasSection[]) : []).map(
+      (section) => ({
+        ...section,
+        items: (section.items ?? []).map((item) => ({
+          ...item,
+          image: aufloesenBildpfad(item.image),
+        })),
+      }),
+    );
     const otherSectionTitle = typeof o.otherSectionTitle === 'string' ? o.otherSectionTitle : '';
-    const otherHighlights = Array.isArray(o.otherHighlights)
-      ? (o.otherHighlights as CanvasOtherHighlight[])
-      : [];
+    const otherHighlights = aufgeloesteHighlights(
+      Array.isArray(o.otherHighlights) ? (o.otherHighlights as CanvasOtherHighlight[]) : [],
+    );
 
     if (!seo?.title || !hero?.title) return null;
     return { seo, hero, intro, sections, otherSectionTitle, otherHighlights };

@@ -9,7 +9,7 @@ if (!content) {
 }
 
 const { seo, hero, intro, sections, otherSectionTitle, otherHighlights } = content;
-const heroImage = sections[0]?.items?.[0]?.image ?? '/img/samples/sample4.webp';
+const heroImage = sections[0]?.items?.[0]?.image || '/img/samples/sample4.webp';
 ---
 
 <Layout title={seo.title} description={seo.description} image={heroImage}>
@@ -55,7 +55,7 @@ const heroImage = sections[0]?.items?.[0]?.image ?? '/img/samples/sample4.webp';
           <div class="canvas-grid">
             {section.items.map((item, idx) => (
               <article class="canvas-card" id={`canvas-item-${section.id}-${idx}`}>
-                <img src={item.image} alt={item.imageAlt || item.title} loading="lazy" />
+                {item.image && (<img src={item.image} alt={item.imageAlt || item.title} loading="lazy" />)}
                 <div class="canvas-card-body">
                   <h3>{item.title}</h3>
                   <p class="canvas-summary">{item.summary}</p>
@@ -91,14 +91,14 @@ const heroImage = sections[0]?.items?.[0]?.image ?? '/img/samples/sample4.webp';
 
             return targetLink ? (
               <a class="canvas-other-card canvas-other-card--link" href={targetLink} aria-label={`Mehr zu ${item.title}`}>
-                <img src={item.image} alt={item.alt || item.title} loading="lazy" />
+                {item.image && (<img src={item.image} alt={item.alt || item.title} loading="lazy" />)}
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
                 <span class="canvas-link canvas-link--small">{targetLabel}</span>
               </a>
             ) : (
               <div class="canvas-other-card">
-                <img src={item.image} alt={item.alt || item.title} loading="lazy" />
+                {item.image && (<img src={item.image} alt={item.alt || item.title} loading="lazy" />)}
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
               </div>
