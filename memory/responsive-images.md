@@ -87,12 +87,26 @@ Site-weit: 2983 `srcset`-Kandidaten auf 118 Seiten, **0 fehlend**.
 | Konstante | Für | Wert |
 | :-- | :-- | :-- |
 | `SLIDESHOW_SIZES` | eine Bühne, ~700 px | `(max-width: 640px) 100vw, (max-width: 1200px) 60vw, 700px` |
-| `GALLERY_SIZES` | Galerie-Gitter, Kacheln ~220–300 px | `(max-width: 480px) 50vw, (max-width: 900px) 33vw, 300px` |
+| `GALLERY_SIZES` | Galerie-Mosaik, Spalte ~390 px | `(max-width: 900px) 50vw, (max-width: 1240px) 33vw, 400px` |
 
 Die zweite gibt es seit der Galerie (2026-07-30). Mit den Slideshow-Werten lüde
-das Gitter für **jede** der ~230 Kacheln die große Variante – der teuerste
+das Mosaik für **jede** der ~230 Kacheln die große Variante – der teuerste
 Copy-Paste-Fehler in diesem Bereich, weil er visuell nicht auffällt. Ein Test
 hält die beiden auseinander.
+
+⚠️ Die Werte hängen an den **Spaltenzahlen** des Mosaiks in `Gallery.astro`
+(bis 900 px zwei Spalten, darüber drei). Spalten ändern heißt `sizes` ändern.
+
+## Breite UND Höhe: `readWebpSize`
+
+`webpSize.ts` liest seit 2026-07-30 beide Maße aus dem WebP-Header;
+`readWebpWidth` ist nur noch ein Wrapper darauf (das braucht `srcset`).
+
+Die Höhe braucht das Galerie-Mosaik: dort steht jedes Bild in seinem eigenen
+Seitenverhältnis, und ohne `width`/`height` am `<img>` kennt der Browser das
+erst nach dem Laden – bei ~230 lazy geladenen Bildern in Spalten springt die
+Seite beim Scrollen. Fehlt eines der Maße, wird **keines** ausgegeben: ein
+halbes Paar ergäbe ein falsches Verhältnis, also schlimmer als gar nichts.
 
 ## ⚠️ Welche Ordner Varianten bekommen
 

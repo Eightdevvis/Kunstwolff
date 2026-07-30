@@ -60,6 +60,58 @@ gebaute Seite (plus Kombinationen), nur damit jemand zwei Chips klicken kann. De
 Bestand (~230 Bilder) passt auf eine Seite; die Bytes holt der Browser über
 `loading="lazy"` erst beim Scrollen.
 
+## Oberfläche: eingeklappte Filter + Mosaik (2026-07-30, zweiter Durchgang)
+
+Die erste Fassung hatte zwei Fehler in der Anmutung, beide von Jenny gemeldet:
+
+**1. Filter fraßen den ersten Viewport.** Suchfeld und drei Chip-Reihen standen
+offen untereinander – der Ort allein hat 20+ Chips. Man landete auf einer
+Bilder-Seite, ohne ein Bild zu sehen.
+
+Jetzt: eine schmale Reihe aus vier `<details>`-Pillen (Suche, Kunstform, Anlass,
+Ort), alle **zu**. Aufgeklappt nimmt eine Pille die volle Breite
+(`flex: 1 0 100%`), sonst wäre ihr Inhalt auf Pillenbreite eingesperrt.
+
+- `<details>` statt eigenem Zustand: Verhalten kommt vom Browser, geht ohne JS
+  und ist per Tastatur bedienbar.
+- **Bewusst ohne `name`-Attribut**: ein exklusives Akkordeon würde beim Öffnen
+  eines Tag-Panels die gerade getippte Suche zuklappen.
+- Ein aktiver Filter steht **in der zugeklappten Pille** (`Ort · Trier`, Pille
+  wird golden). Ohne das wäre er unsichtbar und die Galerie sähe einfach
+  unvollständig aus.
+- Ein **Zurücksetzen**-Knopf erscheint, sobald etwas filtert. Bei zugeklappten
+  Panels wäre der Weg zurück sonst: jedes Panel einzeln öffnen und „Alle" suchen.
+
+**2. Bilder zu klein und beschnitten.** Das Gitter zwang jedes Bild in 4:3 mit
+`object-fit: cover` – bei jedem Hochformat fehlte Kopf oder Signatur.
+
+Jetzt: **Mosaik über `column-count`** (3 Spalten, ab 900px 2). Jedes Bild behält
+sein Seitenverhältnis, nichts wird beschnitten, und eine Spalte ist bei 1200px
+Container rund 390px breit statt 220.
+
+- **Nicht** `grid-template-rows: masonry` – noch nicht überall verfügbar, und der
+  Fallback wäre wieder das beschnittene Gitter.
+- Preis: die Reihenfolge läuft spaltenweise von oben nach unten statt zeilenweise.
+  Für eine Galerie ohne Rangfolge kein Verlust.
+- `.gallery-tile` ist `inline-block` mit voller Breite, sonst reißt eine Kachel
+  am Spaltenumbruch auseinander.
+
+### Dafür nötig: die Bildhöhe
+
+`src/utils/webpSize.ts` liest seit diesem Umbau **beide** Maße
+(`readWebpSize` → `{width, height}`; `readWebpWidth` ist ein Wrapper, den
+`srcset` weiter nutzt). `SlideItem` hat entsprechend ein `height`.
+
+⚠️ Das ist keine Kosmetik: ohne `width`/`height` am `<img>` kennt der Browser
+das Seitenverhältnis erst nach dem Laden. Bei ~230 lazy geladenen Bildern in
+Spalten springt die Seite dann beim Scrollen dauernd. Fehlt ein Maß, wird
+**keines** ausgegeben – ein halbes Paar ergäbe ein falsches Verhältnis.
+
+Tests dazu in `tests/gallery.test.ts`: beide Maße zu jedem Bild, nur paarweise,
+plausible Verhältnisse, und es müssen **Hoch- UND Querformate** vorkommen
+(sonst wäre das Mosaik sinnlos – und ein Header-Leser-Fehler „Höhe = Breite"
+sähe genau so aus). Stand: 97 quer, 126 hoch.
+
 ## Chips kommen aus dem BESTAND, nicht aus dem Vokabular
 
 Gezählt wird, was an Bildern hängt; `config/tags.json` liefert nur die
@@ -107,10 +159,15 @@ Schalter, kein neuer.
 
 ## `srcset`
 
-Das Gitter nutzt `GALLERY_SIZES` (`responsiveImages.ts`), **nicht**
-`SLIDESHOW_SIZES`: Kacheln sind ~220–300 px breit, die Slideshow-Bühne ~700 px.
+Das Mosaik nutzt `GALLERY_SIZES` (`responsiveImages.ts`), **nicht**
+`SLIDESHOW_SIZES`: eine Spalte ist ~390 px breit, die Slideshow-Bühne ~700 px.
 Mit den Slideshow-Werten lüde jede der ~230 Kacheln die große Variante. Ein Test
 hält die beiden auseinander.
+
+⚠️ `GALLERY_SIZES` muss zu den **Spaltenzahlen in `Gallery.astro`** passen (bis
+900 px zwei Spalten, darüber drei). Wer die Spalten ändert, ändert auch die
+`sizes` – sonst lädt jede Kachel die falsche Stufe, und das sieht man dem
+Ergebnis nicht an.
 
 ## Lightbox
 

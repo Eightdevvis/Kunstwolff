@@ -8,24 +8,32 @@
  * Breiten anbieten, die auch wirklich erzeugt wurden, und dafür muss die
  * Originalbreite zur Render-Zeit bekannt sein.
  *
+ * Seit der Galerie wird auch die HÖHE gelesen. Grund: das Mosaik zeigt jedes
+ * Bild in seinem eigenen Seitenverhältnis, ungeschnitten. Ohne `width`/`height`
+ * am `<img>` kennt der Browser dieses Verhältnis erst, wenn die Datei da ist –
+ * bei ~230 lazy geladenen Bildern in Spalten heißt das: die Seite springt beim
+ * Scrollen dauernd um. Mit beiden Maßen reserviert er den Platz vorab.
+ *
  * `sharp` scheidet aus: es ist asynchron, die Slide-Reader sind synchron.
  * Der WebP-Header ist dafür simpel genug – 12 Byte RIFF, dann ein Chunk, dessen
  * vier Kennbuchstaben das Format verraten:
  *
- *   VP8    verlustbehaftet   Breite als 14-Bit-Wert ab Byte 26
- *   VP8L   verlustfrei       Breite-1 als 14-Bit-Wert ab Byte 21
- *   VP8X   erweitert         Leinwandbreite-1 als 24-Bit-Wert ab Byte 24
+ *   VP8    verlustbehaftet   Breite  14-Bit ab Byte 26, Höhe  14-Bit ab Byte 28
+ *   VP8L   verlustfrei       Breite-1 und Höhe-1 als je 14 Bit im 32-Bit-Wert ab Byte 21
+ *   VP8X   erweitert         Leinwandbreite-1 24-Bit ab Byte 24, Höhe-1 24-Bit ab Byte 27
  */
 
 import fs from 'fs';
 
-const cache = new Map<string, number | null>();
+export type WebpSize = { width: number; height: number };
 
-/** Breite in Pixeln, oder null wenn die Datei nicht lesbar/kein WebP ist. */
-export function readWebpWidth(filePath: string): number | null {
+const cache = new Map<string, WebpSize | null>();
+
+/** Breite und Höhe in Pixeln, oder null wenn die Datei nicht lesbar/kein WebP ist. */
+export function readWebpSize(filePath: string): WebpSize | null {
   if (cache.has(filePath)) return cache.get(filePath) ?? null;
 
-  let breite: number | null = null;
+  let groesse: WebpSize | null = null;
   try {
     // 32 Byte genügen für alle drei Varianten.
     const fd = fs.openSync(filePath, 'r');
@@ -36,19 +44,45 @@ export function readWebpWidth(filePath: string): number | null {
     if (gelesen >= 30 && buf.toString('ascii', 0, 4) === 'RIFF' && buf.toString('ascii', 8, 12) === 'WEBP') {
       const kennung = buf.toString('ascii', 12, 16);
       if (kennung === 'VP8 ') {
-        breite = buf.readUInt16LE(26) & 0x3fff;
+        groesse = {
+          width: buf.readUInt16LE(26) & 0x3fff,
+          height: buf.readUInt16LE(28) & 0x3fff,
+        };
       } else if (kennung === 'VP8L') {
+        // 14 Bit Breite-1, dann 14 Bit Höhe-1 – beide im selben 32-Bit-Wert.
         const bits = buf.readUInt32LE(21);
-        breite = (bits & 0x3fff) + 1;
+        groesse = {
+          width: (bits & 0x3fff) + 1,
+          height: ((bits >> 14) & 0x3fff) + 1,
+        };
       } else if (kennung === 'VP8X') {
-        breite = (buf[24]! | (buf[25]! << 8) | (buf[26]! << 16)) + 1;
+        groesse = {
+          width: (buf[24]! | (buf[25]! << 8) | (buf[26]! << 16)) + 1,
+          height: (buf[27]! | (buf[28]! << 8) | (buf[29]! << 16)) + 1,
+        };
       }
     }
   } catch {
-    breite = null;
+    groesse = null;
   }
 
-  if (breite !== null && (!Number.isFinite(breite) || breite <= 0)) breite = null;
-  cache.set(filePath, breite);
-  return breite;
+  // Ein halb gelesenes Maß ist wertlos: ein `height="0"` am `<img>` wäre
+  // schlimmer als gar keine Angabe.
+  if (
+    groesse &&
+    (!Number.isFinite(groesse.width) ||
+      !Number.isFinite(groesse.height) ||
+      groesse.width <= 0 ||
+      groesse.height <= 0)
+  ) {
+    groesse = null;
+  }
+
+  cache.set(filePath, groesse);
+  return groesse;
+}
+
+/** Nur die Breite – was `srcset` braucht. */
+export function readWebpWidth(filePath: string): number | null {
+  return readWebpSize(filePath)?.width ?? null;
 }

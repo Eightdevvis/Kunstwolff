@@ -77,12 +77,15 @@ export function buildSrcSet(src: string, originalWidth?: number): string {
 export const SLIDESHOW_SIZES = '(max-width: 640px) 100vw, (max-width: 1200px) 60vw, 700px';
 
 /**
- * `sizes` für das Galerie-Gitter.
+ * `sizes` für das Galerie-Mosaik.
  *
- * Andere Werte als in der Slideshow, weil das Gitter ein anderes Bild ausliefert:
- * dort EINE Bühne von ~700px, hier Kacheln von ~220–300px, auf schmalen Geräten
- * zwei pro Reihe. Mit `SLIDESHOW_SIZES` lüde die Galerie für jede Kachel die
- * grosse Variante – bei 230 Bildern auf einer Seite ist das der teuerste
- * Copy-Paste-Fehler, den man hier machen kann.
+ * Andere Werte als in der Slideshow, weil das Mosaik ein anderes Bild
+ * ausliefert: dort EINE Bühne von ~700px, hier Spalten. Mit `SLIDESHOW_SIZES`
+ * lüde die Galerie für jede Kachel die grosse Variante – bei 230 Bildern auf
+ * einer Seite ist das der teuerste Copy-Paste-Fehler, den man hier machen kann.
+ *
+ * Muss zu den Spaltenzahlen in `Gallery.astro` passen: bis 900px zwei Spalten
+ * (~50vw), darüber drei. Der Container endet bei 1200px, eine Spalte ist dort
+ * rund 390px breit.
  */
-export const GALLERY_SIZES = '(max-width: 480px) 50vw, (max-width: 900px) 33vw, 300px';
+export const GALLERY_SIZES = '(max-width: 900px) 50vw, (max-width: 1240px) 33vw, 400px';
