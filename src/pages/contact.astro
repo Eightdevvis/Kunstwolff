@@ -1,18 +1,33 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
 import ContactSection from "../components/Contact.astro";
-
-
 ---
 
-<Layout>
-  
-
-  <ContactSection />
-
+<Layout
+  title="Kontakt & Anfrage | Kunstwolff"
+  description="Kontaktieren Sie Kunstwolff für Schnellzeichner & Szenenmaler auf Ihrem Event. Jetzt unverbindlich anfragen – Telefon, E-Mail oder Formular."
+>
+  <div class="contact-page">
+    <h1 class="contact-page-title">Kontakt &amp; Anfrage</h1>
+    <ContactSection />
+  </div>
 
   <script>
     import "../scripts/formspree.js";
   </script>
 </Layout>
+
+<style>
+  .contact-page {
+    padding-top: 70px;
+  }
+  .contact-page-title {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 0.2em;
+    font-family: Mayonice;
+    font-weight: 500;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    text-align: center;
+  }
+</style>

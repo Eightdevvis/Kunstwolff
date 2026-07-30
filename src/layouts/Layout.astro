@@ -19,7 +19,10 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImage = image && Astro.site ? new URL(image, Astro.site).href : undefined;
+// og:image-Fallback: Seiten ohne eigenes Titelbild (Kontakt, FAQ, Impressum …)
+// bekommen das Standard-Titelbild, damit die Social-Vorschau nie leer ist.
+const DEFAULT_OG_IMAGE = "/img/Titelbild/default/titelbild.avif";
+const ogImage = Astro.site ? new URL(image ?? DEFAULT_OG_IMAGE, Astro.site).href : undefined;
 
 // ─── Robots-Meta: Production-Host-Whitelist + Page-Visibility ────────────────
 // Eine Seite bekommt noindex/nofollow, wenn EINE der drei Bedingungen zutrifft:
