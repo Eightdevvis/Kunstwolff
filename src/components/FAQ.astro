@@ -129,10 +129,8 @@ const faqSchema = {
     )}
   </div>
 
-  {interactive && (
-    <script type="application/ld+json">
-      {JSON.stringify(faqSchema)}
-    </script>
+  {interactive && visibleFaqs.length > 0 && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   )}
 </section>
 

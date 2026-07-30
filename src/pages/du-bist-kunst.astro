@@ -9,7 +9,7 @@ if (!content) {
 }
 
 const { seo, hero, intro, galleryTitle, examples, otherSectionTitle, otherHighlights } = content;
-const heroImage = examples[0]?.image ?? '/img/samples/sample2.webp';
+const heroImage = examples[0]?.image || '/img/samples/sample2.webp';
 ---
 
 <Layout title={seo.title} description={seo.description} image={heroImage}>
@@ -33,7 +33,7 @@ const heroImage = examples[0]?.image ?? '/img/samples/sample2.webp';
         <div class="dbk-grid">
           {examples.map((item) => (
             <article class="dbk-card">
-              <img src={item.image} alt={item.imageAlt || item.personTitle} loading="lazy" />
+              {item.image && (<img src={item.image} alt={item.imageAlt || item.personTitle} loading="lazy" />)}
               <div class="dbk-card-body">
                 <h3>{item.personTitle}</h3>
                 <p class="dbk-label">Person</p>
@@ -63,14 +63,14 @@ const heroImage = examples[0]?.image ?? '/img/samples/sample2.webp';
 
             return targetLink ? (
               <a class="dbk-other-card dbk-other-card--link" href={targetLink} aria-label={`Mehr zu ${item.title}`}>
-                <img src={item.image} alt={item.alt || item.title} loading="lazy" />
+                {item.image && (<img src={item.image} alt={item.alt || item.title} loading="lazy" />)}
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
                 <span class="dbk-link dbk-link--small">{targetLabel}</span>
               </a>
             ) : (
               <div class="dbk-other-card">
-                <img src={item.image} alt={item.alt || item.title} loading="lazy" />
+                {item.image && (<img src={item.image} alt={item.alt || item.title} loading="lazy" />)}
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
               </div>

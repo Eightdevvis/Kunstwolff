@@ -9,7 +9,7 @@ if (!content) {
 }
 
 const { seo, hero, intro, examplesTitle, examples, otherSectionTitle, otherHighlights } = content;
-const heroImage = examples[0]?.image ?? '/img/samples/sample3.webp';
+const heroImage = examples[0]?.image || '/img/samples/sample3.webp';
 ---
 
 <Layout title={seo.title} description={seo.description} image={heroImage}>
@@ -33,7 +33,7 @@ const heroImage = examples[0]?.image ?? '/img/samples/sample3.webp';
         <div class="branding-grid">
           {examples.map((item) => (
             <article class="branding-card">
-              <img src={item.image} alt={item.imageAlt || item.title} loading="lazy" />
+              {item.image && (<img src={item.image} alt={item.imageAlt || item.title} loading="lazy" />)}
               <div class="branding-card-body">
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
@@ -60,14 +60,14 @@ const heroImage = examples[0]?.image ?? '/img/samples/sample3.webp';
 
             return targetLink ? (
               <a class="branding-other-card branding-other-card--link" href={targetLink} aria-label={`Mehr zu ${item.title}`}>
-                <img src={item.image} alt={item.alt || item.title} loading="lazy" />
+                {item.image && (<img src={item.image} alt={item.alt || item.title} loading="lazy" />)}
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
                 <span class="branding-link branding-link--small">{targetLabel}</span>
               </a>
             ) : (
               <div class="branding-other-card">
-                <img src={item.image} alt={item.alt || item.title} loading="lazy" />
+                {item.image && (<img src={item.image} alt={item.alt || item.title} loading="lazy" />)}
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
               </div>

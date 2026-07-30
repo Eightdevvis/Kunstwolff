@@ -30,7 +30,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [Reviews](content-reviews.md) – Markdown-Format, **Auswahl über `tags.landings`**, Auffüll-Logik, MiniReviews-Anzeige
 - [Allgemeine Texte](content-site-texts.md) – `site-texts/content.json`, Startseiten-Texte, `landingIntros` (Einführungstext)
 - [FAQs](content-faqs.md) – Markdown-Format, **Auswahl über Tags (UND je Dimension, leer = gilt überall)**, `getFAQsForContext`
-- [Why-Sektion](content-why.md) – JSON-Format, Fallback-Kette, Bilder
+- [Why-Sektion](content-why.md) – JSON-Format, Fallback-Kette, Bilder; **die vier Why-Detailseiten leiten ihre Bilder von hier ab statt sie zu kopieren** (`whyHighlights.ts`), Rest heilt über `bildAufloesung.ts`
 - [Erinnerungen](content-erinnerungen.md) – Pinnwand-Fotos, Fallback-Kette
 - [CinemaWelcome](content-cinema.md) – Startseiten-Konfigurator (Event→Wunsch→Geschmack), `cinema.json`, autoSelect, Ergebnis-Komposition
 - [Navigation](content-navigation.md) – `navigation.json`; **Services kommt aus `skills.json`, Events aus `events.json`** (nicht aus der JSON)
@@ -64,6 +64,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 | "Review pflegen" | `content-reviews.md` |
 | "FAQ pflegen" | `content-faqs.md` |
 | "Why-Texte ändern" | `content-why.md` |
+| "Kaputtes/fehlendes Bild auf einer Seite" | `content-why.md` (Abschnitt Detailseiten) + `git-hooks.md` (`validate:images`) |
 | "Neuen Skill anlegen" | `content-skills.md` |
 | "Event hinzufügen" | `content-events.md` |
 | "Pfad in `public/` umstrukturieren" | `pfadstruktur.md` + `admin-tool.md` + `sync-scripts.md` |

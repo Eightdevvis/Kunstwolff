@@ -1,5 +1,7 @@
 import fs from 'fs';
 import path from 'path';
+import { aufloesenBildpfad } from './bildAufloesung';
+import { aufgeloesteHighlights } from './whyHighlights';
 
 export type StimmungArtForm = {
   id: string;
@@ -44,11 +46,14 @@ export const getStimmungDurchKunstContent = (): StimmungDurchKunstContent | null
     const seo = o.seo as StimmungDurchKunstContent['seo'] | undefined;
     const hero = o.hero as StimmungDurchKunstContent['hero'] | undefined;
     const intro = typeof o.intro === 'string' ? o.intro : '';
-    const artForms = Array.isArray(o.artForms) ? (o.artForms as StimmungArtForm[]) : [];
+    // Bildpfade sind Kopien aus gepflegten Ordnern – siehe `bildAufloesung.ts`.
+    const artForms = (Array.isArray(o.artForms) ? (o.artForms as StimmungArtForm[]) : []).map(
+      (item) => ({ ...item, image: aufloesenBildpfad(item.image) }),
+    );
     const otherSectionTitle = typeof o.otherSectionTitle === 'string' ? o.otherSectionTitle : '';
-    const otherHighlights = Array.isArray(o.otherHighlights)
-      ? (o.otherHighlights as StimmungOtherHighlight[])
-      : [];
+    const otherHighlights = aufgeloesteHighlights(
+      Array.isArray(o.otherHighlights) ? (o.otherHighlights as StimmungOtherHighlight[]) : [],
+    );
 
     if (!seo?.title || !hero?.title) return null;
 

@@ -1,5 +1,7 @@
 import fs from 'fs';
 import path from 'path';
+import { aufloesenBildpfad } from './bildAufloesung';
+import { aufgeloesteHighlights } from './whyHighlights';
 
 export type BrandingExample = {
   title: string;
@@ -44,11 +46,14 @@ export const getBrandingContent = (): BrandingContent | null => {
     const hero = o.hero as BrandingContent['hero'] | undefined;
     const intro = typeof o.intro === 'string' ? o.intro : '';
     const examplesTitle = typeof o.examplesTitle === 'string' ? o.examplesTitle : '';
-    const examples = Array.isArray(o.examples) ? (o.examples as BrandingExample[]) : [];
+    // Bildpfade sind Kopien aus gepflegten Ordnern – siehe `bildAufloesung.ts`.
+    const examples = (Array.isArray(o.examples) ? (o.examples as BrandingExample[]) : []).map(
+      (item) => ({ ...item, image: aufloesenBildpfad(item.image) }),
+    );
     const otherSectionTitle = typeof o.otherSectionTitle === 'string' ? o.otherSectionTitle : '';
-    const otherHighlights = Array.isArray(o.otherHighlights)
-      ? (o.otherHighlights as BrandingOtherHighlight[])
-      : [];
+    const otherHighlights = aufgeloesteHighlights(
+      Array.isArray(o.otherHighlights) ? (o.otherHighlights as BrandingOtherHighlight[]) : [],
+    );
 
     if (!seo?.title || !hero?.title) return null;
     return { seo, hero, intro, examplesTitle, examples, otherSectionTitle, otherHighlights };
