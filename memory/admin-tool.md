@@ -49,7 +49,7 @@ Bei jeder Cross-Repo-Arbeit beide lesen (liegen flach im Admin-Repo-Root):
 | `public/cinema/cinema.json` | `CinemaManager.tsx` |
 | `public/skills/skills.json` | `Dashboard.tsx` |
 | `public/config/tags.json` (Tag-Vokabular) | `services/tagVocabulary.ts` – aus Quick-Add (Skill/Event/Landing), `CityManager`, Tag-Chips und Mediathek. **Seit 2026-07-30**, vorher schrieb es niemand fort und ein neuer Skill war im Admin nicht auswählbar; siehe `tag-system.md` „⚠️ `tags.json` muss COMMITTED werden" |
-| `slides.meta.json` (`tags` mengenweise setzen) | `MediaLibrary.tsx` – Umsortieren-Modus; Uploads landen in `public/img/slides/mediathek/…` |
+| `slides.meta.json` (`tags` mengenweise setzen) | `MediaLibrary.tsx` – Umsortieren-Modus; Uploads landen in `public/img/slides/mediathek/…`. Seit 2026-07-30 auch aus **KI-Tagvorschlägen** (die KI sieht die Fotos an, schreibt aber nie selbst – siehe Admin-Memory `ki-faehigkeiten-und-vision.md`) |
 | `public/partners/partners.json` | `PartnerManager.tsx` |
 | `public/calendar/{jahr}/{monat}.json` | `CalendarView.tsx` (+ `EventModal.tsx` als Editor) |
 | Bereinigung: löscht doppelte/kaputte Bilder, putzt zugehörige `slides.meta.json`-Einträge mit | `CleanupManager.tsx` |

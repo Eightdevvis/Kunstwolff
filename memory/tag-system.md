@@ -3,7 +3,8 @@
 **Stand:** Phase 5a (Datenmodell/Vokabular/Migration) 2026-07-26, Phase 5b
 (Bilder-Rendering) und Phase 5d (Reviews + FAQs) 2026-07-28. **Alle drei
 Inhaltstypen wählen jetzt über Tags aus – der Ordner ist nur noch Ablage.**
-Offen ist nur noch Phase 6 (KI-Auto-Tagging).
+Phase 6 (KI-Tagging) ist seit 2026-07-30 gebaut – **vorschlagend, nicht
+automatisch** (siehe unten).
 
 ## Phase 5b: Umstellung des Renderings (2026-07-28)
 
@@ -178,9 +179,36 @@ und `content-faqs.md`; hier nur, was am Tag-System selbst hängt:
   nicht im Vercel-Build. Ein im Admin neu angelegter Inhalt wäre ungetaggt und
   damit unsichtbar geblieben. Jetzt in beiden Ketten.
 
-## Was noch fehlt (Phase 6)
+## Phase 6: KI-Tagging (2026-07-30) – vorschlagend, nicht automatisch
 
-- **6:** KI-Auto-Tagging auf diesem Vokabular.
+Gebaut, aber bewusst **nicht** als Automatik: die KI schaut sich die Fotos an und
+**schlägt Tags vor**, gesetzt werden sie erst, wenn jemand in der Mediathek
+bestätigt. Ein falscher Tag kippt ein Bild lautlos auf eine Seite, auf die es
+nicht gehört — das fällt niemandem auf, weil dort ja Bilder stehen. Deshalb
+bleibt der letzte Klick bei einem Menschen.
+
+Was dabei am Vokabular hängt:
+
+- Die KI bekommt das Vokabular mit und darf **nur daraus** wählen. Alles andere
+  wirft der Worker weg. Sie kann also keinen Tag erfinden — und `tags.json`
+  bleibt die Wahrheit.
+- **Ort wird fast nie vergeben.** Ein Foto zeigt nicht, in welcher Stadt es
+  entstand; verlangt wird ein lesbares Schild oder Wahrzeichen, sonst bleibt die
+  Dimension leer. Der Ort kommt weiterhin aus Ablageort und Dateiname
+  (`inferLandingsFromKey`), nicht aus dem Bild.
+- Skill und Anlass sind das, was die Bild-Erkennung wirklich beisteuert — genau
+  die zwei Dimensionen, die die Dateinamen-Regeln am schlechtesten treffen.
+- Übernommene Vorschläge laufen durch denselben Weg wie das Umsortieren von
+  Hand: `tags` **und** der `categories`-Spiegel werden geschrieben.
+
+Technik, Modellwahl und Grenzen: Admin-Memory `ki-faehigkeiten-und-vision.md`
+(kurz: multimodal ohne neues Modell, 8 Bilder pro Anfrage, Endpunkt schreibt nie
+selbst, erst nach `npm run worker:deploy` verfügbar).
+
+Damit ist die Phasenliste des Plans abgearbeitet. Was ausdrücklich **nicht**
+gebaut wurde: ein Durchlauf über alle Bilder auf einen Knopf. Das wäre teuer,
+nicht abbrechbar und würde die Prüfung durch einen Menschen zur Formsache
+machen.
 
 ## Abdeckung je Inhaltstyp
 
