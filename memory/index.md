@@ -31,8 +31,8 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [Why-Sektion](content-why.md) – JSON-Format, Fallback-Kette, Bilder
 - [Erinnerungen](content-erinnerungen.md) – Pinnwand-Fotos, Fallback-Kette
 - [CinemaWelcome](content-cinema.md) – Startseiten-Konfigurator (Event→Wunsch→Geschmack), `cinema.json`, autoSelect, Ergebnis-Komposition
-- [Navigation](content-navigation.md) – `navigation.json`
-- [Referenzlogos](content-referenzlogos.md) – Auto-Discovery aus `referenzenLogos/`
+- [Navigation](content-navigation.md) – `navigation.json`; **Services kommt aus `skills.json`, Events aus `events.json`** (nicht aus der JSON)
+- [Referenzlogos](content-referenzlogos.md) – Auto-Discovery aus `referenzenLogos/`, Streifen im Hero vs. Gitter auf `/referenzen/`, Label-Regeln
 
 ### Build & Automatisierung
 - [Sync-Scripts](sync-scripts.md) – Reihenfolge, was jedes Script tut, GitHub Action
