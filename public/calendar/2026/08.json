@@ -80,5 +80,28 @@
       "Jenny",
       "Gaby"
     ]
+  },
+  {
+    "id": "ms7xznzjj90u",
+    "title": "Wiesbaden Gartenparty",
+    "description": "50 Personen\n17-23\n95",
+    "date": "2026-08-22",
+    "time": 17,
+    "location": "Wiesbaden",
+    "categoryId": "auftrag",
+    "actors": [
+      "Gaby"
+    ]
+  },
+  {
+    "id": "ms7y1fm37gdo",
+    "title": "von 14 und übernachtung",
+    "date": "2026-08-22",
+    "time": 14,
+    "location": "Kepl oder birk",
+    "categoryId": "babysitter",
+    "actors": [
+      "Jenny"
+    ]
   }
 ]
