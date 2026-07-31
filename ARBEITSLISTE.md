@@ -22,15 +22,16 @@ Reihenfolge: 1 und 2 blockieren den Umzug, 3 blockiert die KI im Admin.
 1. [ ] **`SITE_URL` in Vercel setzen und MANUELL neu deployen** (Phase 0.1)
        Ohne das bleibt **alles** auf `noindex` — der Stage-Host wird erkannt.
 2. [ ] **DNS-Weg entscheiden** (Phase 0.2) — Zone liegt bei Wix, zwei Wege (A/B).
-3. [ ] **Worker deployen** — `cd kunstwolff-admin && npm run worker:deploy`
-       Die KI-Fähigkeitenliste und die Bild-Erkennung liegen auf `master`, sind aber
-       nur im Worker. Gemessen: `/api/ai/faehigkeiten` antwortet noch **404**.
-4. [ ] **Datenschutzerklärung freigeben** (Phase 0.4) — ich schreibe den Entwurf
-       (Formspree, Vercel), **Wortlaut gibst du frei**. Dazu zwei AV-Verträge klicken.
+3. [x] ~~**Worker deployen**~~ ✅ erledigt (Aufgabe #9)
+4. [x] ~~**Datenschutzerklärung freigeben**~~ ✅ freigegeben 2026-07-31 („sieht gut aus").
+       AV Vercel geklärt (ToS 10.1, SCC Modul 2); AV Formspree entfällt mit dem
+       Worker-Formular nach dem Umzug.
 5. [ ] **Umzugstag** (Phase 1, sieben Schritte) — Redirects testen, DNS, Wix auf
        „Coming Soon", Apex→www, Search Console, 48 h beobachten.
-6. [ ] **Entscheiden: `/private-feier/` und 9 Städte ohne eigene Bilder** — ausblenden
-       wie Aquarelle, oder Inhalte nachliefern? (Rest von Phase 0.5)
+6. [x] ~~**Entscheiden: `/private-feier/` und 9 Städte**~~ ✅ entschieden 2026-07-30/31:
+       9 Städte ausgeblendet (128 Pfade in `page-visibility.json`), `/private-feier/`
+       **bleibt sichtbar** — gemessen 37,5 % einzigartiger Text, genau wie die drei
+       Geschwister-Anlässe. Der Seite fehlen Fotos, nicht Text.
 7. [ ] **KI-Guthaben** — kleine Gemini-Aufladung, damit es zwei finanzierte Anbieter gibt.
 8. [ ] **Vercel-Vorschauprojekt** — sonst bleibt „Entwurf bauen" im Admin tot.
 
@@ -42,9 +43,9 @@ Nach Wirkung sortiert:
 2. [ ] **URL-Umbenennung `/schnellzeichner/` → `/schnellzeichner-karikaturist/`** (neu, Wunsch mom)
 3. [ ] **Hero-Bilder ohne `srcset`** (3.1) — größter Performance-Hebel
 4. [ ] **Barrierefreiheit, vier Befunde Stufe A** (3.2)
-5. [ ] **Anlass-Dimension der FAQs ist tot** (2.3)
-6. [ ] **ReviewManager kann Tags nicht leeren** (2.7)
-7. [ ] **Datenschutz-Entwurf schreiben** (Zuarbeit zu S-4)
+5. [x] ~~**Anlass-Dimension der FAQs ist tot**~~ ✅ erledigt 2026-07-31 (2.3)
+6. [x] ~~**ReviewManager kann Tags nicht leeren**~~ ✅ erledigt 2026-07-31 (2.7)
+7. [x] ~~**Datenschutz-Entwurf schreiben**~~ ✅ erledigt (Zuarbeit zu S-4)
 8. [ ] **Rest-Hygiene** (3.5): `EventManager` legt keinen Anlass-Tag an · `pre-push`
        committet den gesamten Index · `jubilaum`/`jubilaeum` · zwei FAQ-Dateien ohne
        `.md` · Fehlerschlucker in `tagVocabulary.ts`
@@ -134,7 +135,9 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
       `@font-face` mit `font-display: swap`, dann `Layout.astro:57-59` löschen.
       Abnahme: `grep -r 'googleapis\|gstatic' dist/` ist leer.
 
-- [ ] 🔴 **C+S — 0.4 Datenschutzerklärung: drei Empfänger nachtragen**
+- [x] 🔴 **C+S — 0.4 Datenschutzerklärung: drei Empfänger nachtragen** ✅ **erledigt,
+      freigegeben 2026-07-31.** Kontaktadresse `info@artelines.com` statt der nicht
+      existierenden `datenschutz@kunstwolff.de`.
       Heute null Treffer für „Formspree", „Kontaktformular", „Google Fonts", „Drittland".
       Fehlt: Formspree Inc. (Name/E-Mail/Telefon/Datum/Freitext), Vercel Inc. (Hosting),
       Google (IP — entfällt mit 0.3). Ich schreibe den Entwurf, **Wortlaut gibt Sasha frei**.
@@ -194,11 +197,18 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
       **Erledigt:** beide Guards gesetzt. Am `dist/` gemessen: **0** leere
       Galerie-Sektionen (vorher 38), **0** leere Bewertungs-Slider.
 
-- [ ] 🟠 **C — 2.3 Die Anlass-Dimension der FAQs ist tot**
+- [x] 🟠 **C — 2.3 Die Anlass-Dimension der FAQs ist tot** ✅ **erledigt 2026-07-31**
       `eventKeys` entstehen nur, wenn `context.city` mit `events/` beginnt — die
       Event-Zweige übergeben aber gar keinen Kontext. Folge: `/firmenfeier/`, `/messe/`,
       `/hochzeit/`, `/private-feier/` zeigen alle dieselben 4 FAQs wie die Startseite.
       Ein im Admin gesetzter Anlass-Tag kommt nirgends an.
+      **Erledigt:** eigenes `event`-Feld im Kontext, und die Auswahlregel vereinheitlicht —
+      *ein Tag gilt dort, wo danach gefragt wird; Defaults füllen auf*, genau wie bei
+      Bildern und Reviews. Dabei kam heraus, dass `sync-faq-tags.mjs` 82 von 83 FAQs
+      automatisch einen Skill-Tag verpasst hatte; die sind raus. Gemessen: jede
+      Anlass-Seite 3 eigene + 1 Default, Köln 2 + 2, Start/Stadt/Skill 4 Defaults,
+      `/faq/` 87. Dazu 12 neue Anlass-FAQs (`public/faq/default/anlass--*.md`),
+      **die Gabriele noch gegenlesen sollte**.
 
 - [x] 🟠 **C — 2.4 FaqManager vergleicht Label gegen Slug** ✅ **erledigt 2026-07-30**
       Einziger Tag-Weg ohne `tagVocabulary.ts`. Bei **allen 70** FAQs mit Skill-Tag sind
@@ -215,9 +225,14 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
       „Bereichern **Siw Ihrr** Messe, **Betreibsfeier** … **Schnellzichner**" — steht so
       auf der reichweitenstärksten Stadtseite. Zwei Minuten.
 
-- [ ] 🟠 **C — 2.7 ReviewManager kann Tags nicht leeren**
+- [x] 🟠 **C — 2.7 ReviewManager kann Tags nicht leeren** ✅ **erledigt 2026-07-31**
       Sind nach dem Bearbeiten alle drei Dimensionen leer, bleibt der alte `tags`-Block
       stehen, während die Oberfläche „leer" zeigt. (Admin-Repo)
+      **Erledigt:** leerer Block wird geschrieben, wenn vorher einer da war — sonst
+      bleibt die Bewertung ungetaggt und damit Default. Nebenbei: `vite.config.ts`
+      zählte Tests aus einem Worktree mit (58/664 statt echter 28/326).
+
+**→ Phase 2 ist damit vollständig abgearbeitet.**
 
 ---
 
@@ -269,10 +284,9 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
 
 ## Läuft unabhängig weiter
 
-- [ ] **S — Worker deployen.** `cd kunstwolff-admin && npm run worker:deploy`
-      **Jetzt dringend:** die neue KI-Oberfläche liegt auf `master` und ruft
-      `/api/ai/faehigkeiten` und `/api/ai/bild-tags` — beide gibt es nur im Worker.
-      Bis der Deploy läuft, bekommt mom dort Fehler.
+- [x] ~~**S — Worker deployen.**~~ ✅ erledigt. Wichtig bleibt: der Worker wird
+      **nicht** automatisch mitdeployt. Nach jeder Änderung unter `worker/`
+      wieder `npm run worker:deploy`.
 - [ ] **S — KI-Guthaben entscheiden.** Kleine Gemini-Aufladung (5–10 €), damit es zwei
       finanzierte Anbieter gibt statt einen.
 - [ ] **S — Vercel-Vorschauprojekt.** Projekt aus `Eightdevvis/Kunstwolff` mit Production
