@@ -27,6 +27,11 @@
     { "source": "/copy-of-galerie", "destination": "/galerie/", "permanent": true },
     { "source": "/gallerie", "destination": "/galerie/", "permanent": true },
     { "source": "/landingpages/landing", "destination": "/", "permanent": true },
+    {
+      "source": "/schnellzeichner-duesseldorf",
+      "destination": "/schnellzeichner/duesseldorf/",
+      "permanent": true
+    },
 
     {
       "source": "/portfolio-collections/my-portfolio/szenenmalerei",
