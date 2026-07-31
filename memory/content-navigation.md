@@ -13,7 +13,7 @@
     {
       "label": "Services",
       "children": [
-        { "label": "Schnellzeichner", "url": "/schnellzeichner/" },
+        { "label": "Schnellzeichner", "url": "/schnellzeichner-karikaturist/" },
         { "label": "Szenenmaler", "url": "/szenenmaler/" }
       ]
     },

@@ -38,7 +38,9 @@ public/img/Titelbild/events/<slug>/    # Event-Titelbilder
 ## Generierte Seiten
 
 - `/<slug>/` – Standalone Event-Seite (z.B. `/firmenfeier/`)
-- `/<skill>/<slug>/` – Skill+Event-Kombi (für alle Skills, z.B. `/schnellzeichner/firmenfeier/`)
+- `/<skill>/<slug>/` – Skill+Event-Kombi (für alle Skills, z.B. `/schnellzeichner-karikaturist/firmenfeier/`).
+  `<skill>` ist hier der **Adress-Slug** aus `skills.json.link`; die Kombitexte in
+  `comboContent.ts` liegen dagegen unter dem Inhalts-Schlüssel (`schnellzeichner/messe`).
 
 **Routing-Detail:** Event-Slugs teilen den Route-Slot `[landing]` mit Stadt-Slugs. `getStaticPaths()` differenziert via `pageType: 'event' | 'landing'` Prop. Siehe `routing.md`.
 

@@ -4,7 +4,7 @@
 
 1. **Vor jeder Aufgabe `memory/index.md` öffnen.** Dort die relevanten Themen identifizieren und nur die nötigen Subfiles laden. Niemals `README.md` oder das ganze `memory/` als Ersatz für gezieltes Nachschlagen verwenden.
 
-2. **Cross-Repo-Pflicht:** Bei Änderungen an Pfaden, Dateinamen oder Formaten in `public/` zwingend `memory/admin-tool.md` lesen und Auswirkungen aufs Admin-Tool (`/home/sasha/codicus/Kunstwolff/Kunstwolff-admin/kunstwolff-admin/`) prüfen. Beide Repos müssen synchron bleiben – das schließt deren `memory/`-Strukturen ein.
+2. **Cross-Repo-Pflicht:** Bei Änderungen an Pfaden, Dateinamen oder Formaten in `public/` zwingend `memory/admin-tool.md` lesen und Auswirkungen aufs Admin-Tool (`/home/sasha/codicus/Kunstwolff/kunstwolff-admin/`) prüfen. Beide Repos müssen synchron bleiben – das schließt deren `memory/`-Strukturen ein.
 
 3. **Memory-Pflege bei Änderungen – PFLICHT, keine Ausnahmen:** Jede Änderung an Code, Konfiguration, Dateistruktur, Pfaden, Dateiformaten, Sync-Logik, Build-Scripts oder Deployment-Setup muss **sofort** im passenden `memory/`-Subfile mitgepflegt werden. Bei strukturellen Änderungen auch `memory/index.md` und `memory/pfadstruktur.md` anpassen.
 

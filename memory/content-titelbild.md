@@ -14,9 +14,14 @@ public/img/Titelbild/title.meta.json      # Metadaten
 
 `titleImages.ts` löst bei jeder Page den passenden Top-Level-Ordner auf:
 - Stadt-Page `/berlin/` → `Titelbild/berlin/`
-- Skill-Page `/schnellzeichner/` → `Titelbild/schnellzeichner/`
+- Skill-Page `/schnellzeichner-karikaturist/` → `Titelbild/schnellzeichner/`
 - Event-Page `/firmenfeier/` → `Titelbild/events/firmenfeier/`
-- Skill+Stadt `/schnellzeichner/berlin/` → ggf. Skill-Bilder mit Stadt-Override (Details im Loader)
+- Skill+Stadt `/schnellzeichner-karikaturist/berlin/` → ggf. Skill-Bilder mit Stadt-Override (Details im Loader)
+
+⚠️ Der Ordner heisst nach dem **Titel** (`skillContentKey`), nicht nach der URL.
+Die Seiten übergeben deshalb `skillContentKey(skill.title)`, nicht den
+Adress-Slug – sonst fällt die Auflösung still auf `default` zurück
+(`content-skills.md`).
 
 ## Metadaten: `title.meta.json`
 
