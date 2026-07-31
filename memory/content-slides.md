@@ -132,7 +132,7 @@ dort.
 | `tags.events` | array | **Anlass-Dimension** (Slugs, z.B. `["firmenfeier","weihnachtsfeier"]`) – siehe `tag-system.md` |
 | `tags.landings` | array | **Ort-Dimension** (Slugs, z.B. `["hessen","frankfurt"]`) – siehe `tag-system.md` |
 | `altOverride` | string | Alt-Text für `<img>` (Accessibility + Google Bild-SEO) |
-| `title` | string | Anzeigetitel in Lightbox-Caption (unabhängig von altOverride; Fallback: altOverride) |
+| `title` | string | Bildunterschrift in der Lightbox. **Kein Fallback mehr** (seit 2026-07-31): ohne `title` keine Unterschrift — der frühere Rückfall auf den Alt-Text zeigte den Dateinamen. Pflege in der Mediathek. |
 | `priority` | number | Sortierreihenfolge, höher = weiter vorne |
 | `enabled` | boolean | `false` blendet Bild aus |
 
