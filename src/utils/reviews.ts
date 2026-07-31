@@ -23,6 +23,22 @@ export type ReviewItem = {
     events?: string[];
     landings?: string[];
   };
+  /**
+   * Darf diese Bewertung fremde Seiten auffüllen?
+   *
+   * Bewertungen sind absichtlich unspezifischer als FAQs und Bilder: „nett,
+   * schnell, tolles Bild" passt überall, und eine Stadtseite ohne eigene
+   * Bewertungen soll nicht leer bleiben. Deshalb gilt hier NICHT die strenge
+   * Regel der anderen beiden Typen.
+   *
+   * `tagOnly: true` schaltet das ab: die Bewertung erscheint dann nur noch da,
+   * wo ihr Tag sitzt. Für alles, was ortsgebunden ist („die Trierer Location
+   * war perfekt") und auf einer Berliner Seite peinlich wäre.
+   *
+   * Fehlt das Feld, ist die Bewertung frei — das ist das bisherige Verhalten
+   * aller 38 Dateien und bleibt der Standard.
+   */
+  tagOnly?: boolean;
 };
 
 const reviewsRoot = path.resolve('./public/reviews');
@@ -87,6 +103,11 @@ const parseReviewFile = (filePath: string): ReviewItem | null => {
       ? parsed.data.rating
       : undefined;
 
+  // Nur ein ausdrückliches `true` beschränkt. Alles andere (fehlend, false,
+  // Tippfehler) heißt „frei" – der Standard darf nicht von einem kaputten
+  // Wert abhängen.
+  const tagOnly = parsed.data.tagOnly === true;
+
   const rawTags =
     parsed.data.tags && typeof parsed.data.tags === 'object' && !Array.isArray(parsed.data.tags)
       ? (parsed.data.tags as Record<string, unknown>)
@@ -108,6 +129,7 @@ const parseReviewFile = (filePath: string): ReviewItem | null => {
     categories,
     city,
     rating,
+    tagOnly: tagOnly || undefined,
     tags: hasTags ? tags : undefined,
   };
 };
@@ -173,6 +195,14 @@ const hatOrtTag = (review: ReviewItem, landingKey: string): boolean =>
  */
 const istAllgemein = (review: ReviewItem): boolean =>
   (review.tags?.landings ?? []).length === 0;
+
+/**
+ * Darf diese Bewertung eine Seite auffüllen, auf die ihr Tag nicht zeigt?
+ *
+ * Der Schalter aus dem Frontmatter (`tagOnly: true`) sagt nein. Er greift NUR
+ * beim Auffüllen — wo der Tag sitzt, erscheint die Bewertung immer.
+ */
+const darfAuffuellen = (review: ReviewItem): boolean => review.tagOnly !== true;
 
 /**
  * Skill-Treffer aus Tag ODER `categories`.
@@ -241,7 +271,10 @@ const reviewsForLanding = (city: string, skill?: string): ReviewItem[] => {
   let combined = eigene;
 
   if (combined.length < minLandingReviews) {
-    combined = uniqueReviews([...combined, ...filterBySkill(all.filter(istAllgemein), skill)]);
+    combined = uniqueReviews([
+      ...combined,
+      ...filterBySkill(all.filter((r) => istAllgemein(r) && darfAuffuellen(r)), skill),
+    ]);
   }
 
   if (combined.length < minLandingReviews) {
@@ -249,7 +282,7 @@ const reviewsForLanding = (city: string, skill?: string): ReviewItem[] => {
       combined = uniqueReviews([
         ...combined,
         ...filterBySkill(
-          all.filter((review) => hatOrtTag(review, fremderOrt)),
+          all.filter((review) => hatOrtTag(review, fremderOrt) && darfAuffuellen(review)),
           skill,
         ),
       ]);
@@ -291,7 +324,10 @@ const reviewsForEvent = (event: string, skill?: string): ReviewItem[] => {
   let combined = eigene;
 
   if (combined.length < minLandingReviews) {
-    combined = uniqueReviews([...combined, ...filterBySkill(all.filter(istAnlassneutral), skill)]);
+    combined = uniqueReviews([
+      ...combined,
+      ...filterBySkill(all.filter((r) => istAnlassneutral(r) && darfAuffuellen(r)), skill),
+    ]);
   }
 
   return deckel(eigene, combined);

@@ -35,11 +35,28 @@ describe('Anlass-Tag der FAQs', () => {
     }
   });
 
-  it('lässt eine FAQ ohne Anlass-Tag überall gelten', () => {
-    // „leer gilt überall" ersetzt den früheren default-Ordner. Heute haben
-    // ALLE 71 FAQs `events: []` – deshalb ändert der Fix vorerst nichts am
-    // Bild, er macht das Zuordnen im Admin erst möglich.
-    expect(matchesFAQContext(faq({}), { event: 'messe' })).toBe(true);
+  it('laesst eine FAQ ganz ohne Tags NICHT ueberall gelten', () => {
+    // Umgedreht am 2026-07-31 (Entscheidung Sasha): leer heisst nirgends.
+    // Vorher genuegte "kein Tag" als Zustimmung – wer im Admin das Taggen
+    // vergass, veroeffentlichte die Frage versehentlich auf allen 170 Seiten.
+    // Wer ueberall gelten soll, liegt jetzt ausdruecklich in public/faq/default/
+    // und kommt ueber den Auffuell-Topf herein, nicht ueber diese Pruefung.
+    expect(matchesFAQContext(faq({}), { event: 'messe' })).toBe(false);
+    expect(matchesFAQContext(faq({}), { city: 'berlin' })).toBe(false);
+  });
+
+  it('schliesst eine FAQ nicht mehr aus, nur weil sie ein Skill-Label traegt', () => {
+    // Der teuerste Nebeneffekt der alten Regel. `categories` fuellte die
+    // Skill-Dimension; fragte die Seite Skills nicht ab (also jede Stadt- und
+    // jede Anlass-Seite), stimmte die FAQ dagegen und flog raus.
+    // Gemessen am 2026-07-31: `rhein-main-gebiet/kosten-2.md` traegt sieben
+    // Anlass-Tags, einen Ort-Tag und `categories: [Schnellzeichner]` – und
+    // stand auf NULL von 170 Seiten, auch nicht auf ihrer eigenen Stadtseite.
+    const mitLabel = { ...faq({ events: ['messe'], landings: ['rhein-main-gebiet'] }), categories: ['Schnellzeichner'] };
+    expect(matchesFAQContext(mitLabel, { event: 'messe' })).toBe(true);
+    expect(matchesFAQContext(mitLabel, { city: 'rhein-main-gebiet' })).toBe(true);
+    // Der Schutz bleibt: auf einer FREMDEN Stadtseite hat sie nichts zu suchen.
+    expect(matchesFAQContext(mitLabel, { city: 'berlin' })).toBe(false);
   });
 
   it('verknüpft Anlass und Skill mit UND', () => {
@@ -100,13 +117,19 @@ describe('Ein Tag gilt dort, wo danach gefragt wird', () => {
     expect(matchesFAQContext(koelnFaq, { event: 'messe' })).toBe(false);
   });
 
-  it('laesst die voellig ungetaggte FAQ ueberall auffuellen', () => {
-    // Der Default-Topf. Dieselbe Rolle wie `supplementWithDefaultSlides` bei
-    // den Bildern und `landings.length === 0` bei den Reviews.
+  it('holt die ungetaggte FAQ ueber den Auffuell-Topf herein, nicht ueber die Pruefung', () => {
+    // Der Topf ist jetzt der Ablageort `public/faq/default/`, nicht mehr
+    // "hat keine Tags". Die Pruefung selbst sagt nein – aufgefuellt wird
+    // danach, in getFAQsForContext. Dieselbe Rolle wie
+    // supplementWithDefaultSlides bei den Bildern.
     const default_ = faq({});
-    for (const kontext of [{}, { city: 'berlin' }, { event: 'messe' }, { categories: ['Szenenmaler'] }]) {
-      expect(matchesFAQContext(default_, kontext)).toBe(true);
+    for (const kontext of [{ city: 'berlin' }, { event: 'messe' }, { categories: ['Szenenmaler'] }]) {
+      expect(matchesFAQContext(default_, kontext)).toBe(false);
     }
+    // Aber sie kommt an: die echten Auffueller liegen in default/ und stehen
+    // hinter den eigenen.
+    const aufBerlin = getFAQsForContext({ city: 'berlin' });
+    expect(aufBerlin.length).toBeGreaterThan(0);
   });
 
   it('zeigt auf einer Stadtseite keine Anlass-FAQ', () => {
@@ -118,7 +141,10 @@ describe('Ein Tag gilt dort, wo danach gefragt wird', () => {
   it('zeigt auf einer Anlass-Seite die eigenen zuerst und fuellt mit Defaults auf', () => {
     const vier = getFAQsForContext({ event: 'messe' }).slice(0, 4);
     const eigene = vier.filter((f) => f.tags?.events?.includes('messe'));
-    expect(eigene.length).toBe(3);
+    // Alle vier Plaetze gehen an messe-getaggte FAQs, sobald es genug gibt –
+    // aufgefuellt wird nur, was uebrig bleibt. (Vorher stand hier 3: zwei
+    // messe-FAQs waren durch ihr Skill-Label ausgeschlossen.)
+    expect(eigene.length).toBe(4);
     expect(vier.length).toBe(4);
   });
 });

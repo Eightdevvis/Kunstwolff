@@ -113,25 +113,32 @@ export type FAQFilterContext = {
 };
 
 /**
- * Eine Tag-Dimension prüfen.
+ * Wie stimmt eine FAQ in EINER abgefragten Dimension ab?
  *
- * Zwei Regeln, mehr nicht:
- * - Fragt der Kontext diese Dimension nicht ab (kein Ort, kein Skill), passt jede FAQ.
- * - Trägt die FAQ in dieser Dimension KEINEN Tag, gilt sie überall. Genau das
- *   ersetzt den früheren `default`-Ordner: "allgemein" ist ab jetzt eine
- *   Eigenschaft des Inhalts, keine Eigenschaft seines Ablageorts.
+ * Drei Ausgänge, und der mittlere ist der Grund für den Umbau am 2026-07-31:
+ * - `treffer`   – die FAQ trägt den gesuchten Tag. Sie gehört hierher.
+ * - `dagegen`   – sie trägt in dieser Dimension einen ANDEREN Tag. Eine
+ *                 Messe-FAQ hat auf der Hochzeitsseite nichts zu suchen.
+ * - `enthaelt sich` – sie trägt hier gar keinen Tag. Das ist ab jetzt KEINE
+ *                 Zustimmung mehr.
  *
- * Sonst muss der Tag sitzen.
+ * Vorher galt „kein Tag in dieser Dimension = gilt überall". Klingt harmlos,
+ * heißt aber: eine FAQ ganz ohne Tags erscheint auf allen 170 Seiten. Wer im
+ * Admin eine Frage anlegt und das Taggen vergisst, veröffentlicht sie
+ * versehentlich überall — und merkt es nicht, weil es wie Absicht aussieht.
+ *
+ * Die neue Regel (Entscheidung Sasha, 2026-07-31), gleichlautend für alle drei
+ * Inhaltstypen: **leer heißt nirgends.** Wer überall gelten soll, wird
+ * ausdrücklich in `public/faq/default/` abgelegt — das ist der Auffüll-Topf,
+ * genau wie `default-selection.json` bei den Bildern.
  */
-const dimensionPasst = (faqTags: string[] | undefined, gesucht: string[]): boolean => {
+type Stimme = 'treffer' | 'dagegen' | 'enthaltung';
+
+const stimme = (faqTags: string[] | undefined, gesucht: string[]): Stimme => {
+  if (gesucht.length === 0) return 'enthaltung'; // Dimension gar nicht abgefragt
   const vorhanden = (faqTags ?? []).map(normalize).filter(Boolean);
-  // Kein Tag in dieser Dimension = gilt hier nicht als Einschränkung.
-  if (vorhanden.length === 0) return true;
-  // Ein Tag gehört dorthin, wo danach gefragt wird. Fragt der Kontext die
-  // Dimension gar nicht ab, gehört die FAQ nicht hierher: eine Messe-FAQ hat
-  // auf einer Stadtseite nichts zu suchen.
-  if (gesucht.length === 0) return false;
-  return vorhanden.some((tag) => gesucht.includes(tag));
+  if (vorhanden.length === 0) return 'enthaltung';
+  return vorhanden.some((tag) => gesucht.includes(tag)) ? 'treffer' : 'dagegen';
 };
 
 const kontextSchluessel = (context: FAQFilterContext) => {
@@ -149,14 +156,16 @@ const kontextSchluessel = (context: FAQFilterContext) => {
 };
 
 /**
- * Passt eine FAQ zu Ort UND Skill?
+ * Gehört diese FAQ auf diese Seite?
  *
- * Vorher waren die vier Teilprüfungen mit ODER verknüpft. Das klang harmlos,
- * bedeutete aber: eine FAQ mit passendem Skill erschien auf JEDER Stadtseite,
- * egal wo sie hingehört. Deshalb musste FAQ.astro vorher über den Ordner
- * filtern – und deshalb war der Tag-Teil faktisch wirkungslos. Mit UND über
- * die Dimensionen (und "leer gilt überall" innerhalb einer Dimension) trägt
- * die Auswahl allein, das Ordner-Gate kann weg.
+ * Sie braucht **mindestens einen ausdrücklichen Treffer** und darf in keiner
+ * abgefragten Dimension dagegenstimmen. Enthaltungen sind erlaubt — sonst
+ * verlöre `/schnellzeichner/trier/` seine Trier-FAQs, nur weil die keinen
+ * Skill-Tag tragen.
+ *
+ * Was das ausschließt und vorher nicht ausgeschlossen war: eine FAQ ganz ohne
+ * Tags. Die stimmt nirgends zu und kommt deshalb nur noch über den
+ * Auffüll-Topf auf eine Seite (`istAuffueller`).
  */
 export const matchesFAQContext = (faq: FAQItem, context: FAQFilterContext): boolean => {
   const { skillKeys, eventKeys, landingKeys } = kontextSchluessel(context);
@@ -166,12 +175,37 @@ export const matchesFAQContext = (faq: FAQItem, context: FAQFilterContext): bool
   // ihre Skill-Zuordnung.
   const skillTags = [...(faq.tags?.skills ?? []), ...(faq.categories ?? [])];
 
-  return (
-    dimensionPasst(skillTags, skillKeys) &&
-    dimensionPasst(faq.tags?.events, eventKeys) &&
-    dimensionPasst(faq.tags?.landings, landingKeys)
-  );
+  const stimmen: Stimme[] = [
+    stimme(skillTags, skillKeys),
+    stimme(faq.tags?.events, eventKeys),
+    stimme(faq.tags?.landings, landingKeys),
+  ];
+
+  if (stimmen.includes('dagegen')) return false;
+  return stimmen.includes('treffer');
 };
+
+/**
+ * Der Auffüll-Topf: FAQs, die ausdrücklich in `public/faq/default/` liegen und
+ * keinen einzigen Tag tragen.
+ *
+ * Bewusst am ABLAGEORT festgemacht, obwohl der sonst überall abgeschafft ist —
+ * das ist die Entscheidung, die „leer heißt nirgends" überhaupt erst benutzbar
+ * macht. Eine ungetaggte Datei in `public/faq/trier/` ist ein Versehen und soll
+ * auffallen; eine in `default/` ist eine Aussage: „gilt allgemein".
+ *
+ * Gemessen am 2026-07-31: 14 von 86 FAQs sind Auffüller, alle 14 liegen in
+ * `default/`, und es gibt keine ungetaggte Datei außerhalb. Die Regel kostet
+ * heute also keinen einzigen Inhalt.
+ */
+const AUFFUELL_ORDNER = 'default';
+
+const istAuffueller = (faq: FAQItem): boolean =>
+  normalize(faq.city ?? '') === AUFFUELL_ORDNER &&
+  (faq.tags?.skills ?? []).length === 0 &&
+  (faq.tags?.events ?? []).length === 0 &&
+  (faq.tags?.landings ?? []).length === 0 &&
+  (faq.categories ?? []).length === 0;
 
 /**
  * Wie viele der abgefragten Dimensionen trifft die FAQ ausdrücklich?
@@ -228,10 +262,19 @@ export const getFAQsForContext = (
   context: FAQFilterContext,
   locale: Locale = DEFAULT_LOCALE,
 ): FAQItem[] => {
-  const passend = getAllFAQs(locale).filter((faq) => matchesFAQContext(faq, context));
+  const alle = getAllFAQs(locale);
 
-  return passend
+  // Erst die, die ausdrücklich hierher gehören – die genaueren zuerst.
+  const passend = alle
+    .filter((faq) => matchesFAQContext(faq, context))
     .map((faq, index) => ({ faq, index, genauigkeit: trefferGenauigkeit(faq, context) }))
     .sort((a, b) => b.genauigkeit - a.genauigkeit || a.index - b.index)
     .map((eintrag) => eintrag.faq);
+
+  // Dann der Auffüll-Topf, in Lesereihenfolge. Er steht hinten an: die Seite
+  // schneidet über `maxItems` ab, also verdrängen eigene FAQs die allgemeinen
+  // und nicht umgekehrt.
+  const auffueller = alle.filter((faq) => istAuffueller(faq) && !passend.includes(faq));
+
+  return [...passend, ...auffueller];
 };

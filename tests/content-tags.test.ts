@@ -90,8 +90,11 @@ describe('matchesFAQContext – Dimensionen einzeln, nicht als ODER-Kette', () =
     tags: { skills: [], events: [], landings: [], ...tags },
   });
 
-  it('lässt eine FAQ ganz ohne Tags überall zu – der Default-Topf', () => {
-    expect(matchesFAQContext(faq({}), { city: 'trier' })).toBe(true);
+  it('laesst eine FAQ ganz ohne Tags NIRGENDS zu – der Topf ist der Ordner', () => {
+    // Umgedreht am 2026-07-31: "leer" ist keine Zustimmung mehr. Allgemein
+    // gueltige FAQs liegen ausdruecklich in public/faq/default/ und werden in
+    // getFAQsForContext angehaengt, nicht hier durchgewunken.
+    expect(matchesFAQContext(faq({}), { city: 'trier' })).toBe(false);
   });
 
   it('zeigt eine reine Skill-FAQ nur dort, wo nach dem Skill gefragt wird', () => {
