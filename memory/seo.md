@@ -247,3 +247,24 @@ sie mitgeliefert wird).
 Verbleibende Fremd-Hosts im ausgelieferten HTML sind keine Verbindungen:
 `www.w3.org` (XML-Namensräume), `schema.org` (JSON-LD-Kontext) und drei redaktionelle
 Links in Texten.
+
+## Datenschutzerklärung: die drei Empfänger stehen drin (seit 2026-07-31)
+
+`src/pages/datenschutz.astro` nannte bis dahin **keinen** Datenempfänger: §2 sprach
+anonym vom „Hosting-Anbieter", §3 nur von „E-Mail oder Telefon" (das Web-Formular kam
+gar nicht vor), und §4 behauptete sinngemäß, es fänden keine Übertragungen statt.
+
+Jetzt: **Vercel Inc.** (§2, Hosting), **Formspree Inc.** (§4, eigener Abschnitt
+Kontaktformular), und in §5 die ausdrückliche Feststellung, dass Schriftarten lokal
+ausgeliefert werden. Abschnitte wurden dadurch umnummeriert (jetzt 10 statt 9).
+
+⚠️ **Beim Anfassen des Formulars mitpflegen:** `src/components/Contact.astro` sendet
+neben Name/E-Mail/Telefon/Datum/Nachricht **sieben versteckte `cinema_*`-Felder** mit –
+die Auswahlen aus dem CinemaWelcome-Konfigurator. Die sind in §4 benannt, weil Art. 13
+DSGVO Transparenz über das verlangt, was tatsächlich übertragen wird. Kommt ein Feld
+dazu, gehört es dort hinein.
+
+Der Text ist ein **Entwurf und braucht Sashas Freigabe** – insbesondere die Angabe, dass
+AV-Verträge nach Art. 28 mit beiden Anbietern bestehen. Die sind bei Vercel und Formspree
+im Kundenkonto abschließbar, aber jemand muss es tun; solange das nicht passiert ist, ist
+der Satz falsch.
