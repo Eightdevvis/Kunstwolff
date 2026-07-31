@@ -1364,39 +1364,6 @@
     "title": "Schnellzeichner Koblenz"
   },
   "koeln/1_IMG_20240129_120914.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": [
-        "koeln"
-      ]
-    },
-    "priority": 1
-  },
-  "koeln/10_digitale-live-portraits.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": [
-        "koeln"
-      ]
-    },
-    "priority": 10
-  },
-  "koeln/11_digitale-schnellzeichnung.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": [
-        "koeln"
-      ]
-    },
-    "priority": 11
-  },
-  "koeln/12_digitaler-schnellzeichner-messe-koeln.webp": {
     "categories": [
       "Schnellzeichner"
     ],
@@ -1405,10 +1372,120 @@
         "schnellzeichner"
       ],
       "events": [
-        "messe"
+        "firmenfeier",
+        "messe",
+        "jubilaeum",
+        "gala"
       ],
       "landings": [
-        "koeln"
+        "koeln",
+        "berlin",
+        "frankfurt",
+        "hamburg",
+        "schweiz",
+        "wiesbaden",
+        "mainz",
+        "hessen",
+        "rhein-main-gebiet",
+        "rheinland-pfalz",
+        "nord-rhein-westfalen",
+        "main-taunus-kreis",
+        "bw",
+        "stuttgart",
+        "schnellzeichner-duesseldorf"
+      ]
+    },
+    "priority": 1
+  },
+  "koeln/10_digitale-live-portraits.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "jubilaeum"
+      ],
+      "landings": [
+        "koeln",
+        "berlin",
+        "frankfurt",
+        "hamburg",
+        "schweiz",
+        "mainz",
+        "hessen",
+        "rhein-main-gebiet",
+        "rheinland-pfalz",
+        "nord-rhein-westfalen",
+        "main-taunus-kreis",
+        "bw",
+        "stuttgart",
+        "schnellzeichner-duesseldorf"
+      ]
+    },
+    "priority": 10
+  },
+  "koeln/11_digitale-schnellzeichnung.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "messe",
+        "jubilaeum"
+      ],
+      "landings": [
+        "koeln",
+        "frankfurt",
+        "hamburg",
+        "schweiz",
+        "mainz",
+        "luxembourg",
+        "hessen",
+        "rhein-main-gebiet",
+        "rheinland-pfalz",
+        "nord-rhein-westfalen",
+        "main-taunus-kreis",
+        "bw",
+        "stuttgart",
+        "schnellzeichner-duesseldorf"
+      ]
+    },
+    "priority": 11
+  },
+  "koeln/12_digitaler-schnellzeichner-messe-koeln.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "messe",
+        "firmenfeier",
+        "jubilaeum"
+      ],
+      "landings": [
+        "koeln",
+        "berlin",
+        "frankfurt",
+        "hamburg",
+        "wiesbaden",
+        "mainz",
+        "hessen",
+        "rhein-main-gebiet",
+        "rheinland-pfalz",
+        "nord-rhein-westfalen",
+        "main-taunus-kreis",
+        "bw",
+        "stuttgart",
+        "schnellzeichner-duesseldorf"
       ]
     },
     "priority": 12
