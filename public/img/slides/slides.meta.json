@@ -7,7 +7,14 @@
       "skills": [
         "schnellzeichner"
       ],
-      "events": [],
+      "events": [
+        "private-feier",
+        "hochzeit",
+        "geburtstag",
+        "gartenparty",
+        "stadtfest",
+        "sommerfest"
+      ],
       "landings": [
         "belgique"
       ]
@@ -48,7 +55,8 @@
         "firmenfeier"
       ],
       "landings": [
-        "bw"
+        "bw",
+        "stuttgart"
       ]
     },
     "priority": 2
@@ -62,10 +70,12 @@
         "schnellzeichner"
       ],
       "events": [
-        "messe"
+        "messe",
+        "firmenfeier"
       ],
       "landings": [
-        "bw"
+        "bw",
+        "stuttgart"
       ]
     },
     "priority": 3
@@ -102,9 +112,15 @@
         "schnellzeichner"
       ],
       "events": [
-        "stadtfest"
+        "stadtfest",
+        "hochzeit",
+        "private-feier",
+        "geburtstag",
+        "sommerfest"
       ],
-      "landings": []
+      "landings": [
+        "luxembourg"
+      ]
     },
     "priority": 2
   },
@@ -116,7 +132,11 @@
       "skills": [
         "schnellzeichner"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "weihnachtsfeier"
+      ],
       "landings": [
         "schweiz"
       ]
@@ -132,9 +152,13 @@
         "schnellzeichner"
       ],
       "events": [
-        "hochzeit"
+        "hochzeit",
+        "private-feier"
       ],
-      "landings": []
+      "landings": [
+        "wiesbaden",
+        "rhein-main-gebiet"
+      ]
     },
     "priority": 4
   },
