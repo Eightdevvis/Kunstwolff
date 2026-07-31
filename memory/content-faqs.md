@@ -93,3 +93,24 @@ FAQs werden automatisch als `FAQPage` JSON-LD ausgegeben (siehe `seo.md`). Kann 
 ## Admin-Tool
 
 FaqManager schreibt nach `public/faq/default/` und `public/faq/<city>/`.
+
+## Anlass-Dimension: eigenes Feld statt Schmuggel durchs city-Feld (seit 2026-07-31)
+
+`FAQFilterContext` hat jetzt `event`. Vorher entstanden `eventKeys` **ausschliesslich**
+daraus, dass `city` mit `events/` begann – ein Weg, den kein einziger Aufrufer benutzte:
+die Event-Zweige übergaben `faq: {}` bzw. nur den Skill. Folge: auf `/firmenfeier/`,
+`/messe/`, `/hochzeit/` und `/private-feier/` passten alle 71 FAQs mit Treffergüte 0, es
+entschied die Lesereihenfolge der Dateien, und alle vier zeigten dieselben Fragen wie die
+Startseite. Ein im Admin gesetzter Anlass-Tag konnte nie ankommen.
+
+Geändert: `src/utils/faq.ts` (`event` im Kontext), `src/components/FAQ.astro` (nimmt es an
+und reicht es weiter), die Event-Zweige in `src/pages/[landing].astro` und
+`src/pages/[skill]/[landing].astro`. Der alte Weg `city: 'events/<slug>'` bleibt gültig –
+die FAQ-Dateien liegen so im Repo und `cityFromPath` leitet den Wert daraus ab.
+
+⚠️ **Auf dem Bildschirm ändert sich vorerst nichts**, und das ist richtig so: heute haben
+**alle 71 FAQs `events: []`**, und „leer gilt überall". Der Fix macht das Zuordnen im
+Admin erst möglich – sobald dort ein Anlass gesetzt wird, greift er sofort.
+
+Test: `tests/faq-anlass.test.ts`, inklusive der Gegenprobe, dass eine Firmenfeier-FAQ auf
+`/messe/` NICHT erscheint.

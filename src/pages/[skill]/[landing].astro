@@ -262,7 +262,7 @@ if (pageType === 'landing' && landingSlides) {
         }
       : false,
     eventTeaser: { eventTitle: eventData.title, eventSlug: landing ?? '' },
-    faq: { categories: [skillData.title] },
+    faq: { categories: [skillData.title], event: landing ?? '' },
     contact: {},
   };
   sectionOrder = resolveSectionOrder('skill-event', landing ?? '', registry);

@@ -248,7 +248,7 @@ if (pageType === 'landing' && landingData && landingSlides) {
             logos: eventContent.referenzen.logos,
           }
         : false,
-    faq: {},
+    faq: { event: landing ?? '' },
     contact: {},
   };
   sectionOrder = resolveSectionOrder('event', landing ?? '', registry);

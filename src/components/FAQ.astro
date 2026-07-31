@@ -5,6 +5,7 @@ import { DEFAULT_LOCALE, type Locale } from '../i18n/config';
 const {
   categories = [],
   city = '',
+  event = '',
   faqs = [],
   interactive = false,
   maxItems = 4,
@@ -12,6 +13,7 @@ const {
 } = Astro.props as {
   categories?: string[];
   city?: string;
+  event?: string;
   faqs?: FAQItem[];
   interactive?: boolean;
   maxItems?: number;
@@ -26,7 +28,7 @@ const {
 // `locale` wurde bisher NICHT angenommen: `src/pages/fr/[landing].astro` reicht
 // es seit dem i18n-Fundament durch, die Komponente ignorierte es, und die
 // französischen Seiten zeigten deutsche FAQs.
-const list: FAQItem[] = faqs.length > 0 ? faqs : getFAQsForContext({ categories, city }, locale);
+const list: FAQItem[] = faqs.length > 0 ? faqs : getFAQsForContext({ categories, city, event }, locale);
 
 // Fallback auf Default-FAQs wenn keine FAQs gefunden
 const DEFAULT_FAQS: FAQItem[] = [

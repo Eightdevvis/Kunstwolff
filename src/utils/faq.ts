@@ -96,9 +96,20 @@ const parseFaqFile = (filePath: string, rootDir: string): FAQItem | null => {
   };
 };
 
-type FAQFilterContext = {
+export type FAQFilterContext = {
   categories?: string[];
   city?: string;
+  /**
+   * Anlass (`firmenfeier`, `messe`, …). Eigenes Feld, seit 2026-07-31.
+   *
+   * Vorher entstand die Anlass-Dimension NUR daraus, dass `city` mit `events/`
+   * begann – ein Schmuggelweg, den keiner der Aufrufer benutzte. Ergebnis:
+   * `eventKeys` war auf jeder Seite leer, alle 71 FAQs passten mit Treffergüte
+   * 0, und `/firmenfeier/`, `/messe/`, `/hochzeit/`, `/private-feier/` zeigten
+   * dieselben vier Fragen wie die Startseite. Ein im Admin gesetzter
+   * Anlass-Tag konnte nie ankommen.
+   */
+  event?: string;
 };
 
 /**
@@ -121,11 +132,15 @@ const dimensionPasst = (faqTags: string[] | undefined, gesucht: string[]): boole
 
 const kontextSchluessel = (context: FAQFilterContext) => {
   const cityKey = normalize(context.city ?? '');
-  const istEvent = cityKey.startsWith('events/');
+  // `events/<slug>` im city-Feld bleibt gültig: die FAQ-Dateien liegen so im
+  // Repo, und `cityFromPath` leitet den Wert daraus ab. Neu ist nur, dass der
+  // Anlass auch direkt übergeben werden kann – und das tun die Event-Seiten.
+  const istEventPfad = cityKey.startsWith('events/');
+  const eventKey = normalize(context.event ?? '') || (istEventPfad ? cityKey.replace(/^events\//, '') : '');
   return {
     skillKeys: (context.categories ?? []).map(normalize).filter(Boolean),
-    eventKeys: istEvent ? [cityKey.replace(/^events\//, '')].filter(Boolean) : [],
-    landingKeys: !istEvent && cityKey ? [cityKey] : [],
+    eventKeys: eventKey ? [eventKey] : [],
+    landingKeys: !istEventPfad && cityKey ? [cityKey] : [],
   };
 };
 
