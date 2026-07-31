@@ -179,3 +179,19 @@ Gemeinsam mit der Slideshow, siehe `content-slides.md` → Lightbox.
 Tag-Chips ohnehin schreiben (`slides.meta.json`, `config/tags.json`). Kein neues
 Format, kein neuer Schreibpfad. Was im Admin getaggt wird, wirkt hier ohne
 weiteres Zutun.
+
+
+## Nur eingeordnete Bilder (2026-07-31)
+
+`getAllSlidesWithTags` filtert auf **mindestens einen Tag**. Ohne den Filter gab
+die Galerie den kompletten Bestand aus — auch den Foto-Dump-Zwischenspeicher
+`public/img/slides/mediathek`, obwohl der Admin ausdrücklich zusichert, der sei
+„auf der Website inert" (`services/mediaLibrary.ts`). Auf der öffentlichen
+Galerieseite standen dadurch fremde Firmenlogos: `obi_logo.webp`,
+`samsung-logo-1993.webp`, `saarlandtherme-logo-150px.webp`.
+
+Die Prüfung hängt bewusst am **Tag**, nicht am Ordnernamen. Eine zweite
+Ordner-Sonderregel wäre genau der Weg, den Phase 5b abgeschafft hat — und ein
+Bild aus dem Pool, das jemand eingeordnet hat, soll erscheinen.
+
+Gemessen: 232 → 208 Kacheln (24 ungetaggte: 22 im Pool, 2 in `default/`).

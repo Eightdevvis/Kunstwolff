@@ -23,13 +23,13 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [Slides](content-slides.md) – Bilder, `slides.meta.json`, Lightbox (gemeinsam mit der Galerie), Fallback-Logik
 - [Galerie](content-galerie.md) – `/galerie/`: **alle** Bilder auf einer Seite, Chips je Tag-Dimension (UND-verknüpft) + Suche, Client-Filter, verlinkt unter jedem „Unsere Kunst"-Banner
 - [Team](content-team.md) – `/team/`: zwei Profile (Gabriele zuerst), Portraits als Zuschnitte aus Event-Fotos, **kein `srcset`** für `img/team`
-- [Tag-System](tag-system.md) – Skill × Anlass × Ort: `config/tags.json`, Tag-Blöcke an Bildern/Reviews/FAQs, Migration; **Phase 5a+5b+5d fertig – Bilder, Reviews UND FAQs wählen über Tags aus, der Ordner ist nur noch Ablage**
+- [Tag-System](tag-system.md) – Skill × Anlass × Ort: `config/tags.json`, Tag-Blöcke an Bildern/Reviews/FAQs, Migration; **Phase 5a+5b+5d+5e fertig – Bilder, Reviews UND FAQs wählen über Tags aus, und seit 5e (2026-07-31) tut das AUCH der Admin. Der Ordner ist nur noch Ablage und Upload-Ziel.**
 - [Responsive Bilder](responsive-images.md) – `srcset`/`sizes`, Varianten-Erzeugung nach dem Build, warum nicht `astro:assets`
 - [Vercel-Header](vercel-headers.md) – Cache-Control für `/img/*`, warum bewusst kein `immutable`; **Redirect-Karte Wix→Astro** (warum nicht über `astro.config.mjs`)
 - [Titelbild](content-titelbild.md) – Pfad, Metadaten, Fallback-Kette
-- [Reviews](content-reviews.md) – Markdown-Format, **Auswahl über `tags.landings`**, Auffüll-Logik, MiniReviews-Anzeige
+- [Reviews](content-reviews.md) – Markdown-Format, **Auswahl über `tags.landings` bzw. `tags.events`**, Auffüll-Logik **mit Deckel**, MiniReviews-Anzeige (Stadtseiten waren bis 2026-07-31 gar nicht angeschlossen)
 - [Allgemeine Texte](content-site-texts.md) – `site-texts/content.json`, Startseiten-Texte, `landingIntros` (Einführungstext)
-- [FAQs](content-faqs.md) – Markdown-Format, **Auswahl über Tags (UND je Dimension, leer = gilt überall)**, `getFAQsForContext`
+- [FAQs](content-faqs.md) – Markdown-Format, **Auswahl über Tags (UND je Dimension, leer = gilt überall)**, `getFAQsForContext`; **i18n-Overlays laufen seit 2026-07-31 im selben Sync**, deutscher Fallback nur noch für die Standard-Locale
 - [Why-Sektion](content-why.md) – JSON-Format, Fallback-Kette, Bilder; **die vier Why-Detailseiten leiten ihre Bilder von hier ab statt sie zu kopieren** (`whyHighlights.ts`), Rest heilt über `bildAufloesung.ts`
 - [Erinnerungen](content-erinnerungen.md) – Pinnwand-Fotos, Fallback-Kette
 - [CinemaWelcome](content-cinema.md) – Startseiten-Konfigurator (Event→Wunsch→Geschmack), `cinema.json`, autoSelect, Ergebnis-Komposition
@@ -62,6 +62,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 | "Galerie / alle Bilder / Bild-Filter / Bild-Suche" | `content-galerie.md` (+ `tag-system.md`) |
 | "Team / Profile / Portraitfotos" | `content-team.md` |
 | "Tags / Anlass / automatische Einsortierung" | `tag-system.md` |
+| "Admin zeigt etwas anderes als die Seite" | `tag-system.md` (Phase 5e) + `admin-tool.md` |
 | "Review pflegen" | `content-reviews.md` |
 | "FAQ pflegen" | `content-faqs.md` |
 | "Why-Texte ändern" | `content-why.md` |

@@ -85,3 +85,28 @@ automatisch aus dem Hintergrund abgeleitet (`data-review-theme`).
 ReviewManager schreibt nach `public/reviews/<city>/review*.md`. Der Manager zeigt seit dem
 Umbau eine **Erklär-Infobox** (sky-farben), die die Fallback-/Auffüll-Logik im UI sichtbar
 macht (vorher null Kontext beim leeren `default`-Streifen).
+
+
+## Auswahl je Seitenart (2026-07-31)
+
+| Seite | Funktion | Vorher |
+| :-- | :-- | :-- |
+| Startseite | `getAllReviews()` | unverändert, alle 38 |
+| Stadtseite | `getReviewsByLanding(slug)` | **alle 38** – die Funktion hatte null Aufrufer |
+| Anlass-Seite | `getReviewsByEvent(slug)` | gab es nicht, Seite hatte keinen Review-Block |
+| Skill × Stadt | `getReviewsByLandingAndSkill` | unverändert |
+
+`[landing].astro` reichte `homepageReviews: {}` durch; `HomepageReviews.astro`
+holte sich daraufhin selbst den kompletten Bestand. `/berlin/` und `/trier/`
+zeigten dieselben 38 Bewertungen, der Ort-Tag hatte nirgends eine Wirkung.
+Gemessen nach der Reparatur: berlin 7, trier 7 (die eigenen), saarland 8,
+Startseite 38.
+
+**Auffüllung hat einen Deckel.** `minLandingReviews = 7` ist ein Minimum, kein
+Freibrief: eigene Treffer bleiben vollständig, aufgefüllt wird nur bis zum
+Minimum. Ohne den Deckel zeigte `/hochzeit/` 36 von 38 Bewertungen — 33 tragen
+keinen Anlass-Tag und gelten damit überall.
+
+**Der Review-Block auf Anlass-Seiten ist neu** und steht in
+`public/config/components.json` unter `event._default._order`. Eine Zeile dort
+raus nimmt ihn wieder weg.

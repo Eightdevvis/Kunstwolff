@@ -82,3 +82,28 @@ Wenn neue Admin-Felder + Website-Konsumierung gleichzeitig gebaut werden:
 3. **Admin danach** – neuen Tab/Manager im Admin-Tool bauen der in das Format schreibt (Pattern: `src/components/<Name>Manager.tsx` + ggf. Service-Funktion in `src/services/`)
 4. **Sync-Scripts prüfen** – muss `sync-landings.mjs` o.ä. angepasst werden? (siehe `sync-scripts.md`)
 5. **Beide Doku-Sets aktualisieren** – Admin-README/CLAUDE.md + Website-Memory (`admin-tool.md`, `pfadstruktur.md`, betroffene `content-*.md`); Restlücken stehen in der Admin-README bzw. im Admin-`memory/`, nicht in einer separaten Bug-Datei.
+
+
+## Der Admin wählt nach Tag aus (2026-07-31)
+
+Bis dahin listete jeder Editor ein Verzeichnis, während die Website seit Phase 5b
+nach Tags auswählt. Über alle Seiten waren **126 Tag-Zuordnungen** außerhalb des
+gelisteten Ordners, 107 davon auf einer gebauten Seite.
+
+Was das für Änderungen an `public/` bedeutet:
+
+- **Der Ordner steuert nichts mehr.** Er ist Ablage und Upload-Ziel. Wer eine
+  Datei verschiebt, ändert keine Seitenzuordnung — der Tag tut das.
+- **Der Admin schreibt `altOverride`, nicht `alt`.** `slides.meta.json` hat 85
+  Einträge mit `altOverride` und 0 mit `alt`; die Website gibt `altOverride`
+  Vorrang. Wer das Feld umbenennt, muss beide Seiten anfassen.
+- **Leere Tag-Dimensionen werden als `[]` geschrieben**, nicht weggelassen. Eine
+  fehlende Dimension trägt der Sync aus dem Ordner nach, eine ausdrücklich leere
+  lässt er stehen. Das ist der Unterschied zwischen „noch nie eingeordnet" und
+  „bewusst entfernt".
+- **FAQs von Anlass-Seiten landen in `public/faq/default`**, nicht in einem
+  neuen Ordner `faq/events/<slug>`. Dort liegen die bestehenden 12 Anlass-FAQs
+  auch; ihren Anlass tragen sie ausschließlich als Tag.
+
+Details auf der Admin-Seite: `kunstwolff-admin/memory/manager-images.md`,
+`manager-faqs.md`, `manager-reviews.md`.

@@ -210,6 +210,76 @@ gebaut wurde: ein Durchlauf über alle Bilder auf einen Knopf. Das wäre teuer,
 nicht abbrechbar und würde die Prüfung durch einen Menschen zur Formsache
 machen.
 
+## Phase 5e: Die Werkzeuge folgen dem Rendering (2026-07-31)
+
+Phase 5b hat die **Website** auf „der Tag entscheidet" umgestellt. Alles daneben
+blieb beim Ordner. Damit existierte jede Zuordnung doppelt — einmal als Tag (was
+der Besucher sieht) und einmal als Ordner (was Jenny im Admin sieht) — und
+niemand hielt die beiden zusammen. Gemessen: **126 Tag-Zuordnungen lagen
+außerhalb des Ordners, den der zugehörige Admin-Tab listete, 107 davon auf einer
+gebauten Seite.**
+
+| Seite | Admin-Tab (Ordner) | Seite zeigt |
+| :-- | --: | --: |
+| `/firmenfeier/` | 1 | 28 |
+| `/messe/` | 7 | 31 |
+| `/hochzeit/` | 10 | 34 |
+| `/schnellzeichner/` | 0 (Ordner existiert nicht) | 24 |
+
+**Die Regel ab jetzt, für alle drei Inhaltstypen und beide Repos:**
+Die Liste eines Editors entsteht aus derselben Tag-Frage, die die Seite stellt.
+Der Ordner ist Ablage und Upload-Ziel — sonst nichts.
+
+Was dafür geändert wurde:
+
+- **Website:** `getReviewsByLanding` war gebaut, hatte aber null Aufrufer —
+  `[landing].astro` reichte `homepageReviews: {}` durch, also zeigte jede
+  Stadtseite alle 38 Bewertungen. Jetzt angeschlossen; dazu `getReviewsByEvent`
+  und ein Review-Block im `event`-Stack (`components.json`), weil die
+  `events`-Dimension der Reviews vorher von **keiner** Seite abgefragt wurde.
+- **Website:** Die Auffüllung ist ein Minimum mit **Deckel**. Ohne den hieß
+  `minLandingReviews = 7` faktisch „alle, die nicht ausdrücklich woanders
+  hingehören": `/hochzeit/` zeigte 36 von 38. Eigene Treffer bleiben vollständig.
+- **Admin:** `resolveEditorProps` liefert jetzt `auswahl: TagAuswahl[]`
+  (UND-verknüpft) statt nur einer Ordner-Zeichenkette. `ImageManager`,
+  `FaqManager` und `ReviewManager` filtern danach über den ganzen Baum.
+- **Admin:** getrennte Löschsemantik. Ein per Tag hereingeholtes Bild verliert
+  beim „×" nur den Tag; nur Dateien aus dem eigenen Ordner werden gelöscht. Ohne
+  das hätte die Tag-Liste aus einem Klick echten Datenverlust gemacht.
+- **Admin:** Uploads bekommen den Tag der Seite **explizit** gesetzt, statt ihn
+  aus dem Pfad zu raten (`inferTagsFromKey` kennt weder `skills` noch `default`).
+
+**Galerie:** `getAllSlidesWithTags` zeigt nur noch Bilder mit mindestens einem
+Tag. Vorher lief der Foto-Dump-Zwischenspeicher `slides/mediathek` komplett mit
+— inklusive fremder Firmenlogos (`obi_logo.webp`, `samsung-logo-1993.webp`).
+232 → 208 Kacheln.
+
+### Der Fehler, der alles unterlaufen hätte
+
+Der Frontmatter-Parser des Admin (`utils/markdown.ts`) kannte die Schreibweise
+`  skills: []` nicht, die beide Sync-Skripte erzeugen. Sie galt weder als
+Unterblock noch als Listen-Item — der ganze `tags`-Block wurde als leeres Array
+gelesen und beim Speichern weggelassen. **83 von 83 FAQs** kamen im Editor ohne
+Tags an, **33 von 38 Reviews** verloren ihren Ort-Tag (er steht hinter
+`events: []`). Bei Stadt-FAQs kaschierte der nächste Build den Verlust über den
+Ordner, bei den 12 Anlass-FAQs in `public/faq/default` **nicht**.
+
+Wer am Tag-Format schraubt, prüft zuerst den Round-Trip:
+`parseFrontmatter → serializeFrontmatter` muss byte-identisch sein
+(`admin/src/utils/markdown.tagblock.test.ts`).
+
+### i18n war nie mitgezogen
+
+`sync-faq-tags.mjs` lief nur über `public/faq`, nie über `public/i18n/*/faq`.
+Die drei französischen FAQs hatten deshalb nie einen Tag-Block, fielen aus
+`getFAQsForContext` heraus, und `/fr/belgique/` zeigte vier **hartkodierte
+deutsche** Fragen aus dem Fallback in `FAQ.astro`. Der Fallback greift jetzt nur
+noch für die Standard-Locale — ein leerer Block fällt auf, deutscher Text auf
+einer FR-Seite nicht.
+
+**Merksatz:** jedes neue Sync-Skript muss über *alle* Locale-Wurzeln laufen,
+nicht nur über die deutsche.
+
 ## Abdeckung je Inhaltstyp
 
 | Typ | | Stand |

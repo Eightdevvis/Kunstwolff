@@ -110,3 +110,30 @@ So müssen Endbenutzer nach Eintragen einer neuen Stadt nicht lokal builden – 
 ## Validierungsreports
 
 `sync:landings` schreibt nach jedem Lauf einen Report nach `reports/validation/landings/<timestamp>.json`. Details: `validierungsreports.md`.
+
+
+## Wurzeln, nicht Ordner (2026-07-31)
+
+`sync-faq-tags.mjs` läuft über **alle** FAQ-Wurzeln: `public/faq` plus jedes
+`public/i18n/<locale>/faq`. Der Ort-Slug wird relativ zur jeweiligen Wurzel
+gebildet, `tagsFromPath(filePath, root)` bekommt sie übergeben.
+
+Vorher lief es nur über die deutsche Wurzel — mit der Folge, dass
+`/fr/belgique/` vier hartkodierte deutsche FAQs zeigte (Details in
+`content-faqs.md`).
+
+**Regel für neue Sync-Skripte:** über alle Locale-Wurzeln laufen, nicht nur über
+die deutsche. Ein Overlay, das der Sync nicht kennt, ist ein Inhalt, der nie
+ankommt — und der stille Fallback verdeckt es.
+
+## Stichwort-Ableitung trifft an Wortgrenzen (2026-07-31)
+
+`inferEventsFromKey` (`scripts/tags.mjs`) und `eventsFromText`
+(`sync-reviews-tags.mjs`) waren reine Substring-Tests: `angemessen-preis.webp`
+wurde zu `messe`, ebenso jede Bewertung mit dem Wort „gemessen". Beide prüfen
+jetzt am Wortanfang (`-${keyword}`) — dieselbe Regel, die `inferLandingsFromKey`
+zehn Zeilen darüber schon anwandte.
+
+Dazu korrigiert: der Stichwort-Schlüssel `jubilaum` war der einzige von zwölf,
+den `tags.json` nicht kennt (dort `jubilaeum`) — ein so vergebener Tag traf nie
+eine Seite. `tests/event-stichworte.test.ts` hält beides fest.

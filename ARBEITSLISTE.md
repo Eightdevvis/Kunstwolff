@@ -42,8 +42,8 @@ Nach Wirkung sortiert:
 2. [ ] **URL-Umbenennung `/schnellzeichner/` → `/schnellzeichner-karikaturist/`** (neu, Wunsch mom)
 3. [ ] **Hero-Bilder ohne `srcset`** (3.1) — größter Performance-Hebel
 4. [ ] **Barrierefreiheit, vier Befunde Stufe A** (3.2)
-5. [ ] **Anlass-Dimension der FAQs ist tot** (2.3)
-6. [ ] **ReviewManager kann Tags nicht leeren** (2.7)
+5. [x] ~~**Anlass-Dimension der FAQs ist tot** (2.3)~~ erledigt
+6. [x] ~~**ReviewManager kann Tags nicht leeren** (2.7)~~ erledigt
 7. [ ] **Datenschutz-Entwurf schreiben** (Zuarbeit zu S-4)
 8. [ ] **Rest-Hygiene** (3.5): `EventManager` legt keinen Anlass-Tag an · `pre-push`
        committet den gesamten Index · `jubilaum`/`jubilaeum` · zwei FAQ-Dateien ohne
@@ -194,7 +194,9 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
       **Erledigt:** beide Guards gesetzt. Am `dist/` gemessen: **0** leere
       Galerie-Sektionen (vorher 38), **0** leere Bewertungs-Slider.
 
-- [ ] 🟠 **C — 2.3 Die Anlass-Dimension der FAQs ist tot**
+- [x] 🟠 **C — 2.3 Die Anlass-Dimension der FAQs ist tot** ✅ **erledigt** (Commit 71e9a1a,
+      am 2026-07-31 am Build nachgemessen: `/hochzeit/`, `/firmenfeier/` und `/messe/`
+      zeigen je eigene Fragen statt viermal derselben vier)
       `eventKeys` entstehen nur, wenn `context.city` mit `events/` beginnt — die
       Event-Zweige übergeben aber gar keinen Kontext. Folge: `/firmenfeier/`, `/messe/`,
       `/hochzeit/`, `/private-feier/` zeigen alle dieselben 4 FAQs wie die Startseite.
@@ -215,7 +217,8 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
       „Bereichern **Siw Ihrr** Messe, **Betreibsfeier** … **Schnellzichner**" — steht so
       auf der reichweitenstärksten Stadtseite. Zwei Minuten.
 
-- [ ] 🟠 **C — 2.7 ReviewManager kann Tags nicht leeren**
+- [x] 🟠 **C — 2.7 ReviewManager kann Tags nicht leeren** ✅ **erledigt** (Commit 70df633;
+      der FaqManager hatte denselben Fehler und ist am 2026-07-31 nachgezogen)
       Sind nach dem Bearbeiten alle drei Dimensionen leer, bleibt der alte `tags`-Block
       stehen, während die Oberfläche „leer" zeigt. (Admin-Repo)
 
@@ -310,3 +313,79 @@ Tag-Vokabular und Slug-Normalisierung · Testsuiten beider Repos.
       `reviews.ts` (`landings.length === 0`), `slideImages.ts`
       (`supplementWithDefaultSlides`). Solange das so ist, driftet es wieder
       auseinander. Eine Funktion, drei Aufrufer.
+
+---
+
+## Tag-System-Sweep 2026-07-31 (Phase 5e)
+
+Ein Fanout über beide Repos, drei Datentypen und drei Ebenen: 93 Rohfunde, 42
+nach Prüfung, 18 Befunde. Ursache war überall dieselbe — **die Website wurde im
+Juli auf „der Tag entscheidet" umgestellt, die Werkzeuge daneben nicht.**
+
+### ✅ Erledigt
+
+- **Der Admin löschte bei jedem Speichern Tags.** `markdown.ts` verstand
+  `  skills: []` nicht: 83 von 83 FAQs kamen ohne Tags im Editor an, 33 von 38
+  Reviews verloren ihren Ort-Tag. Bei den 12 Anlass-FAQs war der Tag danach weg.
+- **Stadtseiten zeigten alle 38 Bewertungen** — `getReviewsByLanding` hatte null
+  Aufrufer. Jetzt: berlin 7, trier 7, saarland 8.
+- **Anlass-Seiten hatten keinen Review-Block**, die `events`-Dimension der
+  Reviews wurde von keiner Seite abgefragt. Neu verdrahtet (sichtbare
+  Layout-Änderung, eine Zeile in `components.json` nimmt sie zurück).
+- **`/fr/belgique/` zeigte vier hartkodierte deutsche FAQs.** Sync läuft jetzt
+  über die i18n-Overlays, Fallback nur noch für Deutsch.
+- **Admin-Editoren wählen nach Tag aus** (Bilder, FAQs, Reviews), mit getrennter
+  Löschsemantik und Herkunfts-Kennzeichnung. Firmenfeier-Tab: 1 → 28 Bilder.
+- **Galerie zeigte fremde Firmenlogos** aus dem Mediathek-Pool. 232 → 208.
+- **Anlass-Stichworte trafen mitten im Wort** (`angemessen` → `messe`); Schlüssel
+  `jubilaum` existierte im Vokabular nicht.
+- **Zwei FAQ-Dateien ohne `.md`** (3.5) — umbenannt bzw. gelöscht.
+- **Vier Admin-Testdateien liefen dauerhaft nicht** (`window` beim Import).
+  33 Dateien/333 Tests → 35/365.
+
+### [ ] Offen aus demselben Sweep
+
+- [ ] 🟠 **Jede Seite zeigt dieselben vier FAQs.** `FAQ.astro:11` deckelt auf 4,
+      kein Aufrufer setzt es anders. 60 von 158 Seiten zeigen exakt dieselben
+      vier Fragen; 10 FAQs erscheinen nur im Archiv `/faq/`. **Entscheidung
+      nötig:** Deckel je Seitentyp auf 6–8?
+- [ ] 🟠 **`SiteGraphView` rechnet mit FAQ-Ordnern, die es nicht gibt** und zieht
+      als Fallback den ganzen `default`-Ordner (26 Dateien) in die Signatur —
+      das verfälscht die Duplicate-Content-Prozente, an denen entschieden wird.
+- [ ] 🟡 **Drei Metadatenfelder ohne Oberfläche:** `title` (85 Einträge,
+      Lightbox-Überschrift), `priority` (sichtbar, aber nicht bedienbar — kein
+      Drag&Drop), `enabled` (nur im TS-Typ). **Entscheidung:** `enabled` bauen
+      oder website-seitig streichen? Der Zwischenzustand ist die schlechteste
+      Variante.
+- [ ] 🟡 **Die Sync-Skripte für Reviews und FAQs überspringen die GANZE Datei,**
+      sobald ein `tags:`-Block existiert — bei Bildern wird pro **Dimension**
+      nachgetragen. Wächst das Vokabular um eine Stadt, holen Bilder sie auf,
+      Reviews und FAQs nie. Heute folgenlos (alle Blöcke vollständig).
+- [ ] 🟡 **Vier Slug-Regeln für dieselbe Zeichenkette.** `skillTagSlug` in
+      `slideImages.ts` normalisiert ohne deutsche Umschrift („Ölmalerei" →
+      `olmalerei`, Vokabular sagt `oelmalerei`). Heute 0 von 3 Skills betroffen —
+      der erste Skill mit Umlaut bricht die Seite still.
+- [ ] 🟡 **`EventManager.createEvent` legt keinen Anlass-Tag an** (der
+      `CityManager` tut es für Orte), und der Slug entsteht ohne NFD: ein Anlass
+      „Gala Liège" bricht `sync:tags` mit Exit 1 — und das ist seit 2026-07-30
+      ein harter Build-Schritt.
+- [ ] 🟡 **19 Bilder tragen Anlass-Tags, zu denen es keine Seite gibt**
+      (weihnachtsfeier 10, geburtstag 3, silvester 2, sommerfest 2, gartenparty,
+      stadtfest). **Produktentscheidung**, kein Bug — aber im Admin sollte
+      sichtbar sein, welcher Anlass eine Seite hat und welcher nur Galerie-Filter
+      ist.
+- [ ] 🟡 **`getAllSlidesFlat` sammelt nur eine Ebene tief**, die Tag-Abfrage zwei.
+      40 Slides (`mediathek/somfot`, `events/*`) sind damit für die
+      Startseiten-Auswahl unerreichbar. `getAllCitySlides` ist tot (0 Aufrufer).
+- [ ] 🟡 **Skill hängt an zwei Feldern:** die Kombiseiten filtern über die Labels
+      in `categories`, die Skill-Seite über `tags.skills`. Heute deckungsgleich
+      (0 Abweichungen), aber eine latente Bombe.
+
+### Nicht anfassen (bewusst)
+
+- **Titelbild, Why- und Hero-Bilder tag-fähig machen** (74 von 306 Bilddateien).
+  Ob „Bild" künftig alles oder nur Slides meint, ist eine Grundsatzentscheidung.
+- **Die `%2F`-Kodierung** verschachtelter Ordner im HTML: sieht falsch aus, ist
+  es nicht — live gegen Vercel mit HTTP 200 geprüft.
+- **Die 36 `_vorlage.md` und 35 `.gitkeep`** unter `public/reviews`: beabsichtigt
+  und getestet.

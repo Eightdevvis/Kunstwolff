@@ -169,3 +169,33 @@ das nicht auf, weil dort orts- bzw. skillgetaggte FAQs höher ranken. Wer das ä
 Inhaltlich gegründet auf die vorhandenen Angaben (3–5 Minuten pro Gast, drei Stühle,
 Staffelei wird mitgebracht, digital oder Papier). **Keine erfundenen Preise oder Zeiten** –
 wo eine Zahl steht, stammt sie aus einer bestehenden FAQ.
+
+
+## i18n: Overlays brauchen denselben Sync (2026-07-31)
+
+`sync-faq-tags.mjs` läuft seit 2026-07-31 über **alle** FAQ-Wurzeln:
+`public/faq` **und** jedes `public/i18n/<locale>/faq`. Der Ort-Slug entsteht
+relativ zur jeweiligen Wurzel.
+
+Vorher lief es nur über die deutsche Wurzel. Die drei französischen FAQs unter
+`public/i18n/fr/faq/belgique/` hatten deshalb nie einen `tags`-Block, trugen
+weiter nur `categories:` — und `faq.ts:167` mischt `categories` in die
+Skill-Dimension, die die FR-Seite gar nicht abfragt. Also fielen alle drei
+durch, `getFAQsForContext` lieferte `[]`, und `FAQ.astro` schob den
+hartkodierten **deutschen** `DEFAULT_FAQS`-Block nach. Auf einer französischen
+Seite. Monatelang unbemerkt, weil der Fallback wie Inhalt aussah.
+
+**Der Fallback greift jetzt nur noch für `DEFAULT_LOCALE`.** Ein leerer
+FAQ-Block fällt auf; deutscher Text auf einer FR-Seite nicht.
+
+Dazu bereinigt: `categories` ist bei FAQs faktisch tot (nur 5 von 87 Dateien
+trugen es, davon 2 ohne `.md`-Endung). Die drei FR-Dateien haben es verloren,
+damit sie wie ihre deutschen Gegenstücke ohne Skill-Einschränkung gelten.
+
+## Zwei Dateien ohne `.md` (erledigt 2026-07-31)
+
+`getAllFAQs` liest nur `/\.md$/i`. `public/faq/kaiserslautern/wann-buchen` und
+`public/faq/default/kosten-schnellzeichner` hatten keine Endung und waren damit
+für Website **und** Admin unsichtbar. Erstere ist umbenannt (Inhalt war
+verloren, steht jetzt auf der Seite), letztere gelöscht — `kosten.md` deckt
+dieselbe Frage ab, und die Datei ist per git wiederherstellbar.
