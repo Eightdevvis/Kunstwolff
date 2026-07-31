@@ -9,7 +9,7 @@ dist/
 reports/validation/landings/*.json
 
 # dependencies
-node_modules/
+node_modules
 
 # logs
 npm-debug.log*
