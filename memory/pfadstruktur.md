@@ -68,7 +68,12 @@ public/img/Titelbild/
 └── title.meta.json                # Metadaten (gleiches Format wie slides.meta.json)
 ```
 
-**Wichtig:** Sowohl Stadt- als auch Skill-Slugs werden als Top-Level-Ordner in `Titelbild/` erwartet. `titleImages.ts` löst bei einer Skill-Seite (`/schnellzeichner/`) zuerst `Titelbild/schnellzeichner/`, dann `Titelbild/default/` auf.
+**Wichtig:** Sowohl Stadt- als auch Skill-Slugs werden als Top-Level-Ordner in `Titelbild/` erwartet. `titleImages.ts` löst bei einer Skill-Seite zuerst `Titelbild/<skill>/`, dann `Titelbild/default/` auf.
+
+⚠️ Der Ordnername ist der **Inhalts-Schlüssel aus dem Titel**, nicht die URL. Die
+Seite liegt unter `/schnellzeichner-karikaturist/`, der Ordner heisst
+`Titelbild/schnellzeichner/`. Seit die beiden auseinanderfallen, muss der
+Schlüssel über `skillContentKey(title)` kommen – siehe `content-skills.md`.
 
 ## Reviews
 
