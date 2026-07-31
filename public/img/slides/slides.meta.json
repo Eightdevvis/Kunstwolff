@@ -1,26 +1,11 @@
 {
   "belgique/2_caricaturistes_live_belgique.webp": {
     "categories": [
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler"
-      ],
-      "events": [],
-      "landings": [
-        "belgique"
-      ]
-    },
-    "priority": 2
-  },
-  "belgique/caricaturiste-belgique.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "tags": {
-      "skills": [
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": [
@@ -93,7 +78,17 @@
       "skills": [
         "schnellzeichner"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier",
+        "hochzeit",
+        "messe",
+        "private-feier",
+        "geburtstag",
+        "jubilaeum",
+        "gartenparty",
+        "stadtfest",
+        "sommerfest"
+      ],
       "landings": []
     },
     "priority": 1
