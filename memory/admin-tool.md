@@ -82,3 +82,18 @@ Wenn neue Admin-Felder + Website-Konsumierung gleichzeitig gebaut werden:
 3. **Admin danach** – neuen Tab/Manager im Admin-Tool bauen der in das Format schreibt (Pattern: `src/components/<Name>Manager.tsx` + ggf. Service-Funktion in `src/services/`)
 4. **Sync-Scripts prüfen** – muss `sync-landings.mjs` o.ä. angepasst werden? (siehe `sync-scripts.md`)
 5. **Beide Doku-Sets aktualisieren** – Admin-README/CLAUDE.md + Website-Memory (`admin-tool.md`, `pfadstruktur.md`, betroffene `content-*.md`); Restlücken stehen in der Admin-README bzw. im Admin-`memory/`, nicht in einer separaten Bug-Datei.
+
+
+## Skill-URL ≠ Skill-Inhaltsschlüssel (2026-07-31)
+
+Seit die Skill-Seite unter `/schnellzeichner-karikaturist/` liegt, sind Adresse
+und Inhalts-Schlüssel verschieden (Details: `content-skills.md`). **Am Admin war
+nichts zu ändern**, und zwar aus zwei Gründen:
+
+- Der Admin baut seine Pfade aus `slugify(title)` — also aus dem
+  Inhalts-Schlüssel. Das war schon immer die richtige Seite der Trennung.
+- Die Live-Vorschau öffnet denselben Slug als URL. Das funktioniert über die
+  301er in `vercel.json`; `/api/preview/status` folgt ihnen (`redirect: 'follow'`).
+
+⚠️ Fällt der 301 irgendwann weg, muss `livePreviewPath()` im Admin die URL aus
+`skills.json.link` nehmen. Notiert auch in `memory/cross-repo.md` des Admin-Repos.

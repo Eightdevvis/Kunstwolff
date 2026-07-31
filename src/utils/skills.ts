@@ -26,8 +26,22 @@ const normalizeKey = (value: string): string =>
     .toLowerCase()
     .trim();
 
+/**
+ * Umlaute vor dem Slug ausschreiben — genau wie `scripts/tags.mjs` und die
+ * Sync-Skripte. Ohne diesen Schritt würde aus „Ölmalerei" hier `olmalerei`,
+ * während `sync-why.mjs` die Datei als `oelmalerei.json` anlegt: zwei Schlüssel
+ * für dieselbe Sache, und die Seite bliebe leer. Bei den drei heutigen Skills
+ * ändert die Zeile nichts — sie verhindert den nächsten Fall.
+ */
+const transliterateGerman = (value: string): string =>
+  String(value)
+    .replace(/ä/gi, 'ae')
+    .replace(/ö/gi, 'oe')
+    .replace(/ü/gi, 'ue')
+    .replace(/ß/gi, 'ss');
+
 const slugify = (text: string): string => {
-  return text
+  return transliterateGerman(text)
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
@@ -146,6 +160,27 @@ export const getSharedSkills = (): SkillItem[] => {
     };
   });
 };
+
+/**
+ * Der Inhalts-Schlüssel eines Skills kommt aus seinem TITEL, nicht aus seiner URL.
+ *
+ * `skills.json` erlaubt ein eigenes `link`-Feld, mit dem die URL frei wählbar ist
+ * (seit 2026-07-31: „Schnellzeichner" liegt auf `/schnellzeichner-karikaturist/`).
+ * Alles Inhaltliche hängt dagegen am Titel — und zwar nicht aus Gewohnheit, sondern
+ * weil die Sync-Skripte es so anlegen: `sync-why.mjs` und `sync-erinnerungen.mjs`
+ * lesen `entry.title` und schreiben `public/why/schnellzeichner.json` bzw.
+ * `public/erinnerungen/schnellzeichner.json`. Dasselbe gilt für die Bild-Tags
+ * (`getSlidesByTag('skills', …)`) und die Titelbild-Kategorien.
+ *
+ * Wer hier den URL-Slug einsetzt, bekommt keine Fehlermeldung, sondern eine Seite
+ * ohne Bilder, ohne Why-Texte und ohne Erinnerungen — und sucht die Ursache
+ * garantiert nicht in der URL. Deshalb eine benannte Funktion statt drei Kopien.
+ *
+ * Zwei Schlüssel, klare Rollen:
+ *   URL      → `skill.link` (Adresse, Breadcrumb, Schema, interne Links)
+ *   Inhalt   → `skillContentKey(skill.title)` (Ordner, JSON-Dateien, Tags)
+ */
+export const skillContentKey = (title: string): string => slugify(String(title ?? ''));
 
 export const getSkillSlugs = (): string[] => {
   const skills = getSharedSkills();

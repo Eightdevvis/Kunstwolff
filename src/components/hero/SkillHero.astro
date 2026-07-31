@@ -1,6 +1,7 @@
 ---
 import MiniReviews from '../reviews-references/MiniReviews.astro';
 import BrandStripe from '../reviews-references/BrandStripe.astro';
+import { heroSrcSet, HERO_SIZES, HERO_BG_SIZES } from '../../utils/responsiveImages';
 
 const {
   title = 'Live Event-Künstler',
@@ -9,11 +10,25 @@ const {
   skillName = '',
   backgroundImage = '',
 } = Astro.props;
+
+// Das Hero-Bild ist auf fast jeder Seite das grösste Einzelobjekt und wird
+// SOFORT geladen (kein lazy) – hier zahlt sich eine passende Grösse am meisten
+// aus. Leerer String = keine Variante bekannt, dann bleibt es beim Original.
+const titleSrcSet = heroSrcSet(titleImage);
+const bgSrcSet = heroSrcSet(backgroundImage);
 ---
 
 <div class="hero section">
   {backgroundImage && (
-    <img class="hero-bg" src={backgroundImage} alt="" aria-hidden="true" loading="eager" />
+    <img
+      class="hero-bg"
+      src={backgroundImage}
+      srcset={bgSrcSet || undefined}
+      sizes={bgSrcSet ? HERO_BG_SIZES : undefined}
+      alt=""
+      aria-hidden="true"
+      loading="eager"
+    />
   )}
   <div class="hero-inner section-inner">
     <div class="hero-content">
@@ -33,7 +48,14 @@ const {
     </div>
 
     <div class="hero-media">
-      {titleImage && <img src={titleImage} alt={title} />}
+      {titleImage && (
+        <img
+          src={titleImage}
+          srcset={titleSrcSet || undefined}
+          sizes={titleSrcSet ? HERO_SIZES : undefined}
+          alt={title}
+        />
+      )}
     </div>
   </div>
 

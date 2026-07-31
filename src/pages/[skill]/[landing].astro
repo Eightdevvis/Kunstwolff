@@ -22,7 +22,7 @@ import FAQ from '../../components/FAQ.astro';
 import Slideshow from '../../components/slideshows/Slideshow.astro';
 import { getLandingSlugs } from '../../utils/landings';
 import { getCityDisplayName } from '../../utils/cityNames';
-import { getSkillBySlug, getSkillSlugs } from '../../utils/skills';
+import { getSkillBySlug, getSkillSlugs, skillContentKey } from '../../utils/skills';
 import {
   MIN_LANDING_SLIDES,
   getCitySlides,
@@ -95,6 +95,18 @@ if (!skillData) {
   return Astro.redirect('/404');
 }
 
+/**
+ * `skill` ist die ADRESSE, `skillKey` der INHALT.
+ *
+ * Seit „Schnellzeichner" auf `/schnellzeichner-karikaturist/` liegt, sind das
+ * zwei verschiedene Zeichenketten. Ordner und Dateien (Titelbild, hero-bg, Why,
+ * Erinnerungen, Kombitexte, Bild-Tags) heißen nach dem TITEL — so legen die
+ * Sync-Skripte sie an. URLs (Breadcrumb, Schema, Städte-Links, Nachbar-Skills)
+ * heißen nach dem `link`. Wer die beiden vertauscht, bekommt keine
+ * Fehlermeldung, sondern eine leere Sektion.
+ */
+const skillKey = skillContentKey(skillData.title);
+
 // ─────────────────────────────────────────────────────────────────────────────
 // SKILL+LANDING-Seite: bestehende Logik unverändert
 // ─────────────────────────────────────────────────────────────────────────────
@@ -122,8 +134,8 @@ if (pageType === 'landing') {
     MIN_LANDING_SLIDES,
   );
   reviews = getReviewsByLandingAndSkill(landing ?? '', skillData.title);
-  skillCityTitleImage = resolveTitleImage({ skill, landing });
-  skillCityHeroBg = resolveHeroBg({ skill, landing });
+  skillCityTitleImage = resolveTitleImage({ skill: skillKey, landing });
+  skillCityHeroBg = resolveHeroBg({ skill: skillKey, landing });
 
   cityName = getCityDisplayName(landing ?? '');
   skillCityPageTitle = `${skillData.title} ${cityName} buchen | Kunstwolff`;
@@ -221,10 +233,11 @@ if (pageType === 'landing' && landingSlides) {
       backgroundImage: skillCityHeroBg,
     },
     slideshow: { items: landingSlides, filteredCategories: [skillData.title] },
-    why: { skill, landing },
-    erinnerungen: { skill, landing },
+    why: { skill: skillKey, landing },
+    erinnerungen: { skill: skillKey, landing },
     contact: {},
     faq: { city: landing, categories: [skillData.title] },
+    // `site` ist ein URL-Präfix für die Städte-Links, kein Inhalts-Schlüssel.
     landingsection: { site: skill },
   };
   sectionOrder = resolveSectionOrder('skill-landing', landing ?? '', registry);
@@ -232,7 +245,8 @@ if (pageType === 'landing' && landingSlides) {
   // Skill-zentrische Kombiseite: eigener Lead + „Warum"-Block statt der voll
   // duplizierten Event-Sektionen (Ablauf/Pakete/Referenzen) → kein Duplicate
   // Content. Event-Details verlinken wir per EventTeaser auf /<event>.
-  const combo = getSkillEventContent(skill ?? '', landing ?? '', skillData.title, eventData.title);
+  // Die Kombitexte liegen unter `schnellzeichner/messe` – Inhalts-Schlüssel, nicht URL.
+  const combo = getSkillEventContent(skillKey, landing ?? '', skillData.title, eventData.title);
   registry = {
     eventHero: EventHero,
     comboLead: LandingIntro,

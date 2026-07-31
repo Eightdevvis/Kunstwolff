@@ -31,7 +31,14 @@ const nurPruefen = process.argv.includes('--check');
 export const VARIANT_WIDTHS = [400, 800, 1200];
 
 const distRoot = path.resolve('./dist');
-const quellen = ['img/slides', 'img/Titelbild', 'img/why'];
+/**
+ * Welche Ordner Varianten bekommen. Muss mit VARIANT_SOURCES in
+ * `src/utils/responsiveImages.ts` übereinstimmen: ein `srcset` auf einen Ordner,
+ * der hier fehlt, zeigt GAR KEIN Bild. Ein Test hält beide Listen aneinander.
+ */
+export const VARIANT_SOURCES = ['img/slides', 'img/Titelbild', 'img/why'];
+
+const quellen = VARIANT_SOURCES;
 const bildEndung = /\.webp$/i;
 
 /** Zielpfad einer Variante: img/slides/x/y.webp + 800 → img/variants/img/slides/x/y-800.webp */

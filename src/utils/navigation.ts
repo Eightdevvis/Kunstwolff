@@ -28,7 +28,7 @@ const defaultNavigation: NavigationItem[] = [
     label: 'Home',
     children: [
       { label: 'Kunstwolff', url: '/' },
-      { label: 'Schnellzeichner', url: '/schnellzeichner/' },
+      { label: 'Schnellzeichner', url: '/schnellzeichner-karikaturist/' },
     ],
   },
   { label: 'Services', url: '#skills' },

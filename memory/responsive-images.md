@@ -110,15 +110,56 @@ halbes Paar ergäbe ein falsches Verhältnis, also schlimmer als gar nichts.
 
 ## ⚠️ Welche Ordner Varianten bekommen
 
-`quellen` in `scripts/generate-image-variants.mjs`: **nur** `img/slides`,
-`img/Titelbild`, `img/why`.
+`VARIANT_SOURCES`: **nur** `img/slides`, `img/Titelbild`, `img/why`. Die Liste
+steht an ZWEI Stellen (`scripts/generate-image-variants.mjs` und
+`src/utils/responsiveImages.ts`) und wird von
+`tests/responsive-images.test.ts` aneinandergehalten.
 
 Alles andere unter `public/img/` hat **keine** Varianten – dort darf kein
 `srcset` ausgeliefert werden, sonst zeigt der Browser gar kein Bild. Betrifft
-aktuell `img/team` (siehe `content-team.md`): die beiden Portraits liegen
-stattdessen fertig zugeschnitten im Repo, und `tests/team.test.ts` prüft, dass
-niemand dort ein `srcset` ergänzt, ohne den Ordner vorher in `quellen`
-aufzunehmen.
+`img/team` (siehe `content-team.md`) und `img/hero-bg`.
+
+Seit 2026-07-31 sitzt der Riegel **in `buildSrcSet()` selbst**, nicht bei den
+Aufrufern. Grund: beim Nachrüsten der Heroes wäre `hero-bg` um ein Haar mit
+einem `srcset` versehen worden, für das es keine einzige Variante gibt. Ein
+Riegel, an den jeder neue Aufrufer denken muss, ist keiner.
+
+## Hero-Bilder (seit 2026-07-31)
+
+Die Heroes hatten als einzige noch kein `srcset` – 160 Seiten, Median 89 KB,
+16 über 200 KB, zusammen 15,4 MB. Sie sind das erste Bild über dem Falz und
+laden ohne `lazy`; damit der grösste Einzelposten pro Seite.
+
+Zwei Bauarten, zwei Lösungen:
+
+| Bauteil | Art | Lösung |
+| :-- | :-- | :-- |
+| `SkillHero.astro` | echtes `<img>` | `srcset` + `HERO_SIZES` über `heroSrcSet()` |
+| `Opener.astro`, `EventHero.astro` | CSS `background-image` | Varianten als CSS-Variablen + Media-Queries |
+
+`heroSrcSet(pfad)` schliesst die Lücke, dass die Hero-Bauteile nur einen Pfad
+bekommen: Pfad → Datei → Breite → `srcset`. Slideshow und Galerie brauchen das
+nicht, ihre Reader lesen die Breite beim Einsammeln mit.
+
+**Ein CSS-Hintergrund kennt kein `srcset`.** Deshalb setzt
+`heroHintergrundStyle()` die Varianten als `--hero-bg-800` / `--hero-bg-1200`
+ins `style`-Attribut, und die Media-Queries im Bauteil greifen die passende
+heraus. Fehlt eine Variable, greift der zweite Wert in `var(…, …)` und es
+bleibt beim Original – dadurch braucht AVIF keinen Sonderfall.
+
+Die **Pixeldichte muss mit in die Abfrage**: auf einem Retina-Handy sind
+640 CSS-Punkte 1280 echte Pixel, dort wäre die 800er sichtbar weich. Browser
+ohne `resolution`-Abfrage treffen keine Regel und bekommen das Original.
+
+**Keine 400er-Stufe für Hintergründe.** Sie laufen mit `cover` über einen hohen,
+schmalen Handybildschirm; bei querformatigen Originalen entscheidet dort die
+HÖHE, und 400 px Breite wären unscharf.
+
+Gemessen an `/berlin/`: Original 246 KB · 1200er 133 KB · 800er 78 KB.
+
+**Nur WebP.** Der Generator verarbeitet ausschliesslich `.webp`. Es gibt genau
+ein AVIF-Hero (`Titelbild/default/titelbild.avif`, 39 KB auf 49 Seiten) – das
+ist bereits kleiner als jede Variante, die daraus entstünde.
 
 ## Kosten
 

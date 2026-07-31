@@ -9,6 +9,47 @@ import ContactSection from "../components/Contact.astro";
 >
   <div class="contact-page">
     <h1 class="contact-page-title">Kontakt &amp; Anfrage</h1>
+
+    <!-- Eigener Text, kein Baustein von anderen Seiten: /contact hatte 103
+         Wörter, davon 0 % einzigartig – gemessen am 2026-07-30. Für Google war
+         die Seite damit eine Dublette der Startseite, obwohl sie gebraucht wird.
+         Der Text beantwortet, was Anfragende tatsächlich wissen wollen. -->
+    <div class="contact-page-intro">
+      <p>
+        Sie planen eine Veranstaltung und überlegen, ob ein Live-Künstler dazu
+        passt? Schreiben Sie uns einfach, was Sie vorhaben — Anlass, Datum, Ort
+        und ungefähre Gästezahl reichen für den Anfang. Alles Weitere klären wir
+        im Gespräch.
+      </p>
+
+      <h2>Was Sie von uns zurückbekommen</h2>
+      <p>
+        In der Regel antworten wir innerhalb eines Werktags, telefonisch oder per
+        E-Mail — je nachdem, was Ihnen lieber ist. Sie bekommen einen konkreten
+        Vorschlag: welche Kunstform zu Ihrem Anlass passt, wie lange wir vor Ort
+        sind, was gebraucht wird und was es kostet. Ein Angebot ist unverbindlich
+        und kostet Sie nichts.
+      </p>
+
+      <h2>Wann Sie anfragen sollten</h2>
+      <p>
+        Für Termine in der Hochsaison — Herbst und Dezember — lohnt sich der
+        Kontakt einige Monate im Voraus. Kurzfristige Anfragen sind trotzdem
+        willkommen: manchmal geht mehr, als man denkt, und eine Absage kostet Sie
+        nur eine Nachricht. Auch bei Terminen im Ausland fragen Sie gern an,
+        Belgien, Luxemburg und die Schweiz sind für uns Alltag.
+      </p>
+
+      <h2>Wenn Sie noch nicht wissen, was Sie wollen</h2>
+      <p>
+        Das ist der Normalfall und kein Problem. Beschreiben Sie stattdessen die
+        Situation: Sitzen Ihre Gäste an Tischen oder stehen sie? Soll etwas zum
+        Mitnehmen entstehen oder eher Bewegung in den Abend kommen? Aus solchen
+        Antworten ergibt sich meistens von selbst, ob Schnellzeichnen,
+        Szenenmalerei oder etwas Drittes das Richtige ist.
+      </p>
+    </div>
+
     <ContactSection />
   </div>
 
@@ -29,5 +70,31 @@ import ContactSection from "../components/Contact.astro";
     font-weight: 500;
     font-size: clamp(2rem, 5vw, 3.2rem);
     text-align: center;
+  }
+
+  .contact-page-intro {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 20px 8px;
+  }
+
+  .contact-page-intro p {
+    /* 400 statt des globalen 100: --body-font-weight ist für Fließtext in
+       dieser Größe zu dünn, siehe die Schrift-Notiz in global.css. */
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.82);
+    margin-bottom: 1.2em;
+  }
+
+  .contact-page-intro h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    opacity: 1;
+    margin: 2em 0 0.6em;
+    color: #ffffff;
   }
 </style>
