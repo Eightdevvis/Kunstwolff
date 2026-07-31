@@ -3428,5 +3428,85 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
+  },
+  "main-taunus-kreis/schnellzeichnerin-oelmuehle-hattersheim.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 1,
+    "tags": {
+      "landings": [
+        "main-taunus-kreis",
+        "rhein-main-gebiet",
+        "hessen"
+      ],
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier",
+        "geburtstag",
+        "hochzeit",
+        "private-feier"
+      ]
+    }
+  },
+  "main-taunus-kreis/schnellzeichner-firmenfeier-hattersheim.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 2,
+    "tags": {
+      "landings": [
+        "main-taunus-kreis",
+        "rhein-main-gebiet",
+        "hessen"
+      ],
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ]
+    }
+  },
+  "main-taunus-kreis/digitale-karikaturen-wickerbachalm-hochheim.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 3,
+    "tags": {
+      "landings": [
+        "main-taunus-kreis",
+        "rhein-main-gebiet",
+        "hessen"
+      ],
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier",
+        "sommerfest"
+      ]
+    }
+  },
+  "main-taunus-kreis/karikaturistin-betriebsfeier-oehlmuehle-hattersheim.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 4,
+    "tags": {
+      "landings": [
+        "main-taunus-kreis",
+        "rhein-main-gebiet",
+        "hessen"
+      ],
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ]
+    }
   }
 }
