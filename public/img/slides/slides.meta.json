@@ -3667,24 +3667,120 @@
     "tags": {}
   },
   "szenenmaler/img_20240316_154802.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler",
+      "Aquarelle"
+    ],
     "priority": 3,
-    "tags": {}
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler",
+        "aquarelle"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "silvester",
+        "gartenparty",
+        "stadtfest",
+        "gala",
+        "sommerfest"
+      ]
+    }
   },
   "szenenmaler/img_20240316_154730.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler",
+      "Aquarelle"
+    ],
     "priority": 4,
-    "tags": {}
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler",
+        "aquarelle"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "silvester",
+        "gartenparty",
+        "stadtfest",
+        "gala",
+        "sommerfest"
+      ]
+    }
   },
   "szenenmaler/img_20240316_161403.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler",
+      "Aquarelle"
+    ],
     "priority": 5,
-    "tags": {}
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler",
+        "aquarelle"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "silvester",
+        "gartenparty",
+        "stadtfest",
+        "gala",
+        "sommerfest"
+      ]
+    }
   },
   "szenenmaler/img_20240316_162537.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler",
+      "Aquarelle"
+    ],
     "priority": 6,
-    "tags": {}
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler",
+        "aquarelle"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "silvester",
+        "gartenparty",
+        "stadtfest",
+        "gala",
+        "sommerfest"
+      ]
+    }
   },
   "szenenmaler/img_20240316_162602.webp": {
     "categories": [],
