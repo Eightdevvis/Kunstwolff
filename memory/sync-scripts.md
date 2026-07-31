@@ -43,6 +43,19 @@ npm run sync:content:safe  # fehlertolerant (Teilfehler isoliert, Build/Dev läu
 > Die Reihenfolge ist zwingend: `sync:tags` **vor** `sync:reviews-tags`/`sync:faq-tags`,
 > denn beide verwerfen einen Ort, den `tags.json` nicht kennt.
 
+> ✅ **Behoben 2026-07-30 (C3):** `public/config` steht jetzt in **beiden**
+> `git add`-Listen (`.githooks/pre-commit` und `.github/workflows/sync-landings.yml`),
+> zusammen mit `public/erinnerungen` und `public/events`. `events.json` triggert
+> die Action jetzt ebenfalls. Der Commit-Schritt prüft zusätzlich gegen den
+> **Index** statt gegen `git status` — vorher färbte eine Änderung außerhalb der
+> add-Liste den Job rot, obwohl nichts kaputt war.
+>
+> ✅ **Behoben 2026-07-30 (C1):** `sync:tags` ist in `sync-content-safe.mjs` ein
+> **harter** Schritt (`hart: true`) und bricht den Build mit Exit 1 ab. Die alte
+> Begründung „hart blockiert über den pre-commit-Hook" trug nicht: das Admin-Tool
+> veröffentlicht über die GitHub-API, dort läuft kein git-Hook. Gemessen mit
+> einem Event `{title:'Abiball', slug:'abi-party'}`: vorher Exit 0, jetzt Exit 1.
+
 > ⚠️ **Was im Build erzeugt wird, existiert im Repo nicht.** Läuft `sync:tags` als
 > `prebuild`, landet das erweiterte `public/config/tags.json` im Build-Output – **nicht**
 > in einem Commit. Für die Website ist das folgenlos, fürs **Admin-Tool nicht: es liest
@@ -76,7 +89,7 @@ npm run sync:erinnerungen    # nur Erinnerungen-JSONs
 
 Liegt unter `.github/workflows/sync-landings.yml`.
 
-**Trigger:** Push zu `main` wenn `public/landings/landings.md` oder `public/skills/skills.json` geändert. Plus `workflow_dispatch` (manuell auslösbar).
+**Trigger:** Push zu `main` wenn `public/landings/landings.md`, `public/skills/skills.json` oder `public/events/events.json` geändert. Plus `workflow_dispatch` (manuell auslösbar).
 
 **Macht:**
 1. Checkout, Node 20 setup, `npm ci`
@@ -85,10 +98,13 @@ Liegt unter `.github/workflows/sync-landings.yml`.
 
 So müssen Endbenutzer nach Eintragen einer neuen Stadt nicht lokal builden – die Action macht alles.
 
-### Bekannte Lücken (Stand 2026-05-05, siehe `HEALTH_CHECK_2026-05-05.md` SYNC-1/2/3)
+### Behoben 2026-07-30 (waren SYNC-1/2 im `HEALTH_CHECK_2026-05-05.md`)
 
-- **Trigger ist unvollständig:** Reagiert nicht auf Änderungen an `public/events/events.json`. Wer einen Event eintragt, sieht den Sync erst beim nächsten Push einer triggernden Datei oder per `workflow_dispatch`.
-- **`git add` ist unvollständig:** Erfasst `public/img/slides`, `public/reviews`, `public/img/UnsereFähigkeitenBilder`, `public/img/Titelbild`, `public/img/why`, `public/why`, `public/faq`. Es **fehlen** `public/erinnerungen/` (von `sync:erinnerungen` erzeugt) und `public/events/` (von `sync:events` für Event-`content.json`-Defaults erzeugt). Folge: Stubs entstehen im CI-Workspace, kommen aber nicht ins Repo zurück.
+- ~~**Trigger ist unvollständig**~~ → `public/events/events.json` steht jetzt in den Trigger-Pfaden.
+- ~~**`git add` ist unvollständig**~~ → die Liste erfasst jetzt zusätzlich `public/config` (Tag-Vokabular!), `public/erinnerungen` und `public/events`. `public/config` war die Ursache dafür, dass `tags.json` von Hand nachgepflegt werden musste (Commit `6b38e3e`) — und damit indirekt dafür, dass ein neu angelegter Skill im Admin nicht auswählbar war.
+
+### Offene Lücke
+
 - **Kein Build/Typecheck im CI:** Die Action committet Sync-Output ohne `astro check` / `astro build`. Ein durch den Sync erzeugter kaputter JSON fällt erst lokal oder beim Vercel-Deploy auf.
 
 ## Validierungsreports

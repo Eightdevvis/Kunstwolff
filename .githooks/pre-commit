@@ -5,4 +5,7 @@ npm run optimize:images
 
 npm run sync:content
 
-git add public/img/slides public/reviews public/img/UnsereFähigkeitenBilder public/img/Titelbild public/img/why public/why public/faq
+# public/config MUSS mit: dort liegt tags.json, das sync:tags neu erzeugt.
+# Fehlte es hier, driftete die Repo-Kopie des Vokabulars - und das Admin-Tool
+# liest genau diese Repo-Kopie (siehe reports/tagsystem-audit-2026-07-30.md, C3).
+git add public/img/slides public/reviews public/img/UnsereFähigkeitenBilder public/img/Titelbild public/img/why public/why public/faq public/config public/erinnerungen public/events

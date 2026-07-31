@@ -179,7 +179,7 @@ kaputt, C ist Hygiene und kann jederzeit dazwischen.
 
 ## C. Kette, Hygiene, Doku
 
-- [ ] **C1 — mittel — Der harte Event-Guard wird im Build geschluckt.**
+- [x] **C1 — mittel — Der harte Event-Guard wird im Build geschluckt.** ✅ **erledigt 2026-07-30**
       `scripts/sync-content-safe.mjs` · `scripts/sync-tags.mjs`
       Gemessen mit `{title:'Abiball', slug:'abi-party'}`: `sync-tags.mjs` bricht
       korrekt ab (EXIT 1, `tags.json` unverändert) — `sync-content-safe.mjs`
@@ -188,6 +188,9 @@ kaputt, C ist Hygiene und kann jederzeit dazwischen.
       blockiert über den pre-commit-Hook" — **die trägt nicht: der Admin
       veröffentlicht über die GitHub-API, dort läuft kein git-Hook.**
       **Schritt:** `sync:tags` als harten Schritt behandeln (exit 1).
+      **Erledigt:** `hart: true` in `sync-content-safe.mjs`, Schleife bricht ab,
+      Exit 1. Gemessen mit `{title:'Abiball', slug:'abi-party'}`: vorher Exit 0,
+      jetzt Exit 1; Normallauf weiterhin Exit 0.
 
 - [ ] **C2 — mittel — `EventManager.createEvent` legt keinen Anlass-Tag an.**
       `kunstwolff-admin/src/components/EventManager.tsx`
@@ -200,7 +203,7 @@ kaputt, C ist Hygiene und kann jederzeit dazwischen.
       `readEventLabels` den Slug durchreichen und `mergeVocabulary` einen
       expliziten Seed-Slug akzeptieren lassen.
 
-- [ ] **C3 — mittel — `public/config` fehlt in beiden `git add`-Listen.**
+- [x] **C3 — mittel — `public/config` fehlt in beiden `git add`-Listen.** ✅ **erledigt 2026-07-30**
       `.githooks/pre-commit` · `.github/workflows/sync-landings.yml`
       Beide stagen zeichengleich dieselben 7 Pfade — `public/config` ist in
       **keinem**, obwohl `tags.json` getrackt ist und die Action genau bei
@@ -210,6 +213,11 @@ kaputt, C ist Hygiene und kann jederzeit dazwischen.
       staged nichts, `git commit` läuft unter `bash -e` auf → Job rot.
       **Schritt:** `public/config` in beide Listen; `public/events/events.json` in
       die Trigger-Pfade der Action (triggert heute gar nicht).
+      **Erledigt:** beide Listen um `public/config`, `public/erinnerungen` und
+      `public/events` ergänzt, Trigger-Pfad nachgezogen. Der Commit-Schritt prüft
+      jetzt gegen den **Index** (`git diff --cached --quiet`) statt gegen
+      `git status` — das war die Ursache des roten Jobs bei Änderungen außerhalb
+      der add-Liste.
 
 - [ ] **C4 — niedrig — `pre-push` committet den gesamten Index.**
       `.githooks/pre-push`

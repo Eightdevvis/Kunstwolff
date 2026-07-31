@@ -8,7 +8,7 @@ const steps = [
   // Schritt bekäme eine neu angelegte Stadt nie Tags – die Inhalte lägen im
   // Ordner und wären auf der Seite unsichtbar, weil die Auswahl seit
   // 2026-07-28 allein über Tags läuft.
-  { name: 'sync:tags', script: 'scripts/sync-tags.mjs' },
+  { name: 'sync:tags', script: 'scripts/sync-tags.mjs', hart: true },
   { name: 'sync:reviews-tags', script: 'scripts/sync-reviews-tags.mjs' },
   { name: 'sync:faq-tags', script: 'scripts/sync-faq-tags.mjs' },
   { name: 'sync:title-images', script: 'scripts/sync-title-images.mjs' },
@@ -21,7 +21,21 @@ const steps = [
   { name: 'validate:images', script: 'scripts/validate-image-refs.mjs' },
 ];
 
+/**
+ * Schritte, deren Fehlschlag den Build abbrechen MUSS.
+ *
+ * `sync:tags` bricht ab, wenn ein Event-Slug keinen passenden Anlass-Tag hätte —
+ * die Event-Seite fände ihre Bilder dann nicht. Bisher wurde dieser Abbruch hier
+ * zu einer Warnung heruntergestuft, mit der Begründung „hart blockiert über den
+ * pre-commit-Hook". Die trägt nicht: **das Admin-Tool veröffentlicht über die
+ * GitHub-API, dort läuft kein git-Hook.** Ein im Admin angelegtes Event mit
+ * abweichendem Slug wäre also durchgerutscht, und der Vercel-Build hätte grün
+ * gemeldet, während das Vokabular auf dem alten Stand einfriert — für ALLE drei
+ * Dimensionen, auch für gleichzeitig angelegte Städte.
+ * (C1 in reports/tagsystem-audit-2026-07-30.md)
+ */
 const failures = [];
+const harteFehler = [];
 
 for (const step of steps) {
   console.log(`sync-content-safe: starte ${step.name} ...`);
@@ -33,15 +47,28 @@ for (const step of steps) {
 
   if (result.status !== 0) {
     failures.push(step.name);
+    if (step.hart) {
+      harteFehler.push(step.name);
+      console.error(`sync-content-safe: FEHLER - ${step.name} fehlgeschlagen (exit ${result.status ?? 'unknown'}). Das ist ein harter Schritt, der Build bricht ab.`);
+      break;
+    }
     console.warn(`sync-content-safe: Warnung - ${step.name} fehlgeschlagen (exit ${result.status ?? 'unknown'}), fahre fort.`);
   }
 }
 
-if (failures.length > 0) {
+if (harteFehler.length > 0) {
+  // Kein beruhigender Nachsatz: hier ist NICHTS verwendbar, der Build ist tot.
+  console.error(`sync-content-safe: abgebrochen bei: ${harteFehler.join(', ')}`);
+} else if (failures.length > 0) {
   console.warn(`sync-content-safe: abgeschlossen mit Teilfehlern: ${failures.join(', ')}`);
   console.warn('sync-content-safe: Letzter gültiger Datenstand bleibt verwendbar.');
 } else {
   console.log('sync-content-safe: alle Sync-Schritte erfolgreich.');
+}
+
+if (harteFehler.length > 0) {
+  console.error(`sync-content-safe: harte Schritte fehlgeschlagen: ${harteFehler.join(', ')}`);
+  process.exit(1);
 }
 
 process.exit(0);
