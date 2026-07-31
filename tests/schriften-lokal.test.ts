@@ -62,7 +62,10 @@ describe('Schriften kommen vom eigenen Server', () => {
     const bloecke = css.match(/@font-face\s*\{[^}]*Inter[^}]*\}/g) ?? [];
     expect(bloecke).toHaveLength(2);
     for (const b of bloecke) {
-      expect(b).toMatch(/font-weight:\s*100 900/);
+      // Bereich mit Absicht eng: `body` verlangt Gewicht 100, und der volle
+      // Bereich hätte daraus echtes Ultra-Light gemacht statt des früheren
+      // Rückfalls auf 400. Siehe Kommentar in global.css.
+      expect(b).toMatch(/font-weight:\s*400 700/);
       expect(b).toMatch(/font-display:\s*swap/);
       expect(b).toMatch(/unicode-range:/);
       expect(b).toMatch(/\/fonts\/inter\//);
