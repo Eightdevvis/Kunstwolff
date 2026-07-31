@@ -114,3 +114,24 @@ Admin erst möglich – sobald dort ein Anlass gesetzt wird, greift er sofort.
 
 Test: `tests/faq-anlass.test.ts`, inklusive der Gegenprobe, dass eine Firmenfeier-FAQ auf
 `/messe/` NICHT erscheint.
+
+## Anlass-FAQs (seit 2026-07-31)
+
+`public/faq/events/<anlass>--<thema>.md` – 12 Stück, drei je Anlass, getaggt über
+`tags.events`. Der Ordner ist reine Ablage: die Auswahl läuft ausschließlich über den Tag
+(`cityFromPath` würde aus `events/…` ohnehin nur „events" ableiten, das wird für die
+Zuordnung nicht benutzt).
+
+Gemessen nach dem Bauen: jede der vier Anlass-Seiten zeigt **drei eigene Fragen plus eine
+allgemeine**; Startseite und Stadtseiten bleiben unverändert. Das liegt an
+`trefferGenauigkeit` – wer den Anlass ausdrücklich trägt, steht vor der allgemeinen FAQ,
+und `maxItems = 4` schneidet den Rest ab.
+
+⚠️ Eine Anlass-FAQ ist **nicht** von anderen Seiten ausgeschlossen: fragt ein Kontext die
+Anlass-Dimension gar nicht ab (Startseite, Stadtseiten), passt jede FAQ. Praktisch fällt
+das nicht auf, weil dort orts- bzw. skillgetaggte FAQs höher ranken. Wer das ändern will,
+ändert die Semantik von `dimensionPasst` – und trifft damit auch Skills und Orte.
+
+Inhaltlich gegründet auf die vorhandenen Angaben (3–5 Minuten pro Gast, drei Stühle,
+Staffelei wird mitgebracht, digital oder Papier). **Keine erfundenen Preise oder Zeiten** –
+wo eine Zahl steht, stammt sie aus einer bestehenden FAQ.
