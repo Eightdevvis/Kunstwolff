@@ -54,6 +54,11 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
       Empfehlung: (a) jetzt, (b) danach stadtweise. **Sobald du (a) sagst, setze ich es um.**
       Betrifft zusammen: 40 Aquarelle-Seiten (0 Bilder, 0 Reviews, 1 FAQ), `/private-feier/`
       (0 Bilder), 9 Städte mit 0 eigenen Bildern.
+      ✅ **Aquarelle ist erledigt (2026-07-30):** über `page-visibility.json`
+      ausgeblendet, gemessen 40/40 `noindex`, 0 Sitemap-Einträge, raus aus der Navigation.
+      Dafür wurde die Ausblende-Regel präfix-fähig (vorher hätte sie nur die Skill-Seite
+      selbst erwischt, nicht die 39 Kombiseiten). **Offen bleiben** `/private-feier/`
+      und die 9 Städte — sag Bescheid, dann blende ich sie im selben Zug aus.
 
 ---
 

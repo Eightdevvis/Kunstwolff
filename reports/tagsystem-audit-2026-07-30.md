@@ -109,7 +109,7 @@ kaputt, C ist Hygiene und kann jederzeit dazwischen.
       **Erledigt:** beide Guards gesetzt. Am `dist/` gegengeprüft: **0** leere
       Galerie-Sektionen (vorher 38) und **0** leere Bewertungs-Slider.
 
-- [ ] **B3 — hoch (redaktionell) — 40 Aquarelle-Seiten ohne Inhalt sind live.**
+- [x] **B3 — hoch (redaktionell) — 40 Aquarelle-Seiten ohne Inhalt sind live.** ✅ **ausgeblendet 2026-07-30**
       `public/skills/skills.json` · `public/config/page-visibility.json`
       0 von 232 Bildern, 0 von 38 Reviews, 1 von 71 FAQs. `page-visibility.json`
       ist `{"hidden":[]}` und `getSkillSlugs()` filtert nicht darüber → `/aquarelle/`
@@ -119,6 +119,14 @@ kaputt, C ist Hygiene und kann jederzeit dazwischen.
       Aquarell-Motive aus den 232 vorhandenen Fotos heraussuchen — oder bis dahin
       über `page-visibility.json` ausblenden. **Entscheidung nötig** (siehe „Offene
       Fragen").
+      **Erledigt:** ausgeblendet. Dafür musste `isPageHiddenByPath` erst
+      **präfix-fähig** werden — es prüfte exakt, also hätte `/aquarelle/` nur
+      **eine** der 40 Seiten erwischt und 39 wären weiter indexierbar geblieben.
+      Dieselbe Regel steckt ein zweites Mal im Sitemap-Filter in
+      `astro.config.mjs` (die Konfig kann das TS-Modul nicht importieren) und ist
+      dort nachgezogen. Am `dist/` gemessen: 40/40 `noindex`, 0 von 134
+      Sitemap-URLs, raus aus der Navigation. Zurückholen = die eine Zeile aus
+      `page-visibility.json` entfernen.
 
 - [ ] **B4 — mittel — `/private-feier/` ist leer, 9 Städte haben 0 eigene Bilder.**
       `/private-feier/`: 0 Bilder (Ordner `events/private-feier/` leer), 0 Reviews,

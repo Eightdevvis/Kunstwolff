@@ -112,7 +112,15 @@ export default defineConfig({
           const pathname = new URL(url).pathname;
           const normalized = normalizePagePath(pathname);
           if (!normalized) return true;
-          return !hiddenPaths.has(normalized);
+          // Präfix-Regel, zeichengleich zu `isPageHiddenByPath` in
+          // src/utils/pageVisibility.ts: wer /aquarelle/ ausblendet, meint auch
+          // /aquarelle/berlin/. Ohne das stünden 39 der 40 Seiten mit `noindex`
+          // trotzdem in der Sitemap — ein widersprüchliches Signal an Google.
+          if (hiddenPaths.has(normalized)) return false;
+          for (const hidden of hiddenPaths) {
+            if (hidden !== '/' && normalized.startsWith(`${hidden}/`)) return false;
+          }
+          return true;
         } catch {
           return true;
         }

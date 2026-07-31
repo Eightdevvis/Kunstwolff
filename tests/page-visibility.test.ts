@@ -86,3 +86,34 @@ describe('visibility-aware content helpers', () => {
   });
 });
 
+
+/**
+ * Präfix-Regel (2026-07-30): einen Skill auszublenden muss seine Kombiseiten
+ * mitnehmen. Vorher waren von 40 Aquarelle-Seiten **39 weiter indexierbar** —
+ * man blendet den Skill aus und Google sieht ihn trotzdem.
+ */
+describe('Ausblenden wirkt auf Unterseiten', () => {
+  const versteckt = new Set(['/aquarelle']);
+
+  it('blendet die Skill-Seite selbst aus', () => {
+    expect(isPageHiddenByPath('/aquarelle/', versteckt)).toBe(true);
+  });
+
+  it('blendet Skill×Stadt und Skill×Anlass mit aus', () => {
+    expect(isPageHiddenByPath('/aquarelle/berlin/', versteckt)).toBe(true);
+    expect(isPageHiddenByPath('/aquarelle/hochzeit/', versteckt)).toBe(true);
+  });
+
+  it('greift NICHT auf fremde Seiten über', () => {
+    expect(isPageHiddenByPath('/schnellzeichner/', versteckt)).toBe(false);
+    expect(isPageHiddenByPath('/schnellzeichner/berlin/', versteckt)).toBe(false);
+    // Kein Teilstring-Treffer: /aquarelle-xyz/ ist eine andere Seite.
+    expect(isPageHiddenByPath('/aquarelle-xyz/', versteckt)).toBe(false);
+  });
+
+  it('eine ausgeblendete Stadt blendet keine Skill-Seite aus', () => {
+    // Skill×Stadt liegt unter dem SKILL, nicht unter der Stadt.
+    expect(isPageHiddenByPath('/schnellzeichner/berlin/', new Set(['/berlin']))).toBe(false);
+    expect(isPageHiddenByPath('/berlin/', new Set(['/berlin']))).toBe(true);
+  });
+});
