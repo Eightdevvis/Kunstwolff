@@ -290,3 +290,23 @@ Sitemap und Canonicals · `<html lang>`/charset/viewport · FAQPage-Schema (vali
 dem Merge vom 02.07.) · `og:image`-Fallback · Navigation (Services aus `skills.json`,
 Events aus `events.json`) · Cache-Header · `/seite` und `/seite/` · echte 404 ·
 Tag-Vokabular und Slug-Normalisierung · Testsuiten beider Repos.
+
+---
+
+## Nach dem Umzug (2026-07-31 vertagt, drängt nicht)
+
+- [ ] **E-Mail/Formular vom Worker statt Formspree.** Braucht Cloudflare als
+      DNS-Anbieter, und den Nameserver-Wechsel macht bei einer Wix-Domain nur der
+      Wix-Support (Live-Chat, ~2 Tage). Deshalb nach dem Umzug. Fertig geplant:
+      öffentlicher `POST /api/kontakt` mit Feldprüfung, Honeypot, Zeitfalle,
+      Rate-Limit pro IP, Versand über Cloudflare Email Routing.
+      Wenn das steht, fällt §4 der Datenschutzerklärung ersatzlos weg.
+- [ ] **AV-Vertrag Formspree** — bis dahin ungeklärt; `formspree.io/legal/dpa` gibt es
+      nicht. Erledigt sich mit dem Punkt darüber.
+      (Vercel ist geklärt: DPA per Verweis in Ziff. 10.1 der ToS, SCC Modul 2.)
+- [ ] 🟡 **Eine gemeinsame Auswahl-Funktion für FAQs, Bilder und Reviews.**
+      Seit 2026-07-31 verhalten sich alle drei gleich — *spezifisch zuerst, Defaults
+      füllen auf* — aber der Code steht dreimal da: `faq.ts` (`dimensionPasst`),
+      `reviews.ts` (`landings.length === 0`), `slideImages.ts`
+      (`supplementWithDefaultSlides`). Solange das so ist, driftet es wieder
+      auseinander. Eine Funktion, drei Aufrufer.
