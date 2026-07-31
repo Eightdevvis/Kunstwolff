@@ -47,7 +47,7 @@ kaputt, C ist Hygiene und kann jederzeit dazwischen.
       Folgenlos, **weil** `sync-tags.mjs` die Datei im nächsten Build vollständig
       rekonstruiert. Trotzdem dieselbe Korrektur wie A1: nur 404 heißt leer.
 
-- [ ] **A3 — hoch — FaqManager vergleicht Label gegen Slug.**
+- [x] **A3 — hoch — FaqManager vergleicht Label gegen Slug.** ✅ **erledigt 2026-07-30**
       `kunstwolff-admin/src/components/FaqManager.tsx`
       Einziger Tag-Weg **ohne** `tagVocabulary.ts` (grep: 0 Treffer), mit eigenem
       Seed-Parser und abweichender Landing-Regel (`!endsWith(':')` statt
@@ -59,6 +59,10 @@ kaputt, C ist Hygiene und kann jederzeit dazwischen.
       **Schritt:** auf `tagVocabulary.ts` + `slugifyTag` umstellen (Optionen als
       `{slug,label}`, Vergleich über den Slug, Anzeige über das Label). Damit
       fällt der zweite Seed-Parser weg.
+      **Erledigt:** genau so. Getippte Tags laufen jetzt durch `slugifyTag`
+      (sonst landet das Label in der Datei). Der Guard
+      `managers-draft-aware.test.ts` prüft die Draft-Anforderung an der
+      verschobenen Stelle weiter — nicht abgeschwächt.
 
 - [ ] **A4 — mittel — ReviewManager kann Tags nicht leeren.**
       `kunstwolff-admin/src/components/ReviewManager.tsx`
