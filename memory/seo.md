@@ -183,3 +183,39 @@ einem Tag abzuarbeiten. Die vier Punkte, die man hier kennen muss:
 Zwei rechtliche Punkte, die auf der Stage folgenlos sind und auf der `.de`-Domain nicht:
 Google Fonts wird auf 174 Seiten von Google-Servern geladen (`Layout.astro:57-59`), und
 die Datenschutzerklärung nennt keinen der drei Empfänger (Formspree, Vercel, Google).
+
+## Sichtbarkeit: welche Seiten indexierbar sind (seit 2026-07-30)
+
+`public/config/page-visibility.json` ist nicht mehr leer. Ausgeblendet sind **128 Pfade**;
+indexierbar bleiben **41 von 170** gebauten Seiten. Die Sitemap enthält exakt dieselben 41.
+
+**Die Regel, nach der entschieden wurde** – wichtig, weil sie sonst willkürlich aussieht:
+
+- **Eine Stadt bleibt sichtbar, wenn sie ihre Galerie aus EIGENEN Fotos füllen kann**
+  (>= `MIN_LANDING_SLIDES` = 6) **oder** einen eigenen `landingIntro` hat. Darunter füllt
+  `supplementWithDefaultSlides` mit Fremdbildern auf – dann zeigt eine Stadtseite fremde
+  Orte unter ihrer eigenen H1. Sichtbar bleiben damit 12: berlin (Intro), frankfurt,
+  hessen, kaiserslautern, koeln, ludwigshafen, luxembourg, saarbruecken, saarland,
+  schweiz, stuttgart, trier.
+- **Alle 102 Skill+Stadt-Seiten sind ausgeblendet.** Nicht wegen Dünne, sondern wegen
+  Kannibalisierung: 97 % des Textes von `/schnellzeichner/berlin/` stehen wörtlich auch
+  auf `/berlin/`, und beide zielen auf dieselbe Suchanfrage.
+- **`/aquarelle/<anlass>/`** (4 Seiten): 0 eigene Bilder. `/aquarelle/` selbst bleibt
+  sichtbar – es ist eine echte Leistungsseite und hängt im Services-Menü
+  (`getVisibleSharedSkills` würde sie sonst dort auch entfernen).
+
+**Wirkung, gemessen:** einzigartiger Textanteil vorher min 0,4 % / median 0,7 %, 144 von
+173 Seiten unter 5 %. Jetzt median 33,3 %, nur noch 5 Seiten unter 5 % – davon sind drei
+die Startseite und die beiden Skill-Seiten (gemeinsamer Review-Block, unkritisch, eigene
+Titel). Bei `/stuttgart/` und `/hessen/` bleibt echte Dopplung, die erst mit eigenem Text
+verschwindet.
+
+**Der Weg zurück ist eine Zeile:** Text für eine Stadt schreiben, ihren Pfad aus `hidden`
+entfernen. Ausgeblendete Seiten werden weiterhin **gebaut** – sie sind erreichbar und
+verlinkbar, nur nicht indexierbar. Das ist Absicht: ein 404 würde die URL verbrennen,
+die man später füllen will.
+
+Ebenfalls entfernt: der Slug `schnellzeichner-duesseldorf` aus `landings.md` (stand dort
+als "Stadt" und erzeugte vier Seiten mit Titeln wie "Schnellzeichner
+Schnellzeichner-Duesseldorf buchen"). Weiterleitung auf `/schnellzeichner/duesseldorf/`
+steht in `vercel.json`.
