@@ -463,6 +463,50 @@ const getAllSlidesFlat = (): SlideItem[] => {
 
 export const getHomepageSlides = (): SlideItem[] => getDefaultSlides();
 
+/** Wie viele Bilder eine Skill-Seite höchstens zeigt. */
+export const MAX_SKILL_SLIDES = 24;
+
+/**
+ * Slides einer Skill-Seite — über den TAG, nicht über die Startseiten-Auswahl.
+ *
+ * Vorher zog `/schnellzeichner/` `getHomepageSlides()`, also die 30 handverlesenen
+ * Bilder aus `default-selection.json`, und filterte die nach Skill. Diese 30 sind
+ * für die STARTSEITE kuratiert; auf der Skill-Seite blieben davon **16 von 115**
+ * Schnellzeichner-Bildern übrig (Szenenmaler: 12 von 69), und 11 der 30 tragen
+ * gar keinen Skill und konnten dort nie erscheinen.
+ *
+ * Damit war der im Admin gesetzte Skill-Tag auf genau der Seite wirkungslos, die
+ * nach dem Skill benannt ist — `getSlidesByTag('skills', …)` hatte in der ganzen
+ * Website keinen einzigen Aufrufer. Die handverlesene Auswahl bleibt, wo sie
+ * gemeint war: auf der Startseite.
+ *
+ * Gedeckelt, weil „alle 115" eine Slideshow mit 115 DOM-Knoten wäre. Sortierung
+ * kommt aus `getSlidesByTag` (priority, dann Pfad) — die Deckelung nimmt also
+ * die wichtigsten. Der Rest ist über den Galerie-Link unter jeder Slideshow
+ * erreichbar.
+ */
+export const getSkillSlides = (skillTitle: string): SlideItem[] =>
+  getSlidesByTag('skills', skillTagSlug(skillTitle)).slice(0, MAX_SKILL_SLIDES);
+
+/**
+ * Der Tag-Slug eines Skills kommt aus seinem TITEL, nicht aus seiner URL.
+ *
+ * Das ist kein Detail: `skills.json` erlaubt ein eigenes `link`-Feld, mit dem die
+ * URL frei gewählt werden kann (z.B. `/schnellzeichner-karikaturist/` für die
+ * Suche). Die Tags an den Bildern hängen aber weiter am Titel
+ * („Schnellzeichner" → `schnellzeichner`). Würde hier der URL-Slug abgefragt,
+ * fände die umbenannte Seite **null** Bilder — und niemand käme darauf, dass die
+ * URL daran schuld ist.
+ */
+const skillTagSlug = (title: string): string =>
+  String(title ?? '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
 /**
  * Trägt ein Slide diesen Skill?
  *

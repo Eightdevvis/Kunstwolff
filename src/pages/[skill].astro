@@ -7,7 +7,7 @@ import Slideshow from '../components/slideshows/Slideshow.astro';
 import Why from '../components/Why.astro';
 import SkillLayout from '../layouts/SkillLayout.astro';
 import { getSkillBySlug, getSkillSlugs } from '../utils/skills';
-import { getHomepageSlides } from '../utils/slideImages';
+import { getSkillSlides } from '../utils/slideImages';
 import { getAllReviews } from '../utils/reviews';
 import { resolveTitleImage } from '../utils/titleImages';
 import { resolveHeroBg } from '../utils/heroBg';
@@ -25,7 +25,8 @@ if (!skillData) {
   return Astro.redirect('/404');
 }
 
-const allSlideshow = getHomepageSlides();
+// Über den Tag, nicht über die Startseiten-Auswahl (siehe getSkillSlides).
+const allSlideshow = getSkillSlides(skillData.title);
 const allReviews = getAllReviews();
 
 const titleImage = resolveTitleImage({ skill });
@@ -71,7 +72,8 @@ const sectionProps: Record<string, Record<string, any> | false> = {
     skillName: skillData.title,
     backgroundImage: heroBg,
   },
-  slideshow: { items: allSlideshow, filteredCategories: [skillData.title] },
+  // Kein `filteredCategories` mehr: die Liste ist schon über den Tag gewählt.
+  slideshow: { items: allSlideshow },
   why: { skill },
   contact: {},
   faq: { categories: [skillData.title] },

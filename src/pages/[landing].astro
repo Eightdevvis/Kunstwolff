@@ -105,9 +105,17 @@ if (pageType === 'landing') {
   cityName = getCityDisplayName(landing ?? '');
   landingHeading = getLandingHeading(landing ?? '', `Eventkünstler in ${cityName}`);
   landingIntro = getLandingIntro(landing ?? '', cityName);
-  // Titel ≤ 60 Zeichen halten (sonst SERP-Truncation). Longster Fall
-  // „Nordrhein-Westfalen" → 59 Zeichen.
-  landingPageTitle = `Eventkünstler ${cityName} – Live-Kunst | Kunstwolff`;
+  // Der Titel folgt der ÜBERSCHRIFT, statt eine zweite Formulierung zu erfinden.
+  // Vorher stand im SERP „Eventkünstler Berlin", auf der Seite aber
+  // „Schnellzeichner Berlin" (aus `landingHeadings`, im Admin gesetzt) — der
+  // Nutzer klickt auf das eine und liest das andere, und Google bekommt zwei
+  // konkurrierende Themen für dieselbe Seite. Betraf 34 der 35 Stadtseiten.
+  //
+  // Titel ≤ 60 Zeichen halten (sonst SERP-Truncation). Der längste Fall
+  // „Nordrhein-Westfalen" bleibt mit dem Standard-Heading bei 59 Zeichen; eine
+  // im Admin getippte Überschrift kann darüber gehen — dann kürzt Google, was
+  // immer noch besser ist als ein Titel, der der H1 widerspricht.
+  landingPageTitle = `${landingHeading} – Live-Kunst | Kunstwolff`;
   landingPageDescription = `Kunstwolff in ${cityName}: Professionelle Eventkünstler für Firmenfeiern, Messen & Hochzeiten. Schnellzeichner, Szenenmaler & mehr.`;
 
   breadcrumbSchema = {
@@ -115,7 +123,7 @@ if (pageType === 'landing') {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${site}/` },
-      { '@type': 'ListItem', position: 2, name: `Eventkünstler ${cityName}`, item: `${site}/${landing}/` },
+      { '@type': 'ListItem', position: 2, name: landingHeading, item: `${site}/${landing}/` },
     ],
   };
 }

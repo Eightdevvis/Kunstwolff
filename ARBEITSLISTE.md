@@ -12,6 +12,101 @@ einmal, an der Stelle, an der man sie anfasst.
 **Legende:** 🔴 blockiert den Umzug · 🟠 sichtbar kaputt · 🟡 Hygiene
 **S** = nur Sasha kann das (Dashboard, DNS, Geld, Rechtstext) · **C** = kann ich machen
 
+
+---
+
+## 🧍 Nur du (S) — zum Abarbeiten
+
+Reihenfolge: 1 und 2 blockieren den Umzug, 3 blockiert die KI im Admin.
+
+1. [ ] **`SITE_URL` in Vercel setzen und MANUELL neu deployen** (Phase 0.1)
+       Ohne das bleibt **alles** auf `noindex` — der Stage-Host wird erkannt.
+2. [ ] **DNS-Weg entscheiden** (Phase 0.2) — Zone liegt bei Wix, zwei Wege (A/B).
+3. [ ] **Worker deployen** — `cd kunstwolff-admin && npm run worker:deploy`
+       Die KI-Fähigkeitenliste und die Bild-Erkennung liegen auf `master`, sind aber
+       nur im Worker. Gemessen: `/api/ai/faehigkeiten` antwortet noch **404**.
+4. [ ] **Datenschutzerklärung freigeben** (Phase 0.4) — ich schreibe den Entwurf
+       (Formspree, Vercel), **Wortlaut gibst du frei**. Dazu zwei AV-Verträge klicken.
+5. [ ] **Umzugstag** (Phase 1, sieben Schritte) — Redirects testen, DNS, Wix auf
+       „Coming Soon", Apex→www, Search Console, 48 h beobachten.
+6. [ ] **Entscheiden: `/private-feier/` und 9 Städte ohne eigene Bilder** — ausblenden
+       wie Aquarelle, oder Inhalte nachliefern? (Rest von Phase 0.5)
+7. [ ] **KI-Guthaben** — kleine Gemini-Aufladung, damit es zwei finanzierte Anbieter gibt.
+8. [ ] **Vercel-Vorschauprojekt** — sonst bleibt „Entwurf bauen" im Admin tot.
+
+## 🤖 Ich (C) — noch offen
+
+Nach Wirkung sortiert:
+
+1. [ ] **Die 144 Seiten mit nicht-einzigartigem Text** — genauer anschauen (neu, siehe unten)
+2. [ ] **URL-Umbenennung `/schnellzeichner/` → `/schnellzeichner-karikaturist/`** (neu, Wunsch mom)
+3. [ ] **Hero-Bilder ohne `srcset`** (3.1) — größter Performance-Hebel
+4. [ ] **Barrierefreiheit, vier Befunde Stufe A** (3.2)
+5. [ ] **Anlass-Dimension der FAQs ist tot** (2.3)
+6. [ ] **ReviewManager kann Tags nicht leeren** (2.7)
+7. [ ] **Datenschutz-Entwurf schreiben** (Zuarbeit zu S-4)
+8. [ ] **Rest-Hygiene** (3.5): `EventManager` legt keinen Anlass-Tag an · `pre-push`
+       committet den gesamten Index · `jubilaum`/`jubilaeum` · zwei FAQ-Dateien ohne
+       `.md` · Fehlerschlucker in `tagVocabulary.ts`
+
+## ✅ Heute erledigt
+
+`SITE_URL`-unabhängig, alles gemessen statt gehofft:
+
+- Fonts lokal (0.3) · 129 Seiten ausgeblendet inkl. `/aquarelle/` selbst (0.5, Teil)
+- 38 leere Skill×Stadt-Galerien → 0 (2.1) · leere Sektionen rendern nicht mehr (2.2)
+- FaqManager-Chips funktionieren wieder (2.4) · Pseudo-Stadt `schnellzeichner-duesseldorf`
+  raus (2.5) · Berlin-Tippfehler (2.6)
+- Titel folgt jetzt der H1 statt sie zu widersprechen (3.3)
+- **Skill-Seiten nutzen endlich die Tags** (3.4) · `sync:tags` bricht hart ab und
+  `public/config` kommt zurück ins Repo (Teil 3.5)
+- Im Admin-Repo: Datenverlust-Pfad in `slides.meta.json` geschlossen, KI-Fähigkeitenliste,
+  Bild-Erkennung
+
+---
+
+## Neu dazugekommen (2026-07-30, aus dem Gespräch)
+
+- [ ] 🟠 **C — N.1 Die 144 Seiten mit nicht-einzigartigem Text**
+      Aus dem Cutover-Audit: 144 von 173 Seiten unter 5 % einzigartigem Text,
+      `/dortmund/` und `/giessen/` auf 1493 von 1494 Wörtern gleich. Ein Teil ist mit
+      dem Ausblenden vom Tisch (129 Seiten sind jetzt `noindex`), der Rest nicht.
+      **Zu klären:** wie viele der verbliebenen ~41 indexierbaren Seiten sind noch
+      Dubletten? Welcher Textbaustein erzeugt die Gleichheit — Intro, Why, FAQ oder
+      Kontakt? Und was ist der billigste Hebel: pro Stadt 150–250 Wörter Ortsbezug,
+      oder die dublizierenden Bausteine auf Stadtseiten weglassen?
+
+      **✅ Gemessen am 2026-07-30 (nach dem Ausblenden), und es sieht viel besser aus
+      als befürchtet:** von 170 gebauten Seiten sind **41 indexierbar**, 129 ausgeblendet.
+      Von diesen 41 liegt **genau eine** unter 5 % einzigartigem Text: `/contact`
+      (103 Wörter, 0 % — eine Kontaktseite, die naturgemäß nur Bausteine hat).
+      Die 129 Dubletten waren also genau die, die jetzt draußen sind.
+
+      Messmethode: Anteil der Wörter, die auf höchstens der Hälfte der indexierbaren
+      Seiten vorkommen (also nicht Boilerplate). Andere Definition als im Cutover-Audit,
+      dieselbe Frage.
+
+      Was übrig bleibt, nach Dringlichkeit:
+      - `/contact` (0 %, 103 W.) — entweder Text dazu oder ausblenden. **Entscheidung.**
+      - `/partner` (24,5 %, 53 W.) — sehr dünn, gleiche Frage.
+      - Die 8 Skill×Anlass-Kombis liegen bei 28–33 % (`/szenenmaler/private-feier` am
+        niedrigsten) und teilen sich ~470 Wörter Gerüst. Kein Notfall, aber der nächste
+        sinnvolle Hebel: pro Kombination 100–150 Wörter eigener Text.
+      - Zum Vergleich das obere Ende: `/kaiserslautern` 63 %, `/fr/belgique` 77 %.
+
+- [ ] 🟠 **C+S — N.2 `/schnellzeichner/` → `/schnellzeichner-karikaturist/`** (Wunsch mom)
+      Technisch klein: `skills.json` erlaubt ein eigenes `link`-Feld, der Titel
+      („Schnellzeichner") bleibt unverändert. Betrifft **40 URLs** (Skill + 35 Städte
+      + 4 Anlässe).
+      ⚠️ **Zwei Fallen:** (1) Die Tags an den Bildern hängen am TITEL, nicht an der URL —
+      das ist seit heute im Code abgesichert (`skillTagSlug`), sonst hätte die
+      umbenannte Seite 0 Bilder gezeigt. (2) Die alten URLs brauchen 301er, und die
+      Redirect-Karte für den Wix-Umzug wird gerade gebaut — **beides zusammen planen**,
+      sonst entstehen Ketten (Wix-URL → alte Astro-URL → neue Astro-URL).
+      **Am besten VOR dem Cutover**, solange die URLs noch kein Ranking haben.
+      **Entscheidung nötig:** Soll `/schnellzeichner/` als Weiterleitung bestehen
+      bleiben (empfohlen) oder ganz verschwinden?
+
 ---
 
 ## Phase 0 — bevor DNS angefasst wird
@@ -33,7 +128,7 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
       **(B)** NS beim Registrar wegmigrieren, Zone nachbauen (nur `A` + `CNAME www`,
       sonst ist die Zone leer), 24–48 h propagieren — muss **vor** den Cutover-Tag.
 
-- [ ] 🔴 **C — 0.3 Google Fonts lokal hosten**
+- [x] 🔴 **C — 0.3 Google Fonts lokal hosten** ✅ **erledigt**
       174 von 176 Seiten laden `fonts.googleapis.com`/`fonts.gstatic.com`.
       Inter (400/500/600/700, latin + latin-ext) nach `public/fonts/inter/` wie Mayonice,
       `@font-face` mit `font-display: swap`, dann `Layout.astro:57-59` löschen.
@@ -105,18 +200,18 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
       `/hochzeit/`, `/private-feier/` zeigen alle dieselben 4 FAQs wie die Startseite.
       Ein im Admin gesetzter Anlass-Tag kommt nirgends an.
 
-- [ ] 🟠 **C — 2.4 FaqManager vergleicht Label gegen Slug**
+- [x] 🟠 **C — 2.4 FaqManager vergleicht Label gegen Slug** ✅ **erledigt 2026-07-30**
       Einziger Tag-Weg ohne `tagVocabulary.ts`. Bei **allen 70** FAQs mit Skill-Tag sind
       die Chips grau; ein Klick schreibt `skills: [schnellzeichner, Schnellzeichner]`.
       Auf `tagVocabulary.ts` + `slugifyTag` umstellen. (Admin-Repo)
 
-- [ ] 🟠 **C — 2.5 `schnellzeichner-duesseldorf` steht als Stadt in `landings.md`**
+- [x] 🟠 **C — 2.5 `schnellzeichner-duesseldorf` steht als Stadt in `landings.md`** ✅ **erledigt**
       Erzeugt vier indexierte Seiten mit Titeln wie „Schnellzeichner
       Schnellzeichner-Duesseldorf buchen" und dem Fließtext „Bereichern".
       Zeile raus, Eintrag in `site-texts/content.json` raus, 301 auf
       `/schnellzeichner/duesseldorf/`.
 
-- [ ] 🟠 **C — 2.6 Berlin-Intro hat vier Tippfehler in einem Satz**
+- [x] 🟠 **C — 2.6 Berlin-Intro hat vier Tippfehler in einem Satz** ✅ **erledigt**
       „Bereichern **Siw Ihrr** Messe, **Betreibsfeier** … **Schnellzichner**" — steht so
       auf der reichweitenstärksten Stadtseite. Zwei Minuten.
 
@@ -142,15 +237,22 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
       zehn Untermenü-Links bleiben bei `opacity:0` im Tab-Verlauf.
       Dazu: 169 von 176 Seiten ohne `<main>` und ohne Skip-Link.
 
-- [ ] 🟡 **C — 3.3 Titel und H1 widersprechen sich auf 39 Stadtseiten**
+- [x] 🟡 **C — 3.3 Titel und H1 widersprechen sich auf 39 Stadtseiten** ✅ **erledigt 2026-07-30**
       `landingHeadings` setzt „Schnellzeichner <Stadt>", der Titel wird als
       „Eventkünstler <Stadt> – Live-Kunst" gebaut. Der Nutzer liest im SERP etwas
       anderes als in der Überschrift.
 
-- [ ] 🟡 **C — 3.4 Die Skill-Dimension wird nie per Tag abgefragt**
+- [x] 🟡 **C — 3.4 Die Skill-Dimension wird nie per Tag abgefragt** ✅ **erledigt 2026-07-30**
       `getSlidesByTag('skills', …)` hat in `src/` keinen einzigen Aufrufer.
       `/schnellzeichner/` zeigt 16 von 115 Bildern, `/szenenmaler/` 12 von 69.
-      **Erst entscheiden, dann bauen** (siehe „Offene Fragen" im Tag-Audit).
+      **Entschieden (2026-07-30): war ein Bug, kein Kuratieren.** Die 30 Bilder aus
+      `default-selection.json` sind für die STARTSEITE handverlesen (im Admin, über den
+      ImageManager) — sie als Quelle der Skill-Seiten zu nehmen war nie beabsichtigt;
+      11 davon tragen gar keinen Skill und konnten dort nie erscheinen.
+      **Erledigt:** `getSkillSlides()` fragt `getSlidesByTag('skills', …)`, gedeckelt auf
+      24 Bilder (nach `priority`), Rest über den Galerie-Link. Die handverlesene Auswahl
+      bleibt, wo sie gemeint war: auf der Startseite. Der Tag-Slug kommt dabei aus dem
+      TITEL, nicht aus der URL — sonst bricht die geplante Umbenennung N.2 die Seite.
 
 - [ ] 🟡 **C — 3.5 Kette und Hygiene** (Sammelposten aus dem Tag-Audit, Abschnitt C)
       ✅ ~~`sync:tags` als harten Schritt~~ **erledigt 2026-07-30** (`hart: true` in
