@@ -25,7 +25,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [Team](content-team.md) – `/team/`: zwei Profile (Gabriele zuerst), Portraits als Zuschnitte aus Event-Fotos, **kein `srcset`** für `img/team`
 - [Tag-System](tag-system.md) – Skill × Anlass × Ort: `config/tags.json`, Tag-Blöcke an Bildern/Reviews/FAQs, Migration; **Phase 5a+5b+5d fertig – Bilder, Reviews UND FAQs wählen über Tags aus, der Ordner ist nur noch Ablage**
 - [Responsive Bilder](responsive-images.md) – `srcset`/`sizes`, Varianten-Erzeugung nach dem Build, warum nicht `astro:assets`
-- [Vercel-Header](vercel-headers.md) – Cache-Control für `/img/*`, warum bewusst kein `immutable`
+- [Vercel-Header](vercel-headers.md) – Cache-Control für `/img/*`, warum bewusst kein `immutable`; **Redirect-Karte Wix→Astro** (warum nicht über `astro.config.mjs`)
 - [Titelbild](content-titelbild.md) – Pfad, Metadaten, Fallback-Kette
 - [Reviews](content-reviews.md) – Markdown-Format, **Auswahl über `tags.landings`**, Auffüll-Logik, MiniReviews-Anzeige
 - [Allgemeine Texte](content-site-texts.md) – `site-texts/content.json`, Startseiten-Texte, `landingIntros` (Einführungstext)
@@ -75,7 +75,8 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 | "Routing / URL passt nicht" | `routing.md` |
 | "Sektion ein-/ausblenden, Reihenfolge ändern, Sektion taucht falsch auf" | `komponenten-stack.md` |
 | "Admin-Tool schreibt falsch" | `admin-tool.md` |
-| "Hosting / Vercel / Cutover-Stand" | `projekt.md` (Hosting-Section) + `seo.md` + `HEALTH_CHECK_2026-05-05.md` + `CUTOVER_PLAN.md` |
+| "Hosting / Vercel / Cutover-Stand" | `projekt.md` (Hosting-Section) + `seo.md` + `reports/cutover-audit-2026-07-30.md` + `CUTOVER_PLAN.md` (⚠ an zwei Stellen falsch, siehe `seo.md`) |
+| "Umzug auf kunstwolff.de / Redirects / DNS" | `seo.md` (Cutover-Abschnitt) + `vercel-headers.md` + `reports/cutover-audit-2026-07-30.md` |
 | "Cross-Repo / Admin-Tool" | `admin-tool.md` + Admin-Memory `/home/sasha/codicus/Kunstwolff/kunstwolff-admin/memory/index.md` |
 
 Wenn unklar: erst `projekt.md` + `architektur.md` als Einstieg, dann gezielt nachladen.

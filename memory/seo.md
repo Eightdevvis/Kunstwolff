@@ -155,3 +155,31 @@ Vollautomatisch beim Build generiert. Keine manuelle Pflege.
 | `FAQPage` | `public/faq/` Markdown-Dateien |
 
 ⚠ **`LocalBusiness` ist hardcoded** (Telefon `+491736677229`, Adresse `Birkenstr. 3, 66121 Saarbrücken`, Logo-Pfad `https://kunstwolff.de/img/logo/logo_transparent.webp`). Änderungen sind ein Code-Change. Empfehlung aus HEALTH_CHECK §SEO-3: in eine `siteMeta.ts`/`businessProfile.json` ziehen, dann kann das Admin-Tool sie irgendwann pflegen.
+
+## Cutover-Audit 2026-07-30 – was vor dem Umzug offen ist
+
+Voller Bericht: `reports/cutover-audit-2026-07-30.md` (88 Befunde, sechs Prüfstrecken
+mit Gegenprüfung). Urteil: der Umzug kann noch nicht starten, aber die Blocker sind an
+einem Tag abzuarbeiten. Die vier Punkte, die man hier kennen muss:
+
+1. **`SITE_URL` setzen reicht nicht – es muss MANUELL neu deployt werden.** Vercel
+   wendet geänderte Env-Variablen nicht auf bestehende Deployments an.
+   `CUTOVER_PLAN.md:126` behauptet das Gegenteil und ist an der Stelle falsch
+   (Zeile 85 desselben Plans sagt es richtig). Ohne Redeploy liefert
+   `www.kunstwolff.de` ab Sekunde eins 173 Seiten mit `noindex, nofollow`.
+2. **Die Variable LÖSCHEN ist keine Alternative** (die frühere Formulierung oben ist
+   damit überholt): der Fallback in `astro.config.mjs` ist der Apex `kunstwolff.de`,
+   kanonisch ist laut `CUTOVER_PLAN.md:16` aber `www`. Explizit auf
+   `https://www.kunstwolff.de` setzen.
+3. **Die DNS-Zone liegt bei Wix** (`ns12/ns13.wixdns.net`), nicht beim Registrar – der
+   Cutover-Plan unterstellt Registrar-DNS. Solange die Zone dort liegt, darf „Disconnect
+   Domain" NICHT ausgeführt werden, sonst ist die Domain nirgends erreichbar.
+4. **144 von 173 indexierbaren Seiten haben unter 5 % einzigartigen Text**
+   (`/dortmund/` vs. `/giessen/`: 1493 von 1494 Wörtern gleich). Vor dem Umzug
+   entscheiden: Städte ohne eigenen Text über `page-visibility.json` auf `hidden`
+   (wirkt als noindex UND filtert die Sitemap) oder je Stadt echten Ortsbezug
+   schreiben. Nach dem Umzug ist die Erstbewertung der Domain gelaufen.
+
+Zwei rechtliche Punkte, die auf der Stage folgenlos sind und auf der `.de`-Domain nicht:
+Google Fonts wird auf 174 Seiten von Google-Servern geladen (`Layout.astro:57-59`), und
+die Datenschutzerklärung nennt keinen der drei Empfänger (Formspree, Vercel, Google).

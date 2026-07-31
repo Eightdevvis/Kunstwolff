@@ -10,5 +10,71 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    { "source": "/kontakt", "destination": "/contact/", "permanent": true },
+    { "source": "/kontakt-jenny", "destination": "/contact/", "permanent": true },
+
+    { "source": "/about", "destination": "/team/", "permanent": true },
+    { "source": "/about-3", "destination": "/team/", "permanent": true },
+    { "source": "/about-9", "destination": "/team/", "permanent": true },
+
+    { "source": "/aquarelle-galerie", "destination": "/aquarelle/", "permanent": true },
+    { "source": "/schnellzeichnung-galerie", "destination": "/schnellzeichner/", "permanent": true },
+    { "source": "/szenenmaler-galerie", "destination": "/szenenmaler/", "permanent": true },
+
+    { "source": "/portfolio", "destination": "/galerie/", "permanent": true },
+    { "source": "/copy-of-galerie", "destination": "/galerie/", "permanent": true },
+    { "source": "/gallerie", "destination": "/galerie/", "permanent": true },
+    { "source": "/landingpages/landing", "destination": "/", "permanent": true },
+
+    {
+      "source": "/portfolio-collections/my-portfolio/szenenmalerei",
+      "destination": "/szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/portfolio-collections/my-portfolio/storytelling-graphic-recording",
+      "destination": "/szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/portfolio-collections/my-portfolio/digitale-kunst",
+      "destination": "/schnellzeichner/",
+      "permanent": true
+    },
+    {
+      "source": "/portfolio-collections/my-portfolio/karikaturen-schwarz-wei%C3%9F",
+      "destination": "/schnellzeichner/",
+      "permanent": true
+    },
+    {
+      "source": "/portfolio-collections/my-portfolio/portrait-karikatur-vom-foto",
+      "destination": "/schnellzeichner/",
+      "permanent": true
+    },
+    {
+      "source": "/portfolio-collections/my-portfolio/einladungskarten-mit-karikatur",
+      "destination": "/schnellzeichner/",
+      "permanent": true
+    },
+    { "source": "/portfolio-collections/:rest*", "destination": "/galerie/", "permanent": true },
+
+    { "source": "/template/szenenmalerei", "destination": "/szenenmaler/", "permanent": true },
+    {
+      "source": "/template/storytelling---graphic-recording",
+      "destination": "/szenenmaler/",
+      "permanent": true
+    },
+    { "source": "/template/schnellzeichnungen", "destination": "/schnellzeichner/", "permanent": true },
+    { "source": "/template/digitale-kunst", "destination": "/schnellzeichner/", "permanent": true },
+    { "source": "/template/vom-foto", "destination": "/schnellzeichner/", "permanent": true },
+    { "source": "/template/manga--und-cartoonstil", "destination": "/schnellzeichner/", "permanent": true },
+    {
+      "source": "/template/einladungskarten-hochzeit%26geburtstag",
+      "destination": "/schnellzeichner/",
+      "permanent": true
+    },
+    { "source": "/template/:rest*", "destination": "/galerie/", "permanent": true }
   ]
 }

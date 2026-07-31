@@ -34,3 +34,24 @@ Besucher, und eine Änderung ist spätestens am Folgetag überall sichtbar.
 `/img/variants/…` (aus `scripts/generate-image-variants.mjs`) fällt unter
 dieselbe Regel – die Dateinamen leiten sich vom Original ab und ändern sich beim
 Austausch ebenso wenig. Siehe `responsive-images.md`.
+
+## Redirects (seit 2026-07-30)
+
+`vercel.json` hat jetzt neben `headers` einen `redirects`-Block: die Weiterleitungskarte
+der alten Wix-URLs auf die neuen Astro-Pfade. Inventar aus den fünf Wix-Sitemaps
+(34 URLs), 30 davon liefen ohne Karte ins 404 – darunter `/kontakt`, die Anfrage-Seite
+der alten Seite. Vollständige Tabelle mit Begründung je Zeile:
+`reports/cutover-audit-2026-07-30.md`, Anhang A.
+
+Drei Regeln dazu:
+
+- **`"permanent": true`** (=308, von Google wie 301 behandelt). Ohne das erbt das neue
+  Ziel kein Ranking.
+- **Nicht über `astro.config.mjs` `redirects` lösen.** Astro erzeugt bei statischer
+  Ausgabe eine HTML-Seite mit Meta-Refresh, keinen echten Statuscode. Der vorhandene
+  Eintrag `/gallerie → /galerie/` bleibt dort nur für den Dev-Server; ausgeliefert wird
+  auf Vercel der 301 aus `vercel.json` (Redirects greifen vor dem Dateisystem).
+- **Apex → www gehört NICHT hierher**, sondern in die Vercel-Domain-Settings.
+
+Sammelregeln (`/template/:rest*`, `/portfolio-collections/:rest*`) stehen am Ende ihrer
+Gruppe – Vercel nimmt die erste passende Regel, spezifische also zuerst.
