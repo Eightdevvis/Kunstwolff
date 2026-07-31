@@ -88,14 +88,15 @@ Nach Wirkung sortiert:
       dieselbe Frage.
 
       Was übrig bleibt, nach Dringlichkeit:
-      - `/contact` (0 %, 103 W.) — entweder Text dazu oder ausblenden. **Entscheidung.**
-      - `/partner` (24,5 %, 53 W.) — sehr dünn, gleiche Frage.
+      - ✅ `/contact` — **erledigt 2026-07-31**, eigener Text: 103 → 310 Wörter.
+      - ✅ `/partner` — **erledigt 2026-07-31**, eigener Text: 53 → 260 Wörter.
+        (Beide bleiben ausdrücklich indexierbar — ausblenden war keine Option.)
       - Die 8 Skill×Anlass-Kombis liegen bei 28–33 % (`/szenenmaler/private-feier` am
         niedrigsten) und teilen sich ~470 Wörter Gerüst. Kein Notfall, aber der nächste
         sinnvolle Hebel: pro Kombination 100–150 Wörter eigener Text.
       - Zum Vergleich das obere Ende: `/kaiserslautern` 63 %, `/fr/belgique` 77 %.
 
-- [ ] 🟠 **C+S — N.2 `/schnellzeichner/` → `/schnellzeichner-karikaturist/`** (Wunsch mom)
+- [x] 🟠 **C+S — N.2 `/schnellzeichner/` → `/schnellzeichner-karikaturist/`** ✅ **erledigt 2026-07-31**
       Technisch klein: `skills.json` erlaubt ein eigenes `link`-Feld, der Titel
       („Schnellzeichner") bleibt unverändert. Betrifft **40 URLs** (Skill + 35 Städte
       + 4 Anlässe).
@@ -105,8 +106,13 @@ Nach Wirkung sortiert:
       Redirect-Karte für den Wix-Umzug wird gerade gebaut — **beides zusammen planen**,
       sonst entstehen Ketten (Wix-URL → alte Astro-URL → neue Astro-URL).
       **Am besten VOR dem Cutover**, solange die URLs noch kein Ranking haben.
-      **Entscheidung nötig:** Soll `/schnellzeichner/` als Weiterleitung bestehen
-      bleiben (empfohlen) oder ganz verschwinden?
+      **Erledigt:** `link` in `skills.json`, dazu Navigation, Sichtbarkeit (34 Pfade),
+      SkillBanner-Fallback und drei `linkUrl` in Why-Detail-Inhalten. Die alten
+      Adressen bleiben als **301** (`/schnellzeichner` und `/schnellzeichner/:rest*`);
+      die 10 Wix-Ziele zeigen direkt auf die neue URL, also keine Ketten.
+      Der eigentliche Umbau war Falle (1): die URL war zugleich der Schlüssel für
+      Titelbild, hero-bg, Why, Erinnerungen und Kombitexte. Jetzt trennt
+      `skillContentKey()` beides, `tests/skill-url-vs-inhalt.test.ts` hält es fest.
 
 ---
 
@@ -238,11 +244,22 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
 
 ## Phase 3 — danach, nach Wirkung sortiert
 
-- [ ] 🟡 **C — 3.1 Hero-Bilder ohne `srcset`** — größter Performance-Hebel.
+- [x] 🟡 **C — 3.1 Hero-Bilder ohne `srcset`** ✅ **erledigt 2026-07-31**
       Die Varianten werden längst gebaut (677 pro Build), `buildSrcSet` wird aber in
       keinem Hero-Bauteil aufgerufen. 161 Seiten, Median 93 KB, 17 über 200 KB — gegen
       36 KB in der 400er-Variante. Achtung: 43 Seiten nutzen `titelbild.avif`, und der
       Varianten-Generator verarbeitet nur `.webp`. `img/why` ist derselbe Fall.
+      **Erledigt:** `SkillHero` bekommt echtes `srcset`; `Opener` und `EventHero`
+      zeigen ihr Bild als CSS-Hintergrund und bekommen die Varianten als
+      CSS-Variablen plus Media-Queries (mit Pixeldichte, sonst wird es auf
+      Retina-Handys weich). Gemessen: 5139 Kandidaten, **0 fehlend**;
+      Hintergrund-Heroes 132 → 55 KB Median (60 %).
+      Zwei Fallen, beide erst am gebauten `dist/` sichtbar: `hero-bg` liegt
+      ausserhalb der drei Ordner mit Varianten (Riegel jetzt in `buildSrcSet`
+      selbst), und die Stufen aus dem `srcset`-String zurückzulesen zählt das
+      ORIGINAL mit — 13 tote Kandidaten. Beides hat jetzt einen Test.
+      Das eine AVIF (`titelbild.avif`, 39 KB) bleibt bewusst ohne Varianten:
+      es ist kleiner als jede, die daraus entstünde.
 
 - [ ] 🟡 **C — 3.2 Barrierefreiheit, vier Befunde der Stufe A**
       Slider läuft mit 2,5 s Autoplay ohne Pause-Knopf und ignoriert
