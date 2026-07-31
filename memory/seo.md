@@ -247,3 +247,36 @@ sie mitgeliefert wird).
 Verbleibende Fremd-Hosts im ausgelieferten HTML sind keine Verbindungen:
 `www.w3.org` (XML-Namensräume), `schema.org` (JSON-LD-Kontext) und drei redaktionelle
 Links in Texten.
+
+## Datenschutzerklärung: die drei Empfänger stehen drin (seit 2026-07-31)
+
+`src/pages/datenschutz.astro` nannte bis dahin **keinen** Datenempfänger: §2 sprach
+anonym vom „Hosting-Anbieter", §3 nur von „E-Mail oder Telefon" (das Web-Formular kam
+gar nicht vor), und §4 behauptete sinngemäß, es fänden keine Übertragungen statt.
+
+Jetzt: **Vercel Inc.** (§2, Hosting), **Formspree Inc.** (§4, eigener Abschnitt
+Kontaktformular), und in §5 die ausdrückliche Feststellung, dass Schriftarten lokal
+ausgeliefert werden. Abschnitte wurden dadurch umnummeriert (jetzt 10 statt 9).
+
+⚠️ **Beim Anfassen des Formulars mitpflegen:** `src/components/Contact.astro` sendet
+neben Name/E-Mail/Telefon/Datum/Nachricht **sieben versteckte `cinema_*`-Felder** mit –
+die Auswahlen aus dem CinemaWelcome-Konfigurator. Die sind in §4 benannt, weil Art. 13
+DSGVO Transparenz über das verlangt, was tatsächlich übertragen wird. Kommt ein Feld
+dazu, gehört es dort hinein.
+
+Der Text ist ein **Entwurf und braucht Sashas Freigabe.**
+
+⚠️ **Was bewusst NICHT drinsteht:** dass AV-Verträge nach Art. 28 DSGVO bestehen. Die
+erste Fassung behauptete das; beim Nachprüfen stellte sich heraus, dass Vercels
+öffentliches DPA (`vercel.com/legal/dpa`) sich ausdrücklich auf **Enterprise**-Verträge
+bezieht („forms part of Vercel Enterprise Terms and Conditions … on an Enterprise plan")
+und `formspree.io/legal/dpa` gar nicht existiert (404). Ob für den genutzten Tarif ein
+AV-Vertrag zustande gekommen ist, ist damit **ungeklärt** – und eine falsche Angabe in
+der Datenschutzerklärung ist schlimmer als eine fehlende. Es steht deshalb nur die
+nachprüfbare Tatsache drin: beide Anbieter sitzen in den USA, also Drittlandübermittlung
+nach Art. 44 ff.
+
+Sobald die AV-Verträge nachweislich geschlossen sind, gehören in §2 und §4 je ein Satz
+dazu (Art. 28 DSGVO) und die konkrete Garantie für die Drittlandübermittlung
+(Standardvertragsklauseln oder EU-US Data Privacy Framework – je nachdem, was der
+Vertrag sagt).
