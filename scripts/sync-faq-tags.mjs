@@ -30,6 +30,31 @@ import { normalizeTagList, slugifyTag, slugSet } from './tags.mjs';
 
 const projectRoot = process.cwd();
 const faqRoot = path.join(projectRoot, 'public', 'faq');
+
+/**
+ * Alle FAQ-Wurzeln: die deutsche und jedes i18n-Overlay.
+ *
+ * Bis 2026-07-31 lief dieses Skript nur ueber `public/faq`. Die drei
+ * franzoesischen FAQs unter `public/i18n/fr/faq/` bekamen deshalb nie einen
+ * Tag-Block, trugen weiter nur `categories:` – und fielen in
+ * `getFAQsForContext` durch, weil die FR-Seite die Skill-Dimension gar nicht
+ * abfragt. `/fr/belgique/` zeigte daraufhin den hartkodierten DEUTSCHEN
+ * Fallback aus FAQ.astro, und niemandem fiel es auf.
+ *
+ * Der Ort-Slug wird relativ zur JEWEILIGEN Wurzel gebildet – `fr/faq/belgique/x.md`
+ * ergibt `landings: [belgique]`, genau wie `faq/belgique/x.md`.
+ */
+const i18nRoot = path.join(projectRoot, 'public', 'i18n');
+const faqRoots = [
+  faqRoot,
+  ...(fs.existsSync(i18nRoot)
+    ? fs
+        .readdirSync(i18nRoot, { withFileTypes: true })
+        .filter((e) => e.isDirectory())
+        .map((e) => path.join(i18nRoot, e.name, 'faq'))
+        .filter((dir) => fs.existsSync(dir))
+    : []),
+];
 const tagsConfigPath = path.join(projectRoot, 'public', 'config', 'tags.json');
 
 const knownLandings = (() => {
@@ -107,8 +132,8 @@ const readListField = (fmBody, field) => {
  * zu einem Ort, sie gilt überall. Im neuen Auswahlmodell heisst genau das
  * "keine Ort-Tags" (src/utils/faq.ts, `getFAQsForContext`).
  */
-const tagsFromPath = (filePath) => {
-  const segments = path.relative(faqRoot, filePath).split(path.sep);
+const tagsFromPath = (filePath, root) => {
+  const segments = path.relative(root, filePath).split(path.sep);
   if (segments.length < 2) return { landings: [], events: [] };
 
   const erstes = slugifyTag(segments[0] ?? '');
@@ -140,11 +165,11 @@ const renderTagsBlock = (tags) => {
   return `${lines.join('\n')}\n`;
 };
 
-const files = walk(faqRoot);
+const files = faqRoots.flatMap((root) => walk(root).map((filePath) => ({ filePath, root })));
 let touched = 0;
 let skipped = 0;
 
-for (const filePath of files) {
+for (const { filePath, root } of files) {
   const raw = fs.readFileSync(filePath, 'utf-8');
   const fm = findFrontmatter(raw);
   if (!fm) {
@@ -158,7 +183,7 @@ for (const filePath of files) {
     continue;
   }
 
-  const ausPfad = tagsFromPath(filePath);
+  const ausPfad = tagsFromPath(filePath, root);
   const tags = {
     skills: normalizeTagList(readListField(fm.body, 'categories')),
     events: ausPfad.events,

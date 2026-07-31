@@ -26,6 +26,7 @@ import CinemaWelcome from '../components/CinemaWelcome.astro';
 import HomepageReviews from '../components/HomepageReviews.astro';
 import Eventtypes from '../components/Eventtypes.astro';
 import { isComponentEnabled, resolveSectionOrder, type PageType } from '../utils/componentConfig';
+import { getReviewsByLanding, getReviewsByEvent } from '../utils/reviews';
 import {
   MIN_LANDING_SLIDES,
   getCitySlides,
@@ -196,7 +197,9 @@ if (pageType === 'landing' && landingData && landingSlides) {
       heading: landingHeading,
     },
     landingIntro: { text: landingIntro },
-    homepageReviews: {},
+    // Bis 2026-07-31 stand hier `{}` – der Slider holte sich dann selbst den
+    // GANZEN Bestand, und der Ort-Tag der Bewertungen blieb ohne Wirkung.
+    homepageReviews: { items: getReviewsByLanding(landing ?? '') },
     slideshow: { items: landingSlides },
     cinemaWelcome: {},
     eventtypes: {},
@@ -214,6 +217,7 @@ if (pageType === 'landing' && landingData && landingSlides) {
     eventPakete: EventPakete,
     eventSkills: EventSkills,
     eventReferenzen: EventReferenzen,
+    homepageReviews: HomepageReviews,
     faq: FAQ,
     contact: Contact,
   };
@@ -248,6 +252,11 @@ if (pageType === 'landing' && landingData && landingSlides) {
             logos: eventContent.referenzen.logos,
           }
         : false,
+    // Neu am 2026-07-31: die `events`-Dimension der Bewertungen wurde geparst
+    // und im Admin angeboten, aber von keiner Seite je abgefragt – eine als
+    // „Hochzeit“ ausgezeichnete Bewertung erschien auf allen 38 Seiten statt
+    // auf der einen, für die sie gedacht war. Rendert nur, wenn es Treffer gibt.
+    homepageReviews: { items: getReviewsByEvent(landing ?? '') },
     faq: { event: landing ?? '' },
     contact: {},
   };

@@ -1,13 +1,30 @@
 ---
 import MiniReviews from "./reviews-references/MiniReviews.astro";
-import { getAllReviews } from "../utils/reviews";
+import { getAllReviews, type ReviewItem } from "../utils/reviews";
 
-const reviews = getAllReviews();
+/**
+ * Bewertungs-Slider. Ohne `items` zeigt er den GANZEN Bestand – das ist auf der
+ * Startseite richtig und war bis 2026-07-31 auch das Verhalten auf jeder
+ * Stadtseite: `[landing].astro` reichte `homepageReviews: {}` durch, also gar
+ * keine Auswahl. Folge: `/berlin/` und `/trier/` zeigten dieselben 38
+ * Bewertungen, und der Ort-Tag der Reviews hatte nirgends eine Wirkung.
+ *
+ * Wer eine Auswahl hat, gibt sie über `items` mit (`getReviewsByLanding`,
+ * `getReviewsByEvent`).
+ */
+interface Props {
+  items?: ReviewItem[];
+}
+
+const { items } = Astro.props as Props;
+const reviews = items ?? getAllReviews();
 ---
 
-<section class="homepage-reviews">
-  <MiniReviews items={reviews} />
-</section>
+{reviews.length > 0 && (
+  <section class="homepage-reviews">
+    <MiniReviews items={reviews} />
+  </section>
+)}
 
 <style>
   .homepage-reviews {

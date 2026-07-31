@@ -54,7 +54,12 @@ const DEFAULT_FAQS: FAQItem[] = [
   }
 ];
 
-const finalList = list.length > 0 ? list : DEFAULT_FAQS;
+// Der Notnagel gilt nur für Deutsch. Auf einer französischen Seite deutschen
+// Text nachzuschieben ist schlechter als eine fehlende Sektion: `/fr/belgique/`
+// zeigte so vier hartkodierte deutsche Fragen, und dass die drei übersetzten
+// FAQs nie ankamen, ist deshalb monatelang niemandem aufgefallen. Ein leerer
+// Block fällt auf – genau das soll er.
+const finalList = list.length > 0 ? list : locale === DEFAULT_LOCALE ? DEFAULT_FAQS : [];
 const visibleFaqs = interactive ? finalList : finalList.slice(0, maxItems);
 const suggestedTags = [
   'Buchung',

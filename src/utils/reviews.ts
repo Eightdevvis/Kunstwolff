@@ -213,14 +213,32 @@ const auffuellReihenfolge = (landingKey: string, all: ReviewItem[]): string[] =>
   return [...alle.slice(index + 1), ...alle.slice(0, index)].filter((key) => key !== landingKey);
 };
 
+/**
+ * Auffüllen ist ein MINIMUM, kein Freibrief.
+ *
+ * `minLandingReviews` sagt "mindestens so viele" – ohne Deckel hiess das aber
+ * faktisch "alle, die nicht ausdrücklich woanders hingehören". Bei den Orten
+ * fiel das nicht auf (nur 9 Bewertungen tragen keinen Ort-Tag), bei den
+ * Anlässen sofort: 33 der 38 tragen keinen Anlass-Tag, also zeigte
+ * `/hochzeit/` 36 statt der 3 gemeinten. Ein Slider mit 36 Einträgen ist von
+ * "gar keine Auswahl" nicht zu unterscheiden – genau der Zustand, den wir
+ * gerade abstellen.
+ *
+ * Deshalb: eigene Treffer immer vollständig, die Auffüllung nur bis zum
+ * Minimum. Eine Stadt mit 8 eigenen Bewertungen behält alle 8.
+ */
+const deckel = (eigene: ReviewItem[], aufgefuellt: ReviewItem[]): ReviewItem[] =>
+  aufgefuellt.slice(0, Math.max(eigene.length, minLandingReviews));
+
 const reviewsForLanding = (city: string, skill?: string): ReviewItem[] => {
   const landingKey = normalize(city);
   const all = getAllReviews();
 
-  let combined = filterBySkill(
+  const eigene = filterBySkill(
     all.filter((review) => hatOrtTag(review, landingKey)),
     skill,
   );
+  let combined = eigene;
 
   if (combined.length < minLandingReviews) {
     combined = uniqueReviews([...combined, ...filterBySkill(all.filter(istAllgemein), skill)]);
@@ -242,10 +260,44 @@ const reviewsForLanding = (city: string, skill?: string): ReviewItem[] => {
     }
   }
 
-  return combined;
+  return deckel(eigene, combined);
 };
 
 export const getReviewsByLanding = (city: string): ReviewItem[] => reviewsForLanding(city);
+
+/**
+ * Anlass-Treffer über den Tag – dieselbe Regel wie beim Ort.
+ *
+ * Die `events`-Dimension der Reviews wurde seit Phase 5d geparst, im Admin
+ * angeboten und von KEINER Funktion je abgefragt. Eine als „Hochzeit"
+ * ausgezeichnete Bewertung erschien deshalb auf allen 38 Seiten statt auf der
+ * einen, für die sie gedacht war. Ab hier gilt für Anlässe, was für Orte
+ * längst gilt: erst die ausdrücklich passenden, dann die allgemeinen auffüllen.
+ */
+const hatAnlassTag = (review: ReviewItem, eventKey: string): boolean =>
+  (review.tags?.events ?? []).some((tag) => normalize(tag) === eventKey);
+
+const istAnlassneutral = (review: ReviewItem): boolean =>
+  (review.tags?.events ?? []).length === 0;
+
+const reviewsForEvent = (event: string, skill?: string): ReviewItem[] => {
+  const eventKey = normalize(event);
+  const all = getAllReviews();
+
+  const eigene = filterBySkill(
+    all.filter((review) => hatAnlassTag(review, eventKey)),
+    skill,
+  );
+  let combined = eigene;
+
+  if (combined.length < minLandingReviews) {
+    combined = uniqueReviews([...combined, ...filterBySkill(all.filter(istAnlassneutral), skill)]);
+  }
+
+  return deckel(eigene, combined);
+};
+
+export const getReviewsByEvent = (event: string): ReviewItem[] => reviewsForEvent(event);
 
 export const getReviewsByLandingAndSkill = (city: string, skill: string): ReviewItem[] => {
   return reviewsForLanding(city, skill);
