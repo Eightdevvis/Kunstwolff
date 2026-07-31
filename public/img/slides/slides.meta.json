@@ -3655,5 +3655,40 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
+  },
+  "szenenmaler/wedding-live-painter.webp": {
+    "categories": [],
+    "priority": 1,
+    "tags": {}
+  },
+  "szenenmaler/wedding-painting.webp": {
+    "categories": [],
+    "priority": 2,
+    "tags": {}
+  },
+  "szenenmaler/img_20240316_154802.webp": {
+    "categories": [],
+    "priority": 3,
+    "tags": {}
+  },
+  "szenenmaler/img_20240316_154730.webp": {
+    "categories": [],
+    "priority": 4,
+    "tags": {}
+  },
+  "szenenmaler/img_20240316_161403.webp": {
+    "categories": [],
+    "priority": 5,
+    "tags": {}
+  },
+  "szenenmaler/img_20240316_162537.webp": {
+    "categories": [],
+    "priority": 6,
+    "tags": {}
+  },
+  "szenenmaler/img_20240316_162602.webp": {
+    "categories": [],
+    "priority": 7,
+    "tags": {}
   }
 }
