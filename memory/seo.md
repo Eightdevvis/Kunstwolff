@@ -264,7 +264,19 @@ die Auswahlen aus dem CinemaWelcome-Konfigurator. Die sind in §4 benannt, weil 
 DSGVO Transparenz über das verlangt, was tatsächlich übertragen wird. Kommt ein Feld
 dazu, gehört es dort hinein.
 
-Der Text ist ein **Entwurf und braucht Sashas Freigabe** – insbesondere die Angabe, dass
-AV-Verträge nach Art. 28 mit beiden Anbietern bestehen. Die sind bei Vercel und Formspree
-im Kundenkonto abschließbar, aber jemand muss es tun; solange das nicht passiert ist, ist
-der Satz falsch.
+Der Text ist ein **Entwurf und braucht Sashas Freigabe.**
+
+⚠️ **Was bewusst NICHT drinsteht:** dass AV-Verträge nach Art. 28 DSGVO bestehen. Die
+erste Fassung behauptete das; beim Nachprüfen stellte sich heraus, dass Vercels
+öffentliches DPA (`vercel.com/legal/dpa`) sich ausdrücklich auf **Enterprise**-Verträge
+bezieht („forms part of Vercel Enterprise Terms and Conditions … on an Enterprise plan")
+und `formspree.io/legal/dpa` gar nicht existiert (404). Ob für den genutzten Tarif ein
+AV-Vertrag zustande gekommen ist, ist damit **ungeklärt** – und eine falsche Angabe in
+der Datenschutzerklärung ist schlimmer als eine fehlende. Es steht deshalb nur die
+nachprüfbare Tatsache drin: beide Anbieter sitzen in den USA, also Drittlandübermittlung
+nach Art. 44 ff.
+
+Sobald die AV-Verträge nachweislich geschlossen sind, gehören in §2 und §4 je ein Satz
+dazu (Art. 28 DSGVO) und die konkrete Garantie für die Drittlandübermittlung
+(Standardvertragsklauseln oder EU-US Data Privacy Framework – je nachdem, was der
+Vertrag sagt).
