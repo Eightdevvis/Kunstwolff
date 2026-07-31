@@ -102,8 +102,11 @@ const eventsFromText = (text) => {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')}-`;
   const found = [];
+  // Wortgrenze statt Substring – sonst macht "Wir haben die Wirkung gemessen"
+  // aus einer Bewertung eine Messe-Bewertung. Der Heuhaufen ist oben bereits
+  // mit Bindestrichen eingefasst.
   for (const [slug, keywords] of Object.entries(EVENT_KEYWORDS)) {
-    if (keywords.some((kw) => haystack.includes(kw))) found.push(slug);
+    if (keywords.some((kw) => haystack.includes(`-${kw}`))) found.push(slug);
   }
   return normalizeTagList(found);
 };

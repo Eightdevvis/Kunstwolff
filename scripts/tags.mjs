@@ -179,7 +179,10 @@ export const EVENT_KEYWORDS = {
   silvester: ['silvester', 'sylvester'],
   gartenparty: ['gartenparty'],
   stadtfest: ['stadtfest'],
-  jubilaum: ['jubilaum', 'jubilaeum'],
+  // Schluessel = Slug im Vokabular. `jubilaum` war der einzige von zwoelf, der
+  // dort nicht existiert (`tags.json` fuehrt `jubilaeum`) – ein so vergebener
+  // Tag traf nie eine Seite und tauchte in keinem Chip auf.
+  jubilaeum: ['jubilaum', 'jubilaeum'],
   gala: ['gala'],
   sommerfest: ['sommerfest'],
 };
@@ -235,9 +238,14 @@ export function inferEventsFromKey(key) {
     if (slug) found.push(slug);
   }
 
-  const haystack = normalize(raw).replace(/[^a-z0-9]+/g, '-');
+  // An WORTGRENZEN, nicht als Substring – dieselbe Regel wie bei den Orten
+  // direkt darueber. Der reine `includes`-Test war produktiv im Einsatz und
+  // traf zuverlaessig daneben: `angemessen-preis.webp` -> `messe`,
+  // `Wir haben die Wirkung gemessen` -> `messe`. Ein Wortanfang reicht, damit
+  // `weihnachtsfeier` weiter auf das Stichwort `weihnacht` anspringt.
+  const haystack = `-${normalize(raw).replace(/[^a-z0-9]+/g, '-')}-`;
   for (const [slug, keywords] of Object.entries(EVENT_KEYWORDS)) {
-    if (keywords.some((kw) => haystack.includes(kw))) found.push(slug);
+    if (keywords.some((kw) => haystack.includes(`-${kw}`))) found.push(slug);
   }
 
   return normalizeTagList(found);

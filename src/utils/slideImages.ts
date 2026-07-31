@@ -41,6 +41,7 @@ export type SlideTags = {
 };
 
 export type TagDimension = 'skills' | 'events' | 'landings';
+export const TAG_DIMENSIONEN: TagDimension[] = ['skills', 'events', 'landings'];
 
 type SlideMetadataMap = Record<string, SlideMetadataEntry>;
 
@@ -408,6 +409,23 @@ export const getAllSlidesWithTags = (): TaggedSlide[] => {
 
   return collectAllSlidesWithKeys()
     .map(({ slide, key }) => ({ ...slide, key, tags: metadata[key]?.tags ?? {} }))
+    // Wer keinen einzigen Tag trägt, gehört auch nicht in die Galerie.
+    //
+    // `public/img/slides/mediathek` ist der Zwischenspeicher des Foto-Dumps:
+    // hochgeladen, aber noch nicht eingeordnet. Der Admin verspricht
+    // ausdrücklich, er sei "auf der Website inert"
+    // (`services/mediaLibrary.ts`) – die Galerie hat ihn trotzdem komplett
+    // ausgegeben, samt `obi_logo.webp`, `samsung-logo-1993.webp` und
+    // `saarlandtherme-logo-150px.webp`. Fremde Firmenlogos auf der eigenen
+    // Galerieseite.
+    //
+    // Die Prüfung hängt bewusst am TAG und nicht am Ordnernamen: eine zweite
+    // Ordner-Sonderregel wäre genau der Weg, den wir gerade abschaffen. Ein
+    // Bild aus dem Pool, das jemand eingeordnet hat, erscheint weiter.
+    // Betroffen sind heute 24 von 232 Bildern (22 im Pool, 2 in `default/`).
+    .filter((slide) =>
+      TAG_DIMENSIONEN.some((dimension) => (slide.tags?.[dimension] ?? []).length > 0),
+    )
     .sort((a, b) => {
       const nachPrio = (b.priority ?? 0) - (a.priority ?? 0);
       if (nachPrio !== 0) return nachPrio;
