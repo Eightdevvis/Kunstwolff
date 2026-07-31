@@ -49,6 +49,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 ### Status & offene Punkte (außerhalb von `memory/`)
 - `HEALTH_CHECK_2026-05-05.md` (Repo-Root) – aktueller Audit: Vercel-Stage vs. Wix-Production, Cutover-Tickets, GitHub-Action-Lücken, TS-/SEO-Findings.
 - `CUTOVER_PLAN.md` (Repo-Root) – Schritt-für-Schritt-Plan Wix → Astro/Vercel: URL-Mapping, DNS, Vercel-Settings, Cutover-Tag, Rollback.
+- `reports/tagsystem-audit-2026-07-30.md` – **abzuarbeitende Befundliste** aus dem Tag-System-Audit (45 bestätigte Funde über sechs Ebenen, nach Schwere sortiert, mit „gesund"- und „widerlegt"-Abschnitt). Enthält u.a.: 38 leere Skill×Stadt-Galerien, 40 inhaltslose Aquarelle-Seiten, tote Anlass-Dimension der FAQs, `public/config` fehlt in beiden `git add`-Listen.
 
 ---
 
