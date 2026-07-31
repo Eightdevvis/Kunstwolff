@@ -185,10 +185,27 @@ const trefferGenauigkeit = (faq: FAQItem, context: FAQFilterContext): number => 
     return vorhanden.some((tag) => gesucht.includes(tag)) ? 1 : 0;
   };
 
+  /**
+   * Abzug für einen Tag in einer Dimension, nach der gar nicht gefragt wird.
+   *
+   * Ohne den ist eine FAQ mit `events: [messe]` auf einer Stadtseite genauso
+   * gut wie eine allgemeine – beide kommen auf 0, und die Lesereihenfolge der
+   * Dateien entscheidet. Genau das passierte am 2026-07-31: `/berlin/` zeigte
+   * plötzlich „Wie viel Platz brauchen Sie auf dem Messestand?".
+   *
+   * Ausgeschlossen wird die FAQ NICHT – „leer gilt überall" bleibt die Regel,
+   * und wenn es nichts Besseres gibt, ist eine Messe-Antwort besser als keine.
+   * Sie steht nur hinter allem, was allgemein gilt.
+   */
+  const danebenGetaggt = (faqTags: string[] | undefined, gesucht: string[]): number =>
+    gesucht.length === 0 && (faqTags ?? []).length > 0 ? 1 : 0;
+
   return (
     trifft(faq.tags?.landings, landingKeys) +
     trifft(faq.tags?.events, eventKeys) +
-    trifft([...(faq.tags?.skills ?? []), ...(faq.categories ?? [])], skillKeys)
+    trifft([...(faq.tags?.skills ?? []), ...(faq.categories ?? [])], skillKeys) -
+    danebenGetaggt(faq.tags?.landings, landingKeys) -
+    danebenGetaggt(faq.tags?.events, eventKeys)
   );
 };
 

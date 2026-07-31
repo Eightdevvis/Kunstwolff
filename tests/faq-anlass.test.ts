@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'fs';
 import path from 'path';
-import { matchesFAQContext, type FAQItem } from '../src/utils/faq';
+import { matchesFAQContext, getFAQsForContext, type FAQItem } from '../src/utils/faq';
 
 /**
  * Die Anlass-Dimension der FAQs kam nie an.
@@ -77,5 +77,28 @@ describe('die Event-Seiten geben den Anlass auch wirklich mit', () => {
     const c = lies('./src/components/FAQ.astro');
     expect(c).toMatch(/event\?:\s*string/);
     expect(c).toMatch(/getFAQsForContext\(\{[^}]*event[^}]*\}/);
+  });
+});
+
+describe('Rangfolge: ein fremder Anlass-Tag verdrängt nichts Allgemeines', () => {
+  it('stellt die allgemeine FAQ vor die eines fremden Anlasses', () => {
+    // Ohne diese Regel entschied die Lesereihenfolge der Dateien, und /berlin/
+    // zeigte plötzlich „Wie viel Platz brauchen Sie auf dem Messestand?".
+    const allgemein = faq({});
+    const messeFaq = faq({ events: ['messe'] });
+    const kontext = { city: 'berlin' };
+    // Über die echten Dateien geprüft: auf einer Stadtseite darf keine der
+    // zwölf Anlass-FAQs in den ersten vier stehen.
+    const ersteVier = getFAQsForContext(kontext).slice(0, 4);
+    const anlassBezogen = ersteVier.filter((f) => (f.tags?.events?.length ?? 0) > 0);
+    expect(anlassBezogen).toEqual([]);
+    expect(allgemein.tags?.events).toEqual([]);
+    expect(messeFaq.tags?.events).toEqual(['messe']);
+  });
+
+  it('schliesst die fremde FAQ aber NICHT aus', () => {
+    // „leer gilt überall" bleibt: gibt es nichts Besseres, ist eine
+    // Messe-Antwort besser als gar keine.
+    expect(matchesFAQContext(faq({ events: ['messe'] }), { city: 'berlin' })).toBe(true);
   });
 });
