@@ -27,6 +27,7 @@ import {
   MIN_LANDING_SLIDES,
   getCitySlides,
   getDefaultSlides,
+  getSkillSlidesForCity,
   supplementWithDefaultSlides,
 } from '../../utils/slideImages';
 
@@ -112,7 +113,14 @@ const site = Astro.site?.origin ?? 'https://kunstwolff.de';
 if (pageType === 'landing') {
   const rawCitySlides = getCitySlides(landing ?? '');
   const defaultSlides = getDefaultSlides();
-  landingSlides = supplementWithDefaultSlides(rawCitySlides, defaultSlides, MIN_LANDING_SLIDES);
+  // Erst nach Skill filtern, DANN auffüllen – sonst werden die Nachfüller von
+  // der Slideshow gleich wieder aussortiert und die Galerie bleibt leer.
+  landingSlides = getSkillSlidesForCity(
+    rawCitySlides,
+    defaultSlides,
+    skillData.title,
+    MIN_LANDING_SLIDES,
+  );
   reviews = getReviewsByLandingAndSkill(landing ?? '', skillData.title);
   skillCityTitleImage = resolveTitleImage({ skill, landing });
   skillCityHeroBg = resolveHeroBg({ skill, landing });
@@ -156,7 +164,13 @@ if (pageType === 'event') {
   eventContent = getEventContent(landing ?? '');
   const rawEventSlides = getEventSlides(landing ?? '');
   const defaultSlides = getDefaultSlides();
-  eventSlides = supplementWithDefaultSlides(rawEventSlides, defaultSlides, MIN_LANDING_SLIDES);
+  // Gleiche Falle wie bei den Stadt-Kombis: erst nach Skill filtern, dann auffüllen.
+  eventSlides = getSkillSlidesForCity(
+    rawEventSlides,
+    defaultSlides,
+    skillData.title,
+    MIN_LANDING_SLIDES,
+  );
   eventTitleImage = resolveEventTitleImage(landing ?? '');
 
   // Titel: "{Skill} für {Event}" z.B. "Schnellzeichner für Firmenfeiern"

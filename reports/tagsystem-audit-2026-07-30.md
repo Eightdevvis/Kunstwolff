@@ -74,7 +74,7 @@ kaputt, C ist Hygiene und kann jederzeit dazwischen.
 
 ## B. Sichtbar kaputte Seiten
 
-- [ ] **B1 — hoch — 38 von 105 Skill×Stadt-Seiten zeigen eine leere Galerie.**
+- [x] **B1 — hoch — 38 von 105 Skill×Stadt-Seiten zeigen eine leere Galerie.** ✅ **erledigt 2026-07-30**
       `src/pages/[skill]/[landing].astro` · `src/utils/slideImages.ts`
       (`supplementWithDefaultSlides`, `MIN_LANDING_SLIDES = 6`) ·
       `src/components/slideshows/Slideshow.astro`
@@ -89,14 +89,21 @@ kaputt, C ist Hygiene und kann jederzeit dazwischen.
       im Repo liegen.
       **Schritt:** erst nach Skill filtern, dann mit **ebenfalls gefilterten**
       Default-Bildern auffüllen.
+      **Erledigt:** `getSkillSlidesForCity()` in `slideImages.ts`, benutzt in
+      beiden Zweigen von `[skill]/[landing].astro` (Stadt UND Event — der
+      Event-Zweig hatte denselben Fehler). Am gebauten `dist/` gegengeprüft:
+      `karlsruhe`/`neunkirchen`/`fulda` von 0 auf je 6 Bilder, 0 Nicht-Aquarelle-
+      Seiten ohne Bilder. Test: `tests/skill-slides-order.test.ts`.
 
-- [ ] **B2 — mittel — Leere Sektionen rendern trotzdem Überschrift und Rahmen.**
+- [x] **B2 — mittel — Leere Sektionen rendern trotzdem Überschrift und Rahmen.** ✅ **erledigt 2026-07-30**
       `Slideshow.astro` (rendert `<section>` + `<h2>Unsere Kunst</h2>`
       unbedingt) · `SkillHero.astro` (guardet gegen die **ungefilterte**
       Review-Liste, 38 statt 0) · `MiniReviews.astro` (Wrapper bleibt leer,
       ~44 px Leerraum auf `/aquarelle/`).
       **Schritt:** `{gefilterte.length > 0 && …}` um Galerie-Sektion und
       MiniReviews-Wrapper. Unabhängig von B1 — auch nach B1 gibt es leere Fälle.
+      **Erledigt:** beide Guards gesetzt. Am `dist/` gegengeprüft: **0** leere
+      Galerie-Sektionen (vorher 38) und **0** leere Bewertungs-Slider.
 
 - [ ] **B3 — hoch (redaktionell) — 40 Aquarelle-Seiten ohne Inhalt sind live.**
       `public/skills/skills.json` · `public/config/page-visibility.json`

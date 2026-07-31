@@ -463,6 +463,44 @@ const getAllSlidesFlat = (): SlideItem[] => {
 
 export const getHomepageSlides = (): SlideItem[] => getDefaultSlides();
 
+/**
+ * Trägt ein Slide diesen Skill?
+ *
+ * Zeichengleich zu der Prüfung, die `Slideshow.astro` über `filteredCategories`
+ * macht – bewusst dieselbe Semantik (Label-Vergleich über `categories`), damit
+ * das Vorfiltern die Auswahl NICHT verändert, sondern nur früher passiert.
+ * Ein Slide ohne `categories` zählt als „passt nicht" – genau wie dort.
+ *
+ * (Dass die Skill-Dimension überhaupt über Labels statt über `tags.skills`
+ * läuft, ist ein eigener Punkt: siehe B6 in
+ * `reports/tagsystem-audit-2026-07-30.md`.)
+ */
+export const matchesSkill = (slide: SlideItem, skillTitle: string): boolean =>
+  !!slide.categories?.some((cat) => cat === skillTitle);
+
+/**
+ * Nach Skill filtern – und zwar VOR dem Auffüllen.
+ *
+ * Die Reihenfolge ist der ganze Witz. Vorher lief `supplementWithDefaultSlides`
+ * zuerst und die Komponente filterte danach: die Nachfüller wurden also gleich
+ * wieder aussortiert, weil 93 der 232 Slides und 11 der 30 Auswahl-Slides gar
+ * keine `categories` tragen. Ergebnis waren 38 von 105 Skill×Stadt-Seiten mit
+ * LEERER Galerie – Karlsruhe zum Beispiel hatte 7 eigene Bilder, kam damit über
+ * die Auffüll-Schwelle, und der Filter warf danach alle 7 weg, obwohl 115
+ * Schnellzeichner-Bilder im Repo liegen.
+ */
+export const getSkillSlidesForCity = (
+  citySlides: SlideItem[],
+  defaultSlides: SlideItem[],
+  skillTitle: string,
+  minimumSlides: number,
+): SlideItem[] =>
+  supplementWithDefaultSlides(
+    citySlides.filter((s) => matchesSkill(s, skillTitle)),
+    defaultSlides.filter((s) => matchesSkill(s, skillTitle)),
+    minimumSlides,
+  );
+
 export const supplementWithDefaultSlides = (
   citySlides: SlideItem[],
   defaultSlides: SlideItem[],

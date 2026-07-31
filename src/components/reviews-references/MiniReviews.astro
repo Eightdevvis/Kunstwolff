@@ -15,6 +15,13 @@ const filteredItems =
       );
 ---
 
+<!--
+  Leer-Guard: der Aufrufer (SkillHero) prueft gegen die UNGEFILTERTE Liste - auf
+  /aquarelle/ sind das 38 Reviews, von denen nach dem Skill-Filter 0 uebrig
+  bleiben. Ohne diesen Guard steht dann ein leerer Slider-Rahmen im Hero
+  (~44 px Leerraum). Siehe reports/tagsystem-audit-2026-07-30.md, B2.
+-->
+{filteredItems.length > 0 && (
 <div class="review-slider" data-review-rotator>
   <div class="review-track">
     {filteredItems.map((review: Review, index: number) => (
@@ -33,6 +40,7 @@ const filteredItems =
     </div>
   )}
 </div>
+)}
 
 <script>
   type RgbaColor = { r: number; g: number; b: number; a: number };

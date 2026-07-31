@@ -27,6 +27,13 @@ const filteredItems =
 
 ---
 
+<!--
+  Leer-Guard: ohne ihn rendert die Sektion samt Ueberschrift "Unsere Kunst" auch
+  dann, wenn nach dem Skill-Filter kein einziges Bild uebrig bleibt - eine
+  Ueberschrift ueber dem Nichts. Betraf gemessen 38 von 105 Skill-Stadt-Seiten
+  (siehe reports/tagsystem-audit-2026-07-30.md, B1/B2).
+-->
+{filteredItems.length > 0 && (
 <section class="section gallery">
     <h2>Unsere Kunst</h2>
 
@@ -64,6 +71,7 @@ const filteredItems =
         <a href={GALERIE_URL}>Alle Bilder in der Galerie ansehen</a>
     </p>
 </section>
+)}
 
 <script>
     import Swiper from "swiper";

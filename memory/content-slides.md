@@ -32,6 +32,34 @@ public/img/slides/category-matching.md # optionale Zusatzregeln
 - Hat eine Stadt **weniger als 6 eigene Slides**, werden Slides aus `default/` ergänzt
 - Liegen `foto.jpg` und `foto.webp` im selben Ordner: nur `.webp` wird angezeigt (Deduplication)
 
+### ⚠️ Auf Skill×Stadt-Seiten wird ZUERST gefiltert, dann aufgefüllt (2026-07-30)
+
+`getSkillSlidesForCity()` in `slideImages.ts` — nicht mehr
+`supplementWithDefaultSlides` direkt. Die Reihenfolge ist der ganze Punkt:
+
+Vorher lief das Auffüllen zuerst und `Slideshow.astro` filterte danach über
+`filteredCategories`. Da **93 von 232** Slides und **11 von 30** Auswahl-Slides
+gar keine `categories` tragen, wurden die Nachfüller gleich wieder aussortiert.
+Gemessen: **38 von 105** Skill×Stadt-Seiten mit leerer Galerie. Karlsruhe hatte
+7 eigene Bilder, kam damit über die Schwelle (also kein Auffüllen), und der
+Filter warf danach alle 7 weg — obwohl 115 Schnellzeichner-Bilder im Repo liegen.
+
+Nach dem Umbau am gebauten `dist/` gegengeprüft: **0 leere Galerie-Sektionen**,
+`schnellzeichner/karlsruhe|neunkirchen|fulda` von 0 auf je 6 Bilder. Die 39
+verbliebenen Seiten ohne Bilder sind alle `aquarelle/*` — dort trägt kein
+einziges Bild den Skill, das ist Redaktionsstand, kein Rendering-Fehler
+(B3 in `reports/tagsystem-audit-2026-07-30.md`).
+
+`matchesSkill()` hält die Prüfung zeichengleich zu der in `Slideshow.astro`:
+Label-Vergleich über `categories`, ein Bild ohne `categories` passt zu keinem
+Skill. Dass die Skill-Dimension überhaupt über Labels statt über `tags.skills`
+läuft, ist ein eigener offener Punkt (B6 im selben Report).
+
+**Leer-Guards:** `Slideshow.astro` und `MiniReviews.astro` rendern nichts mehr,
+wenn nach dem Filtern 0 Einträge übrig sind. Vorher stand die Überschrift
+„Unsere Kunst" über dem Nichts, und im Hero ein leerer Bewertungs-Rahmen
+(`SkillHero.astro` prüft gegen die **ungefilterte** Liste).
+
 ## Lightbox
 
 Eigene Implementierung (kein externes Package):
