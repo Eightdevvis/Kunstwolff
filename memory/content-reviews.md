@@ -110,3 +110,34 @@ keinen Anlass-Tag und gelten damit überall.
 **Der Review-Block auf Anlass-Seiten ist neu** und steht in
 `public/config/components.json` unter `event._default._order`. Eine Zeile dort
 raus nimmt ihn wieder weg.
+
+
+## `tagOnly` — der Schalter pro Bewertung (2026-07-31)
+
+Bewertungen folgen **absichtlich nicht** der strengen Regel von FAQs und
+Bildern (Entscheidung Sasha). Sie sind unspezifischer — „nett, schnell, tolles
+Bild" passt überall — und eine Stadtseite ohne eigene Bewertungen soll keinen
+leeren Slider zeigen. Deshalb dürfen sie fremde Seiten auffüllen. Ohne das
+stünden heute 9 Städte ohne Bewertungen da.
+
+Neues Frontmatter-Feld:
+
+```yaml
+tagOnly: true    # erscheint nur da, wo ihr Tag sitzt
+```
+
+- **Fehlt das Feld → frei.** Das ist der Standard und das bisherige Verhalten
+  aller 38 Dateien. Nur ein ausdrückliches `true` beschränkt; `false`,
+  Tippfehler oder ein String zählen als frei — der Standard darf nicht von
+  einem kaputten Wert abhängen.
+- `darfAuffuellen()` greift in **allen drei** Auffüll-Schritten (allgemein,
+  fremder Ort, anlassneutral) und **nie** beim eigenen Treffer: wo der Tag
+  sitzt, erscheint die Bewertung immer.
+- Gedacht für alles Ortsgebundene („die Location in Trier war perfekt"), das
+  auf einer Berliner Seite peinlich wäre.
+
+**Cross-Repo:** Der `ReviewManager` hat dafür eine Checkbox („Nur da zeigen, wo
+der Tag sitzt"). Sie schreibt einen **echten Boolean** — dafür musste
+`markdown.ts` im Admin Booleans lernen, sonst wäre `tagOnly: "true"` als String
+in der Datei gelandet und die Website prüft `=== true`. Abwählen **löscht** das
+Feld, statt `false` zu schreiben.

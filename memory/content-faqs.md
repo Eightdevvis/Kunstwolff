@@ -199,3 +199,43 @@ damit sie wie ihre deutschen Gegenstücke ohne Skill-Einschränkung gelten.
 für Website **und** Admin unsichtbar. Erstere ist umbenannt (Inhalt war
 verloren, steht jetzt auf der Seite), letztere gelöscht — `kosten.md` deckt
 dieselbe Frage ab, und die Datei ist per git wiederherstellbar.
+
+
+## Leer heisst nirgends (2026-07-31, Entscheidung Sasha)
+
+Die Regel in einem Satz: **eine FAQ erscheint nur da, wo ein Tag von ihr sitzt.**
+Wer überall gelten soll, liegt ausdrücklich in `public/faq/default/` und trägt
+gar keinen Tag — das ist der Auffüll-Topf, dieselbe Rolle wie
+`default-selection.json` bei den Bildern.
+
+Vorher galt „kein Tag in dieser Dimension = gilt überall". Wer im Admin eine
+Frage anlegte und das Taggen vergaß, veröffentlichte sie versehentlich auf
+allen 170 Seiten — und merkte es nicht, weil es wie Absicht aussah.
+
+`matchesFAQContext` stimmt jetzt je Dimension ab:
+
+| Stimme | wann |
+| :-- | :-- |
+| `treffer` | die FAQ trägt den gesuchten Tag |
+| `dagegen` | sie trägt in dieser Dimension einen ANDEREN Tag |
+| `enthaltung` | sie trägt hier keinen Tag, oder die Dimension wird nicht abgefragt |
+
+**Mindestens ein Treffer, kein Dagegen.** Enthaltungen müssen erlaubt sein,
+sonst verlöre `/schnellzeichner/trier/` seine Trier-FAQs, nur weil die keinen
+Skill-Tag tragen.
+
+Gemessen vor der Umstellung: 14 von 86 FAQs tragen keinen Tag, **alle 14 liegen
+in `default/`**, keine ungetaggte Datei außerhalb. Die Regel kostet also keinen
+Inhalt.
+
+### Der Nebenbefund: `categories` machte FAQs unsichtbar
+
+Unter der alten Regel füllte `categories` die Skill-Dimension. Fragte eine Seite
+Skills **nicht** ab — also jede Stadt- und jede Anlass-Seite —, stimmte die FAQ
+dagegen und flog raus. Betroffen waren genau die zwei FAQs, die zuletzt über den
+Admin veröffentlicht wurden: `rhein-main-gebiet/kosten-2.md` trägt sieben
+Anlass-Tags, einen Ort-Tag und `categories: [Schnellzeichner]` — und stand auf
+**null von 170 Seiten**, nicht einmal auf ihrer eigenen Stadtseite. Seit der
+Umstellung steht sie auf ihren fünf.
+
+Seiten mit identischem FAQ-Satz: 60 → 51 von 158.

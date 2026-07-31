@@ -280,6 +280,30 @@ einer FR-Seite nicht.
 **Merksatz:** jedes neue Sync-Skript muss über *alle* Locale-Wurzeln laufen,
 nicht nur über die deutsche.
 
+## Die Regel, endgültig (2026-07-31, Entscheidung Sasha)
+
+Für **alle drei** Inhaltstypen dieselbe Frage: *trägt der Inhalt einen Tag, der
+auf diese Seite zeigt?* Wenn nein, erscheint er dort nicht.
+
+**Leer heißt nirgends.** „Kein Tag" ist keine Zustimmung mehr. Wer überall
+gelten soll, wird ausdrücklich in den Auffüll-Topf gelegt:
+
+| Typ | Auffüll-Topf | Deckel |
+| :-- | :-- | :-- |
+| Bilder | `default-selection.json` (`getDefaultSlides`) | `MIN_LANDING_SLIDES` |
+| FAQs | `public/faq/default/`, ohne jeden Tag | `maxItems` in `FAQ.astro` |
+| Reviews | **Sonderfall, siehe unten** | `minLandingReviews` |
+
+**Reviews sind absichtlich die Ausnahme.** Sie sind unspezifischer als FAQs und
+Bilder und dürfen fremde Seiten auffüllen — sonst stünden 9 Städte ohne eigene
+Bewertungen mit leerem Slider da. Wer eine einzelne Bewertung davon ausnehmen
+will, setzt `tagOnly: true` (Details in `content-reviews.md`).
+
+Der Grund für die Strenge bei FAQs und Bildern: unter „leer gilt überall"
+veröffentlicht ein vergessener Tag den Inhalt versehentlich auf allen 170
+Seiten — und das sieht aus wie Absicht. Unter „leer heißt nirgends" fällt ein
+vergessener Tag auf, weil der Inhalt nirgends auftaucht.
+
 ## Abdeckung je Inhaltstyp
 
 | Typ | | Stand |
