@@ -60,6 +60,25 @@ wenn nach dem Filtern 0 Einträge übrig sind. Vorher stand die Überschrift
 „Unsere Kunst" über dem Nichts, und im Hero ein leerer Bewertungs-Rahmen
 (`SkillHero.astro` prüft gegen die **ungefilterte** Liste).
 
+## Bildunterschrift: nur `title`, kein Rückfall auf `alt` (2026-07-31)
+
+Die Lightbox zeigte `slide.title || slide.alt`. Der Alt-Text wird aus dem
+**Dateinamen** gebaut (`normalizeAlt`: Endung weg, führende Nummer weg,
+Unterstriche zu Leerzeichen) — unter den Bildern stand also technischer Kram wie
+„2 kollegen weihnachtsfeier trier".
+
+Jetzt zeigt sie **ausschließlich** den gepflegten `title` aus `slides.meta.json`.
+Ohne Titel gibt es **keine** Unterschrift. Der Alt-Text bleibt am `<img>` und
+damit für Screenreader erhalten — er ist nur nicht mehr sichtbar.
+
+Gepflegt wird der Titel **in der Mediathek des Admin-Tools** (Bild anklicken →
+Feld „Bildunterschrift"), auch für längst vorhandene Bilder; leeres Feld
+entfernt ihn. Details: Admin-Memory `mediathek-tags.md`.
+
+Stand beim Umbau: 85 von 232 Bildern hatten bereits einen echten Titel.
+Festgehalten in `tests/lightbox-caption.test.ts` — die Regel rutscht sonst leicht
+zurück.
+
 ## Lightbox
 
 Eigene Implementierung (kein externes Package):

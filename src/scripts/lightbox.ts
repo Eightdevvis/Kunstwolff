@@ -135,9 +135,19 @@ function showSlide() {
     lbImg.src = slide.src;
     lbImg.alt = slide.alt;
     lbCounter.textContent = `${lbIdx + 1} / ${lbSlides.length}`;
-    // title hat Vorrang, Fallback auf alt – Caption ausblenden wenn beides leer
+    // NUR der gepflegte Titel, KEIN Rückfall auf den Alt-Text.
+    //
+    // Der Alt-Text wird aus dem DATEINAMEN abgeleitet (`normalizeAlt` in
+    // slideImages.ts: Endung weg, führende Nummer weg, Unterstriche zu
+    // Leerzeichen). Als Bildunterschrift stand darunter also so etwas wie
+    // „2 kollegen weihnachtsfeier trier" – technischer Dateikram, den niemand
+    // lesen soll. Für Screenreader ist derselbe Text weiterhin richtig und
+    // bleibt am `alt`-Attribut; sichtbar wird er nicht mehr.
+    //
+    // Folge: ohne gepflegten Titel gibt es KEINE Unterschrift. Das ist Absicht –
+    // gepflegt wird er in der Mediathek pro Bild.
     if (lbCaption) {
-        const caption = slide.title || slide.alt || "";
+        const caption = slide.title || "";
         lbCaption.textContent = caption;
         lbCaption.style.display = caption ? "" : "none";
     }
