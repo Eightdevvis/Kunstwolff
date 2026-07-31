@@ -54,9 +54,12 @@ const robotsContent = shouldNoindex ? "noindex, nofollow" : "index, follow";
 		     (HTML → CSS → @import swiper → @font-face → Download).
 		     Ohne preload entdeckt der Browser die Font erst nach allen @imports. -->
 		<link rel="preload" href="/fonts/mayonice/Mayonice.woff2" as="font" type="font/woff2" crossorigin />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+		{/* Inter wird seit 2026-07-31 selbst ausgeliefert (siehe global.css).
+		    Vorher standen hier zwei preconnects und ein Stylesheet von Google –
+		    damit ging die IP jedes Besuchers an Google, ohne Einwilligung.
+		    Preload aus demselben Grund wie bei Mayonice: die @font-face steht
+		    hinter mehreren CSS-@imports und würde sonst spät entdeckt. */}
+		<link rel="preload" href="/fonts/inter/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
 		<link rel="icon" type="image/webp" href="/img/logo/logo_transparent.webp" />
 		<link rel="apple-touch-icon" href="/img/logo/logo_transparent.webp" />
 		<link rel="canonical" href={canonicalURL} />

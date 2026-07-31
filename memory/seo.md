@@ -219,3 +219,31 @@ Ebenfalls entfernt: der Slug `schnellzeichner-duesseldorf` aus `landings.md` (st
 als "Stadt" und erzeugte vier Seiten mit Titeln wie "Schnellzeichner
 Schnellzeichner-Duesseldorf buchen"). Weiterleitung auf `/schnellzeichner/duesseldorf/`
 steht in `vercel.json`.
+
+## Schriften kommen vom eigenen Server (seit 2026-07-31)
+
+Inter lag bis dahin auf `fonts.googleapis.com`/`fonts.gstatic.com`, eingebunden über
+zwei `preconnect` und ein Stylesheet in `Layout.astro`. Damit ging die IP jedes
+Besuchers an Google, ohne Einwilligung. Jetzt unter `public/fonts/inter/`,
+`@font-face` in `src/styles/global.css` neben Mayonice.
+
+**Zwei Dateien statt acht:** Google liefert Inter als **variable Schrift** – die vier
+früher einzeln angeforderten Gewichte (400/500/600/700) waren byteweise dieselbe Datei
+(per md5 geprüft). Deshalb `font-weight: 100 900` als Bereich und nur
+`inter-latin.woff2` (48 KB) + `inter-latin-ext.woff2` (85 KB). `unicode-range` sorgt
+dafür, dass latin-ext nur geladen wird, wenn die Seite Zeichen daraus braucht – für
+Deutsch und Französisch reicht latin, die Umlaute liegen dort.
+
+`inter-latin.woff2` wird per `preload` vorgeladen, aus demselben Grund wie Mayonice:
+die `@font-face` steht hinter mehreren CSS-`@import`s und würde sonst spät entdeckt.
+
+Lizenz SIL OFL 1.1, Kopie in `public/fonts/inter/OFL.txt` (die Lizenz verlangt, dass
+sie mitgeliefert wird).
+
+**Abnahme:** `grep -r 'googleapis\|gstatic' dist/` ist leer. Festgenagelt in
+`tests/schriften-lokal.test.ts` – der Test prüft echte Verweise (`url()`, `href=`,
+`preconnect`), nicht die Erwähnung in Kommentaren.
+
+Verbleibende Fremd-Hosts im ausgelieferten HTML sind keine Verbindungen:
+`www.w3.org` (XML-Namensräume), `schema.org` (JSON-LD-Kontext) und drei redaktionelle
+Links in Texten.
