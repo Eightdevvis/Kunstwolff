@@ -1,6 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Frage from "../components/FAQ.astro";
+import { getAllFAQs } from "../utils/faq";
+
+// Diese Seite ist das Archiv, kein Kontext: hier gehoeren ALLE Fragen hin,
+// auch die ortsspezifischen und die zu einzelnen Anlaessen. Ohne die
+// ausdrueckliche Liste bekaeme sie nur den Default-Topf, weil ein leerer
+// Kontext keine Dimension abfragt.
+const alleFragen = getAllFAQs();
 ---
 
 <Layout
@@ -9,7 +16,7 @@ import Frage from "../components/FAQ.astro";
 >
   <div class="faq-page">
     <h1>Häufige Fragen zu Kunstwolff</h1>
-    <Frage interactive={true} />
+    <Frage interactive={true} faqs={alleFragen} />
   </div>
 </Layout>
 

@@ -90,8 +90,18 @@ describe('matchesFAQContext – Dimensionen einzeln, nicht als ODER-Kette', () =
     tags: { skills: [], events: [], landings: [], ...tags },
   });
 
-  it('lässt eine FAQ ohne Ort-Tag überall zu', () => {
-    expect(matchesFAQContext(faq({ skills: ['schnellzeichner'] }), { city: 'trier' })).toBe(true);
+  it('lässt eine FAQ ganz ohne Tags überall zu – der Default-Topf', () => {
+    expect(matchesFAQContext(faq({}), { city: 'trier' })).toBe(true);
+  });
+
+  it('zeigt eine reine Skill-FAQ nur dort, wo nach dem Skill gefragt wird', () => {
+    // Geändert am 2026-07-31: ein Tag gilt dort, wo danach gefragt wird.
+    // Vorher passte eine skill-getaggte FAQ auch auf Stadtseiten, die den
+    // Skill gar nicht abfragen – dieselbe Nachlässigkeit, durch die eine
+    // Messe-FAQ auf /berlin/ landete.
+    const nurSkill = faq({ skills: ['schnellzeichner'] });
+    expect(matchesFAQContext(nurSkill, { categories: ['Schnellzeichner'] })).toBe(true);
+    expect(matchesFAQContext(nurSkill, { city: 'trier' })).toBe(false);
   });
 
   it('zeigt eine Stadt-FAQ auf ihrer Stadt', () => {
@@ -125,8 +135,10 @@ describe('matchesFAQContext – Dimensionen einzeln, nicht als ODER-Kette', () =
     const hochzeit = faq({ events: ['hochzeit'] });
     expect(matchesFAQContext(hochzeit, { city: 'events/hochzeit' })).toBe(true);
     expect(matchesFAQContext(hochzeit, { city: 'events/messe' })).toBe(false);
-    // Eine Anlass-FAQ hat keinen Ort-Tag und darf deshalb auf Stadtseiten bleiben.
-    expect(matchesFAQContext(hochzeit, { city: 'trier' })).toBe(true);
+    // Geändert am 2026-07-31: eine Anlass-FAQ gehoert auf die Anlass-Seite,
+    // sonst nirgends. Vorher stand deshalb „Wie viel Platz brauchen Sie auf
+    // dem Messestand?" auf /berlin/.
+    expect(matchesFAQContext(hochzeit, { city: 'trier' })).toBe(false);
   });
 });
 
@@ -157,8 +169,19 @@ describe('getFAQsForContext – Reihenfolge und Vollständigkeit', () => {
     expect(fremd.map((f) => f.question)).toEqual([]);
   });
 
-  it('liefert ohne Kontext alle FAQs', () => {
-    expect(getFAQsForContext({}).length).toBe(getAllFAQs().length);
+  it('liefert ohne Kontext den Default-Topf, nicht alles', () => {
+    // Ein leerer Kontext fragt keine Dimension ab – also passt nur, was
+    // nirgends festgelegt ist. Wer wirklich ALLE Fragen will (die Seite
+    // /faq/), reicht `getAllFAQs()` ausdrücklich als `faqs`-Prop durch.
+    const ohneKontext = getFAQsForContext({});
+    const alle = getAllFAQs();
+    expect(ohneKontext.length).toBeLessThan(alle.length);
+    expect(ohneKontext.every((f) => {
+      const tg = f.tags;
+      return (tg?.skills?.length ?? 0) === 0
+        && (tg?.events?.length ?? 0) === 0
+        && (tg?.landings?.length ?? 0) === 0;
+    })).toBe(true);
   });
 });
 

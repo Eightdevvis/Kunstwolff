@@ -94,6 +94,40 @@ FAQs werden automatisch als `FAQPage` JSON-LD ausgegeben (siehe `seo.md`). Kann 
 
 FaqManager schreibt nach `public/faq/default/` und `public/faq/<city>/`.
 
+## EINE Regel für alle drei Dimensionen (seit 2026-07-31)
+
+Nach `skills`, `events`, `landings` wird überall gleich ausgewählt – und zwar genau so,
+wie es die Bilder (`supplementWithDefaultSlides`) und die Reviews
+(`landings.length === 0`) schon machten:
+
+1. **Ein Tag gilt dort, wo danach gefragt wird.** Trägt eine FAQ Tags in einer Dimension,
+   die der Kontext nicht abfragt, gehört sie nicht hierher. Eine Messe-FAQ hat auf
+   `/berlin/` nichts zu suchen, eine Köln-FAQ nicht auf `/trier/`.
+2. **Keine Tags in einer Dimension = keine Einschränkung.** Wer in allen drei Dimensionen
+   ungetaggt ist, bildet den **Default-Topf**.
+3. **Defaults füllen auf**, wo die spezifischen nicht reichen (`maxItems = 4`).
+
+Vorher galt „leer gilt überall" auch in die andere Richtung: fragte ein Kontext eine
+Dimension nicht ab, passte **jede** FAQ. Dadurch stand nach dem Anlegen der Anlass-FAQs
+plötzlich „Wie viel Platz brauchen Sie auf dem Messestand?" auf `/berlin/`. Der erste
+Versuch, das über einen Punktabzug in der Rangfolge zu heilen, war ein Sonderweg und ist
+wieder raus.
+
+⚠️ **Die Umstellung deckte auf, dass die Daten übertaggt waren.** `sync-faq-tags.mjs`
+hatte fast jeder FAQ einen `skills`-Tag verpasst; unter der sauberen Regel hieß das
+„gehört nur auf Skill-Seiten", und Startseite wie Stadtseiten fielen auf **eine** FAQ
+zurück. Deshalb wurden die automatisch vergebenen Skill-Tags aus den 14 Standard- und 57
+Stadt-FAQs entfernt (`categories` gleich mit). Ein Skill-Tag setzt jetzt nur noch, wer
+eine FAQ wirklich nur für einen Skill haben will. `sync-faq-tags.mjs` fasst vorhandene
+`tags:`-Blöcke nie an, es kommt also nichts zurück.
+
+Gemessen nach dem Bauen: Startseite/Stadt-/Skill-Seiten 4 Defaults, Köln 2 eigene + 2
+Defaults, jede Anlass-Seite 3 eigene + 1 Default.
+
+⚠️ **`/faq/` ist das Archiv, kein Kontext.** Ein leerer Kontext fragt keine Dimension ab
+und liefert deshalb nur den Default-Topf. `src/pages/faq.astro` reicht darum ausdrücklich
+`getAllFAQs()` als `faqs`-Prop durch – sonst verliert die Übersichtsseite 65 Fragen.
+
 ## Anlass-Dimension: eigenes Feld statt Schmuggel durchs city-Feld (seit 2026-07-31)
 
 `FAQFilterContext` hat jetzt `event`. Vorher entstanden `eventKeys` **ausschliesslich**

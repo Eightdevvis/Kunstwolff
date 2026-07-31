@@ -57,10 +57,11 @@ describe('Anlass-Tag der FAQs', () => {
   });
 
   it('verwechselt einen Anlass nicht mit einem Ort', () => {
-    // Ohne eigenes Feld landete `firmenfeier` in `landingKeys` – dort hätte es
-    // gegen die Orts-Tags geprüft und nie gepasst.
+    // Ohne eigenes Feld landete `firmenfeier` in `landingKeys` – dort wäre es
+    // gegen die Orts-Tags geprüft worden und hätte nie gepasst.
     const ortsFaq = faq({ landings: ['berlin'] });
-    expect(matchesFAQContext(ortsFaq, { event: 'firmenfeier' })).toBe(true);
+    expect(matchesFAQContext(ortsFaq, { city: 'berlin' })).toBe(true);
+    expect(matchesFAQContext(ortsFaq, { event: 'firmenfeier' })).toBe(false);
     expect(matchesFAQContext(ortsFaq, { city: 'firmenfeier' })).toBe(false);
   });
 });
@@ -80,25 +81,44 @@ describe('die Event-Seiten geben den Anlass auch wirklich mit', () => {
   });
 });
 
-describe('Rangfolge: ein fremder Anlass-Tag verdrängt nichts Allgemeines', () => {
-  it('stellt die allgemeine FAQ vor die eines fremden Anlasses', () => {
-    // Ohne diese Regel entschied die Lesereihenfolge der Dateien, und /berlin/
-    // zeigte plötzlich „Wie viel Platz brauchen Sie auf dem Messestand?".
-    const allgemein = faq({});
+describe('Ein Tag gilt dort, wo danach gefragt wird', () => {
+  it('haelt eine Messe-FAQ von Stadt- und Startseite fern', () => {
+    // Vorher galt „leer gilt ueberall" auch in die andere Richtung: fragte ein
+    // Kontext die Anlass-Dimension gar nicht ab, passte JEDE FAQ. Dadurch
+    // stand auf /berlin/ „Wie viel Platz brauchen Sie auf dem Messestand?".
     const messeFaq = faq({ events: ['messe'] });
-    const kontext = { city: 'berlin' };
-    // Über die echten Dateien geprüft: auf einer Stadtseite darf keine der
-    // zwölf Anlass-FAQs in den ersten vier stehen.
-    const ersteVier = getFAQsForContext(kontext).slice(0, 4);
-    const anlassBezogen = ersteVier.filter((f) => (f.tags?.events?.length ?? 0) > 0);
-    expect(anlassBezogen).toEqual([]);
-    expect(allgemein.tags?.events).toEqual([]);
-    expect(messeFaq.tags?.events).toEqual(['messe']);
+    expect(matchesFAQContext(messeFaq, { city: 'berlin' })).toBe(false);
+    expect(matchesFAQContext(messeFaq, {})).toBe(false);
+    expect(matchesFAQContext(messeFaq, { event: 'messe' })).toBe(true);
   });
 
-  it('schliesst die fremde FAQ aber NICHT aus', () => {
-    // „leer gilt überall" bleibt: gibt es nichts Besseres, ist eine
-    // Messe-Antwort besser als gar keine.
-    expect(matchesFAQContext(faq({ events: ['messe'] }), { city: 'berlin' })).toBe(true);
+  it('haelt eine Koeln-FAQ von anderen Staedten fern', () => {
+    // Dieselbe Regel, andere Dimension - genau das ist der Punkt: eine Regel.
+    const koelnFaq = faq({ landings: ['koeln'] });
+    expect(matchesFAQContext(koelnFaq, { city: 'koeln' })).toBe(true);
+    expect(matchesFAQContext(koelnFaq, { city: 'berlin' })).toBe(false);
+    expect(matchesFAQContext(koelnFaq, { event: 'messe' })).toBe(false);
+  });
+
+  it('laesst die voellig ungetaggte FAQ ueberall auffuellen', () => {
+    // Der Default-Topf. Dieselbe Rolle wie `supplementWithDefaultSlides` bei
+    // den Bildern und `landings.length === 0` bei den Reviews.
+    const default_ = faq({});
+    for (const kontext of [{}, { city: 'berlin' }, { event: 'messe' }, { categories: ['Szenenmaler'] }]) {
+      expect(matchesFAQContext(default_, kontext)).toBe(true);
+    }
+  });
+
+  it('zeigt auf einer Stadtseite keine Anlass-FAQ', () => {
+    const ersteVier = getFAQsForContext({ city: 'berlin' }).slice(0, 4);
+    expect(ersteVier.filter((f) => (f.tags?.events?.length ?? 0) > 0)).toEqual([]);
+    expect(ersteVier.length).toBe(4);
+  });
+
+  it('zeigt auf einer Anlass-Seite die eigenen zuerst und fuellt mit Defaults auf', () => {
+    const vier = getFAQsForContext({ event: 'messe' }).slice(0, 4);
+    const eigene = vier.filter((f) => f.tags?.events?.includes('messe'));
+    expect(eigene.length).toBe(3);
+    expect(vier.length).toBe(4);
   });
 });
