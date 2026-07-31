@@ -163,28 +163,53 @@
     "priority": 4
   },
   "default/5_flip.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
     "tags": {
-      "skills": [],
-      "events": [],
-      "landings": []
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe"
+      ],
+      "landings": [
+        "koeln"
+      ]
     },
     "priority": 5
   },
   "default/digital-artist-live.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner"
+    ],
     "tags": {
-      "skills": [],
-      "events": [],
-      "landings": []
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "ludwigshafen"
+      ]
     },
     "priority": 143
   },
   "default/digital-caricaturist--ludwigshafen.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner"
+    ],
     "tags": {
-      "skills": [],
-      "events": [],
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
       "landings": [
         "ludwigshafen"
       ]
@@ -201,7 +226,9 @@
         "schnellzeichner",
         "szenenmaler"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier"
+      ],
       "landings": [
         "ludwigshafen"
       ]
@@ -443,9 +470,16 @@
         "schnellzeichner",
         "szenenmaler"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "jubilaeum",
+        "gala"
+      ],
       "landings": [
-        "frankfurt"
+        "frankfurt",
+        "hessen",
+        "rhein-main-gebiet"
       ]
     },
     "priority": 10,
@@ -462,9 +496,16 @@
         "schnellzeichner",
         "szenenmaler"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "jubilaeum",
+        "gala"
+      ],
       "landings": [
-        "frankfurt"
+        "frankfurt",
+        "hessen",
+        "rhein-main-gebiet"
       ]
     },
     "priority": 11,
@@ -481,9 +522,15 @@
         "szenenmaler",
         "schnellzeichner"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "jubilaeum"
+      ],
       "landings": [
-        "frankfurt"
+        "frankfurt",
+        "hessen",
+        "rhein-main-gebiet"
       ]
     },
     "priority": 12,
@@ -499,10 +546,14 @@
         "schnellzeichner"
       ],
       "events": [
-        "firmenfeier"
+        "firmenfeier",
+        "messe",
+        "jubilaeum"
       ],
       "landings": [
-        "frankfurt"
+        "frankfurt",
+        "hessen",
+        "rhein-main-gebiet"
       ]
     },
     "priority": 13,
