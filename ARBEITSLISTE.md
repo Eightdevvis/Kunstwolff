@@ -75,18 +75,24 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
 
 ## Phase 2 — sichtbar kaputt (unabhängig vom Umzug)
 
-- [ ] 🟠 **C — 2.1 38 von 105 Skill×Stadt-Seiten zeigen eine leere Galerie**
+- [x] 🟠 **C — 2.1 38 von 105 Skill×Stadt-Seiten zeigen eine leere Galerie** ✅ **erledigt 2026-07-30**
       Aufgefüllt wird **vor** dem Filtern: `getCitySlides` → auf 6 auffüllen →
       dann `filteredCategories`. Da 93 von 232 Slides keine `categories` haben, sieben
       sich die Nachfüller selbst aus. Karlsruhe hat 7 eigene Bilder → kein Auffüllen →
       Filter wirft alle 7 weg, obwohl 115 Schnellzeichner-Bilder im Repo liegen.
       **Schritt:** erst filtern, dann mit ebenfalls gefilterten Bildern auffüllen.
       (`slideImages.ts`, `[skill]/[landing].astro`)
+      **Erledigt:** `getSkillSlidesForCity()`, in beiden Zweigen (Stadt UND Event —
+      der Event-Zweig hatte denselben Fehler). Am `dist/` gemessen:
+      `karlsruhe`/`neunkirchen`/`fulda` von 0 auf je 6 Bilder, 0 Nicht-Aquarelle-
+      Seiten ohne Bilder. Test: `tests/skill-slides-order.test.ts`.
 
-- [ ] 🟠 **C — 2.2 Leere Sektionen rendern trotzdem Überschrift und Rahmen**
+- [x] 🟠 **C — 2.2 Leere Sektionen rendern trotzdem Überschrift und Rahmen** ✅ **erledigt 2026-07-30**
       `Slideshow.astro` rendert `<h2>Unsere Kunst</h2>` unbedingt; `SkillHero.astro`
       guardet gegen die ungefilterte Review-Liste; `MiniReviews.astro` hinterlässt
       ~44 px Leerraum. Unabhängig von 2.1 — auch danach gibt es leere Fälle.
+      **Erledigt:** beide Guards gesetzt. Am `dist/` gemessen: **0** leere
+      Galerie-Sektionen (vorher 38), **0** leere Bewertungs-Slider.
 
 - [ ] 🟠 **C — 2.3 Die Anlass-Dimension der FAQs ist tot**
       `eventKeys` entstehen nur, wenn `context.city` mit `events/` beginnt — die
@@ -142,9 +148,12 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
       **Erst entscheiden, dann bauen** (siehe „Offene Fragen" im Tag-Audit).
 
 - [ ] 🟡 **C — 3.5 Kette und Hygiene** (Sammelposten aus dem Tag-Audit, Abschnitt C)
-      `sync:tags` als harten Schritt (der Guard wird heute im Build geschluckt, und die
-      Begründung „pre-commit fängt das" trägt nicht — der Admin veröffentlicht über die
-      API, ohne Hook) · `public/config` fehlt in **beiden** `git add`-Listen ·
+      ✅ ~~`sync:tags` als harten Schritt~~ **erledigt 2026-07-30** (`hart: true` in
+      `sync-content-safe.mjs`; mit `{title:'Abiball', slug:'abi-party'}` gemessen:
+      vorher Exit 0, jetzt Exit 1) ·
+      ✅ ~~`public/config` fehlt in beiden `git add`-Listen~~ **erledigt 2026-07-30**
+      (plus `public/erinnerungen`, `public/events`, Trigger-Pfad und der rote Job bei
+      Änderungen außerhalb der add-Liste) ·
       `EventManager.createEvent` legt keinen Anlass-Tag an · `pre-push` committet den
       gesamten Index · `jubilaum` vs. `jubilaeum` · zwei FAQ-Dateien ohne `.md`-Endung
       (`kaiserslautern/wann-buchen` umbenennen, `default/kosten-schnellzeichner` löschen).
