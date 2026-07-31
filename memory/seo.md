@@ -59,7 +59,7 @@ Pro Seitentyp automatisch generiert:
 | Homepage | `Kunstwolff – Eventkünstler seit über 25 Jahren` | Generisch (aus `Layout.astro`) |
 | Stadtseite `/berlin/` | `Eventkünstler Berlin – Live-Kunst & Performance \| Kunstwolff` | Stadtspezifisch |
 | Skill-Seite `/schnellzeichner-karikaturist/` | `Schnellzeichner für Events buchen \| Kunstwolff` | `skills.json` (`description`) |
-| Skill+Stadt `/schnellzeichner-karikaturist/berlin/` | `Schnellzeichner Berlin buchen \| Kunstwolff` | pro Stadt individualisiert (nicht mehr `skills.json`) |
+| Skill+Stadt `/berlin-schnellzeichner-karikaturist/` | `Schnellzeichner Berlin buchen \| Kunstwolff` | pro Stadt individualisiert (nicht mehr `skills.json`) |
 
 Auf jeder Seite wird ein `<link rel="canonical">` gesetzt (gegen Duplicate-Content-Strafen).
 
@@ -79,7 +79,7 @@ Bindestrich-Wort großgeschrieben. **Nur für Anzeige, nie für URLs/Slugs.**
 | Skill-Description (Meta) | `public/skills/skills.json` Feld `description` (≤ 155 Zeichen) |
 | Skill-Hero-Title | `public/skills/skills.json` Feld `heroTitle` |
 | Stadtseiten-Texte + Titel-Template | `src/pages/[landing].astro` |
-| Skill+Stadt-Description/H1 (pro Stadt) | `src/pages/[skill]/[landing].astro` |
+| Skill+Stadt-Description/H1 (pro Stadt) | `src/pages/[...kombi].astro` |
 | Stadt-Anzeigename (Umlaut) | `src/utils/cityNames.ts` |
 | Kontakt/FAQ/Impressum/Datenschutz-Titel | jeweilige `src/pages/*.astro` (`<Layout title=… description=…>`) |
 
@@ -94,7 +94,7 @@ Auf jeder Seite automatisch generiert (für WhatsApp, LinkedIn, Facebook, etc.):
 ```html
 <meta property="og:title" content="Schnellzeichner Berlin buchen | Kunstwolff" />
 <meta property="og:description" content="..." />
-<meta property="og:url" content="https://kunstwolff.de/schnellzeichner-karikaturist/berlin/" />
+<meta property="og:url" content="https://kunstwolff.de/berlin-schnellzeichner-karikaturist/" />
 <meta property="og:type" content="website" />
 <meta property="og:image" content="https://kunstwolff.de/img/Titelbild/..." />
 ```
@@ -127,7 +127,7 @@ Vollautomatisch beim Build generiert. Keine manuelle Pflege.
 | Homepage `/` | `LocalBusiness` |
 | Skill-Seite `/schnellzeichner-karikaturist/` | `Service` |
 | Stadtseite `/berlin/` | `BreadcrumbList` |
-| Skill+Stadt `/schnellzeichner-karikaturist/berlin/` | `BreadcrumbList` |
+| Skill+Stadt `/berlin-schnellzeichner-karikaturist/` | `BreadcrumbList` |
 | FAQ-Seite `/faq/` | `FAQPage` |
 
 > ⚠ **FAQPage nur auf `/faq/`.** `FAQ.astro` emittiert das FAQPage-Schema nur bei
@@ -198,7 +198,7 @@ indexierbar bleiben **41 von 170** gebauten Seiten. Die Sitemap enthält exakt d
   hessen, kaiserslautern, koeln, ludwigshafen, luxembourg, saarbruecken, saarland,
   schweiz, stuttgart, trier.
 - **Alle 102 Skill+Stadt-Seiten sind ausgeblendet.** Nicht wegen Dünne, sondern wegen
-  Kannibalisierung: 97 % des Textes von `/schnellzeichner-karikaturist/berlin/` stehen wörtlich auch
+  Kannibalisierung: 97 % des Textes von `/berlin-schnellzeichner-karikaturist/` stehen wörtlich auch
   auf `/berlin/`, und beide zielen auf dieselbe Suchanfrage.
 - **`/aquarelle/<anlass>/`** (4 Seiten): 0 eigene Bilder. `/aquarelle/` selbst bleibt
   sichtbar – es ist eine echte Leistungsseite und hängt im Services-Menü
@@ -310,20 +310,39 @@ hätte dieselbe Änderung echte Signale gekostet.
 Technisch heikel war nicht die URL, sondern dass sie bis dahin auch der Schlüssel
 für Bilder, Why-Texte und Erinnerungen war. Siehe `content-skills.md`.
 
-### Warum NICHT auf flache URLs (`/schnellzeichner-berlin/`)
+### Ort-Kombis sind flach (`/berlin-schnellzeichner-karikaturist/`) — 2026-08-01
 
-Gabriele hält flache URLs für besser platziert. Geprüft am 2026-07-31:
+Gabriele hält flache URLs für besser platziert. **Umgesetzt am 2026-08-01** für
+die 102 Skill×Ort-Seiten. Die Anlass-Kombis bleiben hierarchisch
+(`/szenenmaler/hochzeit/`) — das sind die einzigen 8 indexierbaren Kombi-Seiten,
+und für sie lag kein Auftrag vor.
 
+**Warum es nichts kostete** (geprüft am 2026-07-31, gültig geblieben):
+
+- Die Seite war zu dem Zeitpunkt **noch gar nicht live** — ohne `SITE_URL` steht
+  alles auf `noindex`, Wix lief noch. Kein Astro-URL hatte ein Ranking.
+- **Alle 102** Skill×Ort-Seiten standen ohnehin auf `noindex`
+  (`page-visibility.json`), weil ihr Text dupliziert ist. Gemessen vorher wie
+  nachher: 102 `noindex`, 8 Anlass-Kombis indexierbar, 40 Sitemap-Einträge.
 - In den Wix-Sitemaps steht **genau eine** flache Skill-Stadt-URL
-  (`/schnellzeichner-duesseldorf`). Es gibt also kein bestehendes Ranking auf
-  diesem Muster, das man bewahren könnte.
-- **34 der 35** Skill×Stadt-Seiten stehen ohnehin auf `noindex`
-  (`page-visibility.json`), weil ihr Text dupliziert ist. Solange das so ist,
-  konkurrieren sie um gar nichts, und die Schreibweise der URL ist folgenlos.
-- Ein Schlüsselwort in der URL ist ein sehr schwaches Signal; was diese Seiten
-  ausbremst, ist der fehlende eigene Text — gemessen: `/dortmund/` und
-  `/giessen/` waren 1493 von 1494 Wörtern gleich.
+  (`/schnellzeichner-duesseldorf`) — die zeigt jetzt direkt aufs neue Ziel,
+  ohne Zwischensprung.
 
-Der teure Teil ist nicht die Umbenennung, sondern der Inhalt. **Empfehlung:** pro
-Stadt 150–250 Wörter Ortsbezug schreiben und die Seite dann wieder sichtbar
-schalten — statt eines zweiten URL-Wechsels innerhalb weniger Tage.
+**Was es NICHT bringt, und das bleibt wahr:** Ein Schlüsselwort in der URL ist
+ein sehr schwaches Signal. Was diese Seiten ausbremst, ist der fehlende eigene
+Text — gemessen: `/dortmund/` und `/giessen/` waren 1493 von 1494 Wörtern
+gleich. Der teure Teil ist der Inhalt, nicht die Adresse. **Weiterhin offen:**
+pro Stadt 150–250 Wörter Ortsbezug schreiben und die Seiten dann wieder sichtbar
+schalten. Erst das lässt sie ranken.
+
+⚠️ **Die Falle, die diese Umstellung fast gestellt hätte:**
+`page-visibility.json` blendet per **Präfix** aus — `/aquarelle/` versteckt auch
+`/aquarelle/berlin/`. Bei `/berlin-aquarelle/` greift das **nicht mehr**. Ohne
+das Umschreiben der 102 Einträge wären genau die Seiten wieder indexierbar
+geworden, die man wegen Duplicate Content versteckt hatte — und wären in der
+Sitemap gelandet. Abgesichert in `tests/combo-urls.test.ts` (gegen den alten
+Stand gegengeprüft: 2 von 10 Tests werden rot).
+
+Adressen liegen an einer Stelle: `src/utils/comboUrls.ts`. Weiterleitungen
+(136 Stück, ohne Ketten) in `vercel.json`, erzeugt von
+`scripts/flache-kombi-urls.mjs`.

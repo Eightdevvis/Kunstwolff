@@ -194,7 +194,7 @@ export const getEvents = (): EventItem[] => {
 
 /**
  * Gibt alle Event-Slugs zurück.
- * Wird in getStaticPaths() von [landing].astro und [skill]/[landing].astro genutzt.
+ * Wird in getStaticPaths() von [landing].astro und [...kombi].astro genutzt.
  */
 export const getEventSlugs = (): string[] => getEvents().map((e) => e.slug);
 

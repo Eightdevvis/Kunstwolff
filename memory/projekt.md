@@ -40,7 +40,7 @@ Vor `dev` und `build` läuft automatisch `npm run sync:content:safe` (als `prede
 
 | Ordner / Datei | Zweck |
 | :-- | :-- |
-| `src/pages/` | Astro-Seiten + dynamische Routen (`[landing].astro`, `[skill]/[landing].astro`, …) |
+| `src/pages/` | Astro-Seiten + dynamische Routen (`[landing].astro`, `[...kombi].astro`, …) |
 | `src/components/` | Preact + Astro Components |
 | `src/utils/` | Content-Loader (TS): `landings.ts`, `skills.ts`, `why.ts`, `cinema.ts`, `erinnerungen.ts`, … |
 | `public/` | Komplettes dateibasiertes "CMS" – siehe `pfadstruktur.md` |

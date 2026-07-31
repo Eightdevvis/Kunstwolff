@@ -12,27 +12,71 @@
     }
   ],
   "redirects": [
-    { "source": "/kontakt", "destination": "/contact/", "permanent": true },
-    { "source": "/kontakt-jenny", "destination": "/contact/", "permanent": true },
-
-    { "source": "/about", "destination": "/team/", "permanent": true },
-    { "source": "/about-3", "destination": "/team/", "permanent": true },
-    { "source": "/about-9", "destination": "/team/", "permanent": true },
-
-    { "source": "/aquarelle-galerie", "destination": "/aquarelle/", "permanent": true },
-    { "source": "/schnellzeichnung-galerie", "destination": "/schnellzeichner-karikaturist/", "permanent": true },
-    { "source": "/szenenmaler-galerie", "destination": "/szenenmaler/", "permanent": true },
-
-    { "source": "/portfolio", "destination": "/galerie/", "permanent": true },
-    { "source": "/copy-of-galerie", "destination": "/galerie/", "permanent": true },
-    { "source": "/gallerie", "destination": "/galerie/", "permanent": true },
-    { "source": "/landingpages/landing", "destination": "/", "permanent": true },
     {
-      "source": "/schnellzeichner-duesseldorf",
-      "destination": "/schnellzeichner-karikaturist/duesseldorf/",
+      "source": "/kontakt",
+      "destination": "/contact/",
       "permanent": true
     },
-
+    {
+      "source": "/kontakt-jenny",
+      "destination": "/contact/",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/team/",
+      "permanent": true
+    },
+    {
+      "source": "/about-3",
+      "destination": "/team/",
+      "permanent": true
+    },
+    {
+      "source": "/about-9",
+      "destination": "/team/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle-galerie",
+      "destination": "/aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichnung-galerie",
+      "destination": "/schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler-galerie",
+      "destination": "/szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/portfolio",
+      "destination": "/galerie/",
+      "permanent": true
+    },
+    {
+      "source": "/copy-of-galerie",
+      "destination": "/galerie/",
+      "permanent": true
+    },
+    {
+      "source": "/gallerie",
+      "destination": "/galerie/",
+      "permanent": true
+    },
+    {
+      "source": "/landingpages/landing",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-duesseldorf",
+      "destination": "/duesseldorf-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
     {
       "source": "/portfolio-collections/my-portfolio/szenenmalerei",
       "destination": "/szenenmaler/",
@@ -63,28 +107,734 @@
       "destination": "/schnellzeichner-karikaturist/",
       "permanent": true
     },
-    { "source": "/portfolio-collections/:rest*", "destination": "/galerie/", "permanent": true },
-
-    { "source": "/template/szenenmalerei", "destination": "/szenenmaler/", "permanent": true },
+    {
+      "source": "/portfolio-collections/:rest*",
+      "destination": "/galerie/",
+      "permanent": true
+    },
+    {
+      "source": "/template/szenenmalerei",
+      "destination": "/szenenmaler/",
+      "permanent": true
+    },
     {
       "source": "/template/storytelling---graphic-recording",
       "destination": "/szenenmaler/",
       "permanent": true
     },
-    { "source": "/template/schnellzeichnungen", "destination": "/schnellzeichner-karikaturist/", "permanent": true },
-    { "source": "/template/digitale-kunst", "destination": "/schnellzeichner-karikaturist/", "permanent": true },
-    { "source": "/template/vom-foto", "destination": "/schnellzeichner-karikaturist/", "permanent": true },
-    { "source": "/template/manga--und-cartoonstil", "destination": "/schnellzeichner-karikaturist/", "permanent": true },
+    {
+      "source": "/template/schnellzeichnungen",
+      "destination": "/schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/template/digitale-kunst",
+      "destination": "/schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/template/vom-foto",
+      "destination": "/schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/template/manga--und-cartoonstil",
+      "destination": "/schnellzeichner-karikaturist/",
+      "permanent": true
+    },
     {
       "source": "/template/einladungskarten-hochzeit%26geburtstag",
       "destination": "/schnellzeichner-karikaturist/",
       "permanent": true
     },
-    { "source": "/template/:rest*", "destination": "/galerie/", "permanent": true },
-
+    {
+      "source": "/template/:rest*",
+      "destination": "/galerie/",
+      "permanent": true
+    },
     {
       "source": "/schnellzeichner",
       "destination": "/schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/berlin",
+      "destination": "/berlin-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/frankfurt",
+      "destination": "/frankfurt-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/hamburg",
+      "destination": "/hamburg-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/schweiz",
+      "destination": "/schweiz-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/kaiserslautern",
+      "destination": "/kaiserslautern-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/trier",
+      "destination": "/trier-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/wiesbaden",
+      "destination": "/wiesbaden-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/mainz",
+      "destination": "/mainz-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/luxembourg",
+      "destination": "/luxembourg-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/koeln",
+      "destination": "/koeln-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/ludwigshafen",
+      "destination": "/ludwigshafen-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/mannheim",
+      "destination": "/mannheim-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/saarbruecken",
+      "destination": "/saarbruecken-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/belgique",
+      "destination": "/belgique-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/saarland",
+      "destination": "/saarland-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/hessen",
+      "destination": "/hessen-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/rhein-main-gebiet",
+      "destination": "/rhein-main-gebiet-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/rheinland-pfalz",
+      "destination": "/rheinland-pfalz-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/wuppertal",
+      "destination": "/wuppertal-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/nord-rhein-westfalen",
+      "destination": "/nord-rhein-westfalen-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/main-taunus-kreis",
+      "destination": "/main-taunus-kreis-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/koblenz",
+      "destination": "/koblenz-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/neuwied",
+      "destination": "/neuwied-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/tuebingen",
+      "destination": "/tuebingen-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/karlsruhe",
+      "destination": "/karlsruhe-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/heidelberg",
+      "destination": "/heidelberg-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/giessen",
+      "destination": "/giessen-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/dortmund",
+      "destination": "/dortmund-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/neunkirchen",
+      "destination": "/neunkirchen-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/fulda",
+      "destination": "/fulda-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/bw",
+      "destination": "/bw-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/hanau",
+      "destination": "/hanau-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/stuttgart",
+      "destination": "/stuttgart-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/duesseldorf",
+      "destination": "/duesseldorf-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/berlin",
+      "destination": "/berlin-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/frankfurt",
+      "destination": "/frankfurt-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/hamburg",
+      "destination": "/hamburg-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/schweiz",
+      "destination": "/schweiz-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/kaiserslautern",
+      "destination": "/kaiserslautern-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/trier",
+      "destination": "/trier-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/wiesbaden",
+      "destination": "/wiesbaden-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/mainz",
+      "destination": "/mainz-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/luxembourg",
+      "destination": "/luxembourg-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/koeln",
+      "destination": "/koeln-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/ludwigshafen",
+      "destination": "/ludwigshafen-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/mannheim",
+      "destination": "/mannheim-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/saarbruecken",
+      "destination": "/saarbruecken-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/belgique",
+      "destination": "/belgique-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/saarland",
+      "destination": "/saarland-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/hessen",
+      "destination": "/hessen-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/rhein-main-gebiet",
+      "destination": "/rhein-main-gebiet-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/rheinland-pfalz",
+      "destination": "/rheinland-pfalz-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/wuppertal",
+      "destination": "/wuppertal-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/nord-rhein-westfalen",
+      "destination": "/nord-rhein-westfalen-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/main-taunus-kreis",
+      "destination": "/main-taunus-kreis-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/koblenz",
+      "destination": "/koblenz-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/neuwied",
+      "destination": "/neuwied-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/tuebingen",
+      "destination": "/tuebingen-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/karlsruhe",
+      "destination": "/karlsruhe-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/heidelberg",
+      "destination": "/heidelberg-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/giessen",
+      "destination": "/giessen-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/dortmund",
+      "destination": "/dortmund-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/neunkirchen",
+      "destination": "/neunkirchen-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/fulda",
+      "destination": "/fulda-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/bw",
+      "destination": "/bw-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/hanau",
+      "destination": "/hanau-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/stuttgart",
+      "destination": "/stuttgart-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/duesseldorf",
+      "destination": "/duesseldorf-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/berlin",
+      "destination": "/berlin-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/frankfurt",
+      "destination": "/frankfurt-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/hamburg",
+      "destination": "/hamburg-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/schweiz",
+      "destination": "/schweiz-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/kaiserslautern",
+      "destination": "/kaiserslautern-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/trier",
+      "destination": "/trier-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/wiesbaden",
+      "destination": "/wiesbaden-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/mainz",
+      "destination": "/mainz-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/luxembourg",
+      "destination": "/luxembourg-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/koeln",
+      "destination": "/koeln-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/ludwigshafen",
+      "destination": "/ludwigshafen-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/mannheim",
+      "destination": "/mannheim-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/saarbruecken",
+      "destination": "/saarbruecken-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/belgique",
+      "destination": "/belgique-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/saarland",
+      "destination": "/saarland-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/hessen",
+      "destination": "/hessen-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/rhein-main-gebiet",
+      "destination": "/rhein-main-gebiet-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/rheinland-pfalz",
+      "destination": "/rheinland-pfalz-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/wuppertal",
+      "destination": "/wuppertal-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/nord-rhein-westfalen",
+      "destination": "/nord-rhein-westfalen-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/main-taunus-kreis",
+      "destination": "/main-taunus-kreis-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/koblenz",
+      "destination": "/koblenz-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/neuwied",
+      "destination": "/neuwied-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/tuebingen",
+      "destination": "/tuebingen-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/karlsruhe",
+      "destination": "/karlsruhe-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/heidelberg",
+      "destination": "/heidelberg-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/giessen",
+      "destination": "/giessen-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/dortmund",
+      "destination": "/dortmund-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/neunkirchen",
+      "destination": "/neunkirchen-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/fulda",
+      "destination": "/fulda-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/bw",
+      "destination": "/bw-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/hanau",
+      "destination": "/hanau-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/stuttgart",
+      "destination": "/stuttgart-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/duesseldorf",
+      "destination": "/duesseldorf-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/berlin",
+      "destination": "/berlin-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/frankfurt",
+      "destination": "/frankfurt-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/hamburg",
+      "destination": "/hamburg-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/schweiz",
+      "destination": "/schweiz-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/kaiserslautern",
+      "destination": "/kaiserslautern-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/trier",
+      "destination": "/trier-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/wiesbaden",
+      "destination": "/wiesbaden-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/mainz",
+      "destination": "/mainz-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/luxembourg",
+      "destination": "/luxembourg-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/koeln",
+      "destination": "/koeln-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/ludwigshafen",
+      "destination": "/ludwigshafen-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/mannheim",
+      "destination": "/mannheim-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/saarbruecken",
+      "destination": "/saarbruecken-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/belgique",
+      "destination": "/belgique-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/saarland",
+      "destination": "/saarland-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/hessen",
+      "destination": "/hessen-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/rhein-main-gebiet",
+      "destination": "/rhein-main-gebiet-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/rheinland-pfalz",
+      "destination": "/rheinland-pfalz-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/wuppertal",
+      "destination": "/wuppertal-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/nord-rhein-westfalen",
+      "destination": "/nord-rhein-westfalen-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/main-taunus-kreis",
+      "destination": "/main-taunus-kreis-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/koblenz",
+      "destination": "/koblenz-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/neuwied",
+      "destination": "/neuwied-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/tuebingen",
+      "destination": "/tuebingen-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/karlsruhe",
+      "destination": "/karlsruhe-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/heidelberg",
+      "destination": "/heidelberg-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/giessen",
+      "destination": "/giessen-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/dortmund",
+      "destination": "/dortmund-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/neunkirchen",
+      "destination": "/neunkirchen-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/fulda",
+      "destination": "/fulda-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/bw",
+      "destination": "/bw-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/hanau",
+      "destination": "/hanau-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/stuttgart",
+      "destination": "/stuttgart-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/duesseldorf",
+      "destination": "/duesseldorf-schnellzeichner-karikaturist/",
       "permanent": true
     },
     {

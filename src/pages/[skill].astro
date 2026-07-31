@@ -89,8 +89,8 @@ const sectionProps: Record<string, Record<string, any> | false> = {
   why: { skill: skillKey },
   contact: {},
   faq: { categories: [skillData.title] },
-  // `site` ist ein URL-Präfix für die Städte-Links, kein Inhalts-Schlüssel.
-  landingsection: { site: skill },
+  // Adresse, kein Inhalts-Schlüssel: die Städte-Links zeigen auf die Kombis.
+  landingsection: { skillSlug: skill },
 };
 const sectionOrder = resolveSectionOrder(PAGE_TYPE, skill ?? '', registry);
 ---

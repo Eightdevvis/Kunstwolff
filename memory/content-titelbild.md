@@ -16,7 +16,7 @@ public/img/Titelbild/title.meta.json      # Metadaten
 - Stadt-Page `/berlin/` → `Titelbild/berlin/`
 - Skill-Page `/schnellzeichner-karikaturist/` → `Titelbild/schnellzeichner/`
 - Event-Page `/firmenfeier/` → `Titelbild/events/firmenfeier/`
-- Skill+Stadt `/schnellzeichner-karikaturist/berlin/` → ggf. Skill-Bilder mit Stadt-Override (Details im Loader)
+- Skill+Stadt `/berlin-schnellzeichner-karikaturist/` → ggf. Skill-Bilder mit Stadt-Override (Details im Loader)
 
 ⚠️ Der Ordner heisst nach dem **Titel** (`skillContentKey`), nicht nach der URL.
 Die Seiten übergeben deshalb `skillContentKey(skill.title)`, nicht den

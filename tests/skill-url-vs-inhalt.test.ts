@@ -47,7 +47,7 @@ describe('URL und Inhalts-Schlüssel eines Skills', () => {
   });
 
   it('die Skill-Seiten reichen den Inhalts-Schlüssel weiter, nicht den URL-Slug', () => {
-    for (const seite of ['./src/pages/[skill].astro', './src/pages/[skill]/[landing].astro']) {
+    for (const seite of ['./src/pages/[skill].astro', './src/pages/[...kombi].astro']) {
       const quelle = lies(seite);
       expect(quelle, seite).toMatch(/const skillKey = skillContentKey\(skillData\.title\)/);
     }
@@ -61,7 +61,7 @@ describe('URL und Inhalts-Schlüssel eines Skills', () => {
       /why: \{ skill: skillKey/,
     ];
     const skillSeite = lies('./src/pages/[skill].astro');
-    const komboSeite = lies('./src/pages/[skill]/[landing].astro');
+    const komboSeite = lies('./src/pages/[...kombi].astro');
 
     for (const muster of inhaltsAufrufe) {
       expect(komboSeite, `Kombiseite: ${muster}`).toMatch(muster);
@@ -72,10 +72,14 @@ describe('URL und Inhalts-Schlüssel eines Skills', () => {
     expect(komboSeite).toMatch(/erinnerungen: \{ skill: skillKey/);
     expect(komboSeite).toMatch(/getSkillEventContent\(skillKey/);
 
-    // Umgekehrt: was eine URL baut, muss den URL-Slug behalten.
-    expect(skillSeite, 'Städte-Links müssen die URL benutzen').toMatch(
-      /landingsection: \{ site: skill \}/,
-    );
+    // Umgekehrt: was eine URL baut, muss den URL-Slug behalten. Die Prop hiess
+    // bis zur flachen Ort-Kombi `site` und war ein Pfad-Präfix; jetzt ist es der
+    // Skill-Slug, aus dem `cityComboPath` die Adresse baut.
+    for (const seite of [skillSeite, komboSeite]) {
+      expect(seite, 'Städte-Links müssen die URL benutzen').toMatch(
+        /landingsection: \{ skillSlug: skill \}/,
+      );
+    }
   });
 
   it('schreibt Umlaute aus – wie die Sync-Skripte, sonst zwei Schlüssel für eine Sache', () => {

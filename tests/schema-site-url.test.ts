@@ -11,7 +11,7 @@ const SCHEMA_PAGES = [
   'src/pages/index.astro',
   'src/pages/[skill].astro',
   'src/pages/[landing].astro',
-  'src/pages/[skill]/[landing].astro',
+  'src/pages/[...kombi].astro',
 ];
 
 describe('Schema-URLs aus Astro.site (WEB-012)', () => {

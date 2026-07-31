@@ -110,6 +110,23 @@ Nach Wirkung sortiert:
       SkillBanner-Fallback und drei `linkUrl` in Why-Detail-Inhalten. Die alten
       Adressen bleiben als **301** (`/schnellzeichner` und `/schnellzeichner/:rest*`);
       die 10 Wix-Ziele zeigen direkt auf die neue URL, also keine Ketten.
+
+- [x] 🟠 **C — N.3 Ort-Kombis flach: `/berlin-schnellzeichner-karikaturist/`** ✅ **erledigt 2026-08-01**
+      Zweiter Wunsch von mom, direkt im Anschluss. **Kostenlos, weil die Seite noch
+      nicht live ist** (ohne `SITE_URL` steht alles auf `noindex`, Wix läuft noch) —
+      kein Astro-URL hatte ein Ranking. Betrifft **102 URLs**.
+      **Anlass-Kombis bleiben hierarchisch** (`/szenenmaler/hochzeit/`): das sind die
+      einzigen 8 indexierbaren Kombi-Seiten, dafür lag kein Auftrag vor.
+      ⚠️ **Die Falle:** `page-visibility.json` blendet per **Präfix** aus — `/aquarelle/`
+      versteckt auch `/aquarelle/berlin/`. Bei `/berlin-aquarelle/` greift das **nicht
+      mehr**; ohne Umschreiben der 102 Einträge wären genau die wegen Duplicate Content
+      versteckten Seiten wieder indexierbar geworden und in der Sitemap gelandet.
+      **Gemessen vorher/nachher, identisch:** 170 Seiten, 102 Kombis auf `noindex`,
+      8 Anlass-Kombis indexierbar, 40 Sitemap-Einträge, 0 tote interne Links.
+      Adressen an einer Stelle (`src/utils/comboUrls.ts`), 136 Weiterleitungen ohne
+      Ketten, 10 neue Tests (2 davon gegen den alten Stand rot gegengeprüft).
+      **Bleibt offen und ist der eigentliche Hebel:** pro Stadt 150–250 Wörter
+      Ortsbezug — die URL-Form ändert an der Platzierung nichts (siehe N.1).
       Der eigentliche Umbau war Falle (1): die URL war zugleich der Schlüssel für
       Titelbild, hero-bg, Why, Erinnerungen und Kombitexte. Jetzt trennt
       `skillContentKey()` beides, `tests/skill-url-vs-inhalt.test.ts` hält es fest.

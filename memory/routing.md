@@ -11,9 +11,9 @@ Alle Seiten sind statisch (SSG). URLs entstehen automatisch aus `landings.md`, `
 | `/` | – | `src/pages/index.astro` |
 | `/<stadt>/` | `landings.md` | `src/pages/[landing].astro` |
 | `/<skill>/` | `skills.json` | `src/pages/[skill].astro` |
-| `/<skill>/<stadt>/` | `skills.json` × `landings.md` | `src/pages/[skill]/[landing].astro` |
+| `/<skill>/<stadt>/` | `skills.json` × `landings.md` | `src/pages/[...kombi].astro` |
 | `/<event>/` | `events.json` | `src/pages/[landing].astro` (mit `pageType: 'event'`) |
-| `/<skill>/<event>/` | `skills.json` × `events.json` | `src/pages/[skill]/[landing].astro` (mit `pageType: 'event'`) |
+| `/<skill>/<event>/` | `skills.json` × `events.json` | `src/pages/[...kombi].astro` (mit `pageType: 'event'`) |
 | `/fr/<stadt>/` | FR-Overlay (`public/i18n/fr/landings.json`) | `src/pages/fr/[landing].astro` (Mehrsprachen-Fundament, siehe `i18n_foundation.md`) |
 
 ### Statische Standalone-Pages
@@ -38,7 +38,7 @@ Alle Seiten sind statisch (SSG). URLs entstehen automatisch aus `landings.md`, `
 
 ### Events teilen den `[landing]`-Slot mit Städten
 
-`getStaticPaths()` in `[landing].astro` und `[skill]/[landing].astro` differenziert via `pageType: 'event' | 'landing'` Prop. Das heißt:
+`getStaticPaths()` in `[landing].astro` und `[...kombi].astro` differenziert via `pageType: 'event' | 'landing'` Prop. Das heißt:
 
 - `/firmenfeier/` und `/berlin/` laufen durch dieselbe Page-Datei
 - Page-Logik muss `pageType` prüfen, um zu wissen ob Stadt- oder Event-Content geladen werden soll

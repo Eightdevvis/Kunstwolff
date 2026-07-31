@@ -1,11 +1,20 @@
 ---
 import { getVisibleLandingSlugs } from "../utils/landings";
+import { cityComboPath, skillSlugFromLink } from "../utils/comboUrls";
 
 const cities = getVisibleLandingSlugs();
 
-const { site = "" } = Astro.props;
-const normalizedSite = String(site).replace(/^\/+|\/+$/g, "");
-const basePath = normalizedSite ? `/${normalizedSite}` : "";
+/**
+ * `skillSlug` gesetzt  → Links auf die Kombi-Seiten (`/berlin-szenenmaler/`)
+ * `skillSlug` leer     → Links auf die reinen Stadtseiten (`/berlin/`)
+ *
+ * Früher hiess die Prop `site` und war ein URL-Präfix, aus dem hier
+ * `${praefix}/${stadt}` zusammengesetzt wurde. Seit die Ort-Kombis flach sind,
+ * ist das kein Präfix mehr – die Adresse baut `cityComboPath`, damit sie an
+ * einer Stelle festgelegt bleibt.
+ */
+const { skillSlug = "" } = Astro.props;
+const normalizedSkill = skillSlugFromLink(String(skillSlug));
 ---
 
 <!-- =========================
@@ -19,7 +28,7 @@ const basePath = normalizedSite ? `/${normalizedSite}` : "";
       {
         cities.map((city, index) => (
           <>
-            <a href={`${basePath}/${city}`}>
+            <a href={normalizedSkill ? cityComboPath(normalizedSkill, city) : `/${city}/`}>
               {city.charAt(0).toUpperCase() + city.slice(1)}
             </a>
             {index < cities.length - 1 && " · "}

@@ -139,7 +139,7 @@ Startseite. Ein im Admin gesetzter Anlass-Tag konnte nie ankommen.
 
 Geändert: `src/utils/faq.ts` (`event` im Kontext), `src/components/FAQ.astro` (nimmt es an
 und reicht es weiter), die Event-Zweige in `src/pages/[landing].astro` und
-`src/pages/[skill]/[landing].astro`. Der alte Weg `city: 'events/<slug>'` bleibt gültig –
+`src/pages/[...kombi].astro`. Der alte Weg `city: 'events/<slug>'` bleibt gültig –
 die FAQ-Dateien liegen so im Repo und `cityFromPath` leitet den Wert daraus ab.
 
 ⚠️ **Auf dem Bildschirm ändert sich vorerst nichts**, und das ist richtig so: heute haben

@@ -27,12 +27,12 @@ Welche Sektionen eine Seite in welcher Reihenfolge rendert, kommt **vollständig
 - `resolveSectionOrder(pageType, pageSlug, registry)` – **Build-Guardrail**: wirft, wenn eine
   `_order`-ID keine Komponente im Seiten-Registry hat → Layout & Config können nicht auseinanderlaufen.
 
-Jede Seite (`index.astro`, `[landing].astro`, `[skill].astro`, `[skill]/[landing].astro`) definiert:
+Jede Seite (`index.astro`, `[landing].astro`, `[skill].astro`, `[...kombi].astro`) definiert:
 1. `registry` = `{ id → Astro-Komponente }`
 2. `sectionProps` = `{ id → Props-Objekt | false }` (`false` = Daten-Guard, z.B. Event-Sektion ohne Inhalt)
 3. rendert `sectionOrder.map(id => isEnabled && props!==false && <Section {...props} />)`
 
-Datei-Branches mit zwei Seitentypen (`[landing].astro`: landing+event, `[skill]/[landing].astro`:
+Datei-Branches mit zwei Seitentypen (`[landing].astro`: landing+event, `[...kombi].astro`:
 skill-landing+skill-event) bauen je Branch eine eigene registry/sectionProps.
 
 ## Warum so (Bug-Historie)

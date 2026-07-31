@@ -71,7 +71,7 @@ describe('die Event-Seiten geben den Anlass auch wirklich mit', () => {
 
   it('Anlass-Seite und Skill+Anlass-Seite reichen `event` durch', () => {
     expect(lies('./src/pages/[landing].astro')).toMatch(/faq:\s*\{\s*event:/);
-    expect(lies('./src/pages/[skill]/[landing].astro')).toMatch(/faq:\s*\{[^}]*event:/);
+    expect(lies('./src/pages/[...kombi].astro')).toMatch(/faq:\s*\{[^}]*event:/);
   });
 
   it('FAQ.astro nimmt `event` an und gibt es an die Auswahl weiter', () => {
