@@ -266,17 +266,27 @@ dazu, gehört es dort hinein.
 
 Der Text ist ein **Entwurf und braucht Sashas Freigabe.**
 
-⚠️ **Was bewusst NICHT drinsteht:** dass AV-Verträge nach Art. 28 DSGVO bestehen. Die
-erste Fassung behauptete das; beim Nachprüfen stellte sich heraus, dass Vercels
-öffentliches DPA (`vercel.com/legal/dpa`) sich ausdrücklich auf **Enterprise**-Verträge
-bezieht („forms part of Vercel Enterprise Terms and Conditions … on an Enterprise plan")
-und `formspree.io/legal/dpa` gar nicht existiert (404). Ob für den genutzten Tarif ein
-AV-Vertrag zustande gekommen ist, ist damit **ungeklärt** – und eine falsche Angabe in
-der Datenschutzerklärung ist schlimmer als eine fehlende. Es steht deshalb nur die
-nachprüfbare Tatsache drin: beide Anbieter sitzen in den USA, also Drittlandübermittlung
-nach Art. 44 ff.
+### Vercel: AV-Vertrag besteht, ohne dass jemand etwas klicken muss
 
-Sobald die AV-Verträge nachweislich geschlossen sind, gehören in §2 und §4 je ein Satz
-dazu (Art. 28 DSGVO) und die konkrete Garantie für die Drittlandübermittlung
-(Standardvertragsklauseln oder EU-US Data Privacy Framework – je nachdem, was der
-Vertrag sagt).
+Kostete zwei Anläufe, deshalb hier festgehalten. Die Seite `vercel.com/legal/dpa` liest
+sich, als gälte sie nur für Enterprise („forms part of Vercel Enterprise Terms and
+Conditions … on an Enterprise plan") – **das ist irreführend.** Entscheidend ist
+Ziff. 10.1 der Vercel-ToS: das DPA ist dort **per Verweis eingebunden**, und die ToS
+sagen ausdrücklich „The Hobby plan is subject to all provisions of these Terms of
+Service". Es gibt im Konto also nichts anzunehmen; der Vertrag besteht mit der
+Tarifnutzung.
+
+Im DPA-Volltext geprüft (PDF unter `assets.vercel.com/…/Vercel_Customer_DPA__032923.pdf`):
+enthält die **Standardvertragsklauseln von 2021**, davon greift **Modul 2
+(Verantwortlicher → Auftragsverarbeiter)** für Kundeninhalte – unser Fall – sowie die
+Art.-28-Pflichten (Vertraulichkeit, Unterauftragsverarbeiter, Betroffenenanfragen,
+Löschung/Rückgabe, Audits). Deshalb steht in §2 jetzt die konkrete Garantie und nicht
+nur „Drittland".
+
+### Formspree: ungeklärt – und wird abgelöst
+
+`formspree.io/legal/dpa` existiert nicht (404), auf den öffentlichen Rechtsseiten steht
+weder DPA noch GDPR-Abschnitt. In §4 steht deshalb bewusst **keine** Behauptung über
+einen AV-Vertrag, nur die nachprüfbare Tatsache (Sitz USA, Drittlandübermittlung).
+Entschieden am 2026-07-31: das Formular wandert auf den eigenen Worker, dann entfällt
+der Abschnitt ersatzlos.
