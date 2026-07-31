@@ -1,9 +1,23 @@
 import { describe, expect, it } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { buildSrcSet, variantSrc, VARIANT_WIDTHS, SLIDESHOW_SIZES, SRCSET_AKTIV } from '../src/utils/responsiveImages';
-// @ts-expect-error – reines JS-Modul ohne Typen, wie die übrigen scripts/
-import { variantPath, VARIANT_WIDTHS as SKRIPT_WIDTHS } from '../scripts/generate-image-variants.mjs';
+import {
+  buildSrcSet,
+  variantSrc,
+  VARIANT_WIDTHS,
+  VARIANT_SOURCES,
+  SLIDESHOW_SIZES,
+  SRCSET_AKTIV,
+  heroSrcSet,
+  heroHintergrundVarianten,
+} from '../src/utils/responsiveImages';
+// Kein @ts-expect-error mehr nötig: allowJs löst die .mjs-Typen inzwischen
+// auf, und eine überflüssige Direktive ist selbst ein Typfehler (TS2578).
+import {
+  variantPath,
+  VARIANT_WIDTHS as SKRIPT_WIDTHS,
+  VARIANT_SOURCES as SKRIPT_SOURCES,
+} from '../scripts/generate-image-variants.mjs';
 import { readWebpWidth } from '../src/utils/webpSize';
 
 describe('Varianten-Pfade – Markup und Build-Skript müssen sich treffen', () => {
@@ -95,5 +109,75 @@ describe('readWebpWidth', () => {
   it('gibt null statt zu werfen, wenn die Datei nicht taugt', () => {
     expect(readWebpWidth('/gibt/es/nicht.webp')).toBeNull();
     expect(readWebpWidth(path.resolve('./package.json'))).toBeNull();
+  });
+});
+
+describe('Nur Ordner mit Varianten bekommen ein srcset', () => {
+  // Der Generator läuft über GENAU drei Ordner. Ein srcset auf einen anderen
+  // Ordner verspricht Dateien, die nie erzeugt wurden – und der Browser zeigt
+  // dann gar kein Bild, nicht einmal das Original. Beim Nachrüsten der Heroes
+  // wäre das um ein Haar passiert: `hero-bg` liegt ausserhalb der drei.
+  it('Markup-Liste und Skript-Liste sind dieselben Ordner', () => {
+    const ausMarkup = [...VARIANT_SOURCES].map((o) => o.replace(/^\/|\/$/g, '')).sort();
+    const ausSkript = [...(SKRIPT_SOURCES as string[])].sort();
+    expect(ausMarkup).toEqual(ausSkript);
+  });
+
+  it('gibt für Ordner ohne Varianten kein srcset aus', () => {
+    for (const pfad of ['/img/team/gabriele.webp', '/img/hero-bg/koeln/bild.webp', '/img/samples/sample1.webp']) {
+      expect(buildSrcSet(pfad, 2000), pfad).toBe('');
+      expect(heroSrcSet(pfad), pfad).toBe('');
+    }
+  });
+
+  it('gibt für ein AVIF kein srcset aus – der Generator kann nur WebP', () => {
+    expect(heroSrcSet('/img/Titelbild/default/titelbild.avif')).toBe('');
+  });
+
+  it('findet die Breite eines echten Titelbilds und baut daraus Stufen', () => {
+    const echtes = '/img/Titelbild/berlin/live-painter-trade-fair.webp';
+    const srcset = heroSrcSet(echtes);
+    // Nur prüfen, wenn die Datei im Repo liegt – sonst ist der Test wertlos.
+    if (!fs.existsSync(path.resolve('./public' + echtes))) return;
+    expect(srcset).toContain('/img/variants/img/Titelbild/berlin/live-painter-trade-fair-400.webp 400w');
+    expect(srcset.endsWith('w')).toBe(true);
+  });
+});
+
+describe('Hero-Hintergrund: nur Stufen, die es wirklich gibt', () => {
+  // DER Fehler dieses Bereichs, hier in seiner zweiten Auflage. Der erste
+  // Anlauf las die vorhandenen Stufen aus dem srcset-String zurueck – und
+  // uebersah, dass dort auch das ORIGINAL mit seiner eigenen Breite steht.
+  // Ein 1200px breites Original erzeugte den Eintrag "… 1200w", also wurde
+  // eine 1200er-Variante angeboten, die das Build-Skript nie erzeugt
+  // (es ueberspringt jede Breite >= Original). 13 tote Kandidaten, gefunden
+  // erst am gebauten dist/.
+  it('bietet keine Stufe an, die so breit ist wie das Original', () => {
+    const bilder = fs.existsSync(path.resolve('./public/img/Titelbild'))
+      ? fs
+          .readdirSync(path.resolve('./public/img/Titelbild'), { withFileTypes: true })
+          .filter((e) => e.isDirectory())
+          .flatMap((d) => {
+            const ordner = path.resolve('./public/img/Titelbild', d.name);
+            return fs
+              .readdirSync(ordner)
+              .filter((f) => f.toLowerCase().endsWith('.webp'))
+              .map((f) => ({ web: `/img/Titelbild/${d.name}/${f}`, datei: path.join(ordner, f) }));
+          })
+      : [];
+
+    expect(bilder.length).toBeGreaterThan(0);
+
+    for (const { web, datei } of bilder) {
+      const breite = readWebpWidth(datei) ?? 0;
+      const varianten = heroHintergrundVarianten(web);
+      if (varianten.w800) expect(breite, `${web}: 800er angeboten`).toBeGreaterThan(800);
+      if (varianten.w1200) expect(breite, `${web}: 1200er angeboten`).toBeGreaterThan(1200);
+    }
+  });
+
+  it('bietet fuer ein AVIF und fuer fremde Ordner gar nichts an', () => {
+    expect(heroHintergrundVarianten('/img/Titelbild/default/titelbild.avif')).toEqual({});
+    expect(heroHintergrundVarianten('/img/hero-bg/koeln/bild.webp')).toEqual({});
   });
 });

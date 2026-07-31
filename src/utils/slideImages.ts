@@ -1,6 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import { readWebpSize } from './webpSize';
+// Ein Skill hat zwei Schlüssel: die URL (skills.json.link) und den
+// Inhalts-Schlüssel aus dem Titel. Hier zählt der Inhalt – siehe skills.ts.
+import { skillContentKey } from './skills';
 
 export type SlideItem = {
   src: string;
@@ -504,26 +507,7 @@ export const MAX_SKILL_SLIDES = 24;
  * erreichbar.
  */
 export const getSkillSlides = (skillTitle: string): SlideItem[] =>
-  getSlidesByTag('skills', skillTagSlug(skillTitle)).slice(0, MAX_SKILL_SLIDES);
-
-/**
- * Der Tag-Slug eines Skills kommt aus seinem TITEL, nicht aus seiner URL.
- *
- * Das ist kein Detail: `skills.json` erlaubt ein eigenes `link`-Feld, mit dem die
- * URL frei gewählt werden kann (z.B. `/schnellzeichner-karikaturist/` für die
- * Suche). Die Tags an den Bildern hängen aber weiter am Titel
- * („Schnellzeichner" → `schnellzeichner`). Würde hier der URL-Slug abgefragt,
- * fände die umbenannte Seite **null** Bilder — und niemand käme darauf, dass die
- * URL daran schuld ist.
- */
-const skillTagSlug = (title: string): string =>
-  String(title ?? '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+  getSlidesByTag('skills', skillContentKey(skillTitle)).slice(0, MAX_SKILL_SLIDES);
 
 /**
  * Trägt ein Slide diesen Skill?

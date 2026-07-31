@@ -84,6 +84,20 @@ Wenn neue Admin-Felder + Website-Konsumierung gleichzeitig gebaut werden:
 5. **Beide Doku-Sets aktualisieren** – Admin-README/CLAUDE.md + Website-Memory (`admin-tool.md`, `pfadstruktur.md`, betroffene `content-*.md`); Restlücken stehen in der Admin-README bzw. im Admin-`memory/`, nicht in einer separaten Bug-Datei.
 
 
+## Skill-URL ≠ Skill-Inhaltsschlüssel (2026-07-31)
+
+Seit die Skill-Seite unter `/schnellzeichner-karikaturist/` liegt, sind Adresse
+und Inhalts-Schlüssel verschieden (Details: `content-skills.md`). **Am Admin war
+nichts zu ändern**, und zwar aus zwei Gründen:
+
+- Der Admin baut seine Pfade aus `slugify(title)` — also aus dem
+  Inhalts-Schlüssel. Das war schon immer die richtige Seite der Trennung.
+- Die Live-Vorschau öffnet denselben Slug als URL. Das funktioniert über die
+  301er in `vercel.json`; `/api/preview/status` folgt ihnen (`redirect: 'follow'`).
+
+⚠️ Fällt der 301 irgendwann weg, muss `livePreviewPath()` im Admin die URL aus
+`skills.json.link` nehmen. Notiert auch in `memory/cross-repo.md` des Admin-Repos.
+
 ## Der Admin wählt nach Tag aus (2026-07-31)
 
 Bis dahin listete jeder Editor ein Verzeichnis, während die Website seit Phase 5b

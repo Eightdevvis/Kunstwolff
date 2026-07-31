@@ -14,6 +14,8 @@
  *   ctaLink     – Wohin der CTA-Button linkt (Standard: /contact oder Formular-Anker)
  */
 
+import { heroHintergrundStyle } from '../../utils/responsiveImages';
+
 const {
   titleImage = '/img/samples/sample1.webp',
   title = 'Live-Kunst für Ihr Event',
@@ -25,7 +27,10 @@ const {
 ---
 
 <!-- Hero Section -->
-<section class="event-hero" style={`--hero-bg-image: url('${titleImage}'); --hero-bg-pos: ${titleImagePosition}`}>
+<section
+  class="event-hero"
+  style={`--hero-bg-image: url('${titleImage}'); ${heroHintergrundStyle(titleImage)}--hero-bg-pos: ${titleImagePosition}`}
+>
   <!-- Verstecktes Bild für SEO / Alt-Text -->
   <img src={titleImage} alt={title} style="display:none;" />
 
@@ -65,6 +70,29 @@ const {
     /* Dunkler Overlay über das gesamte Bild */
     isolation: isolate;
     overflow: hidden;
+  }
+
+  /* ── Kleinere Ausgabe für kleinere Bildschirme ────────────────────────
+     Ein CSS-Hintergrund kennt kein `srcset`. Die Variablen kommen aus
+     `heroHintergrundStyle()` im style-Attribut; fehlen sie, greift der zweite
+     Wert in `var(…, …)` und es bleibt beim Original. Ausführliche Begründung
+     inklusive Pixeldichte steht bei derselben Regel in Opener.astro. */
+  @media (max-width: 640px) and (max-resolution: 1.5dppx) {
+    .event-hero {
+      background-image: var(--hero-bg-800, var(--hero-bg-image));
+    }
+  }
+
+  @media (max-width: 640px) and (min-resolution: 1.5dppx) {
+    .event-hero {
+      background-image: var(--hero-bg-1200, var(--hero-bg-image));
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 1200px) and (max-resolution: 1.5dppx) {
+    .event-hero {
+      background-image: var(--hero-bg-1200, var(--hero-bg-image));
+    }
   }
 
   /* Globaler Overlay: abdunkeln damit Text gut lesbar ist */

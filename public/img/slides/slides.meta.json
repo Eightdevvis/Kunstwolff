@@ -1,28 +1,20 @@
 {
   "belgique/2_caricaturistes_live_belgique.webp": {
     "categories": [
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler"
+        "schnellzeichner"
       ],
-      "events": [],
-      "landings": [
-        "belgique"
-      ]
-    },
-    "priority": 2
-  },
-  "belgique/caricaturiste-belgique.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "tags": {
-      "skills": [
-        "szenenmaler"
+      "events": [
+        "private-feier",
+        "hochzeit",
+        "geburtstag",
+        "gartenparty",
+        "stadtfest",
+        "sommerfest"
       ],
-      "events": [],
       "landings": [
         "belgique"
       ]
@@ -63,7 +55,8 @@
         "firmenfeier"
       ],
       "landings": [
-        "bw"
+        "bw",
+        "stuttgart"
       ]
     },
     "priority": 2
@@ -77,10 +70,12 @@
         "schnellzeichner"
       ],
       "events": [
-        "messe"
+        "messe",
+        "firmenfeier"
       ],
       "landings": [
-        "bw"
+        "bw",
+        "stuttgart"
       ]
     },
     "priority": 3
@@ -93,7 +88,17 @@
       "skills": [
         "schnellzeichner"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier",
+        "hochzeit",
+        "messe",
+        "private-feier",
+        "geburtstag",
+        "jubilaeum",
+        "gartenparty",
+        "stadtfest",
+        "sommerfest"
+      ],
       "landings": []
     },
     "priority": 1
@@ -107,9 +112,15 @@
         "schnellzeichner"
       ],
       "events": [
-        "stadtfest"
+        "stadtfest",
+        "hochzeit",
+        "private-feier",
+        "geburtstag",
+        "sommerfest"
       ],
-      "landings": []
+      "landings": [
+        "luxembourg"
+      ]
     },
     "priority": 2
   },
@@ -121,7 +132,11 @@
       "skills": [
         "schnellzeichner"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "weihnachtsfeier"
+      ],
       "landings": [
         "schweiz"
       ]
@@ -137,35 +152,64 @@
         "schnellzeichner"
       ],
       "events": [
-        "hochzeit"
+        "hochzeit",
+        "private-feier"
       ],
-      "landings": []
+      "landings": [
+        "wiesbaden",
+        "rhein-main-gebiet"
+      ]
     },
     "priority": 4
   },
   "default/5_flip.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
     "tags": {
-      "skills": [],
-      "events": [],
-      "landings": []
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe"
+      ],
+      "landings": [
+        "koeln"
+      ]
     },
     "priority": 5
   },
   "default/digital-artist-live.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner"
+    ],
     "tags": {
-      "skills": [],
-      "events": [],
-      "landings": []
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "ludwigshafen"
+      ]
     },
     "priority": 143
   },
   "default/digital-caricaturist--ludwigshafen.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner"
+    ],
     "tags": {
-      "skills": [],
-      "events": [],
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
       "landings": [
         "ludwigshafen"
       ]
@@ -182,7 +226,9 @@
         "schnellzeichner",
         "szenenmaler"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier"
+      ],
       "landings": [
         "ludwigshafen"
       ]
@@ -424,9 +470,16 @@
         "schnellzeichner",
         "szenenmaler"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "jubilaeum",
+        "gala"
+      ],
       "landings": [
-        "frankfurt"
+        "frankfurt",
+        "hessen",
+        "rhein-main-gebiet"
       ]
     },
     "priority": 10,
@@ -443,9 +496,16 @@
         "schnellzeichner",
         "szenenmaler"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "jubilaeum",
+        "gala"
+      ],
       "landings": [
-        "frankfurt"
+        "frankfurt",
+        "hessen",
+        "rhein-main-gebiet"
       ]
     },
     "priority": 11,
@@ -462,9 +522,15 @@
         "szenenmaler",
         "schnellzeichner"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "jubilaeum"
+      ],
       "landings": [
-        "frankfurt"
+        "frankfurt",
+        "hessen",
+        "rhein-main-gebiet"
       ]
     },
     "priority": 12,
@@ -480,10 +546,14 @@
         "schnellzeichner"
       ],
       "events": [
-        "firmenfeier"
+        "firmenfeier",
+        "messe",
+        "jubilaeum"
       ],
       "landings": [
-        "frankfurt"
+        "frankfurt",
+        "hessen",
+        "rhein-main-gebiet"
       ]
     },
     "priority": 13,
@@ -1294,39 +1364,6 @@
     "title": "Schnellzeichner Koblenz"
   },
   "koeln/1_IMG_20240129_120914.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": [
-        "koeln"
-      ]
-    },
-    "priority": 1
-  },
-  "koeln/10_digitale-live-portraits.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": [
-        "koeln"
-      ]
-    },
-    "priority": 10
-  },
-  "koeln/11_digitale-schnellzeichnung.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": [
-        "koeln"
-      ]
-    },
-    "priority": 11
-  },
-  "koeln/12_digitaler-schnellzeichner-messe-koeln.webp": {
     "categories": [
       "Schnellzeichner"
     ],
@@ -1335,10 +1372,120 @@
         "schnellzeichner"
       ],
       "events": [
-        "messe"
+        "firmenfeier",
+        "messe",
+        "jubilaeum",
+        "gala"
       ],
       "landings": [
-        "koeln"
+        "koeln",
+        "berlin",
+        "frankfurt",
+        "hamburg",
+        "schweiz",
+        "wiesbaden",
+        "mainz",
+        "hessen",
+        "rhein-main-gebiet",
+        "rheinland-pfalz",
+        "nord-rhein-westfalen",
+        "main-taunus-kreis",
+        "bw",
+        "stuttgart",
+        "schnellzeichner-duesseldorf"
+      ]
+    },
+    "priority": 1
+  },
+  "koeln/10_digitale-live-portraits.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "jubilaeum"
+      ],
+      "landings": [
+        "koeln",
+        "berlin",
+        "frankfurt",
+        "hamburg",
+        "schweiz",
+        "mainz",
+        "hessen",
+        "rhein-main-gebiet",
+        "rheinland-pfalz",
+        "nord-rhein-westfalen",
+        "main-taunus-kreis",
+        "bw",
+        "stuttgart",
+        "schnellzeichner-duesseldorf"
+      ]
+    },
+    "priority": 10
+  },
+  "koeln/11_digitale-schnellzeichnung.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "messe",
+        "jubilaeum"
+      ],
+      "landings": [
+        "koeln",
+        "frankfurt",
+        "hamburg",
+        "schweiz",
+        "mainz",
+        "luxembourg",
+        "hessen",
+        "rhein-main-gebiet",
+        "rheinland-pfalz",
+        "nord-rhein-westfalen",
+        "main-taunus-kreis",
+        "bw",
+        "stuttgart",
+        "schnellzeichner-duesseldorf"
+      ]
+    },
+    "priority": 11
+  },
+  "koeln/12_digitaler-schnellzeichner-messe-koeln.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "messe",
+        "firmenfeier",
+        "jubilaeum"
+      ],
+      "landings": [
+        "koeln",
+        "berlin",
+        "frankfurt",
+        "hamburg",
+        "wiesbaden",
+        "mainz",
+        "hessen",
+        "rhein-main-gebiet",
+        "rheinland-pfalz",
+        "nord-rhein-westfalen",
+        "main-taunus-kreis",
+        "bw",
+        "stuttgart",
+        "schnellzeichner-duesseldorf"
       ]
     },
     "priority": 12
@@ -1717,6 +1864,86 @@
     "priority": 9,
     "altOverride": "Une portraitiste souriante est assise devant un chevalet en luxembourg et dessine un portrait",
     "title": "Live-Kunst Luxembourg"
+  },
+  "main-taunus-kreis/digitale-karikaturen-wickerbachalm-hochheim.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier",
+        "sommerfest"
+      ],
+      "landings": [
+        "main-taunus-kreis",
+        "rhein-main-gebiet",
+        "hessen"
+      ]
+    },
+    "priority": 3
+  },
+  "main-taunus-kreis/karikaturistin-betriebsfeier-oehlmuehle-hattersheim.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "main-taunus-kreis",
+        "rhein-main-gebiet",
+        "hessen"
+      ]
+    },
+    "priority": 4
+  },
+  "main-taunus-kreis/schnellzeichner-firmenfeier-hattersheim.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "main-taunus-kreis",
+        "rhein-main-gebiet",
+        "hessen"
+      ]
+    },
+    "priority": 2
+  },
+  "main-taunus-kreis/schnellzeichnerin-oelmuehle-hattersheim.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier",
+        "geburtstag",
+        "hochzeit",
+        "private-feier"
+      ],
+      "landings": [
+        "main-taunus-kreis",
+        "rhein-main-gebiet",
+        "hessen"
+      ]
+    },
+    "priority": 1
   },
   "mainz/cartoon-by-speed-painter-alte-lokhalle-mainz.webp": {
     "categories": [],
@@ -2905,6 +3132,41 @@
       ]
     },
     "priority": 3
+  },
+  "szenenmaler/szenenmalerei-schloss-kronberg.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 8
+  },
+  "szenenmaler/wedding-live-painter.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    },
+    "priority": 1
+  },
+  "szenenmaler/wedding-painting.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    },
+    "priority": 2
   },
   "trier/1_2-kollegen-zeigen-froehlich-ihre-karikaturzeichnung-mit-bierglas-auf-der-weihnachtsfeier-in-tommys-teufelskueche-trier.webp": {
     "categories": [

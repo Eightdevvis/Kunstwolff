@@ -47,8 +47,18 @@ Alle Seiten sind statisch (SSG). URLs entstehen automatisch aus `landings.md`, `
 
 ### Slug-Generierung Skills
 
-Aus dem `title`-Feld in `skills.json` wird automatisch der Slug abgeleitet:
-`"Schnellzeichner"` → `/schnellzeichner/`
+Aus dem `title`-Feld in `skills.json` wird der Slug abgeleitet — **es sei denn,
+`link` ist gesetzt.** Seit 2026-07-31 ist genau das der Fall:
+
+| Titel | URL | Inhalts-Schlüssel |
+| :-- | :-- | :-- |
+| Schnellzeichner | `/schnellzeichner-karikaturist/` | `schnellzeichner` |
+| Szenenmaler | `/szenenmaler/` | `szenenmaler` |
+| Aquarelle | `/aquarelle/` (ausgeblendet) | `aquarelle` |
+
+Die URL ist damit NICHT mehr der Schlüssel für Inhalte. Welche Aufrufe welchen
+der beiden brauchen, steht vollständig in `content-skills.md` — die Verwechslung
+erzeugt keine Fehlermeldung, sondern eine leere Seite.
 
 ### Skill-Bilder pro Skill-Seite
 

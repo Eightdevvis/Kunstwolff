@@ -6,7 +6,7 @@ import Landingsection from '../components/Landingsection.astro';
 import Slideshow from '../components/slideshows/Slideshow.astro';
 import Why from '../components/Why.astro';
 import SkillLayout from '../layouts/SkillLayout.astro';
-import { getSkillBySlug, getSkillSlugs } from '../utils/skills';
+import { getSkillBySlug, getSkillSlugs, skillContentKey } from '../utils/skills';
 import { getSkillSlides } from '../utils/slideImages';
 import { getAllReviews } from '../utils/reviews';
 import { resolveTitleImage } from '../utils/titleImages';
@@ -25,12 +25,24 @@ if (!skillData) {
   return Astro.redirect('/404');
 }
 
+/**
+ * `skill` ist die ADRESSE, `skillKey` der INHALT.
+ *
+ * Seit die Seite auf `/schnellzeichner-karikaturist/` liegt, sind das zwei
+ * verschiedene Zeichenketten. Alles, was in Ordner oder Dateien greift
+ * (Titelbild, hero-bg, Why, Erinnerungen, Bild-Tags), muss `skillKey` benutzen —
+ * die Sync-Skripte legen diese Dateien nach dem TITEL an. Alles, was eine URL
+ * baut (Schema, Breadcrumb, Städte-Links), muss `skill` benutzen.
+ * Verwechslung fällt nicht als Fehler auf, sondern als leere Seite.
+ */
+const skillKey = skillContentKey(skillData.title);
+
 // Über den Tag, nicht über die Startseiten-Auswahl (siehe getSkillSlides).
 const allSlideshow = getSkillSlides(skillData.title);
 const allReviews = getAllReviews();
 
-const titleImage = resolveTitleImage({ skill });
-const heroBg = resolveHeroBg({ skill });
+const titleImage = resolveTitleImage({ skill: skillKey });
+const heroBg = resolveHeroBg({ skill: skillKey });
 
 const heroTitle = skillData.heroTitle || `Live ${skillData.title} für Events`;
 const pageTitle = skillData.title + ' für Events buchen | Kunstwolff';
@@ -74,9 +86,10 @@ const sectionProps: Record<string, Record<string, any> | false> = {
   },
   // Kein `filteredCategories` mehr: die Liste ist schon über den Tag gewählt.
   slideshow: { items: allSlideshow },
-  why: { skill },
+  why: { skill: skillKey },
   contact: {},
   faq: { categories: [skillData.title] },
+  // `site` ist ein URL-Präfix für die Städte-Links, kein Inhalts-Schlüssel.
   landingsection: { site: skill },
 };
 const sectionOrder = resolveSectionOrder(PAGE_TYPE, skill ?? '', registry);

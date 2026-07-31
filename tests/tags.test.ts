@@ -3,7 +3,8 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-// @ts-expect-error – reines JS-Modul ohne Typen, wie die übrigen scripts/
+// Kein @ts-expect-error mehr nötig: allowJs löst die .mjs-Typen inzwischen
+// auf, und eine überflüssige Direktive ist selbst ein Typfehler (TS2578).
 import { slugifyTag, mergeVocabulary, normalizeTagList, EXTRA_EVENTS, inferLandingsFromKey, inferEventsFromKey } from '../scripts/tags.mjs';
 
 // Phase 5a: Tag-Vokabular Skill × Anlass × Ort.

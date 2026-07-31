@@ -36,6 +36,39 @@ const partners = data.partners.filter((p) => p.enabled !== false);
       </p>
     </div>
 
+    <!-- Eigener Text statt nur Logos: die Seite hatte 53 Wörter (gemessen am
+         2026-07-30) und war damit für Google fast leer. Sie bleibt indexierbar,
+         also braucht sie etwas zu sagen. -->
+    <div class="partners-text">
+      <h2>Warum wir mit Partnern arbeiten</h2>
+      <p>
+        Eine Veranstaltung besteht aus mehr als dem, was auf der Bühne passiert.
+        Licht, Ton, Räume, Druck, Transport — dahinter stehen Menschen, die ihr
+        Handwerk können. Wir arbeiten seit Jahren mit denselben Häusern
+        zusammen, weil sich das an genau den Abenden auszahlt, an denen etwas
+        nicht nach Plan läuft.
+      </p>
+
+      <h2>Was das für Sie bedeutet</h2>
+      <p>
+        Wenn Sie uns buchen und noch eine Location, einen Druckdienstleister
+        oder Technik brauchen, fragen Sie ruhig. Wir verdienen an keiner
+        Empfehlung mit — wir sagen einfach, mit wem wir gute Erfahrungen gemacht
+        haben, und wo es nicht gepasst hat, sagen wir das auch. Umgekehrt
+        empfehlen uns diese Partner weiter, was für beide Seiten die ehrlichste
+        Form von Werbung ist.
+      </p>
+
+      <h2>Zusammenarbeit</h2>
+      <p>
+        Sie sind Veranstalter, Agentur oder Location und suchen einen Künstler,
+        der zuverlässig auftaucht, sich in Ihr Programm einfügt und mit Ihren
+        Gästen umgehen kann? Sprechen Sie uns an. Wir sind regelmäßig für
+        Agenturen im Einsatz und arbeiten auf Wunsch auch im Auftritt unseres
+        Kunden statt im eigenen.
+      </p>
+    </div>
+
     <!-- Kachel-Grid: hover auf dem Grid dimmt alle nicht-aktiven Kacheln -->
     <div class="partners-grid">
       {
@@ -116,6 +149,32 @@ const partners = data.partners.filter((p) => p.enabled !== false);
     background: #d4af37;
     margin: 28px auto 0;
     opacity: 0.7;
+  }
+
+  /* ── Fließtext ──────────────────────────────────────────────────────────── */
+  .partners-text {
+    max-width: 720px;
+    margin: 0 auto 64px;
+  }
+
+  .partners-text h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin: 2em 0 0.6em;
+    color: #ffffff;
+  }
+
+  .partners-text h2:first-child {
+    margin-top: 0;
+  }
+
+  .partners-text p {
+    /* 400 statt des globalen 100 – siehe Schrift-Notiz in global.css. */
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.82);
   }
 
   /* ── Grid ───────────────────────────────────────────────────────────────── */

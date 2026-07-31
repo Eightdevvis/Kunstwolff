@@ -1,5 +1,6 @@
 ---
 import BrandStripe from "../reviews-references/BrandStripe.astro";
+import { heroHintergrundStyle } from "../../utils/responsiveImages";
 const { titleImage = '/img/Titelbild/default/titelbild.avif', titleImageAlt = 'Kunstwolff - Eventkünstler seit über 25 Jahren', titleImagePosition = 'center', titleImageFrame = 0, heading = 'Event- und Showkünstler seit über 25 Jahren' } = Astro.props;
 
 // Weißer Rahmen: bei frame > 0 wird das Bild via `contain` komplett gezeigt
@@ -9,7 +10,11 @@ const frameThickness = Number(titleImageFrame);
 const framed = Number.isFinite(frameThickness) && frameThickness > 0;
 const heroFit = framed ? 'contain' : 'cover';
 const heroFrame = framed ? `${frameThickness}px` : '0px';
-const heroStyle = `--hero-bg-image: url('${titleImage}'); --hero-bg-pos: ${titleImagePosition}; --hero-fit: ${heroFit}; --hero-frame: ${heroFrame};`;
+// Kleinere Ausgaben desselben Bildes als eigene Variablen; die Media-Queries
+// unten greifen sie ab. Fehlen sie (AVIF, zu kleines Original), bleibt es beim
+// Original – der `var(…, …)`-Rückfall regelt das ohne Sonderfall im Markup.
+const heroVarianten = heroHintergrundStyle(titleImage);
+const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroVarianten}--hero-bg-pos: ${titleImagePosition}; --hero-fit: ${heroFit}; --hero-frame: ${heroFrame};`;
 ---
 <style>
 .hero {
@@ -35,6 +40,38 @@ const heroStyle = `--hero-bg-image: url('${titleImage}'); --hero-bg-pos: ${title
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
+}
+
+/* ── Kleinere Ausgabe für kleinere Bildschirme ──────────────────────────────
+   Ein CSS-Hintergrund kennt kein `srcset`, deshalb hier von Hand. Die
+   Variablen setzt `heroHintergrundStyle()` im style-Attribut; fehlen sie,
+   greift der zweite Wert in `var(…, …)` und es bleibt beim Original — der
+   Grund, warum es kein AVIF-Sonderfall gibt.
+
+   Gemessen an /berlin/ (2026-07-31): Original 246 KB · 1200er 133 KB ·
+   800er 78 KB. Auf einem gewöhnlichen Handy landen also 78 statt 246 KB, und
+   zwar für das Bild, das als erstes über dem Falz steht.
+
+   Die Pixeldichte MUSS mit rein: auf einem Retina-Handy sind 640 CSS-Punkte
+   1280 echte Pixel, dort wäre die 800er sichtbar weich. Browser ohne
+   `resolution`-Abfrage (Safari < 16) treffen keine der Regeln und bekommen das
+   Original — schlechter Fall, aber nie ein unscharfes Bild. */
+@media (max-width: 640px) and (max-resolution: 1.5dppx) {
+  .hero {
+    background-image: var(--hero-bg-800, var(--hero-bg-image));
+  }
+}
+
+@media (max-width: 640px) and (min-resolution: 1.5dppx) {
+  .hero {
+    background-image: var(--hero-bg-1200, var(--hero-bg-image));
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1200px) and (max-resolution: 1.5dppx) {
+  .hero {
+    background-image: var(--hero-bg-1200, var(--hero-bg-image));
+  }
 }
 
 .hero::after {

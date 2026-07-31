@@ -20,7 +20,7 @@
     { "source": "/about-9", "destination": "/team/", "permanent": true },
 
     { "source": "/aquarelle-galerie", "destination": "/aquarelle/", "permanent": true },
-    { "source": "/schnellzeichnung-galerie", "destination": "/schnellzeichner/", "permanent": true },
+    { "source": "/schnellzeichnung-galerie", "destination": "/schnellzeichner-karikaturist/", "permanent": true },
     { "source": "/szenenmaler-galerie", "destination": "/szenenmaler/", "permanent": true },
 
     { "source": "/portfolio", "destination": "/galerie/", "permanent": true },
@@ -29,7 +29,7 @@
     { "source": "/landingpages/landing", "destination": "/", "permanent": true },
     {
       "source": "/schnellzeichner-duesseldorf",
-      "destination": "/schnellzeichner/duesseldorf/",
+      "destination": "/schnellzeichner-karikaturist/duesseldorf/",
       "permanent": true
     },
 
@@ -45,22 +45,22 @@
     },
     {
       "source": "/portfolio-collections/my-portfolio/digitale-kunst",
-      "destination": "/schnellzeichner/",
+      "destination": "/schnellzeichner-karikaturist/",
       "permanent": true
     },
     {
       "source": "/portfolio-collections/my-portfolio/karikaturen-schwarz-wei%C3%9F",
-      "destination": "/schnellzeichner/",
+      "destination": "/schnellzeichner-karikaturist/",
       "permanent": true
     },
     {
       "source": "/portfolio-collections/my-portfolio/portrait-karikatur-vom-foto",
-      "destination": "/schnellzeichner/",
+      "destination": "/schnellzeichner-karikaturist/",
       "permanent": true
     },
     {
       "source": "/portfolio-collections/my-portfolio/einladungskarten-mit-karikatur",
-      "destination": "/schnellzeichner/",
+      "destination": "/schnellzeichner-karikaturist/",
       "permanent": true
     },
     { "source": "/portfolio-collections/:rest*", "destination": "/galerie/", "permanent": true },
@@ -71,15 +71,26 @@
       "destination": "/szenenmaler/",
       "permanent": true
     },
-    { "source": "/template/schnellzeichnungen", "destination": "/schnellzeichner/", "permanent": true },
-    { "source": "/template/digitale-kunst", "destination": "/schnellzeichner/", "permanent": true },
-    { "source": "/template/vom-foto", "destination": "/schnellzeichner/", "permanent": true },
-    { "source": "/template/manga--und-cartoonstil", "destination": "/schnellzeichner/", "permanent": true },
+    { "source": "/template/schnellzeichnungen", "destination": "/schnellzeichner-karikaturist/", "permanent": true },
+    { "source": "/template/digitale-kunst", "destination": "/schnellzeichner-karikaturist/", "permanent": true },
+    { "source": "/template/vom-foto", "destination": "/schnellzeichner-karikaturist/", "permanent": true },
+    { "source": "/template/manga--und-cartoonstil", "destination": "/schnellzeichner-karikaturist/", "permanent": true },
     {
       "source": "/template/einladungskarten-hochzeit%26geburtstag",
-      "destination": "/schnellzeichner/",
+      "destination": "/schnellzeichner-karikaturist/",
       "permanent": true
     },
-    { "source": "/template/:rest*", "destination": "/galerie/", "permanent": true }
+    { "source": "/template/:rest*", "destination": "/galerie/", "permanent": true },
+
+    {
+      "source": "/schnellzeichner",
+      "destination": "/schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/:rest*",
+      "destination": "/schnellzeichner-karikaturist/:rest*",
+      "permanent": true
+    }
   ]
 }

@@ -58,8 +58,8 @@ Pro Seitentyp automatisch generiert:
 | :-- | :-- | :-- |
 | Homepage | `Kunstwolff – Eventkünstler seit über 25 Jahren` | Generisch (aus `Layout.astro`) |
 | Stadtseite `/berlin/` | `Eventkünstler Berlin – Live-Kunst & Performance \| Kunstwolff` | Stadtspezifisch |
-| Skill-Seite `/schnellzeichner/` | `Schnellzeichner für Events buchen \| Kunstwolff` | `skills.json` (`description`) |
-| Skill+Stadt `/schnellzeichner/berlin/` | `Schnellzeichner Berlin buchen \| Kunstwolff` | pro Stadt individualisiert (nicht mehr `skills.json`) |
+| Skill-Seite `/schnellzeichner-karikaturist/` | `Schnellzeichner für Events buchen \| Kunstwolff` | `skills.json` (`description`) |
+| Skill+Stadt `/schnellzeichner-karikaturist/berlin/` | `Schnellzeichner Berlin buchen \| Kunstwolff` | pro Stadt individualisiert (nicht mehr `skills.json`) |
 
 Auf jeder Seite wird ein `<link rel="canonical">` gesetzt (gegen Duplicate-Content-Strafen).
 
@@ -94,7 +94,7 @@ Auf jeder Seite automatisch generiert (für WhatsApp, LinkedIn, Facebook, etc.):
 ```html
 <meta property="og:title" content="Schnellzeichner Berlin buchen | Kunstwolff" />
 <meta property="og:description" content="..." />
-<meta property="og:url" content="https://kunstwolff.de/schnellzeichner/berlin/" />
+<meta property="og:url" content="https://kunstwolff.de/schnellzeichner-karikaturist/berlin/" />
 <meta property="og:type" content="website" />
 <meta property="og:image" content="https://kunstwolff.de/img/Titelbild/..." />
 ```
@@ -125,9 +125,9 @@ Vollautomatisch beim Build generiert. Keine manuelle Pflege.
 | Seitentyp | Schema-Typen |
 | :-- | :-- |
 | Homepage `/` | `LocalBusiness` |
-| Skill-Seite `/schnellzeichner/` | `Service` |
+| Skill-Seite `/schnellzeichner-karikaturist/` | `Service` |
 | Stadtseite `/berlin/` | `BreadcrumbList` |
-| Skill+Stadt `/schnellzeichner/berlin/` | `BreadcrumbList` |
+| Skill+Stadt `/schnellzeichner-karikaturist/berlin/` | `BreadcrumbList` |
 | FAQ-Seite `/faq/` | `FAQPage` |
 
 > ⚠ **FAQPage nur auf `/faq/`.** `FAQ.astro` emittiert das FAQPage-Schema nur bei
@@ -198,7 +198,7 @@ indexierbar bleiben **41 von 170** gebauten Seiten. Die Sitemap enthält exakt d
   hessen, kaiserslautern, koeln, ludwigshafen, luxembourg, saarbruecken, saarland,
   schweiz, stuttgart, trier.
 - **Alle 102 Skill+Stadt-Seiten sind ausgeblendet.** Nicht wegen Dünne, sondern wegen
-  Kannibalisierung: 97 % des Textes von `/schnellzeichner/berlin/` stehen wörtlich auch
+  Kannibalisierung: 97 % des Textes von `/schnellzeichner-karikaturist/berlin/` stehen wörtlich auch
   auf `/berlin/`, und beide zielen auf dieselbe Suchanfrage.
 - **`/aquarelle/<anlass>/`** (4 Seiten): 0 eigene Bilder. `/aquarelle/` selbst bleibt
   sichtbar – es ist eine echte Leistungsseite und hängt im Services-Menü
@@ -217,7 +217,7 @@ die man später füllen will.
 
 Ebenfalls entfernt: der Slug `schnellzeichner-duesseldorf` aus `landings.md` (stand dort
 als "Stadt" und erzeugte vier Seiten mit Titeln wie "Schnellzeichner
-Schnellzeichner-Duesseldorf buchen"). Weiterleitung auf `/schnellzeichner/duesseldorf/`
+Schnellzeichner-Duesseldorf buchen"). Weiterleitung auf `/schnellzeichner-karikaturist/duesseldorf/`
 steht in `vercel.json`.
 
 ## Schriften kommen vom eigenen Server (seit 2026-07-31)
@@ -290,3 +290,40 @@ weder DPA noch GDPR-Abschnitt. In §4 steht deshalb bewusst **keine** Behauptung
 einen AV-Vertrag, nur die nachprüfbare Tatsache (Sitz USA, Drittlandübermittlung).
 Entschieden am 2026-07-31: das Formular wandert auf den eigenen Worker, dann entfällt
 der Abschnitt ersatzlos.
+
+
+## URL-Umbenennung `/schnellzeichner/` → `/schnellzeichner-karikaturist/` (2026-07-31)
+
+Wunsch von Gabriele: „Karikaturist" wird häufiger gesucht als „Schnellzeichner".
+Der sichtbare **Titel bleibt „Schnellzeichner"** — geändert hat sich nur die
+Adresse, über das `link`-Feld in `skills.json`.
+
+Betroffen: 40 URLs (Skill + 35 Städte + 4 Anlässe). In `vercel.json` stehen zwei
+301er (`/schnellzeichner` und `/schnellzeichner/:rest*`), und die 10 Wix-Ziele,
+die vorher auf `/schnellzeichner/` zeigten, wurden **direkt** auf die neue
+Adresse umgehängt — sonst entstünde die Kette Wix-URL → alte Astro-URL → neue.
+
+**Der Zeitpunkt war Absicht:** die neuen URLs haben noch kein Ranking, und die
+Redirect-Karte für den Wix-Umzug wurde ohnehin gerade gebaut. Nach dem Umzug
+hätte dieselbe Änderung echte Signale gekostet.
+
+Technisch heikel war nicht die URL, sondern dass sie bis dahin auch der Schlüssel
+für Bilder, Why-Texte und Erinnerungen war. Siehe `content-skills.md`.
+
+### Warum NICHT auf flache URLs (`/schnellzeichner-berlin/`)
+
+Gabriele hält flache URLs für besser platziert. Geprüft am 2026-07-31:
+
+- In den Wix-Sitemaps steht **genau eine** flache Skill-Stadt-URL
+  (`/schnellzeichner-duesseldorf`). Es gibt also kein bestehendes Ranking auf
+  diesem Muster, das man bewahren könnte.
+- **34 der 35** Skill×Stadt-Seiten stehen ohnehin auf `noindex`
+  (`page-visibility.json`), weil ihr Text dupliziert ist. Solange das so ist,
+  konkurrieren sie um gar nichts, und die Schreibweise der URL ist folgenlos.
+- Ein Schlüsselwort in der URL ist ein sehr schwaches Signal; was diese Seiten
+  ausbremst, ist der fehlende eigene Text — gemessen: `/dortmund/` und
+  `/giessen/` waren 1493 von 1494 Wörtern gleich.
+
+Der teure Teil ist nicht die Umbenennung, sondern der Inhalt. **Empfehlung:** pro
+Stadt 150–250 Wörter Ortsbezug schreiben und die Seite dann wieder sichtbar
+schalten — statt eines zweiten URL-Wechsels innerhalb weniger Tage.
