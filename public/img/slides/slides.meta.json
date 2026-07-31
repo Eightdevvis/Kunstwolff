@@ -3133,6 +3133,41 @@
     },
     "priority": 3
   },
+  "szenenmaler/szenenmalerei-schloss-kronberg.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 8
+  },
+  "szenenmaler/wedding-live-painter.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    },
+    "priority": 1
+  },
+  "szenenmaler/wedding-painting.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    },
+    "priority": 2
+  },
   "trier/1_2-kollegen-zeigen-froehlich-ihre-karikaturzeichnung-mit-bierglas-auf-der-weihnachtsfeier-in-tommys-teufelskueche-trier.webp": {
     "categories": [
       "Schnellzeichner"
@@ -3655,20 +3690,5 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
-  },
-  "szenenmaler/wedding-live-painter.webp": {
-    "categories": [],
-    "priority": 1,
-    "tags": {}
-  },
-  "szenenmaler/wedding-painting.webp": {
-    "categories": [],
-    "priority": 2,
-    "tags": {}
-  },
-  "szenenmaler/szenenmalerei-schloss-kronberg.webp": {
-    "categories": [],
-    "priority": 8,
-    "tags": {}
   }
 }
