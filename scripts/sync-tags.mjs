@@ -88,6 +88,36 @@ if (missing.length > 0) {
   process.exit(1);
 }
 
+// Verwaiste Seed-Einträge melden.
+//
+// Das Vokabular wächst nur (siehe mergeVocabulary) – wer eine Stadt aus
+// landings.md streicht, wird sie in tags.json NICHT los. Der Eintrag bleibt im
+// Admin auswählbar, behauptet weiter `source: "landings.md"` und taggt Bilder
+// auf eine Seite, die es nicht mehr gibt. Genau so überlebte
+// `schnellzeichner-duesseldorf` seine eigene Löschung um zwei Tage.
+//
+// Automatisch entfernen wäre falsch: an so einem Slug hängen Ordner, Bilder,
+// Reviews und Tags, die jemand erst umziehen muss. Deshalb nur ein Hinweis –
+// laut, mit Namen und mit dem nächsten Schritt.
+const seedSlugsJeDimension = {
+  skills: new Set(readSkillLabels().map(slugifyTag)),
+  events: new Set([...readEventLabels(), ...EXTRA_EVENTS].map(slugifyTag)),
+  landings: new Set(readCityLabels().map(slugifyTag)),
+};
+const quelleJeDimension = { skills: 'skills.json', events: 'events.json', landings: 'landings.md' };
+
+for (const [dim, quelle] of Object.entries(quelleJeDimension)) {
+  for (const e of next[dim]) {
+    if (e.source !== quelle || seedSlugsJeDimension[dim].has(e.slug)) continue;
+    console.warn(
+      `sync-tags: HINWEIS - "${e.slug}" steht in tags.json unter ${dim} mit source "${quelle}", ` +
+        `kommt in ${quelle} aber nicht mehr vor. Entweder dort wieder eintragen oder den Eintrag ` +
+        `aus public/config/tags.json entfernen - samt allem, was daran haengt ` +
+        `(grep -rIl "${e.slug}" public src).`
+    );
+  }
+}
+
 const before = fs.existsSync(tagsPath) ? fs.readFileSync(tagsPath, 'utf-8') : '';
 const serialized = `${JSON.stringify(next, null, 2)}\n`;
 

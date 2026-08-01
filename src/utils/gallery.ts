@@ -94,7 +94,6 @@ const LABEL_AUSNAHMEN: Record<string, string> = {
   koeln: 'Köln',
   'nord-rhein-westfalen': 'Nordrhein-Westfalen',
   saarbruecken: 'Saarbrücken',
-  'schnellzeichner-duesseldorf': 'Schnellzeichner Düsseldorf',
   tuebingen: 'Tübingen',
 };
 
