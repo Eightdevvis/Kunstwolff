@@ -515,8 +515,16 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
 - [ ] **S — 1.2** DNS umstellen nach dem in 0.2 gewählten Weg
 - [ ] **S — 1.3** Wix-Site auf „Coming Soon" — **nicht** „Disconnect Domain"
 - [ ] **S — 1.4** Apex → www als Redirect in den Vercel-Domain-Settings (nicht in `vercel.json`)
-- [ ] **S — 1.5** Search Console: Property für `www.kunstwolff.de`, Sitemap
-      `https://www.kunstwolff.de/sitemap-index.xml` einreichen, Adressänderung beantragen
+- [ ] **S — 1.5** Search Console: Sitemap
+      `https://www.kunstwolff.de/sitemap-index.xml` einreichen.
+      ⚠️ **Korrigiert 2026-08-01: KEINE Adressänderung beantragen.** Hier stand
+      es, es ist aber falsch für diesen Fall. Die Adressänderung ist für den
+      Umzug auf eine **andere Domain**. Deine bleibt `kunstwolff.de` — es
+      wechselt nur das Hosting, und die Property ist bereits
+      `https://www.kunstwolff.de/` (siehe GSC-Export). Google soll davon gar
+      nichts merken; ein Adressänderungs-Antrag würde die Indexierung ohne Not
+      durcheinanderbringen.
+      Eine **neue Property** braucht es aus demselben Grund auch nicht.
 - [ ] **S — 1.6** 48 h die Abdeckungsberichte beobachten — 404-Spitzen = fehlende Redirects
 - [ ] **S — 1.7** GSC-Export der alten Property (12 Monate, nach Klicks) gegen die
       Redirect-Karte halten. Die 34 URLs kommen aus den Wix-Sitemaps; was **wirklich**

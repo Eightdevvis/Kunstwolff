@@ -118,17 +118,40 @@ bleibt das Wix-Abo Pflicht — kündigen heißt Domain offline. Weg B macht die
 Sache einmal statt zweimal. Cloudflare, weil dort ohnehin schon der
 Admin-Worker läuft: kein neuer Anbieter, kein neuer Account, kostenlos.
 
-**Ausgangslage, gemessen am 2026-08-01:**
+**Ausgangslage, vollständig ausgelesen am 2026-08-01** (nicht nur die Typen,
+an die man zufällig denkt — die Wix-Zone wurde Satz für Satz abgefragt):
 
-| Record | jetzt | TTL |
-|:--|:--|--:|
-| NS | `ns12.wixdns.net`, `ns13.wixdns.net` | — |
-| `A kunstwolff.de` | `185.230.63.186/107/171` (Wix) | 3600 |
-| `CNAME www` | `cdn1.wixdns.net` (Wix-CDN) | — |
-| MX | **keine** | — |
-| TXT | **keine** | — |
+| Record | jetzt |
+|:--|:--|
+| SOA | `ns12.wixdns.net. support.wix.com.` |
+| NS | `ns12.wixdns.net`, `ns13.wixdns.net` |
+| `A kunstwolff.de` | `185.230.63.186/107/171` (Wix), TTL 3600 |
+| `CNAME www` | `cdn1.wixdns.net` (Wix-CDN) |
+| MX · TXT · CAA · AAAA · SRV · NAPTR | **alle leer** |
+| weitere Subdomains | **keine** (mail/smtp/webmail/blog/shop/api/… geprüft) |
 
-Zu übernehmen ist also **nur die Website**. Kein E-Mail-Risiko.
+Zu übernehmen ist also **nur die Website**. Kein E-Mail-Risiko, kein
+IPv6-Eintrag, keine Subdomain außer `www`.
+
+**Die drei Dinge, die einen Zonen-Umzug sonst killen — hier alle geprüft:**
+
+1. **DNSSEC: aus.** Keine DS-Einträge bei der `.de`-Registry, keine DNSKEY in
+   der Zone, kein `ad`-Flag. **Wäre es an**, würden nach dem Nameserver-Wechsel
+   die alten Signaturschlüssel nicht mehr passen und die Domain wäre für jeden
+   prüfenden Resolver **komplett unerreichbar** — nicht „alte Seite", sondern
+   Fehlermeldung. Nichts zu tun; falls es später jemand einschaltet, vorher
+   ausschalten.
+2. **CAA: keiner.** Damit darf jede CA ein Zertifikat ausstellen. Ein
+   CAA-Eintrag, der nur eine fremde CA erlaubt, würde Let's Encrypt blockieren —
+   Vercel bekäme kein Zertifikat und die Seite wäre über HTTPS tot.
+3. **HSTS: die Wix-Seite sendet `max-age=31556952`** (ein Jahr).
+   🔴 **Daraus folgt: HTTPS muss vom ersten Moment an funktionieren.** Jeder
+   Besucher der letzten zwölf Monate hat im Browser gespeichert, dass diese
+   Domain nur über HTTPS erreichbar ist — das ist bindend und **nicht
+   wegklickbar**. Ist das Vercel-Zertifikat beim Umschalten noch nicht
+   ausgestellt, sehen diese Leute eine harte Fehlerseite statt einer Warnung.
+   **Der Umzug gilt erst als erledigt, wenn `https://www.kunstwolff.de/`
+   wirklich 200 liefert — nicht, wenn `dig` gut aussieht.**
 
 **Reihenfolge — erst die neue Zone fertig, dann erst die Nameserver.**
 Wer zuerst die Nameserver umstellt, hat eine leere Zone im Netz und die Seite
@@ -319,7 +342,33 @@ ist weg.
   - Mind. 4 Wochen ohne Probleme
   - GSC zeigt indexierte www-Seiten in deutlich höherer Zahl als die alten
     Wix-Pages
-  - Alle wichtigen E-Mails kommen weiter an (MX!)
+  - ~~Alle wichtigen E-Mails kommen weiter an (MX!)~~ — **entfällt**, über diese
+    Domain läuft keine E-Mail (2026-08-01 gemessen: keine MX-Records)
+
+- [ ] 🔴 **BEVOR irgendetwas bei Wix gekündigt wird: klären, wer die Domain
+  REGISTRIERT hat.** Das ist nicht dasselbe wie die DNS-Zone.
+
+  Der Umzug nach Cloudflare macht uns von Wix' **Nameservern** unabhängig — er
+  ändert **nichts** daran, bei wem die Domain gekauft ist. Ist `kunstwolff.de`
+  über Wix registriert (wahrscheinlich, siehe unten), hängt der Kaufvertrag
+  weiter dort. **Ein vollständig gekündigtes Wix-Abo lässt die Domain auslaufen**
+  — und eine ausgelaufene Domain ist irgendwann für jeden frei. Das passiert
+  Monate später, wenn niemand mehr an den Umzug denkt, und ist praktisch nicht
+  reparierbar.
+
+  Indiz dafür, dass Wix der Registrar ist: die Zone lag von Anfang an auf
+  `ns12/ns13.wixdns.net`, und es ist kein separates Registrar-Konto bekannt.
+  Über RDAP/DENIC ist es nicht zu ermitteln — `.de` gibt die Daten nicht
+  öffentlich heraus. **Nachsehen: Wix → Domains → kunstwolff.de**, oder
+  `lookup.icann.org`, oder alte Rechnungen.
+
+  Zwei saubere Auswege:
+  - **Domain-Registrierung bei Wix behalten** und nur die Website kündigen
+    (falls Wix das getrennt anbietet), oder
+  - die Registrierung **in Ruhe zu einem echten Registrar transferieren** —
+    dann doch „Transfer", aber ohne Zeitdruck und lange nach dem Umzug.
+
+  Dabei ebenfalls prüfen: **Ablaufdatum der Domain und ob Auto-Renew aktiv ist.**
 
 ---
 
