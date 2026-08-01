@@ -15,7 +15,11 @@ const findFirstImage = (folderName: string): string | null => {
     .sort();
 
   if (files.length === 0) return null;
-  return `/img/hero-bg/${encodeURIComponent(folderName)}/${encodeURIComponent(files[0])}`;
+  // Teilweise kodieren: ein verschachtelter Ordnername würde am Stück zu %2F,
+  // und %2F trennt keine Pfade (siehe slideImages.ts).
+  const encodePath = (value: string): string =>
+    value.split('/').map((part) => encodeURIComponent(part)).join('/');
+  return `/img/hero-bg/${encodePath(folderName)}/${encodePath(files[0])}`;
 };
 
 /**

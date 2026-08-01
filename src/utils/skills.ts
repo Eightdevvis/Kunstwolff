@@ -17,7 +17,10 @@ const skillsRoot = path.resolve('./public/skills');
 const skillImagesRoot = path.resolve('./public/img/UnsereFähigkeitenBilder');
 const allowedImageExtensions = new Set(['.avif', '.gif', '.jpeg', '.jpg', '.png', '.webp']);
 
-const encodePathSegment = (segment: string): string => encodeURIComponent(segment);
+// Jeden Teil einzeln kodieren: ein verschachtelter Ordnerschlüssel würde am Stück
+// zu %2F, und das trifft keine Datei mehr (Fall siehe slideImages.ts).
+const encodePathSegment = (segment: string): string =>
+  segment.split('/').map((part) => encodeURIComponent(part)).join('/');
 
 const normalizeKey = (value: string): string =>
   value
