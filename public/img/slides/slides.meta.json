@@ -1380,19 +1380,18 @@
       "landings": [
         "koeln",
         "berlin",
-        "frankfurt",
         "hamburg",
         "schweiz",
         "wiesbaden",
         "mainz",
-        "hessen",
-        "rhein-main-gebiet",
         "rheinland-pfalz",
         "nord-rhein-westfalen",
         "main-taunus-kreis",
-        "bw",
-        "stuttgart",
-        "schnellzeichner-duesseldorf"
+        "schnellzeichner-duesseldorf",
+        "ludwigshafen",
+        "saarbruecken",
+        "koblenz",
+        "giessen"
       ]
     },
     "priority": 1
@@ -1413,18 +1412,18 @@
       "landings": [
         "koeln",
         "berlin",
-        "frankfurt",
         "hamburg",
         "schweiz",
         "mainz",
-        "hessen",
-        "rhein-main-gebiet",
-        "rheinland-pfalz",
         "nord-rhein-westfalen",
         "main-taunus-kreis",
-        "bw",
         "stuttgart",
-        "schnellzeichner-duesseldorf"
+        "schnellzeichner-duesseldorf",
+        "mannheim",
+        "neuwied",
+        "karlsruhe",
+        "neunkirchen",
+        "fulda"
       ]
     },
     "priority": 10
@@ -1446,12 +1445,13 @@
         "luxembourg",
         "hessen",
         "rhein-main-gebiet",
-        "rheinland-pfalz",
         "nord-rhein-westfalen",
-        "main-taunus-kreis",
-        "bw",
-        "stuttgart",
-        "schnellzeichner-duesseldorf"
+        "schnellzeichner-duesseldorf",
+        "belgique",
+        "neuwied",
+        "heidelberg",
+        "dortmund",
+        "bw"
       ]
     },
     "priority": 11
@@ -1482,10 +1482,12 @@
         "rhein-main-gebiet",
         "rheinland-pfalz",
         "nord-rhein-westfalen",
-        "main-taunus-kreis",
-        "bw",
         "stuttgart",
-        "schnellzeichner-duesseldorf"
+        "schnellzeichner-duesseldorf",
+        "saarland",
+        "koblenz",
+        "tuebingen",
+        "bw"
       ]
     },
     "priority": 12
