@@ -533,17 +533,6 @@
     },
     "priority": 9
   },
-  "events/hochzeit/img_20240316_180247~3.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [
-        "hochzeit"
-      ],
-      "landings": []
-    },
-    "priority": 10
-  },
   "events/hochzeit/img_20240316_182602.webp": {
     "categories": [],
     "tags": {
@@ -3707,9 +3696,7 @@
     "categories": [],
     "tags": {
       "skills": [],
-      "events": [
-        "hochzeit"
-      ],
+      "events": [],
       "landings": []
     },
     "priority": 9
@@ -3728,8 +3715,7 @@
     "tags": {
       "skills": [],
       "events": [
-        "messe",
-        "hochzeit"
+        "messe"
       ],
       "landings": [
         "frankfurt"
@@ -4057,9 +4043,7 @@
       "skills": [
         "schnellzeichner"
       ],
-      "events": [
-        "hochzeit"
-      ],
+      "events": [],
       "landings": [
         "trier"
       ]
