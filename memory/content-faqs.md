@@ -81,10 +81,28 @@ still zu einer Anlass-Frage machen. Anlässe vergibt Jenny im Admin über die Ta
 Der Schritt läuft in `sync:content:safe`, also bei jedem `dev`/`build` – **nach**
 `sync:tags`, weil ein Ort ohne Vokabular-Eintrag verworfen wird.
 
-⚠️ **Bekannte Grenze:** `FaqManager.tsx` schreibt den `tags:`-Block nur, wenn mindestens
+⚠️ **Bekannte Grenze 1:** `FaqManager.tsx` schreibt den `tags:`-Block nur, wenn mindestens
 ein Tag gesetzt ist (gleiche Haltung wie `ReviewManager`). Löscht jemand im Admin *alle*
 Tags einer Stadt-FAQ, um sie allgemein zu machen, ergänzt der Sync beim nächsten Build
 den Ordner-Tag wieder. „Bewusst allgemein" ist derzeit nicht ausdrückbar.
+
+⚠️ **Bekannte Grenze 2 – der gefährlichere Fall (aufgefallen 2026-08-01):** Schreibt der
+Admin einen **teilweisen** `tags:`-Block – etwa nur `skills`, ohne `landings` –, dann
+rührt der Sync die Datei **gar nicht** mehr an. Er prüft `/^tags\s*:/m`, also die bloße
+Anwesenheit des Blocks, nicht die einzelnen Dimensionen. Der Ordner-Tag kommt damit nie
+nach, und weil „Dimension fehlt = gilt überall" gilt, wandert eine Stadt-FAQ still auf
+**alle** Seiten.
+
+Genau das ist `public/faq/bw/wie-kann-ich-einen-event-karikaturisten-buchen.md` passiert
+(Commit `d582233`): Block vorhanden, `landings` fehlt, Datei liegt in `bw/`. Der Test
+`tests/content-tags.test.ts` („jede FAQ ausserhalb von `default/` trägt den Ort-Tag ihres
+Ordners") ist deshalb **rot** – der Wächter tut, was er soll. Zwei Wege stehen offen und
+sie führen zu verschiedenen Ergebnissen: `landings: [bw]` ergänzen (bleibt eine
+BW-Frage) **oder** die Datei nach `public/faq/default/` verschieben (gilt bewusst
+überall). Das ist eine Redaktionsentscheidung, keine technische.
+
+Der strukturelle Fix wäre, `sync-faq-tags.mjs` je **Dimension** ergänzen zu lassen statt
+je Block – dann kann ein halber Tag-Block nicht mehr blockieren.
 
 ## Schema.org
 
