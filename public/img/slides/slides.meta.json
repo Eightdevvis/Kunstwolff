@@ -4454,5 +4454,14 @@
         "duesseldorf"
       ]
     }
+  },
+  "luxembourg/caricaturiste-luxembourg-événement.webp": {
+    "categories": [],
+    "priority": 12,
+    "tags": {
+      "landings": [
+        "luxembourg"
+      ]
+    }
   }
 }
