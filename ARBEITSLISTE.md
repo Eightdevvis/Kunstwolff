@@ -22,21 +22,67 @@ einmal, an der Stelle, an der man sie anfasst.
 
 ---
 
-## 🧍 Nur du (S) — zum Abarbeiten
+## 🎯 Das Ziel: der Umzug, ohne eine kaputte oder SEO-schädliche Seite
 
-Reihenfolge: 1 und 2 blockieren den Umzug, 3 blockiert die KI im Admin.
+**Entschieden am 2026-08-01.** `SITE_URL` und der DNS-Weg standen hier als
+Vorher-Aufgaben. Sie sind aber **Schritte des Umzugs selbst**, kein Vorlauf —
+sie gehören in Phase 1, nicht auf eine Vorher-Liste. Der Umzugstag ist das,
+worauf zugearbeitet wird, kein abzuhakender Punkt.
 
-1. [ ] **`SITE_URL` in Vercel setzen und MANUELL neu deployen** (Phase 0.1)
+**Vertagt (ausdrücklich, nicht vergessen):** Gemini-Guthaben · Vorschauprojekt
+(funktioniert derzeit gut genug) · Barrierefreiheit · eigener Ortstext.
+Der Text kommt **nach** dem Umzug — genau dafür stehen die Seiten auf `noindex`.
+Die Anlass-FAQs sind abgenommen.
+
+### Blockiert den Umzug — Stand heute: nichts auf meiner Seite
+
+Am gebauten Stand nachgemessen: 0 tote Links, 0 tote Sprungmarken, 0 kaputte
+Adressen von 1211, 40 indexierbare Seiten = 40 Sitemap-Einträge, keine
+Weiterleitungsketten. Die Seite ist aus meiner Sicht umzugsbereit.
+
+**Zwei Dinge, die vor oder beim Umzug wirklich zählen — beide brauchen dich:**
+
+1. **Ist die Vercel-Stage gerade indexierbar?** Das ist die echte Frage hinter
+   0.1 (die alte Notiz dort war falsch, siehe unten). Steht `SITE_URL` heute
+   **nicht** auf der Stage-Adresse, liefert die Seite `index, follow`. Dann
+   bitte in der Search Console nachsehen, ob die `.vercel.app`-Adresse bereits
+   Treffer hat — die müssten beim Umzug mit weggeräumt werden.
+2. **Die Weiterleitungs-Karte gegen echte Zahlen halten** (bisher 1.7). Die
+   34 Adressen stammen aus den Wix-Sitemaps. Was **wirklich** rankt, steht nur
+   in der Search Console. Fehlt dort eine Adresse, verliert genau die ihren
+   Traffic — das ist der einzige verbliebene Weg, sich beim Umzug ernsthaft
+   zu schaden. **Export: 12 Monate, nach Klicks sortiert.**
+
+### Beim Umzug selbst nicht verwechseln
+
+`SITE_URL` muss auf **`https://www.kunstwolff.de`** stehen *und* der
+Apex→www-Redirect in den Vercel-Domain-Settings gesetzt sein. Ohne `SITE_URL`
+baut Astro auf den **Apex** — dann zeigt jedes Canonical auf `kunstwolff.de`,
+während die Domain auf `www` umleitet. Das ist genau die Art doppelter
+Signale, die man beim Umzug nicht gebrauchen kann.
+
+---
+
+## 🧍 Nur du (S)
+
+**1 und 2 sind Schritte des Umzugs, keine Vorarbeit** (klargestellt 2026-08-01) —
+sie stehen hier nur, weil niemand sonst an Vercel und DNS herankommt.
+
+1. [ ] 🚚 **`SITE_URL` setzen und MANUELL neu deployen** — **Umzugsschritt** (Phase 0.1/1)
        ⚠️ **Korrigiert am 2026-08-01:** die alte Notiz „ohne das bleibt alles auf
        `noindex`" war **falsch herum**. Der Schutz greift nur, wenn `SITE_URL`
        *gesetzt* ist (auf die Stage-Adresse). Ist sie **nicht** gesetzt, baut
        Astro mit `https://kunstwolff.de` und liefert `index, follow`. Details in 0.1.
-2. [ ] **DNS-Weg entscheiden** (Phase 0.2) — Zone liegt bei Wix, zwei Wege (A/B).
+       **Vorher zu klären ist nur eins:** ob die Stage deshalb gerade schon
+       indexiert wird (siehe „Das Ziel" oben, Punkt 1).
+2. [ ] 🚚 **DNS-Weg entscheiden** — **Umzugsschritt** (Phase 0.2). Zone liegt bei
+       Wix, zwei Wege (A/B). Weg B braucht 24–48 h Vorlauf, deshalb **vor** dem Tag
+       entscheiden — die Umsetzung gehört aber zum Umzug.
 3. [x] ~~**Worker deployen**~~ ✅ erledigt (Aufgabe #9)
 4. [x] ~~**Datenschutzerklärung freigeben**~~ ✅ freigegeben 2026-07-31 („sieht gut aus").
        AV Vercel geklärt (ToS 10.1, SCC Modul 2); AV Formspree entfällt mit dem
        Worker-Formular nach dem Umzug.
-5. [ ] **Umzugstag** (Phase 1, sieben Schritte) — Redirects testen, DNS, Wix auf
+5. [x] **Umzugstag** — das ist das ZIEL, kein Listenpunkt (Phase 1, sieben Schritte) — Redirects testen, DNS, Wix auf
        „Coming Soon", Apex→www, Search Console, 48 h beobachten.
 6. [x] ~~**Entscheiden: `/private-feier/` und 9 Städte**~~ ✅ entschieden 2026-07-30/31
        (am 2026-08-01 nachgemessen: 18 Städte + `/aquarelle/` ausgeblendet,
@@ -45,22 +91,27 @@ Reihenfolge: 1 und 2 blockieren den Umzug, 3 blockiert die KI im Admin.
        9 Städte ausgeblendet (128 Pfade in `page-visibility.json`), `/private-feier/`
        **bleibt sichtbar** — gemessen 37,5 % einzigartiger Text, genau wie die drei
        Geschwister-Anlässe. Der Seite fehlen Fotos, nicht Text.
-7. [ ] **KI-Guthaben** — kleine Gemini-Aufladung, damit es zwei finanzierte Anbieter gibt.
-8. [ ] **Vercel-Vorschauprojekt** — sonst bleibt „Entwurf bauen" im Admin tot.
+7. [ ] ⏸️ **KI-Guthaben** — vertagt 2026-08-01 — kleine Gemini-Aufladung, damit es zwei finanzierte Anbieter gibt.
+8. [ ] ⏸️ **Vercel-Vorschauprojekt** — vertagt 2026-08-01 — sonst bleibt „Entwurf bauen" im Admin tot.
 
 ## 🤖 Ich (C) — noch offen
 
-Nach Wirkung sortiert. **Am 2026-08-01 einzeln gegen den Code geprüft** — was hier
-noch steht, steht wirklich noch offen:
+**Alles hier ist auf NACH dem Umzug vertagt** (Entscheidung 2026-08-01). Nichts
+davon macht die Seite kaputt oder schadet der Platzierung — gemessen, nicht
+vermutet. Nach Wirkung sortiert, am 2026-08-01 einzeln gegen den Code geprüft:
 
-1. [ ] **Barrierefreiheit, vier Befunde Stufe A** (3.2) — **geprüft, offen.**
-       Nachgemessen: kein `A11y`-Import bei Swiper, `<main>` und Skip-Link auf der
-       Startseite je **0**. `prefers-reduced-motion` gibt es nur in vier Bauteilen
-       (BrandStripe, BrandGrid, MiniReviews, Navigation), **nicht** im Hauptslider.
-       Damit ist das jetzt mein größter offener Posten.
-2. [ ] **Eigener Text für die 8 Skill×Anlass-Kombis** (N.1, Rest) — **geprüft, offen**,
-       aber deutlich entschärft: keine Seite mehr unter 5 %.
-3. [ ] **Rest-Hygiene** (3.5) — **geprüft, davon noch offen:**
+1. [ ] ⏸️ **Eigener Text für die 8 Skill×Anlass-Kombis** (N.1, Rest) — **nach dem
+       Umzug.** Genau dafür stehen die Dubletten auf `noindex`. Deutlich
+       entschärft: keine indexierbare Seite mehr unter 5 %.
+2. [ ] ⏸️ **Barrierefreiheit, vier Befunde Stufe A** (3.2) — **nach dem Umzug.**
+       Nachgemessen und weiterhin offen: kein `A11y`-Import bei Swiper, `<main>`
+       und Skip-Link auf der Startseite je **0**, `prefers-reduced-motion` fehlt
+       im Hauptslider (nur in BrandStripe, BrandGrid, MiniReviews, Navigation).
+       **Kein Umzugs-Hindernis:** es macht nichts kaputt und schadet der
+       Platzierung nicht. Auch rechtlich drängt es hier nicht — das BFSG greift
+       für Dienstleistungen von Kleinstunternehmen nicht. Bleibt trotzdem
+       richtig, nur eben danach.
+3. [ ] ⏸️ **Rest-Hygiene** (3.5) — **nach dem Umzug**, geprüft und noch offen:
        `EventManager.createEvent` legt keinen Anlass-Tag an (nur `content.json` + Meta) ·
        `pre-push` committet alles Gestagete in einen `chore:`-Commit ·
        zwei FAQ-Dateien ohne `.md` (`default/kosten-schnellzeichner`,
@@ -68,7 +119,8 @@ noch steht, steht wirklich noch offen:
        `services/tagVocabulary.ts`.
        ✅ ~~`jubilaum`/`jubilaeum`~~ **war schon erledigt** — `jubilaum` ohne `ae`
        kommt in `public/` und `src/` **nirgends** mehr vor.
-4. [ ] **Zwei dünne indexierbare Seiten** (neu am 2026-08-01 aufgefallen)
+4. [ ] ⏸️ **Zwei dünne indexierbare Seiten** — **nach dem Umzug**
+       (neu am 2026-08-01 aufgefallen)
        `/referenzen/` hat **64 Wörter**, `/impressum/` **69**. Beim Impressum ist das
        richtig so. `/referenzen/` ist ein reines Logo-Gitter — entweder ein paar Sätze
        dazu oder ausblenden. *(Achtung: am Branch `referenzen-static-grid` arbeitet
@@ -202,6 +254,23 @@ noch steht, steht wirklich noch offen:
       sondern war der Normalfall, bis heute.
       Umschlüsselung jetzt in `scripts/bild-metadaten-schluessel.mjs`, in beiden
       Optimierern, plus ein Test, der jeden Schlüssel gegen die Platte hält.
+
+- [x] 🟠 **C — N.6 „FAQ" und „Anfrage" zeigten auf 13 Seiten ins Leere** ✅ **erledigt 2026-08-01**
+      Beim zweiten Link-Durchlauf gefunden (diesmal: sind Links überhaupt
+      anklickbar?). `navigation.json` führt „FAQ" auf `#faq` und „Anfrage" auf
+      `#contact`. Diese Abschnitte gibt es aber nur auf einem Teil der Seiten —
+      auf **13** (u. a. `/branding/`, `/team/`, `/galerie/`, `/impressum/`,
+      `/partner/`, `/referenzen/`, und `/faq/` bzw. `/contact/` selbst) tat ein
+      Klick **nichts**.
+      Es gab einen Klick-Handler, der auf die richtige Seite umleitete — der griff
+      aber nur beim normalen Linksklick mit aktivem JavaScript. Ohne JS, bei
+      Mittelklick, „in neuem Tab öffnen" und für Suchmaschinen blieb `#faq`
+      stehen: ein Selbstverweis auf 13 Seiten, davon 12 indexierbar.
+      **Jetzt umgekehrt:** im HTML steht das echte Ziel, das Skript wertet zur
+      Sprungmarke auf, wenn der Abschnitt da ist. Die Regel liegt in
+      `navigation.ts` — `navigation.json` wird im Admin gepflegt, ein künftig
+      ergänzter `#`-Eintrag landet damit automatisch auf der Startseite statt im
+      Nichts. Gemessen: 7157 Links auf 172 Seiten, tote Sprungmarken 24 → **0**.
 
 ---
 
@@ -424,10 +493,11 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
 - [x] ~~**S — Worker deployen.**~~ ✅ erledigt. Wichtig bleibt: der Worker wird
       **nicht** automatisch mitdeployt. Nach jeder Änderung unter `worker/`
       wieder `npm run worker:deploy`.
-- [ ] **S — KI-Guthaben entscheiden.** Kleine Gemini-Aufladung (5–10 €), damit es zwei
-      finanzierte Anbieter gibt statt einen.
-- [ ] **S — Vercel-Vorschauprojekt.** Projekt aus `Eightdevvis/Kunstwolff` mit Production
-      Branch `vorschau`, dann `VITE_VORSCHAU_BASE` (Admin) und `PREVIEW_EXTRA_BASES`
+- [ ] ⏸️ **S — KI-Guthaben.** **Vertagt am 2026-08-01** — wird gerade nicht gebraucht.
+      Kleine Gemini-Aufladung (5–10 €), damit es zwei finanzierte Anbieter gibt.
+- [ ] ⏸️ **S — Vercel-Vorschauprojekt.** **Vertagt am 2026-08-01** — der jetzige
+      Stand reicht. Projekt aus `Eightdevvis/Kunstwolff` mit Production Branch
+      `vorschau`, dann `VITE_VORSCHAU_BASE` (Admin) und `PREVIEW_EXTRA_BASES`
       (Worker) setzen. Erst damit funktioniert der „Entwurf bauen"-Knopf.
 
 ---
