@@ -52,6 +52,14 @@ Weiterleitungsketten. Die Seite ist aus meiner Sicht umzugsbereit.
    in der Search Console. Fehlt dort eine Adresse, verliert genau die ihren
    Traffic — das ist der einzige verbliebene Weg, sich beim Umzug ernsthaft
    zu schaden. **Export: 12 Monate, nach Klicks sortiert.**
+   ✅ **Das Werkzeug dafür steht seit 2026-08-01:**
+   `node scripts/gsc-abgleich.mjs <Seiten.csv>` (nach einem `npm run build`).
+   Es prüft je Adresse in dieser Reihenfolge: existiert sie noch im Build? →
+   greift eine Weiterleitung aus `vercel.json`, und existiert deren Ziel? →
+   sonst Treffer, nach Klicks sortiert. Adressen ohne Klicks werden
+   übersprungen (`--alle` nimmt sie mit), Wildcards wie
+   `/portfolio-collections/:rest*` werden aufgelöst. Exit 1, wenn etwas fehlt.
+   **Du brauchst nur den Export zu ziehen und mir den Pfad zu nennen.**
 
 ### Beim Umzug selbst nicht verwechseln
 
