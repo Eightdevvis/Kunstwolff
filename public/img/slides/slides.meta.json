@@ -3977,19 +3977,43 @@
     "priority": 4,
     "tags": {
       "landings": [
-        "bw"
+        "bw",
+        "stuttgart"
       ],
       "skills": [
         "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "geburtstag",
+        "weihnachtsfeier",
+        "stadtfest",
+        "sommerfest",
+        "silvester"
       ]
     }
   },
   "bw/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler"
+    ],
     "priority": 5,
     "tags": {
       "landings": [
         "bw"
+      ],
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit",
+        "private-feier",
+        "gala",
+        "sommerfest",
+        "silvester"
       ]
     }
   },
@@ -4000,10 +4024,20 @@
     "priority": 6,
     "tags": {
       "landings": [
-        "bw"
+        "bw",
+        "stuttgart"
       ],
       "skills": [
         "szenenmaler"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "gala",
+        "sommerfest",
+        "silvester"
       ]
     }
   },
@@ -4023,10 +4057,22 @@
     "priority": 8,
     "tags": {
       "landings": [
-        "bw"
+        "bw",
+        "stuttgart"
       ],
       "skills": [
         "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "gala",
+        "sommerfest",
+        "silvester"
       ]
     }
   },
