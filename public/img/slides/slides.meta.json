@@ -3677,7 +3677,9 @@
     }
   },
   "szenenmaler/event-illustratorin-malt-feier-in-schloss-kronberg.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler"
+    ],
     "priority": 3,
     "tags": {
       "events": [
@@ -3693,13 +3695,26 @@
         "stadtfest",
         "gala",
         "sommerfest"
+      ],
+      "skills": [
+        "szenenmaler"
       ]
     }
   },
   "szenenmaler/event-illustratoren-rheinland-pfalz.webp": {
-    "categories": [],
+    "categories": [
+      "Aquarelle",
+      "Szenenmaler",
+      "Schnellzeichner"
+    ],
     "priority": 4,
-    "tags": {}
+    "tags": {
+      "skills": [
+        "aquarelle",
+        "szenenmaler",
+        "schnellzeichner"
+      ]
+    }
   },
   "szenenmaler/live-artist-watercolor-portrait-party-pfalz.webp": {
     "categories": [],
@@ -3712,14 +3727,34 @@
     "tags": {}
   },
   "szenenmaler/brautpaar-hochzeitszeichnung-kuenstlerin-rhein-main.webp": {
-    "categories": [],
+    "categories": [
+      "Aquarelle",
+      "Szenenmaler",
+      "Schnellzeichner"
+    ],
     "priority": 7,
-    "tags": {}
+    "tags": {
+      "skills": [
+        "aquarelle",
+        "szenenmaler",
+        "schnellzeichner"
+      ]
+    }
   },
   "szenenmaler/aquarell-portrait-event-illustration.webp": {
-    "categories": [],
+    "categories": [
+      "Aquarelle",
+      "Szenenmaler",
+      "Schnellzeichner"
+    ],
     "priority": 8,
-    "tags": {}
+    "tags": {
+      "skills": [
+        "aquarelle",
+        "szenenmaler",
+        "schnellzeichner"
+      ]
+    }
   },
   "szenenmaler/hochzeitsfeier-mit-event-illustratorin-rpf.webp": {
     "categories": [],
