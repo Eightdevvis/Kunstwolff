@@ -276,10 +276,37 @@
         "hochzeit",
         "private-feier",
         "geburtstag",
-        "sommerfest"
+        "sommerfest",
+        "firmenfeier",
+        "messe",
+        "jubilaeum"
       ],
       "landings": [
-        "luxembourg"
+        "luxembourg",
+        "berlin",
+        "frankfurt",
+        "hamburg",
+        "schweiz",
+        "kaiserslautern",
+        "mainz",
+        "koeln",
+        "ludwigshafen",
+        "mannheim",
+        "belgique",
+        "wuppertal",
+        "nord-rhein-westfalen",
+        "koblenz",
+        "neuwied",
+        "tuebingen",
+        "karlsruhe",
+        "heidelberg",
+        "giessen",
+        "dortmund",
+        "neunkirchen",
+        "bw",
+        "hanau",
+        "stuttgart",
+        "duesseldorf"
       ]
     },
     "priority": 2
@@ -2047,25 +2074,6 @@
     "altOverride": "Caricaturiste assise à un chevalet dessinant en luxembourg",
     "title": "Szenenmaler Luxembourg"
   },
-  "luxembourg/2_caricaturiste-evenementiel-luxembourg-couple-portrait-caricature-1.webp": {
-    "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
-    ],
-    "tags": {
-      "skills": [
-        "schnellzeichner",
-        "szenenmaler"
-      ],
-      "events": [],
-      "landings": [
-        "luxembourg"
-      ]
-    },
-    "priority": 2,
-    "altOverride": "Caricaturiste evenementiel luxembourg couple portrait caricature 1",
-    "title": "Schnellzeichner Luxembourg"
-  },
   "luxembourg/3_dessin-caricature-couple-amoureux-animation-evenement.webp": {
     "categories": [
       "Schnellzeichner"
@@ -2074,9 +2082,43 @@
       "skills": [
         "schnellzeichner"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "gartenparty",
+        "sommerfest"
+      ],
       "landings": [
-        "luxembourg"
+        "luxembourg",
+        "berlin",
+        "frankfurt",
+        "hamburg",
+        "schweiz",
+        "kaiserslautern",
+        "mainz",
+        "koeln",
+        "ludwigshafen",
+        "mannheim",
+        "belgique",
+        "wuppertal",
+        "nord-rhein-westfalen",
+        "koblenz",
+        "neuwied",
+        "tuebingen",
+        "karlsruhe",
+        "heidelberg",
+        "giessen",
+        "dortmund",
+        "neunkirchen",
+        "bw",
+        "hanau",
+        "stuttgart",
+        "duesseldorf"
       ]
     },
     "priority": 3
@@ -2101,12 +2143,40 @@
     "title": "Schnellzeichner Luxembourg"
   },
   "luxembourg/5_un-couple-heureux-montre-fièrement-son-portrait-caricatural-personnalisé-lors-d-une-foire-d-art-au-luxembourg-entouré-d-autres-oeuvres-de-bande-dessinée.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner"
+    ],
     "tags": {
-      "skills": [],
-      "events": [],
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "silvester",
+        "gartenparty",
+        "stadtfest",
+        "sommerfest"
+      ],
       "landings": [
-        "luxembourg"
+        "luxembourg",
+        "berlin",
+        "frankfurt",
+        "hamburg",
+        "schweiz",
+        "kaiserslautern",
+        "trier",
+        "wiesbaden",
+        "mainz",
+        "koeln",
+        "ludwigshafen",
+        "mannheim",
+        "belgique"
       ]
     },
     "priority": 5,
@@ -2114,12 +2184,58 @@
     "title": "Live-Kunst Luxembourg"
   },
   "luxembourg/7_dessins-caricaturaux-lors-d'un-mariage.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner"
+    ],
     "tags": {
-      "skills": [],
-      "events": [],
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "silvester",
+        "gartenparty",
+        "stadtfest",
+        "sommerfest"
+      ],
       "landings": [
-        "luxembourg"
+        "luxembourg",
+        "berlin",
+        "frankfurt",
+        "mainz",
+        "wiesbaden",
+        "trier",
+        "kaiserslautern",
+        "schweiz",
+        "hamburg",
+        "koeln",
+        "ludwigshafen",
+        "mannheim",
+        "belgique",
+        "saarbruecken",
+        "hessen",
+        "rhein-main-gebiet",
+        "wuppertal",
+        "nord-rhein-westfalen",
+        "koblenz",
+        "main-taunus-kreis",
+        "neuwied",
+        "tuebingen",
+        "karlsruhe",
+        "heidelberg",
+        "giessen",
+        "dortmund",
+        "neunkirchen",
+        "bw",
+        "hanau",
+        "stuttgart",
+        "duesseldorf"
       ]
     },
     "priority": 7
@@ -2134,19 +2250,6 @@
       ]
     },
     "priority": 8
-  },
-  "luxembourg/9_une-portraitiste-souriante-est-assise-devant-un-chevalet-en-luxembourg-et-dessine-un-portrait.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": [
-        "luxembourg"
-      ]
-    },
-    "priority": 9,
-    "altOverride": "Une portraitiste souriante est assise devant un chevalet en luxembourg et dessine un portrait",
-    "title": "Live-Kunst Luxembourg"
   },
   "main-taunus-kreis/digitale-karikaturen-wickerbachalm-hochheim.webp": {
     "categories": [
