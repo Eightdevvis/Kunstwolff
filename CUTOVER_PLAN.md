@@ -141,8 +141,14 @@ ist weg.
       Project → Settings → Domains gegenprüfen, Vercel zeigt sie dort an):
       | Typ | Name | Wert | Proxy |
       |:--|:--|:--|:--|
-      | `A` | `@` | `76.76.21.21` | **DNS only (graue Wolke)** |
+      | `A` | `@` | `216.198.79.1` | **DNS only (graue Wolke)** |
       | `CNAME` | `www` | `cname.vercel-dns.com` | **DNS only (graue Wolke)** |
+      ⚠️ **Am 2026-08-01 korrigiert:** hier stand `76.76.21.21`. Vercel zeigt
+      inzwischen `216.198.79.1` an („We're expanding our IP range") und nennt
+      den alten Wert ausdrücklich „legacy". Gemessen funktionieren **beide**
+      (je 200 mit echtem Host-Header), aber es gilt der Wert, den Vercel im
+      Dashboard anzeigt — nicht der aus diesem Plan. Vor dem Anlegen dort
+      nachsehen.
 - [ ] **3. Proxy AUS lassen.** Die orange Wolke schaltet Cloudflare als CDN
       **vor** Vercel. Das bringt hier nichts (Vercel ist bereits CDN) und
       kostet: doppeltes Caching, und die TLS-Ausstellung bei Vercel kann
@@ -176,6 +182,28 @@ ist weg.
         das öffentliche DNS noch auf Wix zeigt
       - Gegenprobe, bevor es weitergeht: der `curl` oben muss **200** liefern,
         nicht 404
+
+- [ ] **5c. 🔴 `SITE_URL` auf die Zieladresse setzen — VOR dem Nameserver-Wechsel.**
+      Am 2026-08-01 beim Prüfen von 5b gemessen: das Production-Deployment
+      liefert für `www.kunstwolff.de` zwar die richtige Seite (Titel, H1, 93 KB),
+      aber im Kopf steht
+      `<link rel="canonical" href="https://kunstwolff.vercel.app/">` und
+      `<meta name="robots" content="noindex, nofollow">`.
+      **`SITE_URL` steht also auf der Stage-Adresse, nicht auf leer.**
+      - **Gute Nachricht:** damit ist beantwortet, ob die Stage indexiert wird —
+        **nein**, der Whitelist-Schutz greift. Die Frage aus `ARBEITSLISTE.md`
+        („Ist die Vercel-Stage gerade indexierbar?") ist damit erledigt.
+      - **Die Falle:** würde man in diesem Zustand die Nameserver umstellen,
+        ginge `kunstwolff.de` mit `noindex, nofollow` live und mit einem
+        Canonical auf `kunstwolff.vercel.app`. Google würde die bestehenden
+        Rankings abräumen. Von außen unsichtbar: die Seite lädt und sieht
+        richtig aus.
+      - Also: `SITE_URL = https://www.kunstwolff.de` für **Production** setzen
+        und das Production-Deployment **von Hand neu bauen** (geänderte
+        Variablen wirken nicht auf bestehende Deployments).
+      - Gegenprobe, bevor es weitergeht:
+        `curl -s -H "Host: www.kunstwolff.de" http://<vercel-ip>/ | grep -E 'canonical|robots'`
+        muss `https://www.kunstwolff.de/` und `index, follow` zeigen.
 
 - [ ] **6. Nameserver beim Registrar umstellen** — dort, wo die Domain gekauft
       ist (nicht bei Wix). `ns12/ns13.wixdns.net` durch die zwei Nameserver

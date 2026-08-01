@@ -42,11 +42,21 @@ Weiterleitungsketten. Die Seite ist aus meiner Sicht umzugsbereit.
 
 **Zwei Dinge, die vor oder beim Umzug wirklich zählen — beide brauchen dich:**
 
-1. **Ist die Vercel-Stage gerade indexierbar?** Das ist die echte Frage hinter
-   0.1 (die alte Notiz dort war falsch, siehe unten). Steht `SITE_URL` heute
-   **nicht** auf der Stage-Adresse, liefert die Seite `index, follow`. Dann
-   bitte in der Search Console nachsehen, ob die `.vercel.app`-Adresse bereits
-   Treffer hat — die müssten beim Umzug mit weggeräumt werden.
+1. ✅ **ERLEDIGT am 2026-08-01: Die Stage ist NICHT indexierbar.** Gemessen am
+   laufenden Production-Deployment (Aufruf mit echtem Host-Header über die
+   Vercel-IP): der Kopf liefert
+   `<link rel="canonical" href="https://kunstwolff.vercel.app/">` und
+   `<meta name="robots" content="noindex, nofollow">`. **`SITE_URL` ist also
+   gesetzt** — auf die Stage-Adresse —, der Whitelist-Schutz greift. Kein Blick
+   in die Search Console nötig, nichts wegzuräumen.
+   ⚠️ **Daraus folgt aber eine neue Reihenfolge-Regel:** genau dieser Zustand
+   macht den Umzug gefährlich. Würden die Nameserver jetzt umgestellt, ginge
+   `kunstwolff.de` mit `noindex, nofollow` live und mit Canonical auf
+   `kunstwolff.vercel.app` — Google räumt dann die Rankings ab, und von außen
+   sieht die Seite völlig normal aus. **`SITE_URL` auf
+   `https://www.kunstwolff.de` umzustellen und neu zu deployen ist damit
+   Voraussetzung für den Nameserver-Wechsel, kein Schritt danach.**
+   Als **5c** in `CUTOVER_PLAN.md` §2.3 eingefügt, mit Gegenprobe.
 2. **Die Weiterleitungs-Karte gegen echte Zahlen halten** (bisher 1.7). Die
    34 Adressen stammen aus den Wix-Sitemaps. Was **wirklich** rankt, steht nur
    in der Search Console. Fehlt dort eine Adresse, verliert genau die ihren
