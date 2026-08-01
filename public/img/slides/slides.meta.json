@@ -2224,18 +2224,6 @@
     },
     "priority": 1
   },
-  "mainz/cartoon-by-speed-painter-alte-lokhalle-mainz.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": [
-        "mainz"
-      ]
-    },
-    "altOverride": "Cartoon by speed painter alte lokhalle mainz",
-    "title": "Live-Kunst Mainz"
-  },
   "mainz/schnellzeichner-dinner-event-alte-lokhalle-mainz.webp": {
     "categories": [
       "Schnellzeichner"
@@ -2244,9 +2232,26 @@
       "skills": [
         "schnellzeichner"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "weihnachtsfeier",
+        "jubilaeum",
+        "silvester",
+        "gala"
+      ],
       "landings": [
-        "mainz"
+        "mainz",
+        "hamburg",
+        "luxembourg",
+        "ludwigshafen",
+        "rhein-main-gebiet",
+        "rheinland-pfalz",
+        "wuppertal",
+        "koblenz",
+        "tuebingen",
+        "dortmund",
+        "duesseldorf"
       ]
     }
   },
@@ -2255,10 +2260,26 @@
     "tags": {
       "skills": [],
       "events": [
-        "firmenfeier"
+        "firmenfeier",
+        "messe",
+        "weihnachtsfeier",
+        "jubilaeum",
+        "silvester",
+        "gala"
       ],
       "landings": [
-        "mainz"
+        "mainz",
+        "berlin",
+        "schweiz",
+        "wiesbaden",
+        "belgique",
+        "rheinland-pfalz",
+        "nord-rhein-westfalen",
+        "neuwied",
+        "karlsruhe",
+        "giessen",
+        "fulda",
+        "hanau"
       ]
     }
   },
