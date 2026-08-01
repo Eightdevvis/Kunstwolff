@@ -86,6 +86,35 @@ const fillServicesWithSkills = (items: NavigationItem[]): NavigationItem[] => {
   return next;
 };
 
+/**
+ * Sprungmarken in der Navigation brauchen ein Ziel, das es überall gibt.
+ *
+ * `navigation.json` (im Admin editierbar) enthält Einträge wie `#faq` und
+ * `#contact`. Die passenden Abschnitte gibt es aber nur auf einem Teil der
+ * Seiten — auf 13 Seiten (u. a. /branding/, /team/, /galerie/, /impressum/)
+ * zeigten sie ins Leere: klicken tat schlicht nichts.
+ *
+ * Deshalb steht im HTML das **echte Ziel**; `Navigation.astro` wertet den Link
+ * per Skript zur Sprungmarke auf, sobald der Abschnitt auf DIESER Seite da ist.
+ * Andersherum — Sprungmarke im HTML, Seite per Klick-Handler — war es vorher,
+ * und das ging ohne JavaScript, bei Mittelklick und für Suchmaschinen ins Leere.
+ *
+ * Für `#faq` und `#contact` gibt es eigene Seiten, die das bessere Ziel sind.
+ * Alles andere landet auf der Startseite, wo die Abschnitte liegen — damit ist
+ * auch ein künftig im Admin ergänzter `#`-Eintrag abgedeckt.
+ */
+const SPRUNGMARKEN_SEITEN: Record<string, string> = {
+  '#faq': '/faq/',
+  '#contact': '/contact/',
+};
+
+export const istSprungmarke = (url: string): boolean => url.startsWith('#');
+
+export const sprungmarkeZuSeite = (url: string): string => {
+  if (!istSprungmarke(url)) return url;
+  return SPRUNGMARKEN_SEITEN[url] ?? `/${url}`;
+};
+
 const addEventsDropdownNextToServices = (items: NavigationItem[]): NavigationItem[] => {
   const eventsItem = buildEventsDropdownItem();
   if (!eventsItem) return items;
