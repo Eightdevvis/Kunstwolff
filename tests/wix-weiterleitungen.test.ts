@@ -12,10 +12,8 @@ import { isPageHiddenByPath } from '../src/utils/pageVisibility';
  * rankt, ist das der teuerste Weg, den Umzug zu vermasseln — und er fällt nicht
  * auf, weil technisch alles funktioniert: 308, Ziel antwortet 200.
  *
- * Am 2026-08-01 traf das zwei der 34 Wix-Adressen:
- *   /aquarelle-galerie          → /aquarelle/ (ausgeblendet, keine Bilder)
- *   /schnellzeichner-duesseldorf → /duesseldorf-…/ (Düsseldorf ist ausgeblendet)
- * Beide zeigen jetzt auf die nächstbeste sichtbare Seite.
+ * Am 2026-08-01 traf das `/aquarelle-galerie` → `/aquarelle/` (ausgeblendet,
+ * keine Bilder). Die Adresse zeigt jetzt auf die nächstbeste sichtbare Seite.
  *
  * ⚠️ Nur die Adressen aus dem Wix-Inventar zählen (Anhang A in
  * `reports/cutover-audit-2026-07-30.md`). Die übrigen ~100 Regeln stammen aus
@@ -24,32 +22,54 @@ import { isPageHiddenByPath } from '../src/utils/pageVisibility';
  * richtig so: die Zielseite ist ja bewusst versteckt.
  */
 
-/** Adressen aus den fünf Wix-Sitemaps, die eine Weiterleitung haben. */
+/**
+ * Das VOLLSTÄNDIGE Wix-Inventar: alle Adressen aus den fünf Sitemaps unter
+ * https://www.kunstwolff.de/sitemap.xml, gezogen am 2026-08-01.
+ *
+ * Die Liste muss vollständig sein, sonst prüft der Test nur das, was ohnehin
+ * schon abgedeckt ist. Genau das war sie vorher nicht: sie enthielt 24 Einträge,
+ * davon zwei erfundene (`/gallerie` und `/schnellzeichner-duesseldorf` stehen in
+ * keiner Wix-Sitemap), und es fehlten sieben echte Adressen ganz ohne Regel —
+ * die wären am Umzugstag ins 404 gelaufen, ohne dass ein Test gemeckert hätte.
+ *
+ * Neu ziehen lässt sie sich so:
+ *   curl -s https://www.kunstwolff.de/sitemap.xml   # → die fünf Teil-Sitemaps
+ *   curl -s <jede davon> | grep -o '<loc>[^<]*</loc>'
+ */
 const WIX_ADRESSEN = [
-  '/kontakt',
-  '/kontakt-jenny',
   '/about',
   '/about-3',
   '/about-9',
-  '/gallerie',
-  '/portfolio',
+  '/aquarelle-galerie',
   '/copy-of-galerie',
-  '/portfolio-collections/my-portfolio/szenenmalerei',
-  '/portfolio-collections/my-portfolio/storytelling-graphic-recording',
+  '/galerie',
+  '/impressum',
+  '/kontakt',
+  '/kontakt-jenny',
+  '/landingpages/landing',
+  '/portfolio',
+  '/portfolio-collections/my-portfolio',
   '/portfolio-collections/my-portfolio/digitale-kunst',
-  '/portfolio-collections/my-portfolio/portrait-karikatur-vom-foto',
   '/portfolio-collections/my-portfolio/einladungskarten-mit-karikatur',
+  '/portfolio-collections/my-portfolio/karikaturen-schwarz-weiß',
+  '/portfolio-collections/my-portfolio/portrait-karikatur-vom-foto',
+  '/portfolio-collections/my-portfolio/storytelling-graphic-recording',
+  '/portfolio-collections/my-portfolio/szenenmalerei',
+  '/portfolio-collections/my-portfolio/veranstaltungen',
+  '/referenzen',
   '/schnellzeichnung-galerie',
   '/szenenmaler-galerie',
-  '/aquarelle-galerie',
-  '/schnellzeichner-duesseldorf',
-  '/template/szenenmalerei',
-  '/template/storytelling---graphic-recording',
-  '/template/schnellzeichnungen',
+  '/template/allur-postkarten',
+  '/template/allur-surrealismus',
   '/template/digitale-kunst',
-  '/template/vom-foto',
+  '/template/einladungskarten-hochzeit%26geburtstag',
+  '/template/fuer-evente-aller-art',
   '/template/manga--und-cartoonstil',
-  '/landingpages/landing',
+  '/template/modezeichnungen',
+  '/template/schnellzeichnungen',
+  '/template/storytelling---graphic-recording',
+  '/template/szenenmalerei',
+  '/template/vom-foto',
 ];
 
 type Regel = { source: string; destination: string; permanent?: boolean };
@@ -60,17 +80,63 @@ const vercel = JSON.parse(fs.readFileSync(path.resolve('vercel.json'), 'utf-8'))
 const regeln = vercel.redirects ?? [];
 const nachQuelle = new Map(regeln.map((r) => [r.source, r]));
 
+/**
+ * Bildet nach, was Vercel tut: die Regeln der Reihe nach durchgehen und die
+ * ERSTE nehmen, die passt — genaue wie Sammelregeln (`/template/:rest*`).
+ *
+ * Ein bloßer Abgleich auf exakte Quellen reicht nicht. Er meldet Adressen als
+ * unversorgt, die längst von einer Sammelregel abgefangen werden (das ist mir
+ * am 2026-08-01 selbst passiert), und er übersieht umgekehrt, wenn eine
+ * Sammelregel vor die genaue Regel rutscht und sie tot macht.
+ *
+ * Verglichen wird percent-kodiert, auf beiden Seiten. Die alten Adressen
+ * enthalten `ß` und `&`; Vercel kodiert die Regel-Quellen selbst, ein Eintrag
+ * mit rohem `ß` ist also nur ein Duplikat des kodierten (am 2026-08-01 live
+ * nachgemessen — der rohe Eintrag fing nichts ab, was der kodierte nicht schon
+ * hatte). Wer hier eine Regel einträgt, schreibt sie kodiert.
+ */
+const normPfad = (pfad: string): string =>
+  pfad
+    .split('/')
+    .map((teil) => {
+      if (teil.includes(':')) return teil; // Platzhalter der Sammelregeln
+      try {
+        return encodeURIComponent(decodeURIComponent(teil));
+      } catch {
+        return teil;
+      }
+    })
+    .join('/');
+
+const alsMuster = (source: string): RegExp =>
+  new RegExp(
+    `^${normPfad(source)
+      .replace(/[.+?^${}()|[\]\\]/g, '\\$&')
+      .replace(/:[A-Za-z]+\*/g, '(?:.*)')
+      .replace(/:[A-Za-z]+/g, '(?:[^/]+)')}$`,
+  );
+
+const regelFuer = (quelle: string): Regel | undefined =>
+  regeln.find((regel) => alsMuster(regel.source).test(normPfad(quelle)));
+
+const eigeneSeite = (quelle: string): boolean =>
+  fs.existsSync(path.resolve(`src/pages${quelle}.astro`)) ||
+  fs.existsSync(path.resolve(`src/pages${quelle}/index.astro`));
+
 describe('Weiterleitungen der alten Wix-Adressen', () => {
   it('es gibt überhaupt Regeln', () => {
     expect(regeln.length).toBeGreaterThan(100);
   });
 
-  it.each(WIX_ADRESSEN)('%s hat eine Regel', (quelle) => {
-    expect(nachQuelle.has(quelle), `keine Weiterleitung für ${quelle}`).toBe(true);
+  it.each(WIX_ADRESSEN)('%s läuft nicht ins 404', (quelle) => {
+    expect(
+      !!regelFuer(quelle) || eigeneSeite(quelle),
+      `${quelle} hat weder eine Weiterleitung noch eine eigene Seite – am Umzugstag ein 404 auf eine heute erreichbare Adresse`,
+    ).toBe(true);
   });
 
   it.each(WIX_ADRESSEN)('%s landet auf einer sichtbaren Seite', (quelle) => {
-    const regel = nachQuelle.get(quelle);
+    const regel = regelFuer(quelle);
     if (!regel) return; // der Test darüber meldet das bereits
     const ziel = regel.destination.endsWith('/') ? regel.destination : `${regel.destination}/`;
     expect(
@@ -79,8 +145,29 @@ describe('Weiterleitungen der alten Wix-Adressen', () => {
     ).toBe(false);
   });
 
+  /**
+   * Die Sammelregeln schicken alles unter `/template/` und
+   * `/portfolio-collections/` pauschal auf `/galerie/`. Für drei Adressen ist
+   * das zu grob – sie handeln von Schnellzeichnen, nicht von Bildern:
+   */
+  const GENAUERES_ZIEL: Record<string, string> = {
+    '/portfolio-collections/my-portfolio/karikaturen-schwarz-weiß': '/schnellzeichner-karikaturist/',
+    '/portfolio-collections/my-portfolio/veranstaltungen': '/schnellzeichner-karikaturist/',
+    '/template/fuer-evente-aller-art': '/schnellzeichner-karikaturist/',
+  };
+
+  it.each(Object.entries(GENAUERES_ZIEL))(
+    '%s wird nicht von der Sammelregel verschluckt',
+    (quelle, ziel) => {
+      expect(
+        regelFuer(quelle)?.destination,
+        `${quelle} landet auf der Sammelregel – die genaue Regel steht zu weit hinten`,
+      ).toBe(ziel);
+    },
+  );
+
   it('alle Wix-Regeln sind dauerhaft (308/301), nicht temporär', () => {
-    const temporaer = WIX_ADRESSEN.map((q) => nachQuelle.get(q))
+    const temporaer = WIX_ADRESSEN.map((q) => regelFuer(q))
       .filter((r): r is Regel => !!r)
       .filter((r) => r.permanent !== true)
       .map((r) => r.source);

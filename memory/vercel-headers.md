@@ -41,9 +41,13 @@ Austausch ebenso wenig. Siehe `responsive-images.md`.
 aus **zwei** Herkünften:
 
 1. **Die Wix-Karte (2026-07-30):** alte Wix-URLs auf die neuen Astro-Pfade. Inventar aus
-   den fünf Wix-Sitemaps (34 URLs), 30 davon liefen ohne Karte ins 404 – darunter
+   den fünf Wix-Sitemaps (33 Pfade), 30 davon liefen ohne Karte ins 404 – darunter
    `/kontakt`, die Anfrage-Seite der alten Seite. Vollständige Tabelle mit Begründung je
    Zeile: `reports/cutover-audit-2026-07-30.md`, Anhang A.
+   Das Inventar steht als Liste in `tests/wix-weiterleitungen.test.ts` und muss
+   **vollständig** sein – der Test bildet Vercels Reihenfolge inkl. Sammelregeln nach
+   und meldet jede Adresse ohne Ziel. Neu ziehen: `curl -s …/sitemap.xml`, dann die
+   fünf Teil-Sitemaps.
 2. **Die Flach-Umstellung (2026-08-01):** 136 Weiterleitungen von der hierarchischen
    Ort-Kombi-Adresse auf die flache (`/szenenmaler/berlin` → `/berlin-szenenmaler/`),
    erzeugt vom Einmal-Werkzeug `scripts/flache-kombi-urls.mjs`. Details in `seo.md`.
@@ -53,9 +57,12 @@ Drei Regeln dazu:
 - **`"permanent": true`** (=308, von Google wie 301 behandelt). Ohne das erbt das neue
   Ziel kein Ranking.
 - **Nicht über `astro.config.mjs` `redirects` lösen.** Astro erzeugt bei statischer
-  Ausgabe eine HTML-Seite mit Meta-Refresh, keinen echten Statuscode. Der vorhandene
-  Eintrag `/gallerie → /galerie/` bleibt dort nur für den Dev-Server; ausgeliefert wird
-  auf Vercel der 301 aus `vercel.json` (Redirects greifen vor dem Dateisystem).
+  Ausgabe eine HTML-Seite mit Meta-Refresh, keinen echten Statuscode – und die Seite
+  hat kein Layout, also keinen Fußbereich und kein Impressum. Der Block ist seit
+  2026-08-01 **ganz weg** und muss leer bleiben; `tests/impressum-ueberall.test.ts`
+  wacht darüber. (Sein einziger Eintrag war `/gallerie → /galerie/`, ersatzlos
+  gelöscht: die Adresse stand in keiner Wix-Sitemap, war nirgends verlinkt und
+  lieferte auf Wix selbst 404.)
 - **Apex → www gehört NICHT hierher**, sondern in die Vercel-Domain-Settings.
 
 **Drei** Sammelregeln (`/portfolio-collections/:rest*`, `/template/:rest*` und – als

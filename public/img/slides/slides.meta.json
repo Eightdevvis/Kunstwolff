@@ -397,6 +397,23 @@
     },
     "priority": 146
   },
+  "duesseldorf/karikaturist-rheinkirmes-duesseldorf.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "duesseldorf"
+      ]
+    },
+    "priority": 1
+  },
   "events/firmenfeier/walking-act-company-party-mainz.webp": {
     "categories": [],
     "tags": {
@@ -3090,23 +3107,6 @@
     },
     "altOverride": "Zeichnung als harry potter von illustratorin saarland",
     "title": "Live-Kunst Saarland"
-  },
-  "duesseldorf/karikaturist-rheinkirmes-duesseldorf.webp": {
-    "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
-    ],
-    "tags": {
-      "skills": [
-        "schnellzeichner",
-        "szenenmaler"
-      ],
-      "events": [],
-      "landings": [
-        "duesseldorf"
-      ]
-    },
-    "priority": 1
   },
   "schweiz/elektriker-zeigt-seine-karikatur-von-portrait-kuenstler--betriebsfeier--schweiz.webp": {
     "categories": [

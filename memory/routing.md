@@ -52,8 +52,9 @@ Die zweite Hälfte des Routings steht **nicht** in `src/pages/`, sondern in
   keine der genauen mehr. `tests/combo-urls.test.ts` hält Zielform,
   Ketten-Freiheit und diese Reihenfolge fest.
 
-Dazu ein Astro-interner Redirect: `astro.config.mjs` → `redirects: { '/gallerie': '/galerie/' }`
-(Fehlschreibung mit doppeltem l).
+In `astro.config.mjs` steht **kein** `redirects` mehr. Astro baut daraus bei
+statischer Ausgabe eine Meta-Refresh-Seite ohne Layout – also ohne Impressum, und
+sie wird ausgeliefert. Weiterleitungen gehören ausschließlich nach `vercel.json`.
 
 ## Wichtige Detail-Logik
 

@@ -366,13 +366,35 @@ vermutet. Nach Wirkung sortiert, am 2026-08-01 einzeln gegen den Code geprüft:
       - `/gallerie/` — Astros Weiterleitungs-Stummel (Meta-Refresh, 310 Bytes).
         Die 301-Regel fing nur `/gallerie` **ohne** Schrägstrich ab; mit
         Schrägstrich kam der Stummel mit **200** durch (live nachgemessen).
-        `vercel.json` deckt jetzt beide Schreibweisen ab, und der Astro-Eintrag
-        ist raus — der Stummel wird gar nicht mehr gebaut. Ein echter 301 ist
-        ohnehin das bessere Signal als ein Meta-Refresh.
+        Die Adresse ist inzwischen **ganz gestrichen**: sie stand in keiner
+        Wix-Sitemap, war nirgends verlinkt und liefert auf Wix selbst 404 —
+        nachgemessen, nicht vermutet. Weder `vercel.json` noch
+        `astro.config.mjs` kennen sie noch.
       Gemessen: Seiten ohne Impressum-Link vorher 2, nachher **0** (von 170).
       Festgehalten in `tests/impressum-ueberall.test.ts` — der prüft die drei
       Wege, auf denen das wiederkommen kann: eine HTML-Datei unter `public/`,
-      eine Seite ohne Layout, ein Fußbereich ohne den Link. War rot (2 von 4).
+      eine Seite ohne Layout, ein Fußbereich ohne den Link. Die vierte Prüfung
+      hält den `redirects`-Block in `astro.config.mjs` leer: jeder Eintrag dort
+      wird zu einer Seite ohne Layout und damit ohne Impressum. War rot (2 von 4),
+      und jede der vier einzeln gegen ihren kaputten Zustand nachgewiesen.
+
+- [x] 🟡 **C — N.12 Das Wix-Inventar im Test war unvollständig** ✅ **erledigt 2026-08-01**
+      Beim Streichen von `/gallerie` aufgefallen: die Liste in
+      `tests/wix-weiterleitungen.test.ts` hatte **24** Einträge, davon zwei
+      erfundene (`/gallerie`, `/schnellzeichner-duesseldorf` stehen in keiner
+      Wix-Sitemap), und es fehlten **neun** echte. Ein Test, der nur prüft, was
+      ohnehin abgedeckt ist, prüft nichts.
+      Jetzt stehen alle **33** Pfade aus den fünf Wix-Sitemaps drin, frisch
+      gezogen. Der Test bildet außerdem Vercels Reihenfolge **inklusive der
+      Sammelregeln** nach — ein reiner Abgleich auf exakte Quellen meldet sonst
+      Adressen als tot, die `/template/:rest*` längst abfängt (genau der Irrtum,
+      dem ich beim Suchen selbst aufgesessen bin).
+      Sachlich gefunden: drei Adressen landeten über die Sammelregel pauschal auf
+      `/galerie/`, obwohl sie von Schnellzeichnen handeln —
+      `…/karikaturen-schwarz-weiß`, `…/veranstaltungen` und
+      `/template/fuer-evente-aller-art` zeigen jetzt auf
+      `/schnellzeichner-karikaturist/`. Eine eigene Prüfung hält fest, dass die
+      Sammelregel sie nicht wieder verschluckt.
 
 - [ ] 🟡 **S — N.11 Die Original-Schriftdateien liegen öffentlich** (neu 2026-08-01)
       Beim Aufräumen daneben aufgefallen: `public/fonts/mayonice/mayonice_original/`
@@ -694,18 +716,17 @@ Vercel liefert beide mit **200 ohne Umleitung**, und beide Formen tragen dasselb
 Canonical `/contact/`. Kostet nichts. ·
 **25** Links von sichtbaren auf ausgeblendete Seiten — das ist die Städteliste
 auf den Skill-Seiten, so gewollt. ·
-`/gallerie/` und die Schriften-Demo des Herstellers ohne Impressum-Link — die
-eine wird von der 301-Regel verdeckt, die andere steht auf `noindex`.
+(Der frühere Punkt „`/gallerie/` und die Schriften-Demo ohne Impressum-Link"
+steht hier nicht mehr: beide Seiten gibt es nicht mehr, siehe N.10.)
 
 **Frühere Messung** (jede Seite und jedes interne Linkziel): Dazu statisch:
 0 tote Links · 0 `noindex`-Seite in der Sitemap · 0 Sitemap-Eintrag ohne Seite ·
 166 Weiterleitungen ohne Ketten, alle Ziele existieren · 102 flache Ort-Adressen
 vollständig, 0 Reste der alten Form, 0 alte Adresse ohne 301.
 
-Zwei Kleinigkeiten, bewusst so gelassen: `/gallerie/` wird gebaut, aber von der
-301-Regel auf `/galerie/` verdeckt (der Tippfehler-Fänger gewinnt, so gewollt) ·
-`public/fonts/mayonice/demo.html` hat kein Canonical (Hersteller-Demo, steht auf
-`noindex` und nicht in der Sitemap).
+Die damals notierten „zwei Kleinigkeiten" (`/gallerie/` wird gebaut ·
+`public/fonts/mayonice/demo.html` ohne Canonical) haben sich erledigt: beide
+Seiten sind gelöscht.
 
 ---
 
