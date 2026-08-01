@@ -3133,6 +3133,52 @@
     },
     "priority": 3
   },
+  "szenenmaler/event-illustratorin-malt-feier-in-schloss-kronberg.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "silvester",
+        "gartenparty",
+        "stadtfest",
+        "gala",
+        "sommerfest"
+      ],
+      "landings": []
+    },
+    "priority": 3
+  },
+  "szenenmaler/wedding-live-painter.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit",
+        "private-feier"
+      ],
+      "landings": []
+    },
+    "priority": 1
+  },
+  "szenenmaler/wedding-painting.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit",
+        "private-feier"
+      ],
+      "landings": []
+    },
+    "priority": 2
+  },
   "trier/1_2-kollegen-zeigen-froehlich-ihre-karikaturzeichnung-mit-bierglas-auf-der-weihnachtsfeier-in-tommys-teufelskueche-trier.webp": {
     "categories": [
       "Schnellzeichner"
@@ -3655,45 +3701,5 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
-  },
-  "szenenmaler/wedding-live-painter.webp": {
-    "categories": [],
-    "priority": 1,
-    "tags": {
-      "events": [
-        "hochzeit",
-        "private-feier"
-      ]
-    }
-  },
-  "szenenmaler/wedding-painting.webp": {
-    "categories": [],
-    "priority": 2,
-    "tags": {
-      "events": [
-        "hochzeit",
-        "private-feier"
-      ]
-    }
-  },
-  "szenenmaler/event-illustratorin-malt-feier-in-schloss-kronberg.webp": {
-    "categories": [],
-    "priority": 3,
-    "tags": {
-      "events": [
-        "firmenfeier",
-        "messe",
-        "hochzeit",
-        "private-feier",
-        "weihnachtsfeier",
-        "geburtstag",
-        "jubilaeum",
-        "silvester",
-        "gartenparty",
-        "stadtfest",
-        "gala",
-        "sommerfest"
-      ]
-    }
   }
 }

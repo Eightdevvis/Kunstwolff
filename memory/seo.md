@@ -319,8 +319,15 @@ und für sie lag kein Auftrag vor.
 
 **Warum es nichts kostete** (geprüft am 2026-07-31, gültig geblieben):
 
-- Die Seite war zu dem Zeitpunkt **noch gar nicht live** — ohne `SITE_URL` steht
-  alles auf `noindex`, Wix lief noch. Kein Astro-URL hatte ein Ranking.
+- Die Seite war zu dem Zeitpunkt **noch gar nicht live**: die Domain zeigte auf
+  Wix, kein Astro-URL hatte ein Ranking.
+  ⚠️ **Korrektur vom 2026-08-01:** hier stand „ohne `SITE_URL` steht alles auf
+  `noindex`". Das ist **falsch herum**. Der Fallback ist `https://kunstwolff.de`,
+  und dieser Host steht in der Whitelist — ohne `SITE_URL` gebaut liefert die
+  Seite `index, follow` (nachgemessen: 40 indexierbare Seiten, identisch zum
+  Build mit `SITE_URL`). Der Stage-Schutz greift nur, wenn `SITE_URL` **gesetzt**
+  ist. Siehe „Stage vs. Production" weiter oben — dort stand es immer richtig.
+  **Am Ergebnis ändert das nichts**, der Punkt darunter trägt die Aussage allein.
 - **Alle 102** Skill×Ort-Seiten standen ohnehin auf `noindex`
   (`page-visibility.json`), weil ihr Text dupliziert ist. Gemessen vorher wie
   nachher: 102 `noindex`, 8 Anlass-Kombis indexierbar, 40 Sitemap-Einträge.

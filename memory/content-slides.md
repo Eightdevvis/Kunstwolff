@@ -168,3 +168,25 @@ Regeln:
 - Neue Bilder bekommen automatisch einen Metadaten-Eintrag
 - Kategorien werden beim ersten Anlegen via Dateiname-Regeln vorbelegt
 - Bei klarer Umbenennung werden Metadaten auf den neuen Dateinamen migriert
+
+## ⚠️ Ordnerschlüssel sind verschachtelt — niemals am Stück kodieren
+
+Die Schlüssel sind teils zweistufig: `events/hochzeit`, `mediathek/somfot`.
+`encodeURIComponent` über den **ganzen** Schlüssel macht aus dem Trenner `%2F`,
+und das ist laut RFC 3986 **kein** Pfadtrenner, sondern ein Zeichen im Segment.
+Die Adresse trifft dann keine Datei mehr.
+
+Am 2026-08-01 lief genau das in `slideImages.ts`: **141 Bild-Adressen** kaputt,
+unter anderem auf `/galerie/`, `/hochzeit/`, `/messe/`, `/firmenfeier/`.
+Nachgemessen gegen den statischen Server: korrekter Pfad `200`, die Form aus dem
+HTML `500`.
+
+**Warum es lange niemandem auffiel:** die Dateien existieren ja — nur der Weg
+dorthin war falsch geschrieben. `validate-image-refs.mjs` prüft die Verweise in
+den *Quellen*, nicht die *erzeugte* Adresse, und meldete „alle gültig".
+Seither kodiert `encodePathSegment` jeden Teil einzeln (auch in `skills.ts`,
+`events.ts`, `heroBg.ts`, wo es bisher nur latent war).
+Festgehalten in `tests/bild-adressen.test.ts`.
+
+**Wenn du Bild-Adressen anfasst:** verlass dich nicht auf die Verweis-Prüfung,
+sondern ruf sie gegen `dist/` per HTTP ab. Nur das misst, was der Browser bekommt.

@@ -1,5 +1,27 @@
 # Git-Hooks
 
+## ⚠️ Umbenennen zerreißt Metadaten — die Schlüssel müssen mitwandern
+
+Der pre-push-Hook konvertiert `x.gif` → `x.webp`. `slides.meta.json` und
+`title.meta.json` schlüsseln aber auf den **Dateinamen**. Wandert der Schlüssel
+nicht mit, zeigt er ins Leere — **ohne jede Fehlermeldung**: die Seite rendert
+weiter, nur mit Standardwerten. Der im Admin eingestellte Bildausschnitt, der
+Rahmen, die Reihenfolge und die Stichworte sind dann still weg.
+
+Das war bis 2026-08-01 der **Normalfall für jeden Nicht-WebP-Upload**: nur
+`slides.meta.json` wurde nachgezogen (über `sync:slides`), `title.meta.json`
+nie. Aufgefallen ist es, als ein frisch gesetzter Titelbild-Rahmen
+(szenenmaler, Schloss Kronberg) direkt nach dem Push wieder verschwunden war.
+
+Die Umschlüsselung liegt jetzt in `scripts/bild-metadaten-schluessel.mjs` und
+läuft in **beiden** Optimierern — **vor** `sync:slides`, sonst räumt der Sync
+den Schlüssel als Karteileiche weg, bevor er repariert werden kann.
+Abgesichert durch `tests/bild-metadaten-schluessel.test.ts` und einen Test, der
+jeden Schlüssel gegen die Platte hält (`tests/bild-adressen.test.ts`).
+
+**Wer ein neues Metadaten-Register anlegt, das auf Dateinamen schlüsselt, muss
+es in `META_FILES` eintragen** — sonst wiederholt sich genau das.
+
 ## Aktivierung (einmalig)
 
 ```bash

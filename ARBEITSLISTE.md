@@ -1,4 +1,11 @@
-# Arbeitsliste — Stand 2026-07-30
+# Arbeitsliste — Stand 2026-08-01
+
+> **Am 2026-08-01 komplett gegen den Code nachgeprüft**, nicht fortgeschrieben.
+> Vier Einträge waren veraltet und sind unten korrigiert: 3.1 (`srcset`) und
+> `jubilaum`/`jubilaeum` waren längst erledigt, 0.5 war entschieden, und die
+> Zahlen in N.1 sind überholt (besser geworden).
+> **Eine Annahme war schlicht falsch — siehe 0.1: ohne `SITE_URL` steht die Seite
+> NICHT auf `noindex`.** Das ändert, wogegen beim Umzug geprüft werden muss.
 
 Zusammengeführt aus beiden Audits desselben Tages plus dem, was ohnehin offen war:
 
@@ -20,7 +27,10 @@ einmal, an der Stelle, an der man sie anfasst.
 Reihenfolge: 1 und 2 blockieren den Umzug, 3 blockiert die KI im Admin.
 
 1. [ ] **`SITE_URL` in Vercel setzen und MANUELL neu deployen** (Phase 0.1)
-       Ohne das bleibt **alles** auf `noindex` — der Stage-Host wird erkannt.
+       ⚠️ **Korrigiert am 2026-08-01:** die alte Notiz „ohne das bleibt alles auf
+       `noindex`" war **falsch herum**. Der Schutz greift nur, wenn `SITE_URL`
+       *gesetzt* ist (auf die Stage-Adresse). Ist sie **nicht** gesetzt, baut
+       Astro mit `https://kunstwolff.de` und liefert `index, follow`. Details in 0.1.
 2. [ ] **DNS-Weg entscheiden** (Phase 0.2) — Zone liegt bei Wix, zwei Wege (A/B).
 3. [x] ~~**Worker deployen**~~ ✅ erledigt (Aufgabe #9)
 4. [x] ~~**Datenschutzerklärung freigeben**~~ ✅ freigegeben 2026-07-31 („sieht gut aus").
@@ -28,7 +38,10 @@ Reihenfolge: 1 und 2 blockieren den Umzug, 3 blockiert die KI im Admin.
        Worker-Formular nach dem Umzug.
 5. [ ] **Umzugstag** (Phase 1, sieben Schritte) — Redirects testen, DNS, Wix auf
        „Coming Soon", Apex→www, Search Console, 48 h beobachten.
-6. [x] ~~**Entscheiden: `/private-feier/` und 9 Städte**~~ ✅ entschieden 2026-07-30/31:
+6. [x] ~~**Entscheiden: `/private-feier/` und 9 Städte**~~ ✅ entschieden 2026-07-30/31
+       (am 2026-08-01 nachgemessen: 18 Städte + `/aquarelle/` ausgeblendet,
+       `/private-feier/` steht **nicht** in `page-visibility.json` und ist indexierbar —
+       genau wie beschlossen. Damit ist auch **0.5 erledigt**, dort stand es noch offen):
        9 Städte ausgeblendet (128 Pfade in `page-visibility.json`), `/private-feier/`
        **bleibt sichtbar** — gemessen 37,5 % einzigartiger Text, genau wie die drei
        Geschwister-Anlässe. Der Seite fehlen Fotos, nicht Text.
@@ -37,18 +50,40 @@ Reihenfolge: 1 und 2 blockieren den Umzug, 3 blockiert die KI im Admin.
 
 ## 🤖 Ich (C) — noch offen
 
-Nach Wirkung sortiert:
+Nach Wirkung sortiert. **Am 2026-08-01 einzeln gegen den Code geprüft** — was hier
+noch steht, steht wirklich noch offen:
 
-1. [ ] **Die 144 Seiten mit nicht-einzigartigem Text** — genauer anschauen (neu, siehe unten)
-2. [ ] **URL-Umbenennung `/schnellzeichner/` → `/schnellzeichner-karikaturist/`** (neu, Wunsch mom)
-3. [ ] **Hero-Bilder ohne `srcset`** (3.1) — größter Performance-Hebel
-4. [ ] **Barrierefreiheit, vier Befunde Stufe A** (3.2)
-5. [x] ~~**Anlass-Dimension der FAQs ist tot**~~ ✅ erledigt 2026-07-31 (2.3)
-6. [x] ~~**ReviewManager kann Tags nicht leeren**~~ ✅ erledigt 2026-07-31 (2.7)
-7. [x] ~~**Datenschutz-Entwurf schreiben**~~ ✅ erledigt (Zuarbeit zu S-4)
-8. [ ] **Rest-Hygiene** (3.5): `EventManager` legt keinen Anlass-Tag an · `pre-push`
-       committet den gesamten Index · `jubilaum`/`jubilaeum` · zwei FAQ-Dateien ohne
-       `.md` · Fehlerschlucker in `tagVocabulary.ts`
+1. [ ] **Barrierefreiheit, vier Befunde Stufe A** (3.2) — **geprüft, offen.**
+       Nachgemessen: kein `A11y`-Import bei Swiper, `<main>` und Skip-Link auf der
+       Startseite je **0**. `prefers-reduced-motion` gibt es nur in vier Bauteilen
+       (BrandStripe, BrandGrid, MiniReviews, Navigation), **nicht** im Hauptslider.
+       Damit ist das jetzt mein größter offener Posten.
+2. [ ] **Eigener Text für die 8 Skill×Anlass-Kombis** (N.1, Rest) — **geprüft, offen**,
+       aber deutlich entschärft: keine Seite mehr unter 5 %.
+3. [ ] **Rest-Hygiene** (3.5) — **geprüft, davon noch offen:**
+       `EventManager.createEvent` legt keinen Anlass-Tag an (nur `content.json` + Meta) ·
+       `pre-push` committet alles Gestagete in einen `chore:`-Commit ·
+       zwei FAQ-Dateien ohne `.md` (`default/kosten-schnellzeichner`,
+       `kaiserslautern/wann-buchen`) · vier stille `catch`-Blöcke in
+       `services/tagVocabulary.ts`.
+       ✅ ~~`jubilaum`/`jubilaeum`~~ **war schon erledigt** — `jubilaum` ohne `ae`
+       kommt in `public/` und `src/` **nirgends** mehr vor.
+4. [ ] **Zwei dünne indexierbare Seiten** (neu am 2026-08-01 aufgefallen)
+       `/referenzen/` hat **64 Wörter**, `/impressum/` **69**. Beim Impressum ist das
+       richtig so. `/referenzen/` ist ein reines Logo-Gitter — entweder ein paar Sätze
+       dazu oder ausblenden. *(Achtung: am Branch `referenzen-static-grid` arbeitet
+       gerade jemand anderes an genau dieser Seite.)*
+
+- [x] ~~**Hero-Bilder ohne `srcset`** (3.1)~~ ✅ **war schon erledigt** — stand hier
+      fälschlich noch offen. `SkillHero` nutzt `heroSrcSet`, `Opener` und `EventHero`
+      setzen die Varianten als CSS-Variablen.
+- [x] ~~**URL-Umbenennung `/schnellzeichner/`**~~ ✅ erledigt 2026-07-31 (N.2)
+- [x] ~~**Ort-Kombis flach ziehen**~~ ✅ erledigt 2026-08-01 (N.3)
+- [x] ~~**Anlass-Dimension der FAQs ist tot**~~ ✅ erledigt 2026-07-31 (2.3)
+- [x] ~~**ReviewManager kann Tags nicht leeren**~~ ✅ erledigt 2026-07-31 (2.7)
+- [x] ~~**Datenschutz-Entwurf schreiben**~~ ✅ erledigt (Zuarbeit zu S-4)
+- [x] ~~**Bild-Adressen mit `%2F`**~~ ✅ erledigt 2026-08-01 (N.4)
+- [x] ~~**Bild-Metadaten überleben das Umbenennen nicht**~~ ✅ erledigt 2026-08-01 (N.5)
 
 ## ✅ Heute erledigt
 
@@ -96,6 +131,16 @@ Nach Wirkung sortiert:
         sinnvolle Hebel: pro Kombination 100–150 Wörter eigener Text.
       - Zum Vergleich das obere Ende: `/kaiserslautern` 63 %, `/fr/belgique` 77 %.
 
+      **🔄 Neu gemessen am 2026-08-01 — die Zahlen oben sind überholt, es ist besser
+      geworden:** von 40 indexierbaren Seiten liegt jetzt **keine einzige unter 5 %**
+      (vorher `/contact` mit 0 %). Die 8 Skill×Anlass-Kombis stehen bei **41–47 %**
+      statt 28–33 %; die 12 neuen Anlass-FAQs vom 31.07. haben sie auseinandergezogen.
+      Am unteren Ende stehen jetzt `/impressum/` (40 %, 69 Wörter — bei einem
+      Rechtstext richtig so) und `/referenzen/` (46 %, 64 Wörter — das ist dünn).
+      Oberes Ende unverändert: `/faq/` 80 %, `/kaiserslautern/` 73 %.
+      Die Empfehlung bleibt trotzdem stehen: 100–150 Wörter eigener Text je Kombination,
+      und pro Stadt 150–250 Wörter Ortsbezug. Das ist der Hebel, nicht die Adressform.
+
 - [x] 🟠 **C+S — N.2 `/schnellzeichner/` → `/schnellzeichner-karikaturist/`** ✅ **erledigt 2026-07-31**
       Technisch klein: `skills.json` erlaubt ein eigenes `link`-Feld, der Titel
       („Schnellzeichner") bleibt unverändert. Betrifft **40 URLs** (Skill + 35 Städte
@@ -131,6 +176,33 @@ Nach Wirkung sortiert:
       Titelbild, hero-bg, Why, Erinnerungen und Kombitexte. Jetzt trennt
       `skillContentKey()` beides, `tests/skill-url-vs-inhalt.test.ts` hält es fest.
 
+- [x] 🟠 **C — N.4 141 Bild-Adressen liefen ins Leere (`%2F`)** ✅ **erledigt 2026-08-01**
+      Beim vollständigen HTTP-Durchlauf gegen den gebauten Stand aufgefallen.
+      Verschachtelte Ordnerschlüssel (`events/hochzeit`, `mediathek/somfot`) liefen
+      am Stück durch `encodeURIComponent`; aus dem Trenner wurde `%2F`. Das ist laut
+      RFC 3986 **kein** Pfadtrenner, sondern ein Zeichen im Segment — die Adresse traf
+      keine Datei mehr. Nachgemessen: korrekter Pfad `200`, die Form aus dem HTML `500`.
+      Betroffen waren `/galerie/`, `/hochzeit/`, `/messe/`, `/firmenfeier/`, `/mainz/`
+      und mehrere Skill×Anlass-Seiten — also **indexierbare** Seiten.
+      **Warum es niemandem auffiel:** die Dateien existieren ja, nur der Weg dorthin war
+      falsch geschrieben. `validate-image-refs.mjs` prüft die Verweise in den Quellen,
+      nicht die erzeugte Adresse — und meldete brav „alle gültig".
+      Vorher **141 von 1140** Adressen kaputt, nachher **0 von 1139**.
+      Dieselbe Falle steckte latent in `skills.ts`, `events.ts` und `heroBg.ts`.
+
+- [x] 🟠 **C — N.5 Bild-Metadaten überlebten das Umbenennen nicht** ✅ **erledigt 2026-08-01**
+      Der Optimierer macht beim Push aus `x.gif` ein `x.webp`. Die Metadaten schlüsseln
+      auf den Dateinamen — der alte Schlüssel zeigte danach ins Leere. **Ohne jede
+      Fehlermeldung:** die Seite rendert weiter, nur mit Standardwerten.
+      Genau das ist passiert, während dieser Durchlauf lief: ein frisch über den Admin
+      hochgeladenes Titelbild (szenenmaler, Schloss Kronberg) wurde konvertiert, und die
+      eben eingestellten Werte `focus 49% 60%` / `frame 0` fielen weg. Zurückgeholt.
+      Bisher zog **nur** `slides.meta.json` mit, `title.meta.json` nie.
+      ⚠️ **Das traf jeden Nicht-WebP-Upload** — es ist also nicht einmalig passiert,
+      sondern war der Normalfall, bis heute.
+      Umschlüsselung jetzt in `scripts/bild-metadaten-schluessel.mjs`, in beiden
+      Optimierern, plus ein Test, der jeden Schlüssel gegen die Platte hält.
+
 ---
 
 ## Phase 0 — bevor DNS angefasst wird
@@ -142,8 +214,26 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
       nur Environment **Production**. Danach Production-Deployment von Hand neu bauen —
       geänderte Env-Variablen wirken nicht auf bestehende Deployments.
       Variable *löschen* ist **keine** Alternative (Fallback ist der Apex, kanonisch ist www).
-      Abnahme: `curl -s <deployment-url>/ | grep -E 'robots|canonical'`
-      → muss `index, follow` und `https://www.kunstwolff.de/` zeigen.
+
+      ⚠️ **Am 2026-08-01 nachgemessen und korrigiert.** Hier stand, ohne `SITE_URL`
+      bleibe alles auf `noindex`. **Das stimmt nicht und war nie so.**
+      `astro.config.mjs` fällt auf `https://kunstwolff.de` zurück — und dieser Host
+      steht in der `PRODUCTION_HOSTS`-Whitelist in `Layout.astro`. Ohne `SITE_URL`
+      gebaut liefert die Seite also `index, follow` und Canonical
+      `https://kunstwolff.de/` (Apex, **nicht** www). Gemessen: 40 indexierbare
+      Seiten, identisch zum Build mit `SITE_URL`.
+
+      Der Schutz greift **nur, wenn `SITE_URL` gesetzt ist** — auf die Stage-Adresse.
+      Ein `X-Robots-Tag`-Header existiert nicht (`vercel.json` setzt nur Cache-Header).
+      **Zu prüfen, bevor irgendetwas anderes passiert:** steht im Vercel-Projekt der
+      Website heute `SITE_URL` auf der Stage-Adresse? Wenn nein, ist die Stage seit
+      jeher indexierbar und zeigt per Canonical auf die Wix-Seite.
+
+      Abnahme (unverändert richtig, aber sie beweist weniger als gedacht):
+      `curl -s <deployment-url>/ | grep -E 'robots|canonical'`
+      → muss `index, follow` und `https://www.kunstwolff.de/` zeigen. **Das `www`
+      ist hier der eigentliche Beweis** — `index, follow` allein zeigt sich auch,
+      wenn gar nichts gesetzt ist.
 
 - [ ] 🔴 **S — 0.2 DNS-Weg entscheiden**
       Die Zone liegt bei **Wix** (`ns12/ns13.wixdns.net`), nicht beim Registrar.
@@ -166,7 +256,12 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
       Google (IP — entfällt mit 0.3). Ich schreibe den Entwurf, **Wortlaut gibt Sasha frei**.
       Dazu AV-Verträge bei Vercel und Formspree (je ein Klick im Kundenkonto).
 
-- [ ] 🔴 **S — 0.5 Entscheidung: was bleibt indexierbar?**
+- [x] 🔴 **S — 0.5 Entscheidung: was bleibt indexierbar?** ✅ **erledigt** — stand hier
+      noch offen, war aber am 30./31.07. entschieden und umgesetzt. Am 2026-08-01
+      am gebauten Stand nachgemessen: **129 Einträge** in `page-visibility.json`,
+      **0 Karteileichen**, **0** als versteckt markierte Seite ist noch indexierbar,
+      **0** `noindex`-Seite steht in der Sitemap. Von 170 gebauten Seiten sind
+      **40 indexierbar**, und die Sitemap hat genau diese 40.
       144 von 173 Seiten haben unter 5 % einzigartigen Text; `/dortmund/` und `/giessen/`
       sind 1493 von 1494 Wörtern gleich. **Zwei Wege:**
       **(a)** Städte/Skills ohne eigenen Inhalt über `public/config/page-visibility.json`
@@ -310,9 +405,17 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
       ✅ ~~`public/config` fehlt in beiden `git add`-Listen~~ **erledigt 2026-07-30**
       (plus `public/erinnerungen`, `public/events`, Trigger-Pfad und der rote Job bei
       Änderungen außerhalb der add-Liste) ·
-      `EventManager.createEvent` legt keinen Anlass-Tag an · `pre-push` committet den
-      gesamten Index · `jubilaum` vs. `jubilaeum` · zwei FAQ-Dateien ohne `.md`-Endung
-      (`kaiserslautern/wann-buchen` umbenennen, `default/kosten-schnellzeichner` löschen).
+      ✅ ~~`jubilaum` vs. `jubilaeum`~~ **erledigt** (am 2026-08-01 nachgesehen:
+      `jubilaum` ohne `ae` kommt in `public/` und `src/` nirgends mehr vor) ·
+
+      **Noch offen, am 2026-08-01 im Code bestätigt:**
+      `EventManager.createEvent` schreibt nur Meta und `content.json`, keinen
+      Anlass-Tag · `pre-push` committet alles Gestagete in einen `chore:`-Commit
+      (`git diff --cached` als Auslöser — wer nebenher etwas anderes gestaged hat,
+      findet es in diesem Commit wieder) · zwei FAQ-Dateien ohne `.md`-Endung
+      (`kaiserslautern/wann-buchen` umbenennen, `default/kosten-schnellzeichner`
+      löschen) · vier stille `catch`-Blöcke in `services/tagVocabulary.ts`, die
+      leere Ergebnisse zurückgeben statt zu melden.
 
 ---
 
@@ -333,11 +436,29 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
 
 Damit niemand es erneut jagt — geprüft und in Ordnung:
 
-Build (176 Seiten fehlerfrei) · keine toten internen Links · keine toten Bildverweise ·
-Sitemap und Canonicals · `<html lang>`/charset/viewport · FAQPage-Schema (valide seit
-dem Merge vom 02.07.) · `og:image`-Fallback · Navigation (Services aus `skills.json`,
-Events aus `events.json`) · Cache-Header · `/seite` und `/seite/` · echte 404 ·
-Tag-Vokabular und Slug-Normalisierung · Testsuiten beider Repos.
+Build (**170** Seiten fehlerfrei) · keine toten internen Links · Sitemap und Canonicals ·
+`<html lang>`/charset/viewport · FAQPage-Schema (valide seit dem Merge vom 02.07.) ·
+`og:image`-Fallback · Navigation (Services aus `skills.json`, Events aus `events.json`) ·
+Cache-Header · `/seite` und `/seite/` · echte 404 · Tag-Vokabular und
+Slug-Normalisierung · Testsuiten beider Repos.
+
+⚠️ **„Keine toten Bildverweise" stand hier zu Unrecht** und ist am 2026-08-01
+gestrichen worden: **141 Bild-Adressen** waren tot (N.4). Der Punkt stützte sich auf
+`validate-image-refs.mjs` — das prüft die Verweise in den *Quelldateien*, nicht die
+daraus *erzeugte* Adresse. Genau in dieser Lücke saß der Fehler.
+**Lehre für diese Liste:** „geprüft" heißt nur so viel wie das, womit geprüft wurde.
+Was am gebauten `dist/` per HTTP nachgemessen ist, steht seit heute dabei.
+
+**Am 2026-08-01 vollständig per HTTP nachgemessen** (jede Seite und jedes interne
+Linkziel einzeln abgerufen): **1139 Adressen, 0 nicht erreichbar.** Dazu statisch:
+0 tote Links · 0 `noindex`-Seite in der Sitemap · 0 Sitemap-Eintrag ohne Seite ·
+166 Weiterleitungen ohne Ketten, alle Ziele existieren · 102 flache Ort-Adressen
+vollständig, 0 Reste der alten Form, 0 alte Adresse ohne 301.
+
+Zwei Kleinigkeiten, bewusst so gelassen: `/gallerie/` wird gebaut, aber von der
+301-Regel auf `/galerie/` verdeckt (der Tippfehler-Fänger gewinnt, so gewollt) ·
+`public/fonts/mayonice/demo.html` hat kein Canonical (Hersteller-Demo, steht auf
+`noindex` und nicht in der Sitemap).
 
 ---
 
