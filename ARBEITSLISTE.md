@@ -1,4 +1,4 @@
-# Arbeitsliste — Stand 2026-07-30
+# Arbeitsliste — Stand 2026-08-01
 
 Zusammengeführt aus beiden Audits desselben Tages plus dem, was ohnehin offen war:
 
@@ -127,6 +127,11 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
       Variable *löschen* ist **keine** Alternative (Fallback ist der Apex, kanonisch ist www).
       Abnahme: `curl -s <deployment-url>/ | grep -E 'robots|canonical'`
       → muss `index, follow` und `https://www.kunstwolff.de/` zeigen.
+      ⚠️ **Nachgemessen 2026-08-01, immer noch offen.** Der Build hier erzeugt
+      `<link rel="canonical" href="https://kunstwolff.de/">` — den Apex, weil die
+      Variable fehlt und `astro.config.mjs:19` darauf zurückfällt. Das ist der
+      teuerste Fehler beim Cutover: Google bucht die Signale auf die falsche
+      Variante. **Der einzige verbliebene 🔴-Punkt, der wirklich blockiert.**
 
 - [ ] 🔴 **S — 0.2 DNS-Weg entscheiden**
       Die Zone liegt bei **Wix** (`ns12/ns13.wixdns.net`), nicht beim Registrar.
@@ -161,8 +166,14 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
       ✅ **Aquarelle ist erledigt (2026-07-30):** über `page-visibility.json`
       ausgeblendet, gemessen 40/40 `noindex`, 0 Sitemap-Einträge, raus aus der Navigation.
       Dafür wurde die Ausblende-Regel präfix-fähig (vorher hätte sie nur die Skill-Seite
-      selbst erwischt, nicht die 39 Kombiseiten). **Offen bleiben** `/private-feier/`
-      und die 9 Städte — sag Bescheid, dann blende ich sie im selben Zug aus.
+      selbst erwischt, nicht die 39 Kombiseiten).
+      ✅ **Auch die Städte sind erledigt (2026-07-31, Commit 4ece0e4).** Gemessen am
+      Build vom 2026-08-01: **40 Seiten indexierbar, 130 auf `noindex`, Sitemap
+      genau 40 Einträge** (vorher 173). `page-visibility.json` deckt Aquarelle,
+      die Städte ohne eigenen Inhalt und deren Skill-Kombis ab.
+      **Offen bleibt nur noch `/private-feier/`** — steht auf `index, follow`, hat
+      aber 0 eigene Bilder. Eine Zeile in `page-visibility.json`, sag Bescheid.
+      Damit ist 0.5 **kein Umzugs-Blocker mehr**, nur noch eine Restentscheidung.
 
 ---
 
@@ -170,6 +181,15 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
 
 - [ ] **S — 1.1** Redirect-Karte gegen eine Vercel-Preview durchtesten
       (liegt fertig in `vercel.json`, Tabelle in `reports/cutover-audit-…` Anhang A)
+      ✅ **Statisch schon geprüft (2026-08-01), gegen den echten Build:**
+      30 Redirects, **keine** doppelten Quellen, **keine** Ketten (kein Ziel ist
+      selbst wieder Quelle), alle `permanent`, und jedes wörtliche Ziel existiert
+      als gebaute Seite. Einziger scheinbarer Treffer war das Wildcard-Muster
+      `/schnellzeichner/:rest*` — kein Pfad, kein Fehler.
+      **Was der statische Test nicht kann:** ob Vercel die Regeln in dieser
+      Reihenfolge anwendet und ob der Apex→www-Redirect greift (der steht in den
+      Domain-Settings, nicht in `vercel.json` — siehe 1.4). Dafür braucht es die
+      Preview.
 - [ ] **S — 1.2** DNS umstellen nach dem in 0.2 gewählten Weg
 - [ ] **S — 1.3** Wix-Site auf „Coming Soon" — **nicht** „Disconnect Domain"
 - [ ] **S — 1.4** Apex → www als Redirect in den Vercel-Domain-Settings (nicht in `vercel.json`)
@@ -228,6 +248,25 @@ Ohne diese fünf geht der Umzug schief. Reihenfolge egal, außer 0.1 muss vor 0.
       Schnellzeichner-Duesseldorf buchen" und dem Fließtext „Bereichern".
       Zeile raus, Eintrag in `site-texts/content.json` raus, 301 auf
       `/schnellzeichner/duesseldorf/`.
+      ⚠️ **Nachtrag 2026-08-01 — der Fix von 30.07. war nur die halbe Miete.**
+      Die Zeile war raus, der Slug nicht: `tags.json` wächst nur (siehe
+      `mergeVocabulary`), also blieb der Eintrag im Admin auswählbar, behauptete
+      weiter `source: "landings.md"` und taggte Bilder auf eine Seite, die es
+      nicht mehr gab. Vier Tage lang. Erst jetzt vollständig raus —
+      **9 Fundstellen in 7 Dateien plus 3 Ordner**: `tags.json`,
+      `slides.meta.json` (4 fremde Bilder + 1 Schlüssel), `title.meta.json`,
+      `gallery.ts`, `why/*.json`, `erinnerungen/*.json`, `img/slides/`,
+      `img/Titelbild/`, `reviews/`.
+      Inhalt ist dabei umgezogen, nicht gelöscht: die zwei echten
+      Rheinkirmes-Bilder liegen unter `duesseldorf/`, die vier Köln-Bilder
+      tragen jetzt `duesseldorf`. `/duesseldorf/` hatte vorher **kein einziges
+      eigenes Bild** und fiel auf `default/` zurück.
+      Gemessen: `dist` enthält den Slug 0×, `tags.json` 34 statt 35 Orte,
+      `tag-parity-check` 0 Lücken.
+      **Damit sich das nicht wiederholt:** `sync-tags.mjs` meldet seit
+      2026-08-01 jeden Eintrag, dessen Quelldatei ihn nicht mehr kennt — mit
+      Namen und mit dem `grep`, der die Fundstellen zeigt. Automatisch entfernen
+      wäre falsch, dafür hängt zu viel daran.
 
 - [x] 🟠 **C — 2.6 Berlin-Intro hat vier Tippfehler in einem Satz** ✅ **erledigt**
       „Bereichern **Siw Ihrr** Messe, **Betreibsfeier** … **Schnellzichner**" — steht so
@@ -396,10 +435,16 @@ Juli auf „der Tag entscheidet" umgestellt, die Werkzeuge daneben nicht.**
       `slideImages.ts` normalisiert ohne deutsche Umschrift („Ölmalerei" →
       `olmalerei`, Vokabular sagt `oelmalerei`). Heute 0 von 3 Skills betroffen —
       der erste Skill mit Umlaut bricht die Seite still.
-- [ ] 🟡 **`EventManager.createEvent` legt keinen Anlass-Tag an** (der
-      `CityManager` tut es für Orte), und der Slug entsteht ohne NFD: ein Anlass
-      „Gala Liège" bricht `sync:tags` mit Exit 1 — und das ist seit 2026-07-30
-      ein harter Build-Schritt.
+- [x] 🟡 **`EventManager.createEvent` legt keinen Anlass-Tag an** ✅ **erledigt
+      2026-08-01.** `createTag('events', title, 'events.json', slug)` ergänzt —
+      derselbe Aufruf, den das Dashboard-Schnellanlegen seit jeher macht. Vorher
+      bekam ein hier angelegtes Event eine Seite, tauchte in keiner Tag-Auswahl
+      auf und blieb ohne ein einziges Bild, ohne Fehlermeldung.
+      Die zweite Hälfte des Befunds (Slug ohne NFD) war schon vorher
+      gegenstandslos: `slugify` in `utils/encoding.ts:77` macht NFD und entfernt
+      die Combining Marks, 21 Tests halten es fest. Nachgeprüft, nicht vermutet.
+      Der im Befund als Gegenbeispiel genannte `CityManager` **wird gar nicht
+      gerendert** — siehe Admin-`memory/manager-staedte.md`.
 - [ ] 🟡 **19 Bilder tragen Anlass-Tags, zu denen es keine Seite gibt**
       (weihnachtsfeier 10, geburtstag 3, silvester 2, sommerfest 2, gartenparty,
       stadtfest). **Produktentscheidung**, kein Bug — aber im Admin sollte
