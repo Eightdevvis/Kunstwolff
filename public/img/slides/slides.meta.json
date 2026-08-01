@@ -3998,7 +3998,8 @@
   },
   "bw/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
     "categories": [
-      "Szenenmaler"
+      "Szenenmaler",
+      "Schnellzeichner"
     ],
     "priority": 5,
     "tags": {
@@ -4006,7 +4007,8 @@
         "bw"
       ],
       "skills": [
-        "szenenmaler"
+        "szenenmaler",
+        "schnellzeichner"
       ],
       "events": [
         "hochzeit",
@@ -4019,7 +4021,8 @@
   },
   "bw/hochzeitsmalerin-praesentiert-hochtzeitsgemaelde-mit-tanzendem-brautpaar-heitlinger-genusswelten-landkreis-karlsruhe.webp": {
     "categories": [
-      "Szenenmaler"
+      "Szenenmaler",
+      "Schnellzeichner"
     ],
     "priority": 6,
     "tags": {
@@ -4028,7 +4031,8 @@
         "stuttgart"
       ],
       "skills": [
-        "szenenmaler"
+        "szenenmaler",
+        "schnellzeichner"
       ],
       "events": [
         "firmenfeier",
