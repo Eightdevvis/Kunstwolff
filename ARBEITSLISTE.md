@@ -83,9 +83,18 @@ sie stehen hier nur, weil niemand sonst an Vercel und DNS herankommt.
        Astro mit `https://kunstwolff.de` und liefert `index, follow`. Details in 0.1.
        **Vorher zu klären ist nur eins:** ob die Stage deshalb gerade schon
        indexiert wird (siehe „Das Ziel" oben, Punkt 1).
-2. [ ] 🚚 **DNS-Weg entscheiden** — **Umzugsschritt** (Phase 0.2). Zone liegt bei
-       Wix, zwei Wege (A/B). Weg B braucht 24–48 h Vorlauf, deshalb **vor** dem Tag
-       entscheiden — die Umsetzung gehört aber zum Umzug.
+2. [x] ✅ **DNS-Weg entschieden 2026-08-01: Weg B — Zone zu Cloudflare.**
+       Gemessen statt vermutet (`dig`): Zone liegt bei Wix
+       (`ns12/ns13.wixdns.net`), **keine MX-, keine TXT-Records**. Über die
+       Domain läuft keine E-Mail — damit fällt das übliche Risiko von Weg B
+       (vergessene Einträge) weg, es gibt nur die Website zu übernehmen.
+       Cloudflare, weil dort schon der Admin-Worker läuft.
+       **Ausführung: `CUTOVER_PLAN.md` §2.3**, zehn Schritte, Reihenfolge ist
+       entscheidend (erst Zone bauen und prüfen, dann Nameserver umstellen).
+       24–48 h Propagation, kein Ausfall dabei.
+       ⚠️ Im alten Cutover-Plan standen **vier falsche Aussagen**, zwei davon
+       gefährlich („Disconnect Domain" bei Wix, und die umgedrehte
+       `noindex`-Behauptung). Alle vier oben im Plan korrigiert.
 3. [x] ~~**Worker deployen**~~ ✅ erledigt (Aufgabe #9)
 4. [x] ~~**Datenschutzerklärung freigeben**~~ ✅ freigegeben 2026-07-31 („sieht gut aus").
        AV Vercel geklärt (ToS 10.1, SCC Modul 2); AV Formspree entfällt mit dem

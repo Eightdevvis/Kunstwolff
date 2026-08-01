@@ -1,8 +1,31 @@
 # Cutover-Plan: Wix → Astro auf Vercel
 
-**Stand:** 2026-05-05
+**Stand:** 2026-08-01 (überarbeitet; ursprünglich 2026-05-05)
 **Ziel:** `kunstwolff.de` von Wix auf die Astro-Site (aktuell `kunstwolff.vercel.app`) umziehen.
-**Status:** Vorbereitung. Cutover-Termin offen.
+**Status:** **Weg B entschieden** — die DNS-Zone zieht zu Cloudflare. Siehe §2.3.
+
+> ## ⚠️ Vier Korrekturen am 2026-08-01 — nicht nach der alten Fassung arbeiten
+>
+> Die Ausgangslage wurde am 2026-08-01 mit `dig` gemessen, nicht angenommen.
+> Vier Aussagen dieses Plans waren falsch, zwei davon gefährlich:
+>
+> 1. **„DNS beim Domain-Registrar ändern" war falsch.** Die Zone liegt bei
+>    **Wix** (`ns12/ns13.wixdns.net`), nicht beim Registrar. Beim Registrar
+>    stehen nur die Nameserver — und genau die ändern wir bei Weg B.
+> 2. **„MX-Records NICHT anfassen" ging ins Leere.** Es gibt **keine**
+>    MX-Records und **keine** TXT-Records. Über diese Domain läuft keine
+>    E-Mail (Kontaktadresse ist `info@artelines.com`, andere Domain). Genau
+>    deshalb ist der Zonen-Umzug hier ungefährlich: es gibt nichts zu vergessen.
+> 3. **🔴 „Wix → 'Disconnect Domain'" ist der eine Knopf, der alles killt.**
+>    Solange Wix die Zone führt, nimmt er nicht die Website vom Netz, sondern
+>    das **Telefonbuch**: danach beantwortet niemand mehr Anfragen für
+>    kunstwolff.de, die Domain ist komplett tot. Ausschließlich
+>    **„Coming Soon"** verwenden.
+> 4. **🔴 „Ohne `SITE_URL` liefert die Stage `noindex`" ist falsch herum.**
+>    Ohne die Variable baut Astro auf den Apex `https://kunstwolff.de` — und
+>    der steht in der `PRODUCTION_HOSTS`-Whitelist. Ergebnis: `index, follow`.
+>    Der Schutz greift nur, wenn `SITE_URL` **gesetzt** ist. Details in
+>    `ARBEITSLISTE.md` Punkt 0.1.
 
 > Schwester-Doku: `HEALTH_CHECK_2026-05-05.md` (Repo-Befunde),
 > `memory/seo.md` → "Stage vs. Production" (`SITE_URL`-Mechanik).
@@ -80,22 +103,82 @@ damit Google sie schnell crawlt.
 - [ ] **Project Settings → Environment Variables:**
   - `SITE_URL = https://www.kunstwolff.de` für Production-Environment
   - Vercel-Stage (Preview-Branches) bekommt `SITE_URL = https://kunstwolff.vercel.app`
-  - *(Aktuell ist `SITE_URL` noch nirgends gesetzt → Layout-Whitelist liefert
-    auf vercel.app bereits `noindex`, was korrekt ist.)*
+  - 🔴 **Korrigiert 2026-08-01:** hier stand, ohne `SITE_URL` liefere die Stage
+    bereits `noindex`. **Falsch herum.** Ohne die Variable baut Astro auf den
+    Apex, der in der Whitelist steht → `index, follow`. **Vor dem Umzug prüfen,
+    ob die `.vercel.app`-Adresse deshalb schon Treffer in der Search Console
+    hat** — die müssten dann mit weggeräumt werden.
 - [ ] In Vercel das `Production`-Deployment einmal redeployen, damit die
   Env-Variable greift.
 
-### 2.3 DNS (beim Domain-Registrar, NICHT in Vercel)
-- [ ] **TTL aller relevanten Records auf 300s (5 Min) reduzieren** —
-  mindestens 24-48 h vor dem Cutover-Tag, damit DNS-Provider die alten
-  Werte nicht stundenlang cachen wenn es schiefgeht.
-- [ ] **Vorab nicht ändern**, nur Notiz machen welche Records gleich
-  geändert werden müssen:
-  - `A` für Apex (`kunstwolff.de`) → Vercel-IP (`76.76.21.21`, Vercel
-    bestätigt im Domain-Dashboard den korrekten Wert)
-  - `CNAME` für `www` → `cname.vercel-dns.com`
-  - **MX-Records (E-Mail) NICHT anfassen!** Separate Records, gehören zu
-    Wix-Mail oder anderem Provider — bleiben wo sie sind.
+### 2.3 DNS — Weg B: Zone von Wix zu Cloudflare (entschieden 2026-08-01)
+
+**Warum B und nicht „Records bei Wix ändern":** Solange Wix die Zone führt,
+bleibt das Wix-Abo Pflicht — kündigen heißt Domain offline. Weg B macht die
+Sache einmal statt zweimal. Cloudflare, weil dort ohnehin schon der
+Admin-Worker läuft: kein neuer Anbieter, kein neuer Account, kostenlos.
+
+**Ausgangslage, gemessen am 2026-08-01:**
+
+| Record | jetzt | TTL |
+|:--|:--|--:|
+| NS | `ns12.wixdns.net`, `ns13.wixdns.net` | — |
+| `A kunstwolff.de` | `185.230.63.186/107/171` (Wix) | 3600 |
+| `CNAME www` | `cdn1.wixdns.net` (Wix-CDN) | — |
+| MX | **keine** | — |
+| TXT | **keine** | — |
+
+Zu übernehmen ist also **nur die Website**. Kein E-Mail-Risiko.
+
+**Reihenfolge — erst die neue Zone fertig, dann erst die Nameserver.**
+Wer zuerst die Nameserver umstellt, hat eine leere Zone im Netz und die Seite
+ist weg.
+
+- [ ] **1. Domain bei Cloudflare hinzufügen** (Add a site → kunstwolff.de →
+      Free-Plan). Cloudflare liest die bestehende Zone aus und schlägt Records
+      vor — die Wix-Einträge dabei **nicht** übernehmen.
+- [ ] **2. Zwei Records anlegen** (Werte im Vercel-Dashboard unter
+      Project → Settings → Domains gegenprüfen, Vercel zeigt sie dort an):
+      | Typ | Name | Wert | Proxy |
+      |:--|:--|:--|:--|
+      | `A` | `@` | `76.76.21.21` | **DNS only (graue Wolke)** |
+      | `CNAME` | `www` | `cname.vercel-dns.com` | **DNS only (graue Wolke)** |
+- [ ] **3. Proxy AUS lassen.** Die orange Wolke schaltet Cloudflare als CDN
+      **vor** Vercel. Das bringt hier nichts (Vercel ist bereits CDN) und
+      kostet: doppeltes Caching, und die TLS-Ausstellung bei Vercel kann
+      scheitern, weil Vercel den Ursprung nicht mehr direkt erreicht.
+- [ ] **4. Alle Wix-Reste in der Cloudflare-Zone löschen** — die
+      `185.230.63.x`-A-Records und der `cdn1.wixdns.net`-CNAME dürfen dort
+      nicht auftauchen.
+- [ ] **5. Zone prüfen, BEVOR die Nameserver umgestellt werden:**
+      ```bash
+      # direkt die neuen Cloudflare-Nameserver fragen, am Cache vorbei
+      dig @<cloudflare-ns1> kunstwolff.de A +short      # → 76.76.21.21
+      dig @<cloudflare-ns1> www.kunstwolff.de CNAME +short  # → cname.vercel-dns.com
+      ```
+      Kommt hier etwas anderes, ist die Zone falsch — dann NICHT weitermachen.
+- [ ] **6. Nameserver beim Registrar umstellen** — dort, wo die Domain gekauft
+      ist (nicht bei Wix). `ns12/ns13.wixdns.net` durch die zwei Nameserver
+      ersetzen, die Cloudflare dir nennt.
+- [ ] **7. 24–48 h Propagation.** Nicht beschleunigbar: der Nameserver-Wechsel
+      wird eine Ebene höher (bei der `.de`-Registry) zwischengespeichert, und
+      diese TTL gehört dir nicht. Das Absenken der Record-TTLs bei Wix hilft
+      dagegen **nicht** — das ist der Grund, warum der alte Plan-Schritt hier
+      entfallen ist.
+      **Kein Ausfall in dieser Zeit:** wer noch die alten Nameserver fragt,
+      bekommt Wix und sieht die alte Seite; wer schon die neuen fragt, bekommt
+      Vercel. Beide funktionieren. Genau deshalb muss Schritt 5 vorher sitzen.
+- [ ] **8. Propagation prüfen**, bis überall Cloudflare antwortet:
+      ```bash
+      dig NS kunstwolff.de +short           # → beide Cloudflare-NS
+      dig kunstwolff.de A +short            # → 76.76.21.21
+      dig www.kunstwolff.de +short          # → Vercel
+      ```
+- [ ] **9. Erst danach Wix auf „Coming Soon"** — siehe Korrektur 3 oben.
+      Sobald die Nameserver weg sind, ist die Wix-DNS-Verwaltung ohnehin
+      wirkungslos; „Disconnect Domain" bleibt trotzdem tabu.
+- [ ] **10. Apex → www** als Redirect in den **Vercel-Domain-Settings**
+      einstellen (nicht in `vercel.json` — dort greift es zu spät).
 
 ### 2.4 Search Console / Analytics
 - [ ] **GSC-Export ziehen:** Performance-Report → Pages, letzte 12 Monate,
@@ -125,17 +208,17 @@ damit Google sie schnell crawlt.
    Export). Bei Misslingen Rollback-Basis.
 2. **`SITE_URL` in Vercel** auf `https://www.kunstwolff.de` setzen, falls noch
    nicht passiert (siehe §2.2). Vercel triggert automatisch ein Redeploy.
-3. **DNS umstellen** beim Registrar:
-   - `A @` → Vercel-IP
-   - `CNAME www` → `cname.vercel-dns.com`
-   - alle alten Wix-Records (`A 185.230.63.107` o. ä., `TXT v=spf1 …` falls
-     wix-spezifisch) entfernen
-4. **Warten 5–15 Min**, bis DNS propagiert (durch die niedrige TTL aus §2.3).
-   Test mit `dig www.kunstwolff.de +short` und `dig kunstwolff.de +short`.
+3. **DNS: nach §2.3 (Weg B) vorgehen** — Zone bei Cloudflare aufbauen, prüfen,
+   dann erst die Nameserver beim Registrar umstellen. Der frühere Text hier
+   („beim Registrar die Records ändern", „5–15 Min warten") galt für Weg A und
+   ist überholt: bei Weg B sind es 24–48 h, und die Records liegen bei
+   Cloudflare, nicht beim Registrar.
+4. **Warten, bis `dig NS kunstwolff.de +short` überall Cloudflare zeigt.**
 5. **Vercel verifiziert die Domain automatisch** (TLS-Cert via Let's Encrypt
-   wird gezogen, dauert üblicherweise <2 Min).
-6. **Wix offline schalten** (Wix → Settings → Site → "Disconnect Domain"
-   oder Site auf "Coming Soon"). Account NICHT kündigen — siehe §5.
+   wird gezogen, dauert üblicherweise <2 Min nachdem DNS steht).
+6. 🔴 **Wix ausschließlich auf „Coming Soon"** (Wix → Settings → Site).
+   **NIEMALS „Disconnect Domain"** — siehe Korrektur 3 ganz oben.
+   Account NICHT kündigen — siehe §5.
 
 ---
 
