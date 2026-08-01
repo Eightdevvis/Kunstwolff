@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
 import { MAX_EDGE, WEBP_QUALITY, resizeToMaxEdge } from './image-constraints.mjs';
+import { migrateMetadataKeys } from './bild-metadaten-schluessel.mjs';
 
 const projectRoot = process.cwd();
 
@@ -160,6 +161,15 @@ if (results.length > 0) {
 
   const totalSaved = results.reduce((sum, r) => sum + r.savedKB, 0);
   console.log(`optimize-images: Gesamt-Einsparung: ${totalSaved} KB`);
+
+  // Aus x.gif wurde x.webp – die Metadaten schlüsseln auf den Dateinamen und
+  // müssen mitwandern, sonst sind die im Admin gesetzten Werte still weg.
+  const migrated = migrateMetadataKeys(projectRoot, results, (file) => {
+    spawnSync('git', ['add', '--', file], { cwd: projectRoot });
+  });
+  if (migrated > 0) {
+    console.log(`optimize-images: ${migrated} Metadaten-Einträge auf den neuen Dateinamen gezogen.`);
+  }
 
   for (const result of results) {
     // spawnSync statt execSync + string interpolation → kein Shell-Injection-Risiko

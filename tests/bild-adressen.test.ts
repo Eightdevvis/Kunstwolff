@@ -50,6 +50,29 @@ describe('Bild-Adressen', () => {
     expect(verschachtelt.length, 'keine verschachtelten Slide-Ordner mehr – Test anpassen').toBeGreaterThan(0);
   });
 
+  /**
+   * Die Metadaten schlüsseln auf den Dateinamen. Der Bild-Optimierer macht beim
+   * Push aus x.gif ein x.webp – zieht er den Schlüssel nicht mit, zeigt der
+   * Eintrag ins Leere. Die Seite rendert dann klaglos weiter, nur mit Standard-
+   * werten: der im Admin eingestellte Bildausschnitt und Rahmen sind still weg.
+   * Genau so ist "szenenmaler/…kronberg….gif" einmal verloren gegangen.
+   */
+  it.each([
+    ['public/img/slides/slides.meta.json', 'public/img/slides'],
+    ['public/img/Titelbild/title.meta.json', 'public/img/Titelbild'],
+  ])('kein Eintrag in %s zeigt ins Leere', (metaDatei, wurzel) => {
+    const abs = path.resolve(metaDatei);
+    if (!fs.existsSync(abs)) return;
+    const daten = JSON.parse(fs.readFileSync(abs, 'utf-8')) as Record<string, unknown>;
+    const schluessel = Object.keys(daten);
+    expect(schluessel.length).toBeGreaterThan(0);
+    const verwaist = schluessel.filter((k) => !fs.existsSync(path.resolve(wurzel, k)));
+    expect(
+      verwaist,
+      `Datei fehlt – die dort eingestellten Werte greifen nicht mehr:\n${verwaist.join('\n')}`,
+    ).toEqual([]);
+  });
+
   it('Fähigkeiten-Bilder treffen ebenfalls eine Datei', () => {
     const mitBild = getSharedSkills().filter(
       (s) => typeof s.image === 'string' && s.image.startsWith('/img/'),

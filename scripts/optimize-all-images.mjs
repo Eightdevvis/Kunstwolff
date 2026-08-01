@@ -1,8 +1,9 @@
-import { execSync } from 'child_process';
+import { execSync, spawnSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
 import { MAX_EDGE, WEBP_QUALITY, resizeToMaxEdge, exceedsMaxEdge } from './image-constraints.mjs';
+import { migrateMetadataKeys } from './bild-metadaten-schluessel.mjs';
 
 const projectRoot = process.cwd();
 const imgRoot = path.join(projectRoot, 'public', 'img');
@@ -222,6 +223,16 @@ const totalSaved =
 console.log(
   `optimize-all-images: ${results.length} konvertiert, ${shrunk.length} verkleinert, ${totalSaved} KB gespart.`
 );
+
+// Metadaten mitziehen – MUSS vor `sync:slides` laufen: danach gehört der
+// Schlüssel wieder zu einer existierenden Datei und der Sync lässt ihn stehen,
+// statt ihn als Karteileiche wegzuräumen. Warum überhaupt: siehe Modul.
+const migrated = migrateMetadataKeys(projectRoot, results, (file) => {
+  spawnSync('git', ['add', '--', file], { cwd: projectRoot });
+});
+if (migrated > 0) {
+  console.log(`optimize-all-images: ${migrated} Metadaten-Einträge auf den neuen Dateinamen gezogen.`);
+}
 
 // Alle neuen WebP-Dateien und gelöschten Originale stagen
 execSync('git add public/img/', { cwd: projectRoot });
