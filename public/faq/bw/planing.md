@@ -4,4 +4,11 @@ answer: "Ein Schnellzeichner ist besonders an beliebten Terminen schnell ausgebu
 categories:
   - Szenenmaler
   - Schnellzeichner
+tags:
+  skills:
+    - szenenmaler
+    - schnellzeichner
+  events: []
+  landings:
+    - bw
 ---

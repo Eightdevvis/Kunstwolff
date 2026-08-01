@@ -48,9 +48,18 @@ export const PREFIXED_LOCALES = LOCALES.filter((l) => l !== DEFAULT_LOCALE);
 /**
  * Baut den Pfad einer Landing-/Inhaltsseite für eine Locale.
  * de → `/<slug>/` (unverändert), sonst → `/<locale>/<slug>/`.
+ *
+ * Leerer Slug meint die Wurzel der Sprache: `/` bzw. `/<locale>/`. Ohne diesen
+ * Fall entstand `//` — die Vorlage setzte den Schrägstrich einfach an beiden
+ * Seiten. Aufgefallen ist es im Breadcrumb-Schema der FR-Seite: der Krümel
+ * „Accueil" zeigte auf `https://kunstwolff.de//`. Im Browser wäre das noch
+ * durchgegangen, in strukturierten Daten ist es eine Adresse, die es nicht gibt.
  */
-export const localizePath = (locale: Locale, slug: string): string =>
-  locale === DEFAULT_LOCALE ? `/${slug}/` : `/${locale}/${slug}/`;
+export const localizePath = (locale: Locale, slug: string): string => {
+  const rein = String(slug ?? '').replace(/^\/+|\/+$/g, '');
+  const wurzel = locale === DEFAULT_LOCALE ? '/' : `/${locale}/`;
+  return rein ? `${wurzel}${rein}/` : wurzel;
+};
 
 // ── Content-Overlay-Auflösung (Build-Zeit) ─────────────────────────────────────
 

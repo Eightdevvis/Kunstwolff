@@ -8,4 +8,7 @@ tags:
   skills:
     - schnellzeichner
     - szenenmaler
+  events: []
+  landings:
+    - bw
 ---

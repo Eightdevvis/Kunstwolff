@@ -4,4 +4,11 @@ answer: "Wir begleiten Ihr Event professionell mit Kunst. Unsere Vielseitigkeit 
 categories:
   - Schnellzeichner
   - Szenenmaler
+tags:
+  skills:
+    - schnellzeichner
+    - szenenmaler
+  events: []
+  landings:
+    - bw
 ---
