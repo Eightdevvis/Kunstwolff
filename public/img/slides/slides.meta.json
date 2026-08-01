@@ -622,6 +622,75 @@
       "landings": []
     }
   },
+  "events/private-feier/karikaturisten-geburtstag-saarland.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "private-feier"
+      ],
+      "landings": [
+        "saarland"
+      ]
+    },
+    "priority": 1
+  },
+  "events/private-feier/karikkatur-geburtstag-grillparty-einladungskarte.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "private-feier"
+      ],
+      "landings": []
+    },
+    "priority": 2
+  },
+  "events/private-feier/kinder-portraet-mitnintendo-wii-maidult-regensburg.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "private-feier"
+      ],
+      "landings": []
+    },
+    "priority": 4
+  },
+  "events/private-feier/lustige-karikatur-jungs-kindergeburtstag.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "private-feier"
+      ],
+      "landings": []
+    },
+    "priority": 5
+  },
+  "events/private-feier/minecraft-drawing-kids-speedpainter-event.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "private-feier"
+      ],
+      "landings": []
+    },
+    "priority": 6
+  },
   "frankfurt/10_digitale-schnellzeichnung-auf-leinwand-projiziert-mit-beamer-comoany-event-allianz-frankfurt.webp": {
     "categories": [
       "Schnellzeichner",
@@ -4149,60 +4218,5 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
-  },
-  "events/private-feier/karikaturisten-geburtstag-saarland.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 1,
-    "tags": {
-      "events": [
-        "private-feier"
-      ],
-      "skills": [
-        "schnellzeichner"
-      ]
-    }
-  },
-  "events/private-feier/karikkatur-geburtstag-grillparty-einladungskarte.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "priority": 2,
-    "tags": {
-      "events": [
-        "private-feier"
-      ],
-      "skills": [
-        "schnellzeichner"
-      ]
-    }
-  },
-  "events/private-feier/kinder-portraet-mitnintendo-wii-maidult-regensburg.webp": {
-    "categories": [],
-    "priority": 4,
-    "tags": {
-      "events": [
-        "private-feier"
-      ]
-    }
-  },
-  "events/private-feier/lustige-karikatur-jungs-kindergeburtstag.webp": {
-    "categories": [],
-    "priority": 5,
-    "tags": {
-      "events": [
-        "private-feier"
-      ]
-    }
-  },
-  "events/private-feier/minecraft-drawing-kids-speedpainter-event.webp": {
-    "categories": [],
-    "priority": 6,
-    "tags": {
-      "events": [
-        "private-feier"
-      ]
-    }
   }
 }
