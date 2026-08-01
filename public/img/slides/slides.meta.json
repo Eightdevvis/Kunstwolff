@@ -4149,5 +4149,33 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
+  },
+  "events/private-feier/karikaturisten-geburtstag-saarland.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 1,
+    "tags": {
+      "events": [
+        "private-feier"
+      ],
+      "skills": [
+        "schnellzeichner"
+      ]
+    }
+  },
+  "events/private-feier/karikkatur-geburtstag-grillparty-einladungskarte.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 2,
+    "tags": {
+      "events": [
+        "private-feier"
+      ],
+      "skills": [
+        "schnellzeichner"
+      ]
+    }
   }
 }
