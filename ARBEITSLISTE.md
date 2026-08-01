@@ -111,7 +111,20 @@ vermutet. Nach Wirkung sortiert, am 2026-08-01 einzeln gegen den Code geprüft:
        Platzierung nicht. Auch rechtlich drängt es hier nicht — das BFSG greift
        für Dienstleistungen von Kleinstunternehmen nicht. Bleibt trotzdem
        richtig, nur eben danach.
-3. [ ] ⏸️ **Rest-Hygiene** (3.5) — **nach dem Umzug**, geprüft und noch offen:
+3. [ ] ⏸️ **Rest-Hygiene** (3.5) — **nach dem Umzug**, geprüft und noch offen.
+       **Neu am 2026-08-01 dazu:**
+       `sync-faq-tags.mjs` überspringt jede Datei, die *irgendeinen* `tags:`-
+       Schlüssel hat — auch einen unvollständigen (Zeile 156). Das Admin-Tool
+       schreibt aber Teilblöcke: eine FAQ im `bw/`-Ordner hatte nur einen
+       Skill-Tag und erschien deshalb **nicht** auf der BW-Seite, sondern galt
+       als allgemeine FAQ. Datei von Hand ergänzt; **das Skript gehört zum
+       Branch `tag-sweep-2026-07-31`**, der es ohnehin ändert — dort gehört der
+       Fix hin. ·
+       Der pre-push-Hook schreibt während des Pushes in `public/`. Läuft
+       gleichzeitig die Testsuite, wird sie davon rot — dreimal beobachtet,
+       jedes Mal ein Fehlalarm. Wer Tests laufen lässt, sollte nicht zeitgleich
+       pushen.
+       **Weiterhin offen:**
        `EventManager.createEvent` legt keinen Anlass-Tag an (nur `content.json` + Meta) ·
        `pre-push` committet alles Gestagete in einen `chore:`-Commit ·
        zwei FAQ-Dateien ohne `.md` (`default/kosten-schnellzeichner`,
@@ -271,6 +284,36 @@ vermutet. Nach Wirkung sortiert, am 2026-08-01 einzeln gegen den Code geprüft:
       `navigation.ts` — `navigation.json` wird im Admin gepflegt, ein künftig
       ergänzter `#`-Eintrag landet damit automatisch auf der Startseite statt im
       Nichts. Gemessen: 7157 Links auf 172 Seiten, tote Sprungmarken 24 → **0**.
+
+- [x] 🟠 **C — N.7 Zwei Wix-Adressen zeigten auf ausgeblendete Seiten** ✅ **erledigt 2026-08-01**
+      Gefunden beim Abfragen der **echten** Weiterleitungen gegen die Live-Stage.
+      Eine Weiterleitung gibt den Wert der alten Adresse ans Ziel weiter — steht
+      das Ziel auf `noindex`, verpufft er. Technisch fällt nichts auf: 308, Ziel
+      antwortet 200.
+      `/aquarelle-galerie` → `/aquarelle/` (ausgeblendet) → jetzt `/galerie/` ·
+      `/schnellzeichner-duesseldorf` → Düsseldorf (ausgeblendet) → jetzt
+      `/schnellzeichner-karikaturist/`. Beide live nachgeprüft.
+      Die übrigen ~100 Regeln auf ausgeblendete Ziele bleiben: ihre Quellen sind
+      die internen Adress-Umstellungen und waren nie öffentlich.
+      Test über die 24 Wix-Adressen mit Regel; war rot (2 von 50).
+
+- [x] 🟠 **C — N.8 Breadcrumb der FR-Seite mit doppeltem Schrägstrich** ✅ **erledigt 2026-08-01**
+      `localizePath` baute `` `/${slug}/` `` — bei leerem Slug also `//`. Im
+      BreadcrumbList-Schema von `/fr/belgique/` zeigte „Accueil" auf
+      `https://kunstwolff.de//`. Im Browser geht das durch, in strukturierten
+      Daten ist es eine Adresse, die es nicht gibt.
+      Unsichtbar geblieben, weil alle **HTML**-Links stimmten — der Fehler saß
+      nur *innerhalb* der JSON-LD-Blöcke.
+
+- [ ] 🟡 **C+S — N.9 `/fr/belgique/` hängt in der Luft** (neu 2026-08-01, **Entscheidung nötig**)
+      Die Seite ist indexierbar und steht in der Sitemap, aber **kein Klickpfad
+      führt hin**. Ihr einziger eingehender Link kommt von `/belgique/` — und die
+      ist ausgeblendet und steht auf `noindex, **nofollow**`. Die beiden
+      verlinken nur sich gegenseitig, ein geschlossenes Paar ohne Anschluss.
+      Auch die hreflang-Verknüpfung läuft damit ins Leere: die deutsche Hälfte
+      des Paares ist für Google nicht da.
+      Es ist die **einzige** französische Seite. Wohin sie verlinkt werden soll,
+      ist eine inhaltliche Entscheidung — deshalb nicht eigenmächtig geändert.
 
 ---
 
@@ -519,8 +562,35 @@ daraus *erzeugte* Adresse. Genau in dieser Lücke saß der Fehler.
 **Lehre für diese Liste:** „geprüft" heißt nur so viel wie das, womit geprüft wurde.
 Was am gebauten `dist/` per HTTP nachgemessen ist, steht seit heute dabei.
 
-**Am 2026-08-01 vollständig per HTTP nachgemessen** (jede Seite und jedes interne
-Linkziel einzeln abgerufen): **1139 Adressen, 0 nicht erreichbar.** Dazu statisch:
+**Drei Prüfrunden über die Links am 2026-08-01**, jede mit anderen Fragen:
+
+1. *Erreichbarkeit* — jede Seite und jedes Linkziel per HTTP: **0 von 1211 kaputt.**
+2. *Klickbarkeit* — 7214 `<a>` auf 172 Seiten: kein `<a>` ohne oder mit leerem
+   `href`, kein `href="#"`, kein `javascript:`, keins ohne erkennbaren Namen,
+   keins per Style unsichtbar im Tab-Verlauf, keine verschachtelten `<a>`, keine
+   doppelten `id`, keine kaputten `mailto:`/`tel:`, **0 tote Sprungmarken**
+   (vorher 24). Alle 5 externen Ziele abgerufen, alle erreichbar.
+3. *Konsistenz und Signale* — Groß-/Kleinschreibung (die WEB-001-Falle): 0 ·
+   fest verdrahtete Absolut-Links: 0 · Mixed Content: 0 · `target="_blank"`
+   ohne `rel="noopener"`: 0 · Canonical-Ketten: 0 · `og:url` ≠ Canonical: 0 ·
+   `og:image` tot: 0 · Adressen in JSON-LD: 0 tot · Breadcrumb-Positionen: 0
+   Fehler · hreflang: 0 tot, 0 einseitig · Links auf per robots.txt gesperrte
+   Pfade: 0 · Links auf Weiterleitungs-Quellen: 0.
+
+**Zusätzlich gegen die Live-Stage geprüft:** alle **165** Weiterleitungen
+abgefragt — jede springt einmal, landet beim gemeinten Ziel, das mit 200
+antwortet. Keine Ketten. Unsinns-Adressen geben sauber 404.
+
+Drei Auffälligkeiten, geprüft und **bewusst so gelassen**:
+**840** interne Links ohne Schrägstrich am Ende (`/contact` statt `/contact/`) —
+Vercel liefert beide mit **200 ohne Umleitung**, und beide Formen tragen dasselbe
+Canonical `/contact/`. Kostet nichts. ·
+**25** Links von sichtbaren auf ausgeblendete Seiten — das ist die Städteliste
+auf den Skill-Seiten, so gewollt. ·
+`/gallerie/` und die Schriften-Demo des Herstellers ohne Impressum-Link — die
+eine wird von der 301-Regel verdeckt, die andere steht auf `noindex`.
+
+**Frühere Messung** (jede Seite und jedes interne Linkziel): Dazu statisch:
 0 tote Links · 0 `noindex`-Seite in der Sitemap · 0 Sitemap-Eintrag ohne Seite ·
 166 Weiterleitungen ohne Ketten, alle Ziele existieren · 102 flache Ort-Adressen
 vollständig, 0 Reste der alten Form, 0 alte Adresse ohne 301.
