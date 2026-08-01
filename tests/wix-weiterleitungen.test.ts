@@ -89,35 +89,35 @@ const nachQuelle = new Map(regeln.map((r) => [r.source, r]));
  * am 2026-08-01 selbst passiert), und er übersieht umgekehrt, wenn eine
  * Sammelregel vor die genaue Regel rutscht und sie tot macht.
  *
- * Die Quelle darf percent-kodiert oder dekodiert stehen: `ß` und `&` kommen in
- * den alten Adressen in beiden Schreibweisen vor.
+ * Verglichen wird percent-kodiert, auf beiden Seiten. Die alten Adressen
+ * enthalten `ß` und `&`; Vercel kodiert die Regel-Quellen selbst, ein Eintrag
+ * mit rohem `ß` ist also nur ein Duplikat des kodierten (am 2026-08-01 live
+ * nachgemessen — der rohe Eintrag fing nichts ab, was der kodierte nicht schon
+ * hatte). Wer hier eine Regel einträgt, schreibt sie kodiert.
  */
+const normPfad = (pfad: string): string =>
+  pfad
+    .split('/')
+    .map((teil) => {
+      if (teil.includes(':')) return teil; // Platzhalter der Sammelregeln
+      try {
+        return encodeURIComponent(decodeURIComponent(teil));
+      } catch {
+        return teil;
+      }
+    })
+    .join('/');
+
 const alsMuster = (source: string): RegExp =>
   new RegExp(
-    `^${source
+    `^${normPfad(source)
       .replace(/[.+?^${}()|[\]\\]/g, '\\$&')
       .replace(/:[A-Za-z]+\*/g, '(?:.*)')
       .replace(/:[A-Za-z]+/g, '(?:[^/]+)')}$`,
   );
 
-const regelFuer = (quelle: string): Regel | undefined => {
-  const formen = new Set([quelle, decodeURIComponent(quelle)]);
-  for (const regel of regeln) {
-    const muster = alsMuster(regel.source);
-    const quelleDekodiert = (() => {
-      try {
-        return decodeURIComponent(regel.source);
-      } catch {
-        return regel.source;
-      }
-    })();
-    const musterDekodiert = alsMuster(quelleDekodiert);
-    for (const form of formen) {
-      if (muster.test(form) || musterDekodiert.test(form)) return regel;
-    }
-  }
-  return undefined;
-};
+const regelFuer = (quelle: string): Regel | undefined =>
+  regeln.find((regel) => alsMuster(regel.source).test(normPfad(quelle)));
 
 const eigeneSeite = (quelle: string): boolean =>
   fs.existsSync(path.resolve(`src/pages${quelle}.astro`)) ||
