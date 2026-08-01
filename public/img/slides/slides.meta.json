@@ -4046,11 +4046,34 @@
     }
   },
   "bw/live-event-kuenstlerin-malt-szenen-hochzeit-heitlinger-genusswelten-baden-wuertemberg.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler",
+      "Schnellzeichner",
+      "Aquarelle"
+    ],
     "priority": 7,
     "tags": {
       "landings": [
         "bw"
+      ],
+      "skills": [
+        "szenenmaler",
+        "schnellzeichner",
+        "aquarelle"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "silvester",
+        "gartenparty",
+        "stadtfest",
+        "gala",
+        "sommerfest"
       ]
     }
   },
