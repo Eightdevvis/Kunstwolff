@@ -120,7 +120,9 @@ Tests dazu in `tests/gallery.test.ts`: beide Maße zu jedem Bild, nur paarweise,
 plausible Verhältnisse, und es müssen **Hoch- UND Querformate** vorkommen
 (sonst wäre das Mosaik sinnlos – und ein Header-Leser-Fehler „Höhe = Breite"
 sähe genau so aus). Stand 2026-08-01: 98 quer, 131 hoch, 9 quadratisch – zusammen
-die 238 Bilder, die `getAllSlidesWithTags()` liefert, alle mit beiden Maßen.
+die 238 Bilder, die `getAllSlidesWithTags()` damals lieferte, alle mit beiden Maßen.
+Der Bestand wächst laufend (Stand Nachmittag: 266 Metadaten-Einträge) – die Verteilung
+ist der Punkt, nicht die Summe.
 
 ## Chips kommen aus dem BESTAND, nicht aus dem Vokabular
 

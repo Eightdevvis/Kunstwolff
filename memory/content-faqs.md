@@ -12,7 +12,7 @@ Start-Tag (`scripts/sync-faq-tags.mjs`), danach ist er reine Ablage – die Ausw
 über die Tags (siehe unten). `getFAQsByCity` / `getFAQsByCategories` / `getFAQsByCategory`
 wurden dabei **entfernt**; wer sie sucht, will `getFAQsForContext`.
 
-Vorhandene Stadt-Ordner: `belgique`, `bw`, `duesseldorf`, `frankfurt`, `heidelberg`, `kaiserslautern`, `karlsruhe`, `koblenz`, `koeln`, `ludwigshafen`, `luxembourg`, `mainz`, `mannheim`, `rhein-main-gebiet`, `rheinland-pfalz`, `saarbruecken`, `saarland`, `schweiz`, `trier`, `wiesbaden`, `wuppertal` (21 Städte + `default`; 85 Dateien, davon 26 in `default/`). Weitere Stadt-FAQs: einfach den Ordner `public/faq/<stadt>/` anlegen und MD-Files reinschreiben – **kein Sync-Skript legt sie an**.
+Vorhandene Stadt-Ordner: `belgique`, `bw`, `duesseldorf`, `frankfurt`, `heidelberg`, `kaiserslautern`, `karlsruhe`, `koblenz`, `koeln`, `ludwigshafen`, `luxembourg`, `mainz`, `mannheim`, `rhein-main-gebiet`, `rheinland-pfalz`, `saarbruecken`, `saarland`, `schweiz`, `trier`, `wiesbaden`, `wuppertal` (21 Städte + `default`; Stand 2026-08-01: 86 Dateien, davon 26 in `default/` – die Zahl wächst mit jeder neuen FAQ, nachzählen mit `find public/faq -name '*.md' | wc -l`). Weitere Stadt-FAQs: einfach den Ordner `public/faq/<stadt>/` anlegen und MD-Files reinschreiben – **kein Sync-Skript legt sie an**.
 
 ## Format
 
@@ -130,8 +130,8 @@ Defaults, jede Anlass-Seite 3 eigene + 1 Default.
 
 ⚠️ **`/faq/` ist das Archiv, kein Kontext.** Ein leerer Kontext fragt keine Dimension ab
 und liefert deshalb nur den Default-Topf. `src/pages/faq.astro` reicht darum ausdrücklich
-`getAllFAQs()` als `faqs`-Prop durch – sonst verliert die Übersichtsseite 71 der
-85 Fragen (Stand 2026-08-01: 14 FAQs bilden den Default-Topf).
+`getAllFAQs()` als `faqs`-Prop durch – sonst verliert die Übersichtsseite 72 der
+86 Fragen (Stand 2026-08-01: 14 FAQs ohne jeden Tag bilden den Default-Topf).
 
 ## Anlass-Dimension: eigenes Feld statt Schmuggel durchs city-Feld (seit 2026-07-31)
 

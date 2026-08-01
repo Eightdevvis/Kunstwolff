@@ -220,13 +220,24 @@ machen.
 
 ## Abdeckung je Inhaltstyp
 
-Stand 2026-08-01, alle Zahlen nachgezählt:
+⚠️ **Diese Zahlen veralten schneller als der Rest der Memory** – Jenny lädt Bilder und
+Bewertungen im Admin nach, ohne dass hier jemand nachzieht. Sie sagen etwas über die
+Größenordnung und über die Abdeckung („alle" vs. „ein Teil"), nicht über den Tagesstand.
+Nachzählen statt glauben:
+
+```bash
+python3 -c "import json;m=json.load(open('public/img/slides/slides.meta.json'));print(len(m),sum(1 for v in m.values() if v.get('tags')))"
+find public/faq -name '*.md' | wc -l
+find public/reviews -name '*.md' ! -name '_vorlage.md' | wc -l
+```
+
+Stand 2026-08-01 (nachmittags):
 
 | Typ | | Stand |
 | :-- | --: | :-- |
-| FAQs | 85 | ✅ seit 2026-07-28 vollständig getaggt (`sync-faq-tags.mjs`); 26 bewusst ohne Ort-Tag = gelten überall |
-| Bilder / Slides | 238 | ✅ `tags` in `slides.meta.json` (jeder Eintrag), 102 mit Anlass UND Ort |
-| Reviews | 38 | ✅ `tags` im Frontmatter (alle 38); 36 weitere Dateien sind `_vorlage.md`, vom Sync ausgeschlossen |
+| FAQs | 86 | ✅ seit 2026-07-28 vollständig getaggt (`sync-faq-tags.mjs`); 26 liegen in `default/`, davon gelten 14 ganz ohne Tag überall |
+| Bilder / Slides | 266 | ✅ `tags` in `slides.meta.json` – **jeder** Eintrag, 110 mit Anlass UND Ort |
+| Reviews | 41 | ✅ `tags` im Frontmatter (alle); 36 weitere Dateien sind `_vorlage.md`, vom Sync ausgeschlossen |
 | Erinnerungen | 39 | erben über Bildpfade – eigene Tags unnötig |
 | Why | 39 | hängen **nicht** am Slide-Bestand – siehe unten |
 

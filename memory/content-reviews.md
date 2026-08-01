@@ -66,7 +66,7 @@ Das war ein großartiges Event.
 ⚠️ **Diese Kette gilt nicht für jede Seite.** `reviewsForLanding` wird nur über
 `getReviewsByLandingAndSkill` erreicht, und das ruft genau eine Stelle auf: die
 Skill×Ort-Kombiseiten (`[...kombi].astro`). Startseite und Stadtseiten rendern
-`HomepageReviews.astro`, das `getAllReviews()` **ungefiltert** durchreicht (alle 38),
+`HomepageReviews.astro`, das `getAllReviews()` **ungefiltert** durchreicht (alle, Stand 2026-08-01: 41),
 `[skill].astro` ebenso. Minimum 7 und Auffüllung greifen also nur auf den Kombiseiten.
 Der zweite Export `getReviewsByLanding` hat derzeit gar keinen Aufrufer.
 

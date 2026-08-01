@@ -110,7 +110,7 @@ Es gibt **kein** `public/reviews/default/`-Verzeichnis. `default` bleibt in `rev
 ```
 public/faq/
 ├── default/*.md           # generische Fallback-FAQs
-└── <stadt>/*.md           # stadt-spezifische FAQs (aktuell für ~21 Städte angelegt)
+└── <stadt>/*.md           # stadt-spezifische FAQs (21 Städte, NICHT auto-erzeugt)
 ```
 
 Neben `default/` existieren 21 Stadt-Ordner (belgique, bw, duesseldorf, frankfurt,
