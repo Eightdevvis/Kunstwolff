@@ -4113,12 +4113,17 @@
     }
   },
   "bw/schnellzeichnung-messe-stuttgart.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner"
+    ],
     "priority": 10,
     "tags": {
       "landings": [
         "bw",
         "stuttgart"
+      ],
+      "skills": [
+        "schnellzeichner"
       ]
     }
   }
