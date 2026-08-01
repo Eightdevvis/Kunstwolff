@@ -1878,9 +1878,7 @@
         "sommerfest"
       ],
       "landings": [
-        "main-taunus-kreis",
-        "rhein-main-gebiet",
-        "hessen"
+        "main-taunus-kreis"
       ]
     },
     "priority": 3
@@ -1897,9 +1895,7 @@
         "firmenfeier"
       ],
       "landings": [
-        "main-taunus-kreis",
-        "rhein-main-gebiet",
-        "hessen"
+        "main-taunus-kreis"
       ]
     },
     "priority": 4
