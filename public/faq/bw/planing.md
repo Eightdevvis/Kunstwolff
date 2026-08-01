@@ -1,8 +1,13 @@
 ---
-question: "Wann sollte ich einen Karikaturisten für meine Veranstaltung reservieren?"
-answer: "Ein Karikaturist ist besonders an beliebten Terminen schnell ausgebucht. Deshalb empfehlen wir eine frühzeitige Buchung. Kurzfristige Anfragen sind jedoch ebenfalls willkommen."
+question: "Wie lange im Vorraus sollte ich den Schnellzeichner für meine Veranstaltung in BW buchen??"
+answer: "Ein Schnellzeichner ist besonders an beliebten Terminen schnell ausgebucht. Deshalb empfehlen wir eine frühzeitige Buchung. Kurzfristige Anfragen sind jedoch ebenfalls willkommen. "
+categories:
+  - Szenenmaler
+  - Schnellzeichner
 tags:
-  skills: []
+  skills:
+    - szenenmaler
+    - schnellzeichner
   events: []
   landings:
     - bw

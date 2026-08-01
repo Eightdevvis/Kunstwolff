@@ -41,12 +41,35 @@ public/img/Titelbild/events/<slug>/    # Event-Titelbilder
 - `/<skill>/<slug>/` – Skill+Event-Kombi (für alle Skills, z.B. `/schnellzeichner-karikaturist/firmenfeier/`).
   `<skill>` ist hier der **Adress-Slug** aus `skills.json.link`; die Kombitexte in
   `comboContent.ts` liegen dagegen unter dem Inhalts-Schlüssel (`schnellzeichner/messe`).
+  Anlass-Kombis sind **weiterhin hierarchisch** – nur die Ort-Kombis wurden 2026-08-01
+  auf die flache Form umgestellt (`routing.md`).
+
+  ⚠️ Die Kombiseite ist **nicht** „Event-Seite plus Skill": Ablauf, Pakete und
+  Referenzen erscheinen dort bewusst **nicht** (Duplicate Content). Statt dessen
+  `comboLead` (LandingIntro mit `combo.lead`), `comboBenefits` und ein `eventTeaser`,
+  der auf `/<slug>/` verlinkt. Gemeinsam sind nur eventHero, slideshow, eventSkills,
+  faq und contact.
 
 **Routing-Detail:** Event-Slugs teilen den Route-Slot `[landing]` mit Stadt-Slugs. `getStaticPaths()` differenziert via `pageType: 'event' | 'landing'` Prop. Siehe `routing.md`.
 
+## Sektions-Stack
+
+Welche Sektionen eine Event-Seite in welcher Reihenfolge zeigt, steht **nicht** hier,
+sondern in `public/config/components.json` unter `event._default._order`
+(`[eventHero, slideshow, eventAblauf, eventPakete, eventSkills, eventReferenzen, faq, contact]`);
+für die Kombiseiten `skill-event._default._order`
+(`[eventHero, comboLead, comboBenefits, slideshow, eventSkills, eventTeaser, faq, contact]`).
+Ohne Eintrag in `_order` rendert eine Sektion nie, egal was in `content.json` steht.
+Details: `komponenten-stack.md`.
+
 ## Per-Event-Content: `content.json`
 
-Jede Sektion hat ein `enabled`-Flag. Vollständiges Format:
+Jede Sektion trägt historisch ein `enabled`-Flag, und `sync:events` schreibt es weiter –
+⚠️ **die Event-Seite wertet es aber nicht mehr aus.** Sichtbarkeit ergibt sich allein aus
+dem Stack (`_order`) plus vorhandenem Inhalt (`steps`/`items`/`logos` > 0). Ein
+`"enabled": false` blendet dort nichts aus, ein `"enabled": true` ohne Inhalt zeigt
+nichts. Einzige Ausnahme: `skills.enabled` auf der Skill+Event-Kombiseite
+(`[...kombi].astro`). Vollständiges Format:
 
 ```json
 {
@@ -99,8 +122,19 @@ Jede Sektion hat ein `enabled`-Flag. Vollständiges Format:
 
 ## Bilder
 
-- **Slides:** `public/img/slides/events/<slug>/` (separater Namespace, nicht mit Stadtslides vermischt)
-- **Titelbild:** `public/img/Titelbild/events/<slug>/`
+- **Slides:** über den **Tag** `events:<slug>`, nicht über den Ordner. `getEventSlides()`
+  = `getSlidesByTag('events', slug)` zieht aus dem **gesamten** Bestand. Bilder aus
+  Stadtordnern erscheinen deshalb bewusst auch auf Event-Seiten – die Vermischung ist
+  seit 2026-07-28 das Ziel, nicht der Fehler. Nachgezählt: in
+  `public/img/slides/events/firmenfeier/` liegt **eine** Datei, den Tag
+  `events:firmenfeier` tragen **45** Einträge.
+  `public/img/slides/events/<slug>/` bleibt Ablage für event-eigene Motive; beim ersten
+  Lauf belegt `sync:slides` daraus den Tag vor (`inferEventsFromKey`).
+- **Titelbild:** `public/img/Titelbild/events/<slug>/` – genommen wird das **alphabetisch
+  erste** Bild (.avif/.gif/.jpeg/.jpg/.png/.webp). Fallback-Kette in
+  `resolveEventTitleImage()`: Event-Ordner → `public/img/Titelbild/default/` →
+  `/img/samples/sample1.webp`. `title.meta.json` wird dabei **nicht** gelesen
+  (`content-titelbild.md`).
 - **Metadaten:** Gleiche `slides.meta.json` wie Stadtslides. Key-Format: `events/<slug>/dateiname.webp`
 
 ## Event entfernen
@@ -111,6 +145,12 @@ Jede Sektion hat ein `enabled`-Flag. Vollständiges Format:
 ## Sync-Script
 
 `sync:events` erstellt Ordner und default `content.json` – **bestehende `content.json` wird NIE überschrieben.**
+
+Das Script ist außerdem bewusst **fehlertolerant** (WEB-003): fehlende `events.json` →
+Warnung und `return`; kaputtes JSON → Warnung und `return` statt Abbruch, damit ein
+Tippfehler nicht Sync, Build und Commit gleichzeitig blockiert; leere Liste → nichts zu
+tun. Der letzte gute Stand bleibt stehen. Abgesichert in `tests/sync-events.test.ts`
+(drei Fälle, jeweils Exit 0).
 
 ## Admin-Tool
 

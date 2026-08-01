@@ -125,8 +125,12 @@ const slugify = (text: string): string =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 
-/** URL-encodes einen einzelnen Pfad-Abschnitt */
-const encodePathSegment = (segment: string): string => encodeURIComponent(segment);
+/**
+ * URL-encodes einen Pfad-Abschnitt – teilweise, nicht am Stück. Am Stück würde ein
+ * verschachtelter Schlüssel zu %2F werden, und %2F ist kein Pfadtrenner (siehe slideImages.ts).
+ */
+const encodePathSegment = (segment: string): string =>
+  segment.split('/').map((part) => encodeURIComponent(part)).join('/');
 
 /** Normalisiert Metadata-Keys (Backslashes → Forward Slashes, führende/trailing Slashes entfernen) */
 const normalizeMetadataKey = (value: string): string =>
@@ -194,7 +198,7 @@ export const getEvents = (): EventItem[] => {
 
 /**
  * Gibt alle Event-Slugs zurück.
- * Wird in getStaticPaths() von [landing].astro und [skill]/[landing].astro genutzt.
+ * Wird in getStaticPaths() von [landing].astro und [...kombi].astro genutzt.
  */
 export const getEventSlugs = (): string[] => getEvents().map((e) => e.slug);
 

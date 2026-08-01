@@ -11,6 +11,11 @@ npm run preview         # Build lokal prüfen
 
 **Hinweis:** `predev` und `prebuild` rufen `sync:content:safe` auf (fehlertolerant), **nicht** `sync:content`. Beide führen dieselben Sync-Schritte aus, aber `:safe` isoliert Teilfehler, sodass Dev/Build nicht abbricht wenn ein Sync-Step fehlschlägt.
 
+⚠️ **Mit einer Ausnahme:** `sync:tags` ist in `scripts/sync-content-safe.mjs` als
+`hart: true` markiert. Fällt das Tag-Vokabular aus, bricht der Lauf mit Exit 1 ab –
+absichtlich, weil `sync:reviews-tags` und `sync:faq-tags` sonst Orte verwerfen würden,
+die `tags.json` nicht kennt, und der Schaden still in die Dateien wanderte.
+
 ## Vollständige Befehlsübersicht
 
 | Befehl | Zweck |
@@ -20,7 +25,7 @@ npm run preview         # Build lokal prüfen
 | `npm run build` | Produktionsbuild (`prebuild` ruft `sync:content:safe`) |
 | `npm run preview` | Build lokal prüfen |
 | `npm run sync:content` | Alle Content-Syncs nacheinander ausführen |
-| `npm run sync:content:safe` | Fehlertolerant (Teilfehler isoliert, Build/Dev läuft weiter) |
+| `npm run sync:content:safe` | Fehlertolerant (Teilfehler isoliert, Build/Dev läuft weiter) – **außer `sync:tags`**, das ist ein harter Schritt und bricht ab |
 | `npm run sync:landings` | Stadtordner für Slides und Reviews anlegen |
 | `npm run sync:skills` | Skill-Bildordner anlegen |
 | `npm run sync:tags` | Tag-Vokabular `public/config/tags.json` erzeugen/pflegen |
@@ -35,7 +40,9 @@ npm run preview         # Build lokal prüfen
 | `npm run validate:images` | Bild-Referenzen prüfen (`scripts/validate-image-refs.mjs`); letzter Schritt von `sync:content` |
 | `npm run optimize:images` | Nur gestagte Bilder zu WebP konvertieren (`scripts/optimize-staged-images.mjs`) |
 | `npm run optimize:all` | Alle Bilder in `public/img/` zu WebP konvertieren (manuell) |
-| `npm run test:unit` | Unit-Tests ausführen (`vitest run`) |
+| `npm run variants` | Responsive Bildvarianten manuell erzeugen (`scripts/generate-image-variants.mjs`). Beim Build läuft dasselbe automatisch als Astro-Integration `kunstwolff-bild-varianten` im `astro:build:done`-Hook – **nicht** als npm-Kette, weil Vercel ein nachgestelltes `&& …` im Build-Befehl abschneidet. Siehe `responsive-images.md` |
+| `npm run test:unit` | Unit-Tests ausführen (`vitest run`, 26 Dateien in `tests/`) |
+| `npm run astro` | Durchreicher auf die Astro-CLI (`astro check`, `astro add`, …) |
 | `npm run setup:hooks` | Git-Hooks aktivieren (einmalig) |
 
 ## Automatik-Reihenfolge

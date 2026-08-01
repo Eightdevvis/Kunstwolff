@@ -57,9 +57,9 @@ Pro Seitentyp automatisch generiert:
 | Seitentyp | Beispiel-Title | Description-Quelle |
 | :-- | :-- | :-- |
 | Homepage | `Kunstwolff – Eventkünstler seit über 25 Jahren` | Generisch (aus `Layout.astro`) |
-| Stadtseite `/berlin/` | `Eventkünstler Berlin – Live-Kunst & Performance \| Kunstwolff` | Stadtspezifisch |
+| Stadtseite `/berlin/` | `Schnellzeichner Berlin – Live-Kunst \| Kunstwolff` (Vorlage `{landingHeading} – Live-Kunst \| Kunstwolff`; das Heading kommt aus `landingHeadings` und wird im Admin gepflegt) | Stadtspezifisch |
 | Skill-Seite `/schnellzeichner-karikaturist/` | `Schnellzeichner für Events buchen \| Kunstwolff` | `skills.json` (`description`) |
-| Skill+Stadt `/schnellzeichner-karikaturist/berlin/` | `Schnellzeichner Berlin buchen \| Kunstwolff` | pro Stadt individualisiert (nicht mehr `skills.json`) |
+| Skill+Stadt `/berlin-schnellzeichner-karikaturist/` | `Schnellzeichner Berlin buchen \| Kunstwolff` | pro Stadt individualisiert (nicht mehr `skills.json`) |
 
 Auf jeder Seite wird ein `<link rel="canonical">` gesetzt (gegen Duplicate-Content-Strafen).
 
@@ -79,13 +79,17 @@ Bindestrich-Wort großgeschrieben. **Nur für Anzeige, nie für URLs/Slugs.**
 | Skill-Description (Meta) | `public/skills/skills.json` Feld `description` (≤ 155 Zeichen) |
 | Skill-Hero-Title | `public/skills/skills.json` Feld `heroTitle` |
 | Stadtseiten-Texte + Titel-Template | `src/pages/[landing].astro` |
-| Skill+Stadt-Description/H1 (pro Stadt) | `src/pages/[skill]/[landing].astro` |
+| Skill+Stadt-Description/H1 (pro Stadt) | `src/pages/[...kombi].astro` |
 | Stadt-Anzeigename (Umlaut) | `src/utils/cityNames.ts` |
 | Kontakt/FAQ/Impressum/Datenschutz-Titel | jeweilige `src/pages/*.astro` (`<Layout title=… description=…>`) |
 
 ## HTML-Sprache
 
-`<html lang="de">` ist global gesetzt – damit weiß Google, dass der Content auf Deutsch ist.
+`<html lang={lang}>` mit Default `"de"` (`Layout.astro`) – damit weiß Google, dass der
+Content auf Deutsch ist. Übersetzte Seiten setzen den Wert selbst: `/fr/…` rendert
+`lang="fr"`. Hat eine Seite Übersetzungen, gibt das Layout zusätzlich
+`<link rel="alternate" hreflang=…>` für jede Sprachvariante aus – ohne das würde
+Google die FR-Seiten als Duplikat der deutschen lesen.
 
 ## Open Graph Tags
 
@@ -94,12 +98,16 @@ Auf jeder Seite automatisch generiert (für WhatsApp, LinkedIn, Facebook, etc.):
 ```html
 <meta property="og:title" content="Schnellzeichner Berlin buchen | Kunstwolff" />
 <meta property="og:description" content="..." />
-<meta property="og:url" content="https://kunstwolff.de/schnellzeichner-karikaturist/berlin/" />
+<meta property="og:url" content="https://kunstwolff.de/berlin-schnellzeichner-karikaturist/" />
 <meta property="og:type" content="website" />
 <meta property="og:image" content="https://kunstwolff.de/img/Titelbild/..." />
 ```
 
-`og:image` wird automatisch aus dem Titelbild der Seite generiert. Kein manueller Aufwand.
+`og:image` wird automatisch aus dem Titelbild der Seite generiert. Kein manueller
+Aufwand. Seiten ohne eigenes Titelbild (Kontakt, FAQ, Impressum, Datenschutz)
+fallen auf `DEFAULT_OG_IMAGE` = `/img/Titelbild/default/titelbild.avif` zurück,
+damit die Social-Vorschau nie leer ist. Ist `Astro.site` nicht gesetzt, wird gar
+**kein** `og:image` ausgegeben – die URL wäre sonst relativ und damit nutzlos.
 
 ## robots.txt
 
@@ -127,7 +135,7 @@ Vollautomatisch beim Build generiert. Keine manuelle Pflege.
 | Homepage `/` | `LocalBusiness` |
 | Skill-Seite `/schnellzeichner-karikaturist/` | `Service` |
 | Stadtseite `/berlin/` | `BreadcrumbList` |
-| Skill+Stadt `/schnellzeichner-karikaturist/berlin/` | `BreadcrumbList` |
+| Skill+Stadt `/berlin-schnellzeichner-karikaturist/` | `BreadcrumbList` |
 | FAQ-Seite `/faq/` | `FAQPage` |
 
 > ⚠ **FAQPage nur auf `/faq/`.** `FAQ.astro` emittiert das FAQPage-Schema nur bei
@@ -140,7 +148,7 @@ Vollautomatisch beim Build generiert. Keine manuelle Pflege.
 
 ### Was die Schemas bringen
 
-- **`LocalBusiness`** (nur Homepage) – Unternehmensadresse, Telefon, Tätigkeitsgebiet. Basis für Google-Wissensbox und Maps.
+- **`LocalBusiness`** – **vollständig** (Adresse, Telefon, `areaServed`) nur auf der Homepage. Auf den Skill-Seiten steckt es zusätzlich als `provider` im `Service`-Schema, dort aber nur mit `name` + `url`. Basis für Google-Wissensbox und Maps.
 - **`Service`** – beschreibt die Dienstleistung (Schnellzeichner/Szenenmaler). Stärkt das Signal für "XY buchen"-Suchanfragen.
 - **`BreadcrumbList`** – Pfadstruktur für Google: `kunstwolff.de › Schnellzeichner › Berlin`. Erscheint unter dem Suchergebnis-Link, verbessert CTR.
 - **`FAQPage`** – via `FAQ.astro`. Kann zu aufklappbaren FAQ-Blöcken direkt in Google führen.
@@ -154,7 +162,17 @@ Vollautomatisch beim Build generiert. Keine manuelle Pflege.
 | `BreadcrumbList` Pfade | dynamisch aus URL-Parametern (`skill`, `landing`) |
 | `FAQPage` | `public/faq/` Markdown-Dateien |
 
-⚠ **`LocalBusiness` ist hardcoded** (Telefon `+491736677229`, Adresse `Birkenstr. 3, 66121 Saarbrücken`, Logo-Pfad `https://kunstwolff.de/img/logo/logo_transparent.webp`). Änderungen sind ein Code-Change. Empfehlung aus HEALTH_CHECK §SEO-3: in eine `siteMeta.ts`/`businessProfile.json` ziehen, dann kann das Admin-Tool sie irgendwann pflegen.
+⚠ **Telefon und Adresse sind hardcoded** (`+491736677229`, `Birkenstr. 3, 66121
+Saarbrücken`). Änderungen sind ein Code-Change. Empfehlung aus HEALTH_CHECK §SEO-3:
+in eine `siteMeta.ts`/`businessProfile.json` ziehen, dann kann das Admin-Tool sie
+irgendwann pflegen.
+
+**Die URLs sind es ausdrücklich nicht.** Host kommt überall aus `Astro.site`
+(= `SITE_URL`), fest ist nur der Pfad (`/img/logo/logo_transparent.webp`). Auf der
+Stage steht dort also `https://kunstwolff.vercel.app/…`. Das ist Regel **WEB-012**
+und per Test festgenagelt: `tests/schema-site-url.test.ts` erlaubt pro Schema-Datei
+**genau ein** Vorkommen von `https://kunstwolff.de` – den Fallback. Wer eine
+absolute URL hart einträgt, macht den Test rot statt still die Stage zu vergiften.
 
 ## Cutover-Audit 2026-07-30 – was vor dem Umzug offen ist
 
@@ -186,8 +204,16 @@ die Datenschutzerklärung nennt keinen der drei Empfänger (Formspree, Vercel, G
 
 ## Sichtbarkeit: welche Seiten indexierbar sind (seit 2026-07-30)
 
-`public/config/page-visibility.json` ist nicht mehr leer. Ausgeblendet sind **128 Pfade**;
-indexierbar bleiben **41 von 170** gebauten Seiten. Die Sitemap enthält exakt dieselben 41.
+`public/config/page-visibility.json` ist nicht mehr leer. Ausgeblendet sind **129 Pfade**
+(102 flache Skill×Ort-Kombis + 22 Städte + `/aquarelle/` + 4 Aquarelle-Anlässe);
+indexierbar bleiben **40 von 172** gebauten Seiten. Die Sitemap enthält exakt dieselben 40.
+
+⚠️ **Die Präfix-Regel steht doppelt im Code.** `isPageHiddenByPath()` in
+`src/utils/pageVisibility.ts` steuert `<meta robots>`; der Sitemap-Filter in
+`astro.config.mjs` baut dieselbe Logik ein zweites Mal nach, weil die Astro-Konfig
+kein TS-Modul importieren kann. Wer eine Stelle ändert und die andere vergisst,
+baut Seiten mit `noindex`, die trotzdem in der Sitemap stehen – der schlechteste
+aller Zustände, weil Google beides sieht. Festgehalten in `tests/page-visibility.test.ts`.
 
 **Die Regel, nach der entschieden wurde** – wichtig, weil sie sonst willkürlich aussieht:
 
@@ -198,11 +224,14 @@ indexierbar bleiben **41 von 170** gebauten Seiten. Die Sitemap enthält exakt d
   hessen, kaiserslautern, koeln, ludwigshafen, luxembourg, saarbruecken, saarland,
   schweiz, stuttgart, trier.
 - **Alle 102 Skill+Stadt-Seiten sind ausgeblendet.** Nicht wegen Dünne, sondern wegen
-  Kannibalisierung: 97 % des Textes von `/schnellzeichner-karikaturist/berlin/` stehen wörtlich auch
+  Kannibalisierung: 97 % des Textes von `/berlin-schnellzeichner-karikaturist/` stehen wörtlich auch
   auf `/berlin/`, und beide zielen auf dieselbe Suchanfrage.
-- **`/aquarelle/<anlass>/`** (4 Seiten): 0 eigene Bilder. `/aquarelle/` selbst bleibt
-  sichtbar – es ist eine echte Leistungsseite und hängt im Services-Menü
-  (`getVisibleSharedSkills` würde sie sonst dort auch entfernen).
+- **`/aquarelle/` ist samt seiner vier Anlass-Kombis ausgeblendet** (0 eigene Bilder).
+  Der Skill-Pfad steht selbst in `hidden`, die Anlässe zusätzlich einzeln. Damit fällt
+  die Aquarelle-Seite auf `noindex, nofollow`, aus der Sitemap **und** über
+  `getVisibleSharedSkills` auch aus dem Services-Menü – sie ist im gebauten `dist/`
+  von keiner Seite mehr verlinkt. Zurückholen = `/aquarelle/` aus `hidden` streichen;
+  die vier Anlass-Kombis bleiben über ihre eigenen Einträge versteckt.
 
 **Wirkung, gemessen:** einzigartiger Textanteil vorher min 0,4 % / median 0,7 %, 144 von
 173 Seiten unter 5 %. Jetzt median 33,3 %, nur noch 5 Seiten unter 5 % – davon sind drei
@@ -217,8 +246,10 @@ die man später füllen will.
 
 Ebenfalls entfernt: der Slug `schnellzeichner-duesseldorf` aus `landings.md` (stand dort
 als "Stadt" und erzeugte vier Seiten mit Titeln wie "Schnellzeichner
-Schnellzeichner-Duesseldorf buchen"). Weiterleitung auf `/schnellzeichner-karikaturist/duesseldorf/`
-steht in `vercel.json`.
+Schnellzeichner-Duesseldorf buchen"). Weiterleitung auf
+`/duesseldorf-schnellzeichner-karikaturist/` steht in `vercel.json` – seit der
+Flach-Umstellung vom 2026-08-01 ist die hierarchische Adresse selbst nur noch
+301-Quelle, kein Ziel mehr.
 
 ## Schriften kommen vom eigenen Server (seit 2026-07-31)
 
@@ -229,7 +260,10 @@ Besuchers an Google, ohne Einwilligung. Jetzt unter `public/fonts/inter/`,
 
 **Zwei Dateien statt acht:** Google liefert Inter als **variable Schrift** – die vier
 früher einzeln angeforderten Gewichte (400/500/600/700) waren byteweise dieselbe Datei
-(per md5 geprüft). Deshalb `font-weight: 100 900` als Bereich und nur
+(per md5 geprüft). Deshalb `font-weight: 400 700` als Bereich – bewusst eng, denn
+`body` verlangt Gewicht 100, und der volle Bereich `100 900` hätte daraus echtes
+Ultra-Light gemacht statt des gewollten Rückfalls auf 400. `tests/schriften-lokal.test.ts`
+nagelt genau `400 700` fest. Und nur
 `inter-latin.woff2` (48 KB) + `inter-latin-ext.woff2` (85 KB). `unicode-range` sorgt
 dafür, dass latin-ext nur geladen wird, wenn die Seite Zeichen daraus braucht – für
 Deutsch und Französisch reicht latin, die Umlaute liegen dort.
@@ -298,7 +332,7 @@ Wunsch von Gabriele: „Karikaturist" wird häufiger gesucht als „Schnellzeich
 Der sichtbare **Titel bleibt „Schnellzeichner"** — geändert hat sich nur die
 Adresse, über das `link`-Feld in `skills.json`.
 
-Betroffen: 40 URLs (Skill + 35 Städte + 4 Anlässe). In `vercel.json` stehen zwei
+Betroffen: 39 URLs (Skill + 34 Städte + 4 Anlässe). In `vercel.json` stehen zwei
 301er (`/schnellzeichner` und `/schnellzeichner/:rest*`), und die 10 Wix-Ziele,
 die vorher auf `/schnellzeichner/` zeigten, wurden **direkt** auf die neue
 Adresse umgehängt — sonst entstünde die Kette Wix-URL → alte Astro-URL → neue.
@@ -310,20 +344,46 @@ hätte dieselbe Änderung echte Signale gekostet.
 Technisch heikel war nicht die URL, sondern dass sie bis dahin auch der Schlüssel
 für Bilder, Why-Texte und Erinnerungen war. Siehe `content-skills.md`.
 
-### Warum NICHT auf flache URLs (`/schnellzeichner-berlin/`)
+### Ort-Kombis sind flach (`/berlin-schnellzeichner-karikaturist/`) — 2026-08-01
 
-Gabriele hält flache URLs für besser platziert. Geprüft am 2026-07-31:
+Gabriele hält flache URLs für besser platziert. **Umgesetzt am 2026-08-01** für
+die 102 Skill×Ort-Seiten. Die Anlass-Kombis bleiben hierarchisch
+(`/szenenmaler/hochzeit/`) — das sind die einzigen 8 indexierbaren Kombi-Seiten,
+und für sie lag kein Auftrag vor.
 
+**Warum es nichts kostete** (geprüft am 2026-07-31, gültig geblieben):
+
+- Die Seite war zu dem Zeitpunkt **noch gar nicht live**: die Domain zeigte auf
+  Wix, kein Astro-URL hatte ein Ranking.
+  ⚠️ **Korrektur vom 2026-08-01:** hier stand „ohne `SITE_URL` steht alles auf
+  `noindex`". Das ist **falsch herum**. Der Fallback ist `https://kunstwolff.de`,
+  und dieser Host steht in der Whitelist — ohne `SITE_URL` gebaut liefert die
+  Seite `index, follow` (nachgemessen: 40 indexierbare Seiten, identisch zum
+  Build mit `SITE_URL`). Der Stage-Schutz greift nur, wenn `SITE_URL` **gesetzt**
+  ist. Siehe „Stage vs. Production" weiter oben — dort stand es immer richtig.
+  **Am Ergebnis ändert das nichts**, der Punkt darunter trägt die Aussage allein.
+- **Alle 102** Skill×Ort-Seiten standen ohnehin auf `noindex`
+  (`page-visibility.json`), weil ihr Text dupliziert ist. Gemessen vorher wie
+  nachher: 102 `noindex`, 8 Anlass-Kombis indexierbar, 40 Sitemap-Einträge.
 - In den Wix-Sitemaps steht **genau eine** flache Skill-Stadt-URL
-  (`/schnellzeichner-duesseldorf`). Es gibt also kein bestehendes Ranking auf
-  diesem Muster, das man bewahren könnte.
-- **34 der 35** Skill×Stadt-Seiten stehen ohnehin auf `noindex`
-  (`page-visibility.json`), weil ihr Text dupliziert ist. Solange das so ist,
-  konkurrieren sie um gar nichts, und die Schreibweise der URL ist folgenlos.
-- Ein Schlüsselwort in der URL ist ein sehr schwaches Signal; was diese Seiten
-  ausbremst, ist der fehlende eigene Text — gemessen: `/dortmund/` und
-  `/giessen/` waren 1493 von 1494 Wörtern gleich.
+  (`/schnellzeichner-duesseldorf`) — die zeigt jetzt direkt aufs neue Ziel,
+  ohne Zwischensprung.
 
-Der teure Teil ist nicht die Umbenennung, sondern der Inhalt. **Empfehlung:** pro
-Stadt 150–250 Wörter Ortsbezug schreiben und die Seite dann wieder sichtbar
-schalten — statt eines zweiten URL-Wechsels innerhalb weniger Tage.
+**Was es NICHT bringt, und das bleibt wahr:** Ein Schlüsselwort in der URL ist
+ein sehr schwaches Signal. Was diese Seiten ausbremst, ist der fehlende eigene
+Text — gemessen: `/dortmund/` und `/giessen/` waren 1493 von 1494 Wörtern
+gleich. Der teure Teil ist der Inhalt, nicht die Adresse. **Weiterhin offen:**
+pro Stadt 150–250 Wörter Ortsbezug schreiben und die Seiten dann wieder sichtbar
+schalten. Erst das lässt sie ranken.
+
+⚠️ **Die Falle, die diese Umstellung fast gestellt hätte:**
+`page-visibility.json` blendet per **Präfix** aus — `/aquarelle/` versteckt auch
+`/aquarelle/berlin/`. Bei `/berlin-aquarelle/` greift das **nicht mehr**. Ohne
+das Umschreiben der 102 Einträge wären genau die Seiten wieder indexierbar
+geworden, die man wegen Duplicate Content versteckt hatte — und wären in der
+Sitemap gelandet. Abgesichert in `tests/combo-urls.test.ts` (gegen den alten
+Stand gegengeprüft: 2 von 10 Tests werden rot).
+
+Adressen liegen an einer Stelle: `src/utils/comboUrls.ts`. Weiterleitungen
+(136 Stück, ohne Ketten) in `vercel.json`, erzeugt von
+`scripts/flache-kombi-urls.mjs`.

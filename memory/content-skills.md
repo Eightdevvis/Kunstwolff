@@ -35,12 +35,19 @@
   `"Schnellzeichner"` → `/schnellzeichner/`
 - **Seiten** werden automatisch generiert:
   - `/<skill>/` – Skill-Hauptseite
-  - `/<skill>/<stadt>/` – Skill+Stadt-Kombi (für jede Stadt aus `landings.md`)
-  - `/<skill>/<event>/` – Skill+Event-Kombi (für jeden Event aus `events.json`)
+  - `/<stadt>-<skill>/` – Skill+Ort-Kombi, **flache** Adresse seit 2026-08-01
+    (`cityComboSlug`/`cityComboPath` in `src/utils/comboUrls.ts`), z.B.
+    `/berlin-schnellzeichner-karikaturist/`. Die alte hierarchische Form lebt nur noch
+    als 301 in `vercel.json` (`legacyCityComboPath`).
+  - `/<skill>/<event>/` – Skill+Anlass-Kombi, **weiterhin hierarchisch** (aus `events.json`)
 - **Skill-Bilder** kommen aus `public/img/UnsereFähigkeitenBilder/<Skill-Titel>/`. Erstes Bild alphabetisch wird verwendet.
-- **Slides** werden automatisch nach Skill-Kategorie gefiltert (via `categories` in `slides.meta.json`)
-- **Reviews** werden automatisch nach Skill-Kategorie gefiltert (via `categories` im Review-Frontmatter)
-- **FAQs** werden automatisch nach Skill-Kategorie gefiltert (via `categories` im FAQ-Frontmatter)
+- **Slides** auf der Skill-Seite kommen über den **Tag** `tags.skills`
+  (`getSkillSlides()` → `getSlidesByTag('skills', skillContentKey(titel))`, gedeckelt
+  auf 24). Nur auf den Kombiseiten läuft die Auswahl noch über das Label-Feld
+  `categories` (`matchesSkill`)
+- **Reviews** werden nach `categories` **oder** `tags.skills` gefiltert – aber nur auf
+  den Kombiseiten; die MiniReviews im Skill-Hero prüfen ausschließlich `categories`
+- **FAQs** über `tags.skills`, Alt-Feld `categories` zählt mit
 
 ## Sync-Script
 
@@ -62,10 +69,13 @@ Sortieren – dafür bleibt manuelle Git-Pflege.
 
 Genau das ist am 2026-07-30 mit „Aquarelle" passiert. Der Grund ist eine Falle,
 die für **jede** Seed-Quelle gilt (`skills.json`, `events.json`, `landings.md`):
-`sync-tags.mjs` läuft als `prebuild` und schreibt `tags.json` nur in den
-**Build-Output**, nie zurück ins Repo – **und das Admin-Tool liest das Repo.**
-Wer eine Seed-Quelle per Hand ändert, muss `npm run sync:tags` laufen lassen und
-das Ergebnis **committen**. Der Admin schreibt den Tag seit 2026-07-30 selbst mit
+`sync-tags.mjs` schreibt in die **Quelldatei** `public/config/tags.json` (kein
+dist-Pfad) – auf Vercel landet das aber nur im wegwerfbaren Checkout, nicht im
+Git-Stand, **und das Admin-Tool liest das Repo.** Zurück ins Repo kommt es seit
+2026-07-31 über die Action `sync-landings.yml` (Push auf `main` mit geänderter
+`landings.md`/`skills.json`/`events.json` – sie committet `public/config` mit) oder
+wenn man `npm run sync:tags` lokal laufen lässt und das Ergebnis **committet**.
+Die Aquarelle-Panne lag vor dieser Änderung. Der Admin schreibt den Tag seit 2026-07-30 selbst mit
 (`createTag`) und mischt fehlende Seeds beim Lesen dazu; Details in
 Admin-Memory `mediathek-tags.md`.
 
@@ -82,7 +92,7 @@ verschiedene Zeichenketten:
 
 | Rolle | Woher | Beispiel | Wofür |
 | :-- | :-- | :-- | :-- |
-| **URL** | `skills.json.link` | `schnellzeichner-karikaturist` | Adresse, Breadcrumb, Schema, interne Links, `Landingsection.site` |
+| **URL** | `skills.json.link` | `schnellzeichner-karikaturist` | Adresse, Breadcrumb, Schema, interne Links, `Landingsection.skillSlug` |
 | **Inhalt** | `skillContentKey(title)` | `schnellzeichner` | Ordner und Dateien, Tags |
 
 **Alles Inhaltliche hängt am TITEL** – nicht aus Gewohnheit, sondern weil die

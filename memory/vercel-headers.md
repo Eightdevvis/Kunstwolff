@@ -37,11 +37,16 @@ Austausch ebenso wenig. Siehe `responsive-images.md`.
 
 ## Redirects (seit 2026-07-30)
 
-`vercel.json` hat jetzt neben `headers` einen `redirects`-Block: die Weiterleitungskarte
-der alten Wix-URLs auf die neuen Astro-Pfade. Inventar aus den fünf Wix-Sitemaps
-(34 URLs), 30 davon liefen ohne Karte ins 404 – darunter `/kontakt`, die Anfrage-Seite
-der alten Seite. Vollständige Tabelle mit Begründung je Zeile:
-`reports/cutover-audit-2026-07-30.md`, Anhang A.
+`vercel.json` hat jetzt neben `headers` einen `redirects`-Block – aktuell **166 Einträge**
+aus **zwei** Herkünften:
+
+1. **Die Wix-Karte (2026-07-30):** alte Wix-URLs auf die neuen Astro-Pfade. Inventar aus
+   den fünf Wix-Sitemaps (34 URLs), 30 davon liefen ohne Karte ins 404 – darunter
+   `/kontakt`, die Anfrage-Seite der alten Seite. Vollständige Tabelle mit Begründung je
+   Zeile: `reports/cutover-audit-2026-07-30.md`, Anhang A.
+2. **Die Flach-Umstellung (2026-08-01):** 136 Weiterleitungen von der hierarchischen
+   Ort-Kombi-Adresse auf die flache (`/szenenmaler/berlin` → `/berlin-szenenmaler/`),
+   erzeugt vom Einmal-Werkzeug `scripts/flache-kombi-urls.mjs`. Details in `seo.md`.
 
 Drei Regeln dazu:
 
@@ -53,5 +58,7 @@ Drei Regeln dazu:
   auf Vercel der 301 aus `vercel.json` (Redirects greifen vor dem Dateisystem).
 - **Apex → www gehört NICHT hierher**, sondern in die Vercel-Domain-Settings.
 
-Sammelregeln (`/template/:rest*`, `/portfolio-collections/:rest*`) stehen am Ende ihrer
-Gruppe – Vercel nimmt die erste passende Regel, spezifische also zuerst.
+**Drei** Sammelregeln (`/portfolio-collections/:rest*`, `/template/:rest*` und – als
+letzter Eintrag der Datei – `/schnellzeichner/:rest*`) stehen am Ende ihrer Gruppe:
+Vercel nimmt die erste passende Regel, spezifische also zuerst. `tests/combo-urls.test.ts`
+hält diese Reihenfolge fest.

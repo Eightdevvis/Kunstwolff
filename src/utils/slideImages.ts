@@ -60,7 +60,12 @@ const slidesRoot = path.resolve('./public/img/slides');
 const slidesMetadataPath = path.join(slidesRoot, 'slides.meta.json');
 const defaultSelectionPath = path.join(slidesRoot, 'default-selection.json');
 
-const encodePathSegment = (segment: string): string => encodeURIComponent(segment);
+// Ordnerschlüssel können verschachtelt sein ("events/hochzeit", "mediathek/somfot").
+// encodeURIComponent über den ganzen Schlüssel macht aus dem Trenn-Schrägstrich %2F –
+// und %2F ist laut Spec KEIN Pfadtrenner. Der statische Server antwortet dann mit 500,
+// obwohl die Datei da ist. Darum jeden Teil einzeln kodieren und mit / zusammensetzen.
+const encodePathSegment = (segment: string): string =>
+  segment.split('/').map((part) => encodeURIComponent(part)).join('/');
 
 const normalizeAlt = (fileName: string): string =>
   decodeURIComponent(fileName)

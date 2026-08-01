@@ -1,4 +1,6 @@
 ---
+import { cityComboPath, skillSlugFromLink } from "../utils/comboUrls";
+
 type Skill = {
   title?: string;
   image?: string;
@@ -24,12 +26,16 @@ const {
 };
 const rawItems: Skill[] = skills && skills.length ? skills : items;
 
-// Funktion zum Anpassen der Links basierend auf currentLanding
+/**
+ * Steht der Banner auf einer Stadtseite, zeigen die Skill-Kacheln auf die
+ * Kombi-Seite dieser Stadt statt auf die allgemeine Skill-Seite.
+ *
+ * Die Adresse baut `cityComboPath` – früher wurde hier `link + '/' + stadt`
+ * zusammengeklebt, was seit der flachen Ort-Kombi falsch wäre.
+ */
 const adjustSkillLink = (originalLink: string): string => {
   if (!currentLanding) return originalLink;
-  // Entferne trailing slashes und füge landing hinzu
-  const cleanLink = originalLink.replace(/\/+$/, '');
-  return `${cleanLink}/${currentLanding}`;
+  return cityComboPath(skillSlugFromLink(originalLink), currentLanding);
 };
 
 const FALLBACK_SKILLS: Required<Skill>[] = [

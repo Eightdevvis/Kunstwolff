@@ -21,6 +21,107 @@
     },
     "priority": 2
   },
+  "bw/1_schnellzeichner_hq.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "geburtstag",
+        "weihnachtsfeier",
+        "stadtfest",
+        "sommerfest",
+        "silvester"
+      ],
+      "landings": [
+        "bw",
+        "stuttgart"
+      ]
+    },
+    "priority": 4
+  },
+  "bw/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
+    "categories": [
+      "Szenenmaler",
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler",
+        "schnellzeichner"
+      ],
+      "events": [
+        "hochzeit",
+        "private-feier",
+        "gala",
+        "sommerfest",
+        "silvester"
+      ],
+      "landings": [
+        "bw"
+      ]
+    },
+    "priority": 5
+  },
+  "bw/hochzeitsmalerin-praesentiert-hochtzeitsgemaelde-mit-tanzendem-brautpaar-heitlinger-genusswelten-landkreis-karlsruhe.webp": {
+    "categories": [
+      "Szenenmaler",
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler",
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "gala",
+        "sommerfest",
+        "silvester"
+      ],
+      "landings": [
+        "bw",
+        "stuttgart"
+      ]
+    },
+    "priority": 6
+  },
+  "bw/karikatur-gabelstabler-messe-event-stuttgart---kopie.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "gala",
+        "sommerfest",
+        "silvester"
+      ],
+      "landings": [
+        "bw",
+        "stuttgart"
+      ]
+    },
+    "priority": 8
+  },
   "bw/karikaturistin-messe-event-stuttgart.webp": {
     "categories": [
       "Schnellzeichner",
@@ -40,6 +141,49 @@
       ]
     },
     "priority": 1
+  },
+  "bw/live-event-kuenstlerin-malt-szenen-hochzeit-heitlinger-genusswelten-baden-wuertemberg.webp": {
+    "categories": [
+      "Szenenmaler",
+      "Schnellzeichner",
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler",
+        "schnellzeichner",
+        "aquarelle"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "silvester",
+        "gartenparty",
+        "stadtfest",
+        "gala",
+        "sommerfest"
+      ],
+      "landings": [
+        "bw"
+      ]
+    },
+    "priority": 7
+  },
+  "bw/live-painting-party-event-stuttgart.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "bw"
+      ]
+    },
+    "priority": 9
   },
   "bw/mitarbeiter-event-karikaturisten-bw.webp": {
     "categories": [
@@ -79,6 +223,24 @@
       ]
     },
     "priority": 3
+  },
+  "bw/schnellzeichnung-messe-stuttgart.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "bw",
+        "stuttgart"
+      ]
+    },
+    "priority": 10
   },
   "default/1_schnellzeichner_hq.webp": {
     "categories": [
@@ -234,23 +396,6 @@
       ]
     },
     "priority": 146
-  },
-  "duesseldorf/karikaturist-rheinkirmes-duesseldorf.webp": {
-    "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
-    ],
-    "tags": {
-      "skills": [
-        "schnellzeichner",
-        "szenenmaler"
-      ],
-      "events": [],
-      "landings": [
-        "duesseldorf"
-      ]
-    },
-    "priority": 1
   },
   "events/firmenfeier/walking-act-company-party-mainz.webp": {
     "categories": [],
@@ -1397,19 +1542,18 @@
       "landings": [
         "koeln",
         "berlin",
-        "frankfurt",
         "hamburg",
         "schweiz",
         "wiesbaden",
         "mainz",
-        "hessen",
-        "rhein-main-gebiet",
         "rheinland-pfalz",
         "nord-rhein-westfalen",
         "main-taunus-kreis",
-        "bw",
-        "stuttgart",
-        "duesseldorf"
+        "duesseldorf",
+        "ludwigshafen",
+        "saarbruecken",
+        "koblenz",
+        "giessen"
       ]
     },
     "priority": 1
@@ -1430,18 +1574,18 @@
       "landings": [
         "koeln",
         "berlin",
-        "frankfurt",
         "hamburg",
         "schweiz",
         "mainz",
-        "hessen",
-        "rhein-main-gebiet",
-        "rheinland-pfalz",
         "nord-rhein-westfalen",
         "main-taunus-kreis",
-        "bw",
         "stuttgart",
-        "duesseldorf"
+        "duesseldorf",
+        "mannheim",
+        "neuwied",
+        "karlsruhe",
+        "neunkirchen",
+        "fulda"
       ]
     },
     "priority": 10
@@ -1463,12 +1607,13 @@
         "luxembourg",
         "hessen",
         "rhein-main-gebiet",
-        "rheinland-pfalz",
         "nord-rhein-westfalen",
-        "main-taunus-kreis",
-        "bw",
-        "stuttgart",
-        "duesseldorf"
+        "duesseldorf",
+        "belgique",
+        "neuwied",
+        "heidelberg",
+        "dortmund",
+        "bw"
       ]
     },
     "priority": 11
@@ -1499,10 +1644,12 @@
         "rhein-main-gebiet",
         "rheinland-pfalz",
         "nord-rhein-westfalen",
-        "main-taunus-kreis",
-        "bw",
         "stuttgart",
-        "duesseldorf"
+        "duesseldorf",
+        "saarland",
+        "koblenz",
+        "tuebingen",
+        "bw"
       ]
     },
     "priority": 12
@@ -1895,9 +2042,7 @@
         "sommerfest"
       ],
       "landings": [
-        "main-taunus-kreis",
-        "rhein-main-gebiet",
-        "hessen"
+        "main-taunus-kreis"
       ]
     },
     "priority": 3
@@ -1914,9 +2059,7 @@
         "firmenfeier"
       ],
       "landings": [
-        "main-taunus-kreis",
-        "rhein-main-gebiet",
-        "hessen"
+        "main-taunus-kreis"
       ]
     },
     "priority": 4
@@ -2100,6 +2243,24 @@
       ],
       "landings": [
         "karlsruhe"
+      ]
+    }
+  },
+  "mediathek/karikaturisten-hochzeitsfeier-heidelberg.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "heidelberg"
       ]
     }
   },
@@ -2882,6 +3043,23 @@
     "altOverride": "Zeichnung als harry potter von illustratorin saarland",
     "title": "Live-Kunst Saarland"
   },
+  "duesseldorf/karikaturist-rheinkirmes-duesseldorf.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "duesseldorf"
+      ]
+    },
+    "priority": 1
+  },
   "schweiz/elektriker-zeigt-seine-karikatur-von-portrait-kuenstler--betriebsfeier--schweiz.webp": {
     "categories": [
       "Schnellzeichner"
@@ -3133,7 +3311,245 @@
     },
     "priority": 3
   },
-  "szenenmaler/szenenmalerei-schloss-kronberg.webp": {
+  "szenenmaler/aquarell-portrait-event-illustration.webp": {
+    "categories": [
+      "Aquarelle",
+      "Szenenmaler",
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle",
+        "szenenmaler",
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 8
+  },
+  "szenenmaler/aquarell-portraits-frankfurt.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    },
+    "priority": 20
+  },
+  "szenenmaler/brautpaar-hochzeitsmaler-bw.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": [
+        "bw"
+      ]
+    },
+    "priority": 16
+  },
+  "szenenmaler/brautpaar-hochzeitszeichnung-kuenstlerin-rhein-main.webp": {
+    "categories": [
+      "Aquarelle",
+      "Szenenmaler",
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle",
+        "szenenmaler",
+        "schnellzeichner"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    },
+    "priority": 7
+  },
+  "szenenmaler/digital-artist-business-event-allianz-frankfurt.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
+    "priority": 19
+  },
+  "szenenmaler/event-illustratoren-rheinland-pfalz.webp": {
+    "categories": [
+      "Aquarelle",
+      "Szenenmaler",
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle",
+        "szenenmaler",
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": [
+        "rheinland-pfalz"
+      ]
+    },
+    "priority": 4
+  },
+  "szenenmaler/event-illustratorin-malt-feier-in-schloss-kronberg.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "silvester",
+        "gartenparty",
+        "stadtfest",
+        "gala",
+        "sommerfest"
+      ],
+      "landings": []
+    },
+    "priority": 3
+  },
+  "szenenmaler/event-illustratorin-tusche-portraits-hessen.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "hessen"
+      ]
+    },
+    "priority": 6
+  },
+  "szenenmaler/event-zeichner-zeichnet-an-staffelei-shop-eroeffnung-frankfurt.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    },
+    "priority": 21
+  },
+  "szenenmaler/familienfeier-tusche-portrait-zeichner-pfalz.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    },
+    "priority": 12
+  },
+  "szenenmaler/familienportrait-modezeichnung-event-offenbach.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    },
+    "priority": 11
+  },
+  "szenenmaler/hochzeitsfeier-mit-event-illustratorin-rpf.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    },
+    "priority": 9
+  },
+  "szenenmaler/img_20240316_183457.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    },
+    "priority": 10
+  },
+  "szenenmaler/kuenstlerin-zeichnet-an-staffelei-bei-hochzeitsmesse-im-hilton-frankfurt-gravenbruch.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "messe",
+        "hochzeit"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
+    "priority": 24
+  },
+  "szenenmaler/live-artist-watercolor-portrait-party-pfalz.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    },
+    "priority": 5
+  },
+  "szenenmaler/live-eventzeichner-frankfurt.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "frankfurt"
+      ]
+    },
+    "priority": 22
+  },
+  "szenenmaler/live-portraetzeichnen-im-forsthaus-neuhaus-kuenstlerin-zeichnet-gaeste.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    },
+    "priority": 18
+  },
+  "szenenmaler/schnellzeichner-dinner-event-schloss-v-eltville.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 13
+  },
+  "szenenmaler/szenenmalerei-hotel-leidinger-saarbruecken.webp": {
     "categories": [
       "Szenenmaler"
     ],
@@ -3142,16 +3558,34 @@
         "szenenmaler"
       ],
       "events": [],
+      "landings": [
+        "saarbruecken"
+      ]
+    },
+    "priority": 17
+  },
+  "szenenmaler/verabschiedung-chef-teambild-karikaturistin-schloss-v-eltville-rhein-main.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
       "landings": []
     },
-    "priority": 8
+    "priority": 14
   },
   "szenenmaler/wedding-live-painter.webp": {
     "categories": [],
     "tags": {
       "skills": [],
       "events": [
-        "hochzeit"
+        "hochzeit",
+        "private-feier"
       ],
       "landings": []
     },
@@ -3162,11 +3596,36 @@
     "tags": {
       "skills": [],
       "events": [
-        "hochzeit"
+        "hochzeit",
+        "private-feier"
       ],
       "landings": []
     },
     "priority": 2
+  },
+  "szenenmaler/zeichner-fertigt-hunde-zeichnung-bei-shop-event-bulgarifrankfurt.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    },
+    "priority": 23
+  },
+  "szenenmaler/zeichnun-stammbaum-familie-portrait-als-weinrebe--von-karikaturist-aschaffenburg.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 15
   },
   "trier/1_2-kollegen-zeigen-froehlich-ihre-karikaturzeichnung-mit-bierglas-auf-der-weihnachtsfeier-in-tommys-teufelskueche-trier.webp": {
     "categories": [

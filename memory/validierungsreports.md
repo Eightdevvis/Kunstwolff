@@ -8,8 +8,13 @@ reports/validation/landings/<timestamp>.json
 
 ## Inhalt
 
-- Welche Städte hinzugekommen oder entfernt wurden
-- Zusammengeführte Slug-Kollisionen (z.B. "Berlin" + "berlin" → "berlin")
+- `createdAt` – Zeitstempel des Laufs
+- `selectedCities` + `inputCount` – die übernommene Städteliste und wie viele Rohzeilen
+  sie gespeist haben
+- `normalizedSummary` / `dropped` – jede Rohzeile mit ihrem normalisierten Slug und ob
+  sie übernommen wurde. ⚠️ **Kein Vorher-Nachher-Vergleich:** der Report kennt den
+  letzten Lauf nicht, „hinzugekommen/entfernt" steht nirgends drin
+- `duplicateMerges` – zusammengeführte Slug-Kollisionen (z.B. "Berlin" + "berlin" → "berlin")
 - `slideVisibility` – welche Slides auf welchen Seiten sichtbar sind
 - `allImageVisibility` – alle Bilder aus `public/img/` mit Seitenzuordnung
 - `unreferencedImages` – Bilder die auf keiner Seite genutzt werden (Aufräum-Hilfe)

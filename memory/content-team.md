@@ -84,6 +84,8 @@ gepflegt – das Admin-Tool hat dafür keinen Manager (siehe
 ## Admin-Tool
 
 **Kein Cross-Repo-Bedarf.** Neuer Ordner `public/img/team/`, aber kein neues
-Format und kein Pfad, den der Admin liest oder schreibt. Der Bilder-Manager
-arbeitet auf `img/slides`; `img/team` liegt außerhalb und soll dort auch nicht
-auftauchen (sonst stünden die Portraits als Slides zur Auswahl).
+Format und kein Pfad, den der Admin liest oder schreibt. Der Bilder-Manager arbeitet
+ausschließlich auf den vier in `IMAGE_TYPE_CONFIG` hinterlegten Wurzeln
+(`img/slides`, `img/Titelbild`, `img/why/<key>/benefit-N`, `img/hero-bg`); `img/team`
+liegt außerhalb und soll dort auch nicht auftauchen (sonst stünden die Portraits als
+Slides zur Auswahl).

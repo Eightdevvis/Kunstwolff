@@ -11,6 +11,15 @@ Einführungstext-Feature – vom **Interface-Editor** (`IntroManager`, Komponent
 Beide schreiben in **dieselbe** Datei → beim Schreiben müssen die anderen Top-Level-Keys
 erhalten bleiben.
 
+⚠️ **Nur der IntroManager hält sich daran** (`const updated = { ...raw, landingIntros }`).
+Der `SiteTextsManager` lädt die Datei durch `withDefaults()`, das ausschließlich
+`{contact, eventtypes, why}` zurückgibt, und schreibt genau dieses Objekt zurück – ein
+Speichern im Tab „Startseiten-Texte" löscht damit `landingIntros` **und** alle
+`landingHeadings`. Das wiegt schwer, weil die deutsche `content.json` derzeit aus nichts
+anderem besteht: 2 Intros (berlin, main-taunus-kreis) und 35 Stadt-H1, kein einziges
+`contact`/`eventtypes`/`why`-Feld. Offener Bug in
+`kunstwolff-admin/src/components/SiteTextsManager.tsx` (`withDefaults` + `save`).
+
 Util: `src/utils/siteTexts.ts`. Defaults sind im Code hartcodiert und werden mit der JSON
 gemerged – fehlt die Datei oder ein Feld, rendert die Seite unverändert weiter (kein Bruch).
 

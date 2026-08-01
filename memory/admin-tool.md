@@ -13,7 +13,7 @@ Browser → Server-Backend (GITHUB_PAT server-seitig) → GitHub REST API → Ku
 ```
 
 Auth: **zwei Modi.**
-- **Server-Auth (Standard):** Frontend loggt sich per Login gegen ein Backend ein und bekommt ein **JWT-Session-Token** (`src/services/auth.ts`, `isServerAuthEnabled()`). Der eigentliche **GitHub-PAT liegt server-seitig** im Backend (`worker/src/index.ts:12` `GITHUB_PAT`, Auth über `Bearer ${GITHUB_PAT}`). `github.ts:10` routet dann über `${apiBaseUrl()}/api/github` statt direkt auf `api.github.com`.
+- **Server-Auth (Standard):** Frontend loggt sich per Login gegen ein Backend ein und bekommt ein **JWT-Session-Token** (`src/services/auth.ts`, `isServerAuthEnabled()`). Der eigentliche **GitHub-PAT liegt server-seitig** im Backend (`worker/src/index.ts:25` `GITHUB_PAT` im `Env`-Typ, Auth über `Bearer ${c.env.GITHUB_PAT}`, z.B. Z. 440). `github.ts:20` routet dann über `${apiBaseUrl()}/api/github` statt direkt auf `api.github.com`.
 - **Legacy-Fallback:** Ohne Server-Auth kann ein PAT im Browser gehalten werden – dann verschlüsselt in einem Vault (`src/utils/authVault.ts` `storeTokenVault`), **nicht** im Klartext-`localStorage` – und die App ruft `api.github.com` direkt.
 
 **Backend:** Cloudflare-Worker (**hono**, `worker/wrangler.toml` name `kunstwolff-admin-api`, deploy via `wrangler`) plus Express-Backend (`server/index.mjs`: express + `jsonwebtoken` + `bcryptjs` + `@libsql/client`).
@@ -37,24 +37,37 @@ Bei jeder Cross-Repo-Arbeit beide lesen (liegen flach im Admin-Repo-Root):
 
 | Pfad im Website-Repo | Admin-Komponente |
 | :-- | :-- |
-| `public/img/slides/{city}/` + `slides.meta.json` | `ImageManager.tsx` (slides-Modus) |
+| `public/img/slides/{city}/` + `slides.meta.json` + `default-selection.json` | `ImageManager.tsx` (slides-Modus) |
 | `public/img/Titelbild/{city}/` | `ImageManager.tsx` (titelbild-Modus) |
+| `public/img/hero-bg/{city}/` | `ImageManager.tsx` (**herobg-Modus**, vierter Modus – bei Skill-Seiten Teil des Hero-Editors) |
 | `public/img/why/{city}/benefit-{1-4}/` (Bilder) | `ImageManager.tsx` (why-Modus) |
 | `public/why/{city}.json` (Why-Texte: Titel/Text/Alt) | `ImageManager.tsx` (why-Modus, `saveWhyBenefits`) |
-| `public/img/Titelbild/title.meta.json` (Categories/Priority) | `ImageManager.tsx` (titelbild-Modus) |
+| `public/img/Titelbild/title.meta.json` (nur `focus`/`frame`) | `ImageManager.tsx` (titelbild-Modus) |
 | `public/reviews/{city}/review*.md` | `ReviewManager.tsx` |
 | `public/faq/default/*.md` + `public/faq/{city}/*.md` | `FaqManager.tsx` |
-| `public/landings/landings.md` | `CityManager.tsx` |
+| `public/landings/landings.md` | `Dashboard.tsx` (Quick-Add). ⚠️ **Nicht mehr `CityManager.tsx`** – die Komponente existiert, wird aber von nichts mehr importiert. |
+| `public/site-texts/content.json` | `SiteTextsManager.tsx` **und** `IntroManager.tsx` (beide schreiben dieselbe Datei) |
+| `public/config/components.json` (Sektions-Stack `_order`) | `InterfaceView.tsx` – siehe `komponenten-stack.md` |
+| `public/img/referenzenLogos/` | `BrandStripeManager.tsx` |
+| `public/branding/`, `public/canvas/`, `public/du-bist-kunst/`, `public/stimmung-durch-kunst/` je `content.json` | Why-Detailseiten-Manager – siehe `content-why.md` |
 | `public/events/events.json` + `public/events/{slug}/content.json` | `EventManager.tsx` (Dashboard-Quick-Add schreibt `events.json` mit) |
 | `public/cinema/cinema.json` | `CinemaManager.tsx` |
 | `public/skills/skills.json` | `Dashboard.tsx` |
 | `public/config/tags.json` (Tag-Vokabular) | `services/tagVocabulary.ts` – aus Quick-Add (Skill/Event/Landing), `CityManager`, Tag-Chips und Mediathek. **Seit 2026-07-30**, vorher schrieb es niemand fort und ein neuer Skill war im Admin nicht auswählbar; siehe `tag-system.md` „⚠️ `tags.json` muss COMMITTED werden" |
 | `slides.meta.json` (`tags` mengenweise setzen) | `MediaLibrary.tsx` – Umsortieren-Modus; Uploads landen in `public/img/slides/mediathek/…`. Seit 2026-07-30 auch aus **KI-Tagvorschlägen** (die KI sieht die Fotos an, schreibt aber nie selbst – siehe Admin-Memory `ki-faehigkeiten-und-vision.md`) |
-| `public/partners/partners.json` | `PartnerManager.tsx` |
-| `public/calendar/{jahr}/{monat}.json` | `CalendarView.tsx` (+ `EventModal.tsx` als Editor) |
+| `public/partners/partners.json` + `public/img/partners/{id}.{ext}` (Logos, webp) | `PartnerManager.tsx` |
+| `public/calendar/{jahr}/{monat}.json` + `public/calendar/categories.json` | `CalendarView.tsx`/`EventModal.tsx` als Oberfläche; die Schreibpfade selbst liegen in `services/calendar.ts` (`saveEvents`, `saveCategories`) |
+| `public/config/page-visibility.json` (ausgeblendete Seitenpfade, Präfix-Match) | `SiteGraphView.tsx` – Sichtbarkeits-Schalter im Seiten-Graph; Website liest über `src/utils/pageVisibility.ts` |
 | Bereinigung: löscht doppelte/kaputte Bilder, putzt zugehörige `slides.meta.json`-Einträge mit | `CleanupManager.tsx` |
 
-Alle Änderungen sammeln sich als **Draft-State** (`pendingFiles`-Signal, `@preact/signals` in `src/services/state.ts`) und gehen erst beim Klick auf "Veröffentlichen" ans Repo. Der Publish ist **EIN atomarer Commit** über die Git-Data-API (`src/services/github.ts:230` `commitFilesBatch`, aufgerufen aus `src/services/publish.ts` `publishPending`): base_tree → `git/trees` (Text inline, Binär als Blob, Löschung via `sha:null`) → Commit → Branch-Ref bewegen, mit Retry bei Fremd-Commit dazwischen. Löst das frühere „ein Commit / eine PUT-DELETE pro Datei" ab – kein sekundäres Rate-Limit bei vielen Dateien, keine per-Datei-SHA-Konflikte, alles-oder-nichts. Der Vercel-Build läuft so pro Klick genau einmal.
+Alle Änderungen sammeln sich als **Draft-State** (`pendingFiles`-Signal, `@preact/signals` in `src/services/state.ts`) und gehen erst beim Klick auf "Veröffentlichen" ans Repo. Der Publish ist **EIN atomarer Commit** über die **GraphQL-Mutation `createCommitOnBranch`** (`src/services/github.ts` `commitFilesBatch`, aufgerufen aus `src/services/publish.ts` `publishPending`): alle Dateien gehen als `fileChanges.additions/deletions` (`contents` immer base64, Löschung via `{path, delete:true}`), abgesichert über `expectedHeadOid` gegen den frisch gelesenen Head, mit Neuaufsetzen bei einem Fremd-Commit dazwischen. **Kein Tree, kein `base_tree`, keine Blobs** – das war der Vorgänger. Sprengt ein Entwurf 40 MB, wird portioniert. Löst das frühere „ein Commit / eine PUT-DELETE pro Datei" ab – kein sekundäres Rate-Limit bei vielen Dateien, keine per-Datei-SHA-Konflikte, alles-oder-nichts. Der Vercel-Build läuft so pro Klick genau einmal.
+
+**Zweiter Schreibweg: die Entwurfs-Vorschau.** `services/publish.ts` → `previewPending()`
+setzt den Wegwerf-Branch **`vorschau`** auf `main` zurück und commitet den kompletten
+Draft dorthin – nichts davon ist veröffentlicht, der Draft bleibt offen. Gebaut wird das
+von einem zweiten Vercel-Projekt (`VITE_VORSCHAU_BASE`); ohne diese Variable bleibt der
+Modus aus. Wer „was geht ins Repo?" beantwortet, muss diesen Weg mitdenken: nach `main`
+geht nur `publishPending`, ins **Repo** geht auch `previewPending`.
 
 ## Was das Admin-Tool NICHT kann (manuell per Git pflegen)
 
@@ -69,7 +82,11 @@ WebP-Konvertierung ist **keine Lücke mehr**: das Admin-Tool konvertiert Uploads
 
 ## Vor Änderungen an `public/`-Strukturen ZWINGEND prüfen
 
-1. **Schreibt das Admin-Tool in diese Pfade?** → Check `src/components/` im Admin-Repo: `ImageManager.tsx`, `ReviewManager.tsx`, `CityManager.tsx`, `FaqManager.tsx`, `EventManager.tsx`, `CinemaManager.tsx`, `PartnerManager.tsx`, `Dashboard.tsx` (Skills/Quick-Add), `CalendarView.tsx`, `EventModal.tsx`, `CleanupManager.tsx`. Die Schreib-Logik sammelt Drafts in `src/services/state.ts` (`pendingFiles`) und committet über `src/services/publish.ts`/`github.ts` (`commitFilesBatch`, `putFile`, `deleteFile`).
+1. **Schreibt das Admin-Tool in diese Pfade?** → im Admin-Repo
+   **`grep -rn "addPendingFile(" src/components/ src/services/`**. Die meisten Zielpfade
+   entstehen in den Komponenten – aber drei **nur** in `src/services/`: der Kalender
+   (`calendar.ts`), die Mediathek-Meta (`mediaLibrary.ts`) und das Tag-Vokabular
+   (`tagVocabulary.ts`). Wer nur `src/components/` durchsucht, übersieht sie. `putFile`/`putBinaryFile`/`deleteFile` in `github.ts` haben **keinen Aufrufer mehr** – ein Grep danach findet nichts. Veröffentlicht wird gebündelt über `src/services/publish.ts` → `github.ts` `commitFilesBatch`.
 2. **Liest die Website diese Pfade?** → Check `src/utils/*.ts` im Website-Repo.
 3. **Beide Repos aktualisieren** – Admin-README/CLAUDE.md + Website-Memory (`pfadstruktur.md`, betroffene `content-*.md`, ggf. `admin-tool.md` hier).
 
@@ -92,11 +109,19 @@ nichts zu ändern**, und zwar aus zwei Gründen:
 
 - Der Admin baut seine Pfade aus `slugify(title)` — also aus dem
   Inhalts-Schlüssel. Das war schon immer die richtige Seite der Trennung.
-- Die Live-Vorschau öffnet denselben Slug als URL. Das funktioniert über die
-  301er in `vercel.json`; `/api/preview/status` folgt ihnen (`redirect: 'follow'`).
+- Die Live-Vorschau öffnet den Inhalts-Schlüssel als URL – für
+  `homepage`/`landing`/`event`/`skill` unverändert. Das funktioniert über die 301er in
+  `vercel.json`; `/api/preview/status` folgt ihnen (`redirect: 'follow'`).
 
-⚠️ Fällt der 301 irgendwann weg, muss `livePreviewPath()` im Admin die URL aus
-`skills.json.link` nehmen. Notiert auch in `memory/cross-repo.md` des Admin-Repos.
+⚠️ **Für Skill×Ort gilt das seit 2026-08-01 nicht mehr.** `livePreviewPath()` rechnet den
+Slug dort selbst in die flache Adresse um und dreht dabei die Reihenfolge (`szenenmaler/berlin`
+→ `/berlin-szenenmaler/`, zeichengleich zu `cityComboPath` in `utils/comboUrls.ts`) – ohne
+301. Für `other-why` nimmt sie nur das letzte Pfadsegment. Der Satz „am Admin war nichts
+zu ändern" gilt also für die **Skill-Umbenennung**, nicht für `livePreviewPath` insgesamt.
+
+Fällt der 301 irgendwann weg, betrifft das nur noch die reine Skill-Seite; dann muss
+`livePreviewPath()` die URL aus `skills.json.link` nehmen. Notiert auch in
+`memory/cross-repo.md` des Admin-Repos.
 
 ## Der Admin wählt nach Tag aus (2026-07-31)
 

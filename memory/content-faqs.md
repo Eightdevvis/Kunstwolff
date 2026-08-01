@@ -12,7 +12,7 @@ Start-Tag (`scripts/sync-faq-tags.mjs`), danach ist er reine Ablage – die Ausw
 über die Tags (siehe unten). `getFAQsByCity` / `getFAQsByCategories` / `getFAQsByCategory`
 wurden dabei **entfernt**; wer sie sucht, will `getFAQsForContext`.
 
-Vorhandene Stadt-Ordner: `belgique`, `bw`, `duesseldorf`, `frankfurt`, `heidelberg`, `kaiserslautern`, `karlsruhe`, `koblenz`, `koeln`, `ludwigshafen`, `luxembourg`, `mainz`, `mannheim`, `rheinland-pfalz`, `saarbruecken`, `saarland`, `schweiz`, `trier`, `wiesbaden`, `wuppertal` (20 Städte + `default`). Weitere Stadt-FAQs: einfach den Ordner `public/faq/<stadt>/` anlegen und MD-Files reinschreiben.
+Vorhandene Stadt-Ordner: `belgique`, `bw`, `duesseldorf`, `frankfurt`, `heidelberg`, `kaiserslautern`, `karlsruhe`, `koblenz`, `koeln`, `ludwigshafen`, `luxembourg`, `mainz`, `mannheim`, `rhein-main-gebiet`, `rheinland-pfalz`, `saarbruecken`, `saarland`, `schweiz`, `trier`, `wiesbaden`, `wuppertal` (21 Städte + `default`; Stand 2026-08-01: 86 Dateien, davon 26 in `default/` – die Zahl wächst mit jeder neuen FAQ, nachzählen mit `find public/faq -name '*.md' | wc -l`). Weitere Stadt-FAQs: einfach den Ordner `public/faq/<stadt>/` anlegen und MD-Files reinschreiben – **kein Sync-Skript legt sie an**.
 
 ## Format
 
@@ -81,14 +81,36 @@ still zu einer Anlass-Frage machen. Anlässe vergibt Jenny im Admin über die Ta
 Der Schritt läuft in `sync:content:safe`, also bei jedem `dev`/`build` – **nach**
 `sync:tags`, weil ein Ort ohne Vokabular-Eintrag verworfen wird.
 
-⚠️ **Bekannte Grenze:** `FaqManager.tsx` schreibt den `tags:`-Block nur, wenn mindestens
+⚠️ **Bekannte Grenze 1:** `FaqManager.tsx` schreibt den `tags:`-Block nur, wenn mindestens
 ein Tag gesetzt ist (gleiche Haltung wie `ReviewManager`). Löscht jemand im Admin *alle*
 Tags einer Stadt-FAQ, um sie allgemein zu machen, ergänzt der Sync beim nächsten Build
 den Ordner-Tag wieder. „Bewusst allgemein" ist derzeit nicht ausdrückbar.
 
+⚠️ **Bekannte Grenze 2 – der gefährlichere Fall (aufgefallen 2026-08-01):** Schreibt der
+Admin einen **teilweisen** `tags:`-Block – etwa nur `skills`, ohne `landings` –, dann
+rührt der Sync die Datei **gar nicht** mehr an. Er prüft `/^tags\s*:/m`, also die bloße
+Anwesenheit des Blocks, nicht die einzelnen Dimensionen. Der Ordner-Tag kommt damit nie
+nach, und weil „Dimension fehlt = gilt überall" gilt, wandert eine Stadt-FAQ still auf
+**alle** Seiten.
+
+Genau das ist `public/faq/bw/wie-kann-ich-einen-event-karikaturisten-buchen.md` passiert
+(Commit `d582233`): Block vorhanden, `landings` fehlt, Datei liegt in `bw/`. Der Test
+`tests/content-tags.test.ts` („jede FAQ ausserhalb von `default/` trägt den Ort-Tag ihres
+Ordners") ist deshalb **rot** – der Wächter tut, was er soll. Zwei Wege stehen offen und
+sie führen zu verschiedenen Ergebnissen: `landings: [bw]` ergänzen (bleibt eine
+BW-Frage) **oder** die Datei nach `public/faq/default/` verschieben (gilt bewusst
+überall). Das ist eine Redaktionsentscheidung, keine technische.
+
+Der strukturelle Fix wäre, `sync-faq-tags.mjs` je **Dimension** ergänzen zu lassen statt
+je Block – dann kann ein halber Tag-Block nicht mehr blockieren.
+
 ## Schema.org
 
-FAQs werden automatisch als `FAQPage` JSON-LD ausgegeben (siehe `seo.md`). Kann zu aufklappbaren FAQ-Blöcken direkt in den Google-Suchergebnissen führen.
+FAQs werden als `FAQPage` JSON-LD ausgegeben – aber **nur auf der Archivseite
+`/faq/`**: `FAQ.astro` rendert den Block ausschließlich bei `interactive={true}`,
+und das setzt allein `src/pages/faq.astro`. Die eingebetteten FAQ-Blöcke auf Stadt-,
+Skill- und Anlass-Seiten liefern kein JSON-LD (Hintergrund in `seo.md`). Kann zu
+aufklappbaren FAQ-Blöcken direkt in den Google-Suchergebnissen führen.
 
 ## Admin-Tool
 
@@ -126,7 +148,8 @@ Defaults, jede Anlass-Seite 3 eigene + 1 Default.
 
 ⚠️ **`/faq/` ist das Archiv, kein Kontext.** Ein leerer Kontext fragt keine Dimension ab
 und liefert deshalb nur den Default-Topf. `src/pages/faq.astro` reicht darum ausdrücklich
-`getAllFAQs()` als `faqs`-Prop durch – sonst verliert die Übersichtsseite 65 Fragen.
+`getAllFAQs()` als `faqs`-Prop durch – sonst verliert die Übersichtsseite 72 der
+86 Fragen (Stand 2026-08-01: 14 FAQs ohne jeden Tag bilden den Default-Topf).
 
 ## Anlass-Dimension: eigenes Feld statt Schmuggel durchs city-Feld (seit 2026-07-31)
 
@@ -139,22 +162,23 @@ Startseite. Ein im Admin gesetzter Anlass-Tag konnte nie ankommen.
 
 Geändert: `src/utils/faq.ts` (`event` im Kontext), `src/components/FAQ.astro` (nimmt es an
 und reicht es weiter), die Event-Zweige in `src/pages/[landing].astro` und
-`src/pages/[skill]/[landing].astro`. Der alte Weg `city: 'events/<slug>'` bleibt gültig –
-die FAQ-Dateien liegen so im Repo und `cityFromPath` leitet den Wert daraus ab.
+`src/pages/[...kombi].astro`. Der alte Weg `city: 'events/<slug>'` funktioniert im Code
+weiter, **wird aber von keiner Datei genutzt** – es gibt keinen Ordner `public/faq/events/`.
 
-⚠️ **Auf dem Bildschirm ändert sich vorerst nichts**, und das ist richtig so: heute haben
-**alle 71 FAQs `events: []`**, und „leer gilt überall". Der Fix macht das Zuordnen im
-Admin erst möglich – sobald dort ein Anlass gesetzt wird, greift er sofort.
+Beim Umbau am 2026-07-31 änderte sich auf dem Bildschirm erst einmal nichts, weil damals
+alle FAQs `events: []` trugen und „leer gilt überall". Inzwischen tragen **14 der 85
+FAQ-Dateien** einen Anlass-Tag (die 12 `anlass--*` in `default/` plus die beiden
+`rhein-main-gebiet`-FAQs) – der Anlass-Weg ist also aktiv, nicht mehr bloß vorbereitet.
 
 Test: `tests/faq-anlass.test.ts`, inklusive der Gegenprobe, dass eine Firmenfeier-FAQ auf
 `/messe/` NICHT erscheint.
 
 ## Anlass-FAQs (seit 2026-07-31)
 
-`public/faq/events/<anlass>--<thema>.md` – 12 Stück, drei je Anlass, getaggt über
-`tags.events`. Der Ordner ist reine Ablage: die Auswahl läuft ausschließlich über den Tag
-(`cityFromPath` würde aus `events/…` ohnehin nur „events" ableiten, das wird für die
-Zuordnung nicht benutzt).
+`public/faq/default/anlass--<anlass>--<thema>.md` – 12 Stück, drei je Anlass, getaggt
+über `tags.events` (z.B. `anlass--messe--platzbedarf.md`). Sie liegen bewusst in
+`default/`, also **ohne Ort-Tag**; die Auswahl läuft ausschließlich über den Anlass-Tag.
+Einen Ordner `public/faq/events/` gibt es nicht.
 
 Gemessen nach dem Bauen: jede der vier Anlass-Seiten zeigt **drei eigene Fragen plus eine
 allgemeine**; Startseite und Stadtseiten bleiben unverändert. Das liegt an

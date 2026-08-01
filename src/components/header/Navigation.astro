@@ -1,5 +1,11 @@
 ---
-import { getNavigationItems, type NavigationDropdownItem, type NavigationItem } from '../../utils/navigation';
+import {
+  getNavigationItems,
+  istSprungmarke,
+  sprungmarkeZuSeite,
+  type NavigationDropdownItem,
+  type NavigationItem,
+} from '../../utils/navigation';
 
 const navigationItems = getNavigationItems();
 
@@ -7,6 +13,8 @@ const isDropdownItem = (item: NavigationItem): item is NavigationDropdownItem =>
 
 /* Prüft ob ein Link-Item als CTA-Button dargestellt werden soll */
 const isCta = (item: NavigationItem): boolean => !isDropdownItem(item) && !!item.cta;
+
+/* Warum Sprungmarken hier ein echtes Ziel bekommen: siehe navigation.ts */
 ---
 
 <!-- =========================
@@ -45,12 +53,9 @@ const isCta = (item: NavigationItem): boolean => !isDropdownItem(item) && !!item
               return [
                 <li class={isCta(item) ? 'nav-cta' : undefined}>
                   <a
-                    href={item.url}
+                    href={sprungmarkeZuSeite(item.url)}
                     class={isCta(item) ? 'nav-cta-link' : undefined}
-                    data-nav-contact={item.url === '#contact' ? 'true' : undefined}
-                    data-nav-contact-fallback={item.url === '#contact' ? '/contact' : undefined}
-                    data-nav-faq={item.url === '#faq' ? 'true' : undefined}
-                    data-nav-faq-fallback={item.url === '#faq' ? '/faq' : undefined}
+                    data-nav-sprung={istSprungmarke(item.url) ? item.url : undefined}
                   >
                     {item.label}
                   </a>
@@ -64,7 +69,11 @@ const isCta = (item: NavigationItem): boolean => !isDropdownItem(item) && !!item
                     <span class="nav-mini-toggle">{item.label}</span>
                     <div class="nav-mini-card">
                       {item.children.map((link) => (
-                        <a class="nav-mini-link" href={link.url}>{link.label}</a>
+                        <a
+                          class="nav-mini-link"
+                          href={sprungmarkeZuSeite(link.url)}
+                          data-nav-sprung={istSprungmarke(link.url) ? link.url : undefined}
+                        >{link.label}</a>
                       ))}
                     </div>
                   </div>
@@ -80,32 +89,15 @@ const isCta = (item: NavigationItem): boolean => !isDropdownItem(item) && !!item
 </nav>
 
 <script>
-  // Contact-Fallback
-  const contactLinks = document.querySelectorAll('a[data-nav-contact="true"]');
-  contactLinks.forEach((link) => {
-    link.addEventListener('click', (event) => {
-      const href = link.getAttribute('href') ?? '';
-      if (href !== '#contact') return;
-      const anchor = document.querySelector('#contact');
-      if (anchor) return;
-      const fallback = link.getAttribute('data-nav-contact-fallback') ?? '/contact';
-      event.preventDefault();
-      window.location.href = fallback;
-    });
-  });
-
-  // FAQ-Fallback
-  const faqLinks = document.querySelectorAll('a[data-nav-faq="true"]');
-  faqLinks.forEach((link) => {
-    link.addEventListener('click', (event) => {
-      const href = link.getAttribute('href') ?? '';
-      if (href !== '#faq') return;
-      const anchor = document.querySelector('#faq');
-      if (anchor) return;
-      const fallback = link.getAttribute('data-nav-faq-fallback') ?? '/faq';
-      event.preventDefault();
-      window.location.href = fallback;
-    });
+  // Im HTML steht die echte Seite (/faq/, /contact/) – die funktioniert immer,
+  // auch ohne JavaScript, bei Mittelklick und für Suchmaschinen. Hat DIESE Seite
+  // den Abschnitt aber selbst, ist Scrollen das bessere Verhalten: dann wird der
+  // Link hier zur Sprungmarke aufgewertet.
+  document.querySelectorAll('a[data-nav-sprung]').forEach((link) => {
+    const sprung = link.getAttribute('data-nav-sprung');
+    if (sprung && document.querySelector(sprung)) {
+      link.setAttribute('href', sprung);
+    }
   });
 </script>
 

@@ -59,7 +59,7 @@ Geladen von `src/utils/erinnerungen.ts` → verwendet in `src/components/Landing
 - Nur auf Skill+Stadt-Kombis (`/<skill>/<stadt>/`) – die `erinnerungen`-Sektion steht ausschließlich im `skill-landing`-`_order`-Block von `public/config/components.json`
 - Position: zwischen Why-Sektion und Kontaktformular
 - **Nicht** auf reinen Stadt-Landings (`/<stadt>/`) und **nicht** auf Event-Seiten
-- Gerendert via Registry in `src/pages/[skill]/[landing].astro` (`LandingErinnerungen`), nicht in `src/pages/[landing].astro`
+- Gerendert via Registry in `src/pages/[...kombi].astro` (`LandingErinnerungen`), nicht in `src/pages/[landing].astro`
 
 ## Sync-Script
 

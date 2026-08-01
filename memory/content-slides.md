@@ -29,7 +29,16 @@ public/img/slides/category-matching.md # optionale Zusatzregeln
 
 ## Fallback-Logik
 
-- Hat eine Stadt **weniger als 6 eigene Slides**, werden Slides aus `default/` ergänzt
+- Hat eine Stadt **weniger als 6 eigene Slides** (`MIN_LANDING_SLIDES = 6`), wird über
+  `getDefaultSlides()` aufgefüllt. ⚠️ Das ist **nicht** der Ordner `default/`: solange
+  `default-selection.json` gefüllt ist (derzeit 28 Einträge aus allen Ordnern, davon
+  genau einer aus `default/`), kommen die Nachfüller aus dieser kuratierten Auswahl,
+  und der Ordner wird gar nicht gelesen. Erst bei **leerer** Auswahl-Datei greift der
+  alte Weg über `readFolderSlides('default')`.
+- **Skill-Seiten** (`/<skill>/`) fallen aus dieser Logik heraus: sie wählen über
+  `getSkillSlides()` = `getSlidesByTag('skills', skillContentKey(titel))`, also über
+  `tags.skills`, ohne Auffüllen und gedeckelt auf `MAX_SKILL_SLIDES = 24`. Was darüber
+  hinausgeht, ist über den Galerie-Link erreichbar.
 - Liegen `foto.jpg` und `foto.webp` im selben Ordner: nur `.webp` wird angezeigt (Deduplication)
 
 ### ⚠️ Auf Skill×Stadt-Seiten wird ZUERST gefiltert, dann aufgefüllt (2026-07-30)
@@ -63,8 +72,9 @@ wenn nach dem Filtern 0 Einträge übrig sind. Vorher stand die Überschrift
 ## Bildunterschrift: nur `title`, kein Rückfall auf `alt` (2026-07-31)
 
 Die Lightbox zeigte `slide.title || slide.alt`. Der Alt-Text wird aus dem
-**Dateinamen** gebaut (`normalizeAlt`: Endung weg, führende Nummer weg,
-Unterstriche zu Leerzeichen) — unter den Bildern stand also technischer Kram wie
+**Dateinamen** gebaut (`normalizeAlt`: Endung weg, führende Nummer samt folgendem
+`_`/`-` weg, Unterstriche **und Bindestriche** zu Leerzeichen) — unter den Bildern
+stand also technischer Kram wie
 „2 kollegen weihnachtsfeier trier".
 
 Jetzt zeigt sie **ausschließlich** den gepflegten `title` aus `slides.meta.json`.
@@ -168,3 +178,25 @@ Regeln:
 - Neue Bilder bekommen automatisch einen Metadaten-Eintrag
 - Kategorien werden beim ersten Anlegen via Dateiname-Regeln vorbelegt
 - Bei klarer Umbenennung werden Metadaten auf den neuen Dateinamen migriert
+
+## ⚠️ Ordnerschlüssel sind verschachtelt — niemals am Stück kodieren
+
+Die Schlüssel sind teils zweistufig: `events/hochzeit`, `mediathek/somfot`.
+`encodeURIComponent` über den **ganzen** Schlüssel macht aus dem Trenner `%2F`,
+und das ist laut RFC 3986 **kein** Pfadtrenner, sondern ein Zeichen im Segment.
+Die Adresse trifft dann keine Datei mehr.
+
+Am 2026-08-01 lief genau das in `slideImages.ts`: **141 Bild-Adressen** kaputt,
+unter anderem auf `/galerie/`, `/hochzeit/`, `/messe/`, `/firmenfeier/`.
+Nachgemessen gegen den statischen Server: korrekter Pfad `200`, die Form aus dem
+HTML `500`.
+
+**Warum es lange niemandem auffiel:** die Dateien existieren ja — nur der Weg
+dorthin war falsch geschrieben. `validate-image-refs.mjs` prüft die Verweise in
+den *Quellen*, nicht die *erzeugte* Adresse, und meldete „alle gültig".
+Seither kodiert `encodePathSegment` jeden Teil einzeln (auch in `skills.ts`,
+`events.ts`, `heroBg.ts`, wo es bisher nur latent war).
+Festgehalten in `tests/bild-adressen.test.ts`.
+
+**Wenn du Bild-Adressen anfasst:** verlass dich nicht auf die Verweis-Prüfung,
+sondern ruf sie gegen `dist/` per HTTP ab. Nur das misst, was der Browser bekommt.

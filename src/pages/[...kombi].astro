@@ -1,61 +1,74 @@
 ---
 /**
- * [skill]/[landing].astro
+ * [...kombi].astro
  *
  * Dynamische Route für zwei Seiten-Typen:
  *
- * 1. pageType === 'landing'  → Skill+Stadt-Seiten: /schnellzeichner/berlin/, /szenenmaler/frankfurt/, ...
- *    Wie bisher: SkillLayout mit SkillHero, Slideshow, Why, FAQ, Contact
+ * 1. pageType === 'landing'  → Skill+Stadt-Seiten: /berlin-schnellzeichner-karikaturist/, /frankfurt-szenenmaler/, ...
+ *    SkillLayout mit SkillHero, Slideshow, Why, FAQ, Contact
  *
- * 2. pageType === 'event'    → Skill+Event-Seiten: /schnellzeichner/firmenfeier/, /szenenmaler/hochzeit/, ...
+ * 2. pageType === 'event'    → Skill+Event-Seiten: /schnellzeichner-karikaturist/firmenfeier/, /szenenmaler/hochzeit/, ...
  *    EventLayout mit EventHero (skill-spezifisch), Slideshow, Ablauf, Pakete, EventSkills, Referenzen, FAQ, Contact
  *
+ * ⚠️ **Warum eine Rest-Route (`[...kombi]`) und nicht mehr `[skill]/[landing]`:**
+ * Seit dem 01.08.2026 sind die beiden Typen **verschieden tief** – Orte flach,
+ * Anlässe hierarchisch (Begründung in `utils/comboUrls.ts`). Eine Ordner-Route
+ * kann immer nur eine Tiefe erzeugen; eine Rest-Route darf den Schrägstrich
+ * selbst setzen und deckt damit beide Formen aus **einer** Datei ab. Ohne das
+ * müsste dieselbe Sektions-Verkabelung zweimal dastehen und würde driften.
+ *
+ * `skill` und `landing` kommen deshalb als **Props**, nicht mehr aus
+ * `Astro.params` – aus `berlin-schnellzeichner-karikaturist` liesse sich die
+ * Grenze zwischen Ort und Skill nicht zuverlässig zurückrechnen (beide
+ * enthalten Bindestriche). getStaticPaths weiss es, also gibt es sie weiter.
+ *
  * getStaticPaths() generiert:
- *   - Alle Skills × alle Städte  → pageType: 'landing'
- *   - Alle Skills × alle Events  → pageType: 'event'
+ *   - Alle Skills × alle Städte  → pageType: 'landing', flache Adresse
+ *   - Alle Skills × alle Events  → pageType: 'event',   hierarchische Adresse
  */
 
 // ── Gemeinsame Imports ─────────────────────────────────────────────────────────
-import EventLayout from '../../layouts/EventLayout.astro';
-import Contact from '../../components/Contact.astro';
-import FAQ from '../../components/FAQ.astro';
-import Slideshow from '../../components/slideshows/Slideshow.astro';
-import { getLandingSlugs } from '../../utils/landings';
-import { getCityDisplayName } from '../../utils/cityNames';
-import { getSkillBySlug, getSkillSlugs, skillContentKey } from '../../utils/skills';
+import EventLayout from '../layouts/EventLayout.astro';
+import Contact from '../components/Contact.astro';
+import FAQ from '../components/FAQ.astro';
+import Slideshow from '../components/slideshows/Slideshow.astro';
+import { getLandingSlugs } from '../utils/landings';
+import { getCityDisplayName } from '../utils/cityNames';
+import { getSkillBySlug, getSkillSlugs, skillContentKey } from '../utils/skills';
+import { cityComboSlug, cityComboPath, eventComboPath } from '../utils/comboUrls';
 import {
   MIN_LANDING_SLIDES,
   getCitySlides,
   getDefaultSlides,
   getSkillSlidesForCity,
   supplementWithDefaultSlides,
-} from '../../utils/slideImages';
+} from '../utils/slideImages';
 
 // ── Landing-spezifische Imports ───────────────────────────────────────────────
-import SkillHero from '../../components/hero/SkillHero.astro';
-import Landingsection from '../../components/Landingsection.astro';
-import Why from '../../components/Why.astro';
-import LandingErinnerungen from '../../components/LandingErinnerungen.astro';
-import SkillLayout from '../../layouts/SkillLayout.astro';
-import { resolveTitleImage } from '../../utils/titleImages';
-import { resolveHeroBg } from '../../utils/heroBg';
-import { getReviewsByLandingAndSkill } from '../../utils/reviews';
+import SkillHero from '../components/hero/SkillHero.astro';
+import Landingsection from '../components/Landingsection.astro';
+import Why from '../components/Why.astro';
+import LandingErinnerungen from '../components/LandingErinnerungen.astro';
+import SkillLayout from '../layouts/SkillLayout.astro';
+import { resolveTitleImage } from '../utils/titleImages';
+import { resolveHeroBg } from '../utils/heroBg';
+import { getReviewsByLandingAndSkill } from '../utils/reviews';
 
 // ── Event-spezifische Imports ─────────────────────────────────────────────────
-import EventHero from '../../components/events/EventHero.astro';
-import EventSkills from '../../components/events/EventSkills.astro';
-import LandingIntro from '../../components/LandingIntro.astro';
-import ComboBenefits from '../../components/combo/ComboBenefits.astro';
-import EventTeaser from '../../components/combo/EventTeaser.astro';
-import { getSkillEventContent } from '../../utils/comboContent';
+import EventHero from '../components/events/EventHero.astro';
+import EventSkills from '../components/events/EventSkills.astro';
+import LandingIntro from '../components/LandingIntro.astro';
+import ComboBenefits from '../components/combo/ComboBenefits.astro';
+import EventTeaser from '../components/combo/EventTeaser.astro';
+import { getSkillEventContent } from '../utils/comboContent';
 import {
   getEventSlugs,
   getEventBySlug,
   getEventContent,
   getEventSlides,
   resolveEventTitleImage,
-} from '../../utils/events';
-import { isComponentEnabled, resolveSectionOrder, type PageType } from '../../utils/componentConfig';
+} from '../utils/events';
+import { isComponentEnabled, resolveSectionOrder, type PageType } from '../utils/componentConfig';
 
 // ── getStaticPaths: alle Skill+Stadt + Skill+Event Kombinationen ──────────────
 export async function getStaticPaths() {
@@ -63,28 +76,32 @@ export async function getStaticPaths() {
   const landings = getLandingSlugs();
   const events = getEventSlugs();
 
-  // Skill × Stadt → pageType: 'landing'
+  // Skill × Stadt → pageType: 'landing', FLACHE Adresse (/berlin-szenenmaler/)
   const cityPaths = skills.flatMap((skill) =>
     landings.map((landing) => ({
-      params: { skill, landing },
-      props: { pageType: 'landing' as const },
+      params: { kombi: cityComboSlug(skill, landing) },
+      props: { pageType: 'landing' as const, skill, landing },
     }))
   );
 
-  // Skill × Event → pageType: 'event'
+  // Skill × Event → pageType: 'event', HIERARCHISCH (/szenenmaler/hochzeit/)
   const eventPaths = skills.flatMap((skill) =>
     events.map((landing) => ({
-      params: { skill, landing },
-      props: { pageType: 'event' as const },
+      params: { kombi: `${skill}/${landing}` },
+      props: { pageType: 'event' as const, skill, landing },
     }))
   );
 
   return [...cityPaths, ...eventPaths];
 }
 
-// ── Params & Props ────────────────────────────────────────────────────────────
-const { skill, landing } = Astro.params;
-const { pageType } = Astro.props as { pageType: 'landing' | 'event' };
+// ── Props ─────────────────────────────────────────────────────────────────────
+// Nicht aus Astro.params: die flache Adresse ist nicht zerlegbar (siehe oben).
+const {
+  pageType,
+  skill,
+  landing,
+} = Astro.props as { pageType: 'landing' | 'event'; skill: string; landing: string };
 
 const pt: PageType = pageType === 'event' ? 'skill-event' : 'skill-landing';
 
@@ -150,7 +167,7 @@ if (pageType === 'landing') {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${site}/` },
       { '@type': 'ListItem', position: 2, name: skillData.title, item: `${site}/${skill}/` },
-      { '@type': 'ListItem', position: 3, name: `${skillData.title} ${cityName}`, item: `${site}/${skill}/${landing}/` },
+      { '@type': 'ListItem', position: 3, name: `${skillData.title} ${cityName}`, item: `${site}${cityComboPath(skill, landing)}` },
     ],
   };
 }
@@ -197,7 +214,7 @@ if (pageType === 'event') {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${site}/` },
       { '@type': 'ListItem', position: 2, name: skillData.title, item: `${site}/${skill}/` },
-      { '@type': 'ListItem', position: 3, name: `${skillData.title} – ${eventData.title}`, item: `${site}/${skill}/${landing}/` },
+      { '@type': 'ListItem', position: 3, name: `${skillData.title} – ${eventData.title}`, item: `${site}${eventComboPath(skill, landing)}` },
     ],
   };
 }
@@ -237,8 +254,8 @@ if (pageType === 'landing' && landingSlides) {
     erinnerungen: { skill: skillKey, landing },
     contact: {},
     faq: { city: landing, categories: [skillData.title] },
-    // `site` ist ein URL-Präfix für die Städte-Links, kein Inhalts-Schlüssel.
-    landingsection: { site: skill },
+    // Adresse, kein Inhalts-Schlüssel: die Städte-Links zeigen auf die Kombis.
+    landingsection: { skillSlug: skill },
   };
   sectionOrder = resolveSectionOrder('skill-landing', landing ?? '', registry);
 } else if (pageType === 'event' && eventData && eventContent && eventSlides) {
@@ -297,7 +314,7 @@ if (pageType === 'landing' && landingSlides) {
       return <Section {...props} />;
     })}
 
-    <script>import "../../scripts/formspree.js";</script>
+    <script>import "../scripts/formspree.js";</script>
   </SkillLayout>
 )}
 
@@ -316,6 +333,6 @@ if (pageType === 'landing' && landingSlides) {
       return <Section {...props} />;
     })}
 
-    <script>import "../../scripts/formspree.js";</script>
+    <script>import "../scripts/formspree.js";</script>
   </EventLayout>
 )}
