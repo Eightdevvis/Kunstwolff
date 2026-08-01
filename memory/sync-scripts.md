@@ -114,6 +114,18 @@ So müssen Endbenutzer nach Eintragen einer neuen Stadt nicht lokal builden – 
 
 - **Kein Build/Typecheck im CI:** Die Action committet Sync-Output ohne `astro check` / `astro build`. Ein durch den Sync erzeugter kaputter JSON fällt erst lokal oder beim Vercel-Deploy auf.
 
+## Einmal-Werkzeuge (laufen NICHT im Sync)
+
+Drei Skripte in `scripts/` gehören nicht in die Kette – sie waren für genau eine
+Umstellung gedacht und liegen als Beleg dort. Sie stehen in keinem npm-Script und
+werden von keinem Hook aufgerufen; wer sie versehentlich laufen lässt, ändert Inhalte.
+
+| Script | Wofür, einmalig |
+| :-- | :-- |
+| `flache-kombi-urls.mjs` | Umstellung auf flache Ort-Kombi-Adressen (2026-08-01); hat die 136 Weiterleitungen in `vercel.json` erzeugt (`routing.md`) |
+| `dissolve-slide-duplicates.mjs` | Löst bytegleiche Slide-Duplikate auf, die es nur gab, weil im Ordnermodell der Ablageort über die Seite entschied. Vereinigt die Tags aller Kopien auf das Original, biegt die Verweise um, löscht die Kopie. **Trockenlauf ist der Default**, echtes Ändern nur mit `--apply` |
+| `migrate-slide-meta.mjs` | Zerlegte aufgeblähte Dateinamen in kurzen `title` + reichen `altOverride` in `slides.meta.json`. Idempotent, fasst bestehende Werte nicht an, berührt nur die Metadaten (Umbenennen der Dateien wäre riskant – `public/erinnerungen/*.json` verweist darauf) |
+
 ## Validierungsreports
 
 `sync:landings` schreibt nach jedem Lauf einen Report nach `reports/validation/landings/<timestamp>.json`. Details: `validierungsreports.md`.

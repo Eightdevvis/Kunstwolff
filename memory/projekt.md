@@ -42,9 +42,11 @@ Vor `dev` und `build` läuft automatisch `npm run sync:content:safe` (als `prede
 | :-- | :-- |
 | `src/pages/` | Astro-Seiten + dynamische Routen (`[landing].astro`, `[...kombi].astro`, …) |
 | `src/components/` | Preact + Astro Components |
-| `src/utils/` | Content-Loader (TS): `landings.ts`, `skills.ts`, `why.ts`, `cinema.ts`, `erinnerungen.ts`, … |
+| `src/utils/` | Content-Loader (TS): `landings.ts`, `skills.ts`, `why.ts`, `cinema.ts`, `erinnerungen.ts`, … – vollständige Tabelle in `architektur.md` |
+| `src/i18n/` | Locale-Registry + Overlay-Auflösung (`config.ts`), siehe unten |
 | `public/` | Komplettes dateibasiertes "CMS" – siehe `pfadstruktur.md` |
 | `scripts/` | Sync-Scripts (Node), siehe `sync-scripts.md` |
+| `tests/` | 26 Vitest-Dateien (`npm run test:unit`), Konfiguration in `vitest.config.ts` |
 | `ANLEITUNGEN/` | Nicht-technische Endbenutzer-Anleitungen (nicht für Claude) |
 | `reports/validation/` | Auto-generierte Validierungsreports (siehe `validierungsreports.md`) |
 | `removed_landings/` | Archiv entfernter Stadtdaten (siehe `content-landings.md`) |
@@ -54,7 +56,10 @@ Vor `dev` und `build` läuft automatisch `npm run sync:content:safe` (als `prede
 
 ## Hosting / Deployment-Stand (2026-05-05)
 
-- **Stage:** `https://kunstwolff.vercel.app` – Astro-Build, Vercel deployt automatisch bei Push auf `main` (Auto-Detect, kein `vercel.json` im Repo).
+- **Stage:** `https://kunstwolff.vercel.app` – Astro-Build, Vercel deployt automatisch bei
+  Push auf `main`. Die Auslieferung steuert `vercel.json` im Repo-Root: Cache-Control für
+  `/img/*` und 166 Weiterleitungen (Wix-Altlasten + die flachen Ort-Kombis). Details:
+  `vercel-headers.md`, `routing.md`.
 - **Production-Domain:** `https://kunstwolff.de` – zeigt noch auf die alte Wix-Site. Cutover steht aus.
 - Build-Output kennt beide Hosts: `astro.config.mjs` liest `site` aus `process.env.SITE_URL` (Fallback `kunstwolff.de`); `Layout.astro` setzt `<meta robots>` per Whitelist (nur `kunstwolff.de`/`www.kunstwolff.de` → `index, follow`). Details: `seo.md`.
 - Offene Cutover-/Repo-Tickets siehe `HEALTH_CHECK_2026-05-05.md` im Projekt-Root.

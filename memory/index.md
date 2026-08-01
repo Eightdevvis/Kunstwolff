@@ -2,6 +2,14 @@
 
 Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identifiziere relevante Themen und lade nur diese Subfiles.
 
+> **Stand 2026-08-01:** Alle Subfiles wurden Aussage für Aussage gegen den Code gehalten
+> (rund 1000 Einzelaussagen, 110 Divergenzen eingearbeitet). Die drei häufigsten Irrtümer:
+> die Ort-Kombis sind **flach** (`/berlin-schnellzeichner-karikaturist/`, die hierarchische
+> Form existiert nur noch als 301); der **Ordner entscheidet nichts mehr** – FAQs, Reviews
+> und Bilder werden über Tags gewählt, `getFAQsByCity` und ein `default/`-Rückfall gibt es
+> nicht mehr; und viele **Zahlen stammten aus der Migrationszeit** (FAQs 71→85, Slides
+> 234→238, versteckte Pfade 128→129).
+
 > **Konvention:** Alle Pfade in diesem Index sind relativ zum Projekt-Root (`Kunstwolffwebsite/`). Memory-Files liegen in `memory/`.
 
 ---
@@ -44,12 +52,13 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 
 ### Sonstiges
 - [SEO](seo.md) – Sitemap, Meta-Tags, OpenGraph, Schema.org JSON-LD, **Stage vs. Production** (`SITE_URL`-Env, robots-Whitelist)
+- [Mehrsprachigkeit](i18n.md) – Locale-Registry, **Content-Overlay unter `public/i18n/<locale>/`** (fehlt eine Datei, greift das deutsche Original), FR-Route, Sprach-Umschalter
 - [WIP-Komponenten](wip-komponenten.md) – Existierend aber noch nicht eingebunden
 
 ### Status & offene Punkte (außerhalb von `memory/`)
 - `HEALTH_CHECK_2026-05-05.md` (Repo-Root) – aktueller Audit: Vercel-Stage vs. Wix-Production, Cutover-Tickets, GitHub-Action-Lücken, TS-/SEO-Findings.
 - `CUTOVER_PLAN.md` (Repo-Root) – Schritt-für-Schritt-Plan Wix → Astro/Vercel: URL-Mapping, DNS, Vercel-Settings, Cutover-Tag, Rollback.
-- `reports/tagsystem-audit-2026-07-30.md` – **abzuarbeitende Befundliste** aus dem Tag-System-Audit (45 bestätigte Funde über sechs Ebenen, nach Schwere sortiert, mit „gesund"- und „widerlegt"-Abschnitt). Enthält u.a.: 38 leere Skill×Stadt-Galerien, 40 inhaltslose Aquarelle-Seiten, tote Anlass-Dimension der FAQs, `public/config` fehlt in beiden `git add`-Listen.
+- `reports/tagsystem-audit-2026-07-30.md` – Befundliste aus dem Tag-System-Audit (45 bestätigte Funde über sechs Ebenen, nach Schwere sortiert, mit „gesund"- und „widerlegt"-Abschnitt). ⚠️ **Nicht mehr als To-do-Liste lesen** – die vier prominentesten Punkte sind erledigt: die 38 leeren Skill×Stadt-Galerien (2026-07-30), die 40 inhaltslosen Aquarelle-Seiten (ausgeblendet, 2026-07-30), die tote Anlass-Dimension der FAQs (eigenes `event`-Feld, 2026-07-31) und `public/config` in beiden `git add`-Listen (pre-commit-Hook **und** `sync-landings.yml`). Der Report bleibt als Beleg, nicht als Auftrag.
 
 ---
 
@@ -77,6 +86,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 | "Admin-Tool schreibt falsch" | `admin-tool.md` |
 | "Hosting / Vercel / Cutover-Stand" | `projekt.md` (Hosting-Section) + `seo.md` + `reports/cutover-audit-2026-07-30.md` + `CUTOVER_PLAN.md` (⚠ an zwei Stellen falsch, siehe `seo.md`) |
 | "Umzug auf kunstwolff.de / Redirects / DNS" | `seo.md` (Cutover-Abschnitt) + `vercel-headers.md` + `reports/cutover-audit-2026-07-30.md` |
+| "Französische Seite / neue Sprache / Übersetzung fehlt" | `i18n.md` |
 | "Cross-Repo / Admin-Tool" | `admin-tool.md` + Admin-Memory `/home/sasha/codicus/Kunstwolff/kunstwolff-admin/memory/index.md` |
 
 Wenn unklar: erst `projekt.md` + `architektur.md` als Einstieg, dann gezielt nachladen.
