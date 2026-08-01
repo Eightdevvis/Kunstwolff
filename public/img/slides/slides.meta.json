@@ -4177,5 +4177,41 @@
         "schnellzeichner"
       ]
     }
+  },
+  "events/private-feier/kinder-karikatur-kinderfest.webp": {
+    "categories": [],
+    "priority": 3,
+    "tags": {
+      "events": [
+        "private-feier"
+      ]
+    }
+  },
+  "events/private-feier/kinder-portraet-mitnintendo-wii-maidult-regensburg.webp": {
+    "categories": [],
+    "priority": 4,
+    "tags": {
+      "events": [
+        "private-feier"
+      ]
+    }
+  },
+  "events/private-feier/lustige-karikatur-jungs-kindergeburtstag.webp": {
+    "categories": [],
+    "priority": 5,
+    "tags": {
+      "events": [
+        "private-feier"
+      ]
+    }
+  },
+  "events/private-feier/minecraft-drawing-kids-speedpainter-event.webp": {
+    "categories": [],
+    "priority": 6,
+    "tags": {
+      "events": [
+        "private-feier"
+      ]
+    }
   }
 }
