@@ -49,13 +49,11 @@
   },
   "bw/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
     "categories": [
-      "Szenenmaler",
-      "Schnellzeichner"
+      "Szenenmaler"
     ],
     "tags": {
       "skills": [
-        "szenenmaler",
-        "schnellzeichner"
+        "szenenmaler"
       ],
       "events": [
         "hochzeit",
@@ -336,10 +334,49 @@
       ],
       "events": [
         "firmenfeier",
-        "messe"
+        "messe",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "silvester",
+        "gala",
+        "sommerfest"
       ],
       "landings": [
-        "koeln"
+        "koeln",
+        "berlin",
+        "frankfurt",
+        "hamburg",
+        "schweiz",
+        "kaiserslautern",
+        "trier",
+        "wiesbaden",
+        "mainz",
+        "luxembourg",
+        "ludwigshafen",
+        "mannheim",
+        "saarbruecken",
+        "belgique",
+        "saarland",
+        "hessen",
+        "rhein-main-gebiet",
+        "rheinland-pfalz",
+        "wuppertal",
+        "nord-rhein-westfalen",
+        "main-taunus-kreis",
+        "koblenz",
+        "tuebingen",
+        "karlsruhe",
+        "heidelberg",
+        "giessen",
+        "dortmund",
+        "fulda",
+        "bw",
+        "neunkirchen",
+        "hanau",
+        "stuttgart",
+        "duesseldorf"
       ]
     },
     "priority": 5
@@ -380,16 +417,15 @@
   },
   "default/digitale-schnellzeichnerin-ludwigshafen---kopie.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
-        "firmenfeier"
+        "firmenfeier",
+        "messe"
       ],
       "landings": [
         "ludwigshafen"
@@ -2188,18 +2224,6 @@
     },
     "priority": 1
   },
-  "mainz/cartoon-by-speed-painter-alte-lokhalle-mainz.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": [
-        "mainz"
-      ]
-    },
-    "altOverride": "Cartoon by speed painter alte lokhalle mainz",
-    "title": "Live-Kunst Mainz"
-  },
   "mainz/schnellzeichner-dinner-event-alte-lokhalle-mainz.webp": {
     "categories": [
       "Schnellzeichner"
@@ -2208,9 +2232,26 @@
       "skills": [
         "schnellzeichner"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "weihnachtsfeier",
+        "jubilaeum",
+        "silvester",
+        "gala"
+      ],
       "landings": [
-        "mainz"
+        "mainz",
+        "hamburg",
+        "luxembourg",
+        "ludwigshafen",
+        "rhein-main-gebiet",
+        "rheinland-pfalz",
+        "wuppertal",
+        "koblenz",
+        "tuebingen",
+        "dortmund",
+        "duesseldorf"
       ]
     }
   },
@@ -2219,10 +2260,26 @@
     "tags": {
       "skills": [],
       "events": [
-        "firmenfeier"
+        "firmenfeier",
+        "messe",
+        "weihnachtsfeier",
+        "jubilaeum",
+        "silvester",
+        "gala"
       ],
       "landings": [
-        "mainz"
+        "mainz",
+        "berlin",
+        "schweiz",
+        "wiesbaden",
+        "belgique",
+        "rheinland-pfalz",
+        "nord-rhein-westfalen",
+        "neuwied",
+        "karlsruhe",
+        "giessen",
+        "fulda",
+        "hanau"
       ]
     }
   },
@@ -3296,13 +3353,9 @@
     "priority": 4
   },
   "stuttgart/live-sketching-event-trade-fair-baden-wuerttemberg.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
+      "skills": [],
       "events": [],
       "landings": [
         "stuttgart"
@@ -4197,5 +4250,106 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
+  },
+  "mediathek/live-hand-lettering-kalligrafie-verkostungsaktion-rewe-bruchsal.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 81,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    }
+  },
+  "mediathek/live-lettering-shop-event-callygraphy-whisky.webp": {
+    "categories": [
+      "Szenenmaler",
+      "Schnellzeichner"
+    ],
+    "priority": 82,
+    "tags": {
+      "skills": [
+        "szenenmaler",
+        "schnellzeichner"
+      ],
+      "events": [
+        "messe",
+        "private-feier",
+        "weihnachtsfeier",
+        "jubilaeum",
+        "silvester",
+        "stadtfest",
+        "gala"
+      ],
+      "landings": [
+        "berlin",
+        "hamburg",
+        "kaiserslautern",
+        "wiesbaden",
+        "luxembourg",
+        "mannheim",
+        "belgique",
+        "hessen",
+        "frankfurt",
+        "rheinland-pfalz",
+        "nord-rhein-westfalen",
+        "neuwied",
+        "tuebingen",
+        "karlsruhe",
+        "giessen",
+        "dortmund",
+        "neunkirchen",
+        "fulda",
+        "hanau",
+        "stuttgart",
+        "duesseldorf"
+      ]
+    }
+  },
+  "mediathek/kalligrafie-kuenstler-live-lettering-rewe-center-event-bruchsal.webp": {
+    "categories": [
+      "Szenenmaler",
+      "Schnellzeichner"
+    ],
+    "priority": 83,
+    "tags": {
+      "skills": [
+        "szenenmaler",
+        "schnellzeichner"
+      ],
+      "events": [
+        "messe",
+        "private-feier",
+        "weihnachtsfeier",
+        "jubilaeum",
+        "silvester",
+        "stadtfest",
+        "gala"
+      ],
+      "landings": [
+        "berlin",
+        "schweiz",
+        "trier",
+        "mainz",
+        "koeln",
+        "saarbruecken",
+        "saarland",
+        "rhein-main-gebiet",
+        "wuppertal",
+        "koblenz",
+        "neuwied",
+        "tuebingen",
+        "karlsruhe",
+        "heidelberg",
+        "giessen",
+        "dortmund",
+        "neunkirchen",
+        "fulda",
+        "bw",
+        "hanau",
+        "duesseldorf"
+      ]
+    }
   }
 }
