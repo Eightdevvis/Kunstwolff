@@ -153,11 +153,6 @@
       "permanent": true
     },
     {
-      "source": "/portfolio-collections/my-portfolio/karikaturen-schwarz-wei%C3%9F",
-      "destination": "/schnellzeichner-karikaturist/",
-      "permanent": true
-    },
-    {
       "source": "/portfolio-collections/my-portfolio/portrait-karikatur-vom-foto",
       "destination": "/schnellzeichner-karikaturist/",
       "permanent": true
