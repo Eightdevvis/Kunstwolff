@@ -16,8 +16,9 @@ import { describe, expect, it } from 'vitest';
  *     abrufbar. Entfernt: sie war nie Inhalt der Website.
  *   - `/gallerie/` (mit Schrägstrich) — Astros Weiterleitungs-Stummel. Die
  *     301-Regel in `vercel.json` fing nur `/gallerie` OHNE Schrägstrich ab,
- *     mit Schrägstrich kam der Stummel mit 200 durch. Jetzt sind beide Formen
- *     abgedeckt, der Stummel wird nie ausgeliefert.
+ *     mit Schrägstrich kam der Stummel mit 200 durch. Der `redirects`-Block in
+ *     `astro.config.mjs` ist deshalb ganz raus; die Adresse gibt es nicht mehr
+ *     (sie stand in keiner Wix-Sitemap und war nirgends verlinkt).
  *
  * Die drei Tests hier decken die drei Wege ab, auf denen das wiederkommen kann:
  * eine HTML-Datei unter `public/`, eine Seite ohne Layout, oder ein Fußbereich
@@ -61,16 +62,17 @@ describe('Impressum ist von überall erreichbar', () => {
     expect(ohne, `ohne Layout und damit ohne Fußbereich:\n${ohne.join('\n')}`).toEqual([]);
   });
 
-  it('der Weiterleitungs-Stummel /gallerie/ wird nie ausgeliefert', () => {
-    // Astro erzeugt für seine `redirects` eine Meta-Refresh-Seite. Die hat
-    // keinen Fußbereich. Sie darf nur existieren, solange die echte 301 sie
-    // in BEIDEN Schreibweisen verdeckt.
-    const vercel = JSON.parse(fs.readFileSync(path.resolve('vercel.json'), 'utf-8')) as {
-      redirects?: { source: string; destination: string }[];
-    };
-    const quellen = new Set((vercel.redirects ?? []).map((r) => r.source));
-    for (const form of ['/gallerie', '/gallerie/']) {
-      expect(quellen.has(form), `${form} wird von keiner 301-Regel abgefangen`).toBe(true);
-    }
+  it('astro.config.mjs erzeugt keine Weiterleitungs-Stummel', () => {
+    // Bei statischer Ausgabe baut Astro aus jedem `redirects`-Eintrag eine
+    // HTML-Seite mit Meta-Refresh — ohne Layout, ohne Fußbereich, ohne
+    // Impressum. Genau so kam `/gallerie/` mit HTTP 200 durch. Weiterleitungen
+    // gehören nach `vercel.json`: dort sind es echte 301, und es entsteht keine
+    // Seite, die ausgeliefert werden könnte.
+    const konfig = fs.readFileSync(path.resolve('astro.config.mjs'), 'utf-8');
+    const ohneKommentare = konfig.replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
+    expect(
+      /\bredirects\s*:/.test(ohneKommentare),
+      'astro.config.mjs hat wieder einen redirects-Block – der wird zu einer Seite ohne Impressum',
+    ).toBe(false);
   });
 });

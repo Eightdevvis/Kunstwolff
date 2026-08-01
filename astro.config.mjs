@@ -92,16 +92,15 @@ const bildVarianten = () => ({
 // https://astro.build/config
 export default defineConfig({
   site: siteUrl,
-  // Die Galerie liegt unter `/galerie/` – deutsche Schreibweise, weil die URL
-  // öffentlich sichtbar ist und in der Suche steht. Die naheliegende
-  // Fehlschreibung `/gallerie/` (doppeltes l) fängt `vercel.json` ab, in beiden
-  // Schreibweisen und als echter 301.
-  //
-  // Hier steht bewusst KEIN `redirects`-Eintrag mehr: bei statischer Ausgabe
-  // baut Astro daraus eine HTML-Seite mit Meta-Refresh. Die hat keinen
+  // Hier steht bewusst KEIN `redirects`-Block: bei statischer Ausgabe baut
+  // Astro daraus eine HTML-Seite mit Meta-Refresh. Die hat kein Layout, keinen
   // Fußbereich und damit kein Impressum – und sie wurde tatsächlich
-  // ausgeliefert, weil die 301-Regel anfangs nur `/gallerie` OHNE Schrägstrich
-  // traf. Ein echter 301 ist ohnehin das bessere Signal.
+  // ausgeliefert. Weiterleitungen gehören nach `vercel.json`, dort sind es
+  // echte 301. Bewacht von tests/impressum-ueberall.test.ts.
+  //
+  // Der frühere Eintrag `/gallerie → /galerie/` (Fänger für die Fehlschreibung
+  // mit doppeltem l) ist ersatzlos weg: die Adresse stand in keiner Wix-Sitemap,
+  // war nirgends verlinkt und lieferte auf Wix schon immer 404.
   integrations: [
     preact(),
     bildVarianten(),

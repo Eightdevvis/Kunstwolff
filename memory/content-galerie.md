@@ -34,9 +34,11 @@ hieß `/FAQ`).
 (`${site}/galerie/` – die Seite importiert `GALERIE_URL` gar nicht) und der
 Textlink in `team.astro`. Wer den Pfad ändert, muss beide mitziehen.
 
-`/gallerie/` (doppeltes l, die naheliegende Fehlschreibung) ist in
-`astro.config.mjs` als `redirects` auf `/galerie/` gelegt. Astro baut daraus eine
-`noindex`-Seite mit Meta-Refresh; die Sitemap enthält nur `/galerie/`.
+Die Fehlschreibung `/gallerie/` (doppeltes l) gibt es **nicht mehr** – seit
+2026-08-01 ersatzlos gestrichen. Sie stand in keiner Wix-Sitemap, war nirgends
+verlinkt und lieferte auf Wix selbst 404; als Astro-`redirects` erzeugte sie
+dafür eine Meta-Refresh-Seite ohne Layout und damit ohne Impressum. Wer sie
+wiederhaben will: nach `vercel.json` als echten 301, nicht nach `astro.config.mjs`.
 
 ## Verlinkung
 

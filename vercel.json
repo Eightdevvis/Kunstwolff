@@ -63,13 +63,23 @@
       "permanent": true
     },
     {
-      "source": "/gallerie",
-      "destination": "/galerie/",
+      "source": "/portfolio-collections/my-portfolio/karikaturen-schwarz-weiß",
+      "destination": "/schnellzeichner-karikaturist/",
       "permanent": true
     },
     {
-      "source": "/gallerie/",
-      "destination": "/galerie/",
+      "source": "/portfolio-collections/my-portfolio/karikaturen-schwarz-wei%C3%9F",
+      "destination": "/schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/portfolio-collections/my-portfolio/veranstaltungen",
+      "destination": "/schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/template/fuer-evente-aller-art",
+      "destination": "/schnellzeichner-karikaturist/",
       "permanent": true
     },
     {
