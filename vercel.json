@@ -39,7 +39,7 @@
     },
     {
       "source": "/aquarelle-galerie",
-      "destination": "/aquarelle/",
+      "destination": "/galerie/",
       "permanent": true
     },
     {
@@ -74,7 +74,7 @@
     },
     {
       "source": "/schnellzeichner-duesseldorf",
-      "destination": "/duesseldorf-schnellzeichner-karikaturist/",
+      "destination": "/schnellzeichner-karikaturist/",
       "permanent": true
     },
     {
