@@ -30,25 +30,28 @@ echo " Umzugs-Status  $DOMAIN"
 echo "──────────────────────────────────────────────────────────────"
 
 # ── 1. Delegation ─────────────────────────────────────────────────
+#
+# WEG A (seit 2026-08-01): Wix bleibt der DNS-Anbieter. Wix laesst die
+# Nameserver einer dort REGISTRIERTEN Domain nicht aendern — nur die Eintraege
+# darin. Deshalb ist "NS zeigt auf Wix" hier KEIN Fehler und kein Fortschritts-
+# mass mehr. Entscheidend ist allein, worauf die Eintraege zeigen (Abschnitt 2).
 echo
-echo "1) Wer ist laut Registry zuständig?"
-umgestellt=0
+echo "1) Wer ist laut Registry zuständig? (bei Weg A bleibt das Wix)"
 for r in "${RESOLVER[@]}"; do
   ns=$(dig @"$r" NS "$DOMAIN" +short +time=3 +tries=1 2>/dev/null | sort | tr '\n' ' ')
   if echo "$ns" | grep -q "cloudflare"; then
     printf '   %-16s ' "$r"; gruen "Cloudflare"; echo "  ($ns)"
-    umgestellt=$((umgestellt+1))
   elif echo "$ns" | grep -q "wixdns"; then
-    printf '   %-16s ' "$r"; gelb "noch Wix"; echo "   ($ns)"
+    printf '   %-16s ' "$r"; echo "Wix (erwartet)"
   else
     printf '   %-16s ' "$r"; rot "unklar"; echo "     ($ns)"
   fi
 done
-echo "   → $umgestellt von ${#RESOLVER[@]} Resolvern sehen schon Cloudflare"
 
 # ── 2. Auflösung ──────────────────────────────────────────────────
 echo
-echo "2) Worauf zeigt die Domain?"
+echo "2) Worauf zeigt die Domain?  ← das ist der Fortschrittsbalken"
+aufVercel=0
 for r in "${RESOLVER[@]}"; do
   a=$(dig @"$r" "$WWW" A +short +time=3 +tries=1 2>/dev/null | grep -E '^[0-9]' | head -1)
   # Gegen die ZIEL-Adressen prüfen, nicht gegen "ist nicht Wix". Wix liefert www
@@ -58,10 +61,12 @@ for r in "${RESOLVER[@]}"; do
     printf '   %-16s ' "$r"; rot "keine Antwort"; echo
   elif echo "$a" | grep -qE "^(216\.198\.79\.|76\.76\.21\.|66\.33\.60\.)"; then
     printf '   %-16s ' "$r"; gruen "Vercel"; echo "   ($a)"
+    aufVercel=$((aufVercel+1))
   else
     printf '   %-16s ' "$r"; gelb "noch nicht Vercel"; echo " ($a)"
   fi
 done
+echo "   → $aufVercel von ${#RESOLVER[@]} Resolvern zeigen auf Vercel"
 
 # ── 3. Erreichbarkeit ─────────────────────────────────────────────
 echo
@@ -99,14 +104,15 @@ rob=$(echo "$body" | grep -o 'name="robots" content="[^"]*"' | head -1)
 
 echo
 echo "──────────────────────────────────────────────────────────────"
-if [ "$umgestellt" -eq "${#RESOLVER[@]}" ] && [ "$code" = "200" ] && echo "$srv" | grep -qi vercel; then
-  gruen " FERTIG — alle Resolver auf Cloudflare, HTTPS liefert Vercel."; echo
-  echo " Jetzt erst Wix auf 'Coming Soon'. Niemals 'Disconnect Domain'."
-elif [ "$umgestellt" -eq 0 ]; then
+if [ "$aufVercel" -eq "${#RESOLVER[@]}" ] && [ "$code" = "200" ] && echo "$srv" | grep -qi vercel; then
+  gruen " FERTIG — alle Resolver zeigen auf Vercel, HTTPS liefert Vercel aus."; echo
+  echo " Jetzt erst die Wix-Site auf 'Coming Soon'."
+  echo " Wix-Abo NICHT kündigen: dort liegen Registrierung UND DNS-Zone."
+elif [ "$aufVercel" -eq 0 ]; then
   gelb " Noch nichts umgestellt."; echo
-  echo " Normal, solange die Nameserver eben erst geändert wurden (24-48 h)."
+  echo " Bei Weg A (Einträge bei Wix ändern) dauert es max. eine Stunde — TTL 3600."
 else
-  gelb " Mitten in der Propagation — $umgestellt von ${#RESOLVER[@]}."; echo
+  gelb " Mitten in der Umstellung — $aufVercel von ${#RESOLVER[@]}."; echo
   echo " Kein Ausfall: die einen sehen Wix, die anderen Vercel, beide funktionieren."
 fi
 echo "──────────────────────────────────────────────────────────────"

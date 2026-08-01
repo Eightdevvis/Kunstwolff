@@ -111,12 +111,54 @@ damit Google sie schnell crawlt.
 - [ ] In Vercel das `Production`-Deployment einmal redeployen, damit die
   Env-Variable greift.
 
-### 2.3 DNS — Weg B: Zone von Wix zu Cloudflare (entschieden 2026-08-01)
+### 2.3 DNS — Weg A: Einträge bei Wix ändern (Stand 2026-08-01, abends)
 
-**Warum B und nicht „Records bei Wix ändern":** Solange Wix die Zone führt,
-bleibt das Wix-Abo Pflicht — kündigen heißt Domain offline. Weg B macht die
-Sache einmal statt zweimal. Cloudflare, weil dort ohnehin schon der
-Admin-Worker läuft: kein neuer Anbieter, kein neuer Account, kostenlos.
+> ## 🔴 Weg B ist gescheitert — Wix lässt es nicht zu
+>
+> Entschieden war **Weg B** (Zone zu Cloudflare, Nameserver beim Registrar
+> umstellen). Die Cloudflare-Zone wurde gebaut und geprüft — sie ist korrekt.
+> Dann stellte sich heraus: **die Domain ist direkt bei Wix registriert, und
+> Wix erlaubt für dort registrierte Domains keine eigenen Nameserver.** Die
+> Einträge sind schreibgeschützt („Einträge können nicht bearbeitet werden").
+> Andere DNS-Einträge sind sehr wohl änderbar.
+>
+> Damit bleibt **Weg A**: Wix bleibt DNS-Anbieter, aber die Einträge zeigen auf
+> Vercel. **Vorteil: kein Nameserver-Wechsel, also keine 24–48 h Propagation —
+> nur die TTL von einer Stunde.**
+>
+> **Der Preis, und er ist dauerhaft:** Wix führt weiterhin Registrierung *und*
+> Zone. Ein gekündigtes Wix-Abo nimmt beides mit. **Wix kann nicht gekündigt
+> werden**, bis die Domain woanders liegt.
+>
+> **Der Ausweg, später und in Ruhe:** echter **Domain-Transfer** zu einem
+> anderen Registrar (Cloudflare Registrar, INWX, united-domains). Bei `.de` über
+> Auth-Code, meist an einem Tag durch. **Die Cloudflare-Zone bleibt dafür
+> stehen** — sie ist fertig und geprüft, kostet nichts und tut nichts, solange
+> keine Nameserver auf sie zeigen. Nach dem Transfer nur noch die Nameserver
+> setzen. Das ist ein eigenes Vorhaben für nach dem Umzug.
+
+**Weg A — die Änderung in der Wix-DNS-Verwaltung:**
+
+| Aktion | Typ | Name | Wert |
+|:--|:--|:--|:--|
+| löschen | `A` | `@` | `185.230.63.186` |
+| löschen | `A` | `@` | `185.230.63.107` |
+| löschen | `A` | `@` | `185.230.63.171` |
+| **anlegen** | `A` | `@` | **`216.198.79.1`** |
+| **ersetzen** | `CNAME` | `www` | **`cname.vercel-dns.com`** (statt `cdn1.wixdns.net`) |
+
+Danach max. eine Stunde warten (TTL 3600), Fortschritt mit
+`bash scripts/umzug-status.sh`.
+
+🔴 **Nichts anklicken, was „Disconnect", „Trennen" oder „Entfernen" heißt** —
+nur Einträge bearbeiten. Wix führt jetzt dauerhaft die Zone; was so ein Knopf
+mit ihr anstellt, wollen wir nicht herausfinden.
+
+---
+
+**Die verworfene Fassung (Weg B) steht unten weiter** — sie wird wieder gültig,
+sobald die Domain zu einem Registrar transferiert ist, der eigene Nameserver
+erlaubt. Zone und Werte sind geprüft, nur die Schritte 6–9 entfallen bis dahin.
 
 **Ausgangslage, vollständig ausgelesen am 2026-08-01** (nicht nur die Typen,
 an die man zufällig denkt — die Wix-Zone wurde Satz für Satz abgefragt):
