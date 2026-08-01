@@ -37,14 +37,19 @@ Bei jeder Cross-Repo-Arbeit beide lesen (liegen flach im Admin-Repo-Root):
 
 | Pfad im Website-Repo | Admin-Komponente |
 | :-- | :-- |
-| `public/img/slides/{city}/` + `slides.meta.json` | `ImageManager.tsx` (slides-Modus) |
+| `public/img/slides/{city}/` + `slides.meta.json` + `default-selection.json` | `ImageManager.tsx` (slides-Modus) |
 | `public/img/Titelbild/{city}/` | `ImageManager.tsx` (titelbild-Modus) |
+| `public/img/hero-bg/{city}/` | `ImageManager.tsx` (**herobg-Modus**, vierter Modus – bei Skill-Seiten Teil des Hero-Editors) |
 | `public/img/why/{city}/benefit-{1-4}/` (Bilder) | `ImageManager.tsx` (why-Modus) |
 | `public/why/{city}.json` (Why-Texte: Titel/Text/Alt) | `ImageManager.tsx` (why-Modus, `saveWhyBenefits`) |
-| `public/img/Titelbild/title.meta.json` (Categories/Priority) | `ImageManager.tsx` (titelbild-Modus) |
+| `public/img/Titelbild/title.meta.json` (nur `focus`/`frame`) | `ImageManager.tsx` (titelbild-Modus) |
 | `public/reviews/{city}/review*.md` | `ReviewManager.tsx` |
 | `public/faq/default/*.md` + `public/faq/{city}/*.md` | `FaqManager.tsx` |
-| `public/landings/landings.md` | `CityManager.tsx` |
+| `public/landings/landings.md` | `Dashboard.tsx` (Quick-Add). ⚠️ **Nicht mehr `CityManager.tsx`** – die Komponente existiert, wird aber von nichts mehr importiert. |
+| `public/site-texts/content.json` | `SiteTextsManager.tsx` **und** `IntroManager.tsx` (beide schreiben dieselbe Datei) |
+| `public/config/components.json` (Sektions-Stack `_order`) | `InterfaceView.tsx` – siehe `komponenten-stack.md` |
+| `public/img/referenzenLogos/` | `BrandStripeManager.tsx` |
+| `public/branding/`, `public/canvas/`, `public/du-bist-kunst/`, `public/stimmung-durch-kunst/` je `content.json` | Why-Detailseiten-Manager – siehe `content-why.md` |
 | `public/events/events.json` + `public/events/{slug}/content.json` | `EventManager.tsx` (Dashboard-Quick-Add schreibt `events.json` mit) |
 | `public/cinema/cinema.json` | `CinemaManager.tsx` |
 | `public/skills/skills.json` | `Dashboard.tsx` |
@@ -54,7 +59,7 @@ Bei jeder Cross-Repo-Arbeit beide lesen (liegen flach im Admin-Repo-Root):
 | `public/calendar/{jahr}/{monat}.json` | `CalendarView.tsx` (+ `EventModal.tsx` als Editor) |
 | Bereinigung: löscht doppelte/kaputte Bilder, putzt zugehörige `slides.meta.json`-Einträge mit | `CleanupManager.tsx` |
 
-Alle Änderungen sammeln sich als **Draft-State** (`pendingFiles`-Signal, `@preact/signals` in `src/services/state.ts`) und gehen erst beim Klick auf "Veröffentlichen" ans Repo. Der Publish ist **EIN atomarer Commit** über die Git-Data-API (`src/services/github.ts:230` `commitFilesBatch`, aufgerufen aus `src/services/publish.ts` `publishPending`): base_tree → `git/trees` (Text inline, Binär als Blob, Löschung via `sha:null`) → Commit → Branch-Ref bewegen, mit Retry bei Fremd-Commit dazwischen. Löst das frühere „ein Commit / eine PUT-DELETE pro Datei" ab – kein sekundäres Rate-Limit bei vielen Dateien, keine per-Datei-SHA-Konflikte, alles-oder-nichts. Der Vercel-Build läuft so pro Klick genau einmal.
+Alle Änderungen sammeln sich als **Draft-State** (`pendingFiles`-Signal, `@preact/signals` in `src/services/state.ts`) und gehen erst beim Klick auf "Veröffentlichen" ans Repo. Der Publish ist **EIN atomarer Commit** über die **GraphQL-Mutation `createCommitOnBranch`** (`src/services/github.ts` `commitFilesBatch`, aufgerufen aus `src/services/publish.ts` `publishPending`): alle Dateien gehen als `fileChanges.additions/deletions` (`contents` immer base64, Löschung via `{path, delete:true}`), abgesichert über `expectedHeadOid` gegen den frisch gelesenen Head, mit Neuaufsetzen bei einem Fremd-Commit dazwischen. **Kein Tree, kein `base_tree`, keine Blobs** – das war der Vorgänger. Sprengt ein Entwurf 40 MB, wird portioniert. Löst das frühere „ein Commit / eine PUT-DELETE pro Datei" ab – kein sekundäres Rate-Limit bei vielen Dateien, keine per-Datei-SHA-Konflikte, alles-oder-nichts. Der Vercel-Build läuft so pro Klick genau einmal.
 
 ## Was das Admin-Tool NICHT kann (manuell per Git pflegen)
 
@@ -69,7 +74,7 @@ WebP-Konvertierung ist **keine Lücke mehr**: das Admin-Tool konvertiert Uploads
 
 ## Vor Änderungen an `public/`-Strukturen ZWINGEND prüfen
 
-1. **Schreibt das Admin-Tool in diese Pfade?** → Check `src/components/` im Admin-Repo: `ImageManager.tsx`, `ReviewManager.tsx`, `CityManager.tsx`, `FaqManager.tsx`, `EventManager.tsx`, `CinemaManager.tsx`, `PartnerManager.tsx`, `Dashboard.tsx` (Skills/Quick-Add), `CalendarView.tsx`, `EventModal.tsx`, `CleanupManager.tsx`. Die Schreib-Logik sammelt Drafts in `src/services/state.ts` (`pendingFiles`) und committet über `src/services/publish.ts`/`github.ts` (`commitFilesBatch`, `putFile`, `deleteFile`).
+1. **Schreibt das Admin-Tool in diese Pfade?** → im Admin-Repo **`grep -rn "addPendingFile(" src/components/`**. Dort entstehen alle Zielpfade als Draft. `putFile`/`putBinaryFile`/`deleteFile` in `github.ts` haben **keinen Aufrufer mehr** – ein Grep danach findet nichts. Veröffentlicht wird gebündelt über `src/services/publish.ts` → `github.ts` `commitFilesBatch`.
 2. **Liest die Website diese Pfade?** → Check `src/utils/*.ts` im Website-Repo.
 3. **Beide Repos aktualisieren** – Admin-README/CLAUDE.md + Website-Memory (`pfadstruktur.md`, betroffene `content-*.md`, ggf. `admin-tool.md` hier).
 
