@@ -2419,11 +2419,13 @@
   },
   "mediathek/acrylgemaelde-brautpaar-hochzeitsmaler-event-karlsruhe.webp": {
     "categories": [
-      "Szenenmaler"
+      "Szenenmaler",
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler"
+        "szenenmaler",
+        "schnellzeichner"
       ],
       "events": [
         "hochzeit"
@@ -2449,9 +2451,13 @@
     }
   },
   "mediathek/gemaelde-hochzeitsfeier-brautpaar-mit-torte-von-event-illustratorin-heitlinger-genusswelten-landkreis-karlsruhe.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler"
+    ],
     "tags": {
-      "skills": [],
+      "skills": [
+        "szenenmaler"
+      ],
       "events": [
         "hochzeit"
       ],
@@ -2462,11 +2468,13 @@
   },
   "mediathek/hochzeitsmalerin-praesentiert-hochtzeitsgemaelde-mit-tanzendem-brautpaar-heitlinger-genusswelten-landkreis-karlsruhe.webp": {
     "categories": [
-      "Szenenmaler"
+      "Szenenmaler",
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler"
+        "szenenmaler",
+        "schnellzeichner"
       ],
       "events": [
         "hochzeit"
@@ -2487,10 +2495,41 @@
         "szenenmaler"
       ],
       "events": [
-        "hochzeit"
+        "hochzeit",
+        "private-feier",
+        "geburtstag",
+        "silvester",
+        "gartenparty",
+        "gala",
+        "sommerfest"
       ],
       "landings": [
-        "heidelberg"
+        "heidelberg",
+        "berlin",
+        "frankfurt",
+        "hamburg",
+        "schweiz",
+        "kaiserslautern",
+        "trier",
+        "wiesbaden",
+        "mainz",
+        "luxembourg",
+        "koeln",
+        "ludwigshafen",
+        "mannheim",
+        "belgique",
+        "hessen",
+        "rhein-main-gebiet",
+        "rheinland-pfalz",
+        "wuppertal",
+        "nord-rhein-westfalen",
+        "koblenz",
+        "neuwied",
+        "tuebingen",
+        "karlsruhe",
+        "giessen",
+        "dortmund",
+        "duesseldorf"
       ]
     }
   },
