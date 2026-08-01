@@ -12,12 +12,23 @@
 // ohne inhaltlichen Wert, und ein unnötiges Risiko für den Frontmatter-Parser
 // des Admin-Tools, der eine eigene Implementierung ist.
 //
-// Vorhandene `tags:`-Blöcke werden NIE angefasst: was im Admin gesetzt wurde,
-// gilt (gleiche Haltung wie bei `priority` und bei den Bild-Tags).
+// Vorhandene Tag-DIMENSIONEN werden NIE angefasst: was im Admin gesetzt wurde,
+// gilt (gleiche Haltung wie bei `priority` und bei den Bild-Tags). Auch ein
+// ausdrücklich leeres `landings: []` bleibt stehen – das ist eine Entscheidung
+// ("gilt überall"), keine Lücke. Seit 2026-08-01 werden aber Dimensionen
+// ergänzt, die im Block GAR NICHT stehen: ein halber Block – wie ihn der Admin
+// schreibt, wenn nur ein Skill gesetzt ist – schaltete die Ergänzung sonst
+// dauerhaft ab (Details in sync-faq-tags.mjs, dort ist es aufgefallen).
 
 import fs from 'fs';
 import path from 'path';
-import { EVENT_KEYWORDS, normalizeTagList, slugifyTag, slugSet } from './tags.mjs';
+import {
+  ergaenzeFehlendeDimensionen,
+  EVENT_KEYWORDS,
+  normalizeTagList,
+  slugifyTag,
+  slugSet,
+} from './tags.mjs';
 
 const projectRoot = process.cwd();
 const reviewsRoot = path.join(projectRoot, 'public', 'reviews');
@@ -127,6 +138,7 @@ const renderTagsBlock = (tags) => {
 
 const files = walk(reviewsRoot);
 let touched = 0;
+let ergaenzt = 0;
 let skipped = 0;
 
 for (const filePath of files) {
@@ -136,11 +148,6 @@ for (const filePath of files) {
     console.warn(`sync-reviews-tags: Warnung - kein Frontmatter, übersprungen: ${path.relative(projectRoot, filePath)}`);
     continue;
   }
-  if (/^tags\s*:/m.test(fm.body)) {
-    skipped += 1;
-    continue;
-  }
-
   const body = raw.slice(fm.end + 4); // hinter dem schliessenden ---
   const tags = {
     skills: normalizeTagList(readListField(fm.body, 'categories')),
@@ -148,13 +155,31 @@ for (const filePath of files) {
     landings: landingFromPath(filePath),
   };
 
+  // Block vorhanden → nur die Dimensionen nachtragen, die gar nicht drinstehen.
+  // Eine vorhandene, auch leere Dimension bleibt: `landings: []` heisst
+  // "gilt ueberall" und ist eine Entscheidung, keine Luecke.
+  if (/^tags\s*:/m.test(fm.body)) {
+    const neuerBody = ergaenzeFehlendeDimensionen(fm.body, tags);
+    if (!neuerBody) {
+      skipped += 1;
+      continue;
+    }
+    fs.writeFileSync(filePath, raw.slice(0, fm.start) + neuerBody + raw.slice(fm.end), 'utf-8');
+    console.log(`sync-reviews-tags: fehlende Dimension ergaenzt in ${path.relative(projectRoot, filePath)}`);
+    ergaenzt += 1;
+    continue;
+  }
+
   const next = raw.slice(0, fm.end) + renderTagsBlock(tags) + raw.slice(fm.end);
   fs.writeFileSync(filePath, next, 'utf-8');
   touched += 1;
 }
 
-if (touched === 0) {
+const teile = [];
+if (touched > 0) teile.push(`${touched} Reviews um Tags ergänzt`);
+if (ergaenzt > 0) teile.push(`${ergaenzt} um fehlende Dimensionen ergänzt`);
+if (teile.length === 0) {
   console.log(`sync-reviews-tags: Alles bereits vorhanden (${skipped} Reviews).`);
 } else {
-  console.log(`sync-reviews-tags: ${touched} Reviews um Tags ergänzt, ${skipped} bereits vorhanden.`);
+  console.log(`sync-reviews-tags: ${teile.join(', ')}, ${skipped} bereits vollständig.`);
 }

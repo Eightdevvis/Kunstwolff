@@ -86,23 +86,32 @@ ein Tag gesetzt ist (gleiche Haltung wie `ReviewManager`). Löscht jemand im Adm
 Tags einer Stadt-FAQ, um sie allgemein zu machen, ergänzt der Sync beim nächsten Build
 den Ordner-Tag wieder. „Bewusst allgemein" ist derzeit nicht ausdrückbar.
 
-⚠️ **Bekannte Grenze 2 – der gefährlichere Fall (aufgefallen 2026-08-01):** Schreibt der
-Admin einen **teilweisen** `tags:`-Block – etwa nur `skills`, ohne `landings` –, dann
-rührt der Sync die Datei **gar nicht** mehr an. Er prüft `/^tags\s*:/m`, also die bloße
-Anwesenheit des Blocks, nicht die einzelnen Dimensionen. Der Ordner-Tag kommt damit nie
-nach, und weil „Dimension fehlt = gilt überall" gilt, wandert eine Stadt-FAQ still auf
-**alle** Seiten.
+### Der halbe Tag-Block (Loch gestopft 2026-08-01)
 
-Genau das ist `public/faq/bw/wie-kann-ich-einen-event-karikaturisten-buchen.md` passiert
-(Commit `d582233`): Block vorhanden, `landings` fehlt, Datei liegt in `bw/`. Der Test
-`tests/content-tags.test.ts` („jede FAQ ausserhalb von `default/` trägt den Ort-Tag ihres
-Ordners") ist deshalb **rot** – der Wächter tut, was er soll. Zwei Wege stehen offen und
-sie führen zu verschiedenen Ergebnissen: `landings: [bw]` ergänzen (bleibt eine
-BW-Frage) **oder** die Datei nach `public/faq/default/` verschieben (gilt bewusst
-überall). Das ist eine Redaktionsentscheidung, keine technische.
+Bis dahin prüfte `sync-faq-tags.mjs` nur, **ob** ein `tags:`-Block da ist
+(`/^tags\s*:/m`), nicht welche Dimensionen darin stehen. Schrieb der Admin einen
+**teilweisen** Block – nur `skills`, ohne `landings` –, war die Ergänzung damit dauerhaft
+abgeschaltet: der Ordner-Tag kam nie nach, und weil „Dimension fehlt = gilt überall"
+gilt, wanderte eine Stadt-FAQ still auf **alle** Seiten.
 
-Der strukturelle Fix wäre, `sync-faq-tags.mjs` je **Dimension** ergänzen zu lassen statt
-je Block – dann kann ein halber Tag-Block nicht mehr blockieren.
+Aufgefallen an `public/faq/bw/wie-kann-ich-einen-event-karikaturisten-buchen.md`
+(Commit `d582233`) – der Test „jede FAQ ausserhalb von `default/` trägt den Ort-Tag ihres
+Ordners" in `tests/content-tags.test.ts` wurde rot und hat den Fall damit sichtbar
+gemacht, statt ihn monatelang laufen zu lassen.
+
+**Jetzt gilt die Regel je Dimension, nicht je Block:**
+
+- Eine Dimension, die im Block **steht**, bleibt unangetastet – auch `landings: []`.
+  Das ist eine Entscheidung („gilt überall"), keine Lücke; sonst könnte niemand eine
+  Stadt-FAQ je allgemein machen.
+- Eine Dimension, die **gar nicht** dasteht, wird aus Ordner bzw. `categories` ergänzt.
+- Die Flow-Form (`tags: { … }`, `tags: []`) wird bewusst nicht angefasst: sie lässt sich
+  nicht zeilenweise ergänzen, ohne die Datei umzuformatieren – und genau das vermeidet
+  das textuelle Einfügen ja.
+
+Die Logik liegt in `scripts/tags.mjs` (`findeTagsBlock`, `ergaenzeFehlendeDimensionen`),
+weil `sync-reviews-tags.mjs` dasselbe Loch hatte. Festgehalten in
+`tests/tag-dimensionen.test.ts` und `tests/tags.test.ts`.
 
 ## Schema.org
 

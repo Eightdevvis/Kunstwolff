@@ -312,6 +312,35 @@ vermutet. Nach Wirkung sortiert, am 2026-08-01 einzeln gegen den Code geprüft:
       Unsichtbar geblieben, weil alle **HTML**-Links stimmten — der Fehler saß
       nur *innerhalb* der JSON-LD-Blöcke.
 
+- [x] 🔴 **C — N.10 Zwei ausgelieferte Seiten ohne Impressum** ✅ **erledigt 2026-08-01**
+      Das Impressum muss von **jeder** Seite erreichbar sein (§ 5 DDG: „leicht
+      erkennbar, unmittelbar erreichbar und ständig verfügbar"). Es hängt am
+      Fußbereich, der am Layout hängt — wer am Layout vorbeikommt, hat keins.
+      Zwei Seiten kamen vorbei:
+      - `public/fonts/mayonice/demo.html` — die Beispielseite des Schriften-
+        Konverters (Transfonter). Lag unter `public/` und wurde damit 1:1
+        ausgeliefert, an Astro vorbei. Nirgends verlinkt, aber abrufbar.
+        **Entfernt**, sie war nie Inhalt der Website.
+      - `/gallerie/` — Astros Weiterleitungs-Stummel (Meta-Refresh, 310 Bytes).
+        Die 301-Regel fing nur `/gallerie` **ohne** Schrägstrich ab; mit
+        Schrägstrich kam der Stummel mit **200** durch (live nachgemessen).
+        `vercel.json` deckt jetzt beide Schreibweisen ab, und der Astro-Eintrag
+        ist raus — der Stummel wird gar nicht mehr gebaut. Ein echter 301 ist
+        ohnehin das bessere Signal als ein Meta-Refresh.
+      Gemessen: Seiten ohne Impressum-Link vorher 2, nachher **0** (von 170).
+      Festgehalten in `tests/impressum-ueberall.test.ts` — der prüft die drei
+      Wege, auf denen das wiederkommen kann: eine HTML-Datei unter `public/`,
+      eine Seite ohne Layout, ein Fußbereich ohne den Link. War rot (2 von 4).
+
+- [ ] 🟡 **S — N.11 Die Original-Schriftdateien liegen öffentlich** (neu 2026-08-01)
+      Beim Aufräumen daneben aufgefallen: `public/fonts/mayonice/mayonice_original/`
+      enthält `Mayonice.otf`, `Mayonice.ttf`, ein JPG-Muster, „More Info.txt" und
+      eine 536 KB große „Read Me.pdf" — zusammen ~900 KB, alles **frei
+      herunterladbar**. Für die Website gebraucht werden nur `.woff2`/`.woff`.
+      Ob die Lizenz das Weitergeben der Originaldateien erlaubt, kann ich nicht
+      beurteilen — deshalb nicht eigenmächtig gelöscht. Wenn es Archiv sein soll,
+      gehört es außerhalb von `public/`.
+
 - [ ] 🟡 **C+S — N.9 `/fr/belgique/` hängt in der Luft** (neu 2026-08-01, **Entscheidung nötig**)
       Die Seite ist indexierbar und steht in der Sitemap, aber **kein Klickpfad
       führt hin**. Ihr einziger eingehender Link kommt von `/belgique/` — und die
