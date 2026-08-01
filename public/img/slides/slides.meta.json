@@ -1709,16 +1709,13 @@
         "hamburg",
         "wiesbaden",
         "mainz",
-        "hessen",
-        "rhein-main-gebiet",
         "rheinland-pfalz",
         "nord-rhein-westfalen",
-        "stuttgart",
         "schnellzeichner-duesseldorf",
-        "saarland",
         "koblenz",
         "tuebingen",
-        "bw"
+        "bw",
+        "dortmund"
       ]
     },
     "priority": 12
