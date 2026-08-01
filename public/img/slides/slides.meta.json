@@ -80,7 +80,6 @@
       ],
       "events": [
         "firmenfeier",
-        "messe",
         "hochzeit",
         "private-feier",
         "gala",
@@ -451,8 +450,7 @@
         "schnellzeichner"
       ],
       "events": [
-        "firmenfeier",
-        "messe"
+        "firmenfeier"
       ],
       "landings": [
         "ludwigshafen"
@@ -918,9 +916,7 @@
         "schnellzeichner",
         "szenenmaler"
       ],
-      "events": [
-        "messe"
-      ],
+      "events": [],
       "landings": [
         "frankfurt",
         "rhein-main-gebiet"
@@ -933,7 +929,6 @@
     "tags": {
       "skills": [],
       "events": [
-        "messe",
         "hochzeit"
       ],
       "landings": [
@@ -1018,9 +1013,7 @@
     "categories": [],
     "tags": {
       "skills": [],
-      "events": [
-        "messe"
-      ],
+      "events": [],
       "landings": [
         "frankfurt"
       ]
@@ -1087,9 +1080,7 @@
       "skills": [
         "szenenmaler"
       ],
-      "events": [
-        "messe"
-      ],
+      "events": [],
       "landings": [
         "frankfurt"
       ]
@@ -1126,9 +1117,7 @@
     "categories": [],
     "tags": {
       "skills": [],
-      "events": [
-        "messe"
-      ],
+      "events": [],
       "landings": [
         "frankfurt"
       ]
@@ -1201,9 +1190,7 @@
       "skills": [
         "szenenmaler"
       ],
-      "events": [
-        "messe"
-      ],
+      "events": [],
       "landings": [
         "frankfurt"
       ]
