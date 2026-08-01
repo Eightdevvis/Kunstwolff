@@ -276,10 +276,37 @@
         "hochzeit",
         "private-feier",
         "geburtstag",
-        "sommerfest"
+        "sommerfest",
+        "firmenfeier",
+        "messe",
+        "jubilaeum"
       ],
       "landings": [
-        "luxembourg"
+        "luxembourg",
+        "berlin",
+        "frankfurt",
+        "hamburg",
+        "schweiz",
+        "kaiserslautern",
+        "mainz",
+        "koeln",
+        "ludwigshafen",
+        "mannheim",
+        "belgique",
+        "wuppertal",
+        "nord-rhein-westfalen",
+        "koblenz",
+        "neuwied",
+        "tuebingen",
+        "karlsruhe",
+        "heidelberg",
+        "giessen",
+        "dortmund",
+        "neunkirchen",
+        "bw",
+        "hanau",
+        "stuttgart",
+        "duesseldorf"
       ]
     },
     "priority": 2
@@ -2047,25 +2074,6 @@
     "altOverride": "Caricaturiste assise à un chevalet dessinant en luxembourg",
     "title": "Szenenmaler Luxembourg"
   },
-  "luxembourg/2_caricaturiste-evenementiel-luxembourg-couple-portrait-caricature-1.webp": {
-    "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
-    ],
-    "tags": {
-      "skills": [
-        "schnellzeichner",
-        "szenenmaler"
-      ],
-      "events": [],
-      "landings": [
-        "luxembourg"
-      ]
-    },
-    "priority": 2,
-    "altOverride": "Caricaturiste evenementiel luxembourg couple portrait caricature 1",
-    "title": "Schnellzeichner Luxembourg"
-  },
   "luxembourg/3_dessin-caricature-couple-amoureux-animation-evenement.webp": {
     "categories": [
       "Schnellzeichner"
@@ -2074,9 +2082,43 @@
       "skills": [
         "schnellzeichner"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "gartenparty",
+        "sommerfest"
+      ],
       "landings": [
-        "luxembourg"
+        "luxembourg",
+        "berlin",
+        "frankfurt",
+        "hamburg",
+        "schweiz",
+        "kaiserslautern",
+        "mainz",
+        "koeln",
+        "ludwigshafen",
+        "mannheim",
+        "belgique",
+        "wuppertal",
+        "nord-rhein-westfalen",
+        "koblenz",
+        "neuwied",
+        "tuebingen",
+        "karlsruhe",
+        "heidelberg",
+        "giessen",
+        "dortmund",
+        "neunkirchen",
+        "bw",
+        "hanau",
+        "stuttgart",
+        "duesseldorf"
       ]
     },
     "priority": 3
