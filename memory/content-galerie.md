@@ -25,10 +25,14 @@ konnte niemand sehen, obwohl er seit Phase 5b durchgängig beschriftet ist.
 
 ## URL
 
-`GALERIE_URL` in `src/utils/gallery.ts` ist die **eine** Quelle des Pfads
-(`/galerie/`). Die Slideshow verlinkt darüber, ein Test prüft ihn gegen die
-vorhandenen Routen – ein getippter Pfad war schon einmal ein site-weiter 404
-(WEB-001: Link `/faq`, Route hieß `/FAQ`).
+`GALERIE_URL` in `src/utils/gallery.ts` ist die Quelle des Pfads (`/galerie/`) für
+den Slideshow-Link, und ein Test prüft ihn gegen die vorhandenen Routen – ein
+getippter Pfad war schon einmal ein site-weiter 404 (WEB-001: Link `/faq`, Route
+hieß `/FAQ`).
+
+⚠️ **Zwei Handeingaben gibt es trotzdem noch:** das JSON-LD in `galerie.astro`
+(`${site}/galerie/` – die Seite importiert `GALERIE_URL` gar nicht) und der
+Textlink in `team.astro`. Wer den Pfad ändert, muss beide mitziehen.
 
 `/gallerie/` (doppeltes l, die naheliegende Fehlschreibung) ist in
 `astro.config.mjs` als `redirects` auf `/galerie/` gelegt. Astro baut daraus eine
@@ -37,8 +41,11 @@ vorhandenen Routen – ein getippter Pfad war schon einmal ein site-weiter 404
 ## Verlinkung
 
 Der Link steht in **`Slideshow.astro`**, unterhalb des Sliders – und damit unter
-JEDEM „Unsere Kunst"-Banner: Startseite, Skill-, Stadt- und Event-Seiten
-(gemessen 162 Seiten). Er gehört bewusst in die Komponente und nicht in die
+JEDEM „Unsere Kunst"-Banner: Startseite, Skill-, Stadt- und Event-Seiten. Gemessen
+am aktuellen Build sind das **118 von 172** HTML-Seiten – nicht alle, weil der
+Leer-Guard in `Slideshow.astro` Sektion **und** Link auf Seiten ohne passende
+Bilder gar nicht erst rendert (allein die 39 `aquarelle/*`-Seiten fallen so weg).
+Er gehört bewusst in die Komponente und nicht in die
 einzelnen Seiten, sonst fehlt er beim nächsten neuen Seitentyp.
 
 ## Auswahl-Logik
@@ -99,8 +106,10 @@ Container rund 390px breit statt 220.
 ### Dafür nötig: die Bildhöhe
 
 `src/utils/webpSize.ts` liest seit diesem Umbau **beide** Maße
-(`readWebpSize` → `{width, height}`; `readWebpWidth` ist ein Wrapper, den
-`srcset` weiter nutzt). `SlideItem` hat entsprechend ein `height`.
+(`readWebpSize` → `{width, height}`). `SlideItem` hat entsprechend ein `height`.
+Den Wrapper `readWebpWidth` gibt es noch, er hat aber **keinen Produktiv-Aufrufer
+mehr** – `buildSrcSet` und der Slide-Reader lesen direkt `readWebpSize(...)?.width`;
+benutzt wird er nur noch von `tests/responsive-images.test.ts`.
 
 ⚠️ Das ist keine Kosmetik: ohne `width`/`height` am `<img>` kennt der Browser
 das Seitenverhältnis erst nach dem Laden. Bei ~230 lazy geladenen Bildern in
@@ -110,7 +119,8 @@ Spalten springt die Seite dann beim Scrollen dauernd. Fehlt ein Maß, wird
 Tests dazu in `tests/gallery.test.ts`: beide Maße zu jedem Bild, nur paarweise,
 plausible Verhältnisse, und es müssen **Hoch- UND Querformate** vorkommen
 (sonst wäre das Mosaik sinnlos – und ein Header-Leser-Fehler „Höhe = Breite"
-sähe genau so aus). Stand: 97 quer, 126 hoch.
+sähe genau so aus). Stand 2026-08-01: 98 quer, 131 hoch, 9 quadratisch – zusammen
+die 238 Bilder, die `getAllSlidesWithTags()` liefert, alle mit beiden Maßen.
 
 ## Chips kommen aus dem BESTAND, nicht aus dem Vokabular
 

@@ -157,9 +157,16 @@ HÖHE, und 400 px Breite wären unscharf.
 
 Gemessen an `/berlin/`: Original 246 KB · 1200er 133 KB · 800er 78 KB.
 
-**Nur WebP.** Der Generator verarbeitet ausschliesslich `.webp`. Es gibt genau
-ein AVIF-Hero (`Titelbild/default/titelbild.avif`, 39 KB auf 49 Seiten) – das
-ist bereits kleiner als jede Variante, die daraus entstünde.
+**Nur WebP.** Der Generator verarbeitet ausschliesslich `.webp`. In den drei
+Varianten-Ordnern gibt es genau ein AVIF (`Titelbild/default/titelbild.avif`,
+39 KB auf 49 Seiten) – bereits kleiner als jede Variante, die daraus entstünde.
+
+⚠️ Ausserhalb liegt ein zweites: das einzige Bild im ganzen
+`public/img/hero-bg/`-Baum ist eine AVIF-Datei mit **313 KB**. `resolveHeroBg()`
+lässt `.avif` ausdrücklich zu und liefert sie als `backgroundImage` an
+`SkillHero.astro`. Sie bekommt kein `srcset`, weil `img/hero-bg` nicht in
+`VARIANT_SOURCES` steht – hier bleibt echtes Sparpotenzial ungenutzt, anders als
+beim 39-KB-Hero, wo Verzicht die richtige Entscheidung ist.
 
 ## Kosten
 

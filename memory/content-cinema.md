@@ -1,6 +1,12 @@
 # CinemaWelcome (Startseiten-Konfigurator)
 
-Interaktiver Konfigurator auf der Startseite (und auf Landings, wenn `cinemaWelcome` in `components.json` aktiv). Der Besucher wählt nacheinander **Event → Wunsch (Muse) → Geschmack**; am Ende wird ein personalisiertes Angebot zusammengesetzt.
+Interaktiver Konfigurator für Startseite und Landings. Der Besucher wählt nacheinander **Event → Wunsch (Muse) → Geschmack**; am Ende wird ein personalisiertes Angebot zusammengesetzt.
+
+⚠️ **Aktuell überall abgeschaltet.** `components.json` setzt `cinemaWelcome: false` in
+`homepage._default` **und** `landing._default` – bewusst, nach mom-Feedback (Commit
+`288da32`). Die Sektion steht zwar in `_order`, wird aber von `isComponentEnabled`
+aussortiert und rendert auf keiner Seite. Zum Aktivieren das Flag auf `true` setzen oder
+pro Seiten-Slug überschreiben.
 
 Aufbau: Intro-Block + 3 Orbit-Sektionen (Hauptkreis + Satelliten-Buttons) + Ergebnis-Sektion (zwei Flip-Karten).
 
@@ -84,7 +90,16 @@ Wählt der Besucher einen Satelliten mit `autoSelect` (aktuell nur **Messe → `
 - Loader: `src/utils/cinema.ts` → `getCinemaData()` (Build-Zeit, robuste Parser pro Feld)
 - Komponente: `src/components/CinemaWelcome.astro` (CSS + Client-`<script>` orchestriert Intro/Sektionen/Ergebnis via IntersectionObserver)
 - Hauptkreis-Klick navigiert bei `event`/`geschmack` zu `/{value}/` (Event-Landing bzw. Skill-Seite); `muse` navigiert nicht
-- Browser-getestet via Playwright (Happy Path + Messe-Skip), s. Commit `a6d185c`
+- Einmalig **manuell im Browser** geprüft (Happy Path + Messe-Skip). Einen
+  automatisierten Browsertest gibt es nicht – `tests/` ist reines Vitest, im Repo liegt
+  kein Playwright. (Der früher hier genannte Commit `a6d185c` existiert in keinem der
+  beiden Repos.)
+- **sessionStorage-Keys:** `cinemaIntro_v1` (Intro) sowie `cinemaWelcome_v1`,
+  `cinemaWelcome2_v1`, `cinemaWelcome3_v1` (je Orbit-Sektion) merken sich pro Session,
+  dass die Kino-Sequenz schon lief; danach greift `instantReveal()` statt
+  `playCinemaSequence()`. Wer die Animation testen will, muss den Session-Storage
+  leeren – sonst sieht man beim zweiten Aufruf nur das Ergebnis und hält die Animation
+  für kaputt. Davon getrennt: `cinemaContactPrefill_v1` fürs Kontakt-Prefill.
 
 ## Admin-Tool
 

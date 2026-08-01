@@ -42,7 +42,11 @@ Test: `tests/nav-services-skills.test.ts`.
 ⚠️ Die children unter „Services" in der JSON müssen trotzdem **nicht leer**
 sein: ein Dropdown ohne gültige children fliegt schon beim Parsen raus
 (`isValidDropdownItem`), dann findet `fillServicesWithSkills` nichts zum Füllen.
-Sie dienen nur noch als Platzhalter – gezeigt wird immer `skills.json`.
+Sie dienen als Platzhalter **und als Notnagel**: normalerweise wird `skills.json`
+gezeigt, aber wenn kein sichtbarer Skill lesbar ist (`children.length === 0`, weil
+die Datei fehlt, kaputt ist oder alles über `page-visibility` ausgeblendet wurde),
+bricht `fillServicesWithSkills` ab und lässt die Hand-Liste stehen – lieber die als
+ein leeres Menü.
 
 ## Strukturen
 
@@ -64,8 +68,15 @@ Sie dienen nur noch als Platzhalter – gezeigt wird immer `skills.json`.
 
 ## Aktueller Stand (2026-07-30)
 
-Home · Services (Schnellzeichner, Szenenmaler) · **Über uns (Team, Referenzen,
-Partner)** · FAQ (`#faq`) · Anfrage (`#contact`, cta)
+Home · Services (aus `skills.json` ersetzt: Schnellzeichner, Szenenmaler –
+`/aquarelle/` ist über `page-visibility.json` ausgeblendet) · **Events** (aus
+`events.json`, vom Code hinter Services eingefügt: Firmenfeier, Messe, Hochzeit,
+Private Feier) · **Über uns (Team, Referenzen, Partner)** · FAQ (`#faq`) ·
+Anfrage (`#contact`, cta)
+
+Das Events-Dropdown steht **nicht** in `navigation.json`:
+`addEventsDropdownNextToServices` schiebt es zur Laufzeit direkt hinter „Services"
+(`tests/nav-services-skills.test.ts` prüft, dass es im Menü landet).
 
 `Team` → `/team/` kam am 2026-07-30 dazu, siehe `content-team.md`.
 

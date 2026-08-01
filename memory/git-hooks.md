@@ -35,7 +35,7 @@ Setzt `core.hooksPath` auf `.githooks/`.
 | Hook | Wann | Was |
 | :-- | :-- | :-- |
 | `pre-commit` | Vor jedem Commit | 1. Gestagete Bilder zu WebP optimieren + gestagete WebP/AVIF auf Übergröße prüfen (`optimize:images`)<br>2. `sync:content` ausführen<br>3. generierte Ordner in `public/` stagen |
-| `pre-push` | Vor jedem Push | **Alle** nicht-WebP Bilder in `public/img/` konvertieren und als separaten Commit pushen. Fasst vorhandene WebP/AVIF **nicht** an – dafür braucht es `--shrink-existing`, siehe unten. |
+| `pre-push` | Vor jedem Push | **Alle** nicht-WebP Bilder in `public/img/` konvertieren und als separaten Commit ablegen. ⚠️ Der Hook **pusht nicht selbst** (kein `git push` darin) – der Commit bleibt lokal liegen und geht erst beim nächsten Push mit. Fasst vorhandene WebP/AVIF **nicht** an – dafür braucht es `--shrink-existing`, siehe unten. |
 
 ## Kantendeckel: EINE Quelle
 
@@ -57,7 +57,9 @@ Workflow für Endbenutzer: Bild (`.jpg`, `.jpeg`, `.png`, `.gif`) in beliebige U
 2. Konvertiert gefundene Nicht-WebP-Bilder → `.webp` (max. 1600px, Qualität 75)
 3. Löscht die Originaldateien
 4. Wenn Slides betroffen: `slides.meta.json` wird automatisch aktualisiert
-5. Erstellt einen Commit `chore: optimize images to webp` und pusht ihn mit
+5. Erstellt einen Commit `chore: optimize images to webp`. **Der Hook pusht nicht** –
+   der Commit gehört nicht zu den Refs, die der laufende Push überträgt, und geht beim
+   nächsten Push mit
 
 ## Manuelle Bildoptimierung
 
@@ -77,7 +79,14 @@ Rechnet **vorhandene** WebP/AVIF-Dateien über dem Kantendeckel an Ort und Stell
 
 **Bewusst NICHT im pre-push-Hook**, obwohl der dieses Skript aufruft. Der Hook committet sein Ergebnis ungefragt – ein automatischer Lauf wäre eine verlustbehaftete Massen-Neucodierung ohne Backup, und die Originale existieren nur im Repo. Zusätzlich bläht jede Neucodierung `.git` auf, weil Git alte Blobs behält. Der Durchgang ist für die **einmalige** Sanierung des Altbestands gedacht (Phase 3 in `reports/plan-bilder-upload-tags-2026-07-26.md`) – vorher Backup außerhalb von `public/` anlegen.
 
-Neu **hinzukommende** Übergrößen braucht das nicht: die fängt der pre-commit-Hook ab, Admin-Uploads deckelt `imageWebp.ts` browser-seitig.
+Neu **hinzukommende** Übergrößen fängt der pre-commit-Hook ab – aber ⚠️ **nur in zwei
+Ordnern**: `public/img/slides` und `public/img/Titelbild` (`watchedFolders` in
+`optimize-staged-images.mjs`), und nur für `.jpg`/`.jpeg`/`.png` plus die
+Übergrößen-Prüfung von webp/avif. Ein zu großes Bild in `public/img/why`,
+`UnsereFähigkeitenBilder`, `team`, `partners`, `referenzenLogos`, `hero-bg` oder
+`samples` sieht der Hook gar nicht; dort greift erst der pre-push-Hook. `.gif`
+konvertiert er ebenfalls nicht (anders als pre-push). Admin-Uploads deckelt
+`imageWebp.ts` browser-seitig.
 
 ## Wichtig fürs Admin-Tool
 

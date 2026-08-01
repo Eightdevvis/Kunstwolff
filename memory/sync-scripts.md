@@ -23,13 +23,13 @@ npm run sync:content:safe  # fehlertolerant (Teilfehler isoliert, Build/Dev läu
 
 | # | Script | Was es tut |
 | :-- | :-- | :-- |
-| 1 | `sync-landings.mjs` | Erstellt `public/img/slides/{city}/`, `public/reviews/{city}/`, `public/faq/{city}/`; merged Slug-Kollisionen; legt Validierungsreports in `reports/validation/` ab |
+| 1 | `sync-landings.mjs` | Erstellt **nur** `public/img/slides/{city}/` und `public/reviews/{city}/` (inkl. `.gitkeep` + `_vorlage.md`); merged Slug-Kollisionen über slides/reviews/faq; legt Validierungsreports in `reports/validation/landings/` ab. ⚠️ **`public/faq/{city}/` wird NICHT angelegt** – `faqRoot` dient hier allein dem Zusammenführen von Duplikaten |
 | 2 | `sync-skills.mjs` | Erstellt `public/img/UnsereFähigkeitenBilder/{skill}/` |
 | 3 | `sync-tags.mjs` | Erzeugt/pflegt `public/config/tags.json` (Vokabular Skill × Anlass × Ort) |
 | 4 | `sync-reviews-tags.mjs` | Ergänzt fehlende `tags:`-Blöcke in `public/reviews/**` (Ort aus Ordner, Skills aus `categories`, Anlass aus dem Text) |
 | 5 | `sync-faq-tags.mjs` | Ergänzt fehlende `tags:`-Blöcke in `public/faq/**` (Ort aus Ordner, Skills aus `categories`; Anlass wird **nicht** geraten) |
 | 6 | `sync-title-images.mjs` | Erstellt `public/img/Titelbild/{city}/` |
-| 7 | `sync-slides-metadata.mjs` | Pflegt `slides.meta.json` (Priority-Prefix, Categories, Migration) |
+| 7 | `sync-slides-metadata.mjs` | Pflegt `slides.meta.json`: Categories (aus Dateinamen abgeleitet), Tag-Vorbelegung `tags: {skills, events, landings}` und Rename-Migration. `priority` wird nur noch **übernommen**, nicht mehr aus einem Dateinamen-Präfix gelesen – gesetzt wird es allein im Admin-Tool |
 | 8 | `sync-why.mjs` | Erstellt `public/why/{city}.json`, `public/why/{skill}.json`, `public/img/why/{key}/benefit-{1-4}/` |
 | 9 | `sync-events.mjs` | Erstellt `public/img/slides/events/{event}/`, `public/img/Titelbild/events/{event}/`, `public/events/{event}/content.json` (bestehende NICHT überschreiben) |
 | 10 | `sync-erinnerungen.mjs` | Erstellt `public/erinnerungen/{city}.json`, `public/erinnerungen/{skill}.json` (bestehende NICHT überschreiben) |
@@ -65,11 +65,18 @@ npm run sync:content:safe  # fehlertolerant (Teilfehler isoliert, Build/Dev läu
 > laufen lassen **und das Ergebnis committen**. Details: `tag-system.md`.
 > Dasselbe Muster gilt für jedes Sync-Script, dessen Ergebnis der Admin liest.
 
-> **Step 8 (`validate:images`) – warum:** Der pre-push-Hook konvertiert Bilder zu `.webp` und löscht Originale, aktualisiert aber keine Verweise → tote `.jpg`-Pfade (404). Der Guard fängt das vor Commit (hart in `sync:content`) bzw. warnt bei dev/build (tolerant in `sync:content:safe`, das immer exit 0 macht). Eingeführt 2026-06-05 nachdem mehrfach jpg→webp-Leichen auf Live gingen (Samples, frankfurt.json, Luxembourg-Stub, Hochzeitsmaler, Opener-avif-Typo). Grenze: nur **literale** Pfade, keine dynamisch konkatenierten.
+> **Schritt 11 (`validate:images`) – warum:** Der pre-push-Hook konvertiert Bilder zu `.webp` und löscht Originale, aktualisiert aber keine Verweise → tote `.jpg`-Pfade (404). Der Guard fängt das vor Commit (hart in `sync:content`) bzw. warnt bei dev/build (tolerant in `sync:content:safe` – das endet nur dann mit Exit 1, wenn ein als `hart: true` markierter Schritt scheitert, aktuell `sync:tags`; „immer exit 0" galt bis zum C1-Fix). Eingeführt 2026-06-05 nachdem mehrfach jpg→webp-Leichen auf Live gingen (Samples, frankfurt.json, Luxembourg-Stub, Hochzeitsmaler, Opener-avif-Typo). Grenze: nur **literale** Pfade, keine dynamisch konkatenierten.
 
 ## Garantien
 
-- **Keine Datenverluste** – bestehende `content.json`/`why.json`/`erinnerungen.json` werden nie überschrieben
+- **Keine Datenverluste bei Events und Erinnerungen** – bestehende
+  `public/events/{slug}/content.json` und `public/erinnerungen/{key}.json` werden nie
+  überschrieben
+- ⚠️ **Ausnahme Why:** bestehende `public/why/{key}.json` **werden** neu geschrieben.
+  `syncExistingWhyFileImages()` läuft über jede Stadt-, Skill- und die Default-Datei und
+  leert absichtlich alle Felder, die wortgleich mit `default.json` sind, sowie
+  sync-generierte Bildpfade – nur so schlagen spätere Änderungen an `default.json`
+  weiter durch. Echte eigene Werte bleiben stehen (`content-why.md`)
 - **Slug-Kollisions-Handling** in `sync-landings.mjs` – `Berlin` + `berlin` werden zu `berlin` gemerged, nichts wird gelöscht
 - **Priority-Schutz** – `sync-slides-metadata.mjs` überschreibt `priority` nicht
 

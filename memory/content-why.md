@@ -2,6 +2,13 @@
 
 Die Why-Sektion zeigt 4 Benefit-Blöcke (Titel, Text, Bild) auf jeder Landing-/Skill-Seite.
 
+Jede Karte ist dabei mehr als Anzeige: sie **verlinkt positionsbasiert** auf ihre
+Detailseite (`WHY_DETAIL_LINKS[i]` in `whyDetailLinks.ts`). Ist die Zielseite über
+`isPageHiddenByPath()` ausgeblendet, rendert `Why.astro` die Karte als `<div>` statt als
+`<a>` – kein toter Link auf eine `noindex`-Seite. Überschrift und Intro der Sektion
+kommen aus `getSiteTexts(locale).why`. `tests/why-detail-links.test.ts` hält Positions-
+liste, titelbasierte Auflösung und die echten `default.json`-Titel zusammen.
+
 ## Ablage
 
 ```
@@ -10,8 +17,15 @@ public/why/<stadt>.json                 # auto von sync:why
 public/why/<skill>.json                 # auto von sync:why
 public/why/<skill>-<stadt>.json         # manuell für spezifischste Variante
 
-public/img/why/<key>/benefit-{1-4}/     # Bilder, key = <stadt> ODER <skill>
+public/img/why/<key>/benefit-{1-4}/     # Bilder, key = `default`, <stadt> ODER <skill>
+public/i18n/<locale>/why/<key>.json     # Overlay für Fremdsprachen (aktuell nur `fr`)
 ```
+
+`img/why/default/` ist die **Vorlage**: `sync:why` liest dessen Unterordner
+(`getDefaultBenefitFolders()`) und legt genau diese unter jedem anderen Key an. Dort
+liegen auch die vier Bilder der ausgelieferten `default.json`. Die Zahl 4 selbst ist
+zusätzlich fest verdrahtet – in `why.ts` (`Array.from({ length: 4 })`), in
+`sync-why.mjs` (`benefit-1`..`benefit-4`) und im Admin-`ImageManager`.
 
 ## Auflösung in `why.ts` (Priorität absteigend)
 
@@ -19,6 +33,16 @@ public/img/why/<key>/benefit-{1-4}/     # Bilder, key = <stadt> ODER <skill>
 2. `{stadt}.json` – z.B. `berlin.json`
 3. `{skill}.json` – z.B. `schnellzeichner.json`
 4. `default.json` – globaler Fallback
+5. **`fallbackDefault` – eine fest einkompilierte Notfall-Liste** in `why.ts` mit vier
+   Karten und den Bildern `/img/samples/sample1-4.webp`. Sie greift, wenn `default.json`
+   fehlt, kaputt ist oder keine gültigen Benefits enthält – **und sie füllt einzelne
+   Positionen**, die in `default.json` fehlen. Ihre Titel/Texte weichen bewusst von der
+   gepflegten `default.json` ab; wer sie auf dem Bildschirm sieht, sieht einen Defekt.
+
+`getWhyBenefits(skill, landing, locale)` hat einen dritten Parameter: bei
+`locale !== 'de'` zeigt die Wurzel nicht auf `public/why`, sondern auf
+`public/i18n/<locale>/why` (`Why.astro` reicht die Locale durch). Fehlt dort eine Datei,
+läuft die Kette leer und endet bei der deutschen `default.json`.
 
 ## JSON-Format
 
@@ -56,6 +80,19 @@ public/img/why/<key>/benefit-{1-4}/     # Bilder, key = <stadt> ODER <skill>
 - `public/img/why/<key>/benefit-{1-4}/` Ordner
 
 Basis: `default.json`. Die generierten Stadt-/Skill-Dateien enthalten **leere Felder** (`title`/`text`/`image`/`alt`); die Website merged fehlende Felder zur Laufzeit aus `default.json` (`why.ts`). Eigene Bilder/Texte entstehen nur durch Admin-Überschreibung. Manuell anlegen muss man nur `{skill}-{stadt}.json` Kombis.
+
+⚠️ **`sync:why` erstellt nicht nur, es schreibt bestehende Dateien um.** Anders als
+`sync:events` und `sync:erinnerungen`, die vorhandene Dateien nie anfassen, läuft hier
+`syncExistingWhyFileImages()` über **jede** Stadt-, Skill- und die Default-Datei und
+leert aktiv Felder:
+
+- `title`/`text`/`alt`, die **wortgleich** mit `default.json` sind → `''`
+- `image`, wenn der Pfad wie eine Sync-/Sample-Kopie aussieht (`/img/samples/…`,
+  `/img/why/default/…`, gleicher Dateiname wie das Default-Bild, `sampleN.*`)
+
+Das ist Absicht: nur so schlagen spätere Änderungen an `default.json` weiter durch.
+Echte eigene Werte bleiben stehen. Nebenbei löscht das Script `public/why/_vorlage.json`
+und legt `.gitkeep` in leere benefit-Ordner.
 
 ## Admin-Tool
 

@@ -70,7 +70,7 @@ Erzeugt und gepflegt von `scripts/sync-tags.mjs` (läuft in `sync:content`
 | Dimension | Seed-Quelle | Stand 2026-07-26 |
 | :-- | :-- | --: |
 | `skills` | `skills.json` (Titel) | 2 |
-| `tags.events` | `events.json` (Slugs) + `EXTRA_ANLAESSE` | 12 |
+| `tags.events` | `events.json` (4 Slugs) + `EXTRA_EVENTS` (8 Labels in `scripts/tags.mjs`) | 12 |
 | `tags.landings` | `landings.md` | 34 |
 
 `source` unterscheidet Herkunft: `events.json`/`skills.json`/`landings.md` sind
@@ -174,6 +174,14 @@ und `content-faqs.md`; hier nur, was am Tag-System selbst hängt:
   Tags, die es nicht gab, und die Auswahl lief zu 100 % über den Ordner. Neu:
   `scripts/sync-faq-tags.mjs` füllt sie, `matchesFAQContext` verknüpft die
   Dimensionen mit UND statt ODER, `getFAQsForContext` ersetzt das Ordner-Gate.
+- **Nachtrag 2026-07-31 – die Anlass-Dimension war auch danach noch tot.**
+  `eventKeys` entstand allein daraus, dass `city` mit `events/` beginnt, und kein
+  einziger Aufrufer tat das. Also passten alle FAQs mit Treffergüte 0, und
+  `/firmenfeier/`, `/messe/`, `/hochzeit/`, `/private-feier/` zeigten dieselben
+  Fragen wie die Startseite. Seither hat `FAQFilterContext` ein eigenes Feld
+  `event`, das `[landing].astro`, `[...kombi].astro` und `FAQ.astro` durchreichen;
+  festgenagelt in `tests/faq-anlass.test.ts`. Dazu kamen 12 Anlass-FAQs
+  (`public/faq/default/anlass--<anlass>--<thema>.md`, drei je Anlass).
 - **Lücke geschlossen:** `sync:tags`, `sync:reviews-tags` und `sync:faq-tags`
   liefen nur in der manuellen Vollvariante, nicht in `sync:content:safe` – also
   nicht im Vercel-Build. Ein im Admin neu angelegter Inhalt wäre ungetaggt und
@@ -212,16 +220,24 @@ machen.
 
 ## Abdeckung je Inhaltstyp
 
+Stand 2026-08-01, alle Zahlen nachgezählt:
+
 | Typ | | Stand |
 | :-- | --: | :-- |
-| FAQs | 71 | ✅ seit 2026-07-28 vollständig getaggt (`sync-faq-tags.mjs`); 15 bewusst ohne Ort-Tag = gelten überall |
-| Bilder / Slides | 234 | ✅ `tags` in `slides.meta.json`, 87 mit Anlass UND Ort |
-| Reviews | 38 | ✅ `tags` im Frontmatter (35 weitere Dateien sind Vorlagen) |
-| Erinnerungen | 37 | erben über Bildpfade – eigene Tags unnötig |
-| Why | 37 | erben über Bildpfade – eigene Tags unnötig |
+| FAQs | 85 | ✅ seit 2026-07-28 vollständig getaggt (`sync-faq-tags.mjs`); 26 bewusst ohne Ort-Tag = gelten überall |
+| Bilder / Slides | 238 | ✅ `tags` in `slides.meta.json` (jeder Eintrag), 102 mit Anlass UND Ort |
+| Reviews | 38 | ✅ `tags` im Frontmatter (alle 38); 36 weitere Dateien sind `_vorlage.md`, vom Sync ausgeschlossen |
+| Erinnerungen | 39 | erben über Bildpfade – eigene Tags unnötig |
+| Why | 39 | hängen **nicht** am Slide-Bestand – siehe unten |
 
-Erinnerungen und Why referenzieren Bilder per Pfad (`"image": "/img/slides/…"`)
-und erben deren Zuordnung, sobald das Rendering danach fragt.
+Erinnerungen referenzieren Slides per Pfad (`"image": "/img/slides/…"`, alle 39
+Dateien) und erben deren Zuordnung, sobald das Rendering danach fragt.
+
+⚠️ **Für Why gilt das nicht.** Keine einzige der 39 `public/why/*.json` enthält
+einen `/img/slides/`-Pfad; Why-Bilder liegen in einem eigenen Baum
+(`/img/why/<key>/benefit-N/…`) und sind in 151 von 156 Einträgen leer, also
+geerbter Default. Dort gibt es schlicht nichts zu erben – wer auf „erbt über
+Bildpfade" baut, wartet auf eine Verbindung, die es nie gab.
 
 ### Reviews
 
@@ -251,11 +267,15 @@ Siehe `admin-tool.md`.
 Zwei Punkte, die dabei wichtig waren:
 
 - Der Admin führt `categories` beim Setzen von Skill-Tags **mit**. Das bleibt
-  auch nach Phase 5b nötig, aber aus einem engeren Grund: Stadt- und
-  Event-Seiten fragen inzwischen Tags ab, die **Skill-Seiten** filtern die
-  Slideshow aber weiter über `categories` (`[skill].astro` →
-  `filteredCategories: [skillData.title]`). Ohne die Spiegelung wählt Jenny
-  einen Skill und auf `/<skill>/` ändert sich nichts.
+  auch nach Phase 5b nötig – aber aus einem anderen Grund, als hier früher stand.
+  Die reine Skill-Seite `/<skill>/` wählt ihre Slides inzwischen **selbst über den
+  Tag** (`getSkillSlides()` → `getSlidesByTag('skills', …)`, gedeckelt auf
+  `MAX_SKILL_SLIDES = 24`) und übergibt ausdrücklich kein `filteredCategories`
+  mehr. Nötig ist der Spiegel für die zwei Stellen, die noch am Label hängen:
+  die **Kombiseiten** (`[...kombi].astro`, Skill×Ort und Skill×Anlass) filtern die
+  Slideshow weiter über `filteredCategories: [skillData.title]`, und die
+  **MiniReviews im Skill-Hero** (`SkillHero.astro` → `MiniReviews.astro`) prüfen
+  ausschließlich `review.categories`, nicht `tags.skills`.
 - Neue Uploads bekommen eine Startbelegung aus ihrem Ablageort (Ordner → Ort,
   `events/<slug>/` → Anlass). Ohne sie lägen sie ungetaggt herum und wären nach
   der Umstellung auf keiner Seite mehr zu sehen.

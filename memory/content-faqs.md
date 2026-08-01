@@ -12,7 +12,7 @@ Start-Tag (`scripts/sync-faq-tags.mjs`), danach ist er reine Ablage – die Ausw
 über die Tags (siehe unten). `getFAQsByCity` / `getFAQsByCategories` / `getFAQsByCategory`
 wurden dabei **entfernt**; wer sie sucht, will `getFAQsForContext`.
 
-Vorhandene Stadt-Ordner: `belgique`, `bw`, `duesseldorf`, `frankfurt`, `heidelberg`, `kaiserslautern`, `karlsruhe`, `koblenz`, `koeln`, `ludwigshafen`, `luxembourg`, `mainz`, `mannheim`, `rheinland-pfalz`, `saarbruecken`, `saarland`, `schweiz`, `trier`, `wiesbaden`, `wuppertal` (20 Städte + `default`). Weitere Stadt-FAQs: einfach den Ordner `public/faq/<stadt>/` anlegen und MD-Files reinschreiben.
+Vorhandene Stadt-Ordner: `belgique`, `bw`, `duesseldorf`, `frankfurt`, `heidelberg`, `kaiserslautern`, `karlsruhe`, `koblenz`, `koeln`, `ludwigshafen`, `luxembourg`, `mainz`, `mannheim`, `rhein-main-gebiet`, `rheinland-pfalz`, `saarbruecken`, `saarland`, `schweiz`, `trier`, `wiesbaden`, `wuppertal` (21 Städte + `default`; 85 Dateien, davon 26 in `default/`). Weitere Stadt-FAQs: einfach den Ordner `public/faq/<stadt>/` anlegen und MD-Files reinschreiben – **kein Sync-Skript legt sie an**.
 
 ## Format
 
@@ -88,7 +88,11 @@ den Ordner-Tag wieder. „Bewusst allgemein" ist derzeit nicht ausdrückbar.
 
 ## Schema.org
 
-FAQs werden automatisch als `FAQPage` JSON-LD ausgegeben (siehe `seo.md`). Kann zu aufklappbaren FAQ-Blöcken direkt in den Google-Suchergebnissen führen.
+FAQs werden als `FAQPage` JSON-LD ausgegeben – aber **nur auf der Archivseite
+`/faq/`**: `FAQ.astro` rendert den Block ausschließlich bei `interactive={true}`,
+und das setzt allein `src/pages/faq.astro`. Die eingebetteten FAQ-Blöcke auf Stadt-,
+Skill- und Anlass-Seiten liefern kein JSON-LD (Hintergrund in `seo.md`). Kann zu
+aufklappbaren FAQ-Blöcken direkt in den Google-Suchergebnissen führen.
 
 ## Admin-Tool
 
@@ -126,7 +130,8 @@ Defaults, jede Anlass-Seite 3 eigene + 1 Default.
 
 ⚠️ **`/faq/` ist das Archiv, kein Kontext.** Ein leerer Kontext fragt keine Dimension ab
 und liefert deshalb nur den Default-Topf. `src/pages/faq.astro` reicht darum ausdrücklich
-`getAllFAQs()` als `faqs`-Prop durch – sonst verliert die Übersichtsseite 65 Fragen.
+`getAllFAQs()` als `faqs`-Prop durch – sonst verliert die Übersichtsseite 71 der
+85 Fragen (Stand 2026-08-01: 14 FAQs bilden den Default-Topf).
 
 ## Anlass-Dimension: eigenes Feld statt Schmuggel durchs city-Feld (seit 2026-07-31)
 
@@ -139,22 +144,23 @@ Startseite. Ein im Admin gesetzter Anlass-Tag konnte nie ankommen.
 
 Geändert: `src/utils/faq.ts` (`event` im Kontext), `src/components/FAQ.astro` (nimmt es an
 und reicht es weiter), die Event-Zweige in `src/pages/[landing].astro` und
-`src/pages/[...kombi].astro`. Der alte Weg `city: 'events/<slug>'` bleibt gültig –
-die FAQ-Dateien liegen so im Repo und `cityFromPath` leitet den Wert daraus ab.
+`src/pages/[...kombi].astro`. Der alte Weg `city: 'events/<slug>'` funktioniert im Code
+weiter, **wird aber von keiner Datei genutzt** – es gibt keinen Ordner `public/faq/events/`.
 
-⚠️ **Auf dem Bildschirm ändert sich vorerst nichts**, und das ist richtig so: heute haben
-**alle 71 FAQs `events: []`**, und „leer gilt überall". Der Fix macht das Zuordnen im
-Admin erst möglich – sobald dort ein Anlass gesetzt wird, greift er sofort.
+Beim Umbau am 2026-07-31 änderte sich auf dem Bildschirm erst einmal nichts, weil damals
+alle FAQs `events: []` trugen und „leer gilt überall". Inzwischen tragen **14 der 85
+FAQ-Dateien** einen Anlass-Tag (die 12 `anlass--*` in `default/` plus die beiden
+`rhein-main-gebiet`-FAQs) – der Anlass-Weg ist also aktiv, nicht mehr bloß vorbereitet.
 
 Test: `tests/faq-anlass.test.ts`, inklusive der Gegenprobe, dass eine Firmenfeier-FAQ auf
 `/messe/` NICHT erscheint.
 
 ## Anlass-FAQs (seit 2026-07-31)
 
-`public/faq/events/<anlass>--<thema>.md` – 12 Stück, drei je Anlass, getaggt über
-`tags.events`. Der Ordner ist reine Ablage: die Auswahl läuft ausschließlich über den Tag
-(`cityFromPath` würde aus `events/…` ohnehin nur „events" ableiten, das wird für die
-Zuordnung nicht benutzt).
+`public/faq/default/anlass--<anlass>--<thema>.md` – 12 Stück, drei je Anlass, getaggt
+über `tags.events` (z.B. `anlass--messe--platzbedarf.md`). Sie liegen bewusst in
+`default/`, also **ohne Ort-Tag**; die Auswahl läuft ausschließlich über den Anlass-Tag.
+Einen Ordner `public/faq/events/` gibt es nicht.
 
 Gemessen nach dem Bauen: jede der vier Anlass-Seiten zeigt **drei eigene Fragen plus eine
 allgemeine**; Startseite und Stadtseiten bleiben unverändert. Das liegt an

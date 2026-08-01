@@ -29,7 +29,16 @@ public/img/slides/category-matching.md # optionale Zusatzregeln
 
 ## Fallback-Logik
 
-- Hat eine Stadt **weniger als 6 eigene Slides**, werden Slides aus `default/` ergänzt
+- Hat eine Stadt **weniger als 6 eigene Slides** (`MIN_LANDING_SLIDES = 6`), wird über
+  `getDefaultSlides()` aufgefüllt. ⚠️ Das ist **nicht** der Ordner `default/`: solange
+  `default-selection.json` gefüllt ist (derzeit 28 Einträge aus allen Ordnern, davon
+  genau einer aus `default/`), kommen die Nachfüller aus dieser kuratierten Auswahl,
+  und der Ordner wird gar nicht gelesen. Erst bei **leerer** Auswahl-Datei greift der
+  alte Weg über `readFolderSlides('default')`.
+- **Skill-Seiten** (`/<skill>/`) fallen aus dieser Logik heraus: sie wählen über
+  `getSkillSlides()` = `getSlidesByTag('skills', skillContentKey(titel))`, also über
+  `tags.skills`, ohne Auffüllen und gedeckelt auf `MAX_SKILL_SLIDES = 24`. Was darüber
+  hinausgeht, ist über den Galerie-Link erreichbar.
 - Liegen `foto.jpg` und `foto.webp` im selben Ordner: nur `.webp` wird angezeigt (Deduplication)
 
 ### ⚠️ Auf Skill×Stadt-Seiten wird ZUERST gefiltert, dann aufgefüllt (2026-07-30)
@@ -63,8 +72,9 @@ wenn nach dem Filtern 0 Einträge übrig sind. Vorher stand die Überschrift
 ## Bildunterschrift: nur `title`, kein Rückfall auf `alt` (2026-07-31)
 
 Die Lightbox zeigte `slide.title || slide.alt`. Der Alt-Text wird aus dem
-**Dateinamen** gebaut (`normalizeAlt`: Endung weg, führende Nummer weg,
-Unterstriche zu Leerzeichen) — unter den Bildern stand also technischer Kram wie
+**Dateinamen** gebaut (`normalizeAlt`: Endung weg, führende Nummer samt folgendem
+`_`/`-` weg, Unterstriche **und Bindestriche** zu Leerzeichen) — unter den Bildern
+stand also technischer Kram wie
 „2 kollegen weihnachtsfeier trier".
 
 Jetzt zeigt sie **ausschließlich** den gepflegten `title` aus `slides.meta.json`.
