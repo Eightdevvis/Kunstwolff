@@ -356,10 +356,25 @@ describe('sync-reviews-tags.mjs', () => {
     }
   });
 
-  it('ruehrt einen vorhandenen tags-Block nicht an', () => {
-    const withTags = `---\nauthor: "T"\ntags:\n  skills:\n    - handgemacht\n---\nHochzeit!\n`;
-    const out = run({ 'trier/review0.md': withTags });
-    expect(out['trier/review0.md']).toBe(withTags);
+  // Seit 2026-08-01 gilt die Regel je DIMENSION, nicht je Block. Der Unterschied
+  // ist nicht kosmetisch: vorher schaltete ein halber Block – wie ihn der Admin
+  // schreibt, wenn nur ein Skill gesetzt ist – die Ergaenzung dauerhaft ab. Der
+  // Ordner-Tag kam nie nach, und weil eine fehlende Dimension "gilt ueberall"
+  // bedeutet, wanderte ein Stadt-Inhalt still auf saemtliche Seiten.
+  it('ruehrt eine vorhandene Dimension nicht an, ergaenzt aber die fehlenden', () => {
+    const halb = `---\nauthor: "T"\ntags:\n  skills:\n    - handgemacht\n---\nHochzeit!\n`;
+    const out = run({ 'trier/review0.md': halb })['trier/review0.md'];
+
+    expect(out).toMatch(/skills:\n\s+- handgemacht/); // unveraendert
+    expect(out).toMatch(/landings:\n\s+- trier/); // aus dem Ordner nachgetragen
+    expect(out).toMatch(/events:\n\s+- hochzeit/); // aus dem Text nachgetragen
+  });
+
+  it('laesst ein ausdruecklich leeres landings in Ruhe', () => {
+    // Das ist eine Entscheidung ("gilt ueberall"), keine Luecke - sonst koennte
+    // niemand einen Stadt-Inhalt je allgemein machen.
+    const bewusstLeer = `---\nauthor: "T"\ntags:\n  skills: []\n  events: []\n  landings: []\n---\nHochzeit!\n`;
+    expect(run({ 'trier/review0.md': bewusstLeer })['trier/review0.md']).toBe(bewusstLeer);
   });
 
   it('laesst Vorlagen aus', () => {

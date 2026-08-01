@@ -26,8 +26,8 @@ npm run sync:content:safe  # fehlertolerant (Teilfehler isoliert, Build/Dev läu
 | 1 | `sync-landings.mjs` | Erstellt **nur** `public/img/slides/{city}/` und `public/reviews/{city}/` (inkl. `.gitkeep` + `_vorlage.md`); merged Slug-Kollisionen über slides/reviews/faq; legt Validierungsreports in `reports/validation/landings/` ab. ⚠️ **`public/faq/{city}/` wird NICHT angelegt** – `faqRoot` dient hier allein dem Zusammenführen von Duplikaten |
 | 2 | `sync-skills.mjs` | Erstellt `public/img/UnsereFähigkeitenBilder/{skill}/` |
 | 3 | `sync-tags.mjs` | Erzeugt/pflegt `public/config/tags.json` (Vokabular Skill × Anlass × Ort) |
-| 4 | `sync-reviews-tags.mjs` | Ergänzt fehlende `tags:`-Blöcke in `public/reviews/**` (Ort aus Ordner, Skills aus `categories`, Anlass aus dem Text) |
-| 5 | `sync-faq-tags.mjs` | Ergänzt fehlende `tags:`-Blöcke in `public/faq/**` (Ort aus Ordner, Skills aus `categories`; Anlass wird **nicht** geraten) |
+| 4 | `sync-reviews-tags.mjs` | Ergänzt fehlende Tag-**Dimensionen** in `public/reviews/**` (Ort aus Ordner, Skills aus `categories`, Anlass aus dem Text) |
+| 5 | `sync-faq-tags.mjs` | Ergänzt fehlende Tag-**Dimensionen** in `public/faq/**` (Ort aus Ordner, Skills aus `categories`; Anlass wird **nicht** geraten) |
 | 6 | `sync-title-images.mjs` | Erstellt `public/img/Titelbild/{city}/` |
 | 7 | `sync-slides-metadata.mjs` | Pflegt `slides.meta.json`: Categories (aus Dateinamen abgeleitet), Tag-Vorbelegung `tags: {skills, events, landings}` und Rename-Migration. `priority` wird nur noch **übernommen**, nicht mehr aus einem Dateinamen-Präfix gelesen – gesetzt wird es allein im Admin-Tool |
 | 8 | `sync-why.mjs` | Erstellt `public/why/{city}.json`, `public/why/{skill}.json`, `public/img/why/{key}/benefit-{1-4}/` |
@@ -79,6 +79,12 @@ npm run sync:content:safe  # fehlertolerant (Teilfehler isoliert, Build/Dev läu
   weiter durch. Echte eigene Werte bleiben stehen (`content-why.md`)
 - **Slug-Kollisions-Handling** in `sync-landings.mjs` – `Berlin` + `berlin` werden zu `berlin` gemerged, nichts wird gelöscht
 - **Priority-Schutz** – `sync-slides-metadata.mjs` überschreibt `priority` nicht
+- **Tag-Schutz je Dimension (seit 2026-08-01)** – die beiden Tag-Skripte fassen eine
+  Dimension, die im `tags:`-Block **steht**, nie an; auch `landings: []` bleibt, weil das
+  „gilt überall" heißt. Ergänzt werden nur Dimensionen, die gar nicht dastehen. Vorher
+  galt das je **Block**, und ein halber Block aus dem Admin schaltete die Ergänzung
+  dauerhaft ab (`content-faqs.md`). Gemeinsame Logik: `scripts/tags.mjs` →
+  `findeTagsBlock` / `ergaenzeFehlendeDimensionen`
 
 ## Einzelne Sync-Befehle
 

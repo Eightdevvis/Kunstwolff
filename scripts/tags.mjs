@@ -242,3 +242,72 @@ export function inferEventsFromKey(key) {
 
   return normalizeTagList(found);
 }
+
+// ── Tag-Blöcke im Frontmatter ergänzen ───────────────────────────────────────
+
+/**
+ * Zerlegt einen `tags:`-Block im Frontmatter, ohne ihn neu zu serialisieren.
+ *
+ * Gibt `null` zurück, wenn es keinen Block gibt – oder wenn er in Flow-Form
+ * (`tags: { … }` / `tags: []`) dasteht. Den fassen wir bewusst nicht an: er
+ * lässt sich nicht zeilenweise ergänzen, ohne die Datei umzuformatieren, und
+ * genau das will dieses Vorgehen vermeiden.
+ *
+ * `vorhanden` sind die Dimensionen, die im Block als Schlüssel STEHEN – auch
+ * wenn sie leer sind. Der Unterschied ist der ganze Punkt: `landings: []` ist
+ * eine Entscheidung ("gilt überall"), ein fehlendes `landings` ist eine Lücke.
+ */
+export function findeTagsBlock(fmBody) {
+  const zeilen = fmBody.split('\n');
+  const kopf = zeilen.findIndex((z) => /^tags\s*:/.test(z));
+  if (kopf === -1) return null;
+
+  // Alles hinter dem Doppelpunkt = Flow-Form, nicht zeilenweise ergänzbar.
+  if (zeilen[kopf].slice(zeilen[kopf].indexOf(':') + 1).trim() !== '') return null;
+
+  // Nur eingerückte, nicht-leere Zeilen gehören zum Block. Leerzeilen bewusst
+  // NICHT mitnehmen: `body` endet auf `\n`, der Split hat also ein leeres
+  // Schlusselement – zählte man das mit, landete die Ergänzung hinter dem
+  // Frontmatter statt darin.
+  let ende = kopf + 1;
+  while (ende < zeilen.length && /^\s+\S/.test(zeilen[ende])) ende += 1;
+
+  const vorhanden = new Set();
+  for (let i = kopf + 1; i < ende; i += 1) {
+    const treffer = zeilen[i].match(/^\s+(skills|events|landings)\s*:/);
+    if (treffer) vorhanden.add(treffer[1]);
+  }
+
+  return { kopf, ende, vorhanden, zeilen };
+}
+
+/** Eine Dimension als YAML-Zeilen, zweistufig eingerückt wie der Rest. */
+export function renderDimension(dimension, werte) {
+  if (!werte || werte.length === 0) return [`  ${dimension}: []`];
+  return [`  ${dimension}:`, ...werte.map((w) => `    - ${w}`)];
+}
+
+/**
+ * Ergänzt in einem VORHANDENEN `tags:`-Block die Dimensionen, die gar nicht
+ * darin stehen. Vorhandene Dimensionen bleiben unangetastet – auch leere.
+ *
+ * Warum das nötig wurde (2026-08-01): die Skripte prüften nur, OB ein Block da
+ * ist. Ein halber Block – wie ihn der Admin schreibt, wenn nur ein Skill gesetzt
+ * ist – schaltete die Ergänzung damit dauerhaft ab. Der Ordner-Tag kam nie nach,
+ * und weil "Dimension fehlt = gilt überall" gilt, wanderte eine Stadt-FAQ still
+ * auf alle Seiten.
+ *
+ * Gibt den neuen Frontmatter-Body zurück oder `null`, wenn nichts zu tun war.
+ */
+export function ergaenzeFehlendeDimensionen(fmBody, werteJeDimension) {
+  const block = findeTagsBlock(fmBody);
+  if (!block) return null;
+
+  const fehlend = DIMENSIONS.filter((d) => !block.vorhanden.has(d));
+  if (fehlend.length === 0) return null;
+
+  const neueZeilen = fehlend.flatMap((d) => renderDimension(d, werteJeDimension[d] ?? []));
+  const zeilen = [...block.zeilen];
+  zeilen.splice(block.ende, 0, ...neueZeilen);
+  return zeilen.join('\n');
+}

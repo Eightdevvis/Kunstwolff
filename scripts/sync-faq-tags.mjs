@@ -15,8 +15,18 @@
 //   `answer`) – ein riesiger Diff ohne inhaltlichen Wert und ein unnötiges
 //   Risiko für den Frontmatter-Parser des Admin-Tools, der eine eigene
 //   Implementierung ist.
-// - Vorhandene `tags:`-Blöcke werden NIE angefasst: was im Admin gesetzt wurde,
-//   gilt (gleiche Haltung wie bei `priority` und bei den Bild-Tags).
+// - Vorhandene Tag-DIMENSIONEN werden NIE angefasst: was im Admin gesetzt wurde,
+//   gilt (gleiche Haltung wie bei `priority` und bei den Bild-Tags). Auch ein
+//   ausdrücklich leeres `landings: []` bleibt stehen – das ist eine Entscheidung
+//   ("gilt überall"), keine Lücke.
+//
+//   Ergänzt werden seit 2026-08-01 aber Dimensionen, die im Block GAR NICHT
+//   stehen. Vorher prüfte das Script nur, OB ein `tags:`-Block da ist. Ein halber
+//   Block – wie ihn der Admin schreibt, wenn nur ein Skill gesetzt ist –
+//   schaltete die Ergänzung damit dauerhaft ab: der Ordner-Tag kam nie nach, und
+//   weil "Dimension fehlt = gilt überall" gilt, wanderte eine Stadt-FAQ still auf
+//   alle Seiten. Aufgefallen an `faq/bw/wie-kann-ich-einen-event-karikaturisten-
+//   buchen.md`, festgehalten von `tests/content-tags.test.ts`.
 //
 // Bewusst NICHT gemacht: Anlässe aus dem Fliesstext raten. Bei den Reviews tut
 // das `eventsFromText`, weil dort der Anlass sonst NIRGENDS steht. Bei FAQs
@@ -26,7 +36,12 @@
 
 import fs from 'fs';
 import path from 'path';
-import { normalizeTagList, slugifyTag, slugSet } from './tags.mjs';
+import {
+  ergaenzeFehlendeDimensionen,
+  normalizeTagList,
+  slugifyTag,
+  slugSet,
+} from './tags.mjs';
 
 const projectRoot = process.cwd();
 const faqRoot = path.join(projectRoot, 'public', 'faq');
@@ -142,6 +157,7 @@ const renderTagsBlock = (tags) => {
 
 const files = walk(faqRoot);
 let touched = 0;
+let ergaenzt = 0;
 let skipped = 0;
 
 for (const filePath of files) {
@@ -153,10 +169,6 @@ for (const filePath of files) {
     );
     continue;
   }
-  if (/^tags\s*:/m.test(fm.body)) {
-    skipped += 1;
-    continue;
-  }
 
   const ausPfad = tagsFromPath(filePath);
   const tags = {
@@ -165,13 +177,31 @@ for (const filePath of files) {
     landings: ausPfad.landings,
   };
 
+  // Block vorhanden → nur die Dimensionen nachtragen, die gar nicht drinstehen.
+  if (/^tags\s*:/m.test(fm.body)) {
+    const neuerBody = ergaenzeFehlendeDimensionen(fm.body, tags);
+    if (!neuerBody) {
+      skipped += 1;
+      continue;
+    }
+    fs.writeFileSync(filePath, raw.slice(0, fm.start) + neuerBody + raw.slice(fm.end), 'utf-8');
+    console.log(
+      `sync-faq-tags: fehlende Dimension ergänzt in ${path.relative(projectRoot, filePath)}`,
+    );
+    ergaenzt += 1;
+    continue;
+  }
+
   const next = raw.slice(0, fm.end) + renderTagsBlock(tags) + raw.slice(fm.end);
   fs.writeFileSync(filePath, next, 'utf-8');
   touched += 1;
 }
 
-if (touched === 0) {
+const teile = [];
+if (touched > 0) teile.push(`${touched} FAQs um Tags ergänzt`);
+if (ergaenzt > 0) teile.push(`${ergaenzt} um fehlende Dimensionen ergänzt`);
+if (teile.length === 0) {
   console.log(`sync-faq-tags: Alles bereits vorhanden (${skipped} FAQs).`);
 } else {
-  console.log(`sync-faq-tags: ${touched} FAQs um Tags ergänzt, ${skipped} bereits vorhanden.`);
+  console.log(`sync-faq-tags: ${teile.join(', ')}, ${skipped} bereits vollständig.`);
 }
