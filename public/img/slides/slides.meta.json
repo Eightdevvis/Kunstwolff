@@ -3967,5 +3967,83 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
+  },
+  "bw/1_schnellzeichner_hq.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 4,
+    "tags": {
+      "landings": [
+        "bw"
+      ],
+      "skills": [
+        "schnellzeichner"
+      ]
+    }
+  },
+  "bw/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
+    "categories": [],
+    "priority": 5,
+    "tags": {
+      "landings": [
+        "bw"
+      ]
+    }
+  },
+  "bw/hochzeitsmalerin-praesentiert-hochtzeitsgemaelde-mit-tanzendem-brautpaar-heitlinger-genusswelten-landkreis-karlsruhe.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 6,
+    "tags": {
+      "landings": [
+        "bw"
+      ],
+      "skills": [
+        "szenenmaler"
+      ]
+    }
+  },
+  "bw/live-event-kuenstlerin-malt-szenen-hochzeit-heitlinger-genusswelten-baden-wuertemberg.webp": {
+    "categories": [],
+    "priority": 7,
+    "tags": {
+      "landings": [
+        "bw"
+      ]
+    }
+  },
+  "bw/karikatur-gabelstabler-messe-event-stuttgart---kopie.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "priority": 8,
+    "tags": {
+      "landings": [
+        "bw"
+      ],
+      "skills": [
+        "schnellzeichner"
+      ]
+    }
+  },
+  "bw/live-painting-party-event-stuttgart.webp": {
+    "categories": [],
+    "priority": 9,
+    "tags": {
+      "landings": [
+        "bw"
+      ]
+    }
+  },
+  "bw/schnellzeichnung-messe-stuttgart.webp": {
+    "categories": [],
+    "priority": 10,
+    "tags": {
+      "landings": [
+        "bw"
+      ]
+    }
   }
 }
