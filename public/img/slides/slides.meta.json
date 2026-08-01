@@ -4197,5 +4197,27 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
+  },
+  "mediathek/live-hand-lettering-kalligrafie-verkostungsaktion-rewe-bruchsal.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 81,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    }
+  },
+  "mediathek/live-lettering-shop-event-callygraphy-whisky.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 82,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    }
   }
 }
