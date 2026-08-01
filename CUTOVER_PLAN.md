@@ -1,6 +1,6 @@
 # Cutover-Plan: Wix → Astro auf Vercel
 
-**Stand:** 2026-08-01 (überarbeitet; ursprünglich 2026-05-05)
+**Stand:** 2026-08-01 (überarbeitet; ursprünglich 2026-05-05) — Cloudflare-Zone steht und ist geprüft
 **Ziel:** `kunstwolff.de` von Wix auf die Astro-Site (aktuell `kunstwolff.vercel.app`) umziehen.
 **Status:** **Weg B entschieden** — die DNS-Zone zieht zu Cloudflare. Siehe §2.3.
 
@@ -157,6 +157,26 @@ ist weg.
       dig @<cloudflare-ns1> www.kunstwolff.de CNAME +short  # → cname.vercel-dns.com
       ```
       Kommt hier etwas anderes, ist die Zone falsch — dann NICHT weitermachen.
+- [ ] **5b. 🔴 Domain im VERCEL-Projekt eintragen — vor dem Nameserver-Wechsel.**
+      Am 2026-08-01 beim Prüfen von Schritt 5 aufgefallen und hier nachgetragen:
+      die Zone war korrekt, aber Vercel antwortete auf
+      `curl -H "Host: www.kunstwolff.de" http://76.76.21.21/` mit
+      **`X-Vercel-Error: DEPLOYMENT_NOT_FOUND`**. Vercel kannte die Domain nicht
+      und wusste nicht, welches Projekt es ausliefern soll. Wären die Nameserver
+      vorher umgestellt worden, hätte **jeder Besucher** nach der Propagation
+      „The deployment could not be found on Vercel" gesehen — bei korrektem DNS.
+      - Vercel → Projekt → **Settings → Domains**
+      - `www.kunstwolff.de` hinzufügen (kanonischer Host)
+      - `kunstwolff.de` hinzufügen, auf **Redirect to `www.kunstwolff.de`**
+        stellen (= Schritt 10, der Apex→www-Redirect; gehört in die
+        Domain-Settings, **nicht** in `vercel.json`)
+      - Die von Vercel angezeigten Sollwerte gegen die Zone halten: müssen
+        `76.76.21.21` und `cname.vercel-dns.com` sein
+      - Vercel markiert beide als „Invalid Configuration" — **normal**, solange
+        das öffentliche DNS noch auf Wix zeigt
+      - Gegenprobe, bevor es weitergeht: der `curl` oben muss **200** liefern,
+        nicht 404
+
 - [ ] **6. Nameserver beim Registrar umstellen** — dort, wo die Domain gekauft
       ist (nicht bei Wix). `ns12/ns13.wixdns.net` durch die zwei Nameserver
       ersetzen, die Cloudflare dir nennt.
