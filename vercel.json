@@ -68,6 +68,11 @@
       "permanent": true
     },
     {
+      "source": "/gallerie/",
+      "destination": "/galerie/",
+      "permanent": true
+    },
+    {
       "source": "/landingpages/landing",
       "destination": "/",
       "permanent": true

@@ -93,12 +93,15 @@ const bildVarianten = () => ({
 export default defineConfig({
   site: siteUrl,
   // Die Galerie liegt unter `/galerie/` – deutsche Schreibweise, weil die URL
-  // öffentlich sichtbar ist und in der Suche steht. `/gallerie/` (doppeltes l)
-  // ist die naheliegende Fehlschreibung und landet per Weiterleitung am Ziel,
-  // statt auf der 404-Seite.
-  redirects: {
-    '/gallerie': '/galerie/',
-  },
+  // öffentlich sichtbar ist und in der Suche steht. Die naheliegende
+  // Fehlschreibung `/gallerie/` (doppeltes l) fängt `vercel.json` ab, in beiden
+  // Schreibweisen und als echter 301.
+  //
+  // Hier steht bewusst KEIN `redirects`-Eintrag mehr: bei statischer Ausgabe
+  // baut Astro daraus eine HTML-Seite mit Meta-Refresh. Die hat keinen
+  // Fußbereich und damit kein Impressum – und sie wurde tatsächlich
+  // ausgeliefert, weil die 301-Regel anfangs nur `/gallerie` OHNE Schrägstrich
+  // traf. Ein echter 301 ist ohnehin das bessere Signal.
   integrations: [
     preact(),
     bildVarianten(),
