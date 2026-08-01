@@ -59,7 +59,32 @@ Weiterleitungsketten. Die Seite ist aus meiner Sicht umzugsbereit.
    sonst Treffer, nach Klicks sortiert. Adressen ohne Klicks werden
    übersprungen (`--alle` nimmt sie mit), Wildcards wie
    `/portfolio-collections/:rest*` werden aufgelöst. Exit 1, wenn etwas fehlt.
-   **Du brauchst nur den Export zu ziehen und mir den Pfad zu nennen.**
+   ✅ **ERLEDIGT am 2026-08-01 — und es hat sich gelohnt.**
+   Der Export (12 Monate, 23 Adressen, 418 Klicks) fand **7 Adressen mit echten
+   Klicks ohne jede Weiterleitung**, plus 2 ohne Klicks. Die Live-Sitemap allein
+   hatte sie **nicht** gezeigt — sie stehen dort nicht mehr drin, ranken aber
+   weiter. Genau dafür war der Export da.
+
+   | Adresse | Klicks | Ziel | woher das Ziel |
+   |:--|--:|:--|:--|
+   | `/blank-1` | 39 | `/team/` | Wix leitet selbst auf `/about` → dort `/team/` |
+   | `/landing/start-kaiserslautern` | 6 | `/kaiserslautern/` | Stadt |
+   | `/services-9` | 3 | `/galerie/` | Wix leitet selbst auf `/galerie` |
+   | `/landing/start-darmstadt` | 2 | `/hessen/` | keine Darmstadt-Seite; Hessen ist indexierbar |
+   | `/landing/start-saarland` | 1 | `/saarland/` | Region |
+   | `/blank-2` | 1 | `/contact/` | Wix leitet selbst auf `/kontakt` → dort `/contact/` |
+   | `/landing/start-koblenz` | 1 | `/koblenz/` | Stadt (noindex, aber die richtige Seite) |
+   | `/landing/start-saarbr%C3%BCcken` | 0 | `/saarbruecken/` | Stadt |
+   | `/kopie-von-schnellzeichnung-galerie` | 0 | `/galerie/` | Dublette |
+
+   `/blank-1` war mit 39 Klicks die **zweitstärkste Seite der ganzen Domain**
+   nach der Startseite. Ohne den Export wäre sie beim Umzug still verschwunden.
+   Die Ziele der drei `blank`/`services`-Adressen sind **nicht geraten**,
+   sondern Wix' eigenen 301ern entnommen; die `/landing/start-*` sind auf Wix
+   schon heute 404 und ranken trotzdem noch.
+   Dazu ein Auffangnetz `/landing/:rest*` → `/` für Städte, die es in dem
+   Muster noch geben mag, aber nie Klicks hatten.
+   **Beide Prüfungen jetzt bei 0 Lücken** (GSC-Export und Live-Sitemap).
 
 ### Beim Umzug selbst nicht verwechseln
 

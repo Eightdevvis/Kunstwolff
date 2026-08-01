@@ -78,6 +78,56 @@
       "permanent": true
     },
     {
+      "source": "/blank-1",
+      "destination": "/team/",
+      "permanent": true
+    },
+    {
+      "source": "/blank-2",
+      "destination": "/contact/",
+      "permanent": true
+    },
+    {
+      "source": "/services-9",
+      "destination": "/galerie/",
+      "permanent": true
+    },
+    {
+      "source": "/kopie-von-schnellzeichnung-galerie",
+      "destination": "/galerie/",
+      "permanent": true
+    },
+    {
+      "source": "/landing/start-kaiserslautern",
+      "destination": "/kaiserslautern/",
+      "permanent": true
+    },
+    {
+      "source": "/landing/start-saarland",
+      "destination": "/saarland/",
+      "permanent": true
+    },
+    {
+      "source": "/landing/start-saarbr%C3%BCcken",
+      "destination": "/saarbruecken/",
+      "permanent": true
+    },
+    {
+      "source": "/landing/start-koblenz",
+      "destination": "/koblenz/",
+      "permanent": true
+    },
+    {
+      "source": "/landing/start-darmstadt",
+      "destination": "/hessen/",
+      "permanent": true
+    },
+    {
+      "source": "/landing/:rest*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/schnellzeichner-duesseldorf",
       "destination": "/schnellzeichner-karikaturist/",
       "permanent": true
