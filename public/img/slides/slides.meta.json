@@ -1685,16 +1685,22 @@
   },
   "koeln/10_digitale-live-portraits.webp": {
     "categories": [
-      "Schnellzeichner"
+      "Schnellzeichner",
+      "Szenenmaler"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner"
+        "schnellzeichner",
+        "szenenmaler"
       ],
       "events": [
         "firmenfeier",
         "messe",
-        "jubilaeum"
+        "jubilaeum",
+        "gala",
+        "sommerfest",
+        "weihnachtsfeier",
+        "private-feier"
       ],
       "landings": [
         "koeln",
@@ -1702,7 +1708,6 @@
         "hamburg",
         "schweiz",
         "mainz",
-        "nord-rhein-westfalen",
         "main-taunus-kreis",
         "stuttgart",
         "duesseldorf",
@@ -1710,7 +1715,20 @@
         "neuwied",
         "karlsruhe",
         "neunkirchen",
-        "fulda"
+        "fulda",
+        "kaiserslautern",
+        "trier",
+        "wiesbaden",
+        "luxembourg",
+        "ludwigshafen",
+        "belgique",
+        "saarbruecken",
+        "saarland",
+        "hessen",
+        "rhein-main-gebiet",
+        "rheinland-pfalz",
+        "wuppertal",
+        "nord-rhein-westfalen"
       ]
     },
     "priority": 10
@@ -1771,10 +1789,26 @@
         "schnellzeichner"
       ],
       "events": [
-        "messe"
+        "messe",
+        "firmenfeier"
       ],
       "landings": [
-        "koeln"
+        "koeln",
+        "duesseldorf",
+        "fulda",
+        "hanau",
+        "neunkirchen",
+        "dortmund",
+        "giessen",
+        "karlsruhe",
+        "neuwied",
+        "koblenz",
+        "wuppertal",
+        "belgique",
+        "berlin",
+        "hamburg",
+        "schweiz",
+        "ludwigshafen"
       ]
     },
     "priority": 13
@@ -1823,17 +1857,6 @@
       ]
     },
     "priority": 2
-  },
-  "koeln/3_digital-artist.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": [
-        "koeln"
-      ]
-    },
-    "priority": 3
   },
   "koeln/4_digital-caricature.webp": {
     "categories": [
