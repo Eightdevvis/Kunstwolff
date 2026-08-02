@@ -1758,21 +1758,7 @@
         "firmenfeier",
         "jubilaeum"
       ],
-      "landings": [
-        "koeln",
-        "berlin",
-        "frankfurt",
-        "hamburg",
-        "wiesbaden",
-        "mainz",
-        "rheinland-pfalz",
-        "nord-rhein-westfalen",
-        "duesseldorf",
-        "koblenz",
-        "tuebingen",
-        "bw",
-        "dortmund"
-      ]
+      "landings": []
     },
     "priority": 12
   },
@@ -2495,21 +2481,10 @@
       "landings": [
         "heidelberg",
         "berlin",
-        "frankfurt",
         "hamburg",
         "schweiz",
-        "kaiserslautern",
-        "trier",
-        "wiesbaden",
-        "mainz",
-        "luxembourg",
-        "koeln",
         "ludwigshafen",
-        "mannheim",
         "belgique",
-        "hessen",
-        "rhein-main-gebiet",
-        "rheinland-pfalz",
         "wuppertal",
         "nord-rhein-westfalen",
         "koblenz",
