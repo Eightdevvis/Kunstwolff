@@ -2386,9 +2386,13 @@
     "title": "Schnellzeichner Mannheim"
   },
   "mediathek/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler"
+    ],
     "tags": {
-      "skills": [],
+      "skills": [
+        "szenenmaler"
+      ],
       "events": [
         "hochzeit"
       ],
