@@ -1759,7 +1759,6 @@
       ],
       "events": [
         "messe",
-        "firmenfeier",
         "jubilaeum"
       ],
       "landings": []
@@ -2025,13 +2024,9 @@
     "title": "Live-Kunst Ludwigshafen"
   },
   "luxembourg/1_caricaturiste-assise-à-un-chevalet-dessinant-en-luxembourg.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
+      "skills": [],
       "events": [],
       "landings": [
         "luxembourg"
@@ -2743,7 +2738,9 @@
       "skills": [
         "szenenmaler"
       ],
-      "events": [],
+      "events": [
+        "hochzeit"
+      ],
       "landings": []
     }
   },
@@ -3897,13 +3894,13 @@
   },
   "trier/15_schnellzeichnerin-zeichnet-gast-im-garten-gartenparty.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Szenenmaler",
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "szenenmaler",
+        "schnellzeichner"
       ],
       "events": [
         "gartenparty"
@@ -3912,7 +3909,8 @@
         "trier"
       ]
     },
-    "priority": 15
+    "priority": 15,
+    "enabled": false
   },
   "trier/16_schnellzeichnerin-zeichnet-paar-hochzeit-trier-saarburg.webp": {
     "categories": [
@@ -4012,7 +4010,8 @@
         "trier"
       ]
     },
-    "priority": 20
+    "priority": 20,
+    "enabled": false
   },
   "trier/21_schnellzeichnerin-restaurant-zur-sim-trier.webp": {
     "categories": [
@@ -4305,12 +4304,14 @@
   },
   "mediathek/live-hand-lettering-kalligrafie-verkostungsaktion-rewe-bruchsal.webp": {
     "categories": [
-      "Szenenmaler"
+      "Szenenmaler",
+      "Schnellzeichner"
     ],
     "priority": 81,
     "tags": {
       "skills": [
-        "szenenmaler"
+        "szenenmaler",
+        "schnellzeichner"
       ]
     }
   },
@@ -4415,12 +4416,14 @@
   },
   "default/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
     "categories": [
-      "Szenenmaler"
+      "Szenenmaler",
+      "Schnellzeichner"
     ],
     "priority": 228,
     "tags": {
       "skills": [
-        "szenenmaler"
+        "szenenmaler",
+        "schnellzeichner"
       ]
     }
   },
