@@ -20,9 +20,9 @@
     "_default": {
       "_order": [
         "opener",
-        "landingIntro",
         "homepageReviews",
         "slideshow",
+        "landingIntro",
         "cinemaWelcome",
         "eventtypes",
         "why",
