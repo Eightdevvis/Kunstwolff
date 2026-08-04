@@ -4424,5 +4424,25 @@
         "szenenmaler"
       ]
     }
+  },
+  "default/caricaturiste-événementiel-luxembourg.webp": {
+    "categories": [],
+    "priority": 229,
+    "tags": {}
+  },
+  "default/dessin-de-couple.webp": {
+    "categories": [],
+    "priority": 230,
+    "tags": {}
+  },
+  "default/dessins-caricaturaux-lors-d'un-mariage.webp": {
+    "categories": [],
+    "priority": 231,
+    "tags": {}
+  },
+  "default/un-couple-heureux-montre-fièrement-son-portrait-caricatural-personnalisé-lors-d-une-foire-d-art-au-luxembourg-entouré-d-autres-oeuvres-de-bande-dessinée.webp": {
+    "categories": [],
+    "priority": 232,
+    "tags": {}
   }
 }
