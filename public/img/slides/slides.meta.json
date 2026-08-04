@@ -2387,11 +2387,13 @@
   },
   "mediathek/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
     "categories": [
-      "Szenenmaler"
+      "Szenenmaler",
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler"
+        "szenenmaler",
+        "schnellzeichner"
       ],
       "events": [
         "hochzeit"
