@@ -1328,13 +1328,11 @@
   },
   "hessen/familienportraet-schnellzeichnerin-wiesbaden.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": [
@@ -1503,11 +1501,11 @@
   },
   "kaiserslautern/7_man-shows-speedpainting-by-caricaturist-kaiserslautern.webp": {
     "categories": [
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": [
@@ -2998,13 +2996,11 @@
   },
   "saarbruecken/7_schnellzeichnerin-saarland-sylvester-event-spielbanken-saarbruecken.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "silvester"
@@ -3378,13 +3374,9 @@
     "priority": 1
   },
   "stuttgart/funny-picture-speed-painting-trade-fair---kopie.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
+      "skills": [],
       "events": [],
       "landings": [
         "stuttgart"
@@ -3919,13 +3911,11 @@
   },
   "trier/16_schnellzeichnerin-zeichnet-paar-hochzeit-trier-saarburg.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "hochzeit"
