@@ -22,6 +22,7 @@ const logosRoot = path.resolve('./public/img/referenzenLogos');
 const NAME_KORREKTUREN: Record<string, string> = {
   samsung: 'Samsung', // Datei heißt "SAmsung.svg"
   'europaeische zentral bank': 'Europäische Zentralbank',
+  'nestle textlogo blue': 'Nestlé', // Datei heißt "nestle_textlogo_blue.svg.webp"
 };
 
 const korrekturKey = (label: string): string =>
@@ -38,9 +39,33 @@ const korrekturKey = (label: string): string =>
  * Bundesbank"). Groß-/Kleinschreibung bleibt wie im Dateinamen, damit
  * Abkürzungen wie `CDU` nicht zu „Cdu" werden.
  */
+/**
+ * Entfernt die Bild-Endung – und zwar so oft, wie am Ende eine steht.
+ *
+ * Der Grund ist eine DOPPELTE Endung: `nestle_textlogo_blue.svg.webp`. Der
+ * Bild-Optimierer wandelt Hochgeladenes nach `.webp` und hängt die neue Endung
+ * an, statt die alte zu ersetzen. Mit nur einem Schnitt blieb „nestle textlogo
+ * blue.svg" stehen – und seit `/referenzen/` die Namen als Gitter ANZEIGT,
+ * stand das als Markenname auf einer indexierten Seite.
+ *
+ * Sicherheitsnetz: nur bekannte Bild-Endungen werden geschnitten. Eine Marke,
+ * die tatsächlich einen Punkt im Namen trägt, bleibt damit unangetastet.
+ */
+const ohneBildEndungen = (name: string): string => {
+  let out = name;
+  // Höchstens ein paar Runden – eine Schleife ohne Deckel über einem Dateinamen
+  // ist eine Falle, die man nur einmal baut.
+  for (let i = 0; i < 4; i += 1) {
+    const punkt = out.lastIndexOf('.');
+    if (punkt <= 0) break;
+    if (!allowedExtensions.has(out.slice(punkt).toLowerCase())) break;
+    out = out.slice(0, punkt);
+  }
+  return out;
+};
+
 export const buildBrandLabel = (fileName: string): string => {
-  const roh = decodeURIComponent(fileName)
-    .replace(/\.[^.]+$/, '')
+  const roh = ohneBildEndungen(decodeURIComponent(fileName))
     .replace(/[_-]+/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()

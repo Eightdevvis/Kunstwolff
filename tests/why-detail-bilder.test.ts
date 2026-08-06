@@ -21,9 +21,27 @@ import { getStimmungDurchKunstContent } from '../src/utils/stimmungDurchKunst';
 const existiert = (webPfad: string): boolean =>
   fs.existsSync(path.resolve('./public', webPfad.replace(/^\//, '')));
 
+/**
+ * Der Prüfwert wird AUS DEM ORDNER gelesen, nicht hineingeschrieben.
+ *
+ * Vorher stand hier ein fester Dateiname. Genau der wurde am 2026-08-06 im
+ * Admin ausgetauscht — und der Test, der vor dem Bildwechsel schützen soll,
+ * fiel selbst dem Bildwechsel zum Opfer. Ein Prüfwert, der bei jedem
+ * Bildwechsel bricht, prüft am Ende nur noch sich selbst.
+ */
+const ersteDateiIn = (ordner: string): string => {
+  const abs = path.resolve('./public', ordner.replace(/^\//, ''));
+  const treffer = fs
+    .readdirSync(abs)
+    .filter((f) => /\.(webp|avif|jpe?g|png|gif|svg)$/i.test(f))
+    .sort();
+  if (treffer.length === 0) throw new Error(`Kein Bild in ${ordner} – Testvoraussetzung fehlt.`);
+  return `${ordner}/${treffer[0]}`;
+};
+
 describe('aufloesenBildpfad', () => {
   it('lässt einen gültigen Pfad unverändert', () => {
-    const echt = '/img/why/default/benefit-4/digital-speedpainter-cologne.webp';
+    const echt = ersteDateiIn('/img/why/default/benefit-4');
     expect(existiert(echt)).toBe(true);
     expect(aufloesenBildpfad(echt)).toBe(echt);
   });
