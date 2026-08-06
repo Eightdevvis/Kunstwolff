@@ -91,5 +91,17 @@
     "actors": [
       "Jenny"
     ]
+  },
+  {
+    "id": "mselewcc3pe2",
+    "title": "Gartenparty",
+    "description": "50 Gäste 4-5 Stunden",
+    "date": "2026-08-22",
+    "time": 17,
+    "location": "Wiesbaden",
+    "categoryId": "auftrag",
+    "actors": [
+      "Gaby"
+    ]
   }
 ]

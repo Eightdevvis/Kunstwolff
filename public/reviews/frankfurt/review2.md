@@ -1,5 +1,5 @@
 ---
-author: "Kaan Kilicasian, EZB lange Nacht der Museen"
+author: "Kaan Kilicasian"
 categories:
   - Schnellzeichner
 tags:

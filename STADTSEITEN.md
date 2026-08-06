@@ -8,6 +8,11 @@ nicht an**.
 
 Dieses Dokument sagt pro Stadt, was noch fehlt.
 
+> **Gabriele hat am 2026-08-06 selbst Vorspanntexte für elf Städte eingepflegt**
+> (frankfurt, schweiz, kaiserslautern, trier, wiesbaden, mainz, luxembourg,
+> koeln, giessen, ludwigshafen und einen `_default`). Diese Texte gelten. Meine
+> Entwürfe stehen nur dort, wo sie keinen geschrieben hat.
+
 ## Die Regel, nach der freigeschaltet wird
 
 Eine Stadt darf sichtbar werden, wenn sie **beides** mitbringt:
@@ -16,42 +21,47 @@ Eine Stadt darf sichtbar werden, wenn sie **beides** mitbringt:
    fremden Orten auf — dann stehen fremde Locations unter der eigenen H1)
 2. **Eigenen Text**, der nicht auf jede andere Stadt genauso passt
 
-Der Vorspanntext allein reicht **nicht**. Er ist rund 40 Wörter lang auf einer
-Seite mit ~1500 — das sind knapp 3 % eigener Anteil. Was eine Stadtseite
-wirklich einzigartig macht, sind ihre **eigenen Fotos und eigenen
-Kundenstimmen**. Beides kann nur Gabriele liefern.
+Der Vorspanntext allein reicht **nicht**. Er ist 20–45 Wörter lang auf einer
+Seite mit ~1500 — das sind rund 2 % eigener Anteil. Was eine Stadtseite wirklich
+einzigartig macht, sind ihre **eigenen Fotos und eigenen Kundenstimmen**. Beides
+kann nur Gabriele liefern.
 
-## Stand je Stadt (erste Welle)
+Seit es einen `_default`-Vorspann gibt, hat **jede** Stadt einen Text — aber
+Städte ohne eigenen zeigen alle denselben. Für die Dopplung ändert das nichts.
 
-Vorspanntexte sind als Entwurf eingetragen und über den Admin änderbar
-(Website-Texte → Stadt-Vorspann). Sie sind **noch nicht geprüft**.
+## Stand je versteckter Stadt
 
-| Stadt | Eigene Fotos | Kundenstimmen | FAQ | Vorspann | Was fehlt zum Freischalten |
-| :-- | --: | --: | --: | :-- | :-- |
-| `bw` (Baden-Württemberg) | 10 | 1 | 4 | ✅ neu | **Fast fertig** — siehe Sonderfall unten |
-| `wiesbaden` | 5 | 5 | 3 | ✅ neu | 1 Foto |
-| `koblenz` | 4 | 0 | 3 | ✅ neu | 2 Fotos, Kundenstimmen |
-| `main-taunus-kreis` | 4 | 0 | 0 | ✅ ergänzt | 2 Fotos, Kundenstimmen |
-| `wuppertal` | 4 | 0 | 2 | ✅ neu | 2 Fotos (eines ist falsch abgelegt, s.u.) |
-| `karlsruhe` | 3 | 0 | 4 | ✅ neu | 3 Fotos, Kundenstimmen |
-| `rhein-main-gebiet` | 3 | 1 | 2 | ✅ neu | 3 Fotos |
-| `rheinland-pfalz` | 3 | 9 | 3 | ✅ neu | 3 Fotos |
-| `fulda` | 4 | 0 | 0 | ❌ **keiner** | siehe unten |
+| Stadt | Eigene Fotos | Kundenstimmen | Vorspann | Was zum Freischalten fehlt |
+| :-- | --: | --: | :-- | :-- |
+| `bw` (Baden-Württemberg) | 10 | 1 | 42 W | **nichts** — siehe Sonderfall 2 |
+| `wiesbaden` | 5 | 5 | 21 W (Gabriele) | 1 Foto |
+| `koblenz` | 4 | 0 | 43 W | 2 Fotos, Kundenstimmen |
+| `main-taunus-kreis` | 4 | 0 | 44 W | 2 Fotos, Kundenstimmen |
+| `wuppertal` | 4 | 0 | 33 W | 2 Fotos (eines falsch abgelegt, s.u.) |
+| `fulda` | 4 | 0 | — | 2 Fotos + siehe Sonderfall 1 |
+| `karlsruhe` | 3 | 0 | 39 W | 3 Fotos, Kundenstimmen |
+| `rhein-main-gebiet` | 3 | 1 | 37 W | 3 Fotos |
+| `rheinland-pfalz` | 3 | 9 | 32 W | 3 Fotos |
+| `mainz` | 2 | 2 | 28 W (Gabriele) | 4 Fotos |
+| `mannheim` | 2 | 1 | — | 4 Fotos, eigener Text |
+| `hanau` | 2 | 0 | — | 4 Fotos, eigener Text, Kundenstimmen |
+| `belgique` | 1 | 0 | — | 5 Fotos, eigener Text, Kundenstimmen |
+| `duesseldorf` | 1 | 1 | — | 5 Fotos, eigener Text |
+| `neunkirchen` | 1 | 0 | — | 5 Fotos, eigener Text, Kundenstimmen |
+| `giessen` | 0 | 1 | 14 W (Gabriele) | **alle** Fotos |
+| `heidelberg` | 0 | 1 | — | **alle** Fotos, eigener Text |
+| `dortmund` | 0 | 0 | — | **alles** |
+| `hamburg` | 0 | 0 | — | **alles** |
+| `neuwied` | 0 | 0 | — | **alles** |
+| `nord-rhein-westfalen` | 0 | 0 | — | **alles** |
+| `tuebingen` | 0 | 0 | — | **alles** |
 
-**Zweite Welle** (1–2 eigene Fotos): `belgique`, `duesseldorf`, `hanau`,
-`mainz`, `mannheim`, `neunkirchen`.
-
-**Ohne ein einziges eigenes Foto** — bleiben versteckt, bis Bilder da sind:
-`dortmund`, `giessen`, `hamburg`, `heidelberg`, `neuwied`,
-`nord-rhein-westfalen`, `tuebingen`.
-
-## Woher der Ortsbezug in den Texten kommt
+## Woher der Ortsbezug in meinen Entwürfen kommt
 
 Jede genannte Location ist durch ein echtes Foto gedeckt — die Ortsangaben
 stecken in den Dateinamen unter `public/img/slides/<stadt>/`:
 
 - **bw** → Messe Stuttgart, Heitlinger Genusswelten (Östringen)
-- **wiesbaden** → Domäne Mechthildshausen
 - **main-taunus-kreis** → Ölmühle Hattersheim, Wickerbachalm Hochheim
 - **rhein-main-gebiet** → Hanau, Domäne Mechthildshausen, Aschaffenburg
 - **rheinland-pfalz** → Gasthaus Leidenborn, Veitsrodt
@@ -60,9 +70,26 @@ stecken in den Dateinamen unter `public/img/slides/<stadt>/`:
 
 **Erfunden wurde nichts.** Wo mir Belege fehlten, steht nichts.
 
+## 🔴 Tippfehler in den neuen Texten — teils auf indexierten Seiten
+
+Nicht korrigiert, weil es Gabrieles Texte sind. Aber sie stehen live und Google
+liest sie mit:
+
+| Wo | Steht da | Gemeint ist vermutlich |
+| :-- | :-- | :-- |
+| `_default` (**alle Städte ohne eigenen Text**) | „für Ihr **Evrent**" | Event |
+| `frankfurt` (indexiert) | „in Frankfurt. **I**" am Absatzende | Buchstabe zu viel |
+| `frankfurt` (indexiert) | „in wenigen Minuten **verweigen** wir Ihre Mitarbeiter" | verewigen |
+| `kaiserslautern` (indexiert) | „Karikaturisten, **liver-painter**" | Live-Painter |
+| `kaiserslautern` (indexiert) | „eine gute Darstellung**,**" — Absatz endet mit Komma | Punkt |
+| `wiesbaden` (versteckt) | „ein Erlebnis für **Iher** Gäste … mit **enem** Schnellzeichner" | Ihre / einem |
+
+Besonders ärgerlich ist `_default`: der Text erscheint auf **jeder** Stadtseite
+ohne eigenen Vorspann, „Evrent" also gleich vielfach.
+
 ## Vier Punkte, die eine Entscheidung brauchen
 
-### 1. `fulda` hat keinen Text bekommen — und das mit Absicht
+### 1. `fulda` hat keinen eigenen Text bekommen — mit Absicht
 
 Die vier Fotos heißen `1000018053.webp`, `1000018054.webp`, `1000018273.webp`,
 `1000018280.webp`. Daraus lässt sich **kein einziger Ortsbezug** belegen — ich
@@ -79,11 +106,11 @@ schon vor diesen Änderungen.)
 
 ### 2. `bw` erfüllt die Freischalt-Regel bereits — warum ist es versteckt?
 
-Baden-Württemberg hat **10 eigene Fotos** und hatte schon vorher einen eigenen
-Vorspann. Nach der dokumentierten Regel (≥ 6 eigene Fotos **oder** eigener
-Intro) müsste es sichtbar sein. Ich habe es **nicht** eigenmächtig
-freigeschaltet — möglicherweise sind nicht alle 10 Bilder über
-`slides.meta.json` aktiv, oder es gab einen anderen Grund.
+Baden-Württemberg hat **10 eigene Fotos** und einen eigenen Vorspann. Nach der
+dokumentierten Regel (≥ 6 eigene Fotos **oder** eigener Intro) müsste es
+sichtbar sein. Ich habe es **nicht** eigenmächtig freigeschaltet — möglicherweise
+sind nicht alle 10 Bilder über `slides.meta.json` aktiv, oder es gab einen
+anderen Grund.
 
 **Zu klären, bevor jemand die Zeile aus `page-visibility.json` streicht.**
 
@@ -96,6 +123,8 @@ freigeschaltet — möglicherweise sind nicht alle 10 Bilder über
   nicht in Rheinland-Pfalz. Bitte prüfen.
 
 Beides zählt doppelt: das Foto fehlt der einen Stadt und verfälscht die andere.
+Wiesbaden fehlt genau **ein** Foto zur Freischaltung — und genau eines liegt im
+falschen Ordner.
 
 ### 4. Dürfen Kundennamen genannt werden?
 

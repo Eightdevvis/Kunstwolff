@@ -20,9 +20,9 @@
     "_default": {
       "_order": [
         "opener",
-        "landingIntro",
         "homepageReviews",
         "slideshow",
+        "landingIntro",
         "cinemaWelcome",
         "eventtypes",
         "why",
@@ -31,6 +31,20 @@
         "landingsection"
       ],
       "cinemaWelcome": false
+    },
+    "giessen": {
+      "_order": [
+        "opener",
+        "homepageReviews",
+        "slideshow",
+        "landingIntro",
+        "cinemaWelcome",
+        "eventtypes",
+        "why",
+        "contact",
+        "faq",
+        "landingsection"
+      ]
     }
   },
   "event": {

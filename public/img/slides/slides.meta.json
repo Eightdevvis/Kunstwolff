@@ -80,7 +80,6 @@
       ],
       "events": [
         "firmenfeier",
-        "messe",
         "hochzeit",
         "private-feier",
         "gala",
@@ -122,13 +121,11 @@
   },
   "bw/karikaturistin-messe-event-stuttgart.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "messe"
@@ -185,13 +182,11 @@
   },
   "bw/mitarbeiter-event-karikaturisten-bw.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "firmenfeier"
@@ -408,6 +403,56 @@
     },
     "priority": 5
   },
+  "default/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
+    "categories": [
+      "Szenenmaler",
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler",
+        "schnellzeichner"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    },
+    "priority": 228
+  },
+  "default/caricaturiste-événementiel-luxembourg.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "luxembourg"
+      ]
+    },
+    "priority": 229
+  },
+  "default/dessin-de-couple.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    },
+    "priority": 230
+  },
+  "default/dessins-caricaturaux-lors-d'un-mariage.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
+    },
+    "priority": 231
+  },
   "default/digital-artist-live.webp": {
     "categories": [
       "Schnellzeichner"
@@ -451,8 +496,7 @@
         "schnellzeichner"
       ],
       "events": [
-        "firmenfeier",
-        "messe"
+        "firmenfeier"
       ],
       "landings": [
         "ludwigshafen"
@@ -460,15 +504,24 @@
     },
     "priority": 146
   },
+  "default/un-couple-heureux-montre-fièrement-son-portrait-caricatural-personnalisé-lors-d-une-foire-d-art-au-luxembourg-entouré-d-autres-oeuvres-de-bande-dessinée.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "luxembourg"
+      ]
+    },
+    "priority": 232
+  },
   "duesseldorf/karikaturist-rheinkirmes-duesseldorf.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": [
@@ -535,17 +588,6 @@
     },
     "priority": 9
   },
-  "events/hochzeit/img_20240316_180247~3.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [
-        "hochzeit"
-      ],
-      "landings": []
-    },
-    "priority": 10
-  },
   "events/hochzeit/img_20240316_182602.webp": {
     "categories": [],
     "tags": {
@@ -582,13 +624,11 @@
   },
   "events/hochzeit/karikaturist-hochzeit.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "hochzeit"
@@ -918,9 +958,7 @@
         "schnellzeichner",
         "szenenmaler"
       ],
-      "events": [
-        "messe"
-      ],
+      "events": [],
       "landings": [
         "frankfurt",
         "rhein-main-gebiet"
@@ -933,7 +971,6 @@
     "tags": {
       "skills": [],
       "events": [
-        "messe",
         "hochzeit"
       ],
       "landings": [
@@ -1018,9 +1055,7 @@
     "categories": [],
     "tags": {
       "skills": [],
-      "events": [
-        "messe"
-      ],
+      "events": [],
       "landings": [
         "frankfurt"
       ]
@@ -1087,9 +1122,7 @@
       "skills": [
         "szenenmaler"
       ],
-      "events": [
-        "messe"
-      ],
+      "events": [],
       "landings": [
         "frankfurt"
       ]
@@ -1126,9 +1159,7 @@
     "categories": [],
     "tags": {
       "skills": [],
-      "events": [
-        "messe"
-      ],
+      "events": [],
       "landings": [
         "frankfurt"
       ]
@@ -1201,9 +1232,7 @@
       "skills": [
         "szenenmaler"
       ],
-      "events": [
-        "messe"
-      ],
+      "events": [],
       "landings": [
         "frankfurt"
       ]
@@ -1360,13 +1389,11 @@
   },
   "hessen/familienportraet-schnellzeichnerin-wiesbaden.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": [
@@ -1394,13 +1421,11 @@
   },
   "hessen/karikaturistin-hanau-druckhaus-am-main.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": [
@@ -1537,11 +1562,11 @@
   },
   "kaiserslautern/7_man-shows-speedpainting-by-caricaturist-kaiserslautern.webp": {
     "categories": [
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": [
@@ -1655,13 +1680,11 @@
   },
   "koblenz/karikaturist-fussball-wm-betriebsfeier-pro-contur-koblenz.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "firmenfeier"
@@ -1709,16 +1732,22 @@
   },
   "koeln/10_digitale-live-portraits.webp": {
     "categories": [
-      "Schnellzeichner"
+      "Schnellzeichner",
+      "Szenenmaler"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner"
+        "schnellzeichner",
+        "szenenmaler"
       ],
       "events": [
         "firmenfeier",
         "messe",
-        "jubilaeum"
+        "jubilaeum",
+        "gala",
+        "sommerfest",
+        "weihnachtsfeier",
+        "private-feier"
       ],
       "landings": [
         "koeln",
@@ -1726,7 +1755,6 @@
         "hamburg",
         "schweiz",
         "mainz",
-        "nord-rhein-westfalen",
         "main-taunus-kreis",
         "stuttgart",
         "duesseldorf",
@@ -1734,7 +1762,20 @@
         "neuwied",
         "karlsruhe",
         "neunkirchen",
-        "fulda"
+        "fulda",
+        "kaiserslautern",
+        "trier",
+        "wiesbaden",
+        "luxembourg",
+        "ludwigshafen",
+        "belgique",
+        "saarbruecken",
+        "saarland",
+        "hessen",
+        "rhein-main-gebiet",
+        "rheinland-pfalz",
+        "wuppertal",
+        "nord-rhein-westfalen"
       ]
     },
     "priority": 10
@@ -1779,24 +1820,9 @@
       ],
       "events": [
         "messe",
-        "firmenfeier",
         "jubilaeum"
       ],
-      "landings": [
-        "koeln",
-        "berlin",
-        "frankfurt",
-        "hamburg",
-        "wiesbaden",
-        "mainz",
-        "rheinland-pfalz",
-        "nord-rhein-westfalen",
-        "duesseldorf",
-        "koblenz",
-        "tuebingen",
-        "bw",
-        "dortmund"
-      ]
+      "landings": []
     },
     "priority": 12
   },
@@ -1809,10 +1835,26 @@
         "schnellzeichner"
       ],
       "events": [
-        "messe"
+        "messe",
+        "firmenfeier"
       ],
       "landings": [
-        "koeln"
+        "koeln",
+        "duesseldorf",
+        "fulda",
+        "hanau",
+        "neunkirchen",
+        "dortmund",
+        "giessen",
+        "karlsruhe",
+        "neuwied",
+        "koblenz",
+        "wuppertal",
+        "belgique",
+        "berlin",
+        "hamburg",
+        "schweiz",
+        "ludwigshafen"
       ]
     },
     "priority": 13
@@ -1862,17 +1904,6 @@
     },
     "priority": 2
   },
-  "koeln/3_digital-artist.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": [
-        "koeln"
-      ]
-    },
-    "priority": 3
-  },
   "koeln/4_digital-caricature.webp": {
     "categories": [
       "Schnellzeichner"
@@ -1910,9 +1941,7 @@
       "Szenenmaler"
     ],
     "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
+      "skills": [],
       "events": [
         "messe"
       ],
@@ -2062,9 +2091,7 @@
       "Szenenmaler"
     ],
     "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
+      "skills": [],
       "events": [],
       "landings": [
         "luxembourg"
@@ -2193,7 +2220,6 @@
       ],
       "events": [
         "firmenfeier",
-        "messe",
         "hochzeit",
         "private-feier",
         "weihnachtsfeier",
@@ -2403,13 +2429,11 @@
   },
   "mannheim/karikaturist-mannheim-q6q7.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": [
@@ -2435,10 +2459,146 @@
     "altOverride": "Vater zeigt witzige familien zeichnungvon schnellzeichner eroeffnungsfeier mr. wash mannheim",
     "title": "Schnellzeichner Mannheim"
   },
-  "mediathek/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
-    "categories": [],
+  "mediathek/1000031312.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
     "tags": {
-      "skills": [],
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 17
+  },
+  "mediathek/1000031313.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 18
+  },
+  "mediathek/1000031319.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 16
+  },
+  "mediathek/1000031340.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 15
+  },
+  "mediathek/1000031366.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 14
+  },
+  "mediathek/1000031508.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 11
+  },
+  "mediathek/1000031509.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 12
+  },
+  "mediathek/1000031511.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 13
+  },
+  "mediathek/1000031528.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 10
+  },
+  "mediathek/1000031531.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 9
+  },
+  "mediathek/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
+    "categories": [
+      "Szenenmaler",
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler",
+        "schnellzeichner"
+      ],
       "events": [
         "hochzeit"
       ],
@@ -2447,11 +2607,13 @@
   },
   "mediathek/acrylgemaelde-brautpaar-hochzeitsmaler-event-karlsruhe.webp": {
     "categories": [
-      "Szenenmaler"
+      "Szenenmaler",
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler"
+        "szenenmaler",
+        "schnellzeichner"
       ],
       "events": [
         "hochzeit"
@@ -2477,9 +2639,13 @@
     }
   },
   "mediathek/gemaelde-hochzeitsfeier-brautpaar-mit-torte-von-event-illustratorin-heitlinger-genusswelten-landkreis-karlsruhe.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler"
+    ],
     "tags": {
-      "skills": [],
+      "skills": [
+        "szenenmaler"
+      ],
       "events": [
         "hochzeit"
       ],
@@ -2490,11 +2656,13 @@
   },
   "mediathek/hochzeitsmalerin-praesentiert-hochtzeitsgemaelde-mit-tanzendem-brautpaar-heitlinger-genusswelten-landkreis-karlsruhe.webp": {
     "categories": [
-      "Szenenmaler"
+      "Szenenmaler",
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler"
+        "szenenmaler",
+        "schnellzeichner"
       ],
       "events": [
         "hochzeit"
@@ -2559,19 +2727,35 @@
   },
   "mediathek/karikaturisten-hochzeitsfeier-heidelberg.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
-        "hochzeit"
+        "hochzeit",
+        "private-feier",
+        "geburtstag",
+        "silvester",
+        "gartenparty",
+        "gala",
+        "sommerfest"
       ],
       "landings": [
-        "heidelberg"
+        "heidelberg",
+        "berlin",
+        "hamburg",
+        "schweiz",
+        "ludwigshafen",
+        "belgique",
+        "koblenz",
+        "neuwied",
+        "tuebingen",
+        "karlsruhe",
+        "giessen",
+        "dortmund",
+        "duesseldorf"
       ]
     }
   },
@@ -2587,11 +2771,13 @@
   },
   "mediathek/live-hand-lettering-kalligrafie-verkostungsaktion-rewe-bruchsal.webp": {
     "categories": [
-      "Szenenmaler"
+      "Szenenmaler",
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler"
+        "szenenmaler",
+        "schnellzeichner"
       ],
       "events": [],
       "landings": []
@@ -2875,7 +3061,9 @@
       "skills": [
         "szenenmaler"
       ],
-      "events": [],
+      "events": [
+        "hochzeit"
+      ],
       "landings": []
     }
   },
@@ -2937,13 +3125,11 @@
   },
   "rhein-main-gebiet/karikaturist-firmen-event-hanau.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "firmenfeier"
@@ -2957,13 +3143,11 @@
   },
   "rhein-main-gebiet/karikaturist-geburtstag-domaene-mechthildshausen.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "geburtstag"
@@ -2985,13 +3169,11 @@
   },
   "rheinland-pfalz/karikaturist-schloss-auel-lohmar-rheinland-pfalz.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": [
@@ -3002,13 +3184,11 @@
   },
   "rheinland-pfalz/kollegen-lachen-mit-ihrer-karikatur-von-karikaturist-weihnachtsfeier-gasthaus-kaut-leidenborn-rheinland-pfalz.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "firmenfeier",
@@ -3141,13 +3321,11 @@
   },
   "saarbruecken/7_schnellzeichnerin-saarland-sylvester-event-spielbanken-saarbruecken.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "silvester"
@@ -3208,13 +3386,11 @@
   },
   "saarland/frau-zeigt-zeichnung-von-karikaturistin-betriebsfeier-angelweiher-gresaubach-schmelz-saarland.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "firmenfeier"
@@ -3275,13 +3451,11 @@
   },
   "saarland/karikaturist-saarwellingen.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": [
@@ -3348,13 +3522,11 @@
   },
   "saarland/paae-mit-baby-familie-karikatur-von-schnellzeichnerin-hochzeitsparty-linslerhof-ueberherrn-saarland.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "hochzeit"
@@ -3368,13 +3540,11 @@
   },
   "saarland/saarlouis-grosser-markt-karikaturist.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": [
@@ -3415,13 +3585,11 @@
   },
   "schweiz/junger-mann-zeigt-seine-karikatur-zeichnung-karikaturist-betriebsfeieractemium-schweiz-ag-arlesheim.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "firmenfeier"
@@ -3472,13 +3640,11 @@
   },
   "schweiz/mann-zeigt-seine-karikaturzeichnung-von-karikaturistin-firmen-event-basel-schweiz.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "firmenfeier"
@@ -3493,13 +3659,11 @@
   },
   "schweiz/schnaell-zeichnige-fescht-karikaturist-basel.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": [
@@ -3526,9 +3690,7 @@
       "Szenenmaler"
     ],
     "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
+      "skills": [],
       "events": [
         "firmenfeier"
       ],
@@ -3543,9 +3705,7 @@
       "Szenenmaler"
     ],
     "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
+      "skills": [],
       "events": [],
       "landings": [
         "stuttgart"
@@ -3809,9 +3969,7 @@
     "categories": [],
     "tags": {
       "skills": [],
-      "events": [
-        "hochzeit"
-      ],
+      "events": [],
       "landings": []
     },
     "priority": 9
@@ -3830,8 +3988,7 @@
     "tags": {
       "skills": [],
       "events": [
-        "messe",
-        "hochzeit"
+        "messe"
       ],
       "landings": [
         "frankfurt"
@@ -4066,13 +4223,13 @@
   },
   "trier/15_schnellzeichnerin-zeichnet-gast-im-garten-gartenparty.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Szenenmaler",
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "szenenmaler",
+        "schnellzeichner"
       ],
       "events": [
         "gartenparty"
@@ -4081,17 +4238,16 @@
         "trier"
       ]
     },
-    "priority": 15
+    "priority": 15,
+    "enabled": false
   },
   "trier/16_schnellzeichnerin-zeichnet-paar-hochzeit-trier-saarburg.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "hochzeit"
@@ -4159,9 +4315,7 @@
       "skills": [
         "schnellzeichner"
       ],
-      "events": [
-        "hochzeit"
-      ],
+      "events": [],
       "landings": [
         "trier"
       ]
@@ -4185,7 +4339,8 @@
         "trier"
       ]
     },
-    "priority": 20
+    "priority": 20,
+    "enabled": false
   },
   "trier/21_schnellzeichnerin-restaurant-zur-sim-trier.webp": {
     "categories": [
@@ -4223,13 +4378,11 @@
   },
   "trier/4_gast-sitzt-schnellzeichnerin-model-dnner-event-restaurant-zur-sim-trier.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": [
@@ -4382,13 +4535,11 @@
   },
   "wiesbaden/mann-zeigt-froh-paar-zeichnung-von-karikaturist-event-mainz.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": [
@@ -4465,13 +4616,11 @@
   },
   "wuppertal/paar-mit-seiner-humorvollen-schnellzeichnung-mit-babybauch-von-karikaturistin-streetart-wuppertal.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": [

@@ -1,7 +1,8 @@
 ---
-author: "Gabriele Frank, Hilton Gravenbruch"
+author: "Gabriele Frank"
 categories:
   - Schnellzeichner
+  - Szenenmaler
 tags:
   skills:
     - schnellzeichner
