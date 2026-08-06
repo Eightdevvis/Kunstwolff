@@ -46,7 +46,7 @@ Vor `dev` und `build` läuft automatisch `npm run sync:content:safe` (als `prede
 | `src/i18n/` | Locale-Registry + Overlay-Auflösung (`config.ts`), siehe unten |
 | `public/` | Komplettes dateibasiertes "CMS" – siehe `pfadstruktur.md` |
 | `scripts/` | Sync-Scripts (Node), siehe `sync-scripts.md` |
-| `tests/` | 26 Vitest-Dateien (`npm run test:unit`), Konfiguration in `vitest.config.ts` |
+| `tests/` | 33 Vitest-Dateien (`npm run test:unit`), Konfiguration in `vitest.config.ts` (Testdateien laufen bewusst nacheinander, siehe dort) |
 | `ANLEITUNGEN/` | Nicht-technische Endbenutzer-Anleitungen (nicht für Claude) |
 | `reports/validation/` | Auto-generierte Validierungsreports (siehe `validierungsreports.md`) |
 | `removed_landings/` | Archiv entfernter Stadtdaten (siehe `content-landings.md`) |

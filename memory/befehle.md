@@ -41,7 +41,7 @@ die `tags.json` nicht kennt, und der Schaden still in die Dateien wanderte.
 | `npm run optimize:images` | Nur gestagte Bilder zu WebP konvertieren (`scripts/optimize-staged-images.mjs`) |
 | `npm run optimize:all` | Alle Bilder in `public/img/` zu WebP konvertieren (manuell) |
 | `npm run variants` | Responsive Bildvarianten manuell erzeugen (`scripts/generate-image-variants.mjs`). Beim Build läuft dasselbe automatisch als Astro-Integration `kunstwolff-bild-varianten` im `astro:build:done`-Hook – **nicht** als npm-Kette, weil Vercel ein nachgestelltes `&& …` im Build-Befehl abschneidet. Siehe `responsive-images.md` |
-| `npm run test:unit` | Unit-Tests ausführen (`vitest run`, 26 Dateien in `tests/`) |
+| `npm run test:unit` | Unit-Tests ausführen (`vitest run`, 33 Dateien in `tests/`). Läuft seit 2026-08-06 **nacheinander statt parallel** (`fileParallelism: false`) – `page-visibility.test.ts` schreibt die echte `public/config/page-visibility.json` und andere Testdateien lasen sie in genau diesem Moment. Kostet ~3 s, verhindert grundlos rote Läufe. Begründung steht in `vitest.config.ts` |
 | `npm run astro` | Durchreicher auf die Astro-CLI (`astro check`, `astro add`, …) |
 | `npm run setup:hooks` | Git-Hooks aktivieren (einmalig) |
 

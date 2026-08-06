@@ -251,6 +251,19 @@ die Startseite und die beiden Skill-Seiten (gemeinsamer Review-Block, unkritisch
 Titel). Bei `/stuttgart/` und `/hessen/` bleibt echte Dopplung, die erst mit eigenem Text
 verschwindet.
 
+📋 **Was pro Stadt noch fehlt, steht in `STADTSEITEN.md`** (Stand 2026-08-06):
+Tabelle mit eigenen Fotos/Kundenstimmen/FAQ je Stadt, die Freischalt-Regel, und
+vier Punkte, die eine Entscheidung von Gabriele brauchen. Dort auch die
+Begründung, warum acht Städte einen neuen Vorspanntext bekommen haben und
+`fulda` bewusst keinen.
+
+⚠️ **Der Vorspanntext allein schaltet keine Stadt frei.** `LandingIntro` ist ein
+zentrierter Aufschlag (720px Satzbreite, 1,4rem) — die vorhandenen Texte sind
+13–31 Wörter lang, die neuen 32–44. Auf einer Seite mit ~1500 Wörtern sind das
+knapp 3 % eigener Anteil. Einzigartig macht eine Stadtseite ihre **eigenen
+Fotos und eigenen Kundenstimmen**. Wer 150–250 Wörter Ortstext will, braucht
+einen eigenen Abschnitt, nicht dieses Feld — das ist eine Design-Entscheidung.
+
 **Der Weg zurück ist eine Zeile:** Text für eine Stadt schreiben, ihren Pfad aus `hidden`
 entfernen. Ausgeblendete Seiten werden weiterhin **gebaut** – sie sind erreichbar und
 verlinkbar, nur nicht indexierbar. Das ist Absicht: ein 404 würde die URL verbrennen,
