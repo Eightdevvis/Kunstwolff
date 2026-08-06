@@ -6,6 +6,11 @@ type Slide = {
     title?: string;
     categories?: string[];
     width?: number;
+    /**
+     * Für `width`/`height` am `<img>`. Der Slide-Leser (`slideImages.ts`) liest
+     * beide Maße ohnehin schon, die Höhe kam hier bisher nur nicht an.
+     */
+    height?: number;
 };
 
 import { buildSrcSet, SLIDESHOW_SIZES } from '../../utils/responsiveImages';
@@ -43,11 +48,26 @@ const filteredItems =
                 filteredItems.map((slide: Slide) => (
                     <div class="swiper-slide">
                         <a class="lg-item" href={slide.src} data-title={slide.title ?? ""}>
+                            {/*
+                              `width`/`height` (2026-08-05): das CSS der Bühne
+                              lässt beide Maße auf `auto` (`max-height: 500px`,
+                              `object-fit: contain`) — der Browser kennt das
+                              Seitenverhältnis also erst, wenn die Datei da ist.
+                              Bei 30+ lazy geladenen Slides ruckt die Seite
+                              dadurch beim Scrollen. Mit beiden Maßen reserviert
+                              er den Platz vorab (dasselbe Mittel wie in der
+                              Galerie, siehe webpSize.ts).
+
+                              Fehlt ein Maß, lässt Astro das Attribut weg —
+                              `height="0"` wäre schlimmer als keine Angabe.
+                            */}
                             <img
                                 src={slide.src}
                                 srcset={buildSrcSet(slide.src, slide.width)}
                                 sizes={SLIDESHOW_SIZES}
                                 alt={slide.alt ?? ""}
+                                width={slide.width}
+                                height={slide.height}
                                 loading="lazy"
                                 decoding="async"
                             />

@@ -16,6 +16,11 @@ const steps = [
   { name: 'sync:why', script: 'scripts/sync-why.mjs' },
   { name: 'sync:events', script: 'scripts/sync-events.mjs' },
   { name: 'sync:erinnerungen', script: 'scripts/sync-erinnerungen.mjs' },
+  // MUSS nach landings/skills/events laufen: das Skript liest genau diese drei
+  // Register, um zu wissen, welcher Slug eine Stadt, ein Anlass oder ein
+  // Können ist. Auf einem Build-Server ohne volle Git-Historie überspringt es
+  // sich selbst und lässt die committete lastmod.json stehen.
+  { name: 'sync:lastmod', script: 'scripts/sync-lastmod.mjs' },
   // Guard läuft hier nur als Warnung (Script bleibt tolerant/exit 0); hart
   // blockiert wird er über `sync:content` im pre-commit-Hook.
   { name: 'validate:images', script: 'scripts/validate-image-refs.mjs' },

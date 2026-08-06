@@ -33,7 +33,8 @@ npm run sync:content:safe  # fehlertolerant (Teilfehler isoliert, Build/Dev läu
 | 8 | `sync-why.mjs` | Erstellt `public/why/{city}.json`, `public/why/{skill}.json`, `public/img/why/{key}/benefit-{1-4}/` |
 | 9 | `sync-events.mjs` | Erstellt `public/img/slides/events/{event}/`, `public/img/Titelbild/events/{event}/`, `public/events/{event}/content.json` (bestehende NICHT überschreiben) |
 | 10 | `sync-erinnerungen.mjs` | Erstellt `public/erinnerungen/{city}.json`, `public/erinnerungen/{skill}.json` (bestehende NICHT überschreiben) |
-| 11 | `validate-image-refs.mjs` | **Guard:** scannt alle literalen `/img/…`-Verweise in `src/` + `public/` (json/md/astro/ts) und prüft, ob die Zieldatei existiert. **Exit 1 bei totem Verweis** → bricht `sync:content` ab |
+| 11 | `sync-lastmod.mjs` | Schreibt `public/config/lastmod.json` (Seitenpfad → Datum der letzten echten Änderung, aus der Git-Historie) für `<lastmod>` in der Sitemap. **Muss nach 1/2/9 laufen** – es liest `landings.md`, `skills.json` und `events.json`, um zu erkennen, welcher Slug Stadt, Können oder Anlass ist |
+| 12 | `validate-image-refs.mjs` | **Guard:** scannt alle literalen `/img/…`-Verweise in `src/` + `public/` (json/md/astro/ts) und prüft, ob die Zieldatei existiert. **Exit 1 bei totem Verweis** → bricht `sync:content` ab |
 
 > **Schritte 3–5 sind seit 2026-07-28 auch in `sync:content:safe`** – vorher liefen sie
 > NUR in der manuellen Vollvariante. Das war eine echte Lücke: seit Reviews und FAQs über
@@ -65,7 +66,21 @@ npm run sync:content:safe  # fehlertolerant (Teilfehler isoliert, Build/Dev läu
 > laufen lassen **und das Ergebnis committen**. Details: `tag-system.md`.
 > Dasselbe Muster gilt für jedes Sync-Script, dessen Ergebnis der Admin liest.
 
-> **Schritt 11 (`validate:images`) – warum:** Der pre-push-Hook konvertiert Bilder zu `.webp` und löscht Originale, aktualisiert aber keine Verweise → tote `.jpg`-Pfade (404). Der Guard fängt das vor Commit (hart in `sync:content`) bzw. warnt bei dev/build (tolerant in `sync:content:safe` – das endet nur dann mit Exit 1, wenn ein als `hart: true` markierter Schritt scheitert, aktuell `sync:tags`; „immer exit 0" galt bis zum C1-Fix). Eingeführt 2026-06-05 nachdem mehrfach jpg→webp-Leichen auf Live gingen (Samples, frankfurt.json, Luxembourg-Stub, Hochzeitsmaler, Opener-avif-Typo). Grenze: nur **literale** Pfade, keine dynamisch konkatenierten.
+> **Schritt 11 (`sync:lastmod`) – warum es NICHT zur Build-Zeit rechnet:** Das
+> Skript erzeugt eine **committete** Datei, statt `git log` beim Bauen zu
+> befragen. Grund: klont der Build-Server flach (nur die letzten Commits),
+> liefert `git log -1 -- <datei>` für JEDE Datei denselben Commit — alle 39
+> Sitemap-Einträge bekämen dasselbe Datum. Das ist kein fehlendes Signal,
+> sondern ein falsches; Google stuft gleichförmige `lastmod`-Werte dauerhaft
+> als unglaubwürdig ein. Das Skript prüft deshalb selbst auf brauchbare
+> Historie (kein Git / flacher Klon / < 50 Commits) und **lässt die vorhandene
+> Datei dann unangetastet**. Pro Seite zählen nur ihre eigenen Quellen, nicht
+> Layout/Fußzeile/CSS — sonst trüge nach jeder Stiländerung jede Seite dasselbe
+> neue Datum. Für die Sammeldateien (`content.json`, `events.json`,
+> `skills.json`) sucht es zeilengenau (`git log -G<slug>`), sonst bekämen nach
+> einer Berlin-Änderung alle 34 Städte ein frisches Datum.
+>
+> **Schritt 12 (`validate:images`) – warum:** Der pre-push-Hook konvertiert Bilder zu `.webp` und löscht Originale, aktualisiert aber keine Verweise → tote `.jpg`-Pfade (404). Der Guard fängt das vor Commit (hart in `sync:content`) bzw. warnt bei dev/build (tolerant in `sync:content:safe` – das endet nur dann mit Exit 1, wenn ein als `hart: true` markierter Schritt scheitert, aktuell `sync:tags`; „immer exit 0" galt bis zum C1-Fix). Eingeführt 2026-06-05 nachdem mehrfach jpg→webp-Leichen auf Live gingen (Samples, frankfurt.json, Luxembourg-Stub, Hochzeitsmaler, Opener-avif-Typo). Grenze: nur **literale** Pfade, keine dynamisch konkatenierten.
 
 ## Garantien
 

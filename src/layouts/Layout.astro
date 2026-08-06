@@ -5,6 +5,7 @@ import Footer from "../components/Footer.astro";
 import LangSwitcher from "../components/LangSwitcher.astro";
 import type { LangAlternate } from "../components/LangSwitcher.astro";
 import { isPageHiddenByPath } from "../utils/pageVisibility";
+import { DEFAULT_LOCALE } from "../i18n/config";
 
 const {
   title = "Kunstwolff – Eventkünstler seit über 25 Jahren",
@@ -21,7 +22,13 @@ const {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 // og:image-Fallback: Seiten ohne eigenes Titelbild (Kontakt, FAQ, Impressum …)
 // bekommen das Standard-Titelbild, damit die Social-Vorschau nie leer ist.
-const DEFAULT_OG_IMAGE = "/img/Titelbild/default/titelbild.avif";
+//
+// WebP, nicht AVIF (2026-08-05). Bis dahin stand hier
+// `/img/Titelbild/default/titelbild.avif` – Facebook, LinkedIn und X lesen AVIF
+// für `og:image` nicht zuverlässig, die Standard-Vorschau blieb dort also leer.
+// `/img/og/og-default.webp` ist dieselbe Aufnahme, nur umkodiert: gleiche Maße
+// (1180×818), nichts beschnitten, nichts skaliert.
+const DEFAULT_OG_IMAGE = "/img/og/og-default.webp";
 const ogImage = Astro.site ? new URL(image ?? DEFAULT_OG_IMAGE, Astro.site).href : undefined;
 
 // ─── Robots-Meta: Production-Host-Whitelist + Page-Visibility ────────────────
@@ -43,6 +50,20 @@ const isProductionHost =
 const shouldNoindex =
   noindex || isPageHiddenByPath(Astro.url.pathname) || !isProductionHost;
 const robotsContent = shouldNoindex ? "noindex, nofollow" : "index, follow";
+
+// ─── hreflang nur auf indexierbaren Seiten ───────────────────────────────────
+// Eine `noindex`-Seite, die Sprachalternativen bewirbt, ist ein Widerspruch:
+// Google liest „nimm mich nicht auf" und gleichzeitig „hier sind meine
+// Sprachfassungen". Konkreter Fall bis 2026-08-05: `/fr/belgique/` stand auf
+// `index, follow` und verwies per `hreflang="de"` auf `/belgique/`, das selbst
+// ausgeblendet war — die einzige beworbene Alternative war unerreichbar.
+const showAlternates = !shouldNoindex && alternates.length > 1;
+
+// `x-default` = die Fassung für alle Sprachen, die wir NICHT anbieten. Das ist
+// die deutsche: sie ist die Ausgangssprache und die einzige vollständige.
+const xDefaultHref = showAlternates
+  ? alternates.find((a) => a.locale === DEFAULT_LOCALE)?.href
+  : undefined;
 ---
 
 <!doctype html>
@@ -63,11 +84,15 @@ const robotsContent = shouldNoindex ? "noindex, nofollow" : "index, follow";
 		<link rel="icon" type="image/webp" href="/img/logo/logo_transparent.webp" />
 		<link rel="apple-touch-icon" href="/img/logo/logo_transparent.webp" />
 		<link rel="canonical" href={canonicalURL} />
-		{/* i18n (Phase 1): hreflang-Alternativen nur wenn vorhanden – deutsche
-		     Seiten ohne Übersetzung bleiben unverändert. */}
-		{alternates.length > 1 && alternates.map((a) => (
+		{/* i18n (Phase 1): hreflang-Alternativen nur wenn vorhanden UND die Seite
+		     indexierbar ist – deutsche Seiten ohne Übersetzung bleiben
+		     unverändert. Siehe `showAlternates` oben. */}
+		{showAlternates && alternates.map((a) => (
 			<link rel="alternate" hreflang={a.locale} href={new URL(a.href, Astro.site).href} />
 		))}
+		{xDefaultHref && (
+			<link rel="alternate" hreflang="x-default" href={new URL(xDefaultHref, Astro.site).href} />
+		)}
 		<meta name="robots" content={robotsContent} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
@@ -77,6 +102,13 @@ const robotsContent = shouldNoindex ? "noindex, nofollow" : "index, follow";
 		<meta property="og:url" content={canonicalURL} />
 		<meta property="og:type" content="website" />
 		{ogImage && <meta property="og:image" content={ogImage} />}
+		{/* Twitter/X liest Open Graph nur teilweise mit: ohne `twitter:card`
+		     zeigt es einen nackten Link statt einer Vorschaukarte. Die Inhalte
+		     sind dieselben wie bei OG – doppelt gepflegt wird hier nichts. */}
+		<meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		{ogImage && <meta name="twitter:image" content={ogImage} />}
 	</head>
 
 	<body data-nav-tone="dark">

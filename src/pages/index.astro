@@ -60,9 +60,16 @@ const sectionOrder = resolveSectionOrder(PAGE_TYPE, '', registry);
 // konsistent zu Canonical/OG im Layout (Stage → vercel.app, Cutover → kunstwolff.de).
 const site = Astro.site?.origin ?? 'https://kunstwolff.de';
 
+// Feste Kennungen, damit WebSite und LocalBusiness aufeinander zeigen können,
+// statt zwei unverbundene Datensätze zu sein. Der Rautenteil ist reine
+// Schema-Kennung, keine aufrufbare Adresse.
+const ORG_ID = `${site}/#organisation`;
+const WEBSITE_ID = `${site}/#website`;
+
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
+  "@id": ORG_ID,
   "name": "Kunstwolff",
   "description": "Eventkünstler seit über 25 Jahren – Schnellzeichner, Szenenmaler & Live-Performance für Firmenfeiern, Messen und Hochzeiten.",
   "url": site,
@@ -77,6 +84,31 @@ const localBusinessSchema = {
   "areaServed": ["DE", "AT", "CH", "LU", "BE"],
   "image": `${site}/img/logo/logo_transparent.webp`,
   "priceRange": "€€"
+
+  // ⚠️ OFFEN: `sameAs` fehlt – das Array mit den echten Profilen (Instagram,
+  // Facebook, LinkedIn …) ist für Google das stärkste Signal, dass ein
+  // Unternehmensprofil und diese Website dieselbe Firma sind. Im gesamten Repo
+  // steht keine einzige Profil-Adresse (geprüft 2026-08-05), deshalb steht hier
+  // bewusst nichts: erfundene Profile wären schlimmer als keine.
+  // Sobald die Adressen bekannt sind: "sameAs": ["https://…", "https://…"].
+};
+
+// `WebSite` gab es bisher nirgends. Es sagt Google, dass die Domain EINE
+// Website ist und wem sie gehört – Grundlage dafür, dass „Kunstwolff“ als
+// Marke erkannt wird statt als beliebiges Suchwort.
+//
+// Bewusst OHNE `potentialAction`/`SearchAction`: die damit verbundene
+// Sitelinks-Suchbox hat Google 2023 abgeschaltet, das Markup bewirkt heute
+// nichts mehr. Und eine seitenweite Suche gibt es hier ohnehin nicht, nur den
+// Filter innerhalb der Galerie.
+const webSiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": WEBSITE_ID,
+  "name": "Kunstwolff",
+  "url": `${site}/`,
+  "inLanguage": "de-DE",
+  "publisher": { "@id": ORG_ID }
 };
 
 //<Aboutsection />
@@ -84,6 +116,7 @@ const localBusinessSchema = {
 
 <Layout image={titleImage}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(webSiteSchema)} />
 
   {sectionOrder.map((id) => {
     if (!isComponentEnabled(PAGE_TYPE, '', id)) return null;

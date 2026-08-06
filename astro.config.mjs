@@ -67,6 +67,29 @@ const readHiddenSet = () => {
 
 const hiddenPaths = readHiddenSet();
 
+// ─── lastmod ──────────────────────────────────────────────────────────────────
+// `public/config/lastmod.json` wird von `scripts/sync-lastmod.mjs` aus der
+// Git-Historie erzeugt und COMMITTET – nicht hier zur Build-Zeit ermittelt.
+// Grund steht ausführlich im Skript: ein flacher Klon auf dem Build-Server
+// würde allen Seiten dasselbe Datum geben, und ein gleichförmiges `lastmod`
+// ist schlimmer als gar keines.
+//
+// Fehlt die Datei oder ein Pfad darin, bleibt `lastmod` für ihn weg.
+const lastmodPath = path.resolve('./public/config/lastmod.json');
+
+/** @returns {Record<string, string>} */
+const readLastmod = () => {
+  if (!fs.existsSync(lastmodPath)) return {};
+  try {
+    const parsed = JSON.parse(fs.readFileSync(lastmodPath, 'utf-8'));
+    return parsed && typeof parsed === 'object' ? parsed : {};
+  } catch {
+    return {};
+  }
+};
+
+const lastmodMap = readLastmod();
+
 /**
  * Responsive Bildvarianten als INTEGRATION statt als nachgelagerter Befehl.
  *
@@ -126,6 +149,20 @@ export default defineConfig({
         } catch {
           return true;
         }
+      },
+      // Hängt das Änderungsdatum an, sofern wir eines kennen. `item` wird
+      // absichtlich verändert und zurückgegeben – gibt `serialize` nichts
+      // zurück, fliegt der Eintrag aus der Sitemap.
+      serialize: (/** @type {{ url: string, lastmod?: string }} */ item) => {
+        try {
+          const pathname = new URL(item.url).pathname;
+          const key = pathname.endsWith('/') ? pathname : `${pathname}/`;
+          const datum = lastmodMap[key];
+          if (datum) item.lastmod = datum;
+        } catch {
+          // kaputte URL → einfach ohne lastmod ausliefern
+        }
+        return item;
       },
     }),
   ],

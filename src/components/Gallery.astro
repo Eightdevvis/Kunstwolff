@@ -12,7 +12,11 @@ const { bilder, facets, ohneTags } = data ?? getGalleryData();
 
 <section id="galerie" class="gallery-page" data-gallery>
   <div class="gallery-container">
-    <h2>Unsere Kunst – alle Bilder</h2>
+    {/* h1, nicht h2 (2026-08-05): /galerie/ war die einzige Seite ohne H1.
+        Die Komponente wird ausschließlich von `src/pages/galerie.astro`
+        eingebunden – wer sie irgendwo einbettet, wo schon ein H1 steht, muss
+        das hier zur Prop machen. */}
+    <h1>Unsere Kunst – alle Bilder</h1>
 
     <p class="gallery-intro">
       Über 25 Jahre Live-Kunst auf Firmenfeiern, Messen, Hochzeiten und privaten
@@ -313,7 +317,7 @@ const { bilder, facets, ohneTags } = data ?? getGalleryData();
     margin: 0 auto;
   }
 
-  .gallery-container h2 {
+  .gallery-container h1 {
     text-align: center;
     font-size: clamp(2.4rem, 5vw, 3.6rem);
     margin-bottom: 16px;

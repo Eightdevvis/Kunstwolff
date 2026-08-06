@@ -12,7 +12,19 @@ dist/sitemap-0.xml
 
 Alle statisch generierten Seiten (Homepage, Stadtseiten, Skill-Seiten, Skill+Stadt-Kombinationen, Events) werden automatisch erfasst.
 
-**Live-URL:** `https://kunstwolff.de/sitemap-index.xml` – sollte in der **Google Search Console** eingetragen sein.
+**Live-URL:** `https://www.kunstwolff.de/sitemap-index.xml` (kanonisch ist `www`,
+der Apex leitet per 308 dorthin). In der **Google Search Console** trägt man im
+Feld unter *Sitemaps* nur `sitemap-index.xml` ein – die Domain steht dort schon
+davor. Das ist ein **einmaliger** Handgriff: Google holt die Datei danach von
+selbst wieder ab, und `@astrojs/sitemap` erzeugt sie bei jedem Build neu.
+Nicht `sitemap.xml` eintragen – die gibt es nicht.
+
+**`lastmod` seit 2026-08-06.** Die Daten kommen aus `public/config/lastmod.json`,
+erzeugt von `scripts/sync-lastmod.mjs` (Schritt 11 der Sync-Kette) und im Repo
+**committet**. `astro.config.mjs` hängt sie über die `serialize`-Option an. Pfade,
+für die kein Datum ermittelbar ist, bekommen schlicht keines – Weglassen ist
+erlaubt, Raten nicht. Warum das eine committete Datei ist und nicht `git log`
+zur Build-Zeit: siehe `sync-scripts.md`, Schritt 11.
 
 ## Stage vs. Production – `SITE_URL` & `<meta robots>`
 
@@ -387,3 +399,69 @@ Stand gegengeprüft: 2 von 10 Tests werden rot).
 Adressen liegen an einer Stelle: `src/utils/comboUrls.ts`. Weiterleitungen
 (136 Stück, ohne Ketten) in `vercel.json`, erzeugt von
 `scripts/flache-kombi-urls.mjs`.
+
+## Nach dem Cutover gerichtet (2026-08-06)
+
+Der Umzug war zu diesem Zeitpunkt durch, am echten Ziel nachgemessen:
+`kunstwolff.de` → 308 → `www.kunstwolff.de`, Vercel liefert aus, Canonical und
+`og:url` stehen auf `www`, Startseite `index, follow`. Sitemap: **39 URLs**
+(vorher 40, siehe FR unten). Festgenagelt in `tests/seo-meta.test.ts` (16 Tests,
+davon 5 gegen das gebaute `dist/`).
+
+### `/fr/` ist ausgeblendet — das war der einzige echte Live-Fehler
+
+`/fr/belgique/` stand auf `index, follow`, deklarierte `<html lang="fr">` und
+lieferte darunter deutsche Navigation, deutsche Fußzeile, „Häufige Fragen",
+„Impressum", „Jetzt anfragen" — nach dem Mehrsprachigkeits-Plan sind ~95 % des
+Textes deutsch. Ihr `hreflang="de"` zeigte auf `/belgique/`, das selbst
+`noindex` ist: die einzige beworbene Alternative war für Google unerreichbar.
+
+Zwei Änderungen:
+
+1. `"/fr/"` steht in `page-visibility.json`. Über die Präfix-Regel trifft das
+   **alle** künftigen FR-Pfade, nicht nur `belgique`. Zurückholen = eine Zeile.
+2. `Layout.astro` gibt `hreflang` nur noch aus, wenn die Seite indexierbar ist
+   (`showAlternates = !shouldNoindex && alternates.length > 1`). Eine
+   noindex-Seite, die Sprachalternativen bewirbt, ist ein Widerspruch.
+
+⚠️ **Cross-Repo geprüft:** Das Admin-Tool schreibt beim Sichtbarkeits-Schalter
+die **ganze** Liste neu (`toggleSelectedPageVisibility` in `SiteGraphView.tsx`).
+Der `/fr/`-Eintrag überlebt das, weil `normalizeUrlToId()` nur normalisiert und
+nicht gegen bekannte Seiten filtert — er wird dabei nur zu `/fr` verkürzt, was
+die Präfix-Regel der Website genauso trifft. Deshalb prüft der Test **beide**
+Schreibweisen.
+
+### Weitere Änderungen
+
+| Was | Wo | Warum |
+| :-- | :-- | :-- |
+| `x-default` | `Layout.astro` | fehlte trotz zweier Sprachen; zeigt auf die deutsche Fassung |
+| Twitter-Cards | `Layout.astro` | fehlten komplett – X zeigte einen nackten Link statt einer Vorschaukarte |
+| `DEFAULT_OG_IMAGE` jetzt WebP | `Layout.astro` + `public/img/og/og-default.webp` | war `.avif`; Facebook, LinkedIn und X lesen AVIF für `og:image` nicht zuverlässig. Dieselbe Aufnahme, nur umkodiert – 1180×818, nichts beschnitten |
+| `WebSite`-Schema | `src/pages/index.astro` | gab es nirgends. Mit `@id` auf das `LocalBusiness` verknüpft. **Bewusst ohne `SearchAction`** – die Sitelinks-Suchbox hat Google 2023 abgeschaltet |
+| `<h1>` auf `/galerie/` | `Gallery.astro` | einzige Seite ohne H1 (hatte nur `<h2>`). CSS-Selektor mitgezogen, Optik unverändert |
+| `width`/`height` in der Slideshow | `Slideshow.astro` | Das CSS lässt beide Maße auf `auto` → Seitenverhältnis erst nach dem Laden bekannt → Ruckeln bei 30+ lazy Slides. Der Slide-Leser liest beide Maße längst, die Höhe kam nur nicht am Markup an |
+| `SchnellzeichnerHero.astro` gelöscht | – | von keiner Seite importiert, trug `alt="Hero Image"` |
+
+**`width`/`height` bewusst NICHT überall:** gemessen statt geraten. `Why`,
+`Eventtypes`, `CinemaWelcome` und `LandingErinnerungen` haben bereits
+`aspect-ratio` im CSS, `SkillHero` setzt `width:100%; height:100%`, das
+Logo-Gitter `max-height:100%` — dort entsteht kein Layout-Sprung, Attribute
+wären reine Zierde. Die Slideshow war der einzige echte Fall.
+
+### Offene Punkte, die bewusst NICHT angefasst wurden
+
+- **`sameAs` im `LocalBusiness` fehlt weiter.** Im ganzen Repo steht keine
+  einzige Profil-Adresse (Instagram/Facebook/LinkedIn). Erfundene Profile wären
+  schlimmer als keine. Sobald die Adressen bekannt sind: Array in
+  `index.astro` ergänzen. Es ist das stärkste Signal dafür, dass
+  Google-Unternehmensprofil und Website dieselbe Firma sind.
+- **`/private-feier/`: Titel 88 Zeichen, Beschreibung 157.** Der Titel kommt aus
+  `heroTitle` in `events.json` — und derselbe String ist die **sichtbare H1**.
+  Kürzen ist eine Textentscheidung von Gabriele, keine technische. Steht als
+  benannte Ausnahme in `tests/seo-meta.test.ts`; Google schneidet ihn solange ab.
+- **`title.meta.json` zeigt zweimal ins Leere** (`fulda/1000018047.webp`,
+  `rheinland-pfalz/karikaturist-schloss-auel-lohmar-rheinland-pfalz.webp`).
+  `tests/bild-adressen.test.ts` ist deshalb rot — **schon vor diesen Änderungen**.
+  Die beiden Städte fallen aufs Standard-Titelbild zurück. Entweder Foto
+  nachliefern oder Eintrag entfernen; beides eine Inhaltsentscheidung.
