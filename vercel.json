@@ -128,6 +128,11 @@
       "permanent": true
     },
     {
+      "source": "/landing/start-gernsheim",
+      "destination": "/hessen/",
+      "permanent": true
+    },
+    {
       "source": "/landing/:rest*",
       "destination": "/",
       "permanent": true
