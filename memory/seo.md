@@ -216,15 +216,23 @@ die Datenschutzerklärung nennt keinen der drei Empfänger (Formspree, Vercel, G
 
 ## Sichtbarkeit: welche Seiten indexierbar sind (seit 2026-07-30)
 
-`public/config/page-visibility.json` ist nicht mehr leer. Ausgeblendet sind **128 Pfade**
-(102 flache Skill×Ort-Kombis + 20 Städte + `/aquarelle/` + 4 Aquarelle-Anlässe + `/fr/`);
-indexierbar bleiben **41 von 170** gebauten Seiten. Die Sitemap enthält exakt dieselben 41.
+`public/config/page-visibility.json` ist nicht mehr leer. Ausgeblendet sind **135 Pfade**
+(108 flache Skill×Ort-Kombis + 21 Städte + `/aquarelle/` + 4 Aquarelle-Anlässe + `/fr/`);
+indexierbar bleiben **42 von 178** gebauten Seiten. Die Sitemap enthält exakt dieselben 42.
 
-**Stand 2026-08-09** (vorher 129/40): `/fr/` kam am 06.08. dazu, `bw` und `wiesbaden`
-sind am 09.08. freigeschaltet worden — beide erfüllen die Regel (exklusive Bilder +
-eigener Text + Kundenstimmen), `bw` war ohne erkennbaren Grund versteckt. Ihre
-Skill-Varianten (`/bw-aquarelle/` usw.) bleiben über eigene Einträge versteckt; die
+**Stand 2026-08-09** (vorher 129/40 bei 34 Städten): `/fr/` kam am 06.08. dazu. Am 09.08.
+sind `bw`, `wiesbaden` und `karlsruhe` freigeschaltet worden — alle drei erfüllen die
+Regel (exklusive Bilder + eigener Text), `bw` war ohne erkennbaren Grund versteckt.
+Ihre Skill-Varianten (`/bw-aquarelle/` usw.) bleiben über eigene Einträge versteckt; die
 Präfix-Regel normalisiert auf `/bw` und trifft nur `/bw/…`.
+
+Ebenfalls am 09.08. **neu angelegt und bewusst versteckt**: `heilbronn` und `muenchen`.
+Grund ist gemessene Nachfrage im Search-Console-Leistungsbericht — „schnellzeichner
+heilbronn" 508 Einblendungen (Position 15,3), „schnellzeichner münchen" 438 (43,8) —
+aber **null eigenes Bildmaterial**. Sie gehen erst live, wenn eigene Fotos und ein
+eigener Text da sind; sonst entstünden genau die Doorway-Seiten, wegen denen 20 Städte
+versteckt sind. Das ist der Grund für den Sprung von 34 auf 36 Städte bei gleichzeitig
+gestiegener Zahl versteckter Pfade.
 
 ⚠️ **Die Präfix-Regel steht doppelt im Code.** `isPageHiddenByPath()` in
 `src/utils/pageVisibility.ts` steuert `<meta robots>`; der Sitemap-Filter in

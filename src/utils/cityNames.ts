@@ -20,6 +20,7 @@ const CITY_DISPLAY_NAMES: Record<string, string> = {
   // Umlaute / ß
   duesseldorf: 'Düsseldorf',
   koeln: 'Köln',
+  muenchen: 'München',
   tuebingen: 'Tübingen',
   giessen: 'Gießen',
   saarbruecken: 'Saarbrücken',

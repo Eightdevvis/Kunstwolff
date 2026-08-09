@@ -1,7 +1,7 @@
 # Stadtseiten freischalten — Stand 2026-08-09
 
-Von 34 Städten sind **14 indexierbar** (seit heute: `bw` und `wiesbaden`), 20 stehen auf
-`noindex` und fehlen in der Sitemap. Die Ausblendung vom 30.07. war richtig: `/dortmund/`
+Von 36 Städten sind **15 indexierbar** (seit heute: `bw`, `wiesbaden`, `karlsruhe`),
+21 stehen auf `noindex` und fehlen in der Sitemap. Die Ausblendung vom 30.07. war richtig: `/dortmund/`
 und `/giessen/` waren 1493 von 1494 Wörtern gleich, Google hätte das als Doorway-Seiten
 gewertet. Aber solange es so bleibt, **treten diese Städte im Wettbewerb gar nicht an**.
 
@@ -55,7 +55,6 @@ sollte.
 
 | Stadt | getaggt | **exklusiv** | Stimmen | Vorspann | Was fehlt |
 | :-- | --: | --: | --: | :-- | :-- |
-| `karlsruhe` | 17 | **5** | 0 | 39 W | **nichts** – nächster Kandidat |
 | `koblenz` | 13 | **4** | 0 | 43 W | Kundenstimmen |
 | `rheinland-pfalz` | 11 | **4** | 9 | 32 W | **nichts** – aber Tag-Fehler klären, s.u. |
 | `fulda` | 10 | **4** | 0 | — | eigener Text (siehe Sonderfall 1) |
@@ -75,6 +74,30 @@ sollte.
 | `neuwied` | 10 | 0 | 0 | — | **alles** |
 | `nord-rhein-westfalen` | 9 | 0 | 0 | — | **alles** |
 | `tuebingen` | 8 | 0 | 0 | — | **alles** |
+| `heilbronn` | 0 | 0 | 0 | — | **alles** – neu, siehe unten |
+| `muenchen` | 0 | 0 | 0 | — | **alles** – neu, siehe unten |
+
+### 🆕 Heilbronn und München: angelegt, aber bewusst versteckt
+
+Beide Seiten existieren seit dem 09.08. samt Ordnerstruktur, Skill-Kombis,
+Weiterleitungen und korrektem Anzeigenamen („München" mit Umlaut). Sie stehen auf
+`noindex` und **bleiben dort**, bis eigenes Material da ist.
+
+Der Grund, sie überhaupt anzulegen, steht im Search-Console-Leistungsbericht:
+
+| Suchanfrage | Einblendungen | Ø Position |
+| :-- | --: | --: |
+| schnellzeichner heilbronn | 508 | 15,3 |
+| schnellzeichner münchen | 438 | 43,8 |
+| schnellzeichner nideggen | 90 | — |
+
+Das ist gemessene Nachfrage ohne jede eigene Seite. **Aber:** null eigene Fotos, null
+Kundenstimmen, kein Text. Live geschaltet wären das exakt die Doorway-Seiten, wegen denen
+20 andere Städte versteckt sind — der Fehler, den der Durchgang vom 30.07. behoben hat.
+
+**Was sie brauchen:** mindestens 3 exklusive Fotos mit Ortsbezug und einen eigenen Text.
+Nideggen ist bewusst **nicht** angelegt — 90 Einblendungen rechtfertigen keine eigene
+Seite, solange größere Städte kein Material haben.
 
 ### Heute freigeschaltet
 
@@ -82,6 +105,11 @@ sollte.
 | :-- | --: | --: | --: | :-- |
 | `bw` | 19 | 4 | 1 | 42 W |
 | `wiesbaden` | 16 | 3 | 5 | 21 W |
+| `karlsruhe` | 17 | 5 | 0 | 39 W |
+
+`karlsruhe` hatte die meisten exklusiven Bilder aller versteckten Städte **und** messbare
+Nachfrage: „schnellzeichner karlsruhe" bringt 207 Einblendungen auf Position 28,2. Eine
+Seite, die es längst gab, war für genau diese Suche unsichtbar.
 
 `bw` war ohne erkennbaren Grund versteckt: alle 10 Dateien in `public/img/slides/bw/`
 tragen `landings: ["bw"]`, keine ist deaktiviert. Der Eintrag stammte aus der

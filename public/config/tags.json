@@ -248,6 +248,16 @@
       "slug": "duesseldorf",
       "label": "duesseldorf",
       "source": "landings.md"
+    },
+    {
+      "slug": "heilbronn",
+      "label": "heilbronn",
+      "source": "landings.md"
+    },
+    {
+      "slug": "muenchen",
+      "label": "muenchen",
+      "source": "landings.md"
     }
   ]
 }

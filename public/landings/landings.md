@@ -36,3 +36,5 @@ bw
 hanau
 stuttgart
 duesseldorf
+heilbronn
+muenchen

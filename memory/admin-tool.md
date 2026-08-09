@@ -45,7 +45,7 @@ Bei jeder Cross-Repo-Arbeit beide lesen (liegen flach im Admin-Repo-Root):
 | `public/img/Titelbild/title.meta.json` (nur `focus`/`frame`) | `ImageManager.tsx` (titelbild-Modus) |
 | `public/reviews/{city}/review*.md` | `ReviewManager.tsx` |
 | `public/faq/default/*.md` + `public/faq/{city}/*.md` | `FaqManager.tsx` |
-| `public/landings/landings.md` | `Dashboard.tsx` (Quick-Add). ⚠️ **Nicht mehr `CityManager.tsx`** – die Komponente existiert, wird aber von nichts mehr importiert. |
+| `public/landings/landings.md` | `Dashboard.tsx` (Quick-Add). ⚠️ **Nicht mehr `CityManager.tsx`** – die Komponente existiert, wird aber von nichts mehr importiert. ⚠️ **Quick-Add schreibt NUR diese Zeile** – siehe Lücke unten. |
 | `public/site-texts/content.json` | `SiteTextsManager.tsx` **und** `IntroManager.tsx` (beide schreiben dieselbe Datei) |
 | `public/config/components.json` (Sektions-Stack `_order`) | `InterfaceView.tsx` – siehe `komponenten-stack.md` |
 | `public/img/referenzenLogos/` | `BrandStripeManager.tsx` |
@@ -75,6 +75,30 @@ Die früher hier gelisteten LÜCKE-1/2/4/5/6 (Events, Cinema, Why-Texte, `title.
 
 - `public/erinnerungen/{key}.json` – Erinnerungen/Pinnwand-Texte. Die `erinnerungen`-Sektion existiert im Stack, hat aber `editorType: null` (`src/components/interface/pageTypes.ts:73`) → kein Editor, kein Schreibpfad im Admin.
 - `public/navigation/navigation.json` – kein Manager, kein Schreibpfad im Admin (grep auf `navigation` in `kunstwolff-admin/src/` = leer). Manuell pflegen.
+- **`vercel.json` – Weiterleitungen.** Kein Schreibpfad im Admin. Relevant wird das bei
+  **neuen Städten**: siehe die Lücke direkt darunter.
+
+### ⚠️ LÜCKE: Stadt-Quick-Add legt nur die halbe Stadt an (2026-08-09)
+
+`Dashboard.tsx` Quick-Add schreibt **eine Zeile** in `landings.md`. Der Build erzeugt
+daraus aber **vier** Seiten (`/<stadt>/` plus drei Skill-Kombis), und zwei Dinge fehlen
+danach:
+
+1. **`page-visibility.json`** – die neue Stadt und ihre drei Kombis sind **sofort
+   indexierbar**. Ohne eigene Fotos und eigenen Text sind das genau die Doorway-Seiten,
+   wegen denen 20 Städte auf `noindex` stehen. Der Sichtbarkeits-Schalter in
+   `SiteGraphView.tsx` kann das nachträglich, wird aber erfahrungsgemäß vergessen.
+2. **`vercel.json`** – für jede Skill×Stadt-Paarung verlangt `tests/combo-urls.test.ts`
+   eine Weiterleitung von der alten hierarchischen Adresse. Fehlt sie, ist die Testsuite
+   rot; das merkt beim Admin-Publish aber **niemand**, weil auf diesem Weg
+   (`createCommitOnBranch`) **keine Git-Hooks laufen**.
+
+Beides ist derzeit reine Handarbeit im Website-Repo — Schritt-für-Schritt in
+`content-landings.md`, Abschnitt „Schritt 4 und 5 macht kein Sync-Script".
+
+Wer den Quick-Add erweitern will: die saubere Lösung wäre, dass er neue Städte
+**standardmäßig versteckt** anlegt (vier Pfade in `page-visibility.json`) — Sichtbarmachen
+ist dann ein bewusster zweiter Klick statt eines stillen Versehens.
 
 > Aktuelle Restlücken werden nicht mehr in einer separaten Bug-Datei geführt (`BUGS_TODO.md` existiert nicht mehr), sondern direkt in der Admin-README bzw. im Admin-`memory/`.
 

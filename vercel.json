@@ -388,6 +388,16 @@
       "permanent": true
     },
     {
+      "source": "/schnellzeichner-karikaturist/heilbronn",
+      "destination": "/heilbronn-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner-karikaturist/muenchen",
+      "destination": "/muenchen-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
       "source": "/szenenmaler/berlin",
       "destination": "/berlin-szenenmaler/",
       "permanent": true
@@ -555,6 +565,16 @@
     {
       "source": "/szenenmaler/duesseldorf",
       "destination": "/duesseldorf-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/heilbronn",
+      "destination": "/heilbronn-szenenmaler/",
+      "permanent": true
+    },
+    {
+      "source": "/szenenmaler/muenchen",
+      "destination": "/muenchen-szenenmaler/",
       "permanent": true
     },
     {
@@ -728,6 +748,16 @@
       "permanent": true
     },
     {
+      "source": "/aquarelle/heilbronn",
+      "destination": "/heilbronn-aquarelle/",
+      "permanent": true
+    },
+    {
+      "source": "/aquarelle/muenchen",
+      "destination": "/muenchen-aquarelle/",
+      "permanent": true
+    },
+    {
       "source": "/schnellzeichner/berlin",
       "destination": "/berlin-schnellzeichner-karikaturist/",
       "permanent": true
@@ -890,6 +920,16 @@
     {
       "source": "/schnellzeichner/stuttgart",
       "destination": "/stuttgart-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/heilbronn",
+      "destination": "/heilbronn-schnellzeichner-karikaturist/",
+      "permanent": true
+    },
+    {
+      "source": "/schnellzeichner/muenchen",
+      "destination": "/muenchen-schnellzeichner-karikaturist/",
       "permanent": true
     },
     {

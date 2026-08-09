@@ -26,7 +26,7 @@ public/erinnerungen/<stadt>.json    # sync:erinnerungen
 ⚠️ **`public/faq/<stadt>/` wird NICHT automatisch angelegt.** Kein Sync-Skript legt
 FAQ-Stadt-Ordner an – `sync-landings.mjs` fasst `faqRoot` nur beim Zusammenführen
 von Slug-Kollisionen an, `sync-faq-tags.mjs` taggt ausschließlich vorhandene
-Dateien. Deshalb haben derzeit nur 21 der 34 Städte einen FAQ-Ordner; die anderen
+Dateien. Deshalb haben derzeit nur 21 der 36 Städte einen FAQ-Ordner; die anderen
 bekommen ihre Fragen über die Tags. Anlegen geht von Hand oder über das Admin-Tool.
 
 ## Skills

@@ -70,10 +70,47 @@ Stadt- und Kombiseiten – `koeln` → „Köln", `bw` → „Baden-Württemberg
      - `public/erinnerungen/<stadt>.json` (Kopie default)
 3. Falls der Name Umlaute, mehrere Wörter oder eine abweichende Schreibweise hat:
    Eintrag in `src/utils/cityNames.ts` ergänzen
-4. Stadtspezifische Bilder hochladen (Slides, Titelbild, Why-Bilder)
-5. Texte in `public/why/<stadt>.json` anpassen
-6. Optional: stadtspezifische Reviews und FAQs anlegen (⚠️ der FAQ-Ordner wird
+4. **`public/config/page-visibility.json`: VIER Pfade eintragen** – siehe unten
+5. **`vercel.json`: ACHT Weiterleitungen ergänzen** – siehe unten
+6. Stadtspezifische Bilder hochladen (Slides, Titelbild, Why-Bilder)
+7. Texte in `public/why/<stadt>.json` anpassen
+8. Optional: stadtspezifische Reviews und FAQs anlegen (⚠️ der FAQ-Ordner wird
    **nicht** automatisch angelegt)
+
+### ⚠️ Schritt 4 und 5 macht kein Sync-Script (2026-08-09)
+
+`sync-landings.mjs` legt Ordner an – **mehr nicht**. Zwei Dinge muss man von Hand
+nachziehen, sonst geht eine neue Stadt entweder ungewollt live oder produziert 404er.
+
+**a) Sichtbarkeit.** Eine neue Stadt erzeugt **vier** Seiten: `/<stadt>/` plus je eine
+Kombi pro Skill (`/<stadt>-aquarelle/`, `/<stadt>-schnellzeichner-karikaturist/`,
+`/<stadt>-szenenmaler/`). Die Kombis werden **nicht** vom Präfix der Stadt mitgezogen –
+`isPageHiddenByPath` normalisiert auf `/<stadt>` und trifft nur `/<stadt>/…`, nicht
+`/<stadt>-aquarelle/`. Wer nur die Stadt einträgt, stellt drei dünne Kombiseiten
+indexierbar ins Netz.
+
+Soll die Stadt (wie üblich) erst versteckt entstehen, gehören **alle vier** Pfade in
+`hidden`. Die 102 bestehenden Skill×Stadt-Kombis bleiben ohnehin dauerhaft versteckt
+(Kannibalisierung, siehe `seo.md`).
+
+**b) Weiterleitungen.** `tests/combo-urls.test.ts` verlangt für **jede** Skill×Stadt-Paarung
+eine Weiterleitung von der alten hierarchischen Adresse auf die flache:
+
+```
+/schnellzeichner-karikaturist/<stadt>  →  /<stadt>-schnellzeichner-karikaturist/
+/szenenmaler/<stadt>                   →  /<stadt>-szenenmaler/
+/aquarelle/<stadt>                     →  /<stadt>-aquarelle/
+/schnellzeichner/<stadt>               →  /<stadt>-schnellzeichner-karikaturist/   (Alt-Alias)
+```
+
+Das sind **acht** Einträge pro Stadt (vier Muster × `permanent: true`). Ohne sie ist die
+Testsuite rot. Der Alt-Alias `/schnellzeichner/<stadt>` ist streng genommen optional –
+die Auffangregel `/schnellzeichner/:rest*` fängt ihn ab –, aber dann entsteht eine
+Weiterleitungs**kette**, und die kostet Crawl-Budget (`combo-urls.test.ts` prüft Ketten
+separat).
+
+Neue Städte hatten diese Adressen historisch nie. Der Test bleibt trotzdem streng: eine
+Ausnahmeliste würde die Prüfung für alle künftigen Städte stillschweigend abschalten.
 
 **Hinweis:** GitHub Action `sync-landings.yml` macht Schritt 2 automatisch bei Push (siehe `sync-scripts.md`).
 
