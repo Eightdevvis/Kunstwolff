@@ -1,65 +1,100 @@
-# Stadtseiten freischalten — Stand 2026-08-06
+# Stadtseiten freischalten — Stand 2026-08-09
 
-Von 34 Städten sind **12 indexierbar**, 22 stehen auf `noindex` und fehlen in der
-Sitemap. Das war am 30.07. richtig entschieden: `/dortmund/` und `/giessen/`
-waren 1493 von 1494 Wörtern gleich, Google hätte das als Doorway-Seiten
-gewertet. Aber solange es so bleibt, **treten diese Städte im Wettbewerb gar
-nicht an**.
-
-Dieses Dokument sagt pro Stadt, was noch fehlt.
+Von 34 Städten sind **14 indexierbar** (seit heute: `bw` und `wiesbaden`), 20 stehen auf
+`noindex` und fehlen in der Sitemap. Die Ausblendung vom 30.07. war richtig: `/dortmund/`
+und `/giessen/` waren 1493 von 1494 Wörtern gleich, Google hätte das als Doorway-Seiten
+gewertet. Aber solange es so bleibt, **treten diese Städte im Wettbewerb gar nicht an**.
 
 > **Gabriele hat am 2026-08-06 selbst Vorspanntexte für elf Städte eingepflegt**
-> (frankfurt, schweiz, kaiserslautern, trier, wiesbaden, mainz, luxembourg,
-> koeln, giessen, ludwigshafen und einen `_default`). Diese Texte gelten. Meine
-> Entwürfe stehen nur dort, wo sie keinen geschrieben hat.
+> (frankfurt, schweiz, kaiserslautern, trier, wiesbaden, mainz, luxembourg, koeln,
+> giessen, ludwigshafen und einen `_default`). Diese Texte gelten. Ergänzte Entwürfe
+> stehen nur dort, wo sie keinen geschrieben hat.
+
+---
+
+## ⚠️ Korrektur zur Vorversion dieses Dokuments
+
+Die Tabelle vom 06.08. zählte Bilddateien **pro Ordner**. Das war das falsche Maß.
+
+Seit dem Tag-System wählt die Website Bilder über `tags.landings` in
+`public/img/slides/slides.meta.json` aus — **der Ordner ist nur noch Ablage und
+Upload-Ziel** (`memory/index.md`, `memory/tag-system.md`). Ein Bild im Ordner `wuppertal/`
+kann für Wiesbaden getaggt sein und erscheint dann dort.
+
+Zwei Folgen:
+
+1. **Keine versteckte Stadt liegt unter 7 getaggten Bildern.** Die Auffüll-Schwelle
+   `MIN_LANDING_SLIDES = 6` (`src/utils/slideImages.ts:54`) greift damit **nirgends**.
+   Die früher beschriebene Gefahr „fremde Locations unter der eigenen H1" gibt es so
+   nicht — sie war ein Artefakt der Ordner-Zählung.
+2. **Das echte Maß ist die Spalte „exklusiv":** Bilder, die *nur* dieser einen Stadt
+   zugeordnet sind. Sie allein unterscheiden eine Stadtseite von den anderen.
+
+---
 
 ## Die Regel, nach der freigeschaltet wird
 
 Eine Stadt darf sichtbar werden, wenn sie **beides** mitbringt:
 
-1. **Eigene Fotos** (mindestens 6, sonst füllt `supplementWithDefaultSlides` mit
-   fremden Orten auf — dann stehen fremde Locations unter der eigenen H1)
+1. **Exklusive Bilder** — mindestens 3, die keiner anderen Stadt zugeordnet sind
 2. **Eigenen Text**, der nicht auf jede andere Stadt genauso passt
 
-Der Vorspanntext allein reicht **nicht**. Er ist 20–45 Wörter lang auf einer
-Seite mit ~1500 — das sind rund 2 % eigener Anteil. Was eine Stadtseite wirklich
-einzigartig macht, sind ihre **eigenen Fotos und eigenen Kundenstimmen**. Beides
-kann nur Gabriele liefern.
+Der Vorspanntext allein reicht **nicht**. Er ist 20–45 Wörter lang auf einer Seite mit
+~1500 — rund 2 % eigener Anteil. Was eine Stadtseite wirklich einzigartig macht, sind
+**exklusive Fotos und eigene Kundenstimmen**. Beides kann nur Gabriele liefern.
 
-Seit es einen `_default`-Vorspann gibt, hat **jede** Stadt einen Text — aber
-Städte ohne eigenen zeigen alle denselben. Für die Dopplung ändert das nichts.
+Seit es einen `_default`-Vorspann gibt, hat **jede** Stadt einen Text — aber Städte ohne
+eigenen zeigen alle denselben. Für die Dopplung ändert das nichts.
+
+---
 
 ## Stand je versteckter Stadt
 
-| Stadt | Eigene Fotos | Kundenstimmen | Vorspann | Was zum Freischalten fehlt |
-| :-- | --: | --: | :-- | :-- |
-| `bw` (Baden-Württemberg) | 10 | 1 | 42 W | **nichts** — siehe Sonderfall 2 |
-| `wiesbaden` | 5 | 5 | 21 W (Gabriele) | 1 Foto |
-| `koblenz` | 4 | 0 | 43 W | 2 Fotos, Kundenstimmen |
-| `main-taunus-kreis` | 4 | 0 | 44 W | 2 Fotos, Kundenstimmen |
-| `wuppertal` | 4 | 0 | 33 W | 2 Fotos (eines falsch abgelegt, s.u.) |
-| `fulda` | 4 | 0 | — | 2 Fotos + siehe Sonderfall 1 |
-| `karlsruhe` | 3 | 0 | 39 W | 3 Fotos, Kundenstimmen |
-| `rhein-main-gebiet` | 3 | 1 | 37 W | 3 Fotos |
-| `rheinland-pfalz` | 3 | 9 | 32 W | 3 Fotos |
-| `mainz` | 2 | 2 | 28 W (Gabriele) | 4 Fotos |
-| `mannheim` | 2 | 1 | — | 4 Fotos, eigener Text |
-| `hanau` | 2 | 0 | — | 4 Fotos, eigener Text, Kundenstimmen |
-| `belgique` | 1 | 0 | — | 5 Fotos, eigener Text, Kundenstimmen |
-| `duesseldorf` | 1 | 1 | — | 5 Fotos, eigener Text |
-| `neunkirchen` | 1 | 0 | — | 5 Fotos, eigener Text, Kundenstimmen |
-| `giessen` | 0 | 1 | 14 W (Gabriele) | **alle** Fotos |
-| `heidelberg` | 0 | 1 | — | **alle** Fotos, eigener Text |
-| `dortmund` | 0 | 0 | — | **alles** |
-| `hamburg` | 0 | 0 | — | **alles** |
-| `neuwied` | 0 | 0 | — | **alles** |
-| `nord-rhein-westfalen` | 0 | 0 | — | **alles** |
-| `tuebingen` | 0 | 0 | — | **alles** |
+Sortiert nach exklusiven Bildern — das ist die Reihenfolge, in der freigeschaltet werden
+sollte.
 
-## Woher der Ortsbezug in meinen Entwürfen kommt
+| Stadt | getaggt | **exklusiv** | Stimmen | Vorspann | Was fehlt |
+| :-- | --: | --: | --: | :-- | :-- |
+| `karlsruhe` | 17 | **5** | 0 | 39 W | **nichts** – nächster Kandidat |
+| `koblenz` | 13 | **4** | 0 | 43 W | Kundenstimmen |
+| `rheinland-pfalz` | 11 | **4** | 9 | 32 W | **nichts** – aber Tag-Fehler klären, s.u. |
+| `fulda` | 10 | **4** | 0 | — | eigener Text (siehe Sonderfall 1) |
+| `wuppertal` | 12 | 3 | 0 | 33 W | Kundenstimmen |
+| `duesseldorf` | 14 | 2 | 1 | — | eigener Text |
+| `hanau` | 12 | 2 | 0 | — | eigener Text, Kundenstimmen |
+| `main-taunus-kreis` | 8 | 2 | 0 | 44 W | 1 exklusives Bild, Kundenstimmen |
+| `mannheim` | 9 | 2 | 1 | — | eigener Text, 1 exklusives Bild |
+| `rhein-main-gebiet` | 17 | 2 | 1 | 37 W | 1 exklusives Bild |
+| `belgique` | 12 | 1 | 0 | — | eigener Text, 2 exklusive Bilder |
+| `mainz` | 15 | 1 | 2 | 28 W | 2 exklusive Bilder |
+| `neunkirchen` | 12 | 1 | 0 | — | eigener Text, 2 exklusive Bilder |
+| `dortmund` | 10 | 0 | 0 | — | **alles** |
+| `giessen` | 10 | 0 | 1 | 14 W | **alle** exklusiven Bilder |
+| `hamburg` | 12 | 0 | 0 | — | **alles** |
+| `heidelberg` | 7 | 0 | 1 | — | **alles** |
+| `neuwied` | 10 | 0 | 0 | — | **alles** |
+| `nord-rhein-westfalen` | 9 | 0 | 0 | — | **alles** |
+| `tuebingen` | 8 | 0 | 0 | — | **alles** |
 
-Jede genannte Location ist durch ein echtes Foto gedeckt — die Ortsangaben
-stecken in den Dateinamen unter `public/img/slides/<stadt>/`:
+### Heute freigeschaltet
+
+| Stadt | getaggt | exklusiv | Stimmen | Vorspann |
+| :-- | --: | --: | --: | :-- |
+| `bw` | 19 | 4 | 1 | 42 W |
+| `wiesbaden` | 16 | 3 | 5 | 21 W |
+
+`bw` war ohne erkennbaren Grund versteckt: alle 10 Dateien in `public/img/slides/bw/`
+tragen `landings: ["bw"]`, keine ist deaktiviert. Der Eintrag stammte aus der
+Pauschal-Ausblendung vom 30.07. (Fürs Protokoll: `bw/1_schnellzeichner_hq.webp` ist
+dieselbe Datei wie in `default/`, also ein Allgemeinbild — echte bw-Aufnahmen sind es
+neun.)
+
+---
+
+## Woher der Ortsbezug in den ergänzten Entwürfen kommt
+
+Jede genannte Location ist durch ein echtes Foto gedeckt — die Ortsangaben stecken in den
+Dateinamen unter `public/img/slides/<stadt>/`:
 
 - **bw** → Messe Stuttgart, Heitlinger Genusswelten (Östringen)
 - **main-taunus-kreis** → Ölmühle Hattersheim, Wickerbachalm Hochheim
@@ -68,87 +103,96 @@ stecken in den Dateinamen unter `public/img/slides/<stadt>/`:
 - **karlsruhe** → Landkreis Karlsruhe, Östringen (Hochzeitsmalerei)
 - **koblenz**, **wuppertal** → Anlassarten aus den Fotos, keine Ortsnamen
 
-**Erfunden wurde nichts.** Wo mir Belege fehlten, steht nichts.
+**Erfunden wurde nichts.** Wo Belege fehlten, steht nichts.
 
-## 🔴 Tippfehler in den neuen Texten — teils auf indexierten Seiten
+---
 
-Nicht korrigiert, weil es Gabrieles Texte sind. Aber sie stehen live und Google
-liest sie mit:
+## ✅ Korrigierte Tippfehler (2026-08-09)
 
-| Wo | Steht da | Gemeint ist vermutlich |
+| Wo | war | ist jetzt |
 | :-- | :-- | :-- |
-| `_default` (**alle Städte ohne eigenen Text**) | „für Ihr **Evrent**" | Event |
-| `frankfurt` (indexiert) | „in Frankfurt. **I**" am Absatzende | Buchstabe zu viel |
-| `frankfurt` (indexiert) | „in wenigen Minuten **verweigen** wir Ihre Mitarbeiter" | verewigen |
-| `kaiserslautern` (indexiert) | „Karikaturisten, **liver-painter**" | Live-Painter |
-| `kaiserslautern` (indexiert) | „eine gute Darstellung**,**" — Absatz endet mit Komma | Punkt |
-| `wiesbaden` (versteckt) | „ein Erlebnis für **Iher** Gäste … mit **enem** Schnellzeichner" | Ihre / einem |
+| `_default` | Ihr **Evrent** | Ihr **Event** |
+| `_default` | Schnellzeichner**.** Event-Illustratoren | Schnellzeichner**,** Event-Illustratoren |
+| `frankfurt` | in Frankfurt. **I** | „I" gestrichen |
+| `frankfurt` | **verweigen** wir Ihre Mitarbeiter | **verewigen** |
+| `kaiserslautern` | Karikaturisten, **liver-painter** | **Live-Painter** |
+| `kaiserslautern` | gute Darstellung**, ** (Absatzende) | gute Darstellung**.** |
+| `wiesbaden` | für **Iher** Gäste | **Ihre** |
+| `wiesbaden` | mit **enem** Schnellzeichner | **einem** |
 
-Besonders ärgerlich ist `_default`: der Text erscheint auf **jeder** Stadtseite
-ohne eigenen Vorspann, „Evrent" also gleich vielfach.
+## 🟡 Bewusst NICHT korrigiert
 
-## Vier Punkte, die eine Entscheidung brauchen
+Freigegeben war nur „Tippfehler". Diese drei sind Grammatik bzw. Schreibweise und
+brauchen Gabrieles Zustimmung:
 
-### 1. `fulda` hat keinen eigenen Text bekommen — mit Absicht
+| Wo | Steht da | Anmerkung |
+| :-- | :-- | :-- |
+| `saarland` *(indexiert)* | „mit einem **Karikaturist**" | Dativ: „Karikaturist**en**" |
+| `schweiz`, `_default` | „**live-Kunst**" | im Deutschen groß: „Live-Kunst" |
+| `ludwigshafen` | „**live-painting**" | im Deutschen groß: „Live-Painting" |
 
-Die vier Fotos heißen `1000018053.webp`, `1000018054.webp`, `1000018273.webp`,
-`1000018280.webp`. Daraus lässt sich **kein einziger Ortsbezug** belegen — ich
-weiß nicht, was darauf zu sehen ist. Ein Text ohne Substanz wäre genau die
-Dopplung, wegen der die Stadt versteckt ist.
+Dazu: `ludwigshafen` endet mit einem überzähligen Zeilenumbruch (unsichtbar, harmlos).
 
-**Was hilft:** Gabriele sagt in zwei Sätzen, was auf den Bildern passiert ist
-(Anlass, Location) — dann schreibe ich den Text.
+---
 
-Dazu kommt: `title.meta.json` verweist für Fulda auf `fulda/1000018047.webp`,
-und **diese Datei existiert nicht**. Die Seite fällt aufs Standard-Titelbild
-zurück. (Das ist auch der Grund, warum `tests/bild-adressen.test.ts` rot ist —
-schon vor diesen Änderungen.)
+## Punkte, die eine Entscheidung brauchen
 
-### 2. `bw` erfüllt die Freischalt-Regel bereits — warum ist es versteckt?
+### 1. `fulda` hat 4 exklusive Bilder, aber keinen Text — mit Absicht
 
-Baden-Württemberg hat **10 eigene Fotos** und einen eigenen Vorspann. Nach der
-dokumentierten Regel (≥ 6 eigene Fotos **oder** eigener Intro) müsste es
-sichtbar sein. Ich habe es **nicht** eigenmächtig freigeschaltet — möglicherweise
-sind nicht alle 10 Bilder über `slides.meta.json` aktiv, oder es gab einen
-anderen Grund.
+Die Fotos heißen `1000018053.webp`, `1000018054.webp`, `1000018273.webp`,
+`1000018280.webp`. Daraus lässt sich **kein einziger Ortsbezug** belegen — unbekannt, was
+darauf zu sehen ist. Ein Text ohne Substanz wäre genau die Dopplung, wegen der die Stadt
+versteckt ist.
 
-**Zu klären, bevor jemand die Zeile aus `page-visibility.json` streicht.**
+**Was hilft:** zwei Sätze von Gabriele, was auf den Bildern passiert ist (Anlass,
+Location) — daraus lässt sich ein Text schreiben. Nach der korrigierten Zählung ist Fulda
+sonst freischaltreif.
 
-### 3. Zwei Fotos liegen im falschen Ordner
+### 2. Ein Bild ist der falschen Region zugeordnet
 
-- `public/img/slides/wuppertal/paar-lachend-…-veranstaltung-**wiesbaden**.webp`
-  liegt unter Wuppertal, heißt aber Wiesbaden.
-- `public/img/slides/rheinland-pfalz/karikaturist-schloss-auel-**lohmar**-rheinland-pfalz.webp`
-  — Schloss Auel in Lohmar liegt nach meiner Kenntnis in Nordrhein-Westfalen,
-  nicht in Rheinland-Pfalz. Bitte prüfen.
+`slides/rheinland-pfalz/karikaturist-schloss-auel-lohmar-rheinland-pfalz.webp` ist
+ausschließlich `landings: ["rheinland-pfalz"]` getaggt. **Schloss Auel in Lohmar liegt in
+Nordrhein-Westfalen.** Damit steht ein NRW-Motiv unter der Rheinland-Pfalz-Überschrift,
+und `nord-rhein-westfalen` (0 exklusive Bilder) geht leer aus.
 
-Beides zählt doppelt: das Foto fehlt der einen Stadt und verfälscht die andere.
-Wiesbaden fehlt genau **ein** Foto zur Freischaltung — und genau eines liegt im
-falschen Ordner.
+Zu ändern wäre der **Tag**, nicht der Ordner. Nur Gabriele weiß, wo die Aufnahme entstand.
+
+### 3. Ein Bild liegt unordentlich — ohne Auswirkung
+
+`slides/wuppertal/paar-lachend-…-veranstaltung-wiesbaden.webp` heißt Wiesbaden und liegt
+unter Wuppertal. Es ist für **beide** Städte getaggt und erscheint auf beiden Seiten. Rein
+kosmetisch. (Die Vorversion dieses Dokuments behauptete, das Foto „fehle der einen Stadt"
+— das war falsch und eine Folge der Ordner-Zählung.)
 
 ### 4. Dürfen Kundennamen genannt werden?
 
 In den Dateinamen stehen echte Firmen: **Novelis**, **Pro Contur**, **Toyota**,
-**Bauern- und Winzerverband**. Namentlich genannte Referenzkunden sind stark —
-aber wen man öffentlich als Kunden nennt, ist eine Freigabefrage. Ich habe
-deshalb **keinen** Kundennamen in die Texte geschrieben, nur Locations.
+**Bauern- und Winzerverband**. Namentlich genannte Referenzkunden sind stark — aber wen
+man öffentlich als Kunden nennt, ist eine Freigabefrage. Deshalb steht **kein**
+Kundenname in den Texten, nur Locations.
 
-Wenn die Freigaben vorliegen: sagen, dann kommen sie rein.
+Wenn die Freigaben vorliegen: Bescheid geben, dann kommen sie rein.
+
+---
 
 ## Der Weg zum Freischalten, Schritt für Schritt
 
-1. Fotos ergänzen, bis die Stadt auf 6 eigene kommt
-2. Vorspanntext prüfen und korrigieren (Admin → Website-Texte)
+1. Bilder so taggen, dass die Stadt auf mindestens 3 **exklusive** kommt
+   (Admin → Bild → Orte; nicht der Ordner entscheidet, sondern der Tag)
+2. Vorspanntext prüfen und ergänzen (Admin → Website-Texte)
 3. Möglichst eine echte Kundenstimme aus der Region ergänzen
 4. Erst dann den Pfad aus `public/config/page-visibility.json` streichen
    (im Admin: Sichtbarkeits-Schalter im Seiten-Graph)
 5. Nach dem Deploy in der Google Search Console → *URL-Prüfung* →
    *Indexierung beantragen*
 
+---
+
 ## Was bewusst versteckt bleibt
 
-Die **102 Skill×Stadt-Seiten** (`/berlin-schnellzeichner-karikaturist/`). Nicht
-wegen dünnem Text, sondern wegen Kannibalisierung: 97 % ihres Textes steht
-wörtlich auch auf `/berlin/`, und beide zielen auf dieselbe Suchanfrage. Zwei
-eigene Seiten um dieselbe Anfrage konkurrieren zu lassen, schwächt beide. Diese
-Entscheidung bleibt.
+Die **102 Skill×Stadt-Seiten** (`/berlin-schnellzeichner-karikaturist/`). Nicht wegen
+dünnem Text, sondern wegen Kannibalisierung: 97 % ihres Textes steht wörtlich auch auf
+`/berlin/`, und beide zielen auf dieselbe Suchanfrage. Zwei eigene Seiten um dieselbe
+Anfrage konkurrieren zu lassen, schwächt beide. Diese Entscheidung bleibt — auch für
+`/bw-aquarelle/`, `/bw-szenenmaler/` & Co., die trotz Freischaltung von `/bw/` versteckt
+bleiben.

@@ -216,9 +216,15 @@ die Datenschutzerklärung nennt keinen der drei Empfänger (Formspree, Vercel, G
 
 ## Sichtbarkeit: welche Seiten indexierbar sind (seit 2026-07-30)
 
-`public/config/page-visibility.json` ist nicht mehr leer. Ausgeblendet sind **129 Pfade**
-(102 flache Skill×Ort-Kombis + 22 Städte + `/aquarelle/` + 4 Aquarelle-Anlässe);
-indexierbar bleiben **40 von 172** gebauten Seiten. Die Sitemap enthält exakt dieselben 40.
+`public/config/page-visibility.json` ist nicht mehr leer. Ausgeblendet sind **128 Pfade**
+(102 flache Skill×Ort-Kombis + 20 Städte + `/aquarelle/` + 4 Aquarelle-Anlässe + `/fr/`);
+indexierbar bleiben **41 von 170** gebauten Seiten. Die Sitemap enthält exakt dieselben 41.
+
+**Stand 2026-08-09** (vorher 129/40): `/fr/` kam am 06.08. dazu, `bw` und `wiesbaden`
+sind am 09.08. freigeschaltet worden — beide erfüllen die Regel (exklusive Bilder +
+eigener Text + Kundenstimmen), `bw` war ohne erkennbaren Grund versteckt. Ihre
+Skill-Varianten (`/bw-aquarelle/` usw.) bleiben über eigene Einträge versteckt; die
+Präfix-Regel normalisiert auf `/bw` und trifft nur `/bw/…`.
 
 ⚠️ **Die Präfix-Regel steht doppelt im Code.** `isPageHiddenByPath()` in
 `src/utils/pageVisibility.ts` steuert `<meta robots>`; der Sitemap-Filter in
@@ -232,9 +238,17 @@ aller Zustände, weil Google beides sieht. Festgehalten in `tests/page-visibilit
 - **Eine Stadt bleibt sichtbar, wenn sie ihre Galerie aus EIGENEN Fotos füllen kann**
   (>= `MIN_LANDING_SLIDES` = 6) **oder** einen eigenen `landingIntro` hat. Darunter füllt
   `supplementWithDefaultSlides` mit Fremdbildern auf – dann zeigt eine Stadtseite fremde
-  Orte unter ihrer eigenen H1. Sichtbar bleiben damit 12: berlin (Intro), frankfurt,
+  Orte unter ihrer eigenen H1. Sichtbar blieben damit 12: berlin (Intro), frankfurt,
   hessen, kaiserslautern, koeln, ludwigshafen, luxembourg, saarbruecken, saarland,
   schweiz, stuttgart, trier.
+
+  ⚠️ **Der erste Halbsatz wurde 2026-08-09 als falsch gemessen erkannt.** „Eigene Fotos"
+  wurde damals **pro Ordner** gezählt. Die Auswahl läuft aber über `tags.landings`
+  (`getSlidesByTag`), der Ordner ist seit dem Tag-System nur noch Ablage. Nach Tags
+  gezählt liegt **keine** Stadt unter 7 Bildern – `supplementWithDefaultSlides` greift
+  also **nirgends**, und die beschriebene Gefahr „fremde Orte unter der eigenen H1"
+  existiert so nicht. Das brauchbare Maß ist die Zahl der **exklusiven** Bilder (nur
+  dieser einen Stadt zugeordnet); die Tabelle dazu steht in `STADTSEITEN.md`.
 - **Alle 102 Skill+Stadt-Seiten sind ausgeblendet.** Nicht wegen Dünne, sondern wegen
   Kannibalisierung: 97 % des Textes von `/berlin-schnellzeichner-karikaturist/` stehen wörtlich auch
   auf `/berlin/`, und beide zielen auf dieselbe Suchanfrage.

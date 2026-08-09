@@ -27,6 +27,30 @@ public/img/slides/category-matching.md # optionale Zusatzregeln
 - Manuell hochgeladene Bilder ohne Priority werden alphabetisch ans Ende sortiert
 - `sync:slides` überschreibt `priority` **nie**
 
+## ⚠️ „Eigene Bilder einer Stadt" zählt man über TAGS, nicht über Ordner (2026-08-09)
+
+Der häufigste Zählfehler in diesem Repo — er ist zweimal passiert und hat beide Male zu
+falschen Sichtbarkeits-Entscheidungen geführt.
+
+`getSlidesByTag('landings', slug)` wählt Bilder ausschließlich über `tags.landings` in
+`slides.meta.json`. **Der Ordner entscheidet nichts** (siehe `tag-system.md`, Phase 5a) —
+er ist Ablage und Upload-Ziel. Ein Bild unter `wuppertal/` kann für Wiesbaden getaggt sein
+und erscheint dann dort; ein Bild unter `bw/` kann zusätzlich Stuttgart tragen.
+
+Wer `ls public/img/slides/<stadt>/ | wc -l` zählt, misst deshalb **etwas anderes** als
+das, was auf der Seite landet. Gemessen am 2026-08-09: Wiesbaden hat 5 Dateien im Ordner,
+aber **16** getaggte Bilder; Karlsruhe 3 im Ordner, **17** getaggt.
+
+Zwei brauchbare Kennzahlen:
+
+| Frage | Zählung |
+| :-- | :-- |
+| „Läuft die Stadt ins Auffüllen?" | Bilder mit dem Stadt-Slug in `tags.landings` |
+| „Ist die Seite inhaltlich eigenständig?" | Bilder, deren `tags.landings` **nur** diesen Slug enthält (*exklusiv*) |
+
+Für Sichtbarkeits- und SEO-Entscheidungen zählt die **zweite** Zahl. Die erste liegt bei
+allen Städten über der Schwelle und ist damit als Kriterium wertlos.
+
 ## Fallback-Logik
 
 - Hat eine Stadt **weniger als 6 eigene Slides** (`MIN_LANDING_SLIDES = 6`), wird über
