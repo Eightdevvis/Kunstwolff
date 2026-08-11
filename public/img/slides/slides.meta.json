@@ -2492,16 +2492,15 @@
   },
   "mediathek/1000031508.webp": {
     "categories": [
-      "Aquarelle"
+      "Aquarelle",
+      "Szenenmaler"
     ],
+    "priority": 236,
     "tags": {
       "skills": [
-        "aquarelle"
-      ],
-      "events": [],
-      "landings": []
-    },
-    "priority": 11
+        "szenenmaler"
+      ]
+    }
   },
   "mediathek/1000031509.webp": {
     "categories": [
@@ -2544,16 +2543,15 @@
   },
   "mediathek/1000031531.webp": {
     "categories": [
-      "Aquarelle"
+      "Aquarelle",
+      "Szenenmaler"
     ],
+    "priority": 237,
     "tags": {
       "skills": [
-        "aquarelle"
-      ],
-      "events": [],
-      "landings": []
-    },
-    "priority": 9
+        "szenenmaler"
+      ]
+    }
   },
   "mediathek/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
     "categories": [
