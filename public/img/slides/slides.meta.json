@@ -996,13 +996,11 @@
   },
   "frankfurt/19_mann-haelt-ergriffen-seine-schnellzeichnung-hoch-von-karikaturist-im-hilton-frankfurt-gravenbruch.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": [
@@ -4612,14 +4610,10 @@
     "title": "Schnellzeichner Wuppertal"
   },
   "mediathek/img_20240316_180247~3.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "priority": 230,
     "tags": {
-      "skills": [
-        "szenenmaler"
-      ]
+      "skills": []
     }
   },
   "mediathek/live-artist-watercolor-portrait-party-pfalz.webp": {
