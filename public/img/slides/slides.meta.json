@@ -4660,5 +4660,27 @@
         "szenenmaler"
       ]
     }
+  },
+  "mediathek/brautpaar-hochzeitsmaler-karlsruhe.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 235,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    }
+  },
+  "mediathek/live-event-kuenstlerin-oestringen-bw.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 234,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    }
   }
 }
