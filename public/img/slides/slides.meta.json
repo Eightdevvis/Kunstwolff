@@ -4626,5 +4626,49 @@
         "szenenmaler"
       ]
     }
+  },
+  "mediathek/aquarell-portrait-event-illustration.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 233,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    }
+  },
+  "mediathek/brautpaar-hochzeitszeichnung-kuenstlerin-rhein-main.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 232,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    }
+  },
+  "mediathek/event-illustratoren-rheinland-pfalz.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 231,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    }
+  },
+  "mediathek/hochzeitsfeier-mit-event-illustratorin-rpf.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 230,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    }
   }
 }
