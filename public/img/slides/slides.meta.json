@@ -2573,12 +2573,10 @@
   },
   "mediathek/acrylgemaelde-brautpaar-hochzeitsmaler-event-karlsruhe.webp": {
     "categories": [
-      "Szenenmaler",
       "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler",
         "schnellzeichner"
       ],
       "events": [
@@ -3049,7 +3047,18 @@
       "skills": [
         "szenenmaler"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier",
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "gartenparty",
+        "stadtfest",
+        "gala",
+        "sommerfest"
+      ],
       "landings": [
         "saarbruecken"
       ]
