@@ -1806,13 +1806,11 @@
   },
   "koeln/12_digitaler-schnellzeichner-messe-koeln.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "messe",
@@ -1933,9 +1931,7 @@
     "priority": 5
   },
   "koeln/6_digital-speed-painting-trade-show.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
       "skills": [],
       "events": [
@@ -2274,13 +2270,9 @@
     "priority": 8
   },
   "luxembourg/caricaturiste-luxembourg-événement.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
+      "skills": [],
       "events": [],
       "landings": [
         "luxembourg"
@@ -3738,9 +3730,7 @@
     "priority": 4
   },
   "stuttgart/live-sketching-event-trade-fair-baden-wuerttemberg.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
       "skills": [],
       "events": [],
@@ -3752,13 +3742,11 @@
   },
   "stuttgart/schnellzeichnerin-messe-stuttgart.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "messe"
@@ -4390,13 +4378,9 @@
     "title": "Schnellzeichner Trier"
   },
   "trier/5_hochzeitsmaler-mal-bild-bei-hochzeit-trier-saarburg.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
+      "skills": [],
       "events": [
         "hochzeit"
       ],
