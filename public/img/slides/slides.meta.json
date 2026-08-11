@@ -807,13 +807,11 @@
   },
   "frankfurt/10_digitale-schnellzeichnung-auf-leinwand-projiziert-mit-beamer-comoany-event-allianz-frankfurt.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "firmenfeier",
@@ -857,12 +855,10 @@
   },
   "frankfurt/12_eventzeichnerin-sitzt-an-staffelei-und-portraitiert-kunden-bulgari-frankfurt.webp": {
     "categories": [
-      "Szenenmaler",
       "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler",
         "schnellzeichner"
       ],
       "events": [
@@ -972,13 +968,9 @@
     "title": "Live-Kunst Frankfurt"
   },
   "frankfurt/18_live-zeichner-malt-portraits-fuer-kunden-aktion-bulgari-frankfurt.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
+      "skills": [],
       "events": [],
       "landings": [
         "frankfurt"
@@ -1054,13 +1046,11 @@
   },
   "frankfurt/22_paar-lacht-ueber-digitale-karikatur-auf-samsung-flip-von-karikaturistin-gezeichnet-auf-betriebsfeier-frankfurt.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [
         "firmenfeier"
@@ -1103,13 +1093,9 @@
     "title": "Live-Kunst Frankfurt"
   },
   "frankfurt/25_szenenmalerin-malt-auf-zeichenbrett-bei-frankfurt-messe.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
+      "skills": [],
       "events": [],
       "landings": [
         "frankfurt"
@@ -3776,23 +3762,6 @@
       ]
     },
     "priority": 3
-  },
-  "szenenmaler/aquarell-portrait-event-illustration.webp": {
-    "categories": [
-      "Aquarelle",
-      "Szenenmaler",
-      "Schnellzeichner"
-    ],
-    "tags": {
-      "skills": [
-        "aquarelle",
-        "szenenmaler",
-        "schnellzeichner"
-      ],
-      "events": [],
-      "landings": []
-    },
-    "priority": 8
   },
   "szenenmaler/aquarell-portraits-frankfurt.webp": {
     "categories": [],
