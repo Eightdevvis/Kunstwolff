@@ -421,13 +421,9 @@
     "priority": 228
   },
   "default/caricaturiste-événementiel-luxembourg.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
+      "skills": [],
       "events": [],
       "landings": [
         "luxembourg"
