@@ -4610,5 +4610,27 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
+  },
+  "mediathek/img_20240316_180247~3.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 230,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    }
+  },
+  "mediathek/live-artist-watercolor-portrait-party-pfalz.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 229,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    }
   }
 }
