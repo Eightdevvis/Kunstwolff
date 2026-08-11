@@ -2794,13 +2794,9 @@
     "priority": 82
   },
   "mediathek/live-wedding-painter.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
+      "skills": [],
       "events": [
         "hochzeit"
       ],
@@ -2809,15 +2805,57 @@
   },
   "mediathek/live-zeichner-frankfurt.webp": {
     "categories": [
-      "Szenenmaler"
+      "Szenenmaler",
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler"
+        "szenenmaler",
+        "schnellzeichner"
       ],
-      "events": [],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "silvester",
+        "gala"
+      ],
       "landings": [
-        "frankfurt"
+        "frankfurt",
+        "berlin",
+        "hamburg",
+        "schweiz",
+        "kaiserslautern",
+        "trier",
+        "wiesbaden",
+        "mainz",
+        "luxembourg",
+        "koeln",
+        "ludwigshafen",
+        "mannheim",
+        "saarbruecken",
+        "belgique",
+        "saarland",
+        "hessen",
+        "rhein-main-gebiet",
+        "wuppertal",
+        "rheinland-pfalz",
+        "nord-rhein-westfalen",
+        "koblenz",
+        "main-taunus-kreis",
+        "neuwied",
+        "tuebingen",
+        "karlsruhe",
+        "heidelberg",
+        "giessen",
+        "dortmund",
+        "neunkirchen",
+        "fulda",
+        "bw",
+        "hanau",
+        "stuttgart",
+        "duesseldorf",
+        "heilbronn",
+        "muenchen"
       ]
     }
   },
@@ -3844,11 +3882,13 @@
   },
   "szenenmaler/event-illustratorin-malt-feier-in-schloss-kronberg.webp": {
     "categories": [
-      "Szenenmaler"
+      "Szenenmaler",
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler"
+        "szenenmaler",
+        "schnellzeichner"
       ],
       "events": [
         "firmenfeier",
@@ -3864,7 +3904,40 @@
         "gala",
         "sommerfest"
       ],
-      "landings": []
+      "landings": [
+        "berlin",
+        "frankfurt",
+        "hamburg",
+        "schweiz",
+        "kaiserslautern",
+        "trier",
+        "wiesbaden",
+        "mainz",
+        "luxembourg",
+        "wuppertal",
+        "nord-rhein-westfalen",
+        "main-taunus-kreis",
+        "koblenz",
+        "neuwied",
+        "tuebingen",
+        "karlsruhe",
+        "heidelberg",
+        "giessen",
+        "dortmund",
+        "neunkirchen",
+        "rheinland-pfalz",
+        "rhein-main-gebiet",
+        "hessen",
+        "saarland",
+        "belgique",
+        "fulda",
+        "bw",
+        "hanau",
+        "stuttgart",
+        "duesseldorf",
+        "heilbronn",
+        "muenchen"
+      ]
     },
     "priority": 3
   },
