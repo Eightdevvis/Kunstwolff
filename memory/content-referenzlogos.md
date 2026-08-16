@@ -19,6 +19,30 @@ dort ist die Firmenliste der Inhalt der Seite, kein Teaser – man musste warten
 bis die gesuchte Firma vorbeikam, und auf dem Handy gab es mangels Hover gar
 keinen Namen. Test dagegen: `tests/brand-referenzen.test.ts`.
 
+## Grösse – neue Logos verkleinern!
+
+Die Logos werden **nirgends gross gezeigt**: der Streifen gibt ihnen rund
+114×44 px, das Gitter genau 160×48 px. Trotzdem lagen hier am 2026-08-16
+33 WebP mit 342 KB – darunter ein Logo mit 3840×1055 px und eines mit 90 KB.
+
+Der Streifen steht weit oben und lädt `eager`; diese 342 KB gingen also **vor**
+den Bildern der Slideshow über die Leitung, die `lazy` geladen werden. Genau
+daher kam die Meldung „die Slider-Bilder laden so langsam".
+
+```
+node scripts/verkleinere-referenzlogos.mjs              # nur zeigen
+node scripts/verkleinere-referenzlogos.mjs --schreiben  # anwenden
+```
+
+Deckel: 320×96 px (doppelte Anzeigegrösse fürs Retina-Display), WebP q82,
+Seitenverhältnis bleibt. Ergebnis 342 KB → 91 KB. Das Skript **ersetzt** die
+Quelldatei (das Original bleibt über die Git-Historie erreichbar) und ist
+idempotent – nach jedem neuen Logo einfach noch einmal laufen lassen. SVGs
+werden nicht angefasst, die sind ohnehin Vektor.
+
+Kein `srcset` und keine Varianten: eine 400er-Stufe wäre für einen 44-px-Platz
+immer noch zu gross, und drei Stufen für ein 2-KB-Logo sind Aufwand ohne Ertrag.
+
 ## Label-Generierung
 
 `buildBrandLabel()` in `src/utils/brandLogos.ts` (exportiert, getestet):

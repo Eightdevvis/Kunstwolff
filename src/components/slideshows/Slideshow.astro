@@ -202,6 +202,53 @@ const filteredItems =
             recalcUniformHeight();
             // (resize wird global gebunden, s.o. – nicht pro Slider, sonst Leak)
 
+            // =============================================================
+            // ROLLENDES VORLADEFENSTER
+            // =============================================================
+            // Alle Slides stehen `loading="lazy"` im Markup, und das bleibt
+            // richtig: es sind bis zu 24 Bilder, die niemand alle ansieht.
+            //
+            // Nur bedeutet `lazy` in einem Karussell „lade das Bild in dem
+            // Moment, in dem es hereinfährt". Der Autoplay wechselt alle 2,5 s,
+            // der Browser beginnt also erst dann. Auf einer Mobilverbindung
+            // steht die Bühne solange schwarz (`.swiper-slide { background:
+            // #000 }`) – das ist die gemeldete „langsame" Slideshow. Es ist
+            // kein Bandbreiten-, sondern ein Zeitpunktproblem: das Bild wird
+            // zu spät angefordert, nicht zu langsam geliefert.
+            //
+            // Das Fenster läuft dem Autoplay deshalb um VORLAUF Slides voraus.
+            // Ein Bild, dessen `loading` von `lazy` auf `eager` wechselt,
+            // beginnt sofort zu laden; `src` wird bewusst NICHT angefasst,
+            // ein neu gesetztes `src` würde den Ladevorgang von vorn beginnen.
+            const VORLAUF = 3;
+            let freigegebenBis = -1;
+            const freigeben = (bis: number) => {
+                const ziel = Math.min(bis, sliderImages.length - 1);
+                for (let i = freigegebenBis + 1; i <= ziel; i++) {
+                    if (sliderImages[i].loading === "lazy") sliderImages[i].loading = "eager";
+                }
+                if (ziel > freigegebenBis) freigegebenBis = ziel;
+            };
+
+            // Die Slideshow steht auf fast jeder Seite unterhalb des ersten
+            // Bildschirms. Öffnete das Fenster schon beim Skriptstart, würden
+            // vier Slides mit dem TITELBILD um die Leitung streiten – also mit
+            // dem Bild, das der Besucher zuerst sieht. Deshalb erst, wenn die
+            // Sektion in die Nähe des Sichtfelds kommt.
+            if ("IntersectionObserver" in window) {
+                const beobachter = new IntersectionObserver(
+                    (eintraege, selbst) => {
+                        if (!eintraege.some((e) => e.isIntersecting)) return;
+                        freigeben(VORLAUF);
+                        selbst.disconnect();
+                    },
+                    { rootMargin: "400px" },
+                );
+                beobachter.observe(host);
+            } else {
+                freigeben(VORLAUF);
+            }
+
             new Swiper(host, {
                 modules: [Autoplay, Navigation, Pagination],
                 slidesPerView: "auto",
@@ -224,6 +271,15 @@ const filteredItems =
                 navigation: {
                     nextEl: nextEl as HTMLElement,
                     prevEl: prevEl as HTMLElement,
+                },
+                on: {
+                    // `realIndex` ist der Index im URSPRÜNGLICHEN Bestand –
+                    // nicht `activeIndex`, der im Loop-Modus die verschobenen
+                    // Slides mitzählt. `sliderImages` wurde vor der Swiper-
+                    // Initialisierung eingesammelt und steht deshalb in genau
+                    // dieser Reihenfolge.
+                    slideChange: (swiper: { realIndex: number }) =>
+                        freigeben(swiper.realIndex + VORLAUF),
                 },
             });
         });

@@ -113,6 +113,35 @@ Stand beim Umbau: 85 von 232 Bildern hatten bereits einen echten Titel.
 Festgehalten in `tests/lightbox-caption.test.ts` — die Regel rutscht sonst leicht
 zurück.
 
+## ⚠️ `lazy` allein reicht in einem Karussell nicht (2026-08-16)
+
+Alle Slides tragen `loading="lazy"` – richtig, es sind bis zu 24 Bilder à
+~55 KB, die niemand alle ansieht. In einem Karussell heisst das aber „lade das
+Bild in dem Moment, in dem es hereinfährt". Der Autoplay wechselt alle 2,5 s,
+der Browser fängt also erst dann an; bis die Datei da ist, steht die Bühne
+schwarz (`.swiper-slide { background: #000 }`).
+
+Das war die gemeldete „langsame" Slideshow – **kein Bandbreiten-, sondern ein
+Zeitpunktproblem**: das Bild wird zu spät angefordert, nicht zu langsam
+geliefert. Wer hier misst, schaut deshalb auf den Startzeitpunkt der Anfrage,
+nicht auf die Dateigrösse.
+
+Gegenmittel in `Slideshow.astro`: ein **rollendes Vorladefenster**. Es öffnet
+per `IntersectionObserver` (`rootMargin: 400px`), gibt die ersten 3 Slides frei
+und läuft danach bei jedem `slideChange` dem Autoplay um 3 Slides voraus.
+Freigeben heisst: `loading` von `lazy` auf `eager` setzen – das startet den
+Ladevorgang sofort. `src` wird bewusst NICHT angefasst, ein neu gesetztes `src`
+würde von vorn beginnen. Der Index kommt aus `realIndex`, nicht `activeIndex`:
+im Loop-Modus zählt letzterer die verschobenen Slides mit.
+
+Warum nicht gleich beim Skriptstart: die Slideshow steht fast immer unterhalb
+des ersten Bildschirms – vier Slides würden sonst mit dem **Titelbild** um die
+Leitung streiten.
+
+Der zweite Teil derselben Meldung lag gar nicht bei den Slides, sondern bei den
+Referenzlogos (`content-referenzlogos.md`): 342 KB `eager` weit oben auf der
+Seite, vor allem, was die Slideshow `lazy` anfordert.
+
 ## Lightbox
 
 Eigene Implementierung (kein externes Package):
