@@ -21,39 +21,15 @@
     },
     "priority": 2
   },
-  "bw/1_schnellzeichner_hq.webp": {
+  "bw/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
     "categories": [
+      "Szenenmaler",
       "Schnellzeichner"
     ],
     "tags": {
       "skills": [
+        "szenenmaler",
         "schnellzeichner"
-      ],
-      "events": [
-        "firmenfeier",
-        "messe",
-        "hochzeit",
-        "private-feier",
-        "geburtstag",
-        "weihnachtsfeier",
-        "stadtfest",
-        "sommerfest",
-        "silvester"
-      ],
-      "landings": [
-        "bw",
-        "stuttgart"
-      ]
-    },
-    "priority": 4
-  },
-  "bw/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "tags": {
-      "skills": [
-        "szenenmaler"
       ],
       "events": [
         "hochzeit",
@@ -88,7 +64,8 @@
       ],
       "landings": [
         "bw",
-        "stuttgart"
+        "stuttgart",
+        "karlsruhe"
       ]
     },
     "priority": 6
@@ -175,7 +152,8 @@
       "skills": [],
       "events": [],
       "landings": [
-        "bw"
+        "bw",
+        "stuttgart"
       ]
     },
     "priority": 9
@@ -217,24 +195,6 @@
     },
     "priority": 3
   },
-  "bw/schnellzeichnung-messe-stuttgart.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "tags": {
-      "skills": [
-        "schnellzeichner"
-      ],
-      "events": [
-        "messe"
-      ],
-      "landings": [
-        "bw",
-        "stuttgart"
-      ]
-    },
-    "priority": 10
-  },
   "default/1_schnellzeichner_hq.webp": {
     "categories": [
       "Schnellzeichner"
@@ -252,9 +212,14 @@
         "jubilaeum",
         "gartenparty",
         "stadtfest",
-        "sommerfest"
+        "sommerfest",
+        "weihnachtsfeier",
+        "silvester"
       ],
-      "landings": []
+      "landings": [
+        "bw",
+        "stuttgart"
+      ]
     },
     "priority": 1
   },
@@ -403,25 +368,10 @@
     },
     "priority": 5
   },
-  "default/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
-    "categories": [
-      "Szenenmaler",
-      "Schnellzeichner"
-    ],
-    "tags": {
-      "skills": [
-        "szenenmaler",
-        "schnellzeichner"
-      ],
-      "events": [
-        "hochzeit"
-      ],
-      "landings": []
-    },
-    "priority": 228
-  },
   "default/caricaturiste-événementiel-luxembourg.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler"
+    ],
     "tags": {
       "skills": [],
       "events": [],
@@ -439,15 +389,6 @@
       "landings": []
     },
     "priority": 230
-  },
-  "default/dessins-caricaturaux-lors-d'un-mariage.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": []
-    },
-    "priority": 231
   },
   "default/digital-artist-live.webp": {
     "categories": [
@@ -561,28 +502,6 @@
       ],
       "landings": []
     }
-  },
-  "events/hochzeit/img_20240316_154730.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [
-        "hochzeit"
-      ],
-      "landings": []
-    },
-    "priority": 8
-  },
-  "events/hochzeit/img_20240316_154802.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [
-        "hochzeit"
-      ],
-      "landings": []
-    },
-    "priority": 9
   },
   "events/hochzeit/img_20240316_182602.webp": {
     "categories": [],
@@ -968,7 +887,9 @@
     "title": "Live-Kunst Frankfurt"
   },
   "frankfurt/18_live-zeichner-malt-portraits-fuer-kunden-aktion-bulgari-frankfurt.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler"
+    ],
     "tags": {
       "skills": [],
       "events": [],
@@ -1093,7 +1014,9 @@
     "title": "Live-Kunst Frankfurt"
   },
   "frankfurt/25_szenenmalerin-malt-auf-zeichenbrett-bei-frankfurt-messe.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler"
+    ],
     "tags": {
       "skills": [],
       "events": [],
@@ -1549,23 +1472,6 @@
     },
     "priority": 7
   },
-  "karlsruhe/brautpaar-hochzeitsmaler-karlsruhe.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
-      "events": [
-        "hochzeit"
-      ],
-      "landings": [
-        "karlsruhe"
-      ]
-    },
-    "priority": 1
-  },
   "karlsruhe/hochzeitsmalerin-landkreis-karlsruhe.webp": {
     "categories": [
       "Szenenmaler"
@@ -1909,7 +1815,9 @@
     "priority": 5
   },
   "koeln/6_digital-speed-painting-trade-show.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler"
+    ],
     "tags": {
       "skills": [],
       "events": [
@@ -2248,7 +2156,9 @@
     "priority": 8
   },
   "luxembourg/caricaturiste-luxembourg-événement.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler"
+    ],
     "tags": {
       "skills": [],
       "events": [],
@@ -2495,13 +2405,14 @@
       "Aquarelle",
       "Szenenmaler"
     ],
-    "priority": 236,
     "tags": {
       "skills": [
         "szenenmaler"
-      ]
+      ],
+      "events": [],
+      "landings": []
     },
-    "alt": "Aqzarell-zeichnung-Q6Q7-Event-Mannheim"
+    "priority": 236
   },
   "mediathek/1000031509.webp": {
     "categories": [
@@ -2547,29 +2458,14 @@
       "Aquarelle",
       "Szenenmaler"
     ],
-    "priority": 237,
     "tags": {
       "skills": [
         "szenenmaler"
-      ]
-    },
-    "alt": "Aquarell-Portrait-Maedchen"
-  },
-  "mediathek/acryl-gemaelde-hochzeit-tanz-live-painter-heitlinger-genusswelten-oestringen.webp": {
-    "categories": [
-      "Szenenmaler",
-      "Schnellzeichner"
-    ],
-    "tags": {
-      "skills": [
-        "szenenmaler",
-        "schnellzeichner"
       ],
-      "events": [
-        "hochzeit"
-      ],
+      "events": [],
       "landings": []
-    }
+    },
+    "priority": 237
   },
   "mediathek/acrylgemaelde-brautpaar-hochzeitsmaler-event-karlsruhe.webp": {
     "categories": [
@@ -2587,6 +2483,21 @@
         "bw"
       ]
     }
+  },
+  "mediathek/aquarell-portrait-event-illustration.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    },
+    "priority": 233
   },
   "mediathek/duesseldorf-rheinlirmes-karikatur-hund.webp": {
     "categories": [
@@ -2618,23 +2529,14 @@
       ]
     }
   },
-  "mediathek/hochzeitsmalerin-praesentiert-hochtzeitsgemaelde-mit-tanzendem-brautpaar-heitlinger-genusswelten-landkreis-karlsruhe.webp": {
-    "categories": [
-      "Szenenmaler",
-      "Schnellzeichner"
-    ],
+  "mediathek/img_20240316_180247~3.webp": {
+    "categories": [],
     "tags": {
-      "skills": [
-        "szenenmaler",
-        "schnellzeichner"
-      ],
-      "events": [
-        "hochzeit"
-      ],
-      "landings": [
-        "karlsruhe"
-      ]
-    }
+      "skills": [],
+      "events": [],
+      "landings": []
+    },
+    "priority": 230
   },
   "mediathek/img_20251216_152239.webp": {
     "categories": [],
@@ -2721,15 +2623,20 @@
       ]
     }
   },
-  "mediathek/live-event-kuenstlerin-malt-szenen-hochzeit-heitlinger-genusswelten-baden-wuertemberg.webp": {
-    "categories": [],
+  "mediathek/live-event-kuenstlerin-oestringen-bw.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
     "tags": {
-      "skills": [],
-      "events": [
-        "hochzeit"
+      "skills": [
+        "szenenmaler"
       ],
-      "landings": []
-    }
+      "events": [],
+      "landings": [
+        "bw"
+      ]
+    },
+    "priority": 234
   },
   "mediathek/live-hand-lettering-kalligrafie-verkostungsaktion-rewe-bruchsal.webp": {
     "categories": [
@@ -2792,7 +2699,9 @@
     "priority": 82
   },
   "mediathek/live-wedding-painter.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler"
+    ],
     "tags": {
       "skills": [],
       "events": [
@@ -3350,21 +3259,6 @@
     "altOverride": "Schnellzeichnerin saarland sylvester event spielbanken saarbruecken",
     "title": "Schnellzeichner Saarbruecken"
   },
-  "saarbruecken/8_szenenmalerei-hotel-leidinger-saarbruecken.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
-      "events": [],
-      "landings": [
-        "saarbruecken"
-      ]
-    },
-    "priority": 8
-  },
   "saarland/brautpaar-zeigt-hochzeits-zeichnung-von-schnellzeichner-bistro-bagatelle-saarland.webp": {
     "categories": [
       "Schnellzeichner"
@@ -3724,36 +3618,10 @@
     },
     "priority": 6
   },
-  "stuttgart/karikatur-gabelstabler-messe-event-stuttgart---kopie.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "tags": {
-      "skills": [
-        "schnellzeichner"
-      ],
-      "events": [
-        "messe"
-      ],
-      "landings": [
-        "stuttgart"
-      ]
-    },
-    "priority": 8
-  },
-  "stuttgart/live-painting-party-event-stuttgart.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": [
-        "stuttgart"
-      ]
-    },
-    "priority": 4
-  },
   "stuttgart/live-sketching-event-trade-fair-baden-wuerttemberg.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler"
+    ],
     "tags": {
       "skills": [],
       "events": [],
@@ -3798,14 +3666,19 @@
     "priority": 7
   },
   "stuttgart/schnellzeichnung-messe-stuttgart.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner"
+    ],
     "tags": {
-      "skills": [],
+      "skills": [
+        "schnellzeichner"
+      ],
       "events": [
         "messe"
       ],
       "landings": [
-        "stuttgart"
+        "stuttgart",
+        "bw"
       ]
     },
     "priority": 3
@@ -3833,7 +3706,8 @@
         "hochzeit"
       ],
       "landings": [
-        "bw"
+        "bw",
+        "karlsruhe"
       ]
     },
     "priority": 16
@@ -3991,10 +3865,16 @@
     "priority": 11
   },
   "szenenmaler/hochzeitsfeier-mit-event-illustratorin-rpf.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler"
+    ],
     "tags": {
-      "skills": [],
-      "events": [],
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
       "landings": []
     },
     "priority": 9
@@ -4022,9 +3902,13 @@
     "priority": 24
   },
   "szenenmaler/live-artist-watercolor-portrait-party-pfalz.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler"
+    ],
     "tags": {
-      "skills": [],
+      "skills": [
+        "szenenmaler"
+      ],
       "events": [],
       "landings": []
     },
@@ -4040,15 +3924,6 @@
       ]
     },
     "priority": 22
-  },
-  "szenenmaler/live-portraetzeichnen-im-forsthaus-neuhaus-kuenstlerin-zeichnet-gaeste.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": []
-    },
-    "priority": 18
   },
   "szenenmaler/schnellzeichner-dinner-event-schloss-v-eltville.webp": {
     "categories": [
@@ -4116,15 +3991,6 @@
       "landings": []
     },
     "priority": 2
-  },
-  "szenenmaler/zeichner-fertigt-hunde-zeichnung-bei-shop-event-bulgarifrankfurt.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": []
-    },
-    "priority": 23
   },
   "szenenmaler/zeichnun-stammbaum-familie-portrait-als-weinrebe--von-karikaturist-aschaffenburg.webp": {
     "categories": [
@@ -4419,7 +4285,9 @@
     "title": "Schnellzeichner Trier"
   },
   "trier/5_hochzeitsmaler-mal-bild-bei-hochzeit-trier-saarburg.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler"
+    ],
     "tags": {
       "skills": [],
       "events": [
@@ -4649,89 +4517,5 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
-  },
-  "mediathek/img_20240316_180247~3.webp": {
-    "categories": [],
-    "priority": 230,
-    "tags": {
-      "skills": []
-    }
-  },
-  "mediathek/live-artist-watercolor-portrait-party-pfalz.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "priority": 229,
-    "tags": {
-      "skills": [
-        "szenenmaler"
-      ]
-    }
-  },
-  "mediathek/aquarell-portrait-event-illustration.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "priority": 233,
-    "tags": {
-      "skills": [
-        "szenenmaler"
-      ]
-    }
-  },
-  "mediathek/brautpaar-hochzeitszeichnung-kuenstlerin-rhein-main.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "priority": 232,
-    "tags": {
-      "skills": [
-        "szenenmaler"
-      ]
-    }
-  },
-  "mediathek/event-illustratoren-rheinland-pfalz.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "priority": 231,
-    "tags": {
-      "skills": [
-        "szenenmaler"
-      ]
-    }
-  },
-  "mediathek/hochzeitsfeier-mit-event-illustratorin-rpf.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "priority": 230,
-    "tags": {
-      "skills": [
-        "szenenmaler"
-      ]
-    }
-  },
-  "mediathek/brautpaar-hochzeitsmaler-karlsruhe.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "priority": 235,
-    "tags": {
-      "skills": [
-        "szenenmaler"
-      ]
-    }
-  },
-  "mediathek/live-event-kuenstlerin-oestringen-bw.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "priority": 234,
-    "tags": {
-      "skills": [
-        "szenenmaler"
-      ]
-    }
   }
 }
