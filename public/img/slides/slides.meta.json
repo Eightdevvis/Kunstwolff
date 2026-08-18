@@ -4518,7 +4518,7 @@
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
   },
-  "mediathek/1000046566.webp": {
+  "mediathek/1000046554.webp": {
     "categories": [
       "Szenenmaler"
     ],
@@ -4527,6 +4527,19 @@
       "skills": [
         "szenenmaler"
       ]
-    }
+    },
+    "alt": "Szenenmalerei Geisterbahn Bad Vilbeler Markt "
+  },
+  "mediathek/1000046570.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 239,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    },
+    "alt": "Live-painting-fairground-drawing"
   }
 }
