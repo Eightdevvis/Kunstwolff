@@ -102,6 +102,10 @@ const filteredItems =
     // zwei Kopien geworden, die bei der naechsten Aenderung auseinanderlaufen.
     import { openLightbox, type LbSlide } from "../../scripts/lightbox";
 
+    // Vorladefenster: eigene Datei, weil die Reihenfolge-Logik ohne Browser
+    // pruefbar sein muss (tests/slide-vorladen.test.ts).
+    import { erzeugeVorladefenster } from "../../scripts/slideVorladen";
+
     // =====================================================================
     // UNIFORM IMAGE HEIGHT
     // =====================================================================
@@ -205,30 +209,17 @@ const filteredItems =
             // =============================================================
             // ROLLENDES VORLADEFENSTER
             // =============================================================
-            // Alle Slides stehen `loading="lazy"` im Markup, und das bleibt
-            // richtig: es sind bis zu 24 Bilder, die niemand alle ansieht.
+            // `lazy` heisst im Karussell „lade erst, wenn das Bild
+            // hereinfährt" – der Autoplay wechselt aber alle 2,5 s, also
+            // beginnt der Browser zu spät und die Bühne bleibt solange
+            // schwarz. Das Fenster läuft ihm um VORLAUF Slides voraus.
             //
-            // Nur bedeutet `lazy` in einem Karussell „lade das Bild in dem
-            // Moment, in dem es hereinfährt". Der Autoplay wechselt alle 2,5 s,
-            // der Browser beginnt also erst dann. Auf einer Mobilverbindung
-            // steht die Bühne solange schwarz (`.swiper-slide { background:
-            // #000 }`) – das ist die gemeldete „langsame" Slideshow. Es ist
-            // kein Bandbreiten-, sondern ein Zeitpunktproblem: das Bild wird
-            // zu spät angefordert, nicht zu langsam geliefert.
-            //
-            // Das Fenster läuft dem Autoplay deshalb um VORLAUF Slides voraus.
-            // Ein Bild, dessen `loading` von `lazy` auf `eager` wechselt,
-            // beginnt sofort zu laden; `src` wird bewusst NICHT angefasst,
-            // ein neu gesetztes `src` würde den Ladevorgang von vorn beginnen.
+            // Die ganze Begründung und die Fallstricke stehen im Modul
+            // (`src/scripts/slideVorladen.ts`), geprüft in
+            // `tests/slide-vorladen.test.ts`. Hier bewusst nur der Kurzsatz –
+            // zwei Fassungen derselben Erklärung laufen auseinander.
             const VORLAUF = 3;
-            let freigegebenBis = -1;
-            const freigeben = (bis: number) => {
-                const ziel = Math.min(bis, sliderImages.length - 1);
-                for (let i = freigegebenBis + 1; i <= ziel; i++) {
-                    if (sliderImages[i].loading === "lazy") sliderImages[i].loading = "eager";
-                }
-                if (ziel > freigegebenBis) freigegebenBis = ziel;
-            };
+            const vorladen = erzeugeVorladefenster(sliderImages, VORLAUF);
 
             // Die Slideshow steht auf fast jeder Seite unterhalb des ersten
             // Bildschirms. Öffnete das Fenster schon beim Skriptstart, würden
@@ -239,14 +230,14 @@ const filteredItems =
                 const beobachter = new IntersectionObserver(
                     (eintraege, selbst) => {
                         if (!eintraege.some((e) => e.isIntersecting)) return;
-                        freigeben(VORLAUF);
+                        vorladen.bisSlide(0);
                         selbst.disconnect();
                     },
                     { rootMargin: "400px" },
                 );
                 beobachter.observe(host);
             } else {
-                freigeben(VORLAUF);
+                vorladen.bisSlide(0);
             }
 
             new Swiper(host, {
@@ -279,7 +270,7 @@ const filteredItems =
                     // Initialisierung eingesammelt und steht deshalb in genau
                     // dieser Reihenfolge.
                     slideChange: (swiper: { realIndex: number }) =>
-                        freigeben(swiper.realIndex + VORLAUF),
+                        vorladen.bisSlide(swiper.realIndex),
                 },
             });
         });

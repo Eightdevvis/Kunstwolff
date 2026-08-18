@@ -253,3 +253,39 @@ Festgehalten in `tests/bild-adressen.test.ts`.
 
 **Wenn du Bild-Adressen anfasst:** verlass dich nicht auf die Verweis-Prüfung,
 sondern ruf sie gegen `dist/` per HTTP ab. Nur das misst, was der Browser bekommt.
+
+
+## ⚠️ Der Feldname `alt` ist eine Falle (2026-08-18)
+
+Das Admin-Tool schrieb den Alt-Text jahrelang in das Feld **`alt`**.
+`slideImages.ts` und `services/mediaLibrary.ts` im Admin lasen es beide als
+Alias – aber `sync-slides-metadata.mjs` übernimmt beim Neuschreiben nur eine
+**feste Feldliste** (`categories, tags, altOverride, title, priority, enabled`),
+und `alt` stand nicht darauf.
+
+Ergebnis: Jeder im Admin getippte Alt-Text wurde beim **nächsten lokalen Commit
+im Website-Repo** vom pre-commit-Hook gelöscht. Danach zeigten Website und Admin
+den maschinellen `altOverride` aus `migrate-slide-meta.mjs` – für die Betreiberin
+sah das aus, als hätten „alle Bilder automatische Namen bekommen".
+
+**Das Tückische war der Zeitversatz.** Kaputt ging es nicht beim Tippen, sondern
+irgendwann später, wenn irgendwer committete. Deshalb wirkte es willkürlich.
+
+Nachgemessen am 2026-08-18: 81 von 273 Einträgen hatten einen `altOverride`, und
+**alle 81 waren byte-identisch mit der Ableitung aus dem Dateinamen** – also
+komplett maschinell. Von Hand geschriebene Alt-Texte: null. Aus der Dateihistorie
+(168 Commits über `slides.meta.json`) ließen sich 23 zurückholen,
+2 waren endgültig weg, weil es ihre Bilder nicht mehr gibt.
+
+**Reparatur:**
+- `sync-slides-metadata.mjs` hebt `alt` jetzt über `altAus()` auf `altOverride`
+  statt es wegzuwerfen – Altbestand heilt sich beim ersten Lauf selbst.
+- Das Admin-Tool schreibt nur noch `altOverride` und räumt `alt` dabei weg.
+- `scripts/alt-texte-zurueckholen.mjs` holt die verlorenen Texte zurück
+  (Trockenlauf ohne Argument, `--schreiben` übernimmt).
+- Festgehalten in `tests/sync-slides-alt.test.ts` und, auf der Admin-Seite,
+  in `src/services/mediaLibrary.alttext.test.ts`.
+
+**Regel für die Zukunft:** Wer ein Feld in `slides.meta.json` einführt, trägt es
+in dieselbe Feldliste im Sync ein – sonst ist es beim nächsten Commit weg, und
+zwar lautlos. Ein Feld nur lesen zu können heißt nicht, dass es überlebt.

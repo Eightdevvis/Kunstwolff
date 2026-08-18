@@ -22,6 +22,14 @@ const knownLandings = (() => {
   }
 })();
 const metadataPath = path.join(slidesRoot, 'slides.meta.json');
+
+/** Alt-Text eines Eintrags – `altOverride` gewinnt, `alt` (Admin-Feldname) zaehlt mit. */
+export const altAus = (entry) => {
+  if (!entry || typeof entry !== 'object') return '';
+  if (typeof entry.altOverride === 'string' && entry.altOverride.trim()) return entry.altOverride.trim();
+  if (typeof entry.alt === 'string' && entry.alt.trim()) return entry.alt.trim();
+  return '';
+};
 const matchingRulesPath = path.join(slidesRoot, 'category-matching.md');
 const skillsRoot = path.join(projectRoot, 'public', 'skills');
 
@@ -271,7 +279,14 @@ const readMetadata = () => {
         }
 
         const categories = uniqueStrings(Array.isArray(value.categories) ? value.categories : []);
-        const altOverride = typeof value.altOverride === 'string' ? value.altOverride.trim() : '';
+        // `alt` ist der Feldname, den das Admin-Tool schreibt. Er stand hier nie drin,
+        // also warf dieser Filter jeden im Admin getippten Alt-Text beim naechsten
+        // Commit weg – Website (slideImages.ts) und Admin (mediaLibrary.ts) lasen ihn
+        // laengst als Alias, nur der Sync nicht. Ergebnis: die Texte fielen still auf
+        // den maschinellen `altOverride` aus migrate-slide-meta.mjs zurueck.
+        // Wir heben `alt` auf das kanonische `altOverride` – nichts geht verloren,
+        // und Altbestand heilt sich beim ersten Lauf selbst.
+        const altOverride = altAus(value);
         // title-Feld für Lightbox-Caption – muss preserved werden damit sync es nicht wegschreibt
         const title = typeof value.title === 'string' ? value.title.trim() : '';
         const priority = typeof value.priority === 'number' && !Number.isNaN(value.priority) ? value.priority : undefined;
@@ -521,9 +536,8 @@ for (const key of imageKeys) {
     tags,
     // Priority aus JSON preserved – wird nur noch vom Admin-Tool gesetzt, nicht mehr aus Dateinamen gelesen
     ...(typeof existing.priority === 'number' ? { priority: existing.priority } : {}),
-    ...(typeof existing.altOverride === 'string' && existing.altOverride.trim()
-      ? { altOverride: existing.altOverride.trim() }
-      : {}),
+    // Siehe readMetadata: `alt` (Admin-Feldname) zaehlt als altOverride.
+    ...(altAus(existing) ? { altOverride: altAus(existing) } : {}),
     // title für Lightbox-Caption preserved
     ...(typeof existing.title === 'string' && existing.title.trim()
       ? { title: existing.title.trim() }
