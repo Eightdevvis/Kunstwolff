@@ -289,3 +289,26 @@ komplett maschinell. Von Hand geschriebene Alt-Texte: null. Aus der Dateihistori
 **Regel für die Zukunft:** Wer ein Feld in `slides.meta.json` einführt, trägt es
 in dieselbe Feldliste im Sync ein – sonst ist es beim nächsten Commit weg, und
 zwar lautlos. Ein Feld nur lesen zu können heißt nicht, dass es überlebt.
+
+
+## Maschinentext ist kein Inhalt (2026-08-18)
+
+`migrate-slide-meta.mjs` ist **gelöscht**. Es hatte 67 `altOverride` geschrieben,
+die byte-identisch mit der Ableitung aus dem Dateinamen waren, und 86 Titel nach
+Schablone (`{Skill} {Stadt}`). Beide Sorten stehen in derselben Datei neben
+25 von Hand geschriebenen Texten und sind von außen nicht zu unterscheiden.
+
+Der Schaden ist nicht der Text selbst – die Website hätte denselben ohnehin
+gebaut. Der Schaden ist, dass ein gefülltes Feld **behauptet**, hier habe jemand
+etwas gepflegt. Damit fallen genau die Bilder aus dem Blick, die einen echten
+Alt-Text am nötigsten hätten.
+
+Die Werte bleiben bewusst in der Datei (nichts gelöscht, kein Risiko). Das
+Admin-Tool erkennt sie über `utils/altHerkunft.ts` und zeigt sie **grau als
+Platzhalter** statt als Feldinhalt – das Feld sieht leer aus, weil es leer ist.
+Auch der KI-Alt-Text-Vorschlag überschreibt einen Maschinentext, aber niemals
+einen handgeschriebenen.
+
+**Regel:** Schreib nie einen abgeleiteten Wert in ein Feld, das für gepflegte
+Inhalte gedacht ist. Die Ableitung gehört in die Anzeige, nicht in die Daten –
+sonst kann später niemand mehr sagen, was ein Mensch gemeint hat.

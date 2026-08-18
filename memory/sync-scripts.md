@@ -145,7 +145,7 @@ werden von keinem Hook aufgerufen; wer sie versehentlich laufen lässt, ändert 
 | :-- | :-- |
 | `flache-kombi-urls.mjs` | Umstellung auf flache Ort-Kombi-Adressen (2026-08-01); hat die 136 Weiterleitungen in `vercel.json` erzeugt (`routing.md`) |
 | `dissolve-slide-duplicates.mjs` | Löst bytegleiche Slide-Duplikate auf, die es nur gab, weil im Ordnermodell der Ablageort über die Seite entschied. Vereinigt die Tags aller Kopien auf das Original, biegt die Verweise um, löscht die Kopie. **Trockenlauf ist der Default**, echtes Ändern nur mit `--apply` |
-| `migrate-slide-meta.mjs` | Zerlegte aufgeblähte Dateinamen in kurzen `title` + reichen `altOverride` in `slides.meta.json`. Idempotent, fasst bestehende Werte nicht an, berührt nur die Metadaten (Umbenennen der Dateien wäre riskant – `public/erinnerungen/*.json` verweist darauf) |
+| ~~`migrate-slide-meta.mjs`~~ | **GELÖSCHT am 2026-08-18.** Zerlegte aufgeblähte Dateinamen in kurzen `title` + reichen `altOverride`. Das Ergebnis waren 67 `altOverride`, die wörtlich der Ableitung aus dem Dateinamen entsprachen, und 86 Schablonen-Titel – Einträge, die aussahen wie gepflegter Inhalt, aber keiner waren. Genau das war für die Betreiberin „alle Bilder haben automatische Namen bekommen". Nicht wiederbeleben: ein Alt-Text, der nur der Dateiname ist, hilft niemandem und hält jeden davon ab, einen echten zu schreiben |
 | `alt-texte-zurueckholen.mjs` | Holt die Alt-Texte zurück, die der Sync-Filter gelöscht hat (Feld `alt` stand nicht auf der Übernahmeliste). Liest aus der Dateihistorie gerettete Texte, schreibt sie als `altOverride`. Idempotent, überschreibt nie einen von Hand gepflegten Text. Trockenlauf ohne Argument, `--schreiben` übernimmt |
 
 ## Validierungsreports
