@@ -117,7 +117,12 @@ const list = getVisibleEvents().map((event) => {
   z-index: 1;
   border-radius: 18px;
   overflow: visible;
-  background: #121214;
+  /* Ein kleiner Schritt heller als der Sektionsgrund (#0f0f11).
+     Vorher #121214 – das sind 1,02:1 gegen den Grund, also praktisch derselbe
+     Ton: die Karte war nur an Rand und Schatten als Karte zu erkennen.
+     Jetzt 1,10:1. Der helle Text darauf steht weiter bei 14,7:1, da ist
+     reichlich Luft (gemessen, nicht geschätzt). */
+  background: #1a1a1e;
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
@@ -218,7 +223,9 @@ const list = getVisibleEvents().map((event) => {
   right: 0;
   top: calc(100% + 10px);
   z-index: 20;
-  background: linear-gradient(140deg, #18181b, #121214);
+  /* Mit der Karte mitgezogen, damit der aufgeklappte Kasten nicht plötzlich
+     dunkler ist als die Karte darüber – derselbe Abstand wie vorher. */
+  background: linear-gradient(140deg, #212125, #1a1a1e);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 14px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.38);
