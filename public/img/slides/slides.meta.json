@@ -2491,17 +2491,22 @@
   },
   "mediathek/1000046570.webp": {
     "categories": [
-      "Szenenmaler"
+      "Szenenmaler",
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler"
+        "szenenmaler",
+        "schnellzeichner"
       ],
       "events": [],
-      "landings": []
+      "landings": [
+        "rhein-main-gebiet"
+      ]
     },
     "priority": 239,
-    "altOverride": "Live-painting-fairground-drawing"
+    "altOverride": "Live-painting-fairground-drawing",
+    "title": "Szenenmalerei vom Fahrgeschäft auf dem Bad Vilbeler Markt"
   },
   "mediathek/acrylgemaelde-brautpaar-hochzeitsmaler-event-karlsruhe.webp": {
     "categories": [
