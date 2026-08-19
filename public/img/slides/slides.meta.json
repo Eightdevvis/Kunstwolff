@@ -4554,5 +4554,17 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
+  },
+  "mediathek/hochzeit-live-painter-heitlinger-genusswelten.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 240,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    },
+    "title": "wedding-painting"
   }
 }
