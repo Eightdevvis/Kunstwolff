@@ -3065,13 +3065,14 @@
     }
   },
   "mediathek/wedding-live-painter.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 241,
     "tags": {
-      "skills": [],
-      "events": [
-        "hochzeit"
-      ],
-      "landings": []
+      "skills": [
+        "szenenmaler"
+      ]
     }
   },
   "mediathek/wedding-painting.webp": {
