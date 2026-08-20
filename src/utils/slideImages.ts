@@ -325,6 +325,32 @@ export const getDefaultSlides = (): SlideItem[] => {
   const byKey = new Map(selected.map((s) => [decodeURIComponent(s.src.replace('/img/slides/', '')), s]));
   const ordered = selection.map((key) => byKey.get(key)).filter((s): s is SlideItem => s !== undefined);
 
+  // Rettungsnetz (2026-08-20): Am 20.08. schrieb der KI-Chat 21 Schlüssel OHNE
+  // Ordner ("bild.webp" statt "szenenmaler/bild.webp") in die Auswahl. Kein
+  // einziger traf ein Bild, `ordered` war leer – und weil `Slideshow.astro` bei
+  // leerer Liste bewusst gar nichts rendert, war die Slideshow auf der Startseite
+  // spurlos verschwunden. Eine gefüllte Auswahl, von der NICHTS existiert, ist
+  // immer ein Schreibfehler und nie eine Absicht: dann lieber der default-Ordner
+  // als eine Seite ohne Bilder. Wer die Slideshow wirklich abschalten will,
+  // nimmt sie in components.json aus der Reihenfolge.
+  if (ordered.length === 0) {
+    console.warn(
+      `[slides] default-selection.json hat ${selection.length} Eintraege, aber keiner passt zu einem Bild. ` +
+        `Fallback auf den default-Ordner. Erwartet werden Schluessel MIT Ordner, z.B. "szenenmaler/bild.webp". ` +
+        `Gesehen: ${selection.slice(0, 3).map((k) => `"${k}"`).join(', ')}`,
+    );
+    return readFolderSlides('default');
+  }
+
+  // Einzelne Fehlgriffe kosten still je ein Bild – im Build wenigstens benennen.
+  const verwaist = selection.filter((key) => !byKey.has(key));
+  if (verwaist.length > 0) {
+    console.warn(
+      `[slides] ${verwaist.length} Eintraege in default-selection.json zeigen ins Leere: ` +
+        `${verwaist.slice(0, 5).join(', ')}${verwaist.length > 5 ? ' …' : ''}`,
+    );
+  }
+
   return ordered;
 };
 

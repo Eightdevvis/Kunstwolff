@@ -2551,6 +2551,34 @@
     },
     "priority": 233
   },
+  "mediathek/aquarellportraits.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 244
+  },
+  "mediathek/brautpaar-hochzeitszeichnung-kuenstlerin-rhein-main.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    },
+    "priority": 1
+  },
   "mediathek/duesseldorf-rheinlirmes-karikatur-hund.webp": {
     "categories": [
       "Schnellzeichner"
@@ -2562,6 +2590,26 @@
       "events": [],
       "landings": [
         "duesseldorf"
+      ]
+    }
+  },
+  "mediathek/event-illustratoren-rheinland-pfalz.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "rheinland-pfalz"
+      ]
+    }
+  },
+  "mediathek/event-illustratorin-tusche-portraits-hessen.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "hessen"
       ]
     }
   },
@@ -2581,6 +2629,100 @@
       ]
     }
   },
+  "mediathek/hochzeit-live-painter-heitlinger-genusswelten.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    },
+    "priority": 240,
+    "title": "wedding-painting"
+  },
+  "mediathek/img_20240217_163309.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 1
+  },
+  "mediathek/img_20240316_154730.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 243
+  },
+  "mediathek/img_20240316_154802.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 242
+  },
+  "mediathek/img_20240316_160325.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 241
+  },
+  "mediathek/img_20240316_162815.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 240
+  },
+  "mediathek/img_20240316_164734.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 239
+  },
   "mediathek/img_20240316_180247~3.webp": {
     "categories": [],
     "tags": {
@@ -2589,6 +2731,19 @@
       "landings": []
     },
     "priority": 230
+  },
+  "mediathek/img_20240316_182602.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 238
   },
   "mediathek/img_20251216_152239.webp": {
     "categories": [],
@@ -2673,6 +2828,14 @@
         "dortmund",
         "duesseldorf"
       ]
+    }
+  },
+  "mediathek/live-artist-watercolor-portrait-party-pfalz.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": []
     }
   },
   "mediathek/live-event-kuenstlerin-oestringen-bw.webp": {
@@ -3068,12 +3231,31 @@
     "categories": [
       "Szenenmaler"
     ],
-    "priority": 241,
     "tags": {
       "skills": [
         "szenenmaler"
-      ]
-    }
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    },
+    "priority": 241
+  },
+  "mediathek/wedding-painting-kronberg-castle.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "hochzeit"
+      ],
+      "landings": []
+    },
+    "priority": 1
   },
   "mediathek/wedding-painting.webp": {
     "categories": [],
@@ -3970,8 +4152,8 @@
       "landings": []
     },
     "priority": 5,
-    "title": "Live-Porträts für die Hochzeitsgäste",
-    "altOverride": "Tuschezeichnung "
+    "altOverride": "Tuschezeichnung",
+    "title": "Live-Porträts für die Hochzeitsgäste"
   },
   "szenenmaler/live-eventzeichner-frankfurt.webp": {
     "categories": [],
@@ -4579,127 +4761,5 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
-  },
-  "mediathek/hochzeit-live-painter-heitlinger-genusswelten.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "priority": 240,
-    "tags": {
-      "skills": [
-        "szenenmaler"
-      ]
-    },
-    "title": "wedding-painting"
-  },
-  "mediathek/wedding-painting-kronberg-castle.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "priority": 1,
-    "tags": {
-      "skills": [
-        "szenenmaler"
-      ]
-    }
-  },
-  "mediathek/img_20240217_163309.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "priority": 1,
-    "tags": {
-      "skills": [
-        "szenenmaler"
-      ]
-    }
-  },
-  "mediathek/brautpaar-hochzeitszeichnung-kuenstlerin-rhein-main.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
-    "priority": 1,
-    "tags": {
-      "skills": [
-        "szenenmaler"
-      ]
-    }
-  },
-  "mediathek/aquarellportraits.webp": {
-    "categories": [
-      "Aquarelle"
-    ],
-    "priority": 244,
-    "tags": {
-      "skills": [
-        "aquarelle"
-      ]
-    }
-  },
-  "mediathek/img_20240316_154730.webp": {
-    "categories": [
-      "Aquarelle"
-    ],
-    "priority": 243,
-    "tags": {
-      "skills": [
-        "aquarelle"
-      ]
-    }
-  },
-  "mediathek/img_20240316_154802.webp": {
-    "categories": [
-      "Aquarelle"
-    ],
-    "priority": 242,
-    "tags": {
-      "skills": [
-        "aquarelle"
-      ]
-    }
-  },
-  "mediathek/img_20240316_160325.webp": {
-    "categories": [
-      "Aquarelle"
-    ],
-    "priority": 241,
-    "tags": {
-      "skills": [
-        "aquarelle"
-      ]
-    }
-  },
-  "mediathek/img_20240316_162815.webp": {
-    "categories": [
-      "Aquarelle"
-    ],
-    "priority": 240,
-    "tags": {
-      "skills": [
-        "aquarelle"
-      ]
-    }
-  },
-  "mediathek/img_20240316_164734.webp": {
-    "categories": [
-      "Aquarelle"
-    ],
-    "priority": 239,
-    "tags": {
-      "skills": [
-        "aquarelle"
-      ]
-    }
-  },
-  "mediathek/img_20240316_182602.webp": {
-    "categories": [
-      "Aquarelle"
-    ],
-    "priority": 238,
-    "tags": {
-      "skills": [
-        "aquarelle"
-      ]
-    }
   }
 }
