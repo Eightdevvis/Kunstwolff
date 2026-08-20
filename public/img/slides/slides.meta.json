@@ -3954,7 +3954,9 @@
       "events": [],
       "landings": []
     },
-    "priority": 5
+    "priority": 5,
+    "title": "Live-Porträts für die Hochzeitsgäste",
+    "altOverride": "Tuschezeichnung "
   },
   "szenenmaler/live-eventzeichner-frankfurt.webp": {
     "categories": [],
