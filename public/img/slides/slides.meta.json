@@ -4353,7 +4353,8 @@
     },
     "priority": 5,
     "altOverride": "Hochzeitsmaler mal bild bei hochzeit trier saarburg",
-    "title": "Szenenmaler Trier"
+    "title": "Szenenmaler Trier",
+    "enabled": false
   },
   "trier/6_hochzeitszeichner-zeichnet-lustiges-familien-portraet-hochzeit-trier-ruwer.webp": {
     "categories": [],
