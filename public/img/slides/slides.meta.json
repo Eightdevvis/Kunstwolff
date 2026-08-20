@@ -3679,7 +3679,8 @@
         "stuttgart"
       ]
     },
-    "priority": 5
+    "priority": 5,
+    "enabled": false
   },
   "stuttgart/schnellzeichnerin-messe-stuttgart.webp": {
     "categories": [
