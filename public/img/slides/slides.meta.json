@@ -4119,7 +4119,8 @@
     },
     "priority": 11,
     "altOverride": "Kuenstlerin zeichnet die gaeste im gasthaus schornstein zur hochzeit",
-    "title": "Live-Kunst Trier"
+    "title": "Live-Kunst Trier",
+    "enabled": false
   },
   "trier/12_lustige-zeichnung-von-paar-mit-hund.webp": {
     "categories": [
