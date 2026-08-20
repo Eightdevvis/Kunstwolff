@@ -4573,5 +4573,38 @@
       ]
     },
     "title": "wedding-painting"
+  },
+  "mediathek/wedding-painting-kronberg-castle.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 1,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    }
+  },
+  "mediathek/img_20240217_163309.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 1,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    }
+  },
+  "mediathek/brautpaar-hochzeitszeichnung-kuenstlerin-rhein-main.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 1,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    }
   }
 }
