@@ -381,7 +381,8 @@
         "luxembourg"
       ]
     },
-    "priority": 229
+    "priority": 229,
+    "enabled": false
   },
   "default/dessin-de-couple.webp": {
     "categories": [],
@@ -1028,7 +1029,8 @@
     },
     "priority": 25,
     "altOverride": "Szenenmalerin malt auf zeichenbrett bei frankfurt messe",
-    "title": "Szenenmaler Frankfurt"
+    "title": "Szenenmaler Frankfurt",
+    "enabled": false
   },
   "frankfurt/26_szenentmaler-malt-fuer-promotion-bulgari-frankfurt.webp": {
     "categories": [],
@@ -1831,7 +1833,8 @@
         "koeln"
       ]
     },
-    "priority": 6
+    "priority": 6,
+    "enabled": false
   },
   "koeln/7_the-customer-is-delighted-with-her-portrait-on-digital-display-event-cologne.webp": {
     "categories": [],
@@ -2473,7 +2476,8 @@
       "landings": []
     },
     "priority": 237,
-    "altOverride": "Aquarell-Portrait-Maedchen"
+    "altOverride": "Aquarell-Portrait-Maedchen",
+    "enabled": false
   },
   "mediathek/1000046554.webp": {
     "categories": [
@@ -4292,7 +4296,8 @@
         "trier"
       ]
     },
-    "priority": 21
+    "priority": 21,
+    "enabled": false
   },
   "trier/3_freundliche-karikatur-von-frau-mit-thema-finanzen.webp": {
     "categories": [
