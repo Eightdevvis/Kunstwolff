@@ -2407,7 +2407,8 @@
       "events": [],
       "landings": []
     },
-    "priority": 14
+    "priority": 14,
+    "enabled": false
   },
   "mediathek/1000031508.webp": {
     "categories": [
@@ -2461,7 +2462,8 @@
       "events": [],
       "landings": []
     },
-    "priority": 10
+    "priority": 10,
+    "enabled": false
   },
   "mediathek/1000031531.webp": {
     "categories": [
