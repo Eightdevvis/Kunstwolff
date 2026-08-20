@@ -3709,7 +3709,8 @@
         "stuttgart"
       ]
     },
-    "priority": 7
+    "priority": 7,
+    "enabled": false
   },
   "stuttgart/schnellzeichnung-messe-stuttgart.webp": {
     "categories": [
