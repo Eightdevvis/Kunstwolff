@@ -47,12 +47,10 @@
   },
   "bw/hochzeitsmalerin-praesentiert-hochtzeitsgemaelde-mit-tanzendem-brautpaar-heitlinger-genusswelten-landkreis-karlsruhe.webp": {
     "categories": [
-      "Szenenmaler",
       "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler",
         "schnellzeichner"
       ],
       "events": [
@@ -118,13 +116,11 @@
   },
   "bw/live-event-kuenstlerin-malt-szenen-hochzeit-heitlinger-genusswelten-baden-wuertemberg.webp": {
     "categories": [
-      "Szenenmaler",
       "Schnellzeichner",
       "Aquarelle"
     ],
     "tags": {
       "skills": [
-        "szenenmaler",
         "schnellzeichner",
         "aquarelle"
       ],
@@ -373,9 +369,7 @@
     "priority": 5
   },
   "default/caricaturiste-événementiel-luxembourg.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
       "skills": [],
       "events": [],
@@ -1019,9 +1013,7 @@
     "title": "Live-Kunst Frankfurt"
   },
   "frankfurt/25_szenenmalerin-malt-auf-zeichenbrett-bei-frankfurt-messe.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
       "skills": [],
       "events": [],
@@ -3104,13 +3096,11 @@
   },
   "mediathek/somfot/schnellzeichnerin_edited.webp": {
     "categories": [
-      "Schnellzeichner",
-      "Szenenmaler"
+      "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner",
-        "szenenmaler"
+        "schnellzeichner"
       ],
       "events": [],
       "landings": []
@@ -3204,13 +3194,9 @@
     }
   },
   "mediathek/szenenmalerin-malt-live-brautpaar-mit-hochzeitstorte-hochzeit-restaurant-albatros-landkreis-karlsruhe.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
-      "skills": [
-        "szenenmaler"
-      ],
+      "skills": [],
       "events": [
         "hochzeit"
       ],
@@ -3828,9 +3814,7 @@
     "priority": 7
   },
   "stuttgart/company-party-live-sketching-stuttgart---kopie.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
       "skills": [],
       "events": [
@@ -3843,9 +3827,7 @@
     "priority": 1
   },
   "stuttgart/funny-picture-speed-painting-trade-fair---kopie.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
       "skills": [],
       "events": [],
@@ -3856,9 +3838,7 @@
     "priority": 6
   },
   "stuttgart/live-sketching-event-trade-fair-baden-wuerttemberg.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
       "skills": [],
       "events": [],
@@ -4356,12 +4336,10 @@
   },
   "trier/15_schnellzeichnerin-zeichnet-gast-im-garten-gartenparty.webp": {
     "categories": [
-      "Szenenmaler",
       "Schnellzeichner"
     ],
     "tags": {
       "skills": [
-        "szenenmaler",
         "schnellzeichner"
       ],
       "events": [
@@ -4528,9 +4506,7 @@
     "title": "Schnellzeichner Trier"
   },
   "trier/5_hochzeitsmaler-mal-bild-bei-hochzeit-trier-saarburg.webp": {
-    "categories": [
-      "Szenenmaler"
-    ],
+    "categories": [],
     "tags": {
       "skills": [],
       "events": [
