@@ -4606,5 +4606,82 @@
         "szenenmaler"
       ]
     }
+  },
+  "mediathek/aquarellportraits.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "priority": 244,
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ]
+    }
+  },
+  "mediathek/img_20240316_154730.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "priority": 243,
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ]
+    }
+  },
+  "mediathek/img_20240316_154802.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "priority": 242,
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ]
+    }
+  },
+  "mediathek/img_20240316_160325.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "priority": 241,
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ]
+    }
+  },
+  "mediathek/img_20240316_162815.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "priority": 240,
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ]
+    }
+  },
+  "mediathek/img_20240316_164734.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "priority": 239,
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ]
+    }
+  },
+  "mediathek/img_20240316_182602.webp": {
+    "categories": [
+      "Aquarelle"
+    ],
+    "priority": 238,
+    "tags": {
+      "skills": [
+        "aquarelle"
+      ]
+    }
   }
 }
