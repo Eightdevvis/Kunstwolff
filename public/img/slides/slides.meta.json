@@ -42,7 +42,8 @@
         "bw"
       ]
     },
-    "priority": 5
+    "priority": 5,
+    "enabled": false
   },
   "bw/hochzeitsmalerin-praesentiert-hochtzeitsgemaelde-mit-tanzendem-brautpaar-heitlinger-genusswelten-landkreis-karlsruhe.webp": {
     "categories": [
@@ -68,7 +69,8 @@
         "karlsruhe"
       ]
     },
-    "priority": 6
+    "priority": 6,
+    "enabled": false
   },
   "bw/karikatur-gabelstabler-messe-event-stuttgart---kopie.webp": {
     "categories": [
