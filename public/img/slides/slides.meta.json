@@ -237,7 +237,10 @@
         "sommerfest",
         "firmenfeier",
         "messe",
-        "jubilaeum"
+        "jubilaeum",
+        "weihnachtsfeier",
+        "silvester",
+        "gartenparty"
       ],
       "landings": [
         "luxembourg",
@@ -264,10 +267,17 @@
         "bw",
         "hanau",
         "stuttgart",
-        "duesseldorf"
+        "duesseldorf",
+        "fulda",
+        "saarbruecken",
+        "saarland",
+        "trier",
+        "rheinland-pfalz"
       ]
     },
-    "priority": 2
+    "priority": 2,
+    "title": "Eine Idee zum Valentinstag",
+    "altOverride": "Un couple exhibe joyeusement sa caricature commune ornée de cœurs à la foire de Schueberfouer au Luxembourg"
   },
   "default/3_schnellzeichner-schweiz.webp": {
     "categories": [
