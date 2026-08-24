@@ -376,7 +376,9 @@
         "duesseldorf"
       ]
     },
-    "priority": 5
+    "priority": 5,
+    "altOverride": "Imaginative live drawing on a digital flipchart at the trade fair in Cologne",
+    "title": "Flash for fantasy"
   },
   "default/caricaturiste-événementiel-luxembourg.webp": {
     "categories": [],
