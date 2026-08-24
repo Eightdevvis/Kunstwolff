@@ -431,7 +431,9 @@
         "ludwigshafen"
       ]
     },
-    "priority": 145
+    "priority": 145,
+    "altOverride": "Monitor zeigt digitale Spaßzeichnung  von Mann als Bowlingkugel von Karikaturistin bei Weihnachtsfeier im Cinema Paradiso in Pforzheim",
+    "title": "Spaßbilder auch digital als Showzeichnung"
   },
   "default/digitale-schnellzeichnerin-ludwigshafen---kopie.webp": {
     "categories": [
@@ -2500,7 +2502,8 @@
       "landings": []
     },
     "priority": 238,
-    "altOverride": "Szenenmalerei Geisterbahn Bad Vilbeler Markt"
+    "altOverride": "Szenenmalerei Geisterbahn Bad Vilbeler Markt",
+    "title": "Live-Malerei vom Lieblings-Haus"
   },
   "mediathek/1000046570.webp": {
     "categories": [
