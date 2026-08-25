@@ -317,7 +317,8 @@
       ]
     },
     "priority": 4,
-    "altOverride": "Schnellzeichner zeichnet Gäste bei einer Hochzeit live"
+    "altOverride": "Schnellzeichner zeichnet Gäste bei einer Hochzeit live",
+    "enabled": false
   },
   "default/5_flip.webp": {
     "categories": [
@@ -4664,7 +4665,7 @@
       ]
     },
     "altOverride": "chef mit karikatur als weinkenner und mitarbeiterinnen als engel in domaene mechthildshausen in wiesbaden",
-    "title": "Schnellzeichner Wiesbaden"
+    "title": "Spaß zur Geburtstagsfeier mit Schnellzeichner in Domäne Mechthild Wiesbaden"
   },
   "wiesbaden/lustige-zeichnung-familienportraet-familienfeier-wiesbaden.webp": {
     "categories": [],
