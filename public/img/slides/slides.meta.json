@@ -376,9 +376,7 @@
         "duesseldorf"
       ]
     },
-    "priority": 5,
-    "altOverride": "Imaginative live drawing on a digital flipchart at the trade fair in Cologne",
-    "title": "Flash for fantasy"
+    "priority": 5
   },
   "default/caricaturiste-événementiel-luxembourg.webp": {
     "categories": [],
@@ -1675,8 +1673,8 @@
       ]
     },
     "priority": 10,
-    "title": "Every portrait drawing is unique and exciting",
-    "altOverride": "Trade fair visitors watch curiously as the digital speed sketch artist creates her portrait"
+    "altOverride": "Trade fair visitors watch curiously as the digital speed sketch artist creates her portrait",
+    "title": "Every portrait is unique and fascinating"
   },
   "koeln/11_digitale-schnellzeichnung.webp": {
     "categories": [],
@@ -2327,8 +2325,7 @@
         "hanau"
       ]
     },
-    "altOverride": "schnellzeichnerin mit zeichenbrett vor paar an tisch bei firmenparty in alter lokhalle mainz",
-    "title": "Spaß mit Schnell-Karikaturen als Walking-Act"
+    "altOverride": "schnellzeichnerin mit zeichenbrett vor paar an tisch bei firmenparty in alter lokhalle mainz"
   },
   "mannheim/karikaturist-mannheim-q6q7.webp": {
     "categories": [
@@ -3777,7 +3774,7 @@
     },
     "priority": 3,
     "altOverride": "Karikaturischti zeiget ihri zeichnig am betriebsfäscht basel schweiz",
-    "title": "Doppelporträt von 2 Karikaturisten"
+    "title": "Schnellzeichner Schweiz"
   },
   "schweiz/man-shows-his-caricature-by-cartoonist-business-event-switzerland.webp": {
     "categories": [
@@ -3830,9 +3827,7 @@
         "schweiz"
       ]
     },
-    "priority": 6,
-    "altOverride": "An employee and his personalized caricature featuring a hunting hobby at a company party in Switzerland",
-    "title": "a quick sketch featuring a personal hobby"
+    "priority": 6
   },
   "schweiz/zeichner-betriebsfeier-bern.webp": {
     "categories": [],
