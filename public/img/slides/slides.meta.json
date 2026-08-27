@@ -4781,13 +4781,30 @@
   },
   "mediathek/digital-live-big-portrait-painting-trade-fair-cologne.webp": {
     "categories": [
-      "Szenenmaler"
+      "Szenenmaler",
+      "Schnellzeichner",
+      "Aquarelle"
     ],
     "priority": 242,
     "tags": {
       "skills": [
-        "szenenmaler"
-      ]
+        "szenenmaler",
+        "schnellzeichner",
+        "aquarelle"
+      ],
+      "events": [
+        "firmenfeier",
+        "messe",
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "silvester",
+        "gala",
+        "sommerfest"
+      ],
+      "landings": []
     },
     "title": "live sketching by digital artist trade fair cologne",
     "altOverride": "A live illustrator is creating a large portrait of a fair visitor on the digital flipchart Samsung Flip 2 at the Pro Sweets fair in Cologne"
