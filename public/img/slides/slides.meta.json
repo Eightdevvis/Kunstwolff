@@ -4778,5 +4778,16 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
+  },
+  "mediathek/digital-live-big-portrait-painting-trade-fair-cologne.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "priority": 242,
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ]
+    }
   }
 }
