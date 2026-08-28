@@ -2572,11 +2572,15 @@
   },
   "mediathek/aquarellportraits.webp": {
     "categories": [
-      "Aquarelle"
+      "Aquarelle",
+      "Schnellzeichner",
+      "Szenenmaler"
     ],
     "tags": {
       "skills": [
-        "aquarelle"
+        "aquarelle",
+        "schnellzeichner",
+        "szenenmaler"
       ],
       "events": [],
       "landings": []
