@@ -4722,9 +4722,45 @@
       "skills": [
         "schnellzeichner"
       ],
-      "events": [],
+      "events": [
+        "hochzeit",
+        "private-feier",
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "silvester",
+        "gartenparty",
+        "stadtfest",
+        "sommerfest"
+      ],
       "landings": [
-        "wuppertal"
+        "wuppertal",
+        "berlin",
+        "hamburg",
+        "schweiz",
+        "kaiserslautern",
+        "trier",
+        "wiesbaden",
+        "koeln",
+        "ludwigshafen",
+        "mannheim",
+        "saarbruecken",
+        "belgique",
+        "saarland",
+        "hessen",
+        "rheinland-pfalz",
+        "nord-rhein-westfalen",
+        "koblenz",
+        "neuwied",
+        "tuebingen",
+        "karlsruhe",
+        "giessen",
+        "dortmund",
+        "neunkirchen",
+        "fulda",
+        "hanau",
+        "heilbronn",
+        "muenchen"
       ]
     },
     "priority": 1,
