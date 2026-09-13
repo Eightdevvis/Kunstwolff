@@ -238,5 +238,17 @@
       "Gaby",
       "Jenny"
     ]
+  },
+  {
+    "id": "mtzy9r9jrh71",
+    "title": "Wurstmarkt",
+    "description": "Oder Geschwister kümmern",
+    "date": "2026-09-24",
+    "time": 11,
+    "location": "Bad Dürkheim",
+    "categoryId": "volksfest",
+    "actors": [
+      "Jenny"
+    ]
   }
 ]
