@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { resolveTitleImage, resolveTitleImageFocus, resolveTitleImageFrame } from './titleImages';
+import { resolveTitleImage, resolveTitleImageFocus, resolveTitleImageFrame, resolveTitleImageAspect } from './titleImages';
 import { isPageHiddenByPath } from './pageVisibility';
 
 export type LandingReference = {
@@ -17,6 +17,7 @@ export type LandingMeta = {
   titleImage: string;
   titleImagePosition: string;
   titleImageFrame: number;
+  titleImageAspect: string | null;
   references: LandingReference[];
 };
 
@@ -184,6 +185,7 @@ export const getLandingBySlug = (slug: string): LandingMeta => {
     titleImage: resolveTitleImage({ landing: normalizedSlug }),
     titleImagePosition: resolveTitleImageFocus({ landing: normalizedSlug }),
     titleImageFrame: resolveTitleImageFrame({ landing: normalizedSlug }),
+    titleImageAspect: resolveTitleImageAspect({ landing: normalizedSlug }),
     references: [],
   };
 };

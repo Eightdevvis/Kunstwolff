@@ -3,6 +3,7 @@ import path from 'path';
 
 const titleRoot = path.resolve('./public/img/Titelbild');
 const titleMetadataPath = path.join(titleRoot, 'title.meta.json');
+const titleDimensionsPath = path.join(titleRoot, 'title.dimensions.json');
 const allowedExtensions = new Set(['.avif', '.webp', '.png', '.jpg', '.jpeg', '.gif']);
 const fallbackImage = '/img/samples/sample1.webp';
 
@@ -42,12 +43,23 @@ type TitleMetadataEntry = {
 
 type TitleMetadataMap = Record<string, TitleMetadataEntry>;
 
+/**
+ * Pixel-Maße pro Titelbild. Werden vom Sync-Script `sync-title-dimensions.mjs`
+ * gepflegt und synchron gelesen. Grund: Der Hero (`Opener.astro`) braucht das
+ * Bild-Aspect-Ratio, damit er auf Mobil das Titelbild nicht mehr croppt,
+ * sondern die Container-Höhe an die Bild-Ratio anpasst. Sharp scheidet zur
+ * Render-Zeit aus (async).
+ */
+type TitleDimensionsEntry = { width: number; height: number };
+type TitleDimensionsMap = Record<string, TitleDimensionsEntry>;
+
 type TitleImageItem = {
   src: string;
   categories: string[];
   priority: number;
   focus: string;
   frame: number;
+  dimensions: TitleDimensionsEntry | null;
 };
 
 /** Default-Fokuspunkt (Bildmitte), falls keiner gesetzt ist. */
@@ -77,6 +89,60 @@ const toNumberOrDefault = (value: unknown, fallback: number): number => {
 };
 
 let metadataCache: TitleMetadataMap | null = null;
+let dimensionsCache: TitleDimensionsMap | null = null;
+
+/**
+ * Öffentlicher Lookup ins `title.dimensions.json`-Cache. `events.ts` nutzt
+ * das, weil Event-Titelbilder außerhalb der `titleImages.ts`-Auswahl liegen
+ * (Doku: `memory/content-titelbild.md`, Warnkasten), aber im selben Titelbild-
+ * Baum stehen und deshalb im selben Sync-Ergebnis mitgeführt werden.
+ *
+ * `relativePath` ist der Pfad UNTER `public/img/Titelbild/` — z.B.
+ * `"events/hochzeit/foto.webp"`.
+ */
+export const lookupTitleDimensions = (relativePath: string): TitleDimensionsEntry | null => {
+  const dims = readTitleDimensions();
+  return dims[normalizeMetadataKey(relativePath)] ?? null;
+};
+
+const readTitleDimensions = (): TitleDimensionsMap => {
+  if (dimensionsCache) {
+    return dimensionsCache;
+  }
+
+  if (!fs.existsSync(titleDimensionsPath)) {
+    dimensionsCache = {};
+    return dimensionsCache;
+  }
+
+  try {
+    const raw = fs.readFileSync(titleDimensionsPath, 'utf-8');
+    const parsed = JSON.parse(raw) as unknown;
+
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+      dimensionsCache = {};
+      return dimensionsCache;
+    }
+
+    const entries = Object.entries(parsed as Record<string, unknown>)
+      .map(([rawKey, value]) => {
+        const key = normalizeMetadataKey(rawKey);
+        if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+        const entry = value as Record<string, unknown>;
+        const width = typeof entry.width === 'number' && Number.isFinite(entry.width) && entry.width > 0 ? entry.width : null;
+        const height = typeof entry.height === 'number' && Number.isFinite(entry.height) && entry.height > 0 ? entry.height : null;
+        if (width === null || height === null) return null;
+        return [key, { width, height }] as const;
+      })
+      .filter((pair): pair is readonly [string, TitleDimensionsEntry] => pair !== null);
+
+    dimensionsCache = Object.fromEntries(entries);
+    return dimensionsCache;
+  } catch {
+    dimensionsCache = {};
+    return dimensionsCache;
+  }
+};
 
 const readTitleMetadata = (): TitleMetadataMap => {
   if (metadataCache) {
@@ -132,13 +198,14 @@ const readFolderTitleImages = (folderName: string): TitleImageItem[] => {
   }
 
   const metadata = readTitleMetadata();
+  const dimensions = readTitleDimensions();
 
   return fs
     .readdirSync(folderPath, { withFileTypes: true })
     .filter((entry) => entry.isFile())
     .map((entry) => entry.name)
     .filter((fileName) => allowedExtensions.has(path.extname(fileName).toLowerCase()))
-    .map((fileName, index) => {
+    .map((fileName, index): TitleImageItem | null => {
       const metadataKey = normalizeMetadataKey(path.posix.join(folderName, fileName));
       const itemMetadata = metadata[metadataKey] ?? {};
       const enabled = itemMetadata.enabled !== false;
@@ -152,6 +219,7 @@ const readFolderTitleImages = (folderName: string): TitleImageItem[] => {
         priority: toNumberOrDefault(itemMetadata.priority, index + 1),
         focus: itemMetadata.focus ?? DEFAULT_TITLE_FOCUS,
         frame: itemMetadata.frame ?? DEFAULT_TITLE_FRAME,
+        dimensions: dimensions[metadataKey] ?? null,
       };
     })
     .filter((entry): entry is TitleImageItem => entry !== null)
@@ -188,7 +256,7 @@ const pickTitleImageFromPool = (pool: TitleImageItem[], skillSlug: string): Titl
  */
 export const resolveTitleImageItem = (
   params?: { skill?: string; landing?: string },
-): { src: string; focus: string; frame: number } => {
+): { src: string; focus: string; frame: number; dimensions: TitleDimensionsEntry | null } => {
   const skillSlug = params?.skill ? normalizeSlug(params.skill) : '';
   const landingSlug = params?.landing ? normalizeSlug(params.landing) : '';
 
@@ -206,6 +274,7 @@ export const resolveTitleImageItem = (
     src: picked?.src ?? fallbackImage,
     focus: picked?.focus ?? DEFAULT_TITLE_FOCUS,
     frame: picked?.frame ?? DEFAULT_TITLE_FRAME,
+    dimensions: picked?.dimensions ?? null,
   };
 };
 
@@ -217,3 +286,15 @@ export const resolveTitleImageFocus = (params?: { skill?: string; landing?: stri
 
 export const resolveTitleImageFrame = (params?: { skill?: string; landing?: string }): number =>
   resolveTitleImageItem(params).frame;
+
+/**
+ * Aspect-Ratio-String (`"1180 / 818"`) für die CSS-Var `--hero-aspect` im Hero,
+ * oder `null`, wenn die Bildmaße nicht bekannt sind (Fallback-Bild, Sync noch
+ * nicht gelaufen, unlesbares Bild). Bei `null` fällt der Hero auf sein altes
+ * Verhalten zurück (volle Viewport-Höhe + cover), sonst passt sich die
+ * Container-Höhe auf Mobil an das Bild an, sodass nichts mehr beschnitten wird.
+ */
+export const resolveTitleImageAspect = (params?: { skill?: string; landing?: string }): string | null => {
+  const dims = resolveTitleImageItem(params).dimensions;
+  return dims ? `${dims.width} / ${dims.height}` : null;
+};

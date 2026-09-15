@@ -85,7 +85,8 @@ public/img/Titelbild/
 ├── events/<event-slug>/           # Event-Titelbilder
 ├── landings/                      # ARTEFAKT mit Stadt-Subordnern (alte Struktur, ignorieren – nicht löschen, nicht befüllen)
 ├── skills/                        # ARTEFAKT mit Skill-Subordnern (alte Struktur, ignorieren – nicht löschen, nicht befüllen)
-└── title.meta.json                # Metadaten (gleiches Format wie slides.meta.json)
+├── title.meta.json                # Metadaten (gleiches Format wie slides.meta.json)
+└── title.dimensions.json          # Pixel-Maße pro Titelbild (sync-generiert; für Hero-Aspect auf Mobil, siehe content-titelbild.md)
 ```
 
 **Wichtig:** Sowohl Stadt- als auch Skill-Slugs werden als Top-Level-Ordner in `Titelbild/` erwartet. `titleImages.ts` löst bei einer Skill-Seite zuerst `Titelbild/<skill>/`, dann `Titelbild/default/` auf.

@@ -29,6 +29,7 @@ npm run sync:content:safe  # fehlertolerant (Teilfehler isoliert, Build/Dev läu
 | 4 | `sync-reviews-tags.mjs` | Ergänzt fehlende Tag-**Dimensionen** in `public/reviews/**` (Ort aus Ordner, Skills aus `categories`, Anlass aus dem Text) |
 | 5 | `sync-faq-tags.mjs` | Ergänzt fehlende Tag-**Dimensionen** in `public/faq/**` (Ort aus Ordner, Skills aus `categories`; Anlass wird **nicht** geraten) |
 | 6 | `sync-title-images.mjs` | Erstellt `public/img/Titelbild/{city}/` |
+| 6a | `sync-title-dimensions.mjs` | Liest Pixel-Maße aller Titelbilder (Sharp: WebP+AVIF) und schreibt sie nach `public/img/Titelbild/title.dimensions.json`. Speist die CSS-Var `--hero-aspect` im `Opener.astro`, damit das Titelbild auf Mobil nicht mehr gecropped wird (`content-titelbild.md`). Idempotent, Sharp ist hier ok, weil Sync-Zeit async sein darf |
 | 7 | `sync-slides-metadata.mjs` | Pflegt `slides.meta.json`: Categories (aus Dateinamen abgeleitet), Tag-Vorbelegung `tags: {skills, events, landings}` und Rename-Migration. `priority` wird nur noch **übernommen**, nicht mehr aus einem Dateinamen-Präfix gelesen – gesetzt wird es allein im Admin-Tool |
 | 8 | `sync-why.mjs` | Erstellt `public/why/{city}.json`, `public/why/{skill}.json`, `public/img/why/{key}/benefit-{1-4}/` |
 | 9 | `sync-events.mjs` | Erstellt `public/img/slides/events/{event}/`, `public/img/Titelbild/events/{event}/`, `public/events/{event}/content.json` (bestehende NICHT überschreiben) |
@@ -104,13 +105,14 @@ npm run sync:content:safe  # fehlertolerant (Teilfehler isoliert, Build/Dev läu
 ## Einzelne Sync-Befehle
 
 ```bash
-npm run sync:landings        # nur Stadtordner
-npm run sync:skills          # nur Skill-Bildordner
-npm run sync:title-images    # nur Titelbild-Ordner
-npm run sync:slides          # nur slides.meta.json
-npm run sync:why             # nur Why-JSONs + Bildordner
-npm run sync:events          # nur Events-Ordner
-npm run sync:erinnerungen    # nur Erinnerungen-JSONs
+npm run sync:landings         # nur Stadtordner
+npm run sync:skills           # nur Skill-Bildordner
+npm run sync:title-images     # nur Titelbild-Ordner
+npm run sync:title-dimensions # nur title.dimensions.json (Aspect-Ratio-Cache)
+npm run sync:slides           # nur slides.meta.json
+npm run sync:why              # nur Why-JSONs + Bildordner
+npm run sync:events           # nur Events-Ordner
+npm run sync:erinnerungen     # nur Erinnerungen-JSONs
 ```
 
 ## GitHub Action: `sync-landings.yml`

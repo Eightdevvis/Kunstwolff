@@ -1,7 +1,7 @@
 ---
 import BrandStripe from "../reviews-references/BrandStripe.astro";
 import { heroHintergrundStyle } from "../../utils/responsiveImages";
-const { titleImage = '/img/Titelbild/default/titelbild.avif', titleImageAlt = 'Kunstwolff - Eventkünstler seit über 25 Jahren', titleImagePosition = 'center', titleImageFrame = 0, heading = 'Event- und Showkünstler seit über 25 Jahren' } = Astro.props;
+const { titleImage = '/img/Titelbild/default/titelbild.avif', titleImageAlt = 'Kunstwolff - Eventkünstler seit über 25 Jahren', titleImagePosition = 'center', titleImageFrame = 0, titleImageAspect = null, heading = 'Event- und Showkünstler seit über 25 Jahren' } = Astro.props;
 
 // Weißer Rahmen: bei frame > 0 wird das Bild via `contain` komplett gezeigt
 // (nichts wird beschnitten) und mit einem weißen Rand dieser Dicke eingefasst.
@@ -14,7 +14,11 @@ const heroFrame = framed ? `${frameThickness}px` : '0px';
 // unten greifen sie ab. Fehlen sie (AVIF, zu kleines Original), bleibt es beim
 // Original – der `var(…, …)`-Rückfall regelt das ohne Sonderfall im Markup.
 const heroVarianten = heroHintergrundStyle(titleImage);
-const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroVarianten}--hero-bg-pos: ${titleImagePosition}; --hero-fit: ${heroFit}; --hero-frame: ${heroFrame};`;
+// Nur setzen, wenn der Sync die Bildmaße geliefert hat. Fehlt die Var, greift
+// die Mobil-Media-Query unten nicht — der Hero fällt aufs alte Verhalten
+// (volle dvh, cover) zurück und lässt lieber croppen als eine 0-Höhe zu bauen.
+const heroAspect = typeof titleImageAspect === 'string' && titleImageAspect.trim() !== '' ? titleImageAspect : null;
+const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroVarianten}--hero-bg-pos: ${titleImagePosition}; --hero-fit: ${heroFit}; --hero-frame: ${heroFrame};${heroAspect ? ` --hero-aspect: ${heroAspect};` : ''}`;
 ---
 <style>
 .hero {
@@ -71,6 +75,40 @@ const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroVarianten}--hero
 @media (min-width: 641px) and (max-width: 1200px) and (max-resolution: 1.5dppx) {
   .hero {
     background-image: var(--hero-bg-1200, var(--hero-bg-image));
+  }
+}
+
+/* ── Mobil: das Bild-Aspect gewinnt ─────────────────────────────────────────
+   Auf einem Portrait-Handy zwingt `min-height: calc(100dvh - 60px)` einen
+   Landscape-Hero in ein Portrait-Container — mit `background-size: cover` wird
+   dabei links/rechts brutal abgeschnitten. Deshalb übernimmt der Hero unter
+   640 px die Ratio des Titelbildes und wird nur so hoch, wie das Bild bei
+   voller Breite ist. Nichts wird abgeschnitten, keine weißen Ränder (weil der
+   Container exakt die Bild-Ratio hat).
+
+   `--hero-aspect` liefert der Frontmatter aus `resolveTitleImageAspect()`, die
+   die Maße aus `title.dimensions.json` zieht (Sync-Script
+   `sync-title-dimensions.mjs`). Fehlt die Var — Fallback-Bild oder Sync noch
+   nie gelaufen —, ist die Property invalid und die ganze Regel greift nicht:
+   der Hero bleibt bei vollem dvh + cover (altes Verhalten), was besser ist
+   als ein zusammenklappender 0-Pixel-Hero.
+
+   Der `hero-band`-Textblock behält seinen `translateY(20vh)`, sitzt aber
+   dadurch relativ zur kleineren Hero-Höhe — er verschiebt sich mit dem Bild
+   nach oben und bleibt sichtbar. */
+@media (max-width: 640px) {
+  .hero {
+    aspect-ratio: var(--hero-aspect);
+    min-height: auto;
+  }
+
+  /* Der Desktop-Textblock steht per translateY(20vh) unten im vollen Viewport.
+     Bei einem auf Bild-Ratio geschrumpften Mobil-Hero (z.B. 400x272) ragt er
+     damit unten aus dem Container heraus und wird von `overflow: hidden`
+     abgeschnitten. Auf Mobil deshalb Band ohne Versatz, zentriert per
+     `align-items: center` des Heroes. */
+  .hero-band {
+    transform: none;
   }
 }
 

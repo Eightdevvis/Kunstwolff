@@ -12,6 +12,10 @@ const steps = [
   { name: 'sync:reviews-tags', script: 'scripts/sync-reviews-tags.mjs' },
   { name: 'sync:faq-tags', script: 'scripts/sync-faq-tags.mjs' },
   { name: 'sync:title-images', script: 'scripts/sync-title-images.mjs' },
+  // Muss nach sync:title-images laufen (Ordner müssen existieren). Liefert
+  // title.dimensions.json, aus der der Hero das Bild-Aspect-Ratio zieht, damit
+  // das Titelbild auf Mobil nicht mehr abgeschnitten wird.
+  { name: 'sync:title-dimensions', script: 'scripts/sync-title-dimensions.mjs' },
   { name: 'sync:slides', script: 'scripts/sync-slides-metadata.mjs' },
   { name: 'sync:why', script: 'scripts/sync-why.mjs' },
   { name: 'sync:events', script: 'scripts/sync-events.mjs' },

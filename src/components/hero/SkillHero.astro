@@ -7,6 +7,7 @@ const {
   title = 'Live Event-Künstler',
   reviews = [],
   titleImage = '',
+  titleImageAspect = null,
   skillName = '',
   backgroundImage = '',
 } = Astro.props;
@@ -16,6 +17,14 @@ const {
 // aus. Leerer String = keine Variante bekannt, dann bleibt es beim Original.
 const titleSrcSet = heroSrcSet(titleImage);
 const bgSrcSet = heroSrcSet(backgroundImage);
+
+// Aspect-Ratio des Titelbildes für Mobil: analog zum Opener-Fix (M3) wird der
+// Bild-Container auf Portrait-Handys nicht mehr auf feste 300 px gezwungen,
+// sondern nimmt das Bild-Aspect an — sonst croppt `object-fit: cover` das
+// Landscape-Titelbild an einer Portrait-Kachel. Fehlt die Var, greift die
+// Regel nicht → alter Zustand bleibt, kein 0-Pixel-Container.
+const heroAspect = typeof titleImageAspect === 'string' && titleImageAspect.trim() !== '' ? titleImageAspect : null;
+const heroMediaStyle = heroAspect ? `--hero-media-aspect: ${heroAspect};` : undefined;
 ---
 
 <div class="hero section">
@@ -47,7 +56,7 @@ const bgSrcSet = heroSrcSet(backgroundImage);
       )}
     </div>
 
-    <div class="hero-media">
+    <div class="hero-media" style={heroMediaStyle}>
       {titleImage && (
         <img
           src={titleImage}
@@ -172,6 +181,17 @@ const bgSrcSet = heroSrcSet(backgroundImage);
 
       .hero-media {
         height: 300px;
+      }
+    }
+
+    /* Portrait-Handy: Media-Kachel übernimmt das Bild-Aspect-Ratio, damit das
+       Titelbild nicht auf 300 px feste Höhe gecropped wird. Analog zum
+       Opener-Fix (M3). Fehlt `--hero-media-aspect`, ist die Property invalid
+       und die Regel greift nicht — dann bleibt es bei den 300 px. */
+    @media (max-width: 640px) {
+      .hero-media {
+        height: auto;
+        aspect-ratio: var(--hero-media-aspect);
       }
     }
   </style>

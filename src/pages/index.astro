@@ -11,7 +11,7 @@ import Why from "../components/Why.astro";
 import Eventtypes from "../components/Eventtypes.astro";
 import FAQ from "../components/FAQ.astro";
 import Aboutsection from "../components/about/Aboutsection.astro";
-import { resolveTitleImage, resolveTitleImageFocus, resolveTitleImageFrame } from "../utils/titleImages";
+import { resolveTitleImage, resolveTitleImageFocus, resolveTitleImageFrame, resolveTitleImageAspect } from "../utils/titleImages";
 import {
   getHomepageSlides,
 } from "../utils/slideImages";
@@ -25,6 +25,7 @@ const homepageSlides = getHomepageSlides();
 const titleImage = resolveTitleImage();
 const titleImagePosition = resolveTitleImageFocus();
 const titleImageFrame = resolveTitleImageFrame();
+const titleImageAspect = resolveTitleImageAspect();
 
 // ── Sektions-Stack: Reihenfolge + Sichtbarkeit kommen aus components.json
 //    (homepage.order), die Props pro Sektion von hier. Registry mappt ID →
@@ -43,7 +44,7 @@ const registry: Record<string, any> = {
   landingsection: Landingsection,
 };
 const sectionProps: Record<string, Record<string, any> | false> = {
-  opener: { titleImage, titleImagePosition, titleImageFrame },
+  opener: { titleImage, titleImagePosition, titleImageFrame, titleImageAspect },
   landingIntro: { text: homeIntro },
   homepageReviews: {},
   slideshow: { items: homepageSlides },

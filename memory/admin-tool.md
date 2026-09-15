@@ -43,6 +43,7 @@ Bei jeder Cross-Repo-Arbeit beide lesen (liegen flach im Admin-Repo-Root):
 | `public/img/why/{city}/benefit-{1-4}/` (Bilder) | `ImageManager.tsx` (why-Modus) |
 | `public/why/{city}.json` (Why-Texte: Titel/Text/Alt) | `ImageManager.tsx` (why-Modus, `saveWhyBenefits`) |
 | `public/img/Titelbild/title.meta.json` (nur `focus`/`frame`) | `ImageManager.tsx` (titelbild-Modus) |
+| `public/img/Titelbild/title.dimensions.json` | **KEINER — sync-generiert** durch `scripts/sync-title-dimensions.mjs`. Der Admin lädt Titelbilder hoch, das Sync-Script (läuft in `predev`/`prebuild`) trägt die Pixel-Maße nach und der Website-Hero zieht daraus das Aspect-Ratio für Mobil (`content-titelbild.md`) |
 | `public/reviews/{city}/review*.md` | `ReviewManager.tsx` |
 | `public/faq/default/*.md` + `public/faq/{city}/*.md` | `FaqManager.tsx` |
 | `public/landings/landings.md` | `Dashboard.tsx` (Quick-Add). ⚠️ **Nicht mehr `CityManager.tsx`** – die Komponente existiert, wird aber von nichts mehr importiert. ⚠️ **Quick-Add schreibt NUR diese Zeile** – siehe Lücke unten. |

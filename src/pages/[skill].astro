@@ -9,7 +9,7 @@ import SkillLayout from '../layouts/SkillLayout.astro';
 import { getSkillBySlug, getSkillSlugs, skillContentKey } from '../utils/skills';
 import { getSkillSlides } from '../utils/slideImages';
 import { getAllReviews } from '../utils/reviews';
-import { resolveTitleImage } from '../utils/titleImages';
+import { resolveTitleImage, resolveTitleImageAspect } from '../utils/titleImages';
 import { resolveHeroBg } from '../utils/heroBg';
 import { isComponentEnabled, resolveSectionOrder, type PageType } from '../utils/componentConfig';
 
@@ -42,6 +42,7 @@ const allSlideshow = getSkillSlides(skillData.title);
 const allReviews = getAllReviews();
 
 const titleImage = resolveTitleImage({ skill: skillKey });
+const titleImageAspect = resolveTitleImageAspect({ skill: skillKey });
 const heroBg = resolveHeroBg({ skill: skillKey });
 
 const heroTitle = skillData.heroTitle || `Live ${skillData.title} für Events`;
@@ -81,6 +82,7 @@ const sectionProps: Record<string, Record<string, any> | false> = {
     title: heroTitle,
     reviews: allReviews,
     titleImage,
+    titleImageAspect,
     skillName: skillData.title,
     backgroundImage: heroBg,
   },

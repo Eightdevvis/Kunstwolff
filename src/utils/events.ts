@@ -18,6 +18,7 @@ import fs from 'fs';
 import path from 'path';
 import { isPageHiddenByPath } from './pageVisibility';
 import { getSlidesByTag } from './slideImages';
+import { lookupTitleDimensions } from './titleImages';
 
 // ─── Pfad-Konstanten ──────────────────────────────────────────────────────────
 const eventsRoot = path.resolve('./public/events');
@@ -296,4 +297,26 @@ export const resolveEventTitleImage = (slug: string): string => {
   return image
     ? `/img/Titelbild/events/${encodePathSegment(slug)}/${encodePathSegment(image)}`
     : resolveDefaultTitleImage();
+};
+
+/**
+ * Aspect-Ratio-String für das Event-Titelbild (analog `resolveTitleImageAspect`
+ * für Stadt-/Skill-Seiten). `null` bedeutet: keine Maße bekannt — der Hero
+ * fällt dann aufs alte Verhalten zurück (volle Höhe + cover), statt eine
+ * 0-Pixel-Höhe zu bauen.
+ *
+ * Zieht die Maße aus `title.dimensions.json` (Sync `sync-title-dimensions.mjs`),
+ * dieselbe Quelle wie die Stadt-Landings. Der Pfad-Key ist `"events/<slug>/<file>"`.
+ */
+export const resolveEventTitleImageAspect = (slug: string): string | null => {
+  const image = firstImageInDir(path.join(eventTitelbildRoot, slug));
+  if (!image) {
+    // Fallback aufs Default-Titelbild: dessen Maße stehen im selben JSON.
+    const defaultImage = firstImageInDir(path.resolve('./public/img/Titelbild/default'));
+    if (!defaultImage) return null;
+    const dims = lookupTitleDimensions(`default/${defaultImage}`);
+    return dims ? `${dims.width} / ${dims.height}` : null;
+  }
+  const dims = lookupTitleDimensions(`events/${slug}/${image}`);
+  return dims ? `${dims.width} / ${dims.height}` : null;
 };

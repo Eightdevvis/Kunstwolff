@@ -18,18 +18,25 @@ import { heroHintergrundStyle } from '../../utils/responsiveImages';
 
 const {
   titleImage = '/img/samples/sample1.webp',
+  titleImageAspect = null,
   title = 'Live-Kunst für Ihr Event',
   subtitle = 'Professionelle Eventkünstler für unvergessliche Momente.',
   eventLabel = '',
   ctaLink = '#contact',
   titleImagePosition = 'center',
 } = Astro.props;
+
+// Aspect-Ratio-Var für Mobil (M11, analog M3 im Opener). Fehlt sie, greift
+// die entsprechende Media-Query unten nicht und der Hero bleibt bei
+// `min-height: 100vh` + `cover` (croppt). Besser als 0-Pixel-Hero.
+const heroAspect = typeof titleImageAspect === 'string' && titleImageAspect.trim() !== '' ? titleImageAspect : null;
+const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroHintergrundStyle(titleImage)}--hero-bg-pos: ${titleImagePosition};${heroAspect ? ` --hero-aspect: ${heroAspect};` : ''}`;
 ---
 
 <!-- Hero Section -->
 <section
   class="event-hero"
-  style={`--hero-bg-image: url('${titleImage}'); ${heroHintergrundStyle(titleImage)}--hero-bg-pos: ${titleImagePosition}`}
+  style={heroStyle}
 >
   <!-- Verstecktes Bild für SEO / Alt-Text -->
   <img src={titleImage} alt={title} style="display:none;" />
@@ -92,6 +99,18 @@ const {
   @media (min-width: 641px) and (max-width: 1200px) and (max-resolution: 1.5dppx) {
     .event-hero {
       background-image: var(--hero-bg-1200, var(--hero-bg-image));
+    }
+  }
+
+  /* Portrait-Handy: Event-Hero übernimmt Bild-Aspect statt volle Höhe zu
+     erzwingen. Analog zum Opener-Fix (M3). Fehlt `--hero-aspect`, greift
+     die Regel nicht → alter Zustand (100vh + cover) bleibt. Der Content
+     ist im .event-hero-content zentriert und rutscht bei kleinerer Höhe
+     mit dem Bild mit. */
+  @media (max-width: 640px) {
+    .event-hero {
+      aspect-ratio: var(--hero-aspect);
+      min-height: auto;
     }
   }
 

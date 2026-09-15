@@ -34,6 +34,62 @@ Die Seiten übergeben deshalb `skillContentKey(skill.title)`, nicht den
 Adress-Slug – sonst fällt die Auflösung still auf `default` zurück
 (`content-skills.md`).
 
+## Pixel-Maße: `title.dimensions.json`
+
+Zweite JSON neben `title.meta.json`. **Vom Sync gepflegt, nicht von Hand.**
+Schema:
+
+```json
+{
+  "default/titelbild.avif": { "width": 1180, "height": 818 },
+  "berlin/live-painter-trade-fair.webp": { "width": 1600, "height": 1201 }
+}
+```
+
+Wozu: `Opener.astro` braucht das Bild-Aspect-Ratio, um auf Mobil die
+Container-Höhe an das Bild anzupassen (`aspect-ratio: var(--hero-aspect)`),
+statt das Bild an einen fast-vollen `dvh`-Container zu drücken und dabei
+links/rechts zu croppen. Ohne die Maße bleibt der Hero beim alten Verhalten
+(volle Höhe + `cover`, croppt) — der Fallback ist bewusst „lieber croppen als
+zusammenklappen", damit ein fehlender Sync-Lauf keine 0-Pixel-Heroes baut.
+
+Erzeugt wird die Datei von `scripts/sync-title-dimensions.mjs` (läuft in
+`sync-content-safe` **nach** `sync:title-images`, damit die Ordner schon da
+sind). Sharp liest die Maße — funktioniert für WebP UND AVIF, weshalb hier
+nicht `readWebpSize` genutzt wird. Idempotent: bestehende Einträge werden
+übernommen, neue kommen dazu, verwaiste raus. Wer eine Datei bytegleich
+ersetzt und andere Maße meint, muss die JSON löschen oder den Eintrag
+manuell entfernen.
+
+Gelesen wird sie synchron in `titleImages.ts` (`readTitleDimensions()`,
+gecached wie `readTitleMetadata`). `resolveTitleImageAspect()` liefert einen
+`"w / h"`-String oder `null`; die vier Astro-Pages, die Opener direkt oder
+über `landings.ts` benutzen (`index.astro`, `[landing].astro`), reichen ihn
+als Prop `titleImageAspect` durch.
+
+**Alle Hero-Komponenten sind seit M11 verkabelt.** Drei Komponenten, drei
+Auflösungswege, ein Cache:
+
+| Komponente | Genutzt in | Aspect kommt aus |
+| :-- | :-- | :-- |
+| `Opener.astro` | Homepage + Stadt-Landings + Skill×Stadt-Kombis | `resolveTitleImageAspect({skill?, landing?})` |
+| `SkillHero.astro` | Skill-Seiten (`/schnellzeichner-karikaturist/`) + Skill×Stadt-Kombis | `resolveTitleImageAspect({skill})` bzw. `{skill, landing}` |
+| `EventHero.astro` | Event-Landings (`/hochzeit/` …) + Skill×Event-Kombis | `resolveEventTitleImageAspect(slug)` in `events.ts` |
+
+`resolveEventTitleImageAspect` läuft nicht über `titleImages.ts` (Events sind
+weiterhin außerhalb dieser Auswahl), zieht aber über `lookupTitleDimensions`
+denselben Sync-Cache. Wenn das Event-Bild fehlt, fällt es auf die Maße des
+Default-Titelbildes zurück — analog dazu, wie `resolveEventTitleImage` beim
+Fehlen aufs Default-Bild fällt. Ohne Fallback stünde ein Event-Hero mit
+Src=default und Aspect=null da (Media-Query greift nicht, alter Crop-Zustand).
+
+CSS-Var-Namen unterscheiden sich pro Komponente:
+
+- `Opener.astro`, `EventHero.astro` → `--hero-aspect` (auf die ganze Sektion)
+- `SkillHero.astro` → `--hero-media-aspect` (nur auf die `.hero-media`-Kachel,
+  weil dort das `<img>` sitzt; die Hero-Höhe selbst ist inhaltsgetrieben und
+  soll auf Mobil eher schrumpfen als eine Aspect-Ratio erzwingen)
+
 ## Metadaten: `title.meta.json`
 
 Selbes Format wie `slides.meta.json`:
