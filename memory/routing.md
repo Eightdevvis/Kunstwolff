@@ -46,6 +46,10 @@ Die zweite Hälfte des Routings steht **nicht** in `src/pages/`, sondern in
   Einmal-Werkzeug `scripts/flache-kombi-urls.mjs` (2026-08-01).
 - **Wix-Altlasten** (`/kontakt`, `/about*`, `/portfolio`, `*-galerie` …) aus dem
   Inventar der fünf Wix-Sitemaps – siehe `vercel-headers.md`.
+- **SEO-Aliase** (2026-09-15): `/hochzeitsmaler` → `/szenenmaler/hochzeit/`.
+  Kunden googeln „Hochzeitsmaler", der Fach-Skill heißt aber „Szenenmaler". Der
+  Alias schlägt die Brücke ohne eine zweite Skill-Landing (Duplicate Content).
+  Test: `tests/hochzeitsmaler-alias.test.ts`.
 - Drei **Sammelregeln** (`/portfolio-collections/:rest*`, `/template/:rest*`,
   `/schnellzeichner/:rest*`), die jeweils **hinter** den genauen Regeln stehen
   müssen. Vercel nimmt die erste passende – steht die Sammelregel vorn, greift

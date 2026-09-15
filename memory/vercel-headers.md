@@ -37,8 +37,7 @@ Austausch ebenso wenig. Siehe `responsive-images.md`.
 
 ## Redirects (seit 2026-07-30)
 
-`vercel.json` hat jetzt neben `headers` einen `redirects`-Block – aktuell **166 Einträge**
-aus **zwei** Herkünften:
+`vercel.json` hat jetzt neben `headers` einen `redirects`-Block aus **drei** Herkünften:
 
 1. **Die Wix-Karte (2026-07-30):** alte Wix-URLs auf die neuen Astro-Pfade. Inventar aus
    den fünf Wix-Sitemaps (33 Pfade), 30 davon liefen ohne Karte ins 404 – darunter
@@ -51,6 +50,12 @@ aus **zwei** Herkünften:
 2. **Die Flach-Umstellung (2026-08-01):** 136 Weiterleitungen von der hierarchischen
    Ort-Kombi-Adresse auf die flache (`/szenenmaler/berlin` → `/berlin-szenenmaler/`),
    erzeugt vom Einmal-Werkzeug `scripts/flache-kombi-urls.mjs`. Details in `seo.md`.
+3. **SEO-Alias `/hochzeitsmaler` (2026-09-15):** dauerhaft auf `/szenenmaler/hochzeit/`.
+   Kunden googeln „Hochzeitsmaler", nicht „Szenenmaler" — die Skill×Event-Kombi wird
+   deshalb unter dem gesuchten Wort erreichbar, ohne eine zweite Seite (Duplicate
+   Content) aufzumachen. Test: `tests/hochzeitsmaler-alias.test.ts`. Wenn weitere
+   Aliase dazukommen (z.B. `/karikaturenzeichner` etc.), zwischen der Flach-Umstellung
+   und der `/schnellzeichner/:rest*`-Sammelregel einreihen.
 
 Drei Regeln dazu:
 

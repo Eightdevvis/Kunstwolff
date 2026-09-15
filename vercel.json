@@ -938,6 +938,11 @@
       "permanent": true
     },
     {
+      "source": "/hochzeitsmaler",
+      "destination": "/szenenmaler/hochzeit/",
+      "permanent": true
+    },
+    {
       "source": "/schnellzeichner/:rest*",
       "destination": "/schnellzeichner-karikaturist/:rest*",
       "permanent": true
