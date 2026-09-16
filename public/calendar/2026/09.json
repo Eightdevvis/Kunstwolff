@@ -253,10 +253,22 @@
   },
   {
     "id": "mtzybv2ln542",
-    "title": "An Schulende",
+    "title": "An Schulende bzw. 18:30 Uhr Sportcamp",
     "date": "2026-09-25",
     "time": 13,
     "location": "Zuhause",
+    "categoryId": "babysitter",
+    "actors": [
+      "Jenny"
+    ]
+  },
+  {
+    "id": "mu3qllyk0zlb",
+    "title": "die lieben Geschwisterchen begleiten",
+    "description": "bis 23-oder 24.00 Uhr",
+    "date": "2026-09-26",
+    "time": 16,
+    "location": "daheim",
     "categoryId": "babysitter",
     "actors": [
       "Jenny"
