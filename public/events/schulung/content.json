@@ -5,7 +5,7 @@
     "steps": [
       {
         "title": "Anfrage & Planung",
-        "text": "Sie kontaktieren uns mit Datum, Ort und Gästeanzahl. Wir besprechen gemeinsam das beste Format.",
+        "text": "Sie kontaktieren uns mit Datum, Ort und Gästeanzahl, Thema der Veranstaltung und gewünschtes Format. Wir besprechen gemeinsam die optimale Darstellung für das Storytelling.",
         "icon": "chat"
       },
       {
@@ -15,12 +15,12 @@
       },
       {
         "title": "Live-Kunst",
-        "text": "Während Ihre Gäste feiern, zeichnen oder malen wir live.",
+        "text": "Während der Schulung zeichnen wir Inhalte zum visuellen Verständnis. Oder das Zeichnen findet in den Pausen der Schulung statt zum Vergnügen der Mitarbeiter.",
         "icon": "star"
       },
       {
-        "title": "Persönliche Erinnerungen",
-        "text": "Jeder Gast nimmt ein individuelles Kunstwerk mit nach Hause.",
+        "title": "Maßgeschneiderte Darstellung",
+        "text": "Wir setzen Ihr Projekt in Szene. Individuell live gefertigte Bilder sorgen für eine besondere Erinnerung.",
         "icon": "gift"
       }
     ]
