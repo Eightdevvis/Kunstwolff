@@ -4187,7 +4187,9 @@
     "priority": 6
   },
   "szenenmaler/event-zeichner-zeichnet-an-staffelei-shop-eroeffnung-frankfurt.webp": {
-    "categories": [],
+    "categories": [
+      "Eventzeichner"
+    ],
     "tags": {
       "skills": [],
       "events": [],
@@ -4268,7 +4270,9 @@
     "title": "Live-Porträts für die Hochzeitsgäste"
   },
   "szenenmaler/live-eventzeichner-frankfurt.webp": {
-    "categories": [],
+    "categories": [
+      "Eventzeichner"
+    ],
     "tags": {
       "skills": [],
       "events": [],
@@ -4795,7 +4799,9 @@
     "title": "Schnellzeichner Wiesbaden"
   },
   "wiesbaden/witziges-schnell-portrait-als-fussballer-und-cheerleader-von-event-zeichner-wiesbaden-domaene-mechthildshausen.webp": {
-    "categories": [],
+    "categories": [
+      "Eventzeichner"
+    ],
     "tags": {
       "skills": [],
       "events": [],
