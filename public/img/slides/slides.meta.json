@@ -297,8 +297,8 @@
       ]
     },
     "priority": 3,
-    "title": "storytelling-die eigenen hobbies astrologie",
-    "altOverride": "Storytelling bei einem Event in der Schweiz"
+    "altOverride": "Storytelling bei einem Event in der Schweiz",
+    "title": "storytelling-die eigenen hobbies astrologie"
   },
   "default/4_Hochzeit_schnellzeichner_maler.webp": {
     "categories": [
@@ -752,6 +752,265 @@
       "landings": []
     },
     "priority": 6
+  },
+  "events/schulung/b012-investor.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 4
+  },
+  "events/schulung/b037-lawyer.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 3
+  },
+  "events/schulung/buergermeister-biebesheim-von-karikaturist-sportlerehrung.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 10
+  },
+  "events/schulung/digital-speedpainter-trade-show.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 9
+  },
+  "events/schulung/einkaufsleiterin-karikatur-personalisiert.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 8
+  },
+  "events/schulung/freundliche-karikatur-von-frau-mit-thema-finanzen.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 7
+  },
+  "events/schulung/gast-zeigt-sein-schnell-portrait-von-schnellzeichner-schulung-ring-hotel-winzerhof-tauenberg-rhein-neckar-kreis.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 19
+  },
+  "events/schulung/gleisbauer-karikaturzeichnung.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 18
+  },
+  "events/schulung/illustration-programmierer-schulung.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 6
+  },
+  "events/schulung/img_20250425_172034.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 17
+  },
+  "events/schulung/img_20250629_164328.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 16
+  },
+  "events/schulung/karikatur-aerztin-weihnachtsfeier-bauern-und-winzer-verband-koblenz.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "schulung"
+      ],
+      "landings": [
+        "koblenz"
+      ]
+    },
+    "priority": 5
+  },
+  "events/schulung/karikaturien-mitarbeiter-messe-party-stuttgart.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "schulung"
+      ],
+      "landings": [
+        "stuttgart"
+      ]
+    },
+    "priority": 1
+  },
+  "events/schulung/lunchtime-skyline-caricature-frankfurt.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "schulung"
+      ],
+      "landings": [
+        "frankfurt"
+      ]
+    },
+    "priority": 15
+  },
+  "events/schulung/minecraft-drawing-kids-speedpainter-event.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 14
+  },
+  "events/schulung/pxl_20260703_161727584.mp.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 13
+  },
+  "events/schulung/schnellzeichner-betriebsfeier-st.-wendel.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 12
+  },
+  "events/schulung/schnellzeichner-messe-koeln.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "schulung"
+      ],
+      "landings": [
+        "koeln"
+      ]
+    },
+    "priority": 2
+  },
+  "events/schulung/zeichnung-stammbaum-weinrebe-aschaffenburg.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 11
   },
   "frankfurt/10_digitale-schnellzeichnung-auf-leinwand-projiziert-mit-beamer-comoany-event-allianz-frankfurt.webp": {
     "categories": [
@@ -4917,176 +5176,5 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
-  },
-  "events/schulung/karikaturien-mitarbeiter-messe-party-stuttgart.webp": {
-    "categories": [],
-    "priority": 1,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/schnellzeichner-messe-koeln.webp": {
-    "categories": [],
-    "priority": 2,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/b012-investor.webp": {
-    "categories": [],
-    "priority": 4,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/b037-lawyer.webp": {
-    "categories": [],
-    "priority": 3,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/einkaufsleiterin-karikatur-personalisiert.webp": {
-    "categories": [],
-    "priority": 8,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/freundliche-karikatur-von-frau-mit-thema-finanzen.webp": {
-    "categories": [],
-    "priority": 7,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/illustration-programmierer-schulung.webp": {
-    "categories": [],
-    "priority": 6,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/karikatur-aerztin-weihnachtsfeier-bauern-und-winzer-verband-koblenz.webp": {
-    "categories": [],
-    "priority": 5,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/buergermeister-biebesheim-von-karikaturist-sportlerehrung.webp": {
-    "categories": [],
-    "priority": 10,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/digital-speedpainter-trade-show.webp": {
-    "categories": [],
-    "priority": 9,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/gast-zeigt-sein-schnell-portrait-von-schnellzeichner-schulung-ring-hotel-winzerhof-tauenberg-rhein-neckar-kreis.webp": {
-    "categories": [],
-    "priority": 19,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/gleisbauer-karikaturzeichnung.webp": {
-    "categories": [],
-    "priority": 18,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/img_20250425_172034.webp": {
-    "categories": [],
-    "priority": 17,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/img_20250629_164328.webp": {
-    "categories": [],
-    "priority": 16,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/lunchtime-skyline-caricature-frankfurt.webp": {
-    "categories": [],
-    "priority": 15,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/minecraft-drawing-kids-speedpainter-event.webp": {
-    "categories": [],
-    "priority": 14,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/pxl_20260703_161727584.mp.webp": {
-    "categories": [],
-    "priority": 13,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/schnellzeichner-betriebsfeier-st.-wendel.webp": {
-    "categories": [],
-    "priority": 12,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
-  },
-  "events/schulung/zeichnung-stammbaum-weinrebe-aschaffenburg.webp": {
-    "categories": [],
-    "priority": 11,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
   }
 }
