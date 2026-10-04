@@ -43,6 +43,11 @@
       "source": "events.json"
     },
     {
+      "slug": "schulung",
+      "label": "Schulung",
+      "source": "events.json"
+    },
+    {
       "slug": "weihnachtsfeier",
       "label": "Weihnachtsfeier",
       "source": "extra"
@@ -81,11 +86,6 @@
       "slug": "sommerfest",
       "label": "Sommerfest",
       "source": "extra"
-    },
-    {
-      "slug": "schulung",
-      "label": "Schulung",
-      "source": "events.json"
     }
   ],
   "landings": [
