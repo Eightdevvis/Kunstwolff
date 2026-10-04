@@ -81,6 +81,11 @@
       "slug": "sommerfest",
       "label": "Sommerfest",
       "source": "extra"
+    },
+    {
+      "slug": "schulung",
+      "label": "Schulung",
+      "source": "events.json"
     }
   ],
   "landings": [
