@@ -14,6 +14,11 @@
       "slug": "aquarelle",
       "label": "Aquarelle",
       "source": "skills.json"
+    },
+    {
+      "slug": "eventzeichner",
+      "label": "Eventzeichner",
+      "source": "skills.json"
     }
   ],
   "events": [
