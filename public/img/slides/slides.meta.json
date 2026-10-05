@@ -833,36 +833,6 @@
     },
     "priority": 7
   },
-  "events/schulung/gast-zeigt-sein-schnell-portrait-von-schnellzeichner-schulung-ring-hotel-winzerhof-tauenberg-rhein-neckar-kreis.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "tags": {
-      "skills": [
-        "schnellzeichner"
-      ],
-      "events": [
-        "schulung"
-      ],
-      "landings": []
-    },
-    "priority": 19
-  },
-  "events/schulung/gleisbauer-karikaturzeichnung.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "tags": {
-      "skills": [
-        "schnellzeichner"
-      ],
-      "events": [
-        "schulung"
-      ],
-      "landings": []
-    },
-    "priority": 18
-  },
   "events/schulung/illustration-programmierer-schulung.webp": {
     "categories": [],
     "tags": {
@@ -884,17 +854,6 @@
       "landings": []
     },
     "priority": 17
-  },
-  "events/schulung/img_20250629_164328.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [
-        "schulung"
-      ],
-      "landings": []
-    },
-    "priority": 16
   },
   "events/schulung/karikatur-aerztin-weihnachtsfeier-bauern-und-winzer-verband-koblenz.webp": {
     "categories": [
@@ -930,34 +889,6 @@
     },
     "priority": 1
   },
-  "events/schulung/lunchtime-skyline-caricature-frankfurt.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "tags": {
-      "skills": [
-        "schnellzeichner"
-      ],
-      "events": [
-        "schulung"
-      ],
-      "landings": [
-        "frankfurt"
-      ]
-    },
-    "priority": 15
-  },
-  "events/schulung/minecraft-drawing-kids-speedpainter-event.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [
-        "schulung"
-      ],
-      "landings": []
-    },
-    "priority": 14
-  },
   "events/schulung/otg-erfolgs-absolventen-story-telling.webp": {
     "categories": [],
     "tags": {
@@ -968,32 +899,6 @@
       "landings": []
     },
     "priority": 20
-  },
-  "events/schulung/pxl_20260703_161727584.mp.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [
-        "schulung"
-      ],
-      "landings": []
-    },
-    "priority": 13
-  },
-  "events/schulung/schnellzeichner-betriebsfeier-st.-wendel.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "tags": {
-      "skills": [
-        "schnellzeichner"
-      ],
-      "events": [
-        "schulung"
-      ],
-      "landings": []
-    },
-    "priority": 12
   },
   "events/schulung/schnellzeichner-messe-koeln.webp": {
     "categories": [
