@@ -53,6 +53,11 @@
       "source": "events.json"
     },
     {
+      "slug": "tagung",
+      "label": "Tagung",
+      "source": "events.json"
+    },
+    {
       "slug": "weihnachtsfeier",
       "label": "Weihnachtsfeier",
       "source": "extra"
