@@ -1,0 +1,65 @@
+{
+  "ablauf": {
+    "enabled": true,
+    "title": "So läuft Ihr Event ab",
+    "steps": [
+      {
+        "title": "Anfrage & Planung",
+        "text": "Kontaktieren Sie uns mit Datum, Ort und Gästeanzahl. Wir besprechen gemeinsam das passende Programm.",
+        "icon": "chat"
+      },
+      {
+        "title": "Aufbau vor Ort",
+        "text": "Wir kommen rechtzeitig an und bauen alles diskret auf.",
+        "icon": "setup"
+      },
+      {
+        "title": "Live-Kunst",
+        "text": "Während Ihre Gäste feiern entstehen individuelle Kunstwerke live vor ihren Augen.",
+        "icon": "star"
+      },
+      {
+        "title": "Persönliche Erinnerungen",
+        "text": "Jeder Gast nimmt ein einzigartiges Kunstwerk mit nach Hause.",
+        "icon": "gift"
+      }
+    ]
+  },
+  "pakete": {
+    "enabled": true,
+    "title": "Unsere Pakete",
+    "items": [
+      {
+        "title": "Basis",
+        "duration": "2 Stunden",
+        "price": "Auf Anfrage",
+        "features": [
+          "1 Künstler",
+          "Live-Kunst",
+          "Material inklusive"
+        ]
+      },
+      {
+        "title": "Standard",
+        "duration": "4 Stunden",
+        "price": "Auf Anfrage",
+        "features": [
+          "1 Künstler",
+          "Live-Kunst",
+          "Material inklusive",
+          "Pause inklusive"
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "enabled": true,
+    "title": "Unsere Künstler für Ihr Event"
+  },
+  "referenzen": {
+    "enabled": false,
+    "title": "Das sagen unsere Kunden",
+    "text": "",
+    "logos": []
+  }
+}
