@@ -281,11 +281,13 @@
   },
   "default/3_schnellzeichner-schweiz.webp": {
     "categories": [
-      "Schnellzeichner"
+      "Schnellzeichner",
+      "Graphic recording"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner"
+        "schnellzeichner",
+        "graphic-recording"
       ],
       "events": [
         "firmenfeier",
@@ -623,24 +625,36 @@
     }
   },
   "events/messe/digital-speedpainter-trade-show.webp": {
-    "categories": [],
+    "categories": [
+      "Graphic recording"
+    ],
     "tags": {
-      "skills": [],
+      "skills": [
+        "graphic-recording"
+      ],
       "events": [
         "messe"
       ],
       "landings": []
-    }
+    },
+    "altOverride": "graphic recording junge unternehmerin mit ihrem produkt-präsentation schokolade pro sweet messe köln",
+    "title": "live graphic recording produkt-präsentation"
   },
   "events/messe/digitale-live-portraits.webp": {
-    "categories": [],
+    "categories": [
+      "Graphic recording"
+    ],
     "tags": {
-      "skills": [],
+      "skills": [
+        "graphic-recording"
+      ],
       "events": [
         "messe"
       ],
       "landings": []
-    }
+    },
+    "altOverride": "Event-Artistin porträtiert Besucher am digitalen FlipChart Samsung Flip2 auf Messe in Köln",
+    "title": "Digital Live-Art Trade fair"
   },
   "events/messe/karikaturist-messe-rai-amsterdam.webp": {
     "categories": [
@@ -762,7 +776,8 @@
       ],
       "landings": []
     },
-    "priority": 18
+    "priority": 18,
+    "altOverride": "graphic recording Erfolgs-Azubis Porträt mit Erfolgs-Symbolen"
   },
   "events/schulung/b012-investor.webp": {
     "categories": [],
@@ -789,19 +804,23 @@
   "events/schulung/buergermeister-biebesheim-von-karikaturist-sportlerehrung.webp": {
     "categories": [
       "Schnellzeichner",
-      "Szenenmaler"
+      "Szenenmaler",
+      "Graphic recording"
     ],
     "tags": {
       "skills": [
         "schnellzeichner",
-        "szenenmaler"
+        "szenenmaler",
+        "graphic-recording"
       ],
       "events": [
         "schulung"
       ],
       "landings": []
     },
-    "priority": 10
+    "priority": 10,
+    "title": "Live-Kunst zur Begleitung von Sportler-Ehrung in Hessen",
+    "altOverride": "Graphic Recording live von Bürgermeister auf einem Event in Rhein-Main"
   },
   "events/schulung/digital-speedpainter-trade-show.webp": {
     "categories": [],
@@ -816,63 +835,85 @@
   },
   "events/schulung/einkaufsleiterin-karikatur-personalisiert.webp": {
     "categories": [
-      "Schnellzeichner"
+      "Schnellzeichner",
+      "Graphic recording"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner"
+        "schnellzeichner",
+        "graphic-recording"
       ],
       "events": [
         "schulung"
       ],
       "landings": []
     },
-    "priority": 8
+    "priority": 8,
+    "altOverride": "Graphic Recording für Meeting mit Einkaufsleiterin und Produktpräsentation",
+    "title": "Graphic Recording Produkt-Präsentation"
   },
   "events/schulung/freundliche-karikatur-von-frau-mit-thema-finanzen.webp": {
     "categories": [
-      "Schnellzeichner"
+      "Schnellzeichner",
+      "Graphic recording"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner"
+        "schnellzeichner",
+        "graphic-recording"
       ],
       "events": [
         "schulung"
       ],
       "landings": []
     },
-    "priority": 7
+    "priority": 7,
+    "title": "Live Graphic Recording Kongress Finanzen",
+    "altOverride": "Event-Illustrtion von junger Frau, die mit einem Geldsack wandert, der Geld verliert"
   },
   "events/schulung/illustration-programmierer-schulung.webp": {
-    "categories": [],
+    "categories": [
+      "Graphic recording"
+    ],
     "tags": {
-      "skills": [],
+      "skills": [
+        "graphic-recording"
+      ],
       "events": [
         "schulung"
       ],
       "landings": []
     },
-    "priority": 6
+    "priority": 6,
+    "title": "digital-art storytelling network programming ki in space",
+    "altOverride": "Graphic Recording, digital Event-sketching of a a programmer throws the keys from his keyboard across the space"
   },
   "events/schulung/img_20250425_172034.webp": {
-    "categories": [],
+    "categories": [
+      "Graphic recording"
+    ],
     "tags": {
-      "skills": [],
+      "skills": [
+        "graphic-recording"
+      ],
       "events": [
         "schulung"
       ],
       "landings": []
     },
-    "priority": 17
+    "priority": 17,
+    "altOverride": "Schnell-Porträt mit Illustration bei Schulung von Graphic Recorder",
+    "title": "Graphic Recording zur Mitarbeiter-Schulung von Schnellzeichnerin im Saarland"
   },
   "events/schulung/karikatur-aerztin-weihnachtsfeier-bauern-und-winzer-verband-koblenz.webp": {
     "categories": [
-      "Schnellzeichner"
+      "Schnellzeichner",
+      "Graphic recording"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner"
+        "schnellzeichner",
+        "graphic-recording"
       ],
       "events": [
         "schulung"
@@ -881,7 +922,9 @@
         "koblenz"
       ]
     },
-    "priority": 5
+    "priority": 5,
+    "title": "Live-sketching medicine graphic recording",
+    "altOverride": "Illustration of a doctor with angel wings listening to a star with a stethoscope"
   },
   "events/schulung/karikaturien-mitarbeiter-messe-party-stuttgart.webp": {
     "categories": [
@@ -5257,5 +5300,16 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
+  },
+  "mediathek/otg-erfolgs-absolventen-graphic-recording.webp": {
+    "categories": [
+      "Graphic recording"
+    ],
+    "priority": 1,
+    "tags": {
+      "skills": [
+        "graphic-recording"
+      ]
+    }
   }
 }
