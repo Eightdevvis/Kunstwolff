@@ -63,6 +63,15 @@
       "categories": [
         "Graphic Recorder"
       ]
+    },
+    {
+      "title": "Tagung",
+      "slug": "Tagung",
+      "heroTitle": "Graphic Recording visualisiert Ihr Event",
+      "description": "Ein Event-Zeichner als Graphic Recorder übersetzt gesprochene Inhalte live vor Ort oder digital in eine visuelle Landkarte aus Bildern, Metaphern und kurzen Texten. Er ist live auf Ihrem Meeting, um flüchtige Worte in eine bleibende, emotionale Struktur zu gießen. Mit oder ohne Text lieben wir es, Geschichten zu erzählen.",
+      "categories": [
+        "SchnellzeichnerSzenenmalerGraphicRecorder"
+      ]
     }
   ]
 }

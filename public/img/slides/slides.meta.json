@@ -5187,5 +5187,122 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
+  },
+  "events/Tagung/b012-investor.webp": {
+    "categories": [],
+    "priority": 4,
+    "tags": {
+      "events": [
+        "Tagung"
+      ]
+    }
+  },
+  "events/Tagung/digital-live-big-portrait-painting-trade-fair-cologne.webp": {
+    "categories": [],
+    "priority": 3,
+    "tags": {
+      "events": [
+        "Tagung"
+      ]
+    }
+  },
+  "events/Tagung/einkaufsleiterin-karikatur-personalisiert.webp": {
+    "categories": [],
+    "priority": 2,
+    "tags": {
+      "events": [
+        "Tagung"
+      ]
+    }
+  },
+  "events/Tagung/b037-lawyer.webp": {
+    "categories": [],
+    "priority": 6,
+    "tags": {
+      "events": [
+        "Tagung"
+      ]
+    }
+  },
+  "events/Tagung/buergermeister-biebesheim-von-karikaturist-sportlerehrung.webp": {
+    "categories": [],
+    "priority": 5,
+    "tags": {
+      "events": [
+        "Tagung"
+      ]
+    }
+  },
+  "events/Tagung/freundliche-karikatur-von-frau-mit-thema-finanzen.webp": {
+    "categories": [],
+    "priority": 11,
+    "tags": {
+      "events": [
+        "Tagung"
+      ]
+    }
+  },
+  "events/Tagung/illustration-programmierer-schulung.webp": {
+    "categories": [],
+    "priority": 10,
+    "tags": {
+      "events": [
+        "Tagung"
+      ]
+    }
+  },
+  "events/Tagung/img_20250425_172034.webp": {
+    "categories": [],
+    "priority": 9,
+    "tags": {
+      "events": [
+        "Tagung"
+      ]
+    }
+  },
+  "events/Tagung/karikatur-aerztin-weihnachtsfeier-bauern-und-winzer-verband-koblenz.webp": {
+    "categories": [],
+    "priority": 8,
+    "tags": {
+      "events": [
+        "Tagung"
+      ]
+    }
+  },
+  "events/Tagung/zeichnung-stammbaum-weinrebe-aschaffenburg.webp": {
+    "categories": [],
+    "priority": 7,
+    "tags": {
+      "events": [
+        "Tagung"
+      ]
+    }
+  },
+  "events/Tagung/digitale-schnellzeichnung-auf-leinwand-projiziert-mit-beamer-comoany-event-allianz-frankfurt.webp": {
+    "categories": [],
+    "priority": 16,
+    "tags": {
+      "events": [
+        "Tagung"
+      ]
+    }
+  },
+  "events/Tagung/digital-speedpainter-trade-show.webp": {
+    "categories": [],
+    "priority": 15,
+    "tags": {
+      "events": [
+        "Tagung"
+      ]
+    }
+  },
+  "events/Tagung/erfolgsabsolventen-der-otg.webp": {
+    "categories": [],
+    "priority": 13,
+    "tags": {
+      "events": [
+        "Tagung"
+      ]
+    }
   }
 }
