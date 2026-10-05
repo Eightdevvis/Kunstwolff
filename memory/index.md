@@ -23,6 +23,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [Routing & URL-Generierung](routing.md) – Wie URLs aus landings.md/skills.json/events.json entstehen
 - [Komponenten-Stack](komponenten-stack.md) – `components.json` `_order` als EINE Quelle für Sektions-Reihenfolge+Sichtbarkeit (Website rendert daraus, Admin liest dasselbe), Build-Guardrail
 - [Admin-Tool / Cross-Repo](admin-tool.md) – Was Admin schreibt, was nicht, Cross-Repo-Workflow
+- [Bug-Zettel](../zettel/LIESMICH.md) – `zettel/bugs.json`: Mutti meldet Bugs im Admin; wer fixt, setzt im selben Commit `status: gefixt` + `antwort`
 
 ### Content-Systeme (lade nur was zur Aufgabe passt)
 - [Cities / Landings](content-landings.md) – `landings.md`, Slugs, neue Stadt anlegen/entfernen

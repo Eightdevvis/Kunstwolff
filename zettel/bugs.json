@@ -1,0 +1,44 @@
+{
+  "bugs": [
+    {
+      "id": "2026-10-05T19-45-00-000Z-kuen",
+      "text": "Bei Künstler musste ich „Graphic Recorder“ von Hand reinschreiben, und die Kommas wurden einfach verschluckt.",
+      "erstellt": "2026-10-05T19:45:00.000Z",
+      "status": "gefixt",
+      "antwort": "Künstler wählst du jetzt per Klick aus. Rot durchgestrichene Einträge passen zu keinem Künstler und wirken auf der Seite nicht.",
+      "gefixtAm": "2026-10-05T19:45:00.000Z"
+    },
+    {
+      "id": "2026-10-05T19-44-00-000Z-dopp",
+      "text": "Tagung ist doppelt da – hätte eine Warnung kommen müssen, dass es das Event schon gibt.",
+      "erstellt": "2026-10-05T19:44:00.000Z",
+      "status": "gefixt",
+      "antwort": "Jetzt gibt es nur noch eine Tagung (/tagung). Beim Anlegen kommt eine Warnung, wenn es das Event schon gibt.",
+      "gefixtAm": "2026-10-05T19:44:00.000Z"
+    },
+    {
+      "id": "2026-10-05T19-43-00-000Z-menu",
+      "text": "Tagung steht nicht im Menü unter Events, und Graphic Recording wurde nicht angenommen.",
+      "erstellt": "2026-10-05T19:43:00.000Z",
+      "status": "gefixt",
+      "antwort": "Ein falscher Eintrag hatte seit Mittag alle Veröffentlichungen blockiert. Jetzt ist alles live, auch Graphic Recording.",
+      "gefixtAm": "2026-10-05T19:43:00.000Z"
+    },
+    {
+      "id": "2026-10-05T19-42-00-000Z-loes",
+      "text": "Bilder in Schulung gelöscht, aber sie waren immer noch da.",
+      "erstellt": "2026-10-05T19:42:00.000Z",
+      "status": "gefixt",
+      "antwort": "Gelöscht war alles richtig, es kam nur nicht auf die Website (gleiche Blockade). Jetzt sind sie weg.",
+      "gefixtAm": "2026-10-05T19:42:00.000Z"
+    },
+    {
+      "id": "2026-10-05T19-41-00-000Z-rahm",
+      "text": "Titelbild bei Schulung mit dem Schieber klein gemacht, mit weißem Rand – auf der Website riesig.",
+      "erstellt": "2026-10-05T19:41:00.000Z",
+      "status": "gefixt",
+      "antwort": "Event-Seiten beachten jetzt den weißen Rahmen aus dem Schieber.",
+      "gefixtAm": "2026-10-05T19:41:00.000Z"
+    }
+  ]
+}
