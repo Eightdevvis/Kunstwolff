@@ -68,6 +68,7 @@ import {
   getEventSlides,
   resolveEventTitleImage,
   resolveEventTitleImageAspect,
+  resolveEventTitleImageMeta,
 } from '../utils/events';
 import { isComponentEnabled, resolveSectionOrder, type PageType } from '../utils/componentConfig';
 
@@ -183,6 +184,7 @@ let eventContent: Awaited<ReturnType<typeof getEventContent>> | undefined;
 let eventSlides: Awaited<ReturnType<typeof supplementWithDefaultSlides>> | undefined;
 let eventTitleImage = '';
 let eventTitleImageAspect: string | null = null;
+let eventTitleImageMeta = { focus: 'center', frame: 0 };
 let eventPageTitle = '';
 let eventPageDescription = '';
 let eventBreadcrumb: unknown;
@@ -206,6 +208,7 @@ if (pageType === 'event') {
   );
   eventTitleImage = resolveEventTitleImage(landing ?? '');
   eventTitleImageAspect = resolveEventTitleImageAspect(landing ?? '');
+  eventTitleImageMeta = resolveEventTitleImageMeta(landing ?? '');
 
   // Titel: "{Skill} für {Event}" z.B. "Schnellzeichner für Firmenfeiern"
   eventPageTitle = `${skillData.title} für ${eventData.title} buchen | Kunstwolff`;
@@ -284,6 +287,8 @@ if (pageType === 'landing' && landingSlides) {
     eventHero: {
       titleImage: eventTitleImage,
       titleImageAspect: eventTitleImageAspect,
+      titleImagePosition: eventTitleImageMeta.focus,
+      titleImageFrame: eventTitleImageMeta.frame,
       title: finalHeroTitle,
       subtitle: eventPageDescription,
       eventLabel: `${skillData.title} · ${eventData.title}`,

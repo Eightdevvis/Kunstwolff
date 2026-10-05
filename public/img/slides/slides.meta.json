@@ -753,6 +753,17 @@
     },
     "priority": 6
   },
+  "events/schulung/abolventen.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 18
+  },
   "events/schulung/b012-investor.webp": {
     "categories": [],
     "tags": {
@@ -5246,14 +5257,5 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
-  },
-  "events/schulung/abolventen.webp": {
-    "categories": [],
-    "priority": 18,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
   }
 }

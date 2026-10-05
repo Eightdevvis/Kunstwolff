@@ -8,6 +8,8 @@
  *
  * Props:
  *   titleImage  – Pfad zum Hintergrundbild (aus resolveEventTitleImage())
+ *   titleImagePosition / titleImageFrame – Fokus und weißer Rahmen aus
+ *                 title.meta.json (resolveEventTitleImageMeta())
  *   title       – Hauptüberschrift (aus event.heroTitle)
  *   subtitle    – Beschreibungstext (aus event.description)
  *   eventLabel  – Label oben (z.B. "Firmenfeier" oder "Schnellzeichner · Firmenfeier")
@@ -24,13 +26,21 @@ const {
   eventLabel = '',
   ctaLink = '#contact',
   titleImagePosition = 'center',
+  titleImageFrame = 0,
 } = Astro.props;
+
+// Weißer Rahmen wie im Opener: bei frame > 0 wird das Bild via `contain`
+// komplett gezeigt und mit einem weißen Rand dieser Dicke eingefasst.
+const frameThickness = Number(titleImageFrame);
+const framed = Number.isFinite(frameThickness) && frameThickness > 0;
+const heroFit = framed ? 'contain' : 'cover';
+const heroFrame = framed ? `${frameThickness}px` : '0px';
 
 // Aspect-Ratio-Var für Mobil (M11, analog M3 im Opener). Fehlt sie, greift
 // die entsprechende Media-Query unten nicht und der Hero bleibt bei
 // `min-height: 100vh` + `cover` (croppt). Besser als 0-Pixel-Hero.
 const heroAspect = typeof titleImageAspect === 'string' && titleImageAspect.trim() !== '' ? titleImageAspect : null;
-const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroHintergrundStyle(titleImage)}--hero-bg-pos: ${titleImagePosition};${heroAspect ? ` --hero-aspect: ${heroAspect};` : ''}`;
+const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroHintergrundStyle(titleImage)}--hero-bg-pos: ${titleImagePosition}; --hero-fit: ${heroFit}; --hero-frame: ${heroFrame};${heroAspect ? ` --hero-aspect: ${heroAspect};` : ''}`;
 ---
 
 <!-- Hero Section -->
@@ -67,8 +77,18 @@ const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroHintergrundStyle
     width: 100%;
     min-height: 100vh;
 
-    /* Titelbild als CSS-Custom-Property – gesetzt im style-Attribut */
-    background: var(--hero-bg-image) var(--hero-bg-pos, center) / cover no-repeat;
+    /* Longhand statt Shorthand, damit Rahmen und Fit-Modus per Variable
+       steuerbar sind – Begründung wie in Opener.astro. Die Paddingfläche
+       zeigt den weißen Grund = der Rahmen. */
+    background-color: #fff;
+    background-image: var(--hero-bg-image);
+    background-position: var(--hero-bg-pos, center);
+    background-repeat: no-repeat;
+    background-size: var(--hero-fit, cover);
+    background-origin: content-box;
+    background-clip: content-box;
+    padding: var(--hero-frame, 0px);
+    box-sizing: border-box;
 
     display: flex;
     align-items: center;
@@ -118,7 +138,8 @@ const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroHintergrundStyle
   .event-hero::before {
     content: "";
     position: absolute;
-    inset: 0;
+    /* innerhalb des weißen Rahmens bleiben, sonst wird er grau */
+    inset: var(--hero-frame, 0px);
     background: rgba(0, 0, 0, 0.58);
     z-index: 0;
   }
@@ -126,9 +147,9 @@ const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroHintergrundStyle
   /* ── Gradient oben: Navigation bleibt sichtbar ─────────────────────── */
   .event-hero-top-fade {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: var(--hero-frame, 0px);
+    left: var(--hero-frame, 0px);
+    right: var(--hero-frame, 0px);
     height: 160px;
     background: linear-gradient(
       to bottom,
@@ -142,9 +163,9 @@ const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroHintergrundStyle
   /* ── Gradient-Blur unten: weicher Übergang ──────────────────────────── */
   .event-hero-bottom-fade {
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    left: var(--hero-frame, 0px);
+    right: var(--hero-frame, 0px);
+    bottom: var(--hero-frame, 0px);
     height: 140px;
     background: linear-gradient(
       to top,

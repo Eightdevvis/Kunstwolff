@@ -57,6 +57,7 @@ import {
   getEventSlides,
   resolveEventTitleImage,
   resolveEventTitleImageAspect,
+  resolveEventTitleImageMeta,
 } from '../utils/events';
 
 // ── getStaticPaths: alle Stadt- + Event-Slugs ────────────────────────────────
@@ -138,6 +139,7 @@ let eventContent: Awaited<ReturnType<typeof getEventContent>> | undefined;
 let eventSlides: Awaited<ReturnType<typeof getEventSlides>> | undefined;
 let eventTitleImage = '';
 let eventTitleImageAspect: string | null = null;
+let eventTitleImageMeta = { focus: 'center', frame: 0 };
 let eventPageTitle = '';
 let eventPageDescription = '';
 let eventBreadcrumbSchema: unknown;
@@ -157,6 +159,7 @@ if (pageType === 'event') {
   eventSlides = supplementWithDefaultSlides(rawEventSlides, defaultSlides, MIN_LANDING_SLIDES);
   eventTitleImage = resolveEventTitleImage(landing ?? '');
   eventTitleImageAspect = resolveEventTitleImageAspect(landing ?? '');
+  eventTitleImageMeta = resolveEventTitleImageMeta(landing ?? '');
 
   eventPageTitle = `${eventData.heroTitle ?? eventData.title} | Kunstwolff`;
   eventPageDescription = eventData.description ?? `Kunstwolff – Live-Kunst für ${eventData.title}. Professionelle Eventkünstler für unvergessliche Momente.`;
@@ -229,6 +232,8 @@ if (pageType === 'landing' && landingData && landingSlides) {
     eventHero: {
       titleImage: eventTitleImage,
       titleImageAspect: eventTitleImageAspect,
+      titleImagePosition: eventTitleImageMeta.focus,
+      titleImageFrame: eventTitleImageMeta.frame,
       title: eventData.heroTitle ?? eventData.title,
       subtitle: eventData.description,
       eventLabel: eventData.title,

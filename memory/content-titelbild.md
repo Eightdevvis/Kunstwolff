@@ -24,10 +24,10 @@ public/img/Titelbild/title.meta.json      # Metadaten
 ⚠️ **Event-Seiten laufen gar nicht über `titleImages.ts`.** `/firmenfeier/` →
 `Titelbild/events/firmenfeier/` löst `resolveEventTitleImage()` in `src/utils/events.ts`
 auf – eine eigene, unabhängige Funktion: alphabetisch erstes Bild im Ordner, sonst
-`default/`, sonst `/img/samples/sample1.webp`. Sie wertet `title.meta.json`
-**komplett nicht** aus: kein `focus`, kein `frame`, kein `priority`, keine `categories`
-und auch kein `enabled: false`. Wer für eine Event-Seite einen Fokuspunkt setzt, wundert
-sich sonst, warum nichts passiert.
+`default/`, sonst `/img/samples/sample1.webp`. Aus `title.meta.json` liest
+`resolveEventTitleImageMeta()` nur `focus` und `frame` (seit 2026-10-05, vorher wirkte
+der Rahmen-Schieber im Admin auf Event-Seiten gar nicht). `priority`, `categories` und
+`enabled: false` bleiben für Events wirkungslos.
 
 ⚠️ Der Ordner heisst nach dem **Titel** (`skillContentKey`), nicht nach der URL.
 Die Seiten übergeben deshalb `skillContentKey(skill.title)`, nicht den

@@ -18,7 +18,7 @@ import fs from 'fs';
 import path from 'path';
 import { isPageHiddenByPath } from './pageVisibility';
 import { getSlidesByTag } from './slideImages';
-import { lookupTitleDimensions } from './titleImages';
+import { lookupTitleDimensions, lookupTitleMetadata } from './titleImages';
 
 // ─── Pfad-Konstanten ──────────────────────────────────────────────────────────
 const eventsRoot = path.resolve('./public/events');
@@ -153,6 +153,8 @@ const normalizeAlt = (fileName: string): string =>
  * Normalisierung: Fehlende `slug`-Felder werden aus `title` generiert,
  * fehlende `link`-Felder aus dem Slug.
  */
+const gewarnteSlugs = new Set<string>();
+
 export const getEvents = (): EventItem[] => {
   if (!fs.existsSync(eventsJsonPath)) {
     return [];
@@ -177,6 +179,17 @@ export const getEvents = (): EventItem[] => {
 
         // Slug aus JSON oder automatisch aus title generieren
         const slug = ((item.slug as string | undefined)?.trim()) || slugify(title);
+        // Ein Slug mit „/" (z.B. eine ganze URL ins Slug-Feld kopiert) ist als
+        // `[landing]`-Parameter unzulässig und bricht den GESAMTEN Build ab –
+        // dann geht keine Veröffentlichung mehr live. Lieber diesen einen
+        // Eintrag auslassen und laut warnen.
+        if (slug.includes('/')) {
+          if (!gewarnteSlugs.has(slug)) {
+            gewarnteSlugs.add(slug);
+            console.warn(`[events] Event „${title}" übersprungen: Slug „${slug}" enthält „/".`);
+          }
+          return null;
+        }
         const link = `/${slug}/`;
 
         return {
@@ -297,6 +310,18 @@ export const resolveEventTitleImage = (slug: string): string => {
   return image
     ? `/img/Titelbild/events/${encodePathSegment(slug)}/${encodePathSegment(image)}`
     : resolveDefaultTitleImage();
+};
+
+/**
+ * Fokus und weißer Rahmen des Event-Titelbilds aus `title.meta.json` (Key
+ * `"events/<slug>/<file>"`, so schreibt ihn das Admin). Ohne Event-Bild gilt
+ * der Eintrag des Default-Titelbilds, passend zu `resolveEventTitleImage`.
+ */
+export const resolveEventTitleImageMeta = (slug: string): { focus: string; frame: number } => {
+  const image = firstImageInDir(path.join(eventTitelbildRoot, slug));
+  if (image) return lookupTitleMetadata(`events/${slug}/${image}`);
+  const defaultImage = firstImageInDir(path.resolve('./public/img/Titelbild/default'));
+  return lookupTitleMetadata(defaultImage ? `default/${defaultImage}` : '');
 };
 
 /**

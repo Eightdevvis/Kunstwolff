@@ -105,6 +105,16 @@ export const lookupTitleDimensions = (relativePath: string): TitleDimensionsEntr
   return dims[normalizeMetadataKey(relativePath)] ?? null;
 };
 
+/**
+ * Öffentlicher Lookup in `title.meta.json`, aus demselben Grund wie
+ * `lookupTitleDimensions`: Event-Titelbilder laufen nicht über die Auswahl
+ * hier, Fokus und Rahmen setzt das Admin aber für sie genauso.
+ */
+export const lookupTitleMetadata = (relativePath: string): { focus: string; frame: number } => {
+  const entry = readTitleMetadata()[normalizeMetadataKey(relativePath)] ?? {};
+  return { focus: entry.focus ?? DEFAULT_TITLE_FOCUS, frame: entry.frame ?? DEFAULT_TITLE_FRAME };
+};
+
 const readTitleDimensions = (): TitleDimensionsMap => {
   if (dimensionsCache) {
     return dimensionsCache;
