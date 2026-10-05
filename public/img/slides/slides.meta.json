@@ -928,7 +928,7 @@
     },
     "priority": 11
   },
-  "events/Tagung/b012-investor.webp": {
+  "events/tagung/b012-investor.webp": {
     "categories": [],
     "tags": {
       "skills": [],
@@ -939,7 +939,7 @@
     },
     "priority": 4
   },
-  "events/Tagung/b037-lawyer.webp": {
+  "events/tagung/b037-lawyer.webp": {
     "categories": [],
     "tags": {
       "skills": [],
@@ -950,7 +950,7 @@
     },
     "priority": 6
   },
-  "events/Tagung/buergermeister-biebesheim-von-karikaturist-sportlerehrung.webp": {
+  "events/tagung/buergermeister-biebesheim-von-karikaturist-sportlerehrung.webp": {
     "categories": [
       "Schnellzeichner",
       "Szenenmaler"
@@ -967,7 +967,7 @@
     },
     "priority": 5
   },
-  "events/Tagung/digital-live-big-portrait-painting-trade-fair-cologne.webp": {
+  "events/tagung/digital-live-big-portrait-painting-trade-fair-cologne.webp": {
     "categories": [],
     "tags": {
       "skills": [],
@@ -978,7 +978,7 @@
     },
     "priority": 3
   },
-  "events/Tagung/digital-speedpainter-trade-show.webp": {
+  "events/tagung/digital-speedpainter-trade-show.webp": {
     "categories": [],
     "tags": {
       "skills": [],
@@ -989,7 +989,7 @@
     },
     "priority": 15
   },
-  "events/Tagung/digitale-schnellzeichnung-auf-leinwand-projiziert-mit-beamer-comoany-event-allianz-frankfurt.webp": {
+  "events/tagung/digitale-schnellzeichnung-auf-leinwand-projiziert-mit-beamer-comoany-event-allianz-frankfurt.webp": {
     "categories": [],
     "tags": {
       "skills": [],
@@ -1002,7 +1002,7 @@
     },
     "priority": 16
   },
-  "events/Tagung/einkaufsleiterin-karikatur-personalisiert.webp": {
+  "events/tagung/einkaufsleiterin-karikatur-personalisiert.webp": {
     "categories": [
       "Schnellzeichner"
     ],
@@ -1017,7 +1017,7 @@
     },
     "priority": 2
   },
-  "events/Tagung/erfolgsabsolventen-der-otg.webp": {
+  "events/tagung/erfolgsabsolventen-der-otg.webp": {
     "categories": [],
     "tags": {
       "skills": [],
@@ -1028,7 +1028,7 @@
     },
     "priority": 13
   },
-  "events/Tagung/freundliche-karikatur-von-frau-mit-thema-finanzen.webp": {
+  "events/tagung/freundliche-karikatur-von-frau-mit-thema-finanzen.webp": {
     "categories": [
       "Schnellzeichner"
     ],
@@ -1043,7 +1043,7 @@
     },
     "priority": 11
   },
-  "events/Tagung/illustration-programmierer-schulung.webp": {
+  "events/tagung/illustration-programmierer-schulung.webp": {
     "categories": [],
     "tags": {
       "skills": [],
@@ -1054,7 +1054,7 @@
     },
     "priority": 10
   },
-  "events/Tagung/img_20250425_172034.webp": {
+  "events/tagung/img_20250425_172034.webp": {
     "categories": [],
     "tags": {
       "skills": [],
@@ -1065,7 +1065,7 @@
     },
     "priority": 9
   },
-  "events/Tagung/karikatur-aerztin-weihnachtsfeier-bauern-und-winzer-verband-koblenz.webp": {
+  "events/tagung/karikatur-aerztin-weihnachtsfeier-bauern-und-winzer-verband-koblenz.webp": {
     "categories": [
       "Schnellzeichner"
     ],
@@ -1082,7 +1082,7 @@
     },
     "priority": 8
   },
-  "events/Tagung/zeichnung-stammbaum-weinrebe-aschaffenburg.webp": {
+  "events/tagung/zeichnung-stammbaum-weinrebe-aschaffenburg.webp": {
     "categories": [],
     "tags": {
       "skills": [],
