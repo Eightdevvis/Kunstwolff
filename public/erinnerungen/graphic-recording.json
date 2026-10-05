@@ -1,0 +1,20 @@
+{
+  "photos": [
+    {
+      "image": "/img/slides/default/1_schnellzeichner_hq.webp",
+      "alt": "Schnellzeichner bei einem Live-Event – Erinnerung an einen besonderen Abend"
+    },
+    {
+      "image": "/img/slides/default/2_karikatur_stadtfest.webp",
+      "alt": "Karikatur-Zeichnung als Andenken an ein Stadtfest"
+    },
+    {
+      "image": "/img/slides/default/3_schnellzeichner-schweiz.webp",
+      "alt": "Live-Schnellzeichner sorgt für Staunen bei den Gästen"
+    },
+    {
+      "image": "/img/slides/default/4_Hochzeit_schnellzeichner_maler.webp",
+      "alt": "Schnellzeichner und Maler auf einer Hochzeitsfeier"
+    }
+  ]
+}
