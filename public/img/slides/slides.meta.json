@@ -958,6 +958,17 @@
     },
     "priority": 14
   },
+  "events/schulung/otg-erfolgs-absolventen-story-telling.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "schulung"
+      ],
+      "landings": []
+    },
+    "priority": 20
+  },
   "events/schulung/pxl_20260703_161727584.mp.webp": {
     "categories": [],
     "tags": {
@@ -5176,14 +5187,5 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
-  },
-  "events/schulung/otg-erfolgs-absolventen-story-telling.webp": {
-    "categories": [],
-    "priority": 20,
-    "tags": {
-      "events": [
-        "schulung"
-      ]
-    }
   }
 }
