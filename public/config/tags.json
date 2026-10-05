@@ -91,6 +91,11 @@
       "slug": "sommerfest",
       "label": "Sommerfest",
       "source": "extra"
+    },
+    {
+      "slug": "kunstwolff-de-tagung",
+      "label": "Tagung",
+      "source": "events.json"
     }
   ],
   "landings": [
