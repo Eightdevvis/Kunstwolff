@@ -19,6 +19,11 @@
       "slug": "eventzeichner",
       "label": "Eventzeichner",
       "source": "skills.json"
+    },
+    {
+      "slug": "graphic-recording",
+      "label": "Graphic recording",
+      "source": "skills.json"
     }
   ],
   "events": [
