@@ -69,7 +69,7 @@ const landingSlides = supplementWithDefaultSlides(citySlides, defaultSlides, MIN
 
 // FR-Texte aus dem Overlay (public/i18n/fr/site-texts/content.json).
 const regionName = slug.charAt(0).toUpperCase() + slug.slice(1);
-const landingHeading = getLandingHeading(slug, `Artistes événementiels en ${regionName}`, LOCALE);
+const landingHeading = getLandingHeading(slug, `Artistes événementiels en ${regionName}`, LOCALE, regionName);
 const landingIntro = getLandingIntro(slug, regionName, LOCALE);
 const pageTitle = `Artistes événementiels ${regionName} – Art live & performance | Kunstwolff`;
 const pageDescription = `Kunstwolff en ${regionName} : des artistes événementiels professionnels pour vos fêtes d'entreprise, salons et mariages. Caricaturistes, peintres de scène et bien plus.`;

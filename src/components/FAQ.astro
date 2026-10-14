@@ -1,6 +1,7 @@
 ---
 import { getFAQsForContext, type FAQItem } from '../utils/faq';
 import { DEFAULT_LOCALE, type Locale } from '../i18n/config';
+import { getSiteTexts } from '../utils/siteTexts';
 
 const {
   categories = [],
@@ -28,6 +29,8 @@ const {
 // `locale` wurde bisher NICHT angenommen: `src/pages/fr/[landing].astro` reicht
 // es seit dem i18n-Fundament durch, die Komponente ignorierte es, und die
 // französischen Seiten zeigten deutsche FAQs.
+// Überschrift aus site-texts/content.json (`faq.heading`), im Admin editierbar.
+const faqHeading = getSiteTexts(locale).faq.heading;
 const list: FAQItem[] = faqs.length > 0 ? faqs : getFAQsForContext({ categories, city, event }, locale);
 
 // Fallback auf Default-FAQs wenn keine FAQs gefunden
@@ -89,7 +92,7 @@ const faqSchema = {
 
 <section id="faq" class:list={['faq-section', interactive && 'faq-section--interactive']} data-faq-component>
   <div class="faq-container">
-    <h2>Häufige Fragen (FAQ)</h2>
+    <h2>{faqHeading}</h2>
     {interactive && <div class="faq-controls">
       <label class="faq-search-wrap" for="faq-search-input">
         <span>Schnell nach Antworten suchen</span>

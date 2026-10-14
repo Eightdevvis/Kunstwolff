@@ -11,14 +11,10 @@ Einführungstext-Feature – vom **Interface-Editor** (`IntroManager`, Komponent
 Beide schreiben in **dieselbe** Datei → beim Schreiben müssen die anderen Top-Level-Keys
 erhalten bleiben.
 
-⚠️ **Nur der IntroManager hält sich daran** (`const updated = { ...raw, landingIntros }`).
-Der `SiteTextsManager` lädt die Datei durch `withDefaults()`, das ausschließlich
-`{contact, eventtypes, why}` zurückgibt, und schreibt genau dieses Objekt zurück – ein
-Speichern im Tab „Startseiten-Texte" löscht damit `landingIntros` **und** alle
-`landingHeadings`. Das wiegt schwer, weil die deutsche `content.json` derzeit aus nichts
-anderem besteht: 2 Intros (berlin, main-taunus-kreis) und 35 Stadt-H1, kein einziges
-`contact`/`eventtypes`/`why`-Feld. Offener Bug in
-`kunstwolff-admin/src/components/SiteTextsManager.tsx` (`withDefaults` + `save`).
+Seit 2026-10-14 halten sich **alle drei** Schreiber daran: `SiteTextsManager` merged seine
+drei Abschnitte in die geladene Datei (vorher löschte ein Speichern dort `landingIntros` und
+alle `landingHeadings`), `IntroManager` und das Überschrift-Feld ändern nur ihren einen Eintrag
+und setzen dabei auf dem aktuellen Entwurf auf.
 
 Util: `src/utils/siteTexts.ts`. Defaults sind im Code hartcodiert und werden mit der JSON
 gemerged – fehlt die Datei oder ein Feld, rendert die Seite unverändert weiter (kein Bruch).
@@ -30,7 +26,9 @@ gemerged – fehlt die Datei oder ein Feld, rendert die Seite unverändert weite
 | `contact` | Kontakt-Abschnitt (kicker/heading/intro/panelTitle/panelText) | `getSiteTexts()` |
 | `eventtypes` | Eventformate-Abschnitt (heading/subtitle) | `getSiteTexts()` |
 | `why` | „Warum Kunstwolff?"-Abschnitt (heading/intro) | `getSiteTexts()` |
-| `landingHeadings` | Pro-Stadt H1-Überschrift, flach `{ "<slug>": "..." }` | `getLandingHeading(slug, fallback)` |
+| `slideshow` | Überschrift der Bilder-Sektion (`heading`, Standard „Unsere Kunst") | `getSiteTexts()` |
+| `faq` | Überschrift der FAQ-Sektion (`heading`, Standard „Häufige Fragen (FAQ)") | `getSiteTexts()` |
+| `landingHeadings` | H1 im Opener: `_home` (Startseite), `_default` (alle Stadtseiten, `{stadt}`), `<slug>` (eine Stadt) | `getHomeHeading()`, `getLandingHeading(slug, fallback, locale, cityName)` |
 | `landingIntros` | Einführungstext der Stadtseiten (siehe unten) | `getLandingIntro(slug, cityName)` |
 
 ## landingIntros (Einführungstext)
@@ -82,7 +80,28 @@ Steht kein Eintrag da, rendert die Komponente nichts.
 **Kein Default-Spiegel mehr nötig:** Da die Default-Texte in der content.json leben (nicht
 im Code), gibt es keine zu synchronisierende Hardcoded-Konstante zwischen den Repos.
 
+## Überschriften (seit 2026-10-14)
+
+Alle sichtbaren Sektions-Überschriften der Start-/Stadt-/Skill-Seiten sind editierbar, ohne
+eigenen Speicher: sie liegen in dieser Datei (bzw. die Skill-H1 als `heroTitle` in
+`skills.json`). Fehlt ein Eintrag oder ist er leer, rendert die Website den bisherigen festen
+Text (Code-Default in `SITE_TEXT_DEFAULTS` / `HOME_HEADING_DEFAULT`) – das Live-Bild ändert sich
+also erst, wenn jemand etwas einträgt. Auflösung Stadt-H1: eigener Eintrag → `_default` mit
+`{stadt}` → `Eventkünstler in <Stadt>`.
+
+Im Admin: Interface-Editor, Sektion anklicken → gelbes Feld „Überschrift" über dem Editor
+(`kunstwolff-admin/src/components/interface/ueberschriften.ts` ordnet Sektion → Datei/Key zu;
+die Standards dort müssen zu den Code-Defaults hier passen). Das Feld speichert nur
+Abweichungen vom Standard.
+
+Weiterhin **nicht** editierbar: die H1 der Kombiseiten (`Live <Skill> in <Stadt>`,
+`<Skill> für <Anlass>`, in `[...kombi].astro` zusammengesetzt) und die Überschriften der
+statischen Seiten (Team, Partner, Kontakt, FAQ-Seite, Referenzen, Galerie, Impressum,
+Datenschutz, 404 – dort ist auch der Fließtext Code). FR-Overlay: neue Keys fallen dort auf
+die deutschen Code-Defaults zurück (wie vorher, als sie fest im Code standen).
+
 ## Admin
 
+- Interface-Editor → Überschrift-Feld je Sektion (siehe oben).
 - `SiteTextsManager.tsx` → Tab „Startseiten-Texte" (contact/eventtypes/why).
 - `IntroManager.tsx` → Interface-Editor, Komponente `landingIntro` (Default + Per-Stadt).

@@ -106,7 +106,7 @@ if (pageType === 'landing') {
   landingSlides = supplementWithDefaultSlides(citySlides, defaultSlides, MIN_LANDING_SLIDES);
 
   cityName = getCityDisplayName(landing ?? '');
-  landingHeading = getLandingHeading(landing ?? '', `Eventkünstler in ${cityName}`);
+  landingHeading = getLandingHeading(landing ?? '', `Eventkünstler in ${cityName}`, undefined, cityName);
   landingIntro = getLandingIntro(landing ?? '', cityName);
   // Der Titel folgt der ÜBERSCHRIFT, statt eine zweite Formulierung zu erfinden.
   // Vorher stand im SERP „Eventkünstler Berlin", auf der Seite aber

@@ -27,6 +27,14 @@ export const SITE_TEXT_DEFAULTS = {
     intro:
       'Wir verbinden künstlerische Qualität mit Event-Erfahrung – für Veranstaltungen, die im Gedächtnis bleiben.',
   },
+  // Überschriften der Bilder- und FAQ-Sektion – gelten auf allen Seiten, die die
+  // Sektion zeigen. Bis 2026-10 fest in Slideshow.astro / FAQ.astro.
+  slideshow: {
+    heading: 'Unsere Kunst',
+  },
+  faq: {
+    heading: 'Häufige Fragen (FAQ)',
+  },
 };
 
 export type SiteTexts = typeof SITE_TEXT_DEFAULTS;
@@ -42,6 +50,9 @@ const FILE = path.resolve('./public/site-texts/content.json');
  */
 const contentFileFor = (locale: Locale): string =>
   locale === DEFAULT_LOCALE ? FILE : resolveLocalizedFile(locale, 'site-texts/content.json');
+
+const fillCity = (text: string, cityName: string): string =>
+  text.replace(/\{stadt\}/gi, cityName);
 
 const mergeSection = <T extends Record<string, string>>(def: T, raw: unknown): T => {
   if (!raw || typeof raw !== 'object') return def;
@@ -62,6 +73,8 @@ export const getSiteTexts = (locale: Locale = DEFAULT_LOCALE): SiteTexts => {
       contact: mergeSection(SITE_TEXT_DEFAULTS.contact, raw.contact),
       eventtypes: mergeSection(SITE_TEXT_DEFAULTS.eventtypes, raw.eventtypes),
       why: mergeSection(SITE_TEXT_DEFAULTS.why, raw.why),
+      slideshow: mergeSection(SITE_TEXT_DEFAULTS.slideshow, raw.slideshow),
+      faq: mergeSection(SITE_TEXT_DEFAULTS.faq, raw.faq),
     };
   } catch {
     return SITE_TEXT_DEFAULTS;
@@ -69,24 +82,50 @@ export const getSiteTexts = (locale: Locale = DEFAULT_LOCALE): SiteTexts => {
 };
 
 /**
- * Optionale, pro-Stadt anpassbare H1-Überschrift der Landingpages.
- * Quelle: content.json -> "landingHeadings": { "<slug>": "Eigene H1" }.
- * Fehlt ein Eintrag, gilt der übergebene Default ("Eventkünstler in {Stadt}").
- * So kann die H1 ohne Code-Änderung gepflegt werden (vom KI-Chat / Admin).
+ * H1-Überschrift der Stadtseiten und der Startseite (im Hero/Opener).
+ * Quelle: content.json -> "landingHeadings" – dasselbe Muster wie `landingIntros`:
+ *
+ *   "landingHeadings": {
+ *     "_home":    "Überschrift der Startseite",
+ *     "_default": "Eventkünstler in {stadt}",   // Standard für alle Stadtseiten
+ *     "berlin":   "Schnellzeichner Berlin"       // nur diese Stadt
+ *   }
+ *
+ * Auflösung Stadtseite: eigener Eintrag → `_default` (mit {stadt}) → übergebener
+ * Code-Fallback. Leere Werte zählen nicht – eine H1 darf nie leer sein.
  */
-export const getLandingHeading = (slug: string, fallback: string, locale: Locale = DEFAULT_LOCALE): string => {
+const HOME_HEADING_DEFAULT = 'Event- und Showkünstler seit über 25 Jahren';
+
+const readHeadingMap = (locale: Locale): Record<string, unknown> | null => {
   try {
     const raw = JSON.parse(fs.readFileSync(contentFileFor(locale), 'utf-8')) as Record<string, unknown>;
     const map = raw.landingHeadings;
-    if (map && typeof map === 'object') {
-      const v = (map as Record<string, unknown>)[slug];
-      if (typeof v === 'string' && v.trim().length > 0) return v.trim();
-    }
+    return map && typeof map === 'object' ? (map as Record<string, unknown>) : null;
   } catch {
-    /* ignore – Fallback unten */
+    return null;
   }
+};
+
+const nonEmpty = (v: unknown): string | null =>
+  typeof v === 'string' && v.trim().length > 0 ? v.trim() : null;
+
+export const getLandingHeading = (
+  slug: string,
+  fallback: string,
+  locale: Locale = DEFAULT_LOCALE,
+  cityName = '',
+): string => {
+  const map = readHeadingMap(locale);
+  const own = nonEmpty(map?.[slug]);
+  if (own) return own;
+  const def = nonEmpty(map?.['_default']);
+  if (def && cityName) return fillCity(def, cityName);
   return fallback;
 };
+
+/** H1 der Startseite: `landingHeadings._home` → sonst der bisherige feste Text. */
+export const getHomeHeading = (): string =>
+  nonEmpty(readHeadingMap(DEFAULT_LOCALE)?.['_home']) ?? HOME_HEADING_DEFAULT;
 
 /**
  * Kleiner Einführungstext direkt unter dem Hero/BrandStripe der Stadtseiten.
@@ -98,8 +137,6 @@ export const getLandingHeading = (slug: string, fallback: string, locale: Locale
  * (siehe site-texts/content.json) und ist damit voll im Admin editierbar.
  * Der Platzhalter {stadt} wird durch den (formatierten) Stadtnamen ersetzt.
  */
-const fillCity = (text: string, cityName: string): string =>
-  text.replace(/\{stadt\}/gi, cityName);
 
 export const getLandingIntro = (slug: string, cityName: string, locale: Locale = DEFAULT_LOCALE): string => {
   try {

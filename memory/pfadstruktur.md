@@ -208,7 +208,7 @@ würde – und genau deshalb übersieht man sie:
 
 ```
 public/site-texts/
-└── content.json                   # landingHeadings + landingIntros (siteTexts.ts)
+└── content.json                   # landingHeadings + landingIntros + Abschnitts-Texte/-Überschriften (siteTexts.ts)
 ```
 
 ## Mehrsprachigkeit

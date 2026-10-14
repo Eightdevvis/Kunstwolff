@@ -47,7 +47,7 @@ Bei jeder Cross-Repo-Arbeit beide lesen (liegen flach im Admin-Repo-Root):
 | `public/reviews/{city}/review*.md` | `ReviewManager.tsx` |
 | `public/faq/default/*.md` + `public/faq/{city}/*.md` | `FaqManager.tsx` |
 | `public/landings/landings.md` | `Dashboard.tsx` (Quick-Add). ⚠️ **Nicht mehr `CityManager.tsx`** – die Komponente existiert, wird aber von nichts mehr importiert. ⚠️ **Quick-Add schreibt NUR diese Zeile** – siehe Lücke unten. |
-| `public/site-texts/content.json` | `SiteTextsManager.tsx` **und** `IntroManager.tsx` (beide schreiben dieselbe Datei) |
+| `public/site-texts/content.json` | `SiteTextsManager.tsx`, `IntroManager.tsx` **und** das Überschrift-Feld im Interface-Editor (`interface/UeberschriftFeld.tsx`) – alle schreiben dieselbe Datei und erhalten fremde Keys |
 | `public/config/components.json` (Sektions-Stack `_order`) | `InterfaceView.tsx` – siehe `komponenten-stack.md` |
 | `public/img/referenzenLogos/` | `BrandStripeManager.tsx` |
 | `public/branding/`, `public/canvas/`, `public/du-bist-kunst/`, `public/stimmung-durch-kunst/` je `content.json` | Why-Detailseiten-Manager – siehe `content-why.md` |

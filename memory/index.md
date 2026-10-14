@@ -37,7 +37,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [Vercel-Header](vercel-headers.md) – Cache-Control für `/img/*`, warum bewusst kein `immutable`; **Redirect-Karte Wix→Astro** (warum nicht über `astro.config.mjs`)
 - [Titelbild](content-titelbild.md) – Pfad, Metadaten, Fallback-Kette
 - [Reviews](content-reviews.md) – Markdown-Format, **Auswahl über `tags.landings` bzw. `tags.events`**, Auffüll-Logik **mit Deckel** und **`tagOnly`-Schalter pro Bewertung**, MiniReviews-Anzeige (Stadtseiten waren bis 2026-07-31 gar nicht angeschlossen)
-- [Allgemeine Texte](content-site-texts.md) – `site-texts/content.json`, Startseiten-Texte, `landingIntros` (Einführungstext)
+- [Allgemeine Texte](content-site-texts.md) – `site-texts/content.json`, Startseiten-Texte, `landingIntros` (Einführungstext), **editierbare Überschriften** (H1 Start/Stadt, Bilder/FAQ/Why/Kontakt/Eventformate)
 - [FAQs](content-faqs.md) – Markdown-Format, **Auswahl über Tags: mindestens ein Treffer, kein Widerspruch — leer heisst NIRGENDS**, `getFAQsForContext`; allgemein Gültiges liegt in `faq/default/` (Auffüll-Topf); i18n-Overlays laufen im selben Sync, deutscher Fallback nur noch für die Standard-Locale
 - [Why-Sektion](content-why.md) – JSON-Format, Fallback-Kette, Bilder; **die vier Why-Detailseiten leiten ihre Bilder von hier ab statt sie zu kopieren** (`whyHighlights.ts`), Rest heilt über `bildAufloesung.ts`
 - [Erinnerungen](content-erinnerungen.md) – Pinnwand-Fotos, Fallback-Kette

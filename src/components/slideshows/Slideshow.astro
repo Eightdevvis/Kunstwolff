@@ -15,8 +15,12 @@ type Slide = {
 
 import { buildSrcSet, SLIDESHOW_SIZES } from '../../utils/responsiveImages';
 import { GALERIE_URL } from '../../utils/gallery';
+import { getSiteTexts } from '../../utils/siteTexts';
+import { DEFAULT_LOCALE } from '../../i18n/config';
 
-const { items = [], filteredCategories = [] } = Astro.props;
+const { items = [], filteredCategories = [], locale = DEFAULT_LOCALE } = Astro.props;
+// Überschrift aus site-texts/content.json (`slideshow.heading`), im Admin editierbar.
+const heading = getSiteTexts(locale).slideshow.heading;
 
 const filteredItems =
     filteredCategories.length === 0
@@ -40,7 +44,7 @@ const filteredItems =
 */}
 {filteredItems.length > 0 && (
 <section class="section gallery">
-    <h2>Unsere Kunst</h2>
+    <h2>{heading}</h2>
 
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">

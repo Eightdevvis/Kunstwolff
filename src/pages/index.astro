@@ -16,9 +16,10 @@ import {
   getHomepageSlides,
 } from "../utils/slideImages";
 import { isComponentEnabled, resolveSectionOrder, type PageType } from "../utils/componentConfig";
-import { getHomeIntro } from "../utils/siteTexts";
+import { getHomeHeading, getHomeIntro } from "../utils/siteTexts";
 
 const homeIntro = getHomeIntro();
+const homeHeading = getHomeHeading();
 
 // Slideshow-Items nur aus Ordnern zusammenführen
 const homepageSlides = getHomepageSlides();
@@ -44,7 +45,7 @@ const registry: Record<string, any> = {
   landingsection: Landingsection,
 };
 const sectionProps: Record<string, Record<string, any> | false> = {
-  opener: { titleImage, titleImagePosition, titleImageFrame, titleImageAspect },
+  opener: { titleImage, titleImagePosition, titleImageFrame, titleImageAspect, heading: homeHeading },
   landingIntro: { text: homeIntro },
   homepageReviews: {},
   slideshow: { items: homepageSlides },
