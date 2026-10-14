@@ -1,6 +1,7 @@
 ---
 import { getVisibleLandingSlugs } from "../utils/landings";
 import { cityComboPath, skillSlugFromLink } from "../utils/comboUrls";
+import { getCityDisplayName } from "../utils/cityNames";
 
 const cities = getVisibleLandingSlugs();
 
@@ -29,7 +30,7 @@ const normalizedSkill = skillSlugFromLink(String(skillSlug));
         cities.map((city, index) => (
           <>
             <a href={normalizedSkill ? cityComboPath(normalizedSkill, city) : `/${city}/`}>
-              {city.charAt(0).toUpperCase() + city.slice(1)}
+              {getCityDisplayName(city)}
             </a>
             {index < cities.length - 1 && " · "}
           </>

@@ -20,7 +20,7 @@ export const SITE_TEXT_DEFAULTS = {
   },
   eventtypes: {
     heading: 'Eventformate',
-    subtitle: 'Waehle dein Event und klappe die Details direkt auf.',
+    subtitle: 'Wähle dein Event und klappe die Details direkt auf.',
   },
   why: {
     heading: 'Warum Kunstwolff?',

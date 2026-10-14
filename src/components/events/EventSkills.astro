@@ -72,7 +72,7 @@ const filteredSkills = categories.length > 0
                   <span class="event-skill-badge">Aktuelle Ansicht</span>
                 ) : (
                   <a href={href} class="event-skill-link">
-                    {skill.title} für {eventSlug || 'Events'} buchen →
+                    {skill.title} für {(Astro.props as { eventTitle?: string }).eventTitle || eventSlug || 'Events'} buchen →
                   </a>
                 )}
               </div>

@@ -1,11 +1,11 @@
 {
   "ablauf": {
     "enabled": true,
-    "title": "So läuft Ihr Schulung mit uns ab",
+    "title": "So läuft Ihre Schulung mit uns ab",
     "steps": [
       {
         "title": "Anfrage & Planung",
-        "text": "Sie kontaktieren uns mit Datum, Ort und Gästeanzahl, Thema der Veranstaltung und gewünschtes Format. Wir besprechen gemeinsam die optimale Darstellung für das Storytelling.",
+        "text": "Sie kontaktieren uns mit Datum, Ort und Gästeanzahl, Thema der Veranstaltung und gewünschtem Format. Wir besprechen gemeinsam die optimale Darstellung für das Storytelling.",
         "icon": "chat"
       },
       {
@@ -27,7 +27,7 @@
   },
   "pakete": {
     "enabled": true,
-    "title": "Unsere Pakete für Ihr Schulung",
+    "title": "Unsere Pakete für Ihre Schulung",
     "items": [
       {
         "title": "Starter",
@@ -53,7 +53,7 @@
   },
   "skills": {
     "enabled": true,
-    "title": "Passende Künstler für Ihr Schulung"
+    "title": "Passende Künstler für Ihre Schulung"
   },
   "referenzen": {
     "enabled": false,

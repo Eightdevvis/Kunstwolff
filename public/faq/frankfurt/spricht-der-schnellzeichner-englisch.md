@@ -1,6 +1,6 @@
 ---
-question: "Spricht der Schnellzeichner englisch?"
-answer: "Die begleitende Kommunikation kann stattfinden auf englisch, französisch, spanisch oder chinesisch."
+question: "Spricht der Schnellzeichner Englisch?"
+answer: "Die begleitende Kommunikation kann stattfinden auf Englisch, Französisch, Spanisch oder Chinesisch."
 tags:
   skills: []
   events: []

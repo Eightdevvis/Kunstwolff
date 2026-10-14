@@ -1,7 +1,7 @@
 {
   "ablauf": {
     "enabled": true,
-    "title": "So läuft Ihr Weihnachtsfeier mit uns ab",
+    "title": "So läuft Ihre Weihnachtsfeier mit uns ab",
     "steps": [
       {
         "title": "Anfrage & Planung",
@@ -27,7 +27,7 @@
   },
   "pakete": {
     "enabled": true,
-    "title": "Unsere Pakete für Ihr Weihnachtsfeier",
+    "title": "Unsere Pakete für Ihre Weihnachtsfeier",
     "items": [
       {
         "title": "Starter",
@@ -53,7 +53,7 @@
   },
   "skills": {
     "enabled": true,
-    "title": "Passende Künstler für Ihr Weihnachtsfeier"
+    "title": "Passende Künstler für Ihre Weihnachtsfeier"
   },
   "referenzen": {
     "enabled": false,
