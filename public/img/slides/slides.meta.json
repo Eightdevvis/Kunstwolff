@@ -458,6 +458,108 @@
     },
     "priority": 146
   },
+  "default/karikatur-aerztin-weihnachtsfeier-bauern-und-winzer-verband-koblenz.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "weihnachtsfeier"
+      ],
+      "landings": [
+        "koblenz"
+      ]
+    },
+    "priority": 245
+  },
+  "default/karikatur-weihnachtsfeier-tommys-teufelskueche-trier.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "weihnachtsfeier"
+      ],
+      "landings": [
+        "trier"
+      ]
+    },
+    "priority": 246
+  },
+  "default/karikaturist-betriebsfeier-actemium-schweiz-ag-arlesheim.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "firmenfeier"
+      ],
+      "landings": [
+        "schweiz"
+      ]
+    },
+    "priority": 251
+  },
+  "default/karikaturist-weihnachtsfeier-gasthaus-kaut-leidenborn-rheinland-pfalz.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "weihnachtsfeier"
+      ],
+      "landings": [
+        "rheinland-pfalz"
+      ]
+    },
+    "priority": 249
+  },
+  "default/karikaturistin-rahmenprogramm-wewihnachtsfeier-taunusstein.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 248
+  },
+  "default/speed-painting-christmas-party-saarlouis.webp": {
+    "categories": [
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "szenenmaler"
+      ],
+      "events": [
+        "weihnachtsfeier"
+      ],
+      "landings": []
+    },
+    "priority": 247
+  },
   "default/un-couple-heureux-montre-fièrement-son-portrait-caricatural-personnalisé-lors-d-une-foire-d-art-au-luxembourg-entouré-d-autres-oeuvres-de-bande-dessinée.webp": {
     "categories": [],
     "tags": {
@@ -469,6 +571,19 @@
     },
     "priority": 232,
     "altOverride": "A couple happily displays their love-themed portrait drawing at the Schueberfouer in Luxembourg"
+  },
+  "default/weihnachtsparty-firma-rheinland-pfalz.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [
+        "weihnachtsfeier"
+      ],
+      "landings": [
+        "rheinland-pfalz"
+      ]
+    },
+    "priority": 250
   },
   "duesseldorf/karikaturist-rheinkirmes-duesseldorf.webp": {
     "categories": [
@@ -819,8 +934,8 @@
       "landings": []
     },
     "priority": 10,
-    "title": "Live-Kunst zur Begleitung von Sportler-Ehrung in Hessen",
-    "altOverride": "Graphic Recording live von Bürgermeister auf einem Event in Rhein-Main"
+    "altOverride": "Graphic Recording live von Bürgermeister auf einem Event in Rhein-Main",
+    "title": "Live-Kunst zur Begleitung von Sportler-Ehrung in Hessen"
   },
   "events/schulung/digital-speedpainter-trade-show.webp": {
     "categories": [],
@@ -868,8 +983,8 @@
       "landings": []
     },
     "priority": 7,
-    "title": "Live Graphic Recording Kongress Finanzen",
-    "altOverride": "Event-Illustrtion von junger Frau, die mit einem Geldsack wandert, der Geld verliert"
+    "altOverride": "Event-Illustrtion von junger Frau, die mit einem Geldsack wandert, der Geld verliert",
+    "title": "Live Graphic Recording Kongress Finanzen"
   },
   "events/schulung/illustration-programmierer-schulung.webp": {
     "categories": [
@@ -885,8 +1000,8 @@
       "landings": []
     },
     "priority": 6,
-    "title": "digital-art storytelling network programming ki in space",
-    "altOverride": "Graphic Recording, digital Event-sketching of a a programmer throws the keys from his keyboard across the space"
+    "altOverride": "Graphic Recording, digital Event-sketching of a a programmer throws the keys from his keyboard across the space",
+    "title": "digital-art storytelling network programming ki in space"
   },
   "events/schulung/img_20250425_172034.webp": {
     "categories": [
@@ -923,8 +1038,8 @@
       ]
     },
     "priority": 5,
-    "title": "Live-sketching medicine graphic recording",
-    "altOverride": "Illustration of a doctor with angel wings listening to a star with a stethoscope"
+    "altOverride": "Illustration of a doctor with angel wings listening to a star with a stethoscope",
+    "title": "Live-sketching medicine graphic recording"
   },
   "events/schulung/karikaturien-mitarbeiter-messe-party-stuttgart.webp": {
     "categories": [
@@ -3477,6 +3592,19 @@
       ]
     }
   },
+  "mediathek/otg-erfolgs-absolventen-graphic-recording.webp": {
+    "categories": [
+      "Graphic recording"
+    ],
+    "tags": {
+      "skills": [
+        "graphic-recording"
+      ],
+      "events": [],
+      "landings": []
+    },
+    "priority": 1
+  },
   "mediathek/somfot/0cc83458-5868-449b-98f0-a043690091ee.webp": {
     "categories": [],
     "tags": {
@@ -5300,51 +5428,5 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
-  },
-  "mediathek/otg-erfolgs-absolventen-graphic-recording.webp": {
-    "categories": [
-      "Graphic recording"
-    ],
-    "priority": 1,
-    "tags": {
-      "skills": [
-        "graphic-recording"
-      ]
-    }
-  },
-  "default/karikatur-aerztin-weihnachtsfeier-bauern-und-winzer-verband-koblenz.webp": {
-    "categories": [],
-    "priority": 245,
-    "tags": {}
-  },
-  "default/karikatur-weihnachtsfeier-tommys-teufelskueche-trier.webp": {
-    "categories": [],
-    "priority": 246,
-    "tags": {}
-  },
-  "default/karikaturistin-rahmenprogramm-wewihnachtsfeier-taunusstein.webp": {
-    "categories": [],
-    "priority": 248,
-    "tags": {}
-  },
-  "default/speed-painting-christmas-party-saarlouis.webp": {
-    "categories": [],
-    "priority": 247,
-    "tags": {}
-  },
-  "default/karikaturist-weihnachtsfeier-gasthaus-kaut-leidenborn-rheinland-pfalz.webp": {
-    "categories": [],
-    "priority": 249,
-    "tags": {}
-  },
-  "default/weihnachtsparty-firma-rheinland-pfalz.webp": {
-    "categories": [],
-    "priority": 250,
-    "tags": {}
-  },
-  "default/karikaturist-betriebsfeier-actemium-schweiz-ag-arlesheim.webp": {
-    "categories": [],
-    "priority": 251,
-    "tags": {}
   }
 }
