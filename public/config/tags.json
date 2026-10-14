@@ -96,6 +96,11 @@
       "slug": "sommerfest",
       "label": "Sommerfest",
       "source": "extra"
+    },
+    {
+      "slug": "schnellzeichner-weihnachtsfeier",
+      "label": "Weihnachtsfeier",
+      "source": "events.json"
     }
   ],
   "landings": [
