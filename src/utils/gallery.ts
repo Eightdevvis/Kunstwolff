@@ -92,6 +92,7 @@ const LABEL_AUSNAHMEN: Record<string, string> = {
   duesseldorf: 'Düsseldorf',
   giessen: 'Gießen',
   koeln: 'Köln',
+  muenchen: 'München',
   'nord-rhein-westfalen': 'Nordrhein-Westfalen',
   saarbruecken: 'Saarbrücken',
   tuebingen: 'Tübingen',

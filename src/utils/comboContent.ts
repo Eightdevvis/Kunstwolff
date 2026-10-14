@@ -60,7 +60,7 @@ const CONTENT: Record<string, SkillEventContent> = {
   'schnellzeichner/private-feier': {
     lead:
       'Ob runder Geburtstag, Jubiläum oder einfach ein Fest mit den Liebsten – ein Schnellzeichner macht aus einer netten Feier ein Erlebnis, über das noch lange geredet wird. Die Gäste werden selbst zu Hauptdarstellern, statt nur Zuschauer zu sein.\n\n' +
-      'In wenigen Minuten entsteht für jeden ein Porträt mit Augenzwinkern: Hobbys, Lieblingsdrink oder der typische Spruch des Geburtstagskinds fließen mit ein. So wird das Gastgeschenk zum Gesprächsthema – und Sie als Gastgeber zum Held des Abends.',
+      'In wenigen Minuten entsteht für jeden ein Porträt mit Augenzwinkern: Hobbys, Lieblingsdrink oder der typische Spruch des Geburtstagskinds fließen mit ein. So wird das Gastgeschenk zum Gesprächsthema – und Sie als Gastgeber zum Helden des Abends.',
     benefitsTitle: 'Warum ein Schnellzeichner Ihre Feier zum Erlebnis macht',
     benefits: [
       { title: 'Jeder Gast wird zum Star', text: 'Persönliche Porträts mit liebevollen Details holen jeden ins Rampenlicht – ein Spaß für Jung und Alt.' },
@@ -115,20 +115,37 @@ const CONTENT: Record<string, SkillEventContent> = {
 };
 
 /**
+ * Anlass mit besitzanzeigendem Begleiter („Ihrer Weihnachtsfeier", „Ihre
+ * private Feier"). Die Event-Titel sind Überschriften-Labels; im Fließtext
+ * brauchen sie Artikel und kleingeschriebene Adjektive. Fast alle Anlässe sind
+ * feminin; „…fest" ist neutrum. Abweichungen hier eintragen statt im Text.
+ */
+const EVENT_PHRASE: Record<string, { dat: string; akk: string }> = {
+  'Private Feier': { dat: 'Ihrer privaten Feier', akk: 'Ihre private Feier' },
+};
+
+export function eventPhrase(eventLabel: string): { dat: string; akk: string } {
+  if (EVENT_PHRASE[eventLabel]) return EVENT_PHRASE[eventLabel];
+  if (/fest$/i.test(eventLabel)) return { dat: `Ihrem ${eventLabel}`, akk: `Ihr ${eventLabel}` };
+  return { dat: `Ihrer ${eventLabel}`, akk: `Ihre ${eventLabel}` };
+}
+
+/**
  * Anlass-bewusster Default, falls eine Kombi (noch) nicht ausformuliert ist –
  * variiert nach Skill + Event, damit die Seite nie leer oder „thin" ist.
  */
 function fallbackContent(skillTitle: string, eventLabel: string): SkillEventContent {
+  const ev = eventPhrase(eventLabel);
   return {
     lead:
-      `Ein ${skillTitle} macht aus ${eventLabel} ein Erlebnis, das Ihren Gästen im Gedächtnis bleibt. ` +
+      `Ein ${skillTitle} macht aus ${ev.dat} ein Erlebnis, das Ihren Gästen im Gedächtnis bleibt. ` +
       `Live und vor aller Augen entsteht Kunst – als Unterhaltung, die verbindet, und als Andenken, das den Anlass weiterleben lässt.\n\n` +
-      `Erzählen Sie uns von ${eventLabel} – wir gestalten den Auftritt passend zu Stimmung, Gästen und Rahmen.`,
-    benefitsTitle: `Warum ein ${skillTitle} zu ${eventLabel} passt`,
+      `Erzählen Sie uns von ${ev.dat} – wir gestalten den Auftritt passend zu Stimmung, Gästen und Rahmen.`,
+    benefitsTitle: `Warum ein ${skillTitle} zu ${ev.dat} passt`,
     benefits: [
       { title: 'Live-Erlebnis', text: `Beim Zuschauen, wie Kunst entsteht, kommen Ihre Gäste ins Gespräch und ins Staunen.` },
       { title: 'Persönliches Andenken', text: 'Statt Wegwerf-Deko bleibt ein Unikat, das an Ihren Anlass erinnert.' },
-      { title: 'Passt zu Ihrem Rahmen', text: `Ob klein oder groß – der Auftritt wird auf ${eventLabel} abgestimmt.` },
+      { title: 'Passt zu Ihrem Rahmen', text: `Ob klein oder groß – der Auftritt wird auf ${ev.akk} abgestimmt.` },
     ],
   };
 }

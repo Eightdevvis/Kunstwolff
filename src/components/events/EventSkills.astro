@@ -45,7 +45,7 @@ const filteredSkills = categories.length > 0
     <div class="event-skills-inner">
       <h2 class="event-skills-heading">{title}</h2>
 
-      <div class="event-skills-grid">
+      <div class={`event-skills-grid${filteredSkills.length < 3 ? ' event-skills-grid--wenige' : ''}`}>
         {filteredSkills.map((skill) => {
           // Skill-Slug aus dem Link extrahieren (z.B. "/schnellzeichner/" → "schnellzeichner")
           const skillSlug = skill.link.replace(/^\/|\/$/g, '');
@@ -72,7 +72,7 @@ const filteredSkills = categories.length > 0
                   <span class="event-skill-badge">Aktuelle Ansicht</span>
                 ) : (
                   <a href={href} class="event-skill-link">
-                    {skill.title} für {eventSlug || 'Events'} buchen →
+                    {skill.title} für {(Astro.props as { eventTitle?: string }).eventTitle || eventSlug || 'Events'} buchen →
                   </a>
                 )}
               </div>
@@ -112,6 +112,16 @@ const filteredSkills = categories.length > 0
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 28px;
+  }
+
+  /* Nur 1–2 Karten: normale Spaltenbreite behalten statt auf 960px zu
+     strecken (sonst schneidet das 220px hohe Bild das Porträt zum Streifen),
+     zentriert wie die Überschrift. Mobil gilt weiter die 1fr-Regel unten. */
+  @media (min-width: 601px) {
+    .event-skills-grid--wenige {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 300px));
+      justify-content: center;
+    }
   }
 
   /* ── Einzelne Skill-Card ─────────────────────────────────────────────── */

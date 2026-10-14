@@ -5,16 +5,19 @@
  * wiederholen, gibt es einen kurzen Verweis + Link auf die eigentliche
  * Event-Seite (/<eventSlug>). So bleibt der Kontext, ohne Duplicate Content.
  */
+import { eventPhrase } from '../../utils/comboContent';
+
 const { eventTitle = '', eventSlug = '' } = Astro.props as { eventTitle: string; eventSlug: string };
+const ev = eventPhrase(eventTitle);
 ---
 
 {eventSlug && (
   <section class="event-teaser section">
     <div class="event-teaser-inner section-inner">
       <p class="event-teaser-text">
-        Ablauf, Pakete und Referenzen für Ihre {eventTitle} haben wir gebündelt auf der Eventseite – inklusive aller Details zur Planung.
+        Ablauf, Pakete und Referenzen für {ev.akk} haben wir gebündelt auf der Eventseite – inklusive aller Details zur Planung.
       </p>
-      <a class="event-teaser-cta" href={`/${eventSlug}`}>Alles zu {eventTitle} ansehen &rarr;</a>
+      <a class="event-teaser-cta" href={`/${eventSlug}`}>Alles zum Thema {eventTitle} ansehen &rarr;</a>
     </div>
   </section>
 )}
