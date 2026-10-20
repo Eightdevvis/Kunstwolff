@@ -4041,23 +4041,6 @@
     "altOverride": "schnellzeichnerin zeichnet 2 mitarbeiterinnen am tisch bei betriebsfeier in scheune neuhaus saarbruecken",
     "title": "Schnellzeichner zur Weihnachtsfeier "
   },
-  "saarbruecken/4_paarzeichnung-von-schnellzeichner-kunst-aktion-europa-galerie-saarbruecken.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "tags": {
-      "skills": [
-        "schnellzeichner"
-      ],
-      "events": [],
-      "landings": [
-        "saarbruecken"
-      ]
-    },
-    "priority": 4,
-    "altOverride": "paar zeigt seine lustigen schnellportraets in europa galerie saarbruecken",
-    "title": "Schnellzeichner Saarbrücken"
-  },
   "saarbruecken/5_schnellzeichner-weihnachtsfeier-saarlandtherme-saarbruecken-1.webp": {
     "categories": [
       "Schnellzeichner"
@@ -5446,5 +5429,16 @@
         "saarbruecken"
       ]
     }
+  },
+  "saarbruecken/karikaturist-shop-aktion-europa-galerie-saarbruecken.webp": {
+    "categories": [],
+    "priority": 245,
+    "tags": {
+      "landings": [
+        "saarbruecken"
+      ]
+    },
+    "altOverride": "paar zeigt seine lustigen schnellportraets passend zur Vorweihnachtszeit in europa galerie saarbruecken",
+    "title": "Spaß zur Weihnachtszeit mit karikaturen"
   }
 }
