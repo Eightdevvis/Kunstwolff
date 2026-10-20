@@ -4259,9 +4259,15 @@
     "title": "Live-Kunst Saarland"
   },
   "saarland/mitarbeiterin-zeigt-ihr-schnell-portrait-weihnachtsfeier-annaheim-wiebelskirchen.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner",
+      "Eventzeichner"
+    ],
     "tags": {
-      "skills": [],
+      "skills": [
+        "schnellzeichner",
+        "eventzeichner"
+      ],
       "events": [
         "firmenfeier",
         "weihnachtsfeier"
@@ -4271,7 +4277,7 @@
       ]
     },
     "altOverride": "Mitarbeiterin zeigt ihr schnell portrait weihnachtsfeier annaheim wiebelskirchen",
-    "title": "Live-Kunst Saarland"
+    "title": "Spaß mit Karikaturisten zur Weihnachtsparty"
   },
   "saarland/paae-mit-baby-familie-karikatur-von-schnellzeichnerin-hochzeitsparty-linslerhof-ueberherrn-saarland.webp": {
     "categories": [
