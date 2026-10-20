@@ -4148,9 +4148,17 @@
     "title": "Schnellzeichner Saarland"
   },
   "saarland/grosseltern-mit-baby-familien-portraet-hochzeitsfeier-linslerhof-saarland.webp": {
-    "categories": [],
+    "categories": [
+      "Szenenmaler",
+      "Schnellzeichner",
+      "Eventzeichner"
+    ],
     "tags": {
-      "skills": [],
+      "skills": [
+        "szenenmaler",
+        "schnellzeichner",
+        "eventzeichner"
+      ],
       "events": [
         "hochzeit"
       ],
@@ -4196,17 +4204,21 @@
   },
   "saarland/karikaturist-saarwellingen.webp": {
     "categories": [
-      "Schnellzeichner"
+      "Schnellzeichner",
+      "Eventzeichner"
     ],
     "tags": {
       "skills": [
-        "schnellzeichner"
+        "schnellzeichner",
+        "eventzeichner"
       ],
       "events": [],
       "landings": [
         "saarland"
       ]
-    }
+    },
+    "title": "Live-Zeichnung für die Hochzeitsgäste",
+    "altOverride": "Hochzeitsgast mit seiner Karikaturzeichnung mit Blitz"
   },
   "saarland/kolleginnen-zeigen-gemeinsame-karikatur-als-camper-sommerfeier-event-angelweiher-gresaubach.webp": {
     "categories": [
