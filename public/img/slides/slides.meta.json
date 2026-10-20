@@ -4226,16 +4226,12 @@
   },
   "saarland/lustige-portraetzeichnung-paar-saarparkcenter-neunkirchen.webp": {
     "categories": [],
+    "priority": 244,
     "tags": {
-      "skills": [],
-      "events": [],
       "landings": [
-        "saarland",
-        "neunkirchen"
+        "saarland"
       ]
-    },
-    "altOverride": "Lustige portraetzeichnung paar saarparkcenter neunkirchen",
-    "title": "Live-Kunst Saarland"
+    }
   },
   "saarland/lustige-zeichnung-mutter-und-kind-von-speed-painter-saarparkxenter-neunkirchen.webp": {
     "categories": [],
@@ -5440,5 +5436,23 @@
     },
     "altOverride": "paar zeigt seine lustigen schnellportraets passend zur Vorweihnachtszeit in europa galerie saarbruecken",
     "title": "Spaß zur Weihnachtszeit mit karikaturen"
+  },
+  "saarland/kids-portrait-frozen-shop-event-mr.-wash-saarbruecken.webp": {
+    "categories": [],
+    "priority": 243,
+    "tags": {
+      "landings": [
+        "saarland"
+      ]
+    }
+  },
+  "saarland/schnellzeichnerin-weihnachtsfeier-saarland-therme.webp": {
+    "categories": [],
+    "priority": 245,
+    "tags": {
+      "landings": [
+        "saarland"
+      ]
+    }
   }
 }
