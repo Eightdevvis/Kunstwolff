@@ -5428,5 +5428,14 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
+  },
+  "saarbruecken/schnellzeichnerin-mr.-wash-saarbruecken.webp": {
+    "categories": [],
+    "priority": 243,
+    "tags": {
+      "landings": [
+        "saarbruecken"
+      ]
+    }
   }
 }
