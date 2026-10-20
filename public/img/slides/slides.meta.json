@@ -4237,13 +4237,34 @@
     "title": "Schnellzeichner Saarland"
   },
   "saarland/lustige-portraetzeichnung-paar-saarparkcenter-neunkirchen.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner",
+      "Eventzeichner"
+    ],
     "priority": 244,
     "tags": {
       "landings": [
-        "saarland"
+        "saarland",
+        "karlsruhe",
+        "heilbronn",
+        "giessen",
+        "dortmund",
+        "ludwigshafen",
+        "nord-rhein-westfalen",
+        "fulda",
+        "hanau",
+        "duesseldorf",
+        "stuttgart",
+        "heidelberg",
+        "muenchen"
+      ],
+      "skills": [
+        "schnellzeichner",
+        "eventzeichner"
       ]
-    }
+    },
+    "title": "Wer ist das Engelchen hier?",
+    "altOverride": "Ehehpaar zeigt seine weihnachtliche Karikatur als Weihnachtsengel und Teufelchen in SaarParkCenter Neunkirchen"
   },
   "saarland/lustige-zeichnung-mutter-und-kind-von-speed-painter-saarparkxenter-neunkirchen.webp": {
     "categories": [],
