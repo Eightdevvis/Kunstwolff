@@ -193,6 +193,18 @@ const heroMediaStyle = heroAspect ? `--hero-media-aspect: ${heroAspect};` : unde
         height: auto;
         aspect-ratio: var(--hero-media-aspect);
       }
+
+      /* „Schnellzeichner" ist in Mayonice bei 2.8rem ~365px breit – breiter
+         als ein 360er Handy. Die Spalte wuchs mit und der Titel lief rechts
+         aus dem Bild (overflow:hidden schnitt ihn ab). */
+      .hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-content h1 {
+        font-size: clamp(2rem, 10vw, 2.8rem);
+        overflow-wrap: break-word;
+      }
     }
   </style>
 </div>
