@@ -4039,7 +4039,7 @@
     },
     "priority": 3,
     "altOverride": "schnellzeichnerin zeichnet 2 mitarbeiterinnen am tisch bei betriebsfeier in scheune neuhaus saarbruecken",
-    "title": "Schnellzeichner zur Weihnachtsfeier "
+    "title": "Schnellzeichner zur Weihnachtsfeier"
   },
   "saarbruecken/5_schnellzeichner-weihnachtsfeier-saarlandtherme-saarbruecken-1.webp": {
     "categories": [
@@ -4098,6 +4098,80 @@
     "priority": 7,
     "altOverride": "Schnellzeichnerin saarland sylvester event spielbanken saarbruecken",
     "title": "Schnellzeichner Saarbrücken"
+  },
+  "saarbruecken/karikaturist-shop-aktion-europa-galerie-saarbruecken.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "saarbruecken"
+      ]
+    },
+    "priority": 245,
+    "altOverride": "paar zeigt seine lustigen schnellportraets passend zur Vorweihnachtszeit in europa galerie saarbruecken",
+    "title": "Spaß zur Weihnachtszeit mit karikaturen"
+  },
+  "saarbruecken/schnellzeichnerin-messe-kongrsshalle-saarbruecken.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "messe"
+      ],
+      "landings": [
+        "saarbruecken"
+      ]
+    },
+    "priority": 244
+  },
+  "saarbruecken/schnellzeichnerin-mr.-wash-saarbruecken.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [],
+      "landings": [
+        "saarbruecken"
+      ]
+    },
+    "priority": 243
+  },
+  "saarbruecken/schnellzeichnerin-saarland-sylvester-event-spielbanken-saarbruecken.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "silvester"
+      ],
+      "landings": [
+        "saarbruecken"
+      ]
+    },
+    "priority": 246
   },
   "saarland/brautpaar-zeigt-hochzeits-zeichnung-von-schnellzeichner-bistro-bagatelle-saarland.webp": {
     "categories": [
@@ -4202,6 +4276,23 @@
     "altOverride": "Karikatur chef de la cuisine weihnachtsfest annaheim wiebelskirchen saarland",
     "title": "Schnellzeichner Saarland"
   },
+  "saarland/karikatur-weihnachtsmarkt-saarlouis-grosser-markt.webp": {
+    "categories": [
+      "Schnellzeichner"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner"
+      ],
+      "events": [
+        "weihnachtsfeier"
+      ],
+      "landings": [
+        "saarland"
+      ]
+    },
+    "priority": 246
+  },
   "saarland/karikaturist-saarwellingen.webp": {
     "categories": [
       "Schnellzeichner",
@@ -4217,8 +4308,19 @@
         "saarland"
       ]
     },
-    "title": "Live-Zeichnung für die Hochzeitsgäste",
-    "altOverride": "Hochzeitsgast mit seiner Karikaturzeichnung mit Blitz"
+    "altOverride": "Hochzeitsgast mit seiner Karikaturzeichnung mit Blitz",
+    "title": "Live-Zeichnung für die Hochzeitsgäste"
+  },
+  "saarland/kids-portrait-frozen-shop-event-mr.-wash-saarbruecken.webp": {
+    "categories": [],
+    "tags": {
+      "skills": [],
+      "events": [],
+      "landings": [
+        "saarland"
+      ]
+    },
+    "priority": 243
   },
   "saarland/kolleginnen-zeigen-gemeinsame-karikatur-als-camper-sommerfeier-event-angelweiher-gresaubach.webp": {
     "categories": [
@@ -4241,8 +4343,12 @@
       "Schnellzeichner",
       "Eventzeichner"
     ],
-    "priority": 244,
     "tags": {
+      "skills": [
+        "schnellzeichner",
+        "eventzeichner"
+      ],
+      "events": [],
       "landings": [
         "saarland",
         "karlsruhe",
@@ -4257,14 +4363,11 @@
         "stuttgart",
         "heidelberg",
         "muenchen"
-      ],
-      "skills": [
-        "schnellzeichner",
-        "eventzeichner"
       ]
     },
-    "title": "Wer ist das Engelchen hier?",
-    "altOverride": "Ehehpaar zeigt seine weihnachtliche Karikatur als Weihnachtsengel und Teufelchen in SaarParkCenter Neunkirchen"
+    "priority": 244,
+    "altOverride": "Ehehpaar zeigt seine weihnachtliche Karikatur als Weihnachtsengel und Teufelchen in SaarParkCenter Neunkirchen",
+    "title": "Wer ist das Engelchen hier?"
   },
   "saarland/lustige-zeichnung-mutter-und-kind-von-speed-painter-saarparkxenter-neunkirchen.webp": {
     "categories": [],
@@ -4331,6 +4434,25 @@
         "saarland"
       ]
     }
+  },
+  "saarland/schnellzeichnerin-weihnachtsfeier-saarland-therme.webp": {
+    "categories": [
+      "Schnellzeichner",
+      "Szenenmaler"
+    ],
+    "tags": {
+      "skills": [
+        "schnellzeichner",
+        "szenenmaler"
+      ],
+      "events": [
+        "weihnachtsfeier"
+      ],
+      "landings": [
+        "saarland"
+      ]
+    },
+    "priority": 245
   },
   "saarland/zeichnung-als-harry-potter-von-illustratorin-saarland.webp": {
     "categories": [],
@@ -5446,70 +5568,5 @@
     "priority": 4,
     "altOverride": "Paar mit seiner humorvollen schnellzeichnung mit babybauch von karikaturistin streetart wuppertal",
     "title": "Schnellzeichner Wuppertal"
-  },
-  "saarbruecken/schnellzeichnerin-mr.-wash-saarbruecken.webp": {
-    "categories": [],
-    "priority": 243,
-    "tags": {
-      "landings": [
-        "saarbruecken"
-      ]
-    }
-  },
-  "saarbruecken/schnellzeichnerin-messe-kongrsshalle-saarbruecken.webp": {
-    "categories": [],
-    "priority": 244,
-    "tags": {
-      "landings": [
-        "saarbruecken"
-      ]
-    }
-  },
-  "saarbruecken/karikaturist-shop-aktion-europa-galerie-saarbruecken.webp": {
-    "categories": [],
-    "priority": 245,
-    "tags": {
-      "landings": [
-        "saarbruecken"
-      ]
-    },
-    "altOverride": "paar zeigt seine lustigen schnellportraets passend zur Vorweihnachtszeit in europa galerie saarbruecken",
-    "title": "Spaß zur Weihnachtszeit mit karikaturen"
-  },
-  "saarland/kids-portrait-frozen-shop-event-mr.-wash-saarbruecken.webp": {
-    "categories": [],
-    "priority": 243,
-    "tags": {
-      "landings": [
-        "saarland"
-      ]
-    }
-  },
-  "saarland/schnellzeichnerin-weihnachtsfeier-saarland-therme.webp": {
-    "categories": [],
-    "priority": 245,
-    "tags": {
-      "landings": [
-        "saarland"
-      ]
-    }
-  },
-  "saarland/karikatur-weihnachtsmarkt-saarlouis-grosser-markt.webp": {
-    "categories": [],
-    "priority": 246,
-    "tags": {
-      "landings": [
-        "saarland"
-      ]
-    }
-  },
-  "saarbruecken/schnellzeichnerin-saarland-sylvester-event-spielbanken-saarbruecken.webp": {
-    "categories": [],
-    "priority": 246,
-    "tags": {
-      "landings": [
-        "saarbruecken"
-      ]
-    }
   }
 }
