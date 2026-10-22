@@ -7,7 +7,7 @@
     "title": "Stimmung durch Kunst",
     "subtitle": "Die richtige Kunstform setzt die Atmosphäre Ihrer Veranstaltung – von locker und witzig bis kultiviert und exklusiv."
   },
-  "intro": "Ob Konferenz, Gala oder private Feier: Nicht jedes Format passt zu jedem Anlass. Hier sehen Sie, was Schnellzeichner und Szenenmaler ausmachen – und welche Stimmung sie schaffen. Später können Sie hier weitere Kunstformen ergänzen; die Inhalte liegen zentral in dieser Datei und sind für das Admin-Tool vorbereitet.",
+  "intro": "Ob Konferenz, Gala oder private Feier: Nicht jedes Format passt zu jedem Anlass. Hier sehen Sie, was Schnellzeichner und Szenenmaler ausmachen – und welche Stimmung sie schaffen.",
   "artForms": [
     {
       "id": "schnellzeichner",
