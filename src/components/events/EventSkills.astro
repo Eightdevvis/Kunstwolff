@@ -88,6 +88,9 @@ const filteredSkills = categories.length > 0
   /* ── Sektion ─────────────────────────────────────────────────────────── */
   .event-skills {
     background: #fff;
+    /* Die Seite erbt sonst Weiß vom body – die Karten-Titel (color: inherit)
+       standen dann weiß auf #fafafa. Gleiche Farbe wie Überschrift und Link. */
+    color: #111;
     padding: clamp(60px, 10vh, 100px) clamp(20px, 6vw, 80px);
   }
 
