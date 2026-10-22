@@ -24,3 +24,17 @@ describe('Skill-Link aus dem Admin', () => {
     expect(link(undefined)).toBe('/graphic-recording/');
   });
 });
+
+describe('Skill-Liste aus dem Admin', () => {
+  it('übersteht Nicht-Texte in den Feldern', () => {
+    const liste = parseSkillsContent({
+      skills: [
+        { title: 'Aquarelle', description: 42 as unknown as string, image: ['x'] as unknown as string },
+        null as unknown as { title: string },
+        { title: '   ' },
+      ],
+    });
+    expect(liste.map((s) => s.link)).toEqual(['/aquarelle/']);
+    expect(liste[0].description).toBeUndefined();
+  });
+});

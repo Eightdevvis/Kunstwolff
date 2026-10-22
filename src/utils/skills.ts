@@ -75,8 +75,13 @@ const normalizeSkillLink = (rawLink: unknown, title: string): string => {
   return `/${slugify(title)}/`;
 };
 
+/** Nur echte Texte zählen – eine Zahl oder Liste aus dem Admin warf sonst bei .trim() und brach den Build. */
+const text = (value: unknown): string | undefined =>
+  typeof value === 'string' ? value.trim() || undefined : undefined;
+
 const normalizeSkill = (skill: Partial<SkillItem>): SkillItem | null => {
-  const title = (skill.title ?? '').trim();
+  if (!skill || typeof skill !== 'object') return null;
+  const title = typeof skill.title === 'number' ? String(skill.title) : (text(skill.title) ?? '');
   
   if (!title) {
     return null;
@@ -88,10 +93,10 @@ const normalizeSkill = (skill: Partial<SkillItem>): SkillItem | null => {
   return {
     title,
     link,
-    image: skill.image?.trim() || undefined,
-    alt: skill.alt?.trim() || undefined,
-    heroTitle: skill.heroTitle?.trim() || undefined,
-    description: skill.description?.trim() || undefined,
+    image: text(skill.image),
+    alt: text(skill.alt),
+    heroTitle: text(skill.heroTitle),
+    description: text(skill.description),
   };
 };
 
@@ -145,7 +150,9 @@ const dedupeSkills = (skills: SkillItem[]): SkillItem[] => {
   const seen = new Set<string>();
 
   return skills.filter((skill) => {
-    const key = `${skill.title}::${skill.link}`;
+    // Nach der Adresse, nicht nach Titel+Adresse: zwei Skills mit derselben
+    // URL ("Graphic recording" und "Graphic Recording") ergäben dieselbe Seite zweimal.
+    const key = skill.link;
     if (seen.has(key)) return false;
     seen.add(key);
     return true;

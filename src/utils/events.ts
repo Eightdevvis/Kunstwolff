@@ -174,19 +174,23 @@ export const getEvents = (): EventItem[] => {
     return rawList
       .filter((item): item is Record<string, unknown> => !!item && typeof item === 'object')
       .map((item): EventItem | null => {
-        const title = (item.title as string | undefined)?.trim();
+        // String() statt Cast: ein Zahlen-Titel oder -Slug (2026) warf bei .trim(),
+        // der catch unten lieferte dann [] – und ALLE Events verschwanden.
+        const title = item.title == null ? '' : String(item.title).trim();
         if (!title) return null;
 
         // Slug aus JSON oder automatisch aus title generieren
-        const slug = ((item.slug as string | undefined)?.trim()) || slugify(title);
+        const slug = (item.slug == null ? '' : String(item.slug).trim()) || slugify(title);
         // Ein Slug mit „/" (z.B. eine ganze URL ins Slug-Feld kopiert) ist als
         // `[landing]`-Parameter unzulässig und bricht den GESAMTEN Build ab –
         // dann geht keine Veröffentlichung mehr live. Lieber diesen einen
         // Eintrag auslassen und laut warnen.
-        if (slug.includes('/')) {
+        // Gleiches gilt für „?", „#" und „\" (die Adresse endet dort bzw. ist
+        // kein Pfad) sowie für „." und „..".
+        if (/[/?#\\]/.test(slug) || /^\.+$/.test(slug)) {
           if (!gewarnteSlugs.has(slug)) {
             gewarnteSlugs.add(slug);
-            console.warn(`[events] Event „${title}" übersprungen: Slug „${slug}" enthält „/".`);
+            console.warn(`[events] Event „${title}" übersprungen: Slug „${slug}" ist keine gültige Adresse.`);
           }
           return null;
         }
@@ -196,9 +200,9 @@ export const getEvents = (): EventItem[] => {
           title,
           slug,
           link,
-          image: (item.image as string | undefined)?.trim() || undefined,
-          heroTitle: (item.heroTitle as string | undefined)?.trim() || undefined,
-          description: (item.description as string | undefined)?.trim() || undefined,
+          image: typeof item.image === 'string' ? item.image.trim() || undefined : undefined,
+          heroTitle: typeof item.heroTitle === 'string' ? item.heroTitle.trim() || undefined : undefined,
+          description: typeof item.description === 'string' ? item.description.trim() || undefined : undefined,
           categories: Array.isArray(item.categories)
             ? (item.categories as string[]).filter((c): c is string => typeof c === 'string')
             : undefined,
