@@ -66,4 +66,12 @@ DE453318616</p>
     .impressum-div .small {
         font-size: 1em;
     }
+
+  /* Handy + Querformat: die fixierte Navigation ist 104px hoch und zeichnet
+     nach unten weich. 70px Abstand ließen die Überschrift darunter verschwimmen. */
+  @media (max-width: 768px), (max-height: 500px) {
+    .impressum-div {
+      padding-top: 112px;
+    }
+  }
 </style>

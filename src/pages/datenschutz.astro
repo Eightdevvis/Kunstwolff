@@ -197,4 +197,12 @@ import Layout from "../layouts/Layout.astro";
   .datenschutz-div ul {
     padding-left: 1.2em;
   }
+
+  /* Handy + Querformat: die fixierte Navigation ist 104px hoch und zeichnet
+     nach unten weich. 70px Abstand ließen die Überschrift darunter verschwimmen. */
+  @media (max-width: 768px), (max-height: 500px) {
+    .datenschutz-div {
+      padding-top: 112px;
+    }
+  }
 </style>

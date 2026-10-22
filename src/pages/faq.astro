@@ -33,4 +33,12 @@ const alleFragen = getAllFAQs();
     font-size: clamp(2rem, 5vw, 3.2rem);
     text-align: center;
   }
+
+  /* Handy + Querformat: die fixierte Navigation ist 104px hoch und zeichnet
+     nach unten weich. 70px Abstand ließen die Überschrift darunter verschwimmen. */
+  @media (max-width: 768px), (max-height: 500px) {
+    .faq-page {
+      padding-top: 112px;
+    }
+  }
 </style>

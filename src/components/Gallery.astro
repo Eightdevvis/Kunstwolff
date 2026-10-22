@@ -622,8 +622,9 @@ const { bilder, facets, ohneTags } = data ?? getGalleryData();
   }
 
   @media (max-width: 520px) {
+    /* oben 112px: die fixierte Navigation ist 104px hoch */
     .gallery-page {
-      padding: 56px 14px;
+      padding: 112px 14px 56px;
     }
 
     .gallery-grid {
