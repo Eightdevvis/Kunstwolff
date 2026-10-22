@@ -138,13 +138,6 @@ wie es die Bilder (`supplementWithDefaultSlides`) und die Reviews
    ungetaggt ist, bildet den **Default-Topf**.
 3. **Defaults füllen auf**, wo die spezifischen nicht reichen (`maxItems = 4`).
 
-**Orts-FAQs nur auf Orts-Seiten (seit 2026-10-22):** Trägt eine FAQ einen Ort-Tag und der
-Kontext fragt keinen Ort ab (Skill-Seite, Anlass-Seite), fliegt sie raus – außer sie trifft
-den Anlass (die Rhein-Main-Messe-FAQs bleiben auf `/messe/`). Vorher reichte der Skill-Treffer,
-und „… im Saarland buchen?" stand auf `/eventzeichner/`, „… in BW buchen?" auf
-`/schnellzeichner-karikaturist/`. Für Skills gilt das bewusst nicht: eine Skill-FAQ der Stadt
-bleibt auf der Stadtseite. Test: `tests/content-tags.test.ts`.
-
 Vorher galt „leer gilt überall" auch in die andere Richtung: fragte ein Kontext eine
 Dimension nicht ab, passte **jede** FAQ. Dadurch stand nach dem Anlegen der Anlass-FAQs
 plötzlich „Wie viel Platz brauchen Sie auf dem Messestand?" auf `/berlin/`. Der erste

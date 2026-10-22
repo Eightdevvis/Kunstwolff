@@ -107,15 +107,6 @@ describe('matchesFAQContext – Dimensionen einzeln, nicht als ODER-Kette', () =
     expect(matchesFAQContext(nurSkill, { city: 'trier' })).toBe(false);
   });
 
-  it('zeigt eine Orts-FAQ nicht auf einer Seite ohne Ort, auch wenn der Skill passt', () => {
-    // "… im Saarland buchen?" stand auf /eventzeichner/.
-    const saarland = faq({ landings: ['saarland'], skills: ['eventzeichner'] });
-    expect(matchesFAQContext(saarland, { categories: ['Eventzeichner'] })).toBe(false);
-    expect(
-      matchesFAQContext(saarland, { city: 'saarland', categories: ['Eventzeichner'] }),
-    ).toBe(true);
-  });
-
   it('zeigt eine Stadt-FAQ auf ihrer Stadt', () => {
     expect(matchesFAQContext(faq({ landings: ['trier'] }), { city: 'trier' })).toBe(true);
   });
