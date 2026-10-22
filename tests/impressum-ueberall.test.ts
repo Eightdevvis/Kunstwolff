@@ -40,8 +40,8 @@ const sammleDateien = (dir: string, endung: string, out: string[] = []): string[
 describe('Impressum ist von überall erreichbar', () => {
   it('der Fußbereich verlinkt Impressum und Datenschutz', () => {
     const footer = fs.readFileSync(path.resolve('src/components/Footer.astro'), 'utf-8');
-    expect(footer).toMatch(/href="\/impressum"/);
-    expect(footer).toMatch(/href="\/datenschutz"/);
+    expect(footer).toMatch(/href="\/impressum\/"/);
+    expect(footer).toMatch(/href="\/datenschutz\/"/);
   });
 
   it('unter public/ liegt keine HTML-Datei — die käme am Layout vorbei', () => {
