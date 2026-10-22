@@ -101,7 +101,10 @@ if (missing.length > 0) {
 // laut, mit Namen und mit dem nächsten Schritt.
 const seedSlugsJeDimension = {
   skills: new Set(readSkillLabels().map(slugifyTag)),
-  events: new Set([...readEventLabels(), ...EXTRA_EVENTS].map(slugifyTag)),
+  // Auch die Slugs selbst: weichen Titel und Slug ab (Titel „Weihnachtsfeier",
+  // Slug „schnellzeichner-weihnachtsfeier"), meldete der Hinweis sonst ein
+  // lebendes Event als verwaist.
+  events: new Set([...readEventLabels(), ...eventSlugs, ...EXTRA_EVENTS].map(slugifyTag)),
   landings: new Set(readCityLabels().map(slugifyTag)),
 };
 const quelleJeDimension = { skills: 'skills.json', events: 'events.json', landings: 'landings.md' };
