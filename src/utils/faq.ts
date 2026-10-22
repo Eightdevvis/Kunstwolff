@@ -182,6 +182,16 @@ export const matchesFAQContext = (faq: FAQItem, context: FAQFilterContext): bool
   ];
 
   if (stimmen.includes('dagegen')) return false;
+
+  // Ortsgebundene FAQs nur dort, wo nach einem Ort gefragt wird. Sonst stand
+  // „… im Saarland buchen?" auf /eventzeichner/ und „… in BW buchen?" auf
+  // /schnellzeichner-karikaturist/ – der Skill traf, der Ort enthielt sich.
+  // Bewusst nur für den Ort: eine Skill-FAQ der Stadt bleibt auf der
+  // Stadtseite, obwohl die keinen Skill abfragt. Und ein Anlass-Treffer zählt
+  // weiter: die Rhein-Main-Messe-FAQs gehören ausdrücklich auch auf /messe/.
+  const ortTags = (faq.tags?.landings ?? []).map(normalize).filter(Boolean);
+  if (ortTags.length > 0 && landingKeys.length === 0 && stimmen[1] !== 'treffer') return false;
+
   return stimmen.includes('treffer');
 };
 
