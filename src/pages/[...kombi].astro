@@ -212,8 +212,10 @@ if (pageType === 'event') {
 
   // Titel: "{Skill} für {Event}" z.B. "Schnellzeichner für Firmenfeiern"
   eventPageTitle = `${skillData.title} für ${eventData.title} buchen | Kunstwolff`;
+  // Nicht die Skill-Beschreibung: die ist für die Skill-Seite geschrieben und
+  // kann einen Anlass nennen – beim Eventzeichner stand so der Schulungs-Text
+  // auf /eventzeichner/hochzeit/ und allen anderen Anlass-Kombis.
   eventPageDescription =
-    skillData.description ||
     `${skillData.title} für ${eventData.title}: Live-Kunst als Highlight für Ihre Veranstaltung. Jetzt Kunstwolff anfragen!`;
 
   eventBreadcrumb = {

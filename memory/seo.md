@@ -72,6 +72,7 @@ Pro Seitentyp automatisch generiert:
 | Stadtseite `/berlin/` | `Schnellzeichner Berlin – Live-Kunst \| Kunstwolff` (Vorlage `{landingHeading} – Live-Kunst \| Kunstwolff`; das Heading kommt aus `landingHeadings` und wird im Admin gepflegt) | Stadtspezifisch |
 | Skill-Seite `/schnellzeichner-karikaturist/` | `Schnellzeichner für Events buchen \| Kunstwolff` | `skills.json` (`description`) |
 | Skill+Stadt `/berlin-schnellzeichner-karikaturist/` | `Schnellzeichner Berlin buchen \| Kunstwolff` | pro Stadt individualisiert (nicht mehr `skills.json`) |
+| Skill+Anlass `/schnellzeichner-karikaturist/messe/` | `Schnellzeichner für Messe buchen \| Kunstwolff` | pro Anlass individualisiert, auch der Hero-Untertitel (seit 2026-10-22 nicht mehr `skills.json` – deren Text kann einen Anlass nennen) |
 
 Auf jeder Seite wird ein `<link rel="canonical">` gesetzt (gegen Duplicate-Content-Strafen).
 
