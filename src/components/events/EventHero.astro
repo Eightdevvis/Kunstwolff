@@ -261,14 +261,28 @@ const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroHintergrundStyle
 
   /* ── Responsive ─────────────────────────────────────────────────────── */
   @media (max-width: 640px) {
-    .event-hero-content {
-      transform: translateY(-4vh);
-      padding: 40px 24px;
+    /* Auf Bild-Ratio geschrumpft (4:3 = 270px auf 360px) ist der Hero viel
+       niedriger als Label + Titel + Text + Button. Mit overflow:hidden ragte
+       der Block oben und unten heraus: H1 unter der Navigation, Button halb
+       abgeschnitten. Jetzt wächst der Hero mit dem Inhalt mit: `aspect-ratio`
+       lässt einen Kasten nur dann über die Ratio hinaus wachsen, wenn er kein
+       Scroll-Container ist – `clip` schneidet wie `hidden`, ist aber keiner. */
+    .event-hero {
+      overflow: clip;
     }
 
     .event-hero-cta {
       width: 100%;
       text-align: center;
+    }
+  }
+
+  /* Handy hoch UND quer (390px Höhe): oben Platz für die 104px hohe, fixierte
+     Navigation; kein Versatz nach oben mehr, der den Titel darunter schiebt. */
+  @media (max-width: 640px), (max-height: 500px) {
+    .event-hero-content {
+      transform: none;
+      padding: 112px 24px 40px;
     }
   }
 </style>
