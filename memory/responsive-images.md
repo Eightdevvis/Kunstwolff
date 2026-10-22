@@ -172,3 +172,11 @@ beim 39-KB-Hero, wo Verzicht die richtige Entscheidung ist.
 
 Der Build dauert länger (671 Varianten, ~25 s zusätzlich). Das trifft nur den
 Build, nicht die Besucher – und nicht das Repo.
+
+## Karten: Why-Kacheln und Eventformate (seit 2026-10-22)
+
+`Why.astro` und `Eventtypes.astro` hatten kein `srcset` und luden auf dem Handy
+das 1600px-Original. Jetzt `heroSrcSet(pfad)` + `CARD_SIZES`
+(`(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px`). Liegt ein Bild
+ausserhalb von `VARIANT_SOURCES`, liefert `heroSrcSet` einen Leerstring und das
+`<img>` bleibt beim Original – kein toter Kandidat möglich.

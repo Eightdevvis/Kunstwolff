@@ -1,6 +1,7 @@
 ---
 import { getVisibleEvents, getEventSlides, resolveEventTitleImage } from "../utils/events";
 import { getSiteTexts } from "../utils/siteTexts";
+import { heroSrcSet, CARD_SIZES } from "../utils/responsiveImages";
 
 const et = getSiteTexts().eventtypes;
 
@@ -52,9 +53,12 @@ const list = getVisibleEvents().map((event) => {
         <summary class="eventtype-link">
           <img
             src={event.image}
+            srcset={heroSrcSet(event.image) || undefined}
+            sizes={heroSrcSet(event.image) ? CARD_SIZES : undefined}
             alt={event.alt}
             class="eventtype-image"
             loading="lazy"
+            decoding="async"
           />
           <div class="eventtype-label">
             <span class="eventtype-chip">Event</span>

@@ -234,3 +234,11 @@ export const SLIDESHOW_SIZES = '(max-width: 640px) 100vw, (max-width: 1200px) 60
  * rund 390px breit.
  */
 export const GALLERY_SIZES = '(max-width: 900px) 50vw, (max-width: 1240px) 33vw, 400px';
+
+/**
+ * Karten-Raster: Why-Kacheln (`Why.astro`, minmax 260px) und Eventformate
+ * (`Eventtypes.astro`, minmax 250px) in einem ≤ 1200px-Container. Am Handy eine
+ * Spalte über die volle Breite, darüber zwei bis vier Spalten.
+ * Seit 2026-10-22 — vorher luden beide auf dem Handy das 1600px-Original.
+ */
+export const CARD_SIZES = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px';

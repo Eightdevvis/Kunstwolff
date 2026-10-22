@@ -1,5 +1,6 @@
 ---
 import { getWhyBenefits } from '../utils/why';
+import { heroSrcSet, CARD_SIZES } from '../utils/responsiveImages';
 import { isPageHiddenByPath } from '../utils/pageVisibility';
 import { WHY_DETAIL_LINKS } from '../utils/whyDetailLinks';
 import { getSiteTexts } from '../utils/siteTexts';
@@ -32,13 +33,13 @@ const whyText = getSiteTexts(locale).why;
         const linkVisible = !!targetLink && !isPageHiddenByPath(targetLink);
         return linkVisible && targetLink ? (
           <a class="why-item why-item--link" href={targetLink}>
-            <img src={benefit.image} alt={benefit.alt} loading="lazy" />
+            <img src={benefit.image} srcset={heroSrcSet(benefit.image) || undefined} sizes={heroSrcSet(benefit.image) ? CARD_SIZES : undefined} alt={benefit.alt} loading="lazy" decoding="async" />
             <h3>{benefit.title}</h3>
             <p>{benefit.text}</p>
           </a>
         ) : (
           <div class="why-item">
-            <img src={benefit.image} alt={benefit.alt} loading="lazy" />
+            <img src={benefit.image} srcset={heroSrcSet(benefit.image) || undefined} sizes={heroSrcSet(benefit.image) ? CARD_SIZES : undefined} alt={benefit.alt} loading="lazy" decoding="async" />
             <h3>{benefit.title}</h3>
             <p>{benefit.text}</p>
           </div>
