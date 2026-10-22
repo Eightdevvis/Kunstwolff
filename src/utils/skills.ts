@@ -53,6 +53,28 @@ const slugify = (text: string): string => {
     .replace(/^-+|-+$/g, '');
 };
 
+/**
+ * Das `link`-Feld kommt von Hand aus dem Admin. Zwei Eingaben haben hier
+ * still oder laut kaputt gemacht:
+ * - ohne Schrägstriche (`eventzeichner`): `getSkillBySlug` sucht `/eventzeichner/`,
+ *   findet nichts, und die Skill-Seite wird zur Weiterleitung auf /404.
+ * - mit Pfad oder ganzer Adresse (`https://…/x/`, `/a/b/`): der Slug enthält „/",
+ *   `[skill]` lehnt ihn ab und der GANZE Build bricht – nichts geht mehr live.
+ * Darum: Schrägstriche vereinheitlichen, Unbrauchbares laut auf den Titel-Slug
+ * zurückfallen lassen.
+ */
+const gewarnteLinks = new Set<string>();
+const normalizeSkillLink = (rawLink: unknown, title: string): string => {
+  const roh = typeof rawLink === 'string' ? rawLink.trim() : '';
+  const slug = roh.replace(/^\/+|\/+$/g, '');
+  if (slug && /^[a-z0-9][a-z0-9-]*$/i.test(slug)) return `/${slug}/`;
+  if (roh && !gewarnteLinks.has(roh)) {
+    gewarnteLinks.add(roh);
+    console.warn(`[skills] Link „${roh}" von „${title}" unbrauchbar – nehme /${slugify(title)}/.`);
+  }
+  return `/${slugify(title)}/`;
+};
+
 const normalizeSkill = (skill: Partial<SkillItem>): SkillItem | null => {
   const title = (skill.title ?? '').trim();
   
@@ -61,7 +83,7 @@ const normalizeSkill = (skill: Partial<SkillItem>): SkillItem | null => {
   }
 
   // Auto-generate link from title if not provided
-  const link = (skill.link ?? '').trim() || `/${slugify(title)}/`;
+  const link = normalizeSkillLink(skill.link, title);
 
   return {
     title,
@@ -73,7 +95,7 @@ const normalizeSkill = (skill: Partial<SkillItem>): SkillItem | null => {
   };
 };
 
-const parseSkillsContent = (content: SkillsJson): SkillItem[] => {
+export const parseSkillsContent = (content: SkillsJson): SkillItem[] => {
   const rawList = Array.isArray(content) ? content : content.skills ?? [];
 
   return rawList

@@ -25,7 +25,7 @@
 | Feld | Pflicht | Zweck |
 | :-- | :-- | :-- |
 | `title` | ja | Skill-Name **und Inhalts-Schlüssel** – siehe unten |
-| `link` | nein | eigene URL; ohne sie wird sie aus `title` gebildet |
+| `link` | nein | eigene URL; ohne sie wird sie aus `title` gebildet. Fehlende Schrägstriche werden ergänzt; ein Pfad oder eine ganze Adresse (`/a/b/`, `https://…`) wird mit Warnung verworfen → Titel-Slug (`normalizeSkillLink`, seit 2026-10-22, Test `tests/skill-link.test.ts`) |
 | `heroTitle` | nein | Angepasster Titel für die Hero-Sektion |
 | `description` | nein | Meta-Description für SEO |
 
