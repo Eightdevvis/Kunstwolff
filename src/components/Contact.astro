@@ -294,6 +294,13 @@ const t = getSiteTexts(locale).contact;
     .contact-form {
       grid-template-columns: 1fr;
     }
+
+    /* iOS Safari zoomt beim Antippen in jedes Feld unter 16px hinein und
+       zoomt danach nicht zurück – das Formular steht dann halb neben dem Bild. */
+    .contact-form input,
+    .contact-form textarea {
+      font-size: 16px;
+    }
   }
 </style>
 
