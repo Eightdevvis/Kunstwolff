@@ -81,6 +81,12 @@ npm run sync:content:safe  # fehlertolerant (Teilfehler isoliert, Build/Dev läu
 > `skills.json`) sucht es zeilengenau (`git log -G<slug>`), sonst bekämen nach
 > einer Berlin-Änderung alle 34 Städte ein frisches Datum.
 >
+> **Flache Ort-Kombis** (`/berlin-schnellzeichner-karikaturist/`) kennt das Skript
+> erst seit 2026-10-22 (`flacheOrtKombi`, gleiche Form wie `cityComboSlug`).
+> Vorher fehlte für alle Skill×Ort-Seiten das Datum — sichtbar wurde das, sobald
+> eine davon indexierbar war (Eventzeichner/Graphic Recording, Test
+> „jeder Sitemap-Eintrag trägt ein lastmod").
+>
 > **Schritt 12 (`validate:images`) – warum:** Der pre-push-Hook konvertiert Bilder zu `.webp` und löscht Originale, aktualisiert aber keine Verweise → tote `.jpg`-Pfade (404). Der Guard fängt das vor Commit (hart in `sync:content`) bzw. warnt bei dev/build (tolerant in `sync:content:safe` – das endet nur dann mit Exit 1, wenn ein als `hart: true` markierter Schritt scheitert, aktuell `sync:tags`; „immer exit 0" galt bis zum C1-Fix). Eingeführt 2026-06-05 nachdem mehrfach jpg→webp-Leichen auf Live gingen (Samples, frankfurt.json, Luxembourg-Stub, Hochzeitsmaler, Opener-avif-Typo). Grenze: nur **literale** Pfade, keine dynamisch konkatenierten.
 
 ## Garantien

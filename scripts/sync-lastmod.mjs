@@ -166,6 +166,21 @@ const skills = new Set(
     .filter(Boolean),
 );
 
+/**
+ * Zerlegt `berlin-schnellzeichner-karikaturist` in Stadt + Skill. Dieselbe
+ * Form wie `cityComboSlug` in `src/utils/comboUrls.ts`: `${stadt}-${skill}`.
+ * Weil beide Teile Bindestriche enthalten können, wird gegen die bekannten
+ * Skills geprüft statt am ersten Bindestrich geschnitten.
+ */
+function flacheOrtKombi(slug) {
+  for (const skill of skills) {
+    if (!slug.endsWith(`-${skill}`)) continue;
+    const stadt = slug.slice(0, -(skill.length + 1));
+    if (staedte.has(stadt)) return { stadt, skill };
+  }
+  return null;
+}
+
 // ─── Quellen je Seitenpfad ────────────────────────────────────────────────────
 
 const CONTENT_JSON = 'public/site-texts/content.json';
@@ -200,6 +215,17 @@ function quellenFuer(pathname) {
     }
     if (staedte.has(slug)) {
       return ['src/pages/[landing].astro', [CONTENT_JSON, slug], `public/img/slides/${slug}`];
+    }
+    // Skill × Ort, flach: /berlin-schnellzeichner-karikaturist/ (seit 2026-08-01).
+    // Fehlte bis 2026-10-22 — alle Ort-Kombis standen ohne lastmod in der Sitemap.
+    const ortKombi = flacheOrtKombi(slug);
+    if (ortKombi) {
+      return [
+        'src/pages/[...kombi].astro',
+        ['public/skills/skills.json', ortKombi.skill],
+        [CONTENT_JSON, ortKombi.stadt],
+        `public/img/slides/${ortKombi.stadt}`,
+      ];
     }
     return [];
   }
@@ -248,6 +274,7 @@ for (const slug of events) pfade.add(`/${slug}/`);
 for (const slug of skills) {
   pfade.add(`/${slug}/`);
   for (const ev of events) pfade.add(`/${slug}/${ev}/`);
+  for (const stadt of staedte) pfade.add(`/${stadt}-${slug}/`);
 }
 
 /** @type {Record<string, string>} */
