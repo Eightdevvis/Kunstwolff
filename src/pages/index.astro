@@ -85,6 +85,7 @@ const localBusinessSchema = {
   },
   "areaServed": ["DE", "AT", "CH", "LU", "BE"],
   "image": `${site}/img/logo/logo_transparent.webp`,
+  "logo": `${site}/img/logo/logo_transparent.webp`,
   "priceRange": "€€"
 
   // ⚠️ OFFEN: `sameAs` fehlt – das Array mit den echten Profilen (Instagram,
@@ -116,7 +117,11 @@ const webSiteSchema = {
 //<Aboutsection />
 ---
 
-<Layout image={titleImage}>
+<Layout
+  title="Kunstwolff – Schnellzeichner & Eventkünstler seit 25 Jahren"
+  description="Schnellzeichner, Karikaturisten, Szenenmaler & Graphic Recording live auf Firmenfeier, Messe und Hochzeit – Eventkünstler seit über 25 Jahren."
+  image={titleImage}
+>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(webSiteSchema)} />
 

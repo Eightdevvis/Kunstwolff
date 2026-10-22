@@ -6,10 +6,11 @@ import LangSwitcher from "../components/LangSwitcher.astro";
 import type { LangAlternate } from "../components/LangSwitcher.astro";
 import { isPageHiddenByPath } from "../utils/pageVisibility";
 import { DEFAULT_LOCALE } from "../i18n/config";
+import { metaDescription } from "../utils/seoSnippet";
 
 const {
   title = "Kunstwolff – Eventkünstler seit über 25 Jahren",
-  description = "Kunstwolff – Kreative Event-Kunst & Live-Performance für Ihr Event seit über 25 Jahren.",
+  description: rawDescription = "Kunstwolff – Kreative Event-Kunst & Live-Performance für Ihr Event seit über 25 Jahren.",
   image,
   noindex = false,
   // i18n (Phase 1): Standard = Deutsch, keine Alternativen → bestehende Seiten
@@ -20,6 +21,11 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+// Meta-Fassung auf Suchergebnis-Länge (≤ 155 Zeichen, ganze Sätze bevorzugt).
+// Die Texte im Admin bleiben unverändert — sie sind oft zugleich der sichtbare
+// Untertitel und dürfen dort länger sein. Siehe `src/utils/seoSnippet.ts`.
+const description = metaDescription(rawDescription);
+const ogLocale = lang === "fr" ? "fr_FR" : "de_DE";
 // og:image-Fallback: Seiten ohne eigenes Titelbild (Kontakt, FAQ, Impressum …)
 // bekommen das Standard-Titelbild, damit die Social-Vorschau nie leer ist.
 //
@@ -101,6 +107,8 @@ const xDefaultHref = showAlternates
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonicalURL} />
 		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Kunstwolff" />
+		<meta property="og:locale" content={ogLocale} />
 		{ogImage && <meta property="og:image" content={ogImage} />}
 		{/* Twitter/X liest Open Graph nur teilweise mit: ohne `twitter:card`
 		     zeigt es einen nackten Link statt einer Vorschaukarte. Die Inhalte

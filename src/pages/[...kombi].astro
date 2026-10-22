@@ -187,6 +187,8 @@ let eventTitleImageAspect: string | null = null;
 let eventTitleImageMeta = { focus: 'center', frame: 0 };
 let eventPageTitle = '';
 let eventPageDescription = '';
+// Nur für <meta description>: der sichtbare Untertitel bleibt `eventPageDescription`.
+let eventMetaDescription = '';
 let eventBreadcrumb: unknown;
 
 if (pageType === 'event') {
@@ -275,6 +277,11 @@ if (pageType === 'landing' && landingSlides) {
   // Content. Event-Details verlinken wir per EventTeaser auf /<event>.
   // Die Kombitexte liegen unter `schnellzeichner/messe` – Inhalts-Schlüssel, nicht URL.
   const combo = getSkillEventContent(skillKey, landing ?? '', skillData.title, eventData.title);
+  // Meta-Beschreibung aus dem eigenen Lead statt der 100-Zeichen-Schablone, die
+  // auf allen 28 Anlass-Kombis bis auf zwei Wörter gleich war. Das Layout kürzt
+  // per `metaDescription()` auf ≤ 155 Zeichen.
+  // Der Lead nennt Skill und Anlass schon selbst (auch im Rückfalltext).
+  eventMetaDescription = combo.lead.split(/\n\s*\n/)[0] ?? '';
   registry = {
     eventHero: EventHero,
     comboLead: LandingIntro,
@@ -337,7 +344,7 @@ if (pageType === 'landing' && landingSlides) {
   <!-- ══════════════════════════════════════════════════
        SKILL+EVENT-SEITE – EventLayout mit Skill-Kontext
   ══════════════════════════════════════════════════ -->
-  <EventLayout title={eventPageTitle} description={eventPageDescription} image={eventTitleImage}>
+  <EventLayout title={eventPageTitle} description={eventMetaDescription || eventPageDescription} image={eventTitleImage}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(eventBreadcrumb)} />
 
     {sectionOrder.map((id) => {

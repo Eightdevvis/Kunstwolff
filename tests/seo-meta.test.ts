@@ -165,14 +165,11 @@ describe.skipIf(!distDa)('Snippet-Längen der indexierbaren Seiten', () => {
    * Bekannte, bewusst offene Fälle. Kein Freibrief: wer hier etwas einträgt,
    * muss den Grund danebenschreiben.
    *
-   * `/private-feier/`: Der Titel kommt aus `heroTitle` in `events.json` — und
-   * derselbe String ist die SICHTBARE H1 der Seite. Ihn zu kürzen ist eine
-   * Textentscheidung von Gabriele, keine technische. Solange er 88 Zeichen
-   * hat, schneidet Google ihn im Suchergebnis ab.
+   * `/private-feier/` stand hier bis 2026-10-22 (heroTitle mit 88 Zeichen).
+   * Seitdem kürzt `pageTitle()` den <title> am Gedankenstrich und
+   * `metaDescription()` im Layout jede Beschreibung — die sichtbare H1 bleibt.
    */
-  const AUSNAHMEN: Record<string, 'titel' | 'beschreibung' | 'beides'> = {
-    '/private-feier/': 'beides',
-  };
+  const AUSNAHMEN: Record<string, 'titel' | 'beschreibung' | 'beides'> = {};
 
   const sitemapPfad = path.resolve('./dist/sitemap-0.xml');
 
@@ -184,6 +181,7 @@ describe.skipIf(!distDa)('Snippet-Längen der indexierbaren Seiten', () => {
   const entschluesseln = (s: string): string =>
     s
       .replace(/&amp;/g, '&')
+      .replace(/&#38;/g, '&') // Astro schreibt „&“ in Attributen so
       .replace(/&quot;/g, '"')
       .replace(/&#39;/g, "'")
       .replace(/&lt;/g, '<')

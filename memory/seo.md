@@ -85,6 +85,21 @@ Bindestrich-Wort großgeschrieben. **Nur für Anzeige, nie für URLs/Slugs.**
 **Title-Längen:** Stadt-Titel bewusst kurz (`Eventkünstler {Stadt} – Live-Kunst | Kunstwolff`,
 ≤ 60 Zeichen) gegen SERP-Truncation. `skills.json`-`description` ≤ 155 Zeichen halten.
 
+**Längen-Riegel im Layout (seit 2026-10-22, `src/utils/seoSnippet.ts`):**
+`Layout.astro` schickt JEDE Beschreibung durch `metaDescription()` (≤ 155 Zeichen,
+ganze Sätze bevorzugt, sonst Wortschnitt mit „…"). Grund: die Event-Beschreibung
+aus dem Admin ist zugleich der sichtbare Untertitel und darf dort lang sein — nur
+die Meta-Fassung wird gekürzt, nichts wird erfunden. Stadt- und Eventtitel laufen
+durch `pageTitle()`: zu lang → erst „– Live-Kunst" bzw. der Teil nach „ - "/„!"
+weg, dann die Marke. Die H1 bleibt immer unverändert. Deshalb steht
+`/private-feier/` nicht mehr in den Ausnahmen von `tests/seo-meta.test.ts`.
+
+**Beschreibungen je Seitentyp (Stand 2026-10-22):**
+- Startseite: eigener Titel/Beschreibung in `src/pages/index.astro` (vorher Layout-Standard, ohne Suchbegriff).
+- Stadtseite: beginnt mit der Admin-Überschrift (`{landingHeading} buchen: …`), damit Titel, H1 und Snippet dasselbe Thema tragen.
+- Skill×Anlass: erster Absatz des Kombi-Leads (`comboContent.ts`) statt der 100-Zeichen-Schablone; der sichtbare Untertitel bleibt die Schablone.
+- `og:site_name` und `og:locale` (de_DE/fr_FR) setzt das Layout.
+
 **Wo Title/Description anpassen:**
 
 | Was | Wo |
@@ -147,7 +162,7 @@ Vollautomatisch beim Build generiert. Keine manuelle Pflege.
 | :-- | :-- |
 | Homepage `/` | `LocalBusiness` |
 | Skill-Seite `/schnellzeichner-karikaturist/` | `Service` |
-| Stadtseite `/berlin/` | `BreadcrumbList` |
+| Stadtseite `/berlin/` | `BreadcrumbList` + `Service` (seit 2026-10-22: `areaServed` = Ort, `provider` per `@id` = LocalBusiness der Startseite) |
 | Skill+Stadt `/berlin-schnellzeichner-karikaturist/` | `BreadcrumbList` |
 | FAQ-Seite `/faq/` | `FAQPage` |
 

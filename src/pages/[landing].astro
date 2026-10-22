@@ -50,6 +50,7 @@ import EventAblauf from '../components/events/EventAblauf.astro';
 import EventPakete from '../components/events/EventPakete.astro';
 import EventSkills from '../components/events/EventSkills.astro';
 import EventReferenzen from '../components/events/EventReferenzen.astro';
+import { pageTitle } from '../utils/seoSnippet';
 import {
   getEventSlugs,
   getEventBySlug,
@@ -98,6 +99,7 @@ let landingHeading = '';
 let landingIntro = '';
 let cityName = '';
 let breadcrumbSchema: unknown;
+let cityServiceSchema: unknown;
 
 if (pageType === 'landing') {
   landingData = getLandingBySlug(landing ?? '');
@@ -118,8 +120,27 @@ if (pageType === 'landing') {
   // „Nordrhein-Westfalen" bleibt mit dem Standard-Heading bei 59 Zeichen; eine
   // im Admin getippte Überschrift kann darüber gehen — dann kürzt Google, was
   // immer noch besser ist als ein Titel, der der H1 widerspricht.
-  landingPageTitle = `${landingHeading} – Live-Kunst | Kunstwolff`;
-  landingPageDescription = `Kunstwolff in ${cityName}: Professionelle Eventkünstler für Firmenfeiern, Messen & Hochzeiten. Schnellzeichner, Szenenmaler & mehr.`;
+  // pageTitle(): eine lange Admin-Überschrift verliert erst „– Live-Kunst“,
+  // statt dass Google den Titel mitten im Wort abschneidet.
+  landingPageTitle = pageTitle(`${landingHeading} – Live-Kunst`);
+  // Beschreibung greift die Überschrift (= Titel = Suchbegriff) auf, statt mit
+  // „Kunstwolff in …" ein drittes Thema aufzumachen. Lange Überschriften kürzt
+  // das Layout auf ganze Sätze (≤ 155 Zeichen).
+  landingPageDescription = `${landingHeading} buchen: Live-Karikaturen, Szenenmalerei & Graphic Recording für Firmenfeier, Messe & Hochzeit in ${cityName}. Seit über 25 Jahren.`;
+
+  // Service mit Ortsbezug: sagt Google, WAS hier WO angeboten wird. Der
+  // Anbieter ist per @id das LocalBusiness der Startseite (dort vollständig mit
+  // Adresse und Telefon), statt die Firmendaten hier ein zweites Mal zu pflegen.
+  cityServiceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: landingHeading,
+    description: landingPageDescription,
+    url: `${site}/${landing}/`,
+    serviceType: 'Eventkünstler – Schnellzeichner, Karikaturist, Szenenmaler, Graphic Recording',
+    areaServed: { '@type': 'Place', name: cityName },
+    provider: { '@type': 'LocalBusiness', '@id': `${site}/#organisation`, name: 'Kunstwolff', url: `${site}/` },
+  };
 
   breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -161,7 +182,9 @@ if (pageType === 'event') {
   eventTitleImageAspect = resolveEventTitleImageAspect(landing ?? '');
   eventTitleImageMeta = resolveEventTitleImageMeta(landing ?? '');
 
-  eventPageTitle = `${eventData.heroTitle ?? eventData.title} | Kunstwolff`;
+  // pageTitle(): ein langer heroTitle wird auf den Teil vor „ - “/„!“ gekürzt
+  // (nur im <title>, die sichtbare H1 bleibt).
+  eventPageTitle = pageTitle(eventData.heroTitle ?? eventData.title);
   eventPageDescription = eventData.description ?? `Kunstwolff – Live-Kunst für ${eventData.title}. Professionelle Eventkünstler für unvergessliche Momente.`;
 
   eventBreadcrumbSchema = {
@@ -291,6 +314,7 @@ const langAlternates = getAvailableLocalesForSlug(landing ?? '').map((loc) => ({
   ══════════════════════════════════════════════════ -->
   <Layout title={landingPageTitle} description={landingPageDescription} image={landingData.titleImage} alternates={langAlternates}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(cityServiceSchema)} />
     {sectionOrder.map((id) => {
       if (!isComponentEnabled(pt, landing ?? '', id)) return null;
       const props = sectionProps[id];
