@@ -116,7 +116,7 @@ nichts. Einzige Ausnahme: `skills.enabled` auf der Skill+Event-Kombiseite
 | | `duration` | string | ja | Zeitangabe |
 | | `price` | string | ja | Preis |
 | | `features` | string[] | ja | Feature-Liste |
-| `skills` | `title` | string | nein | Skills werden automatisch aus `events.json` `categories` gelesen |
+| `skills` | `title` | string | nein | Skills werden automatisch aus `events.json` `categories` gelesen (Abgleich mit dem Skill-Titel ohne Gross/klein, Leer- und Bindestriche: `Event-Zeichner` = `Eventzeichner`, seit 2026-10-22) |
 | `referenzen` | `text` | string | nein | Freitext über Referenzen |
 | | `logos[]` | array | nein | `{ src, alt }` |
 

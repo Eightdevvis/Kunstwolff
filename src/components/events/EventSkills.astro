@@ -32,10 +32,13 @@ const {
 // Alle Skills laden
 const allSkills: SkillItem[] = getVisibleSharedSkills();
 
-// Nach categories filtern wenn angegeben – Vergleich case-insensitive
+// Nach categories filtern wenn angegeben. Verglichen wird ohne Gross/klein,
+// Leer- und Bindestriche: die Kategorien tippt Jenny im Admin von Hand, und
+// „Event-Zeichner" bei Schulung liess die Eventzeichner-Karte still wegfallen.
+const vergleichsSchluessel = (wert: string) => String(wert ?? '').toLowerCase().replace(/[^a-z0-9äöüß]/g, '');
 const filteredSkills = categories.length > 0
   ? allSkills.filter((skill) =>
-      categories.some((cat) => cat.toLowerCase() === skill.title.toLowerCase())
+      categories.some((cat) => vergleichsSchluessel(cat) === vergleichsSchluessel(skill.title))
     )
   : allSkills;
 ---
