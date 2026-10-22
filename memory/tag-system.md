@@ -79,7 +79,7 @@ geseedet, `extra` sind Anlässe ohne eigene Seite (kommen in den Inhalten vor),
 
 **Regeln in `mergeVocabulary()` (scripts/tags.mjs):**
 
-- Neue Seeds kommen dazu; vorhandene Labels werden **nie umbenannt** (Jenny kann
+- Neue Seeds kommen dazu; vorhandene Labels werden **nie umbenannt** (Mama kann
   sie im Admin geändert haben).
 - **Es wird nie etwas entfernt.** Verschwindet eine Stadt aus `landings.md`,
   bleibt ihr Tag: Inhalte könnten noch darauf verweisen, und ein stiller Wegfall
@@ -102,7 +102,7 @@ NFD-Zerlegung, mit zwei Folgen:
   `stra-enfest`, `Größere Gala` wurde `gro-ere-gala`.
 
 Das war vorher folgenlos, weil nur der Sync Slugs erzeugte. Mit der Chip-
-Oberfläche tippt Jenny sie — ab da entscheidet die Funktion über Treffer oder
+Oberfläche tippt Mama sie — ab da entscheidet die Funktion über Treffer oder
 Dublette. Einzige betroffene Vokabel war `jubilaum` (in keinem Inhalt
 referenziert); sie wurde durch `jubilaeum` ersetzt.
 
@@ -222,7 +222,7 @@ machen.
 
 Phase 5b hat die **Website** auf „der Tag entscheidet" umgestellt. Alles daneben
 blieb beim Ordner. Damit existierte jede Zuordnung doppelt — einmal als Tag (was
-der Besucher sieht) und einmal als Ordner (was Jenny im Admin sieht) — und
+der Besucher sieht) und einmal als Ordner (was Mama im Admin sieht) — und
 niemand hielt die beiden zusammen. Gemessen: **126 Tag-Zuordnungen lagen
 außerhalb des Ordners, den der zugehörige Admin-Tab listete, 107 davon auf einer
 gebauten Seite.**
@@ -314,7 +314,7 @@ vergessener Tag auf, weil der Inhalt nirgends auftaucht.
 
 ## Abdeckung je Inhaltstyp
 
-⚠️ **Diese Zahlen veralten schneller als der Rest der Memory** – Jenny lädt Bilder und
+⚠️ **Diese Zahlen veralten schneller als der Rest der Memory** – Mama lädt Bilder und
 Bewertungen im Admin nach, ohne dass hier jemand nachzieht. Sie sagen etwas über die
 Größenordnung und über die Abdeckung („alle" vs. „ein Teil"), nicht über den Tagesstand.
 Nachzählen statt glauben:

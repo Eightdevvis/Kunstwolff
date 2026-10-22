@@ -17,7 +17,7 @@ hole im Hintergrund den neuen".
 ## Warum NICHT `immutable` / `max-age=31536000`
 
 Das ist der übliche Rat für Bilder – hier wäre er **falsch**. Das Admin-Tool
-schreibt Bilder unter **demselben Dateinamen** zurück: ersetzt Jenny ein Motiv
+schreibt Bilder unter **demselben Dateinamen** zurück: ersetzt Mama ein Motiv
 oder ändert sie den Titelbild-Rahmen, bleibt der Pfad gleich. Mit `immutable`
 sähen wiederkehrende Besucher bis zu ein Jahr lang die alte Fassung, ohne dass
 irgendetwas kaputt aussieht – der schlimmste Fehlertyp, weil ihn niemand meldet.

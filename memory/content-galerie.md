@@ -143,7 +143,7 @@ Beide Richtungen sind als Test festgenagelt.
 `tagLabel(slug, vokabularLabel)`, Rangfolge:
 
 1. Label aus `tags.json`, **wenn es sich vom Slug unterscheidet** (dann ist es
-   gepflegt – Jenny kann es im Admin geändert haben).
+   gepflegt – Mama kann es im Admin geändert haben).
 2. Ausnahmeliste `LABEL_AUSNAHMEN` in `gallery.ts`.
 3. Titelfall des Slugs, Bindestriche bleiben (`rhein-main-gebiet` →
    `Rhein-Main-Gebiet`).

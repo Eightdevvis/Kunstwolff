@@ -1,14 +1,13 @@
 # WIP – Nicht eingebundene Komponenten
 
 Diese Components existieren im Code, sind aber aktuell **nirgendwo in Pages/Layouts
-importiert**. Es sind fünf, und sie zerfallen in zwei Gruppen – der Unterschied
-entscheidet, was man mit ihnen tun darf.
+importiert** (Stand 2026-10-22). Es sind vier, und sie zerfallen in zwei Gruppen – der
+Unterschied entscheidet, was man mit ihnen tun darf.
 
 ### Bewusst vorbereitet, noch nicht live
 
 | Component | Zweck |
 | :-- | :-- |
-| `src/components/hero/SchnellzeichnerHero.astro` | Alternativer Hero-Block für Schnellzeichner-Seiten (helles Design, Grid-Layout mit MiniReviews + BrandStripe) |
 | `src/components/about/AboutSchnellzeichner.astro` | Skill-spezifische About-Sektion mit festem Schnellzeichner-Text und Bild-Slot |
 
 ### Altlasten – abgelöst, aber nie entfernt
@@ -27,4 +26,6 @@ und in keinem `_order`. Zieht ihn jemand im Admin in den Stack, bricht der Websi
 **Beim Refactoren beachten:** Die Files der ersten Gruppe nicht entfernen, nur weil sie
 nicht referenziert sind – sind absichtlich da.
 
-**Nicht mehr WIP:** `src/components/Eventtypes.astro` ist inzwischen live – importiert und in der Sektions-Component-Map registriert in `src/pages/index.astro` (Import Z. 11, `eventtypes:` Z. 39) und `src/pages/[landing].astro` (Import Z. 27, `eventtypes:` Z. 184, sectionProps Z. 202).
+**Nicht mehr WIP:** `src/components/Eventtypes.astro` ist live – importiert und in der Sektions-Component-Map (`eventtypes:`) registriert in `src/pages/index.astro`, `src/pages/[landing].astro` und `src/pages/fr/[landing].astro`.
+
+**Gelöscht:** `src/components/hero/SchnellzeichnerHero.astro` (2026-08-06, `8f6063d`, von keiner Seite importiert – siehe `seo.md`).

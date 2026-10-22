@@ -7,7 +7,7 @@
 // Dazu die Anlässe aus EXTRA_EVENTS, die in den Inhalten vorkommen, aber
 // (noch) keine eigene Seite haben.
 //
-// Jenny kann im Admin eigene Tags anlegen; die tragen `source: "custom"` und
+// Mama kann im Admin eigene Tags anlegen; die tragen `source: "custom"` und
 // werden hier NIE angefasst. Auch geseedete Einträge werden nie entfernt –
 // siehe mergeVocabulary() in tags.mjs für die Begründung.
 

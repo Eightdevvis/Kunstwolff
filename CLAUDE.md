@@ -18,6 +18,12 @@
 
 6. **`ANLEITUNGEN/` ist Endbenutzer-Doku** (deutsch, nicht-technisch) – nicht für Claude. Aber: bei Änderungen an dort dokumentierten Workflows trotzdem mitpflegen, da Endbenutzer darauf angewiesen sind.
 
+7. **`main` ist live.** Jeder Push auf `main` (und jedes Admin-Veröffentlichen) geht über Vercel sofort auf `www.kunstwolff.de`. Es gibt keine Stage.
+
+8. **Bug-Zettel:** Wer einen Punkt aus `zettel/bugs.json` fixt, setzt im selben Commit `status: "gefixt"`, `gefixtAm` und eine kurze `antwort` in Alltagssprache (`zettel/LIESMICH.md`).
+
+9. **Namen:** Den Admin bedient **Mama** (Gabriele, im Code/KI-Prompt „mom"). **Jenny** ist Sasha – Entwicklerin und Künstlerin (Team-Seite). In Doku und Kommentaren nicht verwechseln.
+
 ## Einstieg
 
 Projekt-Übersicht: `memory/projekt.md`

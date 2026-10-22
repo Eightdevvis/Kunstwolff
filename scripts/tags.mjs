@@ -35,7 +35,7 @@ export const normalize = (value) =>
  * heraus: „Straßenfest“ wurde zu „stra-enfest“, „Größere Gala“ zu
  * „gro-ere-gala“.
  *
- * Das ist kein Schönheitsfehler: sobald Jenny im Admin einen Tag TIPPT statt
+ * Das ist kein Schönheitsfehler: sobald Mama im Admin einen Tag TIPPT statt
  * ihn auszuwählen, entscheidet diese Funktion, ob sie den vorhandenen Tag
  * trifft oder lautlos einen zweiten anlegt.
  */
@@ -89,7 +89,7 @@ const entry = (label, source) => ({ slug: slugifyTag(label), label: String(label
  * priority nie`:
  * - Neue Seeds kommen dazu.
  * - Vorhandene Einträge behalten ihr Label; der Sync benennt nichts um, weil
- *   Jenny es im Admin geändert haben kann.
+ *   Mama es im Admin geändert haben kann.
  * - **Nichts wird je entfernt.** Verschwindet eine Stadt aus landings.md, bleibt
  *   ihr Tag stehen: Inhalte könnten noch darauf verweisen, und ein stiller
  *   Wegfall würde sie unsichtbar aus Seiten kippen. Aufräumen ist Handarbeit.
@@ -137,7 +137,7 @@ export function mergeVocabulary(existing, seeds, seedSource) {
 /**
  * Bringt eine Tag-Liste aus Inhalten (z.B. `anlaesse` an einem Bild) auf
  * bekannte Slugs: normalisiert, entdoppelt, verwirft Leeres. Unbekannte Slugs
- * bleiben erhalten – sie zu schlucken würde Jennys frisch angelegte Tags
+ * bleiben erhalten – sie zu schlucken würde Mamas frisch angelegte Tags
  * verschwinden lassen, bevor der nächste Sync sie ins Vokabular aufnimmt.
  */
 export function normalizeTagList(values) {

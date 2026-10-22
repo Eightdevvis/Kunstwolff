@@ -46,12 +46,27 @@ Geprüft werden drei Dimensionen **einzeln und mit UND** verknüpft:
 
 | Dimension | FAQ-Feld | Regel |
 | :-- | :-- | :-- |
-| Skill | `tags.skills` + `categories` | leer ⇒ gilt für jeden Skill |
-| Anlass | `tags.events` | leer ⇒ gilt für jeden Anlass |
-| Ort | `tags.landings` | leer ⇒ gilt für jeden Ort |
+| Skill | `tags.skills` + `categories` | leer ⇒ Enthaltung (kein Veto, aber auch kein Treffer) |
+| Anlass | `tags.events` | leer ⇒ Enthaltung |
+| Ort | `tags.landings` | leer ⇒ Enthaltung |
 
-Innerhalb einer Dimension heißt **leer = gilt überall**. Das ersetzt den `default/`-Ordner:
-„allgemein" ist jetzt eine Eigenschaft des Inhalts, nicht seines Ablageorts.
+⚠️ **„Leer" heißt zweierlei – genau auseinanderhalten** (Stand Code 2026-10-22,
+`matchesFAQContext` in `src/utils/faq.ts`):
+
+- **Eine leere Dimension** ist eine Enthaltung: sie blockiert nicht. Trägt die FAQ
+  in einer *anderen* abgefragten Dimension einen Treffer, erscheint sie – auf **jeder**
+  Seite mit diesem Treffer. Beispiel 21.10.2026: drei Saarland-FAQs mit Skill-Tag, aber
+  `landings: []`, standen auf allen Schnellzeichner-Stadtseiten (behoben in `2e4992e`
+  durch Nachtragen des Ort-Tags). `sync-faq-tags` füllt eine **vorhandene** leere Liste
+  absichtlich nicht nach.
+- **Eine FAQ ganz ohne Tags** hat keinen Treffer und erscheint **nirgends** – außer sie
+  liegt in `public/faq/default/` (Auffüll-Topf, `istAuffueller`). Siehe „Leer heisst
+  nirgends" unten.
+
+Der Admin (`passtZuAuswahl` in `kunstwolff-admin/src/services/tagAuswahl.ts`) bildet das
+nur grob nach: dort zählt eine leere Dimension als „passt", und eine FAQ ganz ohne Tags
+passt auf **jede** Seite (Kennzeichen „gilt überall"). Auf der Website stimmt das nur für
+FAQs in `default/`.
 
 Sortierung: FAQs, die den Kontext ausdrücklich nennen, stehen vor den allgemeinen.
 Sonst entschiede die Lesereihenfolge der Dateien, was in die ersten `maxItems` (Default 4)
@@ -76,7 +91,7 @@ nicht-leere, aber kurze Liste zurückgab.
 Skills aus `categories`, `default/` bleibt absichtlich ohne Ort-Tag. Vorhandene
 `tags:`-Blöcke werden **nie** angefasst. Anlässe rät das Script bewusst **nicht** aus
 dem Text (anders als bei Reviews) – ein geratener Anlass würde eine allgemeine Frage
-still zu einer Anlass-Frage machen. Anlässe vergibt Jenny im Admin über die Tag-Chips.
+still zu einer Anlass-Frage machen. Anlässe vergibt Mama im Admin über die Tag-Chips.
 
 Der Schritt läuft in `sync:content:safe`, also bei jedem `dev`/`build` – **nach**
 `sync:tags`, weil ein Ort ohne Vokabular-Eintrag verworfen wird.

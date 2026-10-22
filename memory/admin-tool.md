@@ -9,7 +9,7 @@
 Eigenständige Vite + Preact + TypeScript + Tailwind-App, die **in dieses Repo schreibt**. Schnittstelle:
 
 ```
-Browser → Server-Backend (GITHUB_PAT server-seitig) → GitHub REST API → Kunstwolffwebsite-Repo → Vercel-Build → Stage/Production
+Browser → Server-Backend (GITHUB_PAT server-seitig) → GitHub-API → Website-Repo (`Eightdevvis/Kunstwolff`, Branch `main`) → Vercel-Build → www.kunstwolff.de (live)
 ```
 
 Auth: **zwei Modi.**
@@ -18,18 +18,19 @@ Auth: **zwei Modi.**
 
 **Backend:** Cloudflare-Worker (**hono**, `worker/wrangler.toml` name `kunstwolff-admin-api`, deploy via `wrangler`) plus Express-Backend (`server/index.mjs`: express + `jsonwebtoken` + `bcryptjs` + `@libsql/client`).
 
-**Remote:** `git@github.com:Eightdevvis/kunstwolff-admin.git` – Default-Branch und Live-Deploy-Quelle ist **`master`** (nicht `main`). `main` existiert parallel und hat nur Bugfixes; `master` enthält zusätzliche Features (Cloudflare-Worker, Multi-User, EventManager). Lokal kann HEAD trotzdem auf `main` sein – das ist nur die lokale Setup-Default.
+**Remote:** `git@github.com:Eightdevvis/kunstwolff-admin.git` – Default-Branch und Live-Deploy-Quelle ist **`master`**. `main` ist **verwaist** (alte Struktur, nicht verwenden; Details Admin-`memory/deployment.md`).
 
-**Deployment:** Admin-Frontend als Vite-SPA auf **Vercel** (`kunstwolff-admin.vercel.app`, s. `ADMIN_ALLOWED_ORIGIN` in `worker/wrangler.toml`); Backend-Worker via `wrangler` auf Cloudflare. Kein GitHub Pages / keine gh-actions.
+**Deployment:** Admin-Frontend als Vite-SPA auf **Vercel** (`kunstwolff-admin.vercel.app`, s. `ADMIN_ALLOWED_ORIGIN` in `worker/wrangler.toml`), baut automatisch bei Push auf `master`. Der Backend-Worker geht **nicht** über Vercel, sondern nur per `npm run worker:deploy` (wrangler) – und zwar ⚠️ **nur aus einem frischen Checkout von `origin/master`**. Am 05.10.2026 wurde aus einem veralteten lokalen Checkout deployt; der live Worker kannte danach die Freigabe für `zettel/bugs.json` nicht, und der Bug-Zettel lieferte 403 `forbidden_path`. Details: Admin-`memory/deployment.md`.
 
-> **Hosting-Stand 2026-05-05:** Der Vercel-Build der Website läuft als Stage auf `kunstwolff.vercel.app`. Die echte Domain `kunstwolff.de` zeigt noch auf Wix – Admin-Edits erreichen also aktuell **die Stage**, nicht den Production-Traffic. Dieser Zustand ist gewollt bis zum Cutover. Befunde: `HEALTH_CHECK_2026-05-05.md`. Cutover-Ablauf (URL-Mapping, DNS, Vercel-Settings, Rollback): `CUTOVER_PLAN.md` – beide im Website-Repo-Root.
+> **Hosting-Stand (2026-10-22):** Die Website ist live auf `www.kunstwolff.de` (Cutover seit August 2026). Jedes Admin-Veröffentlichen ist damit sofort **Production** – es gibt keine Stage mehr dazwischen.
 
 ## Cross-Repo-Doku
 
-Bei jeder Cross-Repo-Arbeit beide lesen (liegen flach im Admin-Repo-Root):
+Bei jeder Cross-Repo-Arbeit zuerst:
 
-- `kunstwolff-admin/README.md` – vollständige Funktions- und Format-Doku
-- `kunstwolff-admin/CLAUDE.md` – Claude-spezifische Kurzübersicht + Cross-Repo-Workflow
+- `kunstwolff-admin/memory/index.md` – Themen-Index der Admin-Memory (der aktuelle, gegen den Code gehaltene Stand), daraus gezielt `cross-repo.md` und die passenden `manager-*.md`
+- `kunstwolff-admin/CLAUDE.md` – Kurzübersicht + Cross-Repo-Workflow
+- `kunstwolff-admin/README.md` ist lang und teils älter als die Memory – nur nachschlagen, bei Widerspruch gilt die Memory bzw. der Code
 
 > Die früher hier verlinkten `BUGS_TODO.md` und `human_doc_bugs.md` (im Website-Repo-Root) existieren **nicht mehr** – nicht mehr referenzieren. Offene Lücken stehen direkt in der Admin-README bzw. im Admin-`memory/`.
 
@@ -53,7 +54,7 @@ Bei jeder Cross-Repo-Arbeit beide lesen (liegen flach im Admin-Repo-Root):
 | `public/branding/`, `public/canvas/`, `public/du-bist-kunst/`, `public/stimmung-durch-kunst/` je `content.json` | Why-Detailseiten-Manager – siehe `content-why.md` |
 | `public/events/events.json` + `public/events/{slug}/content.json` | `EventManager.tsx` (Dashboard-Quick-Add schreibt `events.json` mit) |
 | `public/cinema/cinema.json` | `CinemaManager.tsx` |
-| `public/skills/skills.json` | `Dashboard.tsx` |
+| `public/skills/skills.json` | `Dashboard.tsx` (Quick-Add „+ Neu“) und das Überschrift-Feld im Interface (`heroTitle` = H1 der Skill-Seite, `interface/ueberschriften.ts`) |
 | `public/config/tags.json` (Tag-Vokabular) | `services/tagVocabulary.ts` – aus Quick-Add (Skill/Event/Landing), `CityManager`, Tag-Chips und Mediathek. **Seit 2026-07-30**, vorher schrieb es niemand fort und ein neuer Skill war im Admin nicht auswählbar; siehe `tag-system.md` „⚠️ `tags.json` muss COMMITTED werden" |
 | `slides.meta.json` (`tags` mengenweise setzen) | `MediaLibrary.tsx` – Umsortieren-Modus; Uploads landen in `public/img/slides/mediathek/…`. Seit 2026-07-30 auch aus **KI-Tagvorschlägen** (die KI sieht die Fotos an, schreibt aber nie selbst – siehe Admin-Memory `ki-faehigkeiten-und-vision.md`) |
 | `public/partners/partners.json` + `public/img/partners/{id}.{ext}` (Logos, webp) | `PartnerManager.tsx` |
@@ -105,6 +106,30 @@ ist dann ein bewusster zweiter Klick statt eines stillen Versehens.
 > Aktuelle Restlücken werden nicht mehr in einer separaten Bug-Datei geführt (`BUGS_TODO.md` existiert nicht mehr), sondern direkt in der Admin-README bzw. im Admin-`memory/`.
 
 WebP-Konvertierung ist **keine Lücke mehr**: das Admin-Tool konvertiert Uploads browser-seitig (`src/utils/imageWebp.ts` `imageToWebpUpload`, genutzt von `ImageManager`, `CinemaManager`, `PartnerManager`, `BrandStripeManager`, `MediaLibrary`), lädt also bereits `.webp` hoch (siehe `git-hooks.md`).
+
+## Was die Website gegen kaputte Admin-Eingaben tut (Stand 2026-10-22)
+
+Auf dem Admin-Weg laufen **keine Git-Hooks und keine Tests** – ein Eintrag, der den Build
+bricht, legt **jede** weitere Veröffentlichung lahm (so geschehen am 05.10.2026 mit dem
+Event-Slug `Kunstwolff.de/Tagung`). Deshalb prüfen beide Seiten:
+
+| Eingabe | Website (Build) | Admin (beim Anlegen) |
+| :-- | :-- | :-- |
+| Event-Slug mit `/ ? # \`, `.`/`..` | Eintrag wird mit Warnung **übersprungen** (`getEvents` in `src/utils/events.ts`) | `pruefeNeuesEvent` (`utils/neuesEvent.ts`): Slug immer per `slugify`, eingefügte Adresse → letzter Teil |
+| Zahl als Event-Titel/-Slug | per `String()` gelesen statt Absturz (vorher verschwanden **alle** Events) | – |
+| Dubletten (gleicher Slug/Titel in anderer Schreibweise) | – | abgewiesen (`pruefeNeuesEvent`) |
+| Adresse schon belegt (Event „berlin", Stadt „team", Skill mit Event-Namen) | doppelte Route bräche den Build | abgewiesen (`utils/adressen.ts`, `FESTE_SEITEN` muss zu `src/pages/` passen) |
+| Skill-`link` ohne/mit Schrägstrichen, ganze URL | vereinheitlicht bzw. Rückfall auf den Titel mit Warnung (`content-skills.md`) | – |
+| zu lange Event-/Skill-Beschreibung | nur die **Meta**-Fassung wird gekürzt (`src/utils/seoSnippet.ts`, ≤ 155 Zeichen), der sichtbare Untertitel bleibt | – |
+
+Und im Admin selbst: **ein Lesefehler sperrt den Editor** statt mit leerem Inhalt zu
+starten (`istNichtGefunden` in `services/github-errors.ts`; nur 404 heißt „Datei leer").
+Vorher konnte ein Rate-Limit dazu führen, dass `site-texts/content.json` ohne Einführungstexte
+oder `skills.json` ohne Skills überschrieben wurde.
+
+⚠️ **Bekannt offen:** Veröffentlichen schreibt **ganze Dateien** ohne SHA-Vergleich. Wer
+eine Datei hier im Repo ändert, während im Admin ein Entwurf derselben Datei offen ist,
+verliert seine Änderung beim nächsten Admin-Publish still (Admin-`memory/publish-workflow.md`).
 
 ## Vor Änderungen an `public/`-Strukturen ZWINGEND prüfen
 
@@ -166,6 +191,13 @@ Was das für Änderungen an `public/` bedeutet:
   fehlende Dimension trägt der Sync aus dem Ordner nach, eine ausdrücklich leere
   lässt er stehen. Das ist der Unterschied zwischen „noch nie eingeordnet" und
   „bewusst entfernt".
+- ⚠️ **Ausnahme `categories` bei Bildern:** ein **leeres** `categories` in
+  `slides.meta.json` rät `sync-slides-metadata.mjs` bei **jedem** Lauf neu aus dem
+  Dateinamen (`inferCategoriesFromFileName`), und fehlt `tags.skills`, wird es aus
+  diesen `categories` gefüllt. Ein im Admin entfernter Skill kann so nach dem nächsten
+  Build wieder dastehen, und Bilder im Mediathek-Pool landen auf Skill-Seiten, obwohl
+  der Admin sie für „unzugeordnet" hält. Details: `content-slides.md`, Abschnitt
+  „Automatik".
 - **FAQs von Anlass-Seiten landen in `public/faq/default`**, nicht in einem
   neuen Ordner `faq/events/<slug>`. Dort liegen die bestehenden 12 Anlass-FAQs
   auch; ihren Anlass tragen sie ausschließlich als Tag.

@@ -247,7 +247,7 @@ export const getAllFAQs = (locale: Locale = DEFAULT_LOCALE): FAQItem[] => {
  *
  * Vorher entschied `getFAQsByCity` über den ORDNER, welche FAQs überhaupt in
  * Frage kamen; die Tags durften danach nur noch aussieben. Eine FAQ, die per
- * Tag nach Trier gehörte, aber woanders lag, erschien deshalb nie – und Jenny
+ * Tag nach Trier gehörte, aber woanders lag, erschien deshalb nie – und Mama
  * konnte im Admin Tags vergeben, die nichts bewirkten.
  *
  * Jetzt entscheiden die Tags, und zwar allein. Der Ordner bestimmt beim Anlegen

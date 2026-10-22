@@ -49,6 +49,20 @@ Zweite Lücke, gleiches Datum geschlossen: `allowedExtensions` kannte nur `jpg/j
 
 Weil `sync:content` im Hook läuft, können neu generierte Dateien automatisch zum Commit hinzugefügt werden – auch solche die vorher nicht gestaged waren. Das ist gewollt.
 
+⚠️ **Praktisch heißt das: fast jeder lokale Commit nimmt `public/config/lastmod.json` und
+`public/img/slides/slides.meta.json` mit**, auch wenn man nur eine `.astro`-Datei oder
+Doku geändert hat (Beispiel `457ed1f`: EventSkills-CSS + 2 generierte Dateien).
+`sync:lastmod` rechnet aus der Git-Historie, `sync:slides` normalisiert die Meta-Datei;
+die `git add`-Liste des Hooks umfasst `public/config` und `public/img/slides`. Das ist
+kein Fehler, aber:
+
+- Vor dem Commit nicht wundern, und den Diff dieser zwei Dateien nicht von Hand „aufräumen".
+- Der Hook braucht `node_modules` (sharp, js-yaml …). In einem frischen Worktree ohne
+  `npm install` scheitert er – dann `node_modules` aus dem Haupt-Checkout verlinken,
+  **nicht** `--no-verify`.
+- Auf dem Admin-Weg (GitHub-API) läuft der Hook nicht; dort übernimmt der Build
+  (`prebuild` → `sync:content:safe`) bzw. die Action `sync-landings.yml`.
+
 ## Pre-Push-Detail: Automatische Bildoptimierung
 
 Workflow für Endbenutzer: Bild (`.jpg`, `.jpeg`, `.png`, `.gif`) in beliebige Unterordner von `public/img/` legen → committen → pushen. Der Pre-Push-Hook macht dann automatisch:

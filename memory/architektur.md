@@ -9,7 +9,7 @@
 
 **Folge:** Es gibt keine Datenbank, keinen Backend-Server, kein Runtime-CMS. Alles ist im Repo. Änderungen → committen → Vercel rebuilds.
 
-> **Hosting-Stand 2026-05-05:** Das Astro-Build läuft als Stage unter `https://kunstwolff.vercel.app`. Die Production-Domain `kunstwolff.de` zeigt noch auf die alte Wix-Site – Cutover steht aus. Build-Output bekommt host-spezifisch entweder `index, follow` oder `noindex, nofollow` (siehe `seo.md` "Stage vs. Production"). Status & offene Tickets: `HEALTH_CHECK_2026-05-05.md` im Projekt-Root.
+> **Hosting-Stand (geprüft 2026-10-22):** Live unter `https://www.kunstwolff.de` (Cutover von Wix seit August 2026 durch, Apex → 308 → `www`). Jeder Push auf `main` – auch jedes Admin-Veröffentlichen – geht über Vercel direkt live; eine Stage gibt es nicht mehr. `<meta robots>` hängt am Host von `site` (`SITE_URL`), siehe `seo.md`. `HEALTH_CHECK_2026-05-05.md` ist historisch.
 
 ## Drei Inhaltsachsen
 

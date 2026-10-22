@@ -295,7 +295,7 @@ const readMetadata = () => {
         // Tag-Block MUSS hier durchgereicht werden. Diese Funktion normalisiert
         // und wirft dabei alles Unbekannte weg – bliebe `tags` unerwähnt, läse
         // der Sync sie nie, würde sie bei jedem Lauf neu aus Pfad/Dateiname
-        // erraten und damit jede Zuordnung überschreiben, die Jenny im Admin
+        // erraten und damit jede Zuordnung überschreiben, die Mama im Admin
         // gesetzt hat. Ein leeres Array ist eine bewusste Aussage („gehört
         // nirgends hin") und muss ebenfalls erhalten bleiben – deshalb wird auf
         // Array-Existenz geprüft, nicht auf Länge.

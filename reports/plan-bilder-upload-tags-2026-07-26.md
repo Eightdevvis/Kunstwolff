@@ -2,7 +2,7 @@
 
 **Datum:** 2026-07-26
 **Umfang:** beide Repos (`Kunstwolffwebsite`, `kunstwolff-admin`)
-**Anlass:** (1) Fotos laden langsam auf der Astro-Site, (2) Jenny wird beim Hochladen
+**Anlass:** (1) Fotos laden langsam auf der Astro-Site, (2) Mama wird beim Hochladen
 von GitHub gedrosselt obwohl das „schon gefixt" war, (3) der Umbau auf das
 Tag-System steht noch aus.
 **Status:** Phase 1, 2 und 3 **erledigt und live** (2026-07-26). Phase 4–6 offen.
@@ -65,7 +65,7 @@ bleibt der ganze Draft erhalten, *„ein erneuter Klick re-committet den komplet
 Batch"*. Genau das ist bei Rate-Limit fatal:
 
 1. Upload bricht bei Bild 60 von 100 ab.
-2. Jenny sieht „bitte 1–2 Minuten warten" (`Dashboard.tsx:263`).
+2. Mama sieht „bitte 1–2 Minuten warten" (`Dashboard.tsx:263`).
 3. Sie klickt erneut → **alle 100 Blobs gehen erneut raus**.
 4. Kontingent ist wieder weg, bevor Bild 60 erreicht ist.
 
@@ -198,7 +198,7 @@ vorhandene Übergrößen unberührt.
 - Tests für beide Kappungen; `git-hooks.md` + `publish-workflow.md` nachziehen.
 
 **Ergebnis:** neue Uploads sind 3–4× kleiner. Die *Anzahl* der Requests ändert
-sich nicht — Jennys Limit-Problem löst das noch nicht.
+sich nicht — Mamas Limit-Problem löst das noch nicht.
 
 ## Phase 2 — Upload-Pfad: alles in EINEN Request ✅ ERLEDIGT 2026-07-26
 
@@ -223,7 +223,7 @@ sich nicht — Jennys Limit-Problem löst das noch nicht.
 **Offen:** End-to-End gegen GitHub. Das geht erst nach dem Deploy von Worker
 und Frontend — siehe „Was noch aussteht" am Ende.
 
-**Warum hier:** entsperrt Jennys Alltag und ist Voraussetzung für Phase 5, in der
+**Warum hier:** entsperrt Mamas Alltag und ist Voraussetzung für Phase 5, in der
 die Tag-Migration ihrerseits viele Schreibvorgänge durch dieselbe Röhre schickt.
 
 ### Der bessere Weg: GraphQL statt REST

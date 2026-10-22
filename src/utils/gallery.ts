@@ -84,7 +84,7 @@ const DIMENSIONEN: Array<{ dimension: TagDimension; label: string }> = [
  * eine kurze, ausdrückliche Liste statt Ratens.
  *
  * Diese Labels sind reine ANZEIGE. Trägt ein Tag in `tags.json` ein eigenes
- * Label (weil Jenny es im Admin gesetzt hat), gewinnt immer dieses – der Sync
+ * Label (weil Mama es im Admin gesetzt hat), gewinnt immer dieses – der Sync
  * benennt vorhandene Labels bewusst nie um, und diese Liste tut es auch nicht.
  */
 const LABEL_AUSNAHMEN: Record<string, string> = {

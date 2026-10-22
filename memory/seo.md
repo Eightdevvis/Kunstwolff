@@ -28,7 +28,12 @@ zur Build-Zeit: siehe `sync-scripts.md`, Schritt 11.
 
 ## Stage vs. Production – `SITE_URL` & `<meta robots>`
 
-Solange `kunstwolff.de` noch auf der alten Wix-Site liegt und Astro nur unter `https://kunstwolff.vercel.app` läuft, gibt es zwei Risiken:
+> **Stand 2026-10-22: erledigt.** Der Cutover ist durch, `SITE_URL` steht in Vercel auf
+> `https://www.kunstwolff.de` (nachprüfbar: Canonical und `og:url` live zeigen auf `www`,
+> der Code-Fallback wäre der Apex). Der Abschnitt bleibt als Erklärung der Mechanik –
+> wichtig, falls je wieder eine zweite Domain/Preview indexierbar zu werden droht.
+
+Solange `kunstwolff.de` noch auf der alten Wix-Site lag und Astro nur unter `https://kunstwolff.vercel.app` läuft, gibt es zwei Risiken:
 
 1. **Sitemap/Canonical zeigen auf den falschen Host.** Astro schreibt `site` zur Build-Zeit fest in Sitemap, Canonical-Links und OG-URLs. Wenn `site` hart auf `kunstwolff.de` steht, leitet die Vercel-Stage-Sitemap Crawler in den 404-Land der Wix-Site.
 2. **Stage wird indexiert.** Vercel-`*.vercel.app`-Domains schickt Vercel zwar default mit `x-robots-tag: noindex`, aber wir verlassen uns nicht darauf, sondern setzen die Meta selbst.

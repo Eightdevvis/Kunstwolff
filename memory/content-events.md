@@ -133,13 +133,56 @@ nichts. Einzige Ausnahme: `skills.enabled` auf der Skill+Event-Kombiseite
 - **Titelbild:** `public/img/Titelbild/events/<slug>/` – genommen wird das **alphabetisch
   erste** Bild (.avif/.gif/.jpeg/.jpg/.png/.webp). Fallback-Kette in
   `resolveEventTitleImage()`: Event-Ordner → `public/img/Titelbild/default/` →
-  `/img/samples/sample1.webp`. `title.meta.json` wird dabei **nicht** gelesen
-  (`content-titelbild.md`).
+  `/img/samples/sample1.webp`. ⚠️ Andere Regel als Start-/Stadtseiten (die sortieren in
+  `titleImages.ts` nach `priority` aus `title.meta.json`, dann Pfad): lädt man ein zweites
+  Event-Titelbild hoch, entscheidet allein der Dateiname, welches live ist. **`title.meta.json` wird seit 2026-10-05 gelesen**
+  (`resolveEventTitleImageMeta`, Commit `ca9545b`): `focus` und `frame` wirken wie im
+  Opener (frame > 0 → contain + weißer Rand). `priority`/`categories`/`enabled` bleiben
+  wirkungslos (`content-titelbild.md`).
 - **Metadaten:** Gleiche `slides.meta.json` wie Stadtslides. Key-Format: `events/<slug>/dateiname.webp`
+
+## Slug-Regeln (seit 2026-10-05)
+
+Der Event-Slug wird zum `[landing]`-Parameter. Ein Slug mit `/`, `?`, `#`, `\` oder nur
+aus Punkten bricht den **ganzen** Build – am 05.10.2026 ging dadurch stundenlang nichts
+live (`Kunstwolff.de/Tagung` im Slug-Feld, daneben eine Dublette „Tagung"; zusammengeführt
+in `828ef22`, Slug jetzt `tagung`). `getEvents()` überspringt solche Einträge seither mit
+Warnung; Zahlen als Titel/Slug werden per `String()` gelesen. Der Admin säubert und prüft
+den Slug schon beim Anlegen (`admin-tool.md`, „Was die Website gegen kaputte
+Admin-Eingaben tut").
+
+## Anlass im Fließtext: `eventPhrase` (Genus-Regel)
+
+Event-Titel sind Überschriften-Labels („Schulung", „Sommerfest", „Private Feier"). Im
+Fließtext brauchen sie den besitzanzeigenden Begleiter. `eventPhrase()` in
+`src/utils/comboContent.ts` liefert Dativ und Akkusativ:
+
+- Standard feminin: „Ihrer Schulung" / „Ihre Schulung"
+- endet auf `…fest` → neutrum: „Ihrem Sommerfest" / „Ihr Sommerfest"
+- Ausnahmen in der Tabelle `EVENT_PHRASE` (z. B. `Private Feier` → „Ihrer privaten Feier")
+
+Neue Ausnahmen **dort** eintragen, nicht im Text. Der Admin nutzt dieselbe Regel für die
+Startüberschriften neuer Events (`eventAkkusativ` in `kunstwolff-admin/src/utils/neuesEvent.ts`,
+„So läuft Ihre Schulung mit uns ab") – wer die Regel ändert, zieht beide mit. Bekannte
+Grenze: die Kombi-Rückfalltexte setzen den Skill-Namen ein („Ein Graphic recording macht
+aus …") und passen grammatisch nicht zu jedem Skill.
+
+## `EventSkills` – Karten „Unsere Künstler"
+
+`src/components/events/EventSkills.astro`. Gezeigt werden die Skills, deren Titel in
+`events.json` `categories` steht (Abgleich ohne Groß/klein, Leer- und Bindestriche).
+Layout: `auto-fit, minmax(280px, 1fr)`; bei nur **1–2 Karten** (`--wenige`) ab 601 px
+`minmax(280px, 300px)` und zentriert – vorher zog `auto-fit` eine einzelne Karte auf
+~960 px und das 220 px hohe Bild schnitt das Porträt zum Streifen (`457ed1f`). Kartentitel
+explizit `#111` (erbten sonst Weiß vom `body`, `636f57f`).
 
 ## Event entfernen
 
 - Eintrag aus `events.json` löschen
+- ⚠️ `/<slug>/` und alle Skill×Anlass-Kombis sind danach sofort 404; eine Weiterleitung
+  in `vercel.json` muss von Hand nachgezogen werden (der Admin kann `vercel.json` nicht
+  schreiben). Verwaiste Ordner (z. B. `public/events/kinderfest/`) überschreibt ein
+  späteres Neuanlegen mit gleichem Slug still mit dem Startinhalt.
 - Ordner manuell löschen: `public/events/<slug>/`, `public/img/slides/events/<slug>/`, `public/img/Titelbild/events/<slug>/`
 
 ## Sync-Script

@@ -193,7 +193,7 @@ describe('sync-tags.mjs', () => {
     expect(second.stdout).toContain('Alles bereits vorhanden');
   });
 
-  it('ueberlebt ein kaputtes tags.json, statt Jennys Tags zu verlieren', () => {
+  it('ueberlebt ein kaputtes tags.json, statt Mamas Tags zu verlieren', () => {
     const { res, tags } = run({
       'public/skills/skills.json': SKILLS,
       'public/config/tags.json': '{ kaputt',

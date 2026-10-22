@@ -207,7 +207,7 @@ const darfAuffuellen = (review: ReviewItem): boolean => review.tagOnly !== true;
 /**
  * Skill-Treffer aus Tag ODER `categories`.
  *
- * `categories` bleibt gültig, weil es das Feld ist, das Jenny im Admin sieht;
+ * `categories` bleibt gültig, weil es das Feld ist, das Mama im Admin sieht;
  * der Tag ist die normalisierte Form davon. Beide zu prüfen kostet nichts und
  * verhindert, dass ein Review durchfällt, dessen Tag-Block noch fehlt.
  */

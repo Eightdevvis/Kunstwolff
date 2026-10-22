@@ -32,7 +32,7 @@
 // das `eventsFromText`, weil dort der Anlass sonst NIRGENDS steht. Bei FAQs
 // würde ein geratener Anlass eine allgemeine Frage stillschweigend zu einer
 // Anlass-Frage machen – genau die Sorte unsichtbarer Automatik, die wir gerade
-// abbauen. Anlässe vergibt Jenny im Admin über die Tag-Chips.
+// abbauen. Anlässe vergibt Mama im Admin über die Tag-Chips.
 
 import fs from 'fs';
 import path from 'path';

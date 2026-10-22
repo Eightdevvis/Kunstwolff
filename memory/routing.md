@@ -14,7 +14,7 @@ Alle Seiten sind statisch (SSG). URLs entstehen automatisch aus `landings.md`, `
 | `/<stadt>-<skill>/` | `skills.json` × `landings.md` | `src/pages/[...kombi].astro` – **flach** seit 2026-08-01 (`cityComboSlug()` in `src/utils/comboUrls.ts`); die alte Form `/<skill>/<stadt>/` lebt nur noch als 301 in `vercel.json` |
 | `/<event>/` | `events.json` | `src/pages/[landing].astro` (mit `pageType: 'event'`) |
 | `/<skill>/<event>/` | `skills.json` × `events.json` | `src/pages/[...kombi].astro` (mit `pageType: 'event'`) |
-| `/fr/<stadt>/` | FR-Overlay (`public/i18n/fr/landings.json`) | `src/pages/fr/[landing].astro` (Mehrsprachen-Fundament, siehe `i18n_foundation.md`) |
+| `/fr/<stadt>/` | FR-Overlay (`public/i18n/fr/landings.json`) | `src/pages/fr/[landing].astro` (Mehrsprachen-Fundament, siehe `i18n.md`) |
 
 ### Statische Standalone-Pages
 

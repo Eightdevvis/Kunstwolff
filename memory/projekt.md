@@ -46,24 +46,32 @@ Vor `dev` und `build` läuft automatisch `npm run sync:content:safe` (als `prede
 | `src/i18n/` | Locale-Registry + Overlay-Auflösung (`config.ts`), siehe unten |
 | `public/` | Komplettes dateibasiertes "CMS" – siehe `pfadstruktur.md` |
 | `scripts/` | Sync-Scripts (Node), siehe `sync-scripts.md` |
-| `tests/` | 33 Vitest-Dateien (`npm run test:unit`), Konfiguration in `vitest.config.ts` (Testdateien laufen bewusst nacheinander, siehe dort) |
+| `tests/` | 41 Vitest-Dateien (Stand 2026-10-22) (`npm run test:unit`), Konfiguration in `vitest.config.ts` (Testdateien laufen bewusst nacheinander, siehe dort) |
 | `ANLEITUNGEN/` | Nicht-technische Endbenutzer-Anleitungen (nicht für Claude) |
+| `zettel/` | Bug-Zettel: `bugs.json` (schreibt der Admin, bewusst nicht unter `public/`) + `LIESMICH.md` (Regeln für den, der fixt) |
+| `mom-requests.md` | Wünsche aus dem Admin-KI-Chat (`log_feature_request`, committet ohne Rückfrage) |
 | `reports/validation/` | Auto-generierte Validierungsreports (siehe `validierungsreports.md`) |
 | `removed_landings/` | Archiv entfernter Stadtdaten (siehe `content-landings.md`) |
 | `dist/` | Build-Output |
 | `.github/workflows/` | GitHub Actions (siehe `sync-scripts.md`) |
 | `.githooks/` | Git-Hooks (siehe `git-hooks.md`) |
 
-## Hosting / Deployment-Stand (2026-05-05)
+## Hosting / Deployment-Stand (geprüft 2026-10-22)
 
-- **Stage:** `https://kunstwolff.vercel.app` – Astro-Build, Vercel deployt automatisch bei
-  Push auf `main`. Die Auslieferung steuert `vercel.json` im Repo-Root: Cache-Control für
-  `/img/*` und 166 Weiterleitungen (Wix-Altlasten + die flachen Ort-Kombis). Details:
-  `vercel-headers.md`, `routing.md`.
-- **Production-Domain:** `https://kunstwolff.de` – zeigt noch auf die alte Wix-Site. Cutover steht aus.
-- Build-Output kennt beide Hosts: `astro.config.mjs` liest `site` aus `process.env.SITE_URL` (Fallback `kunstwolff.de`); `Layout.astro` setzt `<meta robots>` per Whitelist (nur `kunstwolff.de`/`www.kunstwolff.de` → `index, follow`). Details: `seo.md`.
-- Offene Cutover-/Repo-Tickets siehe `HEALTH_CHECK_2026-05-05.md` im Projekt-Root.
-- Schritt-für-Schritt-Plan für den Cutover (URL-Mapping, DNS, Vercel-Settings, Rollback): `CUTOVER_PLAN.md` im Projekt-Root. Kanonischer Host post-Cutover: **`www.kunstwolff.de`** (Apex 301 → www).
+- **Live:** `https://www.kunstwolff.de` – der Cutover von Wix ist **seit Anfang August 2026
+  durch** (Nachmessung in `seo.md`, „Nach dem Cutover gerichtet (2026-08-06)"). Der Apex
+  `kunstwolff.de` leitet per 308 auf `www`, Vercel liefert aus, Canonical/`og:url` stehen
+  auf `www`. Vercel deployt automatisch bei jedem Push auf `main` – also auch bei jedem
+  Admin-Veröffentlichen. Es gibt keine Stage mehr: was auf `main` landet, ist live.
+- `https://kunstwolff.vercel.app` liefert denselben Build aus (Canonical zeigt auf `www`).
+- Die Auslieferung steuert `vercel.json` im Repo-Root: Cache-Control für `/img/*` und die
+  Weiterleitungen (Wix-Altlasten, flache Ort-Kombis, SEO-Aliase wie `/hochzeitsmaler`).
+  Details: `vercel-headers.md`, `routing.md`.
+- `astro.config.mjs` liest `site` aus `process.env.SITE_URL` (in Vercel auf
+  `https://www.kunstwolff.de`; Fallback im Code `kunstwolff.de`); `Layout.astro` setzt
+  `<meta robots>` per Whitelist auf den Host von `site`. Details: `seo.md`.
+- `HEALTH_CHECK_2026-05-05.md` und `CUTOVER_PLAN.md` im Projekt-Root sind **historisch**
+  (Stand vor dem Umzug) – nicht mehr als offene To-do-Liste lesen.
 
 ## Verwandte Repos
 

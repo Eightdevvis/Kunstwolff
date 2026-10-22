@@ -229,7 +229,18 @@ Regeln:
 ## Automatik
 
 - Neue Bilder bekommen automatisch einen Metadaten-Eintrag
-- Kategorien werden beim ersten Anlegen via Dateiname-Regeln vorbelegt
+- ⚠️ **`categories` wird nicht nur beim ersten Anlegen geraten, sondern bei JEDEM Lauf,
+  solange es leer ist** (`sync-slides-metadata.mjs`: `existingCategories.length > 0 ?
+  … : inferCategoriesFromFileName(...)`). Ein im Admin geleertes `categories` füllt der
+  nächste Sync wieder aus dem Dateinamen.
+- **Tag-Dimensionen** werden nur geraten, wenn sie **fehlen** (kein Array): `tags.skills`
+  aus `categories`, `tags.events` aus dem Pfad (`inferEventsFromKey`), `tags.landings`
+  aus dem Pfad (`inferLandingsFromKey`). Ein vorhandenes `[]` bleibt stehen.
+- Folge: auch Bilder im Pool `slides/mediathek/` sind **nicht inert**. Trägt der
+  Dateiname ein Skill-Stichwort und fehlt `tags.skills`, stehen sie nach dem nächsten
+  Build auf der Skill-Seite. Admin-Uploads über den ImageManager schreiben die Tags der
+  Seite ausdrücklich, aber nicht immer alle drei Dimensionen – den Rest rät dann der Build
+  (Admin-Abgleich 22.10.2026: 5 Bilder live auf falschen Skill-Seiten).
 - Bei klarer Umbenennung werden Metadaten auf den neuen Dateinamen migriert
 
 ## ⚠️ Ordnerschlüssel sind verschachtelt — niemals am Stück kodieren
