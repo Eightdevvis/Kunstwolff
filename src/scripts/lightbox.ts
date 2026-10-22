@@ -88,11 +88,13 @@ function createLightbox() {
     // Keyboard
     document.addEventListener("keydown", onKeydown);
 
-    // Touch (Swipe, Pinch, Pan)
+    // Touch (Swipe, Pinch, Pan) – auf der ganzen Lightbox, nicht nur auf dem
+    // Bild: im Querformat ist ein Hochformat-Bild nur ein schmaler Streifen in
+    // der Mitte, und ein Wisch daneben über den dunklen Grund tat vorher nichts.
     const wrap = el.querySelector(".lb-wrap") as HTMLElement;
-    wrap.addEventListener("touchstart", onTouchStart, { passive: true });
-    wrap.addEventListener("touchmove", onTouchMove, { passive: false });
-    wrap.addEventListener("touchend", onTouchEnd, { passive: true });
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchend", onTouchEnd, { passive: true });
 
     // Maus-Drag-Panning (Desktop)
     wrap.addEventListener("mousedown", onMouseDown);

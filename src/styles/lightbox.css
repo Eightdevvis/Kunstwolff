@@ -19,6 +19,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    /* Wischen/Pinch steuert das Skript – auch neben dem Bild (siehe lightbox.ts) */
+    touch-action: none;
 }
 
 #kw-lightbox[hidden] {
