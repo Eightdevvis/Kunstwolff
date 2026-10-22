@@ -107,8 +107,40 @@ const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroVarianten}--hero
      damit unten aus dem Container heraus und wird von `overflow: hidden`
      abgeschnitten. Auf Mobil deshalb Band ohne Versatz, zentriert per
      `align-items: center` des Heroes. */
-  .hero-band {
+  /* `.hero .hero-band` statt `.hero-band`: die Grundregel weiter unten hat
+     dieselbe Spezifität und stand später in der Datei – sie hat dieses
+     `transform: none` bis 2026-10 stillschweigend überschrieben. Folge: der
+     Textblock rutschte 20vh nach unten aus dem ~250px hohen Hero, und die H1
+     war auf jedem Handy weggeschnitten (Startseite + alle Stadtseiten). */
+  .hero .hero-band {
     transform: none;
+    /* über den unteren Weichzeichner (::after) heben, in dem das Band jetzt
+       liegt – ohne Transform wäre es sonst darunter gemalt. */
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Band unten statt mittig: oben liegt die 104px hohe, weichgezeichnete
+     Navigation über dem Hero – mittig stand die Wortmarke halb darunter. */
+  .hero {
+    align-items: flex-end;
+    /* Reicht die Bildhöhe nicht für den Text, wächst der Hero mit, statt ihn
+       abzuschneiden: `aspect-ratio` gibt nur dann nach, wenn der Kasten kein
+       Scroll-Container ist – `clip` schneidet wie `hidden`, ist aber keiner. */
+    overflow: clip;
+  }
+
+  /* Ein Desktop-Rahmen von z.B. 74px lässt auf 360px nur 212px Bild übrig und
+     quetscht die Wortmarke über den Rand. Auf dem Handy höchstens 4vw. */
+  .hero {
+    padding: min(var(--hero-frame, 0px), 4vw);
+  }
+
+  /* `section.hero` aus demselben Grund wie oben: die Grundregel steht später. */
+  section.hero::after {
+    left: min(var(--hero-frame, 0px), 4vw);
+    right: min(var(--hero-frame, 0px), 4vw);
+    bottom: min(var(--hero-frame, 0px), 4vw);
   }
 }
 
