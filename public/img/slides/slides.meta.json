@@ -5577,7 +5577,9 @@
       "landings": [
         "mannheim"
       ]
-    }
+    },
+    "title": "Bitte lächeln!",
+    "altOverride": "Junge hübsche Frauzeigt begeistert ihre witzige Schnellzeichnung mitF ahrrad bei Monnem Bike im Q6Q7 in Mannheim"
   },
   "mannheim/digital-live-painting-birthday-party-hive.mannheim.webp": {
     "categories": [],
@@ -5589,13 +5591,22 @@
     }
   },
   "mannheim/illustratorin-kundenevent-q6q7-mannheim.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner",
+      "Aquarelle"
+    ],
     "priority": 249,
     "tags": {
       "landings": [
         "mannheim"
+      ],
+      "skills": [
+        "schnellzeichner",
+        "aquarelle"
       ]
-    }
+    },
+    "title": "Eine Modezeichnung als Porträt",
+    "altOverride": "Frauzeig tihr Aquarellporträt beim Erlebniswochenende im Q6Q7 Mannheim"
   },
   "mannheim/live-digital-painting-mario-party-hive-mannheim.webp": {
     "categories": [],
