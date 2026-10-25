@@ -2410,40 +2410,6 @@
     },
     "priority": 9
   },
-  "ludwigshafen/1_digital-artist-zeichnet-live-auf-buehne-mit-tabelt-pc-und-beamer-karikaturen-betriebsfeier-cinema-paradiso-ludwigshafen.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "tags": {
-      "skills": [
-        "schnellzeichner"
-      ],
-      "events": [
-        "firmenfeier"
-      ],
-      "landings": [
-        "ludwigshafen"
-      ]
-    },
-    "priority": 1,
-    "altOverride": "Digital artist zeichnet live auf buehne mit tablet pc und beamer karikaturen betriebsfeier cinema paradiso ludwigshafen",
-    "title": "Schnellzeichner Ludwigshafen"
-  },
-  "ludwigshafen/2_digital-schnellzeichner-ljames-bond-party-ludwigshafen.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "tags": {
-      "skills": [
-        "schnellzeichner"
-      ],
-      "events": [],
-      "landings": [
-        "ludwigshafen"
-      ]
-    },
-    "priority": 2
-  },
   "ludwigshafen/3_digitale-schnellzeichnerin-ludwigshafen.webp": {
     "categories": [
       "Schnellzeichner",
@@ -2489,19 +2455,6 @@
     },
     "priority": 5,
     "altOverride": "Speed painter drawing with tablet pc beamer ludwigshafen",
-    "title": "Live-Kunst Ludwigshafen"
-  },
-  "ludwigshafen/6_zeichnung-mann-als-bowlingkugel-mit-bramer-auf-leinwand-von-digital-caricaturist-ludwigshafen.webp": {
-    "categories": [],
-    "tags": {
-      "skills": [],
-      "events": [],
-      "landings": [
-        "ludwigshafen"
-      ]
-    },
-    "priority": 6,
-    "altOverride": "Zeichnung mann als bowlingkugel mit beamer auf leinwand von digital caricaturist ludwigshafen",
     "title": "Live-Kunst Ludwigshafen"
   },
   "luxembourg/1_caricaturiste-assise-à-un-chevalet-dessinant-en-luxembourg.webp": {
@@ -5660,6 +5613,15 @@
   "ludwigshafen/digitaler-schnellzeichner-ludwigshafen-weihnachtsfeier-cinema-paradiso.webp": {
     "categories": [],
     "priority": 245,
+    "tags": {
+      "landings": [
+        "ludwigshafen"
+      ]
+    }
+  },
+  "ludwigshafen/live-painting-tablet-christmas-party-ludwigshafen.webp": {
+    "categories": [],
+    "priority": 246,
     "tags": {
       "landings": [
         "ludwigshafen"
