@@ -5618,11 +5618,31 @@
     }
   },
   "mannheim/event-illustratoren-modezeichnung-erlbniswochenende-q6q7-mannheim.webp": {
-    "categories": [],
+    "categories": [
+      "Schnellzeichner",
+      "Aquarelle",
+      "Eventzeichner"
+    ],
     "priority": 250,
     "tags": {
       "landings": [
         "mannheim"
+      ],
+      "skills": [
+        "schnellzeichner",
+        "aquarelle",
+        "eventzeichner"
+      ],
+      "events": [
+        "weihnachtsfeier",
+        "geburtstag",
+        "jubilaeum",
+        "silvester",
+        "sommerfest",
+        "gartenparty",
+        "stadtfest",
+        "hochzeit",
+        "private-feier"
       ]
     },
     "title": "EIn Freunschaftsbild als Erinnerung zum Erlebnis-Shopping",
