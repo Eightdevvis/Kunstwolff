@@ -5572,7 +5572,7 @@
   },
   "mannheim/karikaturistin-monnem-bike-q6q7-shop-event-mannheim.webp": {
     "categories": [],
-    "priority": 245,
+    "priority": 248,
     "tags": {
       "landings": [
         "mannheim"
@@ -5582,6 +5582,24 @@
   "mannheim/digital-live-painting-birthday-party-hive.mannheim.webp": {
     "categories": [],
     "priority": 246,
+    "tags": {
+      "landings": [
+        "mannheim"
+      ]
+    }
+  },
+  "mannheim/illustratorin-kundenevent-q6q7-mannheim.webp": {
+    "categories": [],
+    "priority": 249,
+    "tags": {
+      "landings": [
+        "mannheim"
+      ]
+    }
+  },
+  "mannheim/live-digital-painting-mario-party-hive-mannheim.webp": {
+    "categories": [],
+    "priority": 247,
     "tags": {
       "landings": [
         "mannheim"
