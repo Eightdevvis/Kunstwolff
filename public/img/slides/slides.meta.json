@@ -4536,23 +4536,6 @@
     "priority": 5,
     "enabled": false
   },
-  "stuttgart/schnellzeichnerin-messe-stuttgart.webp": {
-    "categories": [
-      "Schnellzeichner"
-    ],
-    "tags": {
-      "skills": [
-        "schnellzeichner"
-      ],
-      "events": [
-        "messe"
-      ],
-      "landings": [
-        "stuttgart"
-      ]
-    },
-    "priority": 4
-  },
   "stuttgart/schnellzeichnerin-stuttgart.webp": {
     "categories": [
       "Schnellzeichner",
