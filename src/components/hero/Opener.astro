@@ -1,6 +1,7 @@
 ---
 import BrandStripe from "../reviews-references/BrandStripe.astro";
 import { heroHintergrundStyle } from "../../utils/responsiveImages";
+import { heroMobileStyle } from "../../utils/mobileTitleImage";
 const { titleImage = '/img/Titelbild/default/titelbild.avif', titleImageAlt = 'Kunstwolff - Eventkünstler seit über 25 Jahren', titleImagePosition = 'center', titleImageFrame = 0, titleImageAspect = null, heading = 'Event- und Showkünstler seit über 25 Jahren' } = Astro.props;
 
 // Weißer Rahmen: bei frame > 0 wird das Bild via `contain` komplett gezeigt
@@ -18,7 +19,8 @@ const heroVarianten = heroHintergrundStyle(titleImage);
 // die Mobil-Media-Query unten nicht — der Hero fällt aufs alte Verhalten
 // (volle dvh, cover) zurück und lässt lieber croppen als eine 0-Höhe zu bauen.
 const heroAspect = typeof titleImageAspect === 'string' && titleImageAspect.trim() !== '' ? titleImageAspect : null;
-const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroVarianten}--hero-bg-pos: ${titleImagePosition}; --hero-fit: ${heroFit}; --hero-frame: ${heroFrame};${heroAspect ? ` --hero-aspect: ${heroAspect};` : ''}`;
+// Optional own phone photo from Titelbild/<folder>/mobile/ ('' if none).
+const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroVarianten}--hero-bg-pos: ${titleImagePosition}; --hero-fit: ${heroFit}; --hero-frame: ${heroFrame};${heroAspect ? ` --hero-aspect: ${heroAspect};` : ''} ${heroMobileStyle(titleImage)}`;
 ---
 <style>
 .hero {
@@ -62,13 +64,13 @@ const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroVarianten}--hero
    Original — schlechter Fall, aber nie ein unscharfes Bild. */
 @media (max-width: 640px) and (max-resolution: 1.5dppx) {
   .hero {
-    background-image: var(--hero-bg-800, var(--hero-bg-image));
+    background-image: var(--hero-m-800, var(--hero-m-image, var(--hero-bg-800, var(--hero-bg-image))));
   }
 }
 
 @media (max-width: 640px) and (min-resolution: 1.5dppx) {
   .hero {
-    background-image: var(--hero-bg-1200, var(--hero-bg-image));
+    background-image: var(--hero-m-1200, var(--hero-m-image, var(--hero-bg-1200, var(--hero-bg-image))));
   }
 }
 
@@ -98,8 +100,13 @@ const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroVarianten}--hero
    nach oben und bleibt sichtbar. */
 @media (max-width: 640px) {
   .hero {
-    aspect-ratio: var(--hero-aspect);
+    aspect-ratio: var(--hero-m-aspect, var(--hero-aspect));
     min-height: auto;
+    /* Own phone photo (Titelbild/<folder>/mobile/, `heroMobileStyle()`):
+       its focus/fit win here; without one the --hero-m-* vars are missing
+       and the desktop values apply as before. */
+    background-position: var(--hero-m-pos, var(--hero-bg-pos, center));
+    background-size: var(--hero-m-fit, var(--hero-fit, cover));
   }
 
   /* Der Desktop-Textblock steht per translateY(20vh) unten im vollen Viewport.
@@ -133,14 +140,14 @@ const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroVarianten}--hero
   /* Ein Desktop-Rahmen von z.B. 74px lässt auf 360px nur 212px Bild übrig und
      quetscht die Wortmarke über den Rand. Auf dem Handy höchstens 4vw. */
   .hero {
-    padding: min(var(--hero-frame, 0px), 4vw);
+    padding: min(var(--hero-m-frame, var(--hero-frame, 0px)), 4vw);
   }
 
   /* `section.hero` aus demselben Grund wie oben: die Grundregel steht später. */
   section.hero::after {
-    left: min(var(--hero-frame, 0px), 4vw);
-    right: min(var(--hero-frame, 0px), 4vw);
-    bottom: min(var(--hero-frame, 0px), 4vw);
+    left: min(var(--hero-m-frame, var(--hero-frame, 0px)), 4vw);
+    right: min(var(--hero-m-frame, var(--hero-frame, 0px)), 4vw);
+    bottom: min(var(--hero-m-frame, var(--hero-frame, 0px)), 4vw);
   }
 }
 

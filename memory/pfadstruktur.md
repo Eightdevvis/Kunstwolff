@@ -83,6 +83,7 @@ public/img/Titelbild/
 ├── <stadt>/                       # Stadt-Titelbilder
 ├── <skill>/                       # Skill-Titelbilder (z.B. schnellzeichner/, szenenmaler/)
 ├── events/<event-slug>/           # Event-Titelbilder
+├── <ordner>/mobile/               # optionales Handy-Titelbild (≤ 640 px) zum Titelbild aus <ordner>/ (content-titelbild.md)
 ├── landings/                      # ARTEFAKT mit Stadt-Subordnern (alte Struktur, ignorieren – nicht löschen, nicht befüllen)
 ├── skills/                        # ARTEFAKT mit Skill-Subordnern (alte Struktur, ignorieren – nicht löschen, nicht befüllen)
 ├── title.meta.json                # Metadaten (gleiches Format wie slides.meta.json)

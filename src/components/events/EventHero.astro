@@ -17,6 +17,7 @@
  */
 
 import { heroHintergrundStyle } from '../../utils/responsiveImages';
+import { heroMobileStyle } from '../../utils/mobileTitleImage';
 
 const {
   titleImage = '/img/samples/sample1.webp',
@@ -40,7 +41,8 @@ const heroFrame = framed ? `${frameThickness}px` : '0px';
 // die entsprechende Media-Query unten nicht und der Hero bleibt bei
 // `min-height: 100vh` + `cover` (croppt). Besser als 0-Pixel-Hero.
 const heroAspect = typeof titleImageAspect === 'string' && titleImageAspect.trim() !== '' ? titleImageAspect : null;
-const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroHintergrundStyle(titleImage)}--hero-bg-pos: ${titleImagePosition}; --hero-fit: ${heroFit}; --hero-frame: ${heroFrame};${heroAspect ? ` --hero-aspect: ${heroAspect};` : ''}`;
+// Optional own phone photo from Titelbild/events/<slug>/mobile/ ('' if none).
+const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroHintergrundStyle(titleImage)}--hero-bg-pos: ${titleImagePosition}; --hero-fit: ${heroFit}; --hero-frame: ${heroFrame};${heroAspect ? ` --hero-aspect: ${heroAspect};` : ''} ${heroMobileStyle(titleImage)}`;
 ---
 
 <!-- Hero Section -->
@@ -106,13 +108,13 @@ const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroHintergrundStyle
      inklusive Pixeldichte steht bei derselben Regel in Opener.astro. */
   @media (max-width: 640px) and (max-resolution: 1.5dppx) {
     .event-hero {
-      background-image: var(--hero-bg-800, var(--hero-bg-image));
+      background-image: var(--hero-m-800, var(--hero-m-image, var(--hero-bg-800, var(--hero-bg-image))));
     }
   }
 
   @media (max-width: 640px) and (min-resolution: 1.5dppx) {
     .event-hero {
-      background-image: var(--hero-bg-1200, var(--hero-bg-image));
+      background-image: var(--hero-m-1200, var(--hero-m-image, var(--hero-bg-1200, var(--hero-bg-image))));
     }
   }
 
@@ -129,8 +131,31 @@ const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroHintergrundStyle
      mit dem Bild mit. */
   @media (max-width: 640px) {
     .event-hero {
-      aspect-ratio: var(--hero-aspect);
+      aspect-ratio: var(--hero-m-aspect, var(--hero-aspect));
       min-height: auto;
+      /* Own phone photo (Titelbild/events/<slug>/mobile/, `heroMobileStyle()`):
+         its focus/fit/frame win; without one the --hero-m-* vars are missing
+         and the desktop values apply as before. */
+      background-position: var(--hero-m-pos, var(--hero-bg-pos, center));
+      background-size: var(--hero-m-fit, var(--hero-fit, cover));
+      padding: var(--hero-m-frame, var(--hero-frame, 0px));
+    }
+
+    /* `section.` because the base rules for these come later in the file. */
+    section.event-hero::before {
+      inset: var(--hero-m-frame, var(--hero-frame, 0px));
+    }
+
+    section.event-hero .event-hero-top-fade {
+      top: var(--hero-m-frame, var(--hero-frame, 0px));
+      left: var(--hero-m-frame, var(--hero-frame, 0px));
+      right: var(--hero-m-frame, var(--hero-frame, 0px));
+    }
+
+    section.event-hero .event-hero-bottom-fade {
+      left: var(--hero-m-frame, var(--hero-frame, 0px));
+      right: var(--hero-m-frame, var(--hero-frame, 0px));
+      bottom: var(--hero-m-frame, var(--hero-frame, 0px));
     }
   }
 

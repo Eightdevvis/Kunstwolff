@@ -40,10 +40,11 @@ Bei jeder Cross-Repo-Arbeit zuerst:
 | :-- | :-- |
 | `public/img/slides/{city}/` + `slides.meta.json` + `default-selection.json` | `ImageManager.tsx` (slides-Modus) |
 | `public/img/Titelbild/{city}/` | `ImageManager.tsx` (titelbild-Modus) |
+| `public/img/Titelbild/{city}/mobile/` (optionales Handy-Titelbild) | `ImageManager.tsx` (**titelbildMobil-Modus**; über `TitleImageEditors` immer zusammen mit dem Titelbild) |
 | `public/img/hero-bg/{city}/` | `ImageManager.tsx` (**herobg-Modus**, vierter Modus – bei Skill-Seiten Teil des Hero-Editors) |
 | `public/img/why/{city}/benefit-{1-4}/` (Bilder) | `ImageManager.tsx` (why-Modus) |
 | `public/why/{city}.json` (Why-Texte: Titel/Text/Alt) | `ImageManager.tsx` (why-Modus, `saveWhyBenefits`) |
-| `public/img/Titelbild/title.meta.json` (nur `focus`/`frame`) | `ImageManager.tsx` (titelbild-Modus) |
+| `public/img/Titelbild/title.meta.json` (nur `focus`/`frame`, auch für `…/mobile/…`-Keys) | `ImageManager.tsx` (titelbild-Modus) |
 | `public/img/Titelbild/title.dimensions.json` | **KEINER — sync-generiert** durch `scripts/sync-title-dimensions.mjs`. Der Admin lädt Titelbilder hoch, das Sync-Script (läuft in `predev`/`prebuild`) trägt die Pixel-Maße nach und der Website-Hero zieht daraus das Aspect-Ratio für Mobil (`content-titelbild.md`) |
 | `public/reviews/{city}/review*.md` | `ReviewManager.tsx` |
 | `public/faq/default/*.md` + `public/faq/{city}/*.md` | `FaqManager.tsx` |

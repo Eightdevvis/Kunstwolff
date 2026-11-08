@@ -44,7 +44,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [Tag-System](tag-system.md) – Skill × Anlass × Ort: `config/tags.json`, Tag-Blöcke an Bildern/Reviews/FAQs, Migration; **Phase 5a+5b+5d+5e fertig – Bilder, Reviews UND FAQs wählen über Tags aus, und seit 5e (2026-07-31) tut das AUCH der Admin. Der Ordner ist nur noch Ablage und Upload-Ziel.**
 - [Responsive Bilder](responsive-images.md) – `srcset`/`sizes`, Varianten-Erzeugung nach dem Build, warum nicht `astro:assets`
 - [Vercel-Header](vercel-headers.md) – Cache-Control für `/img/*`, warum bewusst kein `immutable`; **Redirect-Karte Wix→Astro** (warum nicht über `astro.config.mjs`)
-- [Titelbild](content-titelbild.md) – Pfad, Metadaten, Fallback-Kette
+- [Titelbild](content-titelbild.md) – Pfad, Metadaten, Fallback-Kette, **optionales Handy-Titelbild in `<ordner>/mobile/`**
 - [Reviews](content-reviews.md) – Markdown-Format, **Auswahl über `tags.landings` bzw. `tags.events`**, Auffüll-Logik **mit Deckel** und **`tagOnly`-Schalter pro Bewertung**, MiniReviews-Anzeige (Stadtseiten waren bis 2026-07-31 gar nicht angeschlossen)
 - [Allgemeine Texte](content-site-texts.md) – `site-texts/content.json`, Startseiten-Texte, `landingIntros` (Einführungstext), **editierbare Überschriften** (H1 Start/Stadt, Bilder/FAQ/Why/Kontakt/Eventformate)
 - [FAQs](content-faqs.md) – Markdown-Format, **Auswahl über Tags: mindestens ein Treffer, kein Widerspruch**, `getFAQsForContext`. „Leer" heißt zweierlei: eine **leere Dimension** blockiert nicht (Saarland-FAQs ohne Ort-Tag standen auf allen Städten), eine FAQ **ganz ohne Tags** erscheint nirgends außer aus `faq/default/` (Auffüll-Topf). Der Admin zeigt tag-lose FAQs als „gilt überall"; i18n-Overlays laufen im selben Sync

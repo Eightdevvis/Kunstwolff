@@ -2,6 +2,7 @@
 import MiniReviews from '../reviews-references/MiniReviews.astro';
 import BrandStripe from '../reviews-references/BrandStripe.astro';
 import { heroSrcSet, HERO_SIZES, HERO_BG_SIZES } from '../../utils/responsiveImages';
+import { resolveMobileTitleImage } from '../../utils/mobileTitleImage';
 
 const {
   title = 'Live Event-Künstler',
@@ -24,7 +25,16 @@ const bgSrcSet = heroSrcSet(backgroundImage);
 // Landscape-Titelbild an einer Portrait-Kachel. Fehlt die Var, greift die
 // Regel nicht → alter Zustand bleibt, kein 0-Pixel-Container.
 const heroAspect = typeof titleImageAspect === 'string' && titleImageAspect.trim() !== '' ? titleImageAspect : null;
-const heroMediaStyle = heroAspect ? `--hero-media-aspect: ${heroAspect};` : undefined;
+// Optional own phone photo from Titelbild/<folder>/mobile/: a <source> for
+// ≤ 640 px plus its own aspect and focus for the tile.
+const mobileImage = resolveMobileTitleImage(titleImage);
+const mobileSrcSet = mobileImage ? heroSrcSet(mobileImage.src) : '';
+const heroMediaStyle =
+  [
+    heroAspect ? `--hero-media-aspect: ${heroAspect};` : '',
+    mobileImage?.aspect ? `--hero-m-aspect: ${mobileImage.aspect};` : '',
+    mobileImage ? `--hero-m-pos: ${mobileImage.focus};` : '',
+  ].join(' ').trim() || undefined;
 ---
 
 <div class="hero section">
@@ -58,12 +68,21 @@ const heroMediaStyle = heroAspect ? `--hero-media-aspect: ${heroAspect};` : unde
 
     <div class="hero-media" style={heroMediaStyle}>
       {titleImage && (
-        <img
-          src={titleImage}
-          srcset={titleSrcSet || undefined}
-          sizes={titleSrcSet ? HERO_SIZES : undefined}
-          alt={title}
-        />
+        <picture>
+          {mobileImage && (
+            <source
+              media="(max-width: 640px)"
+              srcset={mobileSrcSet || mobileImage.src}
+              sizes={mobileSrcSet ? HERO_SIZES : undefined}
+            />
+          )}
+          <img
+            src={titleImage}
+            srcset={titleSrcSet || undefined}
+            sizes={titleSrcSet ? HERO_SIZES : undefined}
+            alt={title}
+          />
+        </picture>
       )}
     </div>
   </div>
@@ -153,6 +172,12 @@ const heroMediaStyle = heroAspect ? `--hero-media-aspect: ${heroAspect};` : unde
       border: 1px solid #d1d1d1;
     }
 
+    /* The <picture> wrapper (phone source) must not take part in layout,
+       otherwise `height: 100%` of the img resolves against an inline box. */
+    .hero-media picture {
+      display: contents;
+    }
+
     .hero-media img,
     .hero-media video {
       width: 100%;
@@ -191,7 +216,11 @@ const heroMediaStyle = heroAspect ? `--hero-media-aspect: ${heroAspect};` : unde
     @media (max-width: 640px) {
       .hero-media {
         height: auto;
-        aspect-ratio: var(--hero-media-aspect);
+        aspect-ratio: var(--hero-m-aspect, var(--hero-media-aspect));
+      }
+
+      .hero-media img {
+        object-position: var(--hero-m-pos, 50% 50%);
       }
 
       /* „Schnellzeichner" ist in Mayonice bei 2.8rem ~365px breit – breiter

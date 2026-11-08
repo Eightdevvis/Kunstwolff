@@ -34,6 +34,34 @@ Die Seiten übergeben deshalb `skillContentKey(skill.title)`, nicht den
 Adress-Slug – sonst fällt die Auflösung still auf `default` zurück
 (`content-skills.md`).
 
+## Handy-Titelbild (`mobile/`)
+
+Seit 2026-11-08 kann jedes Titelbild ein **eigenes Foto für Handys** (≤ 640 px)
+bekommen – gedacht für ein Hochformat-Foto, weil ein Querformat-Titelbild auf
+dem Handy sonst nur als flacher Streifen oder hart beschnitten erscheint.
+
+- **Ablage:** `public/img/Titelbild/<ordner>/mobile/<datei>` – der `mobile/`-Unterordner
+  des Ordners, aus dem das **Desktop-Bild** kommt. Alphabetisch erstes Bild zählt.
+  Gilt damit für Stadt, Skill, `default/` und `events/<slug>/` gleich. Zeigt eine Stadt
+  ohne eigenes Titelbild das Default-Bild, zeigt sie auch dessen Handy-Foto.
+- **Kein Eintrag in den Seiten nötig:** `src/utils/mobileTitleImage.ts`
+  (`resolveMobileTitleImage(desktopSrc)`) leitet alles aus dem Desktop-`src` ab.
+  Die Desktop-Auswahl (`readFolderTitleImages`, `firstImageInDir` in `events.ts`)
+  liest nur Dateien, der Unterordner konkurriert also nie mit dem Desktop-Bild.
+- **Fokus/Rahmen:** in `title.meta.json` unter `"<ordner>/mobile/<datei>"`
+  (Admin setzt sie wie beim Desktop-Bild). **Maße:** `title.dimensions.json` – der
+  Sync läuft rekursiv, der Eintrag kommt von selbst.
+- **Rendering:**
+  - `Opener.astro`, `EventHero.astro`: `heroMobileStyle()` setzt `--hero-m-image`,
+    `--hero-m-800/-1200`, `--hero-m-pos`, `--hero-m-fit`, `--hero-m-frame`,
+    `--hero-m-aspect`. Die Handy-Media-Queries lesen zuerst `--hero-m-*` und fallen
+    sonst auf die Desktop-Variablen zurück → ohne Handy-Foto ändert sich nichts.
+    Die 641–1200-px-Regel (Tablet) bleibt beim Desktop-Bild.
+  - `SkillHero.astro`: `<picture>` mit `<source media="(max-width: 640px)">`, eigene
+    Kachel-Ratio (`--hero-m-aspect`) und `object-position` aus dem Fokus. Rahmen
+    gibt es dort wie beim Desktop-Bild nicht.
+- Das versteckte SEO-`<img>` und `og:image` bleiben beim Desktop-Bild.
+
 ## Pixel-Maße: `title.dimensions.json`
 
 Zweite JSON neben `title.meta.json`. **Vom Sync gepflegt, nicht von Hand.**
@@ -149,4 +177,4 @@ bleibt unangetastet – aktuell stehen dort 6 gepflegte Einträge mit `frame`/`f
 
 ## Admin-Tool
 
-ImageManager schreibt nach `public/img/Titelbild/<stadt>/`. Der Admin verwaltet in `title.meta.json` inzwischen den **Fokuspunkt** (Klick-Picker) und die **weiße Rahmendicke** (Schieber, `frame`, 0–120 px) je Titelbild – Vorschau spiegelt cover/contain + Rahmen. `categories`/`priority` weiterhin manuell pflegen.
+ImageManager schreibt nach `public/img/Titelbild/<stadt>/`, das optionale Handy-Foto nach `public/img/Titelbild/<stadt>/mobile/` (Modus `titelbildMobil`, immer unter dem Titelbild-Editor). Der Admin verwaltet in `title.meta.json` inzwischen den **Fokuspunkt** (Klick-Picker) und die **weiße Rahmendicke** (Schieber, `frame`, 0–120 px) je Titelbild – Vorschau spiegelt cover/contain + Rahmen. `categories`/`priority` weiterhin manuell pflegen.
