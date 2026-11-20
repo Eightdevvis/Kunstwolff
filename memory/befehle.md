@@ -67,5 +67,5 @@ Projektspezifische Settings liegen in `.vscode/` (`settings.json` mit dem TypeSc
 
 ## Was (noch) NICHT als Script existiert
 
-- **Kein `typecheck` / `check`-Script.** Astro transpiliert `.astro` ohne harten TS-Check, `.ts`-Fehler werden vom Build durchgewunken. Empfehlung im Health-Check: `"typecheck": "astro check"` in `package.json` ergänzen und im CI laufen lassen (siehe `HEALTH_CHECK_2026-05-05.md` BUG-A2).
+- **Kein `typecheck` / `check`-Script.** Astro transpiliert `.astro` ohne harten TS-Check, `.ts`-Fehler werden vom Build durchgewunken. Empfehlung im Health-Check: `"typecheck": "astro check"` in `package.json` ergänzen und im CI laufen lassen (siehe `ARCHIVE/HEALTH_CHECK_2026-05-05.md` BUG-A2).
 - **Kein `lint`-Script.** Manueller Style-Check fehlt entsprechend.

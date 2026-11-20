@@ -13,8 +13,8 @@
 //   3. Alle Verweise in public/ auf die kanonische Datei umbiegen.
 //   4. Kopie und ihren Metadaten-Eintrag entfernen.
 //
-//   node scripts/dissolve-slide-duplicates.mjs            # Trockenlauf
-//   node scripts/dissolve-slide-duplicates.mjs --apply    # wirklich ändern
+//   node ARCHIVE/scripts/dissolve-slide-duplicates.mjs            # Trockenlauf
+//   node ARCHIVE/scripts/dissolve-slide-duplicates.mjs --apply    # wirklich ändern
 
 import fs from 'node:fs';
 import path from 'node:path';

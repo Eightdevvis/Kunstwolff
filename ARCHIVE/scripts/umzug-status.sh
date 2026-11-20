@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # umzug-status.sh — zeigt, wie weit der Domain-Umzug durch ist.
 #
-# Aufruf:  bash scripts/umzug-status.sh
+# Aufruf:  bash ARCHIVE/scripts/umzug-status.sh
 #
 # Propagation ist NICHT binär. Jeder Resolver hat seinen eigenen Zwischenspeicher
 # und kippt zu seiner eigenen Zeit. Deshalb fragt dieses Skript mehrere

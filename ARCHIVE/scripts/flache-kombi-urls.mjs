@@ -13,7 +13,7 @@
  *    301er vom früheren Skill-Namen (`/schnellzeichner/berlin`), damit keine
  *    Weiterleitungs-Kette entsteht (Wix-URL → alte Astro-URL → neue Astro-URL).
  *
- * Aufruf: `node scripts/flache-kombi-urls.mjs`
+ * Aufruf: `node ARCHIVE/scripts/flache-kombi-urls.mjs`
  * Ist idempotent – zweimal laufen lassen ändert nichts.
  */
 import fs from 'fs';

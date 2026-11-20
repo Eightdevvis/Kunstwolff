@@ -9,7 +9,7 @@
 
 **Folge:** Es gibt keine Datenbank, keinen Backend-Server, kein Runtime-CMS. Alles ist im Repo. Änderungen → committen → Vercel rebuilds.
 
-> **Hosting-Stand (geprüft 2026-10-22):** Live unter `https://www.kunstwolff.de` (Cutover von Wix seit August 2026 durch, Apex → 308 → `www`). Jeder Push auf `main` – auch jedes Admin-Veröffentlichen – geht über Vercel direkt live; eine Stage gibt es nicht mehr. `<meta robots>` hängt am Host von `site` (`SITE_URL`), siehe `seo.md`. `HEALTH_CHECK_2026-05-05.md` ist historisch.
+> **Hosting-Stand (geprüft 2026-10-22):** Live unter `https://www.kunstwolff.de` (Cutover von Wix seit August 2026 durch, Apex → 308 → `www`). Jeder Push auf `main` – auch jedes Admin-Veröffentlichen – geht über Vercel direkt live; eine Stage gibt es nicht mehr. `<meta robots>` hängt am Host von `site` (`SITE_URL`), siehe `seo.md`. `ARCHIVE/HEALTH_CHECK_2026-05-05.md` ist historisch.
 
 ## Drei Inhaltsachsen
 
@@ -90,10 +90,8 @@ Fest im Layout, also **nicht** Teil des Stacks: `header/Header.astro` +
 `header/Navigation.astro` (aus `navigation.json`, `content-navigation.md`) und
 `Footer.astro`.
 
-⚠️ `about/Aboutsection.astro` ist ein Sonderfall: `index.astro` **importiert** sie,
-rendert sie aber nicht (`//<Aboutsection />`, Zeile 82). Ein Grep nach dem Dateinamen
-findet sie deshalb – sie steht trotzdem auf keiner Seite. Fünf weitere Komponenten sind
-gar nicht importiert; welche und warum, steht in `wip-komponenten.md`.
+`Aboutsection.astro` war nur auskommentiert eingebunden und liegt seit 2026-11-20 in
+`ARCHIVE/components/`. Nicht importierte Komponenten: `wip-komponenten.md`.
 
 ## Fallback-Philosophie
 

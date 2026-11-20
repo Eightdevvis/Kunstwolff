@@ -23,8 +23,8 @@
  * Idempotent: was bereits klein genug ist, wird nicht angefasst. Nach dem
  * Hinzufügen neuer Logos einfach noch einmal laufen lassen.
  *
- *   node scripts/verkleinere-referenzlogos.mjs            # nur zeigen
- *   node scripts/verkleinere-referenzlogos.mjs --schreiben
+ *   node ARCHIVE/scripts/verkleinere-referenzlogos.mjs            # nur zeigen
+ *   node ARCHIVE/scripts/verkleinere-referenzlogos.mjs --schreiben
  */
 import { readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';

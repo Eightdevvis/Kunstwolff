@@ -69,7 +69,7 @@ Vor `dev` und `build` läuft automatisch `npm run sync:content:safe` (als `prede
 - `astro.config.mjs` liest `site` aus `process.env.SITE_URL` (in Vercel auf
   `https://www.kunstwolff.de`; Fallback im Code `kunstwolff.de`); `Layout.astro` setzt
   `<meta robots>` per Whitelist auf den Host von `site`. Details: `seo.md`.
-- `HEALTH_CHECK_2026-05-05.md` und `CUTOVER_PLAN.md` im Projekt-Root sind **historisch**
+- `ARCHIVE/HEALTH_CHECK_2026-05-05.md` und `ARCHIVE/CUTOVER_PLAN.md` sind **historisch**
   (Stand vor dem Umzug) – nicht mehr als offene To-do-Liste lesen.
 
 ## Verwandte Repos

@@ -67,11 +67,10 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 
 ### Status, Pläne & offene Punkte (außerhalb von `memory/`)
 - `zettel/bugs.json` + `zettel/LIESMICH.md` – was Mama aktuell als kaputt meldet (erste Anlaufstelle für „was ist offen?").
-- `ARBEITSLISTE.md` (Repo-Root, Stand 2026-08-01) – priorisierte Arbeitsliste; vor Verwendung gegen den Code prüfen.
+- `ARCHIVE/` (Repo-Root, seit 2026-11-20) – **historisch, kein To-do**: `ARBEITSLISTE.md` (Stand 2026-08-01), `HEALTH_CHECK_2026-05-05.md` + `CUTOVER_PLAN.md` (Audit und Umzugsplan von vor dem Cutover; der Umzug ist durch), `scripts/` (Einmal-Werkzeuge ohne Aufrufer, Aufruf aus dem Repo-Root: `node ARCHIVE/scripts/<name>`), `components/Aboutsection.astro` (war nie sichtbar), `fonts/mayonice_original/` (Original-Font-Paket, wurde vorher öffentlich ausgeliefert). Außerhalb von `public/`, also nicht live; `tsconfig.json` schließt den Ordner aus.
 - `STADTSEITEN.md` (Repo-Root, Stand 2026-08-09) – welche Stadt was zum Freischalten braucht.
 - `MEHRSPRACHIGKEIT_PLAN.md` (Repo-Root) – Plan Englisch/N Sprachen (nicht umgesetzt).
 - `mom-requests.md` (Repo-Root) – Wünsche, die der KI-Chat im Admin per `log_feature_request` notiert (committet ohne Rückfrage).
-- `HEALTH_CHECK_2026-05-05.md` und `CUTOVER_PLAN.md` (Repo-Root) – **historisch**: Audit und Umzugsplan von vor dem Cutover. Der Umzug ist durch; beide nicht mehr als To-do lesen.
 - `reports/tagsystem-audit-2026-07-30.md` – Befundliste aus dem Tag-System-Audit (45 bestätigte Funde über sechs Ebenen, nach Schwere sortiert, mit „gesund"- und „widerlegt"-Abschnitt). ⚠️ **Nicht mehr als To-do-Liste lesen** – die vier prominentesten Punkte sind erledigt: die 38 leeren Skill×Stadt-Galerien (2026-07-30), die 40 inhaltslosen Aquarelle-Seiten (ausgeblendet, 2026-07-30), die tote Anlass-Dimension der FAQs (eigenes `event`-Feld, 2026-07-31) und `public/config` in beiden `git add`-Listen (pre-commit-Hook **und** `sync-landings.yml`). Der Report bleibt als Beleg, nicht als Auftrag.
 
 ---

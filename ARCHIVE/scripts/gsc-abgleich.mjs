@@ -14,7 +14,7 @@
  *   → Exportieren → CSV herunterladen → darin `Seiten.csv` (bzw. `Pages.csv`).
  *
  * AUFRUF
- *   node scripts/gsc-abgleich.mjs <pfad/zu/Seiten.csv> [--alle]
+ *   node ARCHIVE/scripts/gsc-abgleich.mjs <pfad/zu/Seiten.csv> [--alle]
  *
  * Ohne `--alle` werden nur Adressen mit mindestens einem Klick geprüft — die
  * ohne Klicks kosten nichts, wenn sie 404 werden.
@@ -39,7 +39,7 @@ const [, , csvArg, ...flags] = process.argv;
 const alle = flags.includes('--alle');
 
 if (!csvArg) {
-  console.error('Aufruf: node scripts/gsc-abgleich.mjs <Seiten.csv> [--alle]');
+  console.error('Aufruf: node ARCHIVE/scripts/gsc-abgleich.mjs <Seiten.csv> [--alle]');
   console.error('CSV: Search Console → Leistung → Seiten → 12 Monate → Exportieren.');
   process.exit(2);
 }

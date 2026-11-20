@@ -45,7 +45,7 @@ mehr ausliefert):
 
 - **136 Kombi-Weiterleitungen** von der alten hierarchischen Ort-Form auf die
   flache (`/szenenmaler/berlin` → `/berlin-szenenmaler/`), erzeugt vom
-  Einmal-Werkzeug `scripts/flache-kombi-urls.mjs` (2026-08-01).
+  Einmal-Werkzeug `ARCHIVE/scripts/flache-kombi-urls.mjs` (2026-08-01).
 - **Wix-Altlasten** (`/kontakt`, `/about*`, `/portfolio`, `*-galerie` …) aus dem
   Inventar der fünf Wix-Sitemaps – siehe `vercel-headers.md`.
 - **SEO-Aliase** (2026-09-15): `/hochzeitsmaler` → `/szenenmaler/hochzeit/`.

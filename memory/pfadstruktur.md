@@ -254,8 +254,9 @@ Hintergrund. Aufgerufen von `[skill].astro` und `[...kombi].astro`.
 
 ```
 public/fonts/inter/                # Inter latin + latin-ext (woff2), SIL OFL → OFL.txt
-public/fonts/mayonice/             # Custom-Font (woff2/woff, stylesheet.css, demo.html,
-                                   #   Unterordner mayonice_original/)
+public/fonts/mayonice/             # Custom-Font (woff2/woff, stylesheet.css). Das Original-
+                                   #   Paket (otf/ttf/PDF) liegt seit 2026-11-20 in
+                                   #   ARCHIVE/fonts/mayonice_original/ – nicht mehr öffentlich
 public/img/samples/                # System-Fallback /img/samples/sample1.webp
 public/img/logo/                   # Logo (u.a. im LocalBusiness-Schema)
 public/img/team/                   # Team-Portraits

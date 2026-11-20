@@ -8,8 +8,8 @@
 // Bewusst kein Test, sondern ein Bericht – die Zahl der Abweichungen sinkt
 // über mehrere Durchgänge, und man will dabei SEHEN, was noch fehlt.
 //
-//   node scripts/tag-parity-check.mjs           # Zusammenfassung
-//   node scripts/tag-parity-check.mjs --details # jede Abweichung einzeln
+//   node ARCHIVE/scripts/tag-parity-check.mjs           # Zusammenfassung
+//   node ARCHIVE/scripts/tag-parity-check.mjs --details # jede Abweichung einzeln
 
 import fs from 'node:fs';
 import path from 'node:path';

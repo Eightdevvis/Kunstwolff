@@ -8,9 +8,10 @@ eingebunden** (Stand 2026-11-20).
 | Component | Zweck |
 | :-- | :-- |
 | `src/components/about/AboutSchnellzeichner.astro` | Skill-spezifische About-Sektion mit festem Schnellzeichner-Text und Bild-Slot |
-| `src/components/about/Aboutsection.astro` | Wird in `src/pages/index.astro` importiert, der Aufruf steht aber nur als Kommentar (`//<Aboutsection />`) – rendert nichts |
 
 ### Altlasten – gelöscht (2026-11-20, Inventur)
+
+`about/Aboutsection.astro` (nur auskommentiert eingebunden) liegt in `ARCHIVE/components/`, nicht gelöscht.
 
 `reviews-references/References.astro` (ersetzt durch `BrandStripe`/`BrandGrid`),
 `header/LanguageMenu.astro` (ersetzt durch `LangSwitcher.astro`),

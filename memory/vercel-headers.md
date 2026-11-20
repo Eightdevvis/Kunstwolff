@@ -49,7 +49,7 @@ Austausch ebenso wenig. Siehe `responsive-images.md`.
    fünf Teil-Sitemaps.
 2. **Die Flach-Umstellung (2026-08-01):** 136 Weiterleitungen von der hierarchischen
    Ort-Kombi-Adresse auf die flache (`/szenenmaler/berlin` → `/berlin-szenenmaler/`),
-   erzeugt vom Einmal-Werkzeug `scripts/flache-kombi-urls.mjs`. Details in `seo.md`.
+   erzeugt vom Einmal-Werkzeug `ARCHIVE/scripts/flache-kombi-urls.mjs`. Details in `seo.md`.
 3. **SEO-Alias `/hochzeitsmaler` (2026-09-15):** dauerhaft auf `/szenenmaler/hochzeit/`.
    Kunden googeln „Hochzeitsmaler", nicht „Szenenmaler" — die Skill×Event-Kombi wird
    deshalb unter dem gesuchten Wort erreichbar, ohne eine zweite Seite (Duplicate

@@ -17,7 +17,7 @@ Geändert wurden genau zwei Stellen:
 
 **Harter Schnitt ohne Ordner-Fallback** — zwei parallele Modelle wären genau die
 Doppelrealität, die das Tag-System beseitigen soll. Abgesichert durch
-`scripts/tag-parity-check.mjs`: die Prüfung vergleicht für jede Seite das
+`ARCHIVE/scripts/tag-parity-check.mjs`: die Prüfung vergleicht für jede Seite das
 Ordner-Ergebnis gegen das Tag-Ergebnis und meldet, was verschwinden würde. Vor
 der Umstellung stand sie auf **0 Lücken bei 39 Seiten**.
 

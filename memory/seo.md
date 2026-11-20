@@ -49,9 +49,9 @@ In **Project Settings → Environment Variables:**
 
 | Env | Wert (Stage, aktuell) | Wert (nach Cutover) |
 | :-- | :-- | :-- |
-| `SITE_URL` | `https://kunstwolff.vercel.app` | `https://www.kunstwolff.de` (kanonisch lt. `CUTOVER_PLAN.md` §0; Apex wird via Vercel-Domain-Settings auf www umgeleitet) bzw. Variable löschen → Fallback greift |
+| `SITE_URL` | `https://kunstwolff.vercel.app` | `https://www.kunstwolff.de` (kanonisch lt. `ARCHIVE/CUTOVER_PLAN.md` §0; Apex wird via Vercel-Domain-Settings auf www umgeleitet) bzw. Variable löschen → Fallback greift |
 
-Der vollständige Cutover-Ablauf (DNS, Domain-Settings, Verifikations-Checks, Rollback) steht in `CUTOVER_PLAN.md` im Projekt-Root.
+Der vollständige Cutover-Ablauf (DNS, Domain-Settings, Verifikations-Checks, Rollback) steht in `ARCHIVE/CUTOVER_PLAN.md` (historisch).
 
 ### Verifikation
 
@@ -215,12 +215,12 @@ einem Tag abzuarbeiten. Die vier Punkte, die man hier kennen muss:
 
 1. **`SITE_URL` setzen reicht nicht – es muss MANUELL neu deployt werden.** Vercel
    wendet geänderte Env-Variablen nicht auf bestehende Deployments an.
-   `CUTOVER_PLAN.md:126` behauptet das Gegenteil und ist an der Stelle falsch
+   `ARCHIVE/CUTOVER_PLAN.md:126` behauptet das Gegenteil und ist an der Stelle falsch
    (Zeile 85 desselben Plans sagt es richtig). Ohne Redeploy liefert
    `www.kunstwolff.de` ab Sekunde eins 173 Seiten mit `noindex, nofollow`.
 2. **Die Variable LÖSCHEN ist keine Alternative** (die frühere Formulierung oben ist
    damit überholt): der Fallback in `astro.config.mjs` ist der Apex `kunstwolff.de`,
-   kanonisch ist laut `CUTOVER_PLAN.md:16` aber `www`. Explizit auf
+   kanonisch ist laut `ARCHIVE/CUTOVER_PLAN.md:16` aber `www`. Explizit auf
    `https://www.kunstwolff.de` setzen.
 3. **Die DNS-Zone liegt bei Wix** (`ns12/ns13.wixdns.net`), nicht beim Registrar – der
    Cutover-Plan unterstellt Registrar-DNS. Solange die Zone dort liegt, darf „Disconnect
@@ -458,7 +458,7 @@ Stand gegengeprüft: 2 von 10 Tests werden rot).
 
 Adressen liegen an einer Stelle: `src/utils/comboUrls.ts`. Weiterleitungen
 (136 Stück, ohne Ketten) in `vercel.json`, erzeugt von
-`scripts/flache-kombi-urls.mjs`.
+`ARCHIVE/scripts/flache-kombi-urls.mjs`.
 
 ## Nach dem Cutover gerichtet (2026-08-06)
 

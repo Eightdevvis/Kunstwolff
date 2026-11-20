@@ -128,13 +128,13 @@ Liegt unter `.github/workflows/sync-landings.yml`.
 **Trigger:** Push zu `main` wenn `public/landings/landings.md`, `public/skills/skills.json` oder `public/events/events.json` geändert. Plus `workflow_dispatch` (manuell auslösbar).
 
 **Macht:**
-1. Checkout, Node 20 setup, `npm ci`
+1. Checkout, Node 22 setup (wie Vercel und PC, seit 2026-11-20), `npm ci`
 2. `npm run sync:content` (volle Variante, nicht `:safe`)
 3. `git add` über die generierten Verzeichnisse (siehe Lücke unten), Commit `chore: sync content folders`, Push
 
 So müssen Endbenutzer nach Eintragen einer neuen Stadt nicht lokal builden – die Action macht alles.
 
-### Behoben 2026-07-30 (waren SYNC-1/2 im `HEALTH_CHECK_2026-05-05.md`)
+### Behoben 2026-07-30 (waren SYNC-1/2 im `ARCHIVE/HEALTH_CHECK_2026-05-05.md`)
 
 - ~~**Trigger ist unvollständig**~~ → `public/events/events.json` steht jetzt in den Trigger-Pfaden.
 - ~~**`git add` ist unvollständig**~~ → die Liste erfasst jetzt zusätzlich `public/config` (Tag-Vokabular!), `public/erinnerungen` und `public/events`. `public/config` war die Ursache dafür, dass `tags.json` von Hand nachgepflegt werden musste (Commit `6b38e3e`) — und damit indirekt dafür, dass ein neu angelegter Skill im Admin nicht auswählbar war.
@@ -145,9 +145,14 @@ So müssen Endbenutzer nach Eintragen einer neuen Stadt nicht lokal builden – 
 
 ## Einmal-Werkzeuge (laufen NICHT im Sync)
 
-Drei Skripte in `scripts/` gehören nicht in die Kette – sie waren für genau eine
-Umstellung gedacht und liegen als Beleg dort. Sie stehen in keinem npm-Script und
-werden von keinem Hook aufgerufen; wer sie versehentlich laufen lässt, ändert Inhalte.
+Seit 2026-11-20 liegen sie in `ARCHIVE/scripts/` (Aufruf aus dem Repo-Root, z. B.
+`node ARCHIVE/scripts/flache-kombi-urls.mjs`). Sie gehören nicht in die Kette – sie waren
+für genau eine Umstellung gedacht und bleiben als Beleg. Sie stehen in keinem npm-Script
+und werden von keinem Hook aufgerufen; wer sie versehentlich laufen lässt, ändert Inhalte.
+Ebenfalls dort, ohne eigene Zeile hier: `gsc-abgleich.mjs` (Search-Console-Export gegen die
+Weiterleitungskarte), `tag-parity-check.mjs` (`tag-system.md`),
+`verkleinere-referenzlogos.mjs` (`content-referenzlogos.md`) und `umzug-status.sh`
+(Fortschritt des abgeschlossenen Domain-Umzugs).
 
 | Script | Wofür, einmalig |
 | :-- | :-- |
