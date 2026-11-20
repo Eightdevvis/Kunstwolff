@@ -262,13 +262,27 @@ const readMetadata = () => {
     return {};
   }
 
-  try {
-    const raw = fs.readFileSync(metadataPath, 'utf-8');
-    const parsed = JSON.parse(raw);
+  // Eine kaputte slides.meta.json darf NIE als „leer" gelesen werden: der Lauf
+  // schreibt die Datei am Ende neu, und pre-commit-Hook wie GitHub Action
+  // committen das Ergebnis. Aus „nicht lesbar" würde so „alle Alt-Texte, Tags
+  // und enabled-Schalter gelöscht". Lieber abbrechen und die Datei stehen lassen.
+  const abbrechen = (grund) => {
+    console.error(`sync-slides-metadata: FEHLER - ${path.relative(projectRoot, metadataPath)} ist nicht lesbar (${grund}). Nichts geschrieben.`);
+    process.exit(1);
+  };
 
-    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
-      return {};
-    }
+  let parsed;
+  try {
+    parsed = JSON.parse(fs.readFileSync(metadataPath, 'utf-8'));
+  } catch (err) {
+    abbrechen(err instanceof Error ? err.message : String(err));
+  }
+
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    abbrechen('kein JSON-Objekt');
+  }
+
+  {
 
     return Object.fromEntries(
       Object.entries(parsed).map(([key, value]) => {
@@ -320,8 +334,6 @@ const readMetadata = () => {
         ];
       }),
     );
-  } catch {
-    return {};
   }
 };
 

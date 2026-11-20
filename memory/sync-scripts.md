@@ -175,6 +175,23 @@ Vorher lief es nur über die deutsche Wurzel — mit der Folge, dass
 die deutsche. Ein Overlay, das der Sync nicht kennt, ist ein Inhalt, der nie
 ankommt — und der stille Fallback verdeckt es.
 
+## Kaputte Metadaten werden nie als „leer" gelesen (2026-11-20)
+
+`sync-slides-metadata.mjs` und `sync-tags.mjs` lesen eine Datei ein und
+schreiben sie am Ende komplett neu. Bisher wurde eine **vorhandene, aber nicht
+parsbare** `slides.meta.json` bzw. `tags.json` still als `{}` gelesen – der Lauf
+hätte dann alle Alt-Texte, Tags, `enabled`-Schalter bzw. alle nur in `tags.json`
+stehenden Einträge verworfen, und pre-commit-Hook wie GitHub Action
+(`sync-landings.yml`) hätten das Ergebnis committet. Jetzt brechen beide mit
+Exit 1 ab und schreiben nichts. Folgen: `sync:slides` ist kein harter Schritt –
+der Build läuft mit Warnung weiter, die Datei bleibt unangetastet; `sync:tags`
+ist hart – der Vercel-Build bricht ab und die letzte gute Fassung bleibt live.
+Eine **fehlende** Datei ist weiter erlaubt (wird neu angelegt).
+
+Die Lader in `src/utils/` (Website-Seite) fallen bei kaputtem JSON weiterhin auf
+Standardwerte zurück, melden das aber jetzt im Build-Log über
+`src/utils/warnUnreadable.ts` (fehlende Datei = still).
+
 ## Stichwort-Ableitung trifft an Wortgrenzen (2026-07-31)
 
 `inferEventsFromKey` (`scripts/tags.mjs`) und `eventsFromText`
