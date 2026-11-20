@@ -119,4 +119,4 @@ statisch generierten Seiten **außer** den in `public/config/page-visibility.jso
 ausgeblendeten: die Sitemap-Integration in `astro.config.mjs` filtert sie per
 Präfix-Regel heraus (zeichengleich zu `isPageHiddenByPath()` in
 `src/utils/pageVisibility.ts`), damit keine `noindex`-Seite widersprüchlich in der
-Sitemap steht. Stand 2026-11-20: 135 ausgeblendete Pfade. Output: `dist/sitemap-index.xml` + `dist/sitemap-0.xml`. Host wird zur Build-Zeit aus `process.env.SITE_URL` (Fallback `https://kunstwolff.de`) übernommen – siehe `seo.md` "Stage vs. Production". Cutover-Historie siehe `seo.md` (seit August 2026 live auf `www`).
+Sitemap steht. Stand 2026-11-20: 135 ausgeblendete Pfade. Output: `dist/sitemap-index.xml` + `dist/sitemap-0.xml`. Host wird zur Build-Zeit aus `process.env.SITE_URL` (Fallback `SITE_ORIGIN` = `https://www.kunstwolff.de`, `src/utils/siteOrigin.mjs`) übernommen – siehe `seo.md` "Stage vs. Production". Cutover-Historie siehe `seo.md` (seit August 2026 live auf `www`).
