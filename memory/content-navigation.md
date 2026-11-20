@@ -90,8 +90,29 @@ Unter 768 px ist das Menü eine reine CSS-Lösung: versteckte Checkbox
 kleines Skript in `Navigation.astro` das Menü bei **jedem Tipp auf einen Menü-Link**
 (Checkbox zurück auf `false`). Vorher blieb es nach einer Sprungmarke (`#faq`,
 `#contact`) offen und lag mit ~640 px Höhe über genau dem Abschnitt, zu dem man
-wollte. Tipp daneben oder Escape schließt es weiterhin **nicht**, eine Scroll-Sperre
-dahinter gibt es nicht (offene Punkte der Handy-Inventur).
+wollte.
+
+Seit 2026-11-20 (Branch `mobile-fixes`) außerdem:
+- **Tipp daneben schließt:** ein zweites, leeres `<label class="nav-backdrop">`
+  derselben Checkbox liegt bei offenem Menü fixiert über der ganzen Seite
+  (z-index 0, Burger + Menü darüber). Funktioniert ohne JS und fängt den Tipp ab,
+  damit darunter kein Link auslöst.
+- **Scroll-Sperre:** `html:has(#nav-toggle-main:checked) { overflow: hidden }`
+  (reines CSS); das Menü selbst scrollt mit `overscroll-behavior: contain`.
+- **Tastatur:** die Checkbox ist unter 768 px nicht mehr `display: none`, sondern
+  unsichtbar (opacity 0) über dem Burger und fokussierbar; Fokusrahmen am Burger
+  (`:focus-visible + .nav-toggle`). Leertaste schaltet nativ, Enter per Skript,
+  Escape schließt von überall. Das `aria-label` hängt jetzt an der Checkbox,
+  das sichtbare Label ist `aria-hidden`. Über 768 px bleibt sie `display: none`.
+- **Geschlossen unsichtbar auch für Tastatur:** `visibility: hidden` am zu-
+  geklappten Menü (erst nach der Animation) – vorher lief der Tab-Fokus durch
+  alle unsichtbaren Menü-Links.
+- **Tap-Ziele:** Burger 44×44 (vorher 42), Menü- und Untermenü-Links `min-height: 44px`.
+- **Weichzeichner** (`.nav::before`, blur + Verlauf) ist unter 768 px bei
+  geschlossenem Menü 74 statt 104 px hoch (`bottom: 30px`) – er lag sonst über
+  fast der Hälfte des ~250 px hohen Handy-Heroes. Offen deckt er das ganze Menü.
+- **Querformat** (`max-height: 500px` + landscape): Leiste 72 statt 104 px
+  (Innenabstand 12, Logo 44 px).
 
 ## Admin-Tool
 

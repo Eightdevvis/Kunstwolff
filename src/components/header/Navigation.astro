@@ -31,16 +31,26 @@ const isCta = (item: NavigationItem): boolean => !isDropdownItem(item) && !!item
 
     <!-- Sprache + Menü rechts -->
     <div class="nav-right">
-      <input class="nav-toggle-input" type="checkbox" id="nav-toggle-main" />
+      <input
+        class="nav-toggle-input"
+        type="checkbox"
+        id="nav-toggle-main"
+        aria-label="Navigation umschalten"
+        aria-controls="main-nav-menu"
+      />
       <label
         class="nav-toggle"
         for="nav-toggle-main"
-        aria-label="Navigation umschalten"
+        aria-hidden="true"
       >
         <span></span>
         <span></span>
         <span></span>
       </label>
+      <!-- Handy: unsichtbare Fläche hinter dem offenen Menü. Ein Tipp darauf
+           schließt es (ein zweites Label derselben Checkbox, also auch ohne
+           JavaScript) und fängt den Tipp ab, damit darunter nichts auslöst. -->
+      <label class="nav-backdrop" for="nav-toggle-main" aria-hidden="true"></label>
       <!-- Hauptmenü -->
       <ul class="nav-menu" id="main-nav-menu">
         {
@@ -110,6 +120,22 @@ const isCta = (item: NavigationItem): boolean => !isDropdownItem(item) && !!item
     link.addEventListener('click', () => {
       if (menuSchalter) menuSchalter.checked = false;
     });
+  });
+
+  // Tastatur: Leertaste schaltet die Checkbox von selbst, Enter tut das bei
+  // Checkboxen nicht – Menü-Knöpfe öffnen aber üblicherweise auch mit Enter.
+  // Escape schließt das offene Menü von überall.
+  menuSchalter?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      menuSchalter.click();
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menuSchalter?.checked) {
+      menuSchalter.checked = false;
+      menuSchalter.focus();
+    }
   });
 </script>
 
@@ -204,8 +230,9 @@ const isCta = (item: NavigationItem): boolean => !isDropdownItem(item) && !!item
 
 .nav-toggle {
   display: none;
-  width: 42px;
-  height: 42px;
+  /* 44 statt 42: Mindestgröße für Tap-Ziele */
+  width: 44px;
+  height: 44px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   background: rgba(0, 0, 0, 0.35);
   border-radius: 8px;
@@ -214,6 +241,10 @@ const isCta = (item: NavigationItem): boolean => !isDropdownItem(item) && !!item
 }
 
 .nav-toggle-input {
+  display: none;
+}
+
+.nav-backdrop {
   display: none;
 }
 
@@ -464,7 +495,10 @@ const isCta = (item: NavigationItem): boolean => !isDropdownItem(item) && !!item
     background: rgba(0, 0, 0, 0.72);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 10px;
-    transition: max-height 0.28s ease, opacity 0.22s ease, transform 0.22s ease, padding 0.22s ease;
+    transition: max-height 0.28s ease, opacity 0.22s ease, transform 0.22s ease, padding 0.22s ease, visibility 0s linear 0.28s;
+    /* Geschlossen auch für Tastatur und Screenreader weg – sonst wanderte der
+       Tab-Fokus durch ~15 unsichtbare Links. Ausblenden erst nach der Animation. */
+    visibility: hidden;
   }
 
   .nav-menu > li {
@@ -479,6 +513,8 @@ const isCta = (item: NavigationItem): boolean => !isDropdownItem(item) && !!item
     transform: translateY(0);
     pointer-events: auto;
     padding: 8px 12px 10px;
+    visibility: visible;
+    transition-delay: 0s;
   }
 
   .nav-menu .divider {
@@ -526,8 +562,67 @@ const isCta = (item: NavigationItem): boolean => !isDropdownItem(item) && !!item
     transform: none;
   }
 
+  /* Tap-Ziele 44 px (vorher 36 bzw. 41,5 px), Schrift unverändert. */
   .nav-mini-link {
     padding: 8px 4px 8px 0;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-menu > li:not(.nav-cta) > a,
+  .nav-menu-item > .nav-mini-dropdown > .nav-mini-toggle {
+    min-height: 44px;
+  }
+
+  /* Checkbox nicht mehr `display: none`, sonst ist das Menü per Tastatur
+     unerreichbar: unsichtbar über dem Burger, aber fokussierbar. Der Rahmen
+     erscheint am Burger, wenn sie den Tastaturfokus hat. */
+  .nav-toggle-input {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .nav-toggle-input:focus-visible + .nav-toggle {
+    outline: 2px solid #d4af37;
+    outline-offset: 2px;
+  }
+
+  /* Tipp neben das offene Menü schließt es (Label der Checkbox, s. Markup). */
+  .nav-toggle-input:checked ~ .nav-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .nav-toggle,
+  .nav-menu {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Solange das Menü offen ist, scrollt die Seite dahinter nicht mit. */
+  :global(html:has(#nav-toggle-main:checked)) {
+    overflow: hidden;
+  }
+
+  .nav-menu {
+    overscroll-behavior: contain;
+  }
+
+  /* Weichzeichner hinter der geschlossenen Leiste ~30 % kürzer (104 → 74 px):
+     auf dem Handy ist der Hero oft nur ~250 px hoch, der Verlauf lag über
+     fast der Hälfte des Fotos. Offen bleibt er über dem ganzen Menü. */
+  .nav:not(:has(.nav-toggle-input:checked))::before {
+    bottom: 30px;
   }
 
   /* CTA: gleiche linke Achse wie die Links (kein Zentrier-Layout) */
@@ -545,6 +640,27 @@ const isCta = (item: NavigationItem): boolean => !isDropdownItem(item) && !!item
     padding: 10px 22px;
     box-sizing: border-box;
     vertical-align: middle;
+  }
+}
+/* =========================
+   Handy quer: flachere Leiste
+   104 px waren bei 390 px Bildschirmhöhe 27 % des Schirms. Logo 44 statt
+   60 px, Innenabstand 12 statt 20 px → 68 px. Desktop-Höhen erreichen die
+   Regel nicht.
+========================= */
+@media (max-height: 500px) and (orientation: landscape) {
+  .nav {
+    padding-top: max(12px, env(safe-area-inset-top));
+    padding-bottom: 12px;
+  }
+
+  .nav-logo img {
+    height: 44px;
+  }
+
+  .nav-logo::before {
+    width: 38px;
+    height: 38px;
   }
 }
 </style>
