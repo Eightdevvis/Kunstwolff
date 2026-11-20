@@ -128,7 +128,7 @@ Liegt unter `.github/workflows/sync-landings.yml`.
 **Trigger:** Push zu `main` wenn `public/landings/landings.md`, `public/skills/skills.json` oder `public/events/events.json` geändert. Plus `workflow_dispatch` (manuell auslösbar).
 
 **Macht:**
-1. Checkout, Node 22 setup (wie Vercel und PC, seit 2026-11-20), `npm ci`
+1. Checkout, Node 24 setup (wie `engines` in `package.json` und damit Vercel, seit dem Astro-7-Upgrade 2026-11-20 – Astro 7.4 braucht ≥ 22.23.4), `npm ci`
 2. `npm run sync:content` (volle Variante, nicht `:safe`)
 3. `git add` über die generierten Verzeichnisse (siehe Lücke unten), Commit `chore: sync content folders`, Push
 

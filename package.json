@@ -2,6 +2,9 @@
   "name": "capricious-conjunction",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "setup:hooks": "git config core.hooksPath .githooks",
     "sync:landings": "node scripts/sync-landings.mjs",
