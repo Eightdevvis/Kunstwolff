@@ -307,7 +307,7 @@ komplett maschinell. Von Hand geschriebene Alt-Texte: null. Aus der Dateihistori
 - `sync-slides-metadata.mjs` hebt `alt` jetzt über `altAus()` auf `altOverride`
   statt es wegzuwerfen – Altbestand heilt sich beim ersten Lauf selbst.
 - Das Admin-Tool schreibt nur noch `altOverride` und räumt `alt` dabei weg.
-- `scripts/alt-texte-zurueckholen.mjs` holt die verlorenen Texte zurück
+- `ARCHIVE/scripts/alt-texte-zurueckholen.mjs` holt die verlorenen Texte zurück
   (Trockenlauf ohne Argument, `--schreiben` übernimmt).
 - Festgehalten in `tests/sync-slides-alt.test.ts` und, auf der Admin-Seite,
   in `src/services/mediaLibrary.alttext.test.ts`.

@@ -94,6 +94,12 @@ Das ist Absicht: nur so schlagen spätere Änderungen an `default.json` weiter d
 Echte eigene Werte bleiben stehen. Nebenbei löscht das Script `public/why/_vorlage.json`
 und legt `.gitkeep` in leere benefit-Ordner.
 
+Diese `.gitkeep` sind **nicht eingecheckt** (`.gitignore`: `public/img/why/**/.gitkeep`).
+Bis 2026-11-20 waren 84 davon trotzdem im Repo (aus der Zeit vor der Ignore-Zeile) –
+widersprüchlich, und unnötig: `sync:why` legt sie bei jedem Dev-Start/Build/Commit neu an,
+der Admin filtert `.gitkeep` ohnehin heraus, und Ordner ohne `.gitkeep` (z. B. `berlin/`)
+gab es auf GitHub schon vorher. Deshalb aus dem Repo genommen, Ignore-Zeile bleibt.
+
 ## Admin-Tool
 
 - Der Why-Editor (`ImageManager`, `editorType: 'why'`) verwaltet **Bilder UND Texte**.

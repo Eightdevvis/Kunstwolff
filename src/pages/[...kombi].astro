@@ -1,4 +1,5 @@
 ---
+import { SITE_ORIGIN } from '../utils/siteOrigin.mjs';
 /**
  * [...kombi].astro
  *
@@ -139,8 +140,8 @@ let skillCityDescription = '';
 let skillCityBreadcrumb: unknown;
 let cityName = '';
 
-// WEB-012: Schema-URLs aus Astro.site (= SITE_URL) statt hardcoded kunstwolff.de.
-const site = Astro.site?.origin ?? 'https://kunstwolff.de';
+// WEB-012: Schema-URLs aus Astro.site (= SITE_URL) statt hardcoded Domain.
+const site = Astro.site?.origin ?? SITE_ORIGIN;
 
 if (pageType === 'landing') {
   const rawCitySlides = getCitySlides(landing ?? '');
@@ -322,10 +323,8 @@ if (pageType === 'landing' && landingSlides) {
 }
 ---
 
+{/* SKILL+STADT-SEITE – bestehende Struktur unverändert */}
 {pageType === 'landing' && landingSlides && (
-  <!-- ══════════════════════════════════════════════════
-       SKILL+STADT-SEITE – bestehende Struktur unverändert
-  ══════════════════════════════════════════════════ -->
   <SkillLayout title={skillCityPageTitle} description={skillCityDescription} image={skillCityTitleImage}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(skillCityBreadcrumb)} />
     {sectionOrder.map((id) => {
@@ -340,10 +339,8 @@ if (pageType === 'landing' && landingSlides) {
   </SkillLayout>
 )}
 
+{/* SKILL+EVENT-SEITE – EventLayout mit Skill-Kontext */}
 {pageType === 'event' && eventData && eventContent && eventSlides && (
-  <!-- ══════════════════════════════════════════════════
-       SKILL+EVENT-SEITE – EventLayout mit Skill-Kontext
-  ══════════════════════════════════════════════════ -->
   <EventLayout title={eventPageTitle} description={eventMetaDescription || eventPageDescription} image={eventTitleImage} heroImage={sectionOrder.includes('eventHero') && isComponentEnabled(pt, landing ?? '', 'eventHero') ? eventTitleImage : undefined}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(eventBreadcrumb)} />
 

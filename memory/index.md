@@ -28,8 +28,8 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 ### Grundlagen (fast immer relevant)
 - [Projekt-Übersicht](projekt.md) – Was ist Kunstwolff, Tech-Stack, Ziele, Setup, **Hosting-/Deploy-Stand** (live, keine Stage)
 - [Architektur](architektur.md) – SSG-Logik, dateibasiertes CMS, public/-Prinzip
-- [Pfadstruktur](pfadstruktur.md) – Vollständiger Baum von `public/` mit Zweck pro Pfad
-- [Routing & URL-Generierung](routing.md) – Wie URLs aus landings.md/skills.json/events.json entstehen
+- [Pfadstruktur](pfadstruktur.md) – Vollständiger Baum von `public/` mit Zweck pro Pfad; private Admin-Daten außerhalb (`admin-data/calendar/`, `zettel/`)
+- [Routing & URL-Generierung](routing.md) – Wie URLs aus landings.md/skills.json/events.json entstehen; **Slug-Regeln an einer Stelle: `scripts/slug.mjs`** + Testvektoren `tests/fixtures/slug-vectors.json`
 - [Komponenten-Stack](komponenten-stack.md) – `components.json` `_order` als EINE Quelle für Sektions-Reihenfolge+Sichtbarkeit (Website rendert daraus, Admin liest dasselbe), Build-Guardrail
 - [Admin-Tool / Cross-Repo](admin-tool.md) – Was Admin schreibt, was nicht, Cross-Repo-Workflow
 - [Bug-Zettel](../zettel/LIESMICH.md) – `zettel/bugs.json` (bewusst **nicht** unter `public/`): Mama meldet Bugs im Admin (Käfer-Knopf); wer fixt, setzt im selben Commit `status: gefixt` + `gefixtAm` + `antwort`. Speichern im Admin klappt nur, wenn der **Worker aus aktuellem `master` deployt** ist (sonst 403 `forbidden_path`, siehe `admin-tool.md`)
@@ -43,7 +43,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [Team](content-team.md) – `/team/`: zwei Profile (Gabriele zuerst), Portraits als Zuschnitte aus Event-Fotos, **kein `srcset`** für `img/team`
 - [Tag-System](tag-system.md) – Skill × Anlass × Ort: `config/tags.json`, Tag-Blöcke an Bildern/Reviews/FAQs, Migration; **Phase 5a+5b+5d+5e fertig – Bilder, Reviews UND FAQs wählen über Tags aus, und seit 5e (2026-07-31) tut das AUCH der Admin. Der Ordner ist nur noch Ablage und Upload-Ziel.**
 - [Responsive Bilder](responsive-images.md) – `srcset`/`sizes`, Varianten-Erzeugung nach dem Build, warum nicht `astro:assets`
-- [Vercel-Header](vercel-headers.md) – Cache-Control für `/img/*`, warum bewusst kein `immutable`; **Redirect-Karte Wix→Astro** (warum nicht über `astro.config.mjs`)
+- [Vercel-Header](vercel-headers.md) – Cache-Control für `/img/*`, warum bewusst kein `immutable`; **Sicherheits-Header** (`nosniff`, `Referrer-Policy`, bewusst kein `X-Frame-Options` wegen Admin-iframe); **Redirect-Karte Wix→Astro** (warum nicht über `astro.config.mjs`)
 - [Titelbild](content-titelbild.md) – Pfad, Metadaten, Fallback-Kette, **optionales Handy-Titelbild in `<ordner>/mobile/`**
 - [Reviews](content-reviews.md) – Markdown-Format, **Auswahl über `tags.landings` bzw. `tags.events`**, Auffüll-Logik **mit Deckel** und **`tagOnly`-Schalter pro Bewertung**, MiniReviews-Anzeige (Stadtseiten waren bis 2026-07-31 gar nicht angeschlossen)
 - [Allgemeine Texte](content-site-texts.md) – `site-texts/content.json`, Startseiten-Texte, `landingIntros` (Einführungstext), **editierbare Überschriften** (H1 Start/Stadt, Bilder/FAQ/Why/Kontakt/Eventformate)
@@ -56,7 +56,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 
 ### Build & Automatisierung
 - [Sync-Scripts](sync-scripts.md) – Reihenfolge, was jedes Script tut, GitHub Action
-- [Git-Hooks](git-hooks.md) – pre-commit, pre-push, Bildoptimierung; **pre-commit regeneriert `lastmod.json` + `slides.meta.json` und nimmt sie in fast jeden Commit mit**, braucht `node_modules` (nie `--no-verify`)
+- [Git-Hooks](git-hooks.md) – pre-commit, pre-push (**`astro check` muss 0 Fehler melden**), Bildoptimierung; **pre-commit regeneriert `lastmod.json` + `slides.meta.json` und nimmt sie in fast jeden Commit mit**, braucht `node_modules` (nie `--no-verify`)
 - [Befehle](befehle.md) – `npm run …` Übersicht, Dev/Build/Preview
 - [Validierungsreports](validierungsreports.md) – `reports/validation/`
 
@@ -67,11 +67,10 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 
 ### Status, Pläne & offene Punkte (außerhalb von `memory/`)
 - `zettel/bugs.json` + `zettel/LIESMICH.md` – was Mama aktuell als kaputt meldet (erste Anlaufstelle für „was ist offen?").
-- `ARBEITSLISTE.md` (Repo-Root, Stand 2026-08-01) – priorisierte Arbeitsliste; vor Verwendung gegen den Code prüfen.
+- `ARCHIVE/` (Repo-Root, seit 2026-11-20) – **historisch, kein To-do**: `ARBEITSLISTE.md` (Stand 2026-08-01), `HEALTH_CHECK_2026-05-05.md` + `CUTOVER_PLAN.md` (Audit und Umzugsplan von vor dem Cutover; der Umzug ist durch), `scripts/` (Einmal-Werkzeuge ohne Aufrufer, Aufruf aus dem Repo-Root: `node ARCHIVE/scripts/<name>`), `components/Aboutsection.astro` (war nie sichtbar), `fonts/mayonice_original/` (Original-Font-Paket, wurde vorher öffentlich ausgeliefert). Außerhalb von `public/`, also nicht live; `tsconfig.json` schließt den Ordner aus.
 - `STADTSEITEN.md` (Repo-Root, Stand 2026-08-09) – welche Stadt was zum Freischalten braucht.
 - `MEHRSPRACHIGKEIT_PLAN.md` (Repo-Root) – Plan Englisch/N Sprachen (nicht umgesetzt).
 - `mom-requests.md` (Repo-Root) – Wünsche, die der KI-Chat im Admin per `log_feature_request` notiert (committet ohne Rückfrage).
-- `HEALTH_CHECK_2026-05-05.md` und `CUTOVER_PLAN.md` (Repo-Root) – **historisch**: Audit und Umzugsplan von vor dem Cutover. Der Umzug ist durch; beide nicht mehr als To-do lesen.
 - `reports/tagsystem-audit-2026-07-30.md` – Befundliste aus dem Tag-System-Audit (45 bestätigte Funde über sechs Ebenen, nach Schwere sortiert, mit „gesund"- und „widerlegt"-Abschnitt). ⚠️ **Nicht mehr als To-do-Liste lesen** – die vier prominentesten Punkte sind erledigt: die 38 leeren Skill×Stadt-Galerien (2026-07-30), die 40 inhaltslosen Aquarelle-Seiten (ausgeblendet, 2026-07-30), die tote Anlass-Dimension der FAQs (eigenes `event`-Feld, 2026-07-31) und `public/config` in beiden `git add`-Listen (pre-commit-Hook **und** `sync-landings.yml`). Der Report bleibt als Beleg, nicht als Auftrag.
 
 ---
@@ -96,6 +95,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 | "Überschrift ändern (H1, Bilder, FAQ, Kontakt …)" | `content-site-texts.md` (Abschnitt Überschriften) |
 | "„Ihre Sommerfest" / falscher Artikel im Text" | `content-events.md` (`eventPhrase`) |
 | "Bug-Zettel / Mama meldet etwas" | `../zettel/LIESMICH.md` + `admin-tool.md` |
+| "Kalender / admin-data / Repo privat" | `pfadstruktur.md` („Admin-Daten außerhalb von `public/`") + `admin-tool.md` + Admin-Memory `manager-kalender.md`, `repo-schnappschuss.md` |
 | "Commit enthält plötzlich `lastmod.json`/`slides.meta.json`" | `git-hooks.md` (Pre-Commit-Detail) |
 | "Meta-Beschreibung/Titel zu lang" | `seo.md` (Längen-Riegel) |
 | "FAQ erscheint auf falschen Seiten" | `content-faqs.md` („Leer" heißt zweierlei) |

@@ -1,6 +1,15 @@
 #!/usr/bin/env sh
 set -e
 
+# Typecheck (seit 2026-11-20): `astro check` muss 0 Fehler melden, sonst kein
+# Push. Braucht die devDependency `@astrojs/check` – fehlt sie, einmal
+# `npm install` laufen lassen (nie --no-verify). Details: memory/git-hooks.md.
+if ! node -e "import('@astrojs/check').catch(() => process.exit(1))" 2>/dev/null; then
+  echo "pre-push: @astrojs/check fehlt in node_modules – bitte einmal 'npm install' ausführen." >&2
+  exit 1
+fi
+npx astro check
+
 node scripts/optimize-all-images.mjs
 
 # Prüfen ob Änderungen durch die Optimierung entstanden sind

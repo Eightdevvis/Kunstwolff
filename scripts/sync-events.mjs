@@ -13,6 +13,8 @@
 
 import fs from 'fs';
 import path from 'path';
+// Event-Slug-Ersatz: schreibt Umlaute bewusst NICHT aus (siehe scripts/slug.mjs).
+import { slugifyWithoutTransliteration } from './slug.mjs';
 
 const projectRoot = process.cwd();
 const eventsRoot = path.join(projectRoot, 'public', 'events');
@@ -30,19 +32,6 @@ const ensureDirectory = (dirPath) => {
   }
   return false;
 };
-
-/**
- * Slugifiziert einen Text: NFD, lowercase, kebab-case.
- * Identisch mit der Logik in events.ts damit Slugs konsistent sind.
- */
-const slugify = (text) =>
-  String(text)
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
 
 /** Standard-content.json Template für neue Events (ohne bisherige Daten zu überschreiben) */
 const buildDefaultContent = (event) => ({
@@ -140,7 +129,7 @@ const run = () => {
     if (!title) continue;
 
     // Slug: aus JSON oder automatisch generiert
-    const slug = String(event.slug ?? '').trim() || slugify(title);
+    const slug = String(event.slug ?? '').trim() || slugifyWithoutTransliteration(title);
 
     // 1) Slides-Ordner anlegen
     const slidesDir = path.join(slidesEventsRoot, slug);

@@ -17,7 +17,7 @@ Geändert wurden genau zwei Stellen:
 
 **Harter Schnitt ohne Ordner-Fallback** — zwei parallele Modelle wären genau die
 Doppelrealität, die das Tag-System beseitigen soll. Abgesichert durch
-`scripts/tag-parity-check.mjs`: die Prüfung vergleicht für jede Seite das
+`ARCHIVE/scripts/tag-parity-check.mjs`: die Prüfung vergleicht für jede Seite das
 Ordner-Ergebnis gegen das Tag-Ergebnis und meldet, was verschwinden würde. Vor
 der Umstellung stand sie auf **0 Lücken bei 39 Seiten**.
 
@@ -109,7 +109,9 @@ referenziert); sie wurde durch `jubilaeum` ersetzt.
 ⚠️ `slugifyTag()` muss **zeichengleich** zu `src/utils/tagSlug.ts` im Admin-Repo
 bleiben. Beide Repos vergleichen dieselben Tags gegeneinander; eine Abweichung
 trennt sie lautlos. Der Admin hat dafür einen Test, der die erwarteten Slugs
-fest verdrahtet.
+fest verdrahtet. Seit 2026-11-20 steht die Funktion in `scripts/slug.mjs` (eine
+Quelle für alle Slugs, siehe `routing.md` „Slug-Regeln“); gemeinsame Testvektoren:
+`tests/fixtures/slug-vectors.json`.
 
 **Harte Prüfung:** `sync-tags` bricht ab, wenn ein Event-Slug keinen passenden
 Anlass-Tag hätte — sonst fände die Event-Seite ihre Bilder nicht, und das fiele

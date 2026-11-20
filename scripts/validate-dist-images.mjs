@@ -22,19 +22,16 @@
  *
  * ## Benutzung
  *
- *   npm run build && npm run validate:dist
- *
- * Beendet sich mit Code 1, wenn etwas fehlt — damit taugt es für CI.
+ * Läuft seit 2026-11-20 AUTOMATISCH am Ende jedes Builds (Astro-Integration in
+ * `astro.config.mjs`, nach den Bildvarianten) und lässt den Build scheitern,
+ * wenn etwas fehlt – damit geht ein kaputter Build auf Vercel nicht live.
+ * Bewusst kein npm-`postbuild`: Vercel führt seinen eigenen Astro-Build aus,
+ * npm-Ketten um den Build herum laufen dort nicht zuverlässig
+ * (`memory/responsive-images.md`). Von Hand: `npm run validate:dist`
+ * (Code 1, wenn etwas fehlt).
  */
 import { readdirSync, statSync, existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-
-const DIST = 'dist';
-
-if (!existsSync(DIST)) {
-  console.error(`${DIST}/ gibt es nicht – erst "npm run build" laufen lassen.`);
-  process.exit(1);
-}
 
 function htmlDateien(dir, treffer = []) {
   for (const name of readdirSync(dir)) {
@@ -45,53 +42,79 @@ function htmlDateien(dir, treffer = []) {
   return treffer;
 }
 
-const seiten = htmlDateien(DIST);
-const verweise = new Map(); // URL -> Set(Seiten)
-
-const merke = (url, seite) => {
-  if (!url || !url.startsWith('/')) return;
-  const sauber = url.split('?')[0].split('#')[0];
-  if (!/\.(webp|avif|png|jpe?g|gif|svg)$/i.test(sauber)) return;
-  if (!verweise.has(sauber)) verweise.set(sauber, new Set());
-  verweise.get(sauber).add(seite.slice(DIST.length));
-};
-
-for (const seite of seiten) {
-  const html = readFileSync(seite, 'utf8');
-
-  // `data-src`/`data-srcset`: die Slideshow-Bilder tragen ihre Adresse bis zum
-  // Vorladen nur dort (siehe src/scripts/slideVorladen.ts).
-  for (const m of html.matchAll(/\s(?:data-)?src="([^"]+)"/g)) merke(m[1], seite);
-  // Jede Stufe einzeln – der fehlende Kandidat ist der gefährliche Fall.
-  for (const m of html.matchAll(/\s(?:data-)?srcset="([^"]+)"/g)) {
-    for (const kandidat of m[1].split(',')) merke(kandidat.trim().split(/\s+/)[0], seite);
+/**
+ * Prüft alle Bild-Adressen im gebauten HTML unter `dist`.
+ * @param {string} [dist]
+ * @returns {{ seiten: number, urls: number, fehlend: { url: string, beispiele: string[], gesamt: number }[] }}
+ */
+export function validateDist(dist = 'dist') {
+  if (!existsSync(dist)) {
+    throw new Error(`${dist}/ gibt es nicht – erst "npm run build" laufen lassen.`);
   }
-  // Hero-Hintergründe kommen als CSS-Variablen im style-Attribut.
-  for (const m of html.matchAll(/url\(['"]?([^'")]+)['"]?\)/g)) merke(m[1], seite);
-  // Lightbox-Links zeigen auf das Originalbild.
-  for (const m of html.matchAll(/\shref="([^"]+\.(?:webp|avif|png|jpe?g|gif))"/gi)) merke(m[1], seite);
+
+  const seiten = htmlDateien(dist);
+  const verweise = new Map(); // URL -> Set(Seiten)
+
+  const merke = (url, seite) => {
+    if (!url || !url.startsWith('/')) return;
+    const sauber = url.split('?')[0].split('#')[0];
+    if (!/\.(webp|avif|png|jpe?g|gif|svg)$/i.test(sauber)) return;
+    if (!verweise.has(sauber)) verweise.set(sauber, new Set());
+    verweise.get(sauber).add(seite.slice(dist.length));
+  };
+
+  for (const seite of seiten) {
+    const html = readFileSync(seite, 'utf8');
+
+    // `data-src`/`data-srcset`: die Slideshow-Bilder tragen ihre Adresse bis zum
+    // Vorladen nur dort (siehe src/scripts/slideVorladen.ts).
+    for (const m of html.matchAll(/\s(?:data-)?src="([^"]+)"/g)) merke(m[1], seite);
+    // Jede Stufe einzeln – der fehlende Kandidat ist der gefährliche Fall.
+    for (const m of html.matchAll(/\s(?:data-)?srcset="([^"]+)"/g)) {
+      for (const kandidat of m[1].split(',')) merke(kandidat.trim().split(/\s+/)[0], seite);
+    }
+    // Hero-Hintergründe kommen als CSS-Variablen im style-Attribut.
+    for (const m of html.matchAll(/url\(['"]?([^'")]+)['"]?\)/g)) merke(m[1], seite);
+    // Lightbox-Links zeigen auf das Originalbild.
+    for (const m of html.matchAll(/\shref="([^"]+\.(?:webp|avif|png|jpe?g|gif))"/gi)) merke(m[1], seite);
+  }
+
+  const fehlend = [];
+  for (const [url, seitenMenge] of verweise) {
+    if (!existsSync(join(dist, decodeURIComponent(url)))) {
+      fehlend.push({ url, beispiele: [...seitenMenge].slice(0, 3), gesamt: seitenMenge.size });
+    }
+  }
+
+  return { seiten: seiten.length, urls: verweise.size, fehlend };
 }
 
-const fehlend = [];
-for (const [url, seitenMenge] of verweise) {
-  if (!existsSync(join(DIST, decodeURIComponent(url)))) {
-    fehlend.push({ url, beispiele: [...seitenMenge].slice(0, 3), gesamt: seitenMenge.size });
+/**
+ * Ergebnis ausgeben. Gibt `true` zurück, wenn alles gültig ist.
+ * @param {ReturnType<typeof validateDist>} ergebnis
+ */
+export function reportDist({ seiten, urls, fehlend }) {
+  console.log(`validate-dist: ${seiten} Seiten, ${urls} eindeutige Bild-URLs geprüft.`);
+
+  if (fehlend.length === 0) {
+    console.log('validate-dist: alle Bild-Adressen im gebauten Ergebnis gültig ✓');
+    return true;
+  }
+
+  console.error(`\nvalidate-dist: ${fehlend.length} tote Adresse(n)!\n`);
+  for (const f of fehlend.slice(0, 25)) {
+    console.error(`FEHLT  ${f.url}`);
+    console.error(`       auf ${f.gesamt} Seite(n), z.B. ${f.beispiele.join(', ')}`);
+  }
+  if (fehlend.length > 25) console.error(`... und ${fehlend.length - 25} weitere`);
+  return false;
+}
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  try {
+    process.exit(reportDist(validateDist('dist')) ? 0 : 1);
+  } catch (err) {
+    console.error(err instanceof Error ? err.message : err);
+    process.exit(1);
   }
 }
-
-console.log(
-  `validate-dist: ${seiten.length} Seiten, ${verweise.size} eindeutige Bild-URLs geprüft.`
-);
-
-if (fehlend.length === 0) {
-  console.log('validate-dist: alle Bild-Adressen im gebauten Ergebnis gültig ✓');
-  process.exit(0);
-}
-
-console.error(`\nvalidate-dist: ${fehlend.length} tote Adresse(n)!\n`);
-for (const f of fehlend.slice(0, 25)) {
-  console.error(`FEHLT  ${f.url}`);
-  console.error(`       auf ${f.gesamt} Seite(n), z.B. ${f.beispiele.join(', ')}`);
-}
-if (fehlend.length > 25) console.error(`... und ${fehlend.length - 25} weitere`);
-process.exit(1);

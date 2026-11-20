@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'fs';
-// @ts-expect-error - reines JS-Modul ohne Typen
 import { EVENT_KEYWORDS, inferEventsFromKey, slugSet } from '../scripts/tags.mjs';
 
 describe('Anlass-Ableitung trifft an Wortgrenzen', () => {

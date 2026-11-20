@@ -1,0 +1,563 @@
+{
+  "_comment": [
+    "Shared slug test vectors. Expected outputs were recorded from the original copies BEFORE they were merged into scripts/slug.mjs (2026-11-20).",
+    "slugify = normalizeSlug in the sync scripts and src/utils (landings, titleImages, skills).",
+    "slugifyTag = scripts/tags.mjs; same as slugify except null/undefined become \"\" instead of \"null\"/\"undefined\". Mirror of the admin repo src/utils/tagSlug.ts.",
+    "slugifyWithoutTransliteration = event slug fallback (sync-events.mjs, src/utils/events.ts); does NOT write out German umlauts (Jubiläum -> jubilaum). Known deviation, kept on purpose.",
+    "Any other repo (admin) should run its own slug functions against these vectors."
+  ],
+  "vectors": [
+    {
+      "input": "",
+      "slugify": "",
+      "slugifyTag": "",
+      "slugifyWithoutTransliteration": ""
+    },
+    {
+      "input": " ",
+      "slugify": "",
+      "slugifyTag": "",
+      "slugifyWithoutTransliteration": ""
+    },
+    {
+      "input": "   ",
+      "slugify": "",
+      "slugifyTag": "",
+      "slugifyWithoutTransliteration": ""
+    },
+    {
+      "input": "-",
+      "slugify": "",
+      "slugifyTag": "",
+      "slugifyWithoutTransliteration": ""
+    },
+    {
+      "input": "---",
+      "slugify": "",
+      "slugifyTag": "",
+      "slugifyWithoutTransliteration": ""
+    },
+    {
+      "input": "a",
+      "slugify": "a",
+      "slugifyTag": "a",
+      "slugifyWithoutTransliteration": "a"
+    },
+    {
+      "input": "Berlin",
+      "slugify": "berlin",
+      "slugifyTag": "berlin",
+      "slugifyWithoutTransliteration": "berlin"
+    },
+    {
+      "input": "berlin",
+      "slugify": "berlin",
+      "slugifyTag": "berlin",
+      "slugifyWithoutTransliteration": "berlin"
+    },
+    {
+      "input": "BERLIN",
+      "slugify": "berlin",
+      "slugifyTag": "berlin",
+      "slugifyWithoutTransliteration": "berlin"
+    },
+    {
+      "input": "  Berlin  ",
+      "slugify": "berlin",
+      "slugifyTag": "berlin",
+      "slugifyWithoutTransliteration": "berlin"
+    },
+    {
+      "input": "Köln",
+      "slugify": "koeln",
+      "slugifyTag": "koeln",
+      "slugifyWithoutTransliteration": "koln"
+    },
+    {
+      "input": "KÖLN",
+      "slugify": "koeln",
+      "slugifyTag": "koeln",
+      "slugifyWithoutTransliteration": "koln"
+    },
+    {
+      "input": "Saarbrücken",
+      "slugify": "saarbruecken",
+      "slugifyTag": "saarbruecken",
+      "slugifyWithoutTransliteration": "saarbrucken"
+    },
+    {
+      "input": "Düsseldorf",
+      "slugify": "duesseldorf",
+      "slugifyTag": "duesseldorf",
+      "slugifyWithoutTransliteration": "dusseldorf"
+    },
+    {
+      "input": "Tübingen",
+      "slugify": "tuebingen",
+      "slugifyTag": "tuebingen",
+      "slugifyWithoutTransliteration": "tubingen"
+    },
+    {
+      "input": "München",
+      "slugify": "muenchen",
+      "slugifyTag": "muenchen",
+      "slugifyWithoutTransliteration": "munchen"
+    },
+    {
+      "input": "Gießen",
+      "slugify": "giessen",
+      "slugifyTag": "giessen",
+      "slugifyWithoutTransliteration": "gie-en"
+    },
+    {
+      "input": "Zürich",
+      "slugify": "zuerich",
+      "slugifyTag": "zuerich",
+      "slugifyWithoutTransliteration": "zurich"
+    },
+    {
+      "input": "Größere Gala",
+      "slugify": "groessere-gala",
+      "slugifyTag": "groessere-gala",
+      "slugifyWithoutTransliteration": "gro-ere-gala"
+    },
+    {
+      "input": "Straßenfest",
+      "slugify": "strassenfest",
+      "slugifyTag": "strassenfest",
+      "slugifyWithoutTransliteration": "stra-enfest"
+    },
+    {
+      "input": "STRASSE",
+      "slugify": "strasse",
+      "slugifyTag": "strasse",
+      "slugifyWithoutTransliteration": "strasse"
+    },
+    {
+      "input": "Jubiläum",
+      "slugify": "jubilaeum",
+      "slugifyTag": "jubilaeum",
+      "slugifyWithoutTransliteration": "jubilaum"
+    },
+    {
+      "input": "Äpfel Öl Übung",
+      "slugify": "aepfel-oel-uebung",
+      "slugifyTag": "aepfel-oel-uebung",
+      "slugifyWithoutTransliteration": "apfel-ol-ubung"
+    },
+    {
+      "input": "ÄÖÜ äöü ß",
+      "slugify": "aeoeue-aeoeue-ss",
+      "slugifyTag": "aeoeue-aeoeue-ss",
+      "slugifyWithoutTransliteration": "aou-aou"
+    },
+    {
+      "input": "ẞ groß",
+      "slugify": "gross",
+      "slugifyTag": "gross",
+      "slugifyWithoutTransliteration": "gro"
+    },
+    {
+      "input": "Ölmalerei",
+      "slugify": "oelmalerei",
+      "slugifyTag": "oelmalerei",
+      "slugifyWithoutTransliteration": "olmalerei"
+    },
+    {
+      "input": "Berlín",
+      "slugify": "berlin",
+      "slugifyTag": "berlin",
+      "slugifyWithoutTransliteration": "berlin"
+    },
+    {
+      "input": "Café Crème",
+      "slugify": "cafe-creme",
+      "slugifyTag": "cafe-creme",
+      "slugifyWithoutTransliteration": "cafe-creme"
+    },
+    {
+      "input": "Señor Niño",
+      "slugify": "senor-nino",
+      "slugifyTag": "senor-nino",
+      "slugifyWithoutTransliteration": "senor-nino"
+    },
+    {
+      "input": "Français à la carte",
+      "slugify": "francais-a-la-carte",
+      "slugifyTag": "francais-a-la-carte",
+      "slugifyWithoutTransliteration": "francais-a-la-carte"
+    },
+    {
+      "input": "Ångström",
+      "slugify": "angstroem",
+      "slugifyTag": "angstroem",
+      "slugifyWithoutTransliteration": "angstrom"
+    },
+    {
+      "input": "Łódź",
+      "slugify": "odz",
+      "slugifyTag": "odz",
+      "slugifyWithoutTransliteration": "odz"
+    },
+    {
+      "input": "Øresund",
+      "slugify": "resund",
+      "slugifyTag": "resund",
+      "slugifyWithoutTransliteration": "resund"
+    },
+    {
+      "input": "Œuvre",
+      "slugify": "uvre",
+      "slugifyTag": "uvre",
+      "slugifyWithoutTransliteration": "uvre"
+    },
+    {
+      "input": "Graphic recording",
+      "slugify": "graphic-recording",
+      "slugifyTag": "graphic-recording",
+      "slugifyWithoutTransliteration": "graphic-recording"
+    },
+    {
+      "input": "Private Feier",
+      "slugify": "private-feier",
+      "slugifyTag": "private-feier",
+      "slugifyWithoutTransliteration": "private-feier"
+    },
+    {
+      "input": "Rhein-Main-Gebiet",
+      "slugify": "rhein-main-gebiet",
+      "slugifyTag": "rhein-main-gebiet",
+      "slugifyWithoutTransliteration": "rhein-main-gebiet"
+    },
+    {
+      "input": "nord-rhein-westfalen",
+      "slugify": "nord-rhein-westfalen",
+      "slugifyTag": "nord-rhein-westfalen",
+      "slugifyWithoutTransliteration": "nord-rhein-westfalen"
+    },
+    {
+      "input": "Main--Taunus  Kreis",
+      "slugify": "main-taunus-kreis",
+      "slugifyTag": "main-taunus-kreis",
+      "slugifyWithoutTransliteration": "main-taunus-kreis"
+    },
+    {
+      "input": "-führend-",
+      "slugify": "fuehrend",
+      "slugifyTag": "fuehrend",
+      "slugifyWithoutTransliteration": "fuhrend"
+    },
+    {
+      "input": "_unterstrich_",
+      "slugify": "unterstrich",
+      "slugifyTag": "unterstrich",
+      "slugifyWithoutTransliteration": "unterstrich"
+    },
+    {
+      "input": "a_b.c/d",
+      "slugify": "a-b-c-d",
+      "slugifyTag": "a-b-c-d",
+      "slugifyWithoutTransliteration": "a-b-c-d"
+    },
+    {
+      "input": "Hallo, Welt!",
+      "slugify": "hallo-welt",
+      "slugifyTag": "hallo-welt",
+      "slugifyWithoutTransliteration": "hallo-welt"
+    },
+    {
+      "input": "Weihnachts-Feier",
+      "slugify": "weihnachts-feier",
+      "slugifyTag": "weihnachts-feier",
+      "slugifyWithoutTransliteration": "weihnachts-feier"
+    },
+    {
+      "input": "weihnachtsfeier",
+      "slugify": "weihnachtsfeier",
+      "slugifyTag": "weihnachtsfeier",
+      "slugifyWithoutTransliteration": "weihnachtsfeier"
+    },
+    {
+      "input": "Event & Party",
+      "slugify": "event-party",
+      "slugifyTag": "event-party",
+      "slugifyWithoutTransliteration": "event-party"
+    },
+    {
+      "input": "50% Rabatt",
+      "slugify": "50-rabatt",
+      "slugifyTag": "50-rabatt",
+      "slugifyWithoutTransliteration": "50-rabatt"
+    },
+    {
+      "input": "2026",
+      "slugify": "2026",
+      "slugifyTag": "2026",
+      "slugifyWithoutTransliteration": "2026"
+    },
+    {
+      "input": "Summer 2026 / Edition #3",
+      "slugify": "summer-2026-edition-3",
+      "slugifyTag": "summer-2026-edition-3",
+      "slugifyWithoutTransliteration": "summer-2026-edition-3"
+    },
+    {
+      "input": "tab\there",
+      "slugify": "tab-here",
+      "slugifyTag": "tab-here",
+      "slugifyWithoutTransliteration": "tab-here"
+    },
+    {
+      "input": "line\nbreak",
+      "slugify": "line-break",
+      "slugifyTag": "line-break",
+      "slugifyWithoutTransliteration": "line-break"
+    },
+    {
+      "input": "emoji 🎨 kunst",
+      "slugify": "emoji-kunst",
+      "slugifyTag": "emoji-kunst",
+      "slugifyWithoutTransliteration": "emoji-kunst"
+    },
+    {
+      "input": "日本語",
+      "slugify": "",
+      "slugifyTag": "",
+      "slugifyWithoutTransliteration": ""
+    },
+    {
+      "input": "Ölmalerei – Live",
+      "slugify": "oelmalerei-live",
+      "slugifyTag": "oelmalerei-live",
+      "slugifyWithoutTransliteration": "olmalerei-live"
+    },
+    {
+      "input": "„Zitat\"",
+      "slugify": "zitat",
+      "slugifyTag": "zitat",
+      "slugifyWithoutTransliteration": "zitat"
+    },
+    {
+      "input": "it's",
+      "slugify": "it-s",
+      "slugifyTag": "it-s",
+      "slugifyWithoutTransliteration": "it-s"
+    },
+    {
+      "input": "äpfel (zerlegt)",
+      "slugify": "apfel-zerlegt",
+      "slugifyTag": "apfel-zerlegt",
+      "slugifyWithoutTransliteration": "apfel-zerlegt"
+    },
+    {
+      "input": "über",
+      "slugify": "uber",
+      "slugifyTag": "uber",
+      "slugifyWithoutTransliteration": "uber"
+    },
+    {
+      "input": "Ä",
+      "slugify": "ae",
+      "slugifyTag": "ae",
+      "slugifyWithoutTransliteration": "a"
+    },
+    {
+      "input": "ä",
+      "slugify": "ae",
+      "slugifyTag": "ae",
+      "slugifyWithoutTransliteration": "a"
+    },
+    {
+      "input": "ß",
+      "slugify": "ss",
+      "slugifyTag": "ss",
+      "slugifyWithoutTransliteration": ""
+    },
+    {
+      "input": "ẞ",
+      "slugify": "",
+      "slugifyTag": "",
+      "slugifyWithoutTransliteration": ""
+    },
+    {
+      "input": " nbsp ",
+      "slugify": "nbsp",
+      "slugifyTag": "nbsp",
+      "slugifyWithoutTransliteration": "nbsp"
+    },
+    {
+      "input": "schnellzeichner-weihnachtsfeier",
+      "slugify": "schnellzeichner-weihnachtsfeier",
+      "slugifyTag": "schnellzeichner-weihnachtsfeier",
+      "slugifyWithoutTransliteration": "schnellzeichner-weihnachtsfeier"
+    },
+    {
+      "input": "private-feier",
+      "slugify": "private-feier",
+      "slugifyTag": "private-feier",
+      "slugifyWithoutTransliteration": "private-feier"
+    },
+    {
+      "input": "firmenfeier",
+      "slugify": "firmenfeier",
+      "slugifyTag": "firmenfeier",
+      "slugifyWithoutTransliteration": "firmenfeier"
+    },
+    {
+      "input": "messe",
+      "slugify": "messe",
+      "slugifyTag": "messe",
+      "slugifyWithoutTransliteration": "messe"
+    },
+    {
+      "input": "hochzeit",
+      "slugify": "hochzeit",
+      "slugifyTag": "hochzeit",
+      "slugifyWithoutTransliteration": "hochzeit"
+    },
+    {
+      "input": "schulung",
+      "slugify": "schulung",
+      "slugifyTag": "schulung",
+      "slugifyWithoutTransliteration": "schulung"
+    },
+    {
+      "input": "tagung",
+      "slugify": "tagung",
+      "slugifyTag": "tagung",
+      "slugifyWithoutTransliteration": "tagung"
+    },
+    {
+      "input": "Schnellzeichner",
+      "slugify": "schnellzeichner",
+      "slugifyTag": "schnellzeichner",
+      "slugifyWithoutTransliteration": "schnellzeichner"
+    },
+    {
+      "input": "Szenenmaler",
+      "slugify": "szenenmaler",
+      "slugifyTag": "szenenmaler",
+      "slugifyWithoutTransliteration": "szenenmaler"
+    },
+    {
+      "input": "Aquarelle",
+      "slugify": "aquarelle",
+      "slugifyTag": "aquarelle",
+      "slugifyWithoutTransliteration": "aquarelle"
+    },
+    {
+      "input": "Eventzeichner",
+      "slugify": "eventzeichner",
+      "slugifyTag": "eventzeichner",
+      "slugifyWithoutTransliteration": "eventzeichner"
+    },
+    {
+      "input": "Firmenfeier",
+      "slugify": "firmenfeier",
+      "slugifyTag": "firmenfeier",
+      "slugifyWithoutTransliteration": "firmenfeier"
+    },
+    {
+      "input": "Messe",
+      "slugify": "messe",
+      "slugifyTag": "messe",
+      "slugifyWithoutTransliteration": "messe"
+    },
+    {
+      "input": "Hochzeit",
+      "slugify": "hochzeit",
+      "slugifyTag": "hochzeit",
+      "slugifyWithoutTransliteration": "hochzeit"
+    },
+    {
+      "input": "Schulung",
+      "slugify": "schulung",
+      "slugifyTag": "schulung",
+      "slugifyWithoutTransliteration": "schulung"
+    },
+    {
+      "input": "Tagung",
+      "slugify": "tagung",
+      "slugifyTag": "tagung",
+      "slugifyWithoutTransliteration": "tagung"
+    },
+    {
+      "input": "Weihnachtsfeier",
+      "slugify": "weihnachtsfeier",
+      "slugifyTag": "weihnachtsfeier",
+      "slugifyWithoutTransliteration": "weihnachtsfeier"
+    },
+    {
+      "input": "koeln",
+      "slugify": "koeln",
+      "slugifyTag": "koeln",
+      "slugifyWithoutTransliteration": "koeln"
+    },
+    {
+      "input": "saarbruecken",
+      "slugify": "saarbruecken",
+      "slugifyTag": "saarbruecken",
+      "slugifyWithoutTransliteration": "saarbruecken"
+    },
+    {
+      "input": "tuebingen",
+      "slugify": "tuebingen",
+      "slugifyTag": "tuebingen",
+      "slugifyWithoutTransliteration": "tuebingen"
+    },
+    {
+      "input": "giessen",
+      "slugify": "giessen",
+      "slugifyTag": "giessen",
+      "slugifyWithoutTransliteration": "giessen"
+    },
+    {
+      "input": "duesseldorf",
+      "slugify": "duesseldorf",
+      "slugifyTag": "duesseldorf",
+      "slugifyWithoutTransliteration": "duesseldorf"
+    },
+    {
+      "input": "muenchen",
+      "slugify": "muenchen",
+      "slugifyTag": "muenchen",
+      "slugifyWithoutTransliteration": "muenchen"
+    },
+    {
+      "input": "rheinland-pfalz",
+      "slugify": "rheinland-pfalz",
+      "slugifyTag": "rheinland-pfalz",
+      "slugifyWithoutTransliteration": "rheinland-pfalz"
+    },
+    {
+      "input": "main-taunus-kreis",
+      "slugify": "main-taunus-kreis",
+      "slugifyTag": "main-taunus-kreis",
+      "slugifyWithoutTransliteration": "main-taunus-kreis"
+    },
+    {
+      "input": "bw",
+      "slugify": "bw",
+      "slugifyTag": "bw",
+      "slugifyWithoutTransliteration": "bw"
+    },
+    {
+      "input": "belgique",
+      "slugify": "belgique",
+      "slugifyTag": "belgique",
+      "slugifyWithoutTransliteration": "belgique"
+    },
+    {
+      "input": "luxembourg",
+      "slugify": "luxembourg",
+      "slugifyTag": "luxembourg",
+      "slugifyWithoutTransliteration": "luxembourg"
+    },
+    {
+      "input": null,
+      "slugify": "null",
+      "slugifyTag": "",
+      "slugifyWithoutTransliteration": "null"
+    }
+  ]
+}

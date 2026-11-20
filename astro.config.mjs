@@ -2,9 +2,11 @@
 import { defineConfig } from 'astro/config';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 import preact from "@astrojs/preact";
 import sitemap from "@astrojs/sitemap";
+import { SITE_ORIGIN } from "./src/utils/siteOrigin.mjs";
 
 // ─── Site-Host pro Umgebung ───────────────────────────────────────────────────
 // `site` wird zur BUILD-Zeit fest in Sitemap, Canonical-Links und OG-URLs
@@ -12,11 +14,10 @@ import sitemap from "@astrojs/sitemap";
 // Domain (kunstwolff.de) verweist (was Crawler in 404-Land schicken würde,
 // solange dort noch Wix läuft), liest die Konfig die Env-Variable SITE_URL.
 //
-// Vercel-Env (Project Settings → Environment Variables):
-//   SITE_URL=https://kunstwolff.vercel.app   (Stage)
-// Beim Cutover dann auf https://www.kunstwolff.de stellen, alternativ
-// Variable löschen → Fallback unten greift.
-const siteUrl = process.env.SITE_URL ?? "https://kunstwolff.de";
+// Vercel-Env (Project Settings → Environment Variables): live steht
+// SITE_URL auf die www-Adresse. Fehlt sie, greift SITE_ORIGIN
+// (src/utils/siteOrigin.mjs) – ebenfalls www, die kanonische Adresse.
+const siteUrl = process.env.SITE_URL ?? SITE_ORIGIN;
 
 // ─── Page-Visibility ──────────────────────────────────────────────────────────
 // `public/config/page-visibility.json` listet Pfade die aus der Sitemap
@@ -102,12 +103,22 @@ const lastmodMap = readLastmod();
  * Als Integration hängt die Erzeugung am Build selbst und kann nicht mehr
  * abgeschnitten werden – egal, wer den Build anstößt und wie.
  */
+/** @returns {import('astro').AstroIntegration} */
 const bildVarianten = () => ({
   name: 'kunstwolff-bild-varianten',
   hooks: {
-    'astro:build:done': async () => {
+    'astro:build:done': async ({ dir }) => {
       const { generateVariants } = await import('./scripts/generate-image-variants.mjs');
       await generateVariants();
+
+      // Danach das fertige Ergebnis prüfen (seit 2026-11-20): zeigt eine
+      // Bild-Adresse – v. a. eine srcset-Stufe – ins Leere, scheitert der
+      // Build, statt mit leeren Bildern live zu gehen. Hier statt als
+      // npm-`postbuild`, aus demselben Grund wie oben.
+      const { validateDist, reportDist } = await import('./scripts/validate-dist-images.mjs');
+      if (!reportDist(validateDist(fileURLToPath(dir).replace(/\/$/, '')))) {
+        throw new Error('validate-dist: tote Bild-Adressen im Build (siehe oben) – Build abgebrochen.');
+      }
     },
   },
 });

@@ -77,7 +77,7 @@ Und: **rund 265 deutsche Zeichenketten stehen im Code statt in `public/`**. Das 
 Beim Audit sind zwei Dinge aufgefallen, die **unabhängig von diesem Vorhaben** repariert gehören:
 
 - **Datenverlust im Startseiten-Texte-Tab.** `SiteTextsManager.tsx:35-41` reduziert die geladene `content.json` beim Speichern auf `{contact, eventtypes, why}`. Jeder Tastendruck in diesem Tab löscht damit die 34 `landingHeadings` und 4 `landingIntros` aus `public/site-texts/content.json` – also alle per Admin und per KI-Chat gepflegten Überschriften und Einführungstexte. Sichtbar ist nur „1 ungespeicherte Änderung".
-- **Die Doku glaubt, die Seite sei nicht live.** `CUTOVER_PLAN.md`, `ARBEITSLISTE.md` und `memory/seo.md` behaupten übereinstimmend, der DNS-Weg sei gescheitert. Tatsächlich liefert `www.kunstwolff.de` Vercel, der Apex leitet mit 308 auf `www`, und `robots` steht auf `index, follow`. Der Cutover ist passiert.
+- **Die Doku glaubt, die Seite sei nicht live.** `ARCHIVE/CUTOVER_PLAN.md`, `ARCHIVE/ARBEITSLISTE.md` und `memory/seo.md` behaupten übereinstimmend, der DNS-Weg sei gescheitert. Tatsächlich liefert `www.kunstwolff.de` Vercel, der Apex leitet mit 308 auf `www`, und `robots` steht auf `index, follow`. Der Cutover ist passiert.
 
 ---
 
@@ -145,7 +145,7 @@ Der wichtigste Ordnungsgedanke dieses Plans: Inhalte zerfallen in vier Schichten
 
 Zum Vergleich: das **heutige FR-Overlay umfasst 7 Dateien mit 606 Wörtern** – rund 5 % dessen, was eine vollwertige Sprache braucht.
 
-Sprachneutral und niemals zu duplizieren: alle 355 Bilder, `config/components.json`, `config/page-visibility.json`, `img/Titelbild/title.meta.json`, `img/slides/default-selection.json`, `landings/landings.md` (reine Slugs), `img/referenzenLogos/` und `public/calendar/**` – letzteres wird von `src/` nachweislich gar nicht gelesen und ist reines Admin-Datenmaterial.
+Sprachneutral und niemals zu duplizieren: alle 355 Bilder, `config/components.json`, `config/page-visibility.json`, `img/Titelbild/title.meta.json`, `img/slides/default-selection.json`, `landings/landings.md` (reine Slugs), `img/referenzenLogos/` und der Kalender (seit 2026-11-20 `admin-data/calendar/**`, außerhalb `public/`) – letzterer wird von `src/` nachweislich gar nicht gelesen und ist reines Admin-Datenmaterial.
 
 ### 3.5 Der Admin
 
@@ -716,7 +716,7 @@ Für alles, was das Admin-Tool schreibt, ist der `pre-commit`-Hook **kein Sicher
 1. **E1 und E18** sind irreversibel. Sollen englische URLs übersetzt werden (`/en/cologne/`) oder deutsche Slugs behalten (`/en/koeln/`)? Die empfohlene Slug-Map hält das offen, kostet aber Vorarbeit.
 2. **E14:** Landings + statische Seiten – oder ist ein kleinerer Anfang gewünscht (nur Startseite + Kontakt + eine Landing als Beweis)?
 3. Soll der **`SiteTextsManager`-Datenverlust** (B6) sofort separat repariert werden, unabhängig von diesem Vorhaben? Er zerstört heute Daten.
-4. Die **Doku behauptet, die Seite sei nicht live** (`CUTOVER_PLAN.md`, `ARBEITSLISTE.md`, `memory/seo.md`) – soll ich das im Zuge dessen richtigstellen?
+4. Die **Doku behauptet, die Seite sei nicht live** (`ARCHIVE/CUTOVER_PLAN.md`, `ARCHIVE/ARBEITSLISTE.md`, `memory/seo.md`) – soll ich das im Zuge dessen richtigstellen?
 
 **An Gabriele:**
 
@@ -838,7 +838,7 @@ Beim Prüfen sind sieben Stellen aufgefallen, an denen die Projektdokumentation 
 3. `src/i18n/config.ts:12-13`: „Overlay spiegelt `public/`" – `public/i18n/fr/landings.json` tut das nicht, und die deutschen `contact`/`eventtypes`/`why`-Originale liegen gar nicht in `public/`, sondern in `siteTexts.ts:12-29`. Das Overlay **erweitert** dort, statt zu spiegeln.
 4. `fr/[landing].astro:44-46`: `LOCALE_READY_SECTIONS` filtert **Datenquellen**, nicht Beschriftungen – `faq` und `contact` stehen als „übersetzt" darin und sind es nicht.
 5. `CLAUDE.md` und `Dashboard.tsx:236`: Publish schreibt **nicht** sequenziell, sondern als ein atomarer GraphQL-Commit.
-6. `CUTOVER_PLAN.md`, `ARBEITSLISTE.md`, `memory/seo.md`: behaupten, die Seite sei nicht live. **Sie ist es.**
+6. `ARCHIVE/CUTOVER_PLAN.md`, `ARCHIVE/ARBEITSLISTE.md`, `memory/seo.md`: behaupten, die Seite sei nicht live. **Sie ist es.**
 7. Nutzer-Notiz „4 tote Bildverweise blockieren jeden Commit": **veraltet**, auf sauberem `main` läuft der Wächter grün durch.
 
 ---

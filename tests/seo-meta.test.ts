@@ -65,6 +65,12 @@ describe('Layout: hreflang, x-default, Twitter-Cards, OG-Bild', () => {
     expect(pfad.endsWith('.avif')).toBe(false);
     expect(fs.existsSync(path.resolve(`./public${pfad}`))).toBe(true);
   });
+
+  it('ein übergebenes AVIF-Bild wird nicht als og:image ausgegeben', () => {
+    // Bis 2026-11-20 lief `image` ungefiltert durch – 28 Sitemap-Seiten
+    // (auch die Startseite) hatten titelbild.avif als Vorschaubild.
+    expect(layoutQuelle).toMatch(/!\/\\\.avif\$\/i\.test\(image\)/);
+  });
 });
 
 describe('Galerie hat eine H1', () => {

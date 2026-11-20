@@ -1,4 +1,5 @@
 ---
+import { SITE_ORIGIN } from '../utils/siteOrigin.mjs';
 /**
  * [landing].astro
  *
@@ -85,8 +86,8 @@ const { pageType } = Astro.props as { pageType: 'landing' | 'event' };
 // Component-Visibility
 const pt: PageType = pageType === 'event' ? 'event' : 'landing';
 
-// WEB-012: Schema-URLs aus Astro.site (= SITE_URL) statt hardcoded kunstwolff.de.
-const site = Astro.site?.origin ?? 'https://kunstwolff.de';
+// WEB-012: Schema-URLs aus Astro.site (= SITE_URL) statt hardcoded Domain.
+const site = Astro.site?.origin ?? SITE_ORIGIN;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // LANDING-Seite: Bestehende Logik unverändert
@@ -265,11 +266,11 @@ if (pageType === 'landing' && landingData && landingSlides) {
     // Sichtbarkeit = allein der Stack (_order) + Inhalt. Kein separates
     // `enabled`-Flag mehr (fiel im Admin weg, damit „im Stack" = „auf der Seite").
     eventAblauf:
-      (eventContent.ablauf?.steps?.length ?? 0) > 0
+      eventContent.ablauf && (eventContent.ablauf.steps?.length ?? 0) > 0
         ? { title: eventContent.ablauf.title, steps: eventContent.ablauf.steps }
         : false,
     eventPakete:
-      (eventContent.pakete?.items?.length ?? 0) > 0
+      eventContent.pakete && (eventContent.pakete.items?.length ?? 0) > 0
         ? { title: eventContent.pakete.title, items: eventContent.pakete.items }
         : false,
     eventSkills: {
@@ -279,7 +280,7 @@ if (pageType === 'landing' && landingData && landingSlides) {
       categories: eventData.categories,
     },
     eventReferenzen:
-      (eventContent.referenzen?.logos?.length ?? 0) > 0
+      eventContent.referenzen && (eventContent.referenzen.logos?.length ?? 0) > 0
         ? {
             title: eventContent.referenzen.title,
             text: eventContent.referenzen.text,
@@ -308,10 +309,8 @@ const langAlternates = getAvailableLocalesForSlug(landing ?? '').map((loc) => ({
 }));
 ---
 
+{/* STADTSEITE – bestehende Struktur unverändert */}
 {pageType === 'landing' && landingData && landingSlides && (
-  <!-- ══════════════════════════════════════════════════
-       STADTSEITE – bestehende Struktur unverändert
-  ══════════════════════════════════════════════════ -->
   <Layout title={landingPageTitle} description={landingPageDescription} image={landingData.titleImage} alternates={langAlternates} heroImage={sectionOrder.includes('opener') && isComponentEnabled(pt, landing ?? '', 'opener') ? landingData.titleImage : undefined}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(cityServiceSchema)} />
@@ -326,10 +325,8 @@ const langAlternates = getAvailableLocalesForSlug(landing ?? '').map((loc) => ({
   </Layout>
 )}
 
+{/* EVENT-SEITE – eigenes EventLayout */}
 {pageType === 'event' && eventData && eventContent && eventSlides && (
-  <!-- ══════════════════════════════════════════════════
-       EVENT-SEITE – eigenes EventLayout
-  ══════════════════════════════════════════════════ -->
   <EventLayout title={eventPageTitle} description={eventPageDescription} image={eventTitleImage} heroImage={sectionOrder.includes('eventHero') && isComponentEnabled(pt, landing ?? '', 'eventHero') ? eventTitleImage : undefined}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(eventBreadcrumbSchema)} />
 

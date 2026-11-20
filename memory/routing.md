@@ -41,11 +41,12 @@ Alle Seiten sind statisch (SSG). URLs entstehen automatisch aus `landings.md`, `
 Die zweite Hälfte des Routings steht **nicht** in `src/pages/`, sondern in
 `vercel.json` → `redirects` (Stand 2026-11-20: 188 Einträge, alle `permanent: true` bis auf die
 Sperre `/calendar/:path*` → `/404/`, die den privaten Admin-Kalender unter `public/calendar/` nicht
-mehr ausliefert):
+mehr ausliefert; der Kalender liegt seit 2026-11-20 ohnehin unter `admin-data/calendar/`, die
+Sperre bleibt als Sicherheitsnetz):
 
 - **136 Kombi-Weiterleitungen** von der alten hierarchischen Ort-Form auf die
   flache (`/szenenmaler/berlin` → `/berlin-szenenmaler/`), erzeugt vom
-  Einmal-Werkzeug `scripts/flache-kombi-urls.mjs` (2026-08-01).
+  Einmal-Werkzeug `ARCHIVE/scripts/flache-kombi-urls.mjs` (2026-08-01).
 - **Wix-Altlasten** (`/kontakt`, `/about*`, `/portfolio`, `*-galerie` …) aus dem
   Inventar der fünf Wix-Sitemaps – siehe `vercel-headers.md`.
 - **SEO-Aliase** (2026-09-15): `/hochzeitsmaler` → `/szenenmaler/hochzeit/`.
@@ -88,6 +89,22 @@ Die URL ist damit NICHT mehr der Schlüssel für Inhalte. Welche Aufrufe welchen
 der beiden brauchen, steht vollständig in `content-skills.md` — die Verwechslung
 erzeugt keine Fehlermeldung, sondern eine leere Seite.
 
+### Slug-Regeln: eine Quelle (`scripts/slug.mjs`, seit 2026-11-20)
+
+Alle Slugs (Orte, Skills, Ordner-/Dateinamen, Tags, Event-Ersatz) kommen aus
+`scripts/slug.mjs`. Sync-Skripte **und** `src/utils/` importieren dieselbe Datei;
+vorher stand die Logik als Kopie in neun Dateien. Drei Funktionen, bewusst getrennt:
+
+| Funktion | Benutzt von | Verhalten |
+| :-- | :-- | :-- |
+| `slugify` | `sync-landings/why/erinnerungen/title-images`, `remove-landing`, `landings.ts`, `titleImages.ts`, `skills.ts` (dort unter dem Alias `normalizeSlug`) | Umlaute ausschreiben (Köln → `koeln`, ß → `ss`), Akzente weg, alles außer a–z/0–9 → `-` |
+| `slugifyTag` | `scripts/tags.mjs` (reicht sie weiter) | wie `slugify`, aber null/undefined → `''`; zeichengleich zu Admin `src/utils/tagSlug.ts` |
+| `slugifyWithoutTransliteration` | `sync-events.mjs`, `events.ts` – nur wenn `events.json` kein `slug` hat | ⚠️ schreibt Umlaute **nicht** aus („Jubiläum" → `jubilaum`). Bekannte Abweichung, nicht angeglichen, weil sie Event-URLs ändern könnte; heute folgenlos (alle Events haben `slug`) |
+
+**Testvektoren:** `tests/fixtures/slug-vectors.json` (aus den alten Kopien
+aufgenommen, geprüft von `tests/slug.test.ts`). Der Admin soll dieselbe Datei gegen
+seine Funktionen laufen lassen. Slug-Regel ändern = Modul + Vektoren + Admin zusammen.
+
 ### Skill-Bilder pro Skill-Seite
 
 Werden automatisch aus `public/img/UnsereFähigkeitenBilder/<Skill-Titel>/` geladen. Erstes Bild alphabetisch.
@@ -119,4 +136,4 @@ statisch generierten Seiten **außer** den in `public/config/page-visibility.jso
 ausgeblendeten: die Sitemap-Integration in `astro.config.mjs` filtert sie per
 Präfix-Regel heraus (zeichengleich zu `isPageHiddenByPath()` in
 `src/utils/pageVisibility.ts`), damit keine `noindex`-Seite widersprüchlich in der
-Sitemap steht. Stand 2026-11-20: 135 ausgeblendete Pfade. Output: `dist/sitemap-index.xml` + `dist/sitemap-0.xml`. Host wird zur Build-Zeit aus `process.env.SITE_URL` (Fallback `https://kunstwolff.de`) übernommen – siehe `seo.md` "Stage vs. Production". Cutover-Historie siehe `seo.md` (seit August 2026 live auf `www`).
+Sitemap steht. Stand 2026-11-20: 135 ausgeblendete Pfade. Output: `dist/sitemap-index.xml` + `dist/sitemap-0.xml`. Host wird zur Build-Zeit aus `process.env.SITE_URL` (Fallback `SITE_ORIGIN` = `https://www.kunstwolff.de`, `src/utils/siteOrigin.mjs`) übernommen – siehe `seo.md` "Stage vs. Production". Cutover-Historie siehe `seo.md` (seit August 2026 live auf `www`).

@@ -30,8 +30,8 @@ den Bildern der Slideshow über die Leitung, die `lazy` geladen werden. Genau
 daher kam die Meldung „die Slider-Bilder laden so langsam".
 
 ```
-node scripts/verkleinere-referenzlogos.mjs              # nur zeigen
-node scripts/verkleinere-referenzlogos.mjs --schreiben  # anwenden
+node ARCHIVE/scripts/verkleinere-referenzlogos.mjs              # nur zeigen
+node ARCHIVE/scripts/verkleinere-referenzlogos.mjs --schreiben  # anwenden
 ```
 
 Deckel: 320×96 px (doppelte Anzeigegrösse fürs Retina-Display), WebP q82,

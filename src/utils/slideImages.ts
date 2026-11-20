@@ -480,7 +480,7 @@ export const getAllSlidesWithTags = (): TaggedSlide[] => {
  * gegenseitig aus, und wer ein Motiv auf beiden Seiten wollte, musste es als
  * Byte-Kopie zweimal ins Repo legen.
  *
- * Vor der Umstellung mit `scripts/tag-parity-check.mjs` nachgewiesen: für alle
+ * Vor der Umstellung mit `ARCHIVE/scripts/tag-parity-check.mjs` nachgewiesen: für alle
  * 39 Seiten liefert die Tag-Abfrage mindestens das, was der Ordner lieferte –
  * kein einziges Bild verschwindet, 110 kommen hinzu.
  */

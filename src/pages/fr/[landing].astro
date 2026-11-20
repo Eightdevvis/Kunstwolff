@@ -1,4 +1,5 @@
 ---
+import { SITE_ORIGIN } from '../../utils/siteOrigin.mjs';
 /**
  * fr/[landing].astro — Französische Landing-Route (i18n Phase 1, POC).
  * ============================================================================
@@ -59,7 +60,7 @@ const { landing } = Astro.params;
 const slug = landing ?? '';
 const pt: PageType = 'landing';
 
-const site = Astro.site?.origin ?? 'https://kunstwolff.de';
+const site = Astro.site?.origin ?? SITE_ORIGIN;
 
 // Bild-/Slide-Assets sind sprachneutral → dieselben Loader wie die de-Seite.
 const landingData = getLandingBySlug(slug);

@@ -1,28 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 import { warnUnreadable } from './warnUnreadable';
+import { slugify as normalizeSlug } from '../../scripts/slug.mjs';
 
 const titleRoot = path.resolve('./public/img/Titelbild');
 const titleMetadataPath = path.join(titleRoot, 'title.meta.json');
 const titleDimensionsPath = path.join(titleRoot, 'title.dimensions.json');
 const allowedExtensions = new Set(['.avif', '.webp', '.png', '.jpg', '.jpeg', '.gif']);
 const fallbackImage = '/img/samples/sample1.webp';
-
-const transliterateGerman = (value: string): string =>
-  String(value)
-    .replace(/ä/gi, 'ae')
-    .replace(/ö/gi, 'oe')
-    .replace(/ü/gi, 'ue')
-    .replace(/ß/gi, 'ss');
-
-const normalizeSlug = (value: string): string =>
-  transliterateGerman(value)
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
 
 const encodeUrlPath = (segments: string[]): string =>
   segments.map((segment) => encodeURIComponent(segment)).join('/');
