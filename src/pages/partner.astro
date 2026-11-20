@@ -291,6 +291,36 @@ const partners = data.partners.filter((p) => p.enabled !== false);
     margin: 0 0 14px 0;
   }
 
+  /* ── Touch (kein Hover): Infofeld dauerhaft unter dem Logo ─────────────
+     Am Handy gibt es kein `:hover` – das Feld fuhr nie ein, Beschreibung und
+     „Erfahre mehr" waren dort unsichtbar. Hier steht es fest unter dem Logo;
+     die Logo-Fläche behält ihr 5:4, die Kachel wächst nach unten. */
+  @media (hover: none) {
+    .partner-card {
+      aspect-ratio: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .partner-logo-wrap {
+      height: auto;
+      aspect-ratio: 5 / 4;
+    }
+
+    .partner-info,
+    .partner-card:hover .partner-info {
+      position: static;
+      transform: none;
+      max-height: none;
+      overflow: visible;
+      backdrop-filter: none;
+    }
+
+    .partner-card:hover .partner-logo-wrap {
+      filter: none;
+    }
+  }
+
   /* "Erfahre mehr →" in Projektgold */
   .partner-more {
     display: inline-block;
