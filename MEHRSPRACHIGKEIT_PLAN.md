@@ -145,7 +145,7 @@ Der wichtigste Ordnungsgedanke dieses Plans: Inhalte zerfallen in vier Schichten
 
 Zum Vergleich: das **heutige FR-Overlay umfasst 7 Dateien mit 606 Wörtern** – rund 5 % dessen, was eine vollwertige Sprache braucht.
 
-Sprachneutral und niemals zu duplizieren: alle 355 Bilder, `config/components.json`, `config/page-visibility.json`, `img/Titelbild/title.meta.json`, `img/slides/default-selection.json`, `landings/landings.md` (reine Slugs), `img/referenzenLogos/` und `public/calendar/**` – letzteres wird von `src/` nachweislich gar nicht gelesen und ist reines Admin-Datenmaterial.
+Sprachneutral und niemals zu duplizieren: alle 355 Bilder, `config/components.json`, `config/page-visibility.json`, `img/Titelbild/title.meta.json`, `img/slides/default-selection.json`, `landings/landings.md` (reine Slugs), `img/referenzenLogos/` und der Kalender (seit 2026-11-20 `admin-data/calendar/**`, außerhalb `public/`) – letzterer wird von `src/` nachweislich gar nicht gelesen und ist reines Admin-Datenmaterial.
 
 ### 3.5 Der Admin
 

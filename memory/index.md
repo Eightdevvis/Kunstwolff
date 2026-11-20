@@ -28,7 +28,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 ### Grundlagen (fast immer relevant)
 - [Projekt-Übersicht](projekt.md) – Was ist Kunstwolff, Tech-Stack, Ziele, Setup, **Hosting-/Deploy-Stand** (live, keine Stage)
 - [Architektur](architektur.md) – SSG-Logik, dateibasiertes CMS, public/-Prinzip
-- [Pfadstruktur](pfadstruktur.md) – Vollständiger Baum von `public/` mit Zweck pro Pfad
+- [Pfadstruktur](pfadstruktur.md) – Vollständiger Baum von `public/` mit Zweck pro Pfad; private Admin-Daten außerhalb (`admin-data/calendar/`, `zettel/`)
 - [Routing & URL-Generierung](routing.md) – Wie URLs aus landings.md/skills.json/events.json entstehen
 - [Komponenten-Stack](komponenten-stack.md) – `components.json` `_order` als EINE Quelle für Sektions-Reihenfolge+Sichtbarkeit (Website rendert daraus, Admin liest dasselbe), Build-Guardrail
 - [Admin-Tool / Cross-Repo](admin-tool.md) – Was Admin schreibt, was nicht, Cross-Repo-Workflow
@@ -96,6 +96,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 | "Überschrift ändern (H1, Bilder, FAQ, Kontakt …)" | `content-site-texts.md` (Abschnitt Überschriften) |
 | "„Ihre Sommerfest" / falscher Artikel im Text" | `content-events.md` (`eventPhrase`) |
 | "Bug-Zettel / Mama meldet etwas" | `../zettel/LIESMICH.md` + `admin-tool.md` |
+| "Kalender / admin-data / Repo privat" | `pfadstruktur.md` („Admin-Daten außerhalb von `public/`") + `admin-tool.md` + Admin-Memory `manager-kalender.md`, `repo-schnappschuss.md` |
 | "Commit enthält plötzlich `lastmod.json`/`slides.meta.json`" | `git-hooks.md` (Pre-Commit-Detail) |
 | "Meta-Beschreibung/Titel zu lang" | `seo.md` (Längen-Riegel) |
 | "FAQ erscheint auf falschen Seiten" | `content-faqs.md` („Leer" heißt zweierlei) |

@@ -41,7 +41,8 @@ Alle Seiten sind statisch (SSG). URLs entstehen automatisch aus `landings.md`, `
 Die zweite Hälfte des Routings steht **nicht** in `src/pages/`, sondern in
 `vercel.json` → `redirects` (Stand 2026-11-20: 188 Einträge, alle `permanent: true` bis auf die
 Sperre `/calendar/:path*` → `/404/`, die den privaten Admin-Kalender unter `public/calendar/` nicht
-mehr ausliefert):
+mehr ausliefert; der Kalender liegt seit 2026-11-20 ohnehin unter `admin-data/calendar/`, die
+Sperre bleibt als Sicherheitsnetz):
 
 - **136 Kombi-Weiterleitungen** von der alten hierarchischen Ort-Form auf die
   flache (`/szenenmaler/berlin` → `/berlin-szenenmaler/`), erzeugt vom
