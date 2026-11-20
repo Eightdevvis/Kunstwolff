@@ -198,6 +198,17 @@ import Layout from "../layouts/Layout.astro";
     padding-left: 1.2em;
   }
 
+  /* Links im Seiten-Gold (wie „Alle Bilder in der Galerie ansehen") statt
+     Browser-Blau: das hatte auf Schwarz nur 2,2:1, Gold hat 11:1. */
+  .datenschutz-div a {
+    color: #d7b96a;
+  }
+
+  .datenschutz-div a:hover,
+  .datenschutz-div a:focus-visible {
+    color: #fff;
+  }
+
   /* Handy + Querformat: die fixierte Navigation ist 104px hoch und zeichnet
      nach unten weich. 70px Abstand ließen die Überschrift darunter verschwimmen. */
   @media (max-width: 768px), (max-height: 500px) {

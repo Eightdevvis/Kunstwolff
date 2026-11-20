@@ -36,7 +36,8 @@ import Layout from "../layouts/Layout.astro";
     margin: 0 0 0.5em;
   }
   .notfound-text {
-    color: #555;
+    /* #767676 statt #555: 4,6:1 statt 2,8:1 auf Schwarz (Minimum 4,5:1). */
+    color: #767676;
     line-height: 1.6;
     margin: 0 0 2em;
   }
@@ -51,7 +52,9 @@ import Layout from "../layouts/Layout.astro";
     padding: 12px 24px;
     border-radius: 8px;
     background: #c9a227;
-    color: #fff;
+    /* Dunkle Schrift wie beim goldenen „Anfrage"-Knopf der Navigation:
+       Weiß auf diesem Gold hatte nur 2,4:1, so sind es 7,6:1. */
+    color: #1a1400;
     text-decoration: none;
     font-weight: 600;
     transition: opacity 0.2s;
