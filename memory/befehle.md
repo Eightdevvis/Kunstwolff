@@ -38,6 +38,7 @@ die `tags.json` nicht kennt, und der Schaden still in die Dateien wanderte.
 | `npm run sync:erinnerungen` | `public/erinnerungen/{city\|skill}.json` (bestehende NICHT überschreiben) |
 | `npm run remove:landing -- <stadt> [archivpfad]` | Archiviert alle Landing-Daten und entfernt Stadt aus `landings.md` |
 | `npm run validate:images` | Bild-Referenzen prüfen (`scripts/validate-image-refs.mjs`); letzter Schritt von `sync:content` |
+| `npm run validate:dist` | Prüft das **gebaute** `dist/`: jede Bild-URL im HTML (`src`, jede `srcset`-Stufe, `url(...)`) muss existieren (`scripts/validate-dist-images.mjs`). Läuft **nirgends automatisch** – nach `npm run build` von Hand. |
 | `npm run optimize:images` | Nur gestagte Bilder zu WebP konvertieren (`scripts/optimize-staged-images.mjs`) |
 | `npm run optimize:all` | Alle Bilder in `public/img/` zu WebP konvertieren (manuell) |
 | `npm run variants` | Responsive Bildvarianten manuell erzeugen (`scripts/generate-image-variants.mjs`). Beim Build läuft dasselbe automatisch als Astro-Integration `kunstwolff-bild-varianten` im `astro:build:done`-Hook – **nicht** als npm-Kette, weil Vercel ein nachgestelltes `&& …` im Build-Befehl abschneidet. Siehe `responsive-images.md` |
@@ -62,7 +63,7 @@ die `tags.json` nicht kennt, und der Schaden still in die Dateien wanderte.
 
 ## VS Code
 
-Projektspezifische Settings liegen in `.vscode/settings.json` (u.a. TypeScript-Plugin für Astro). Im Repo-Root liegen außerdem `extensions.json` und `launch.json`.
+Projektspezifische Settings liegen in `.vscode/` (`settings.json` mit dem TypeScript-Plugin für Astro, `extensions.json`, `launch.json`). Bis 2026-11-20 lagen die beiden letzten im Repo-Root, wo VS Code sie nicht liest.
 
 ## Was (noch) NICHT als Script existiert
 

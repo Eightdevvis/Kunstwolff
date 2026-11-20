@@ -400,7 +400,7 @@ So bekommt man beides: einen **Build-Guard** („jeder Schlüssel der Registry e
 
 **Nicht mitzählen:** Sechs Komponenten mit deutschen Strings sind toter Code ohne Importeur – `Reviews.astro`, `References.astro`, `SkillBanner.astro`, `AboutSchnellzeichner.astro`, `SchnellzeichnerHero.astro` und `header/LanguageMenu.astro` – plus `Aboutsection.astro` (Import vorhanden, Aufruf auskommentiert).
 
-> **`header/LanguageMenu.astro` gehört gelöscht, bevor jemand Englisch einbaut.** Sie trägt bereits eine britische Flagge und `href="#"`, wird aber von **keiner** Datei importiert. Ein Entwickler, der „Englisch einbauen" liest, findet mit hoher Wahrscheinlichkeit die falsche der beiden Umschalter-Fassungen.
+> ✅ **Erledigt 2026-11-20:** `LanguageMenu.astro`, `Reviews.astro`, `References.astro` und `SkillBanner.astro` sind gelöscht (`memory/wip-komponenten.md`). Ursprünglicher Hinweis: **`header/LanguageMenu.astro` gehört gelöscht, bevor jemand Englisch einbaut.** Sie trägt bereits eine britische Flagge und `href="#"`, wird aber von **keiner** Datei importiert. Ein Entwickler, der „Englisch einbauen" liest, findet mit hoher Wahrscheinlichkeit die falsche der beiden Umschalter-Fassungen.
 
 ### 5.8 Interne Links
 

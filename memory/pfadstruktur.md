@@ -188,6 +188,12 @@ public/img/partners/               # Partner-Logos
 public/calendar/<jahr>/<monat>.json   # NICHT von der Website gelesen, nur vom Admin
 ```
 
+⚠️ **Privat, liegt aber unter `public/`.** Alles unter `public/` liefert Vercel aus; der
+Kalender (Familientermine, teils Kundendaten) war bis 2026-11-20 unter
+`www.kunstwolff.de/calendar/…` abrufbar. Seitdem sperrt eine Weiterleitung
+`/calendar/:path*` → `/404/` in `vercel.json` die Auslieferung. Im (öffentlichen)
+Git-Repo bleibt er lesbar – Umzug aus `public/` und Historie entscheidet Sasha.
+
 ## Konfiguration
 
 ```

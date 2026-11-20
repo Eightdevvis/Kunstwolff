@@ -83,3 +83,21 @@ describe('sync-slides-metadata wirft keinen Alt-Text mehr weg', () => {
     expect(eintrag.categories).toEqual(['Schnellzeichner']);
   });
 });
+
+describe('sync-slides-metadata bei kaputter slides.meta.json', () => {
+  it('bricht ab und lässt die Datei unangetastet, statt sie leer neu zu schreiben', () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sync-slides-kaputt-'));
+    const slides = path.join(dir, 'public', 'img', 'slides');
+    fs.mkdirSync(path.join(slides, 'frankfurt'), { recursive: true });
+    fs.writeFileSync(path.join(slides, KEY), 'nicht wirklich ein Bild');
+    const kaputt = '{ "frankfurt/x.webp": { "altOverride": "von Hand" ';
+    fs.writeFileSync(path.join(slides, 'slides.meta.json'), kaputt);
+    try {
+      const res = spawnSync('node', [scriptPath], { cwd: dir, encoding: 'utf-8' });
+      expect(res.status).toBe(1);
+      expect(fs.readFileSync(path.join(slides, 'slides.meta.json'), 'utf-8')).toBe(kaputt);
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  });
+});

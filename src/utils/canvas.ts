@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { aufloesenBildpfad } from './bildAufloesung';
 import { aufgeloesteHighlights } from './whyHighlights';
+import { warnUnreadable } from './warnUnreadable';
 
 export type CanvasItem = {
   title: string;
@@ -69,7 +70,8 @@ export const getCanvasContent = (): CanvasContent | null => {
 
     if (!seo?.title || !hero?.title) return null;
     return { seo, hero, intro, sections, otherSectionTitle, otherHighlights };
-  } catch {
+  } catch (err) {
+    warnUnreadable('canvas/content.json', err);
     return null;
   }
 };

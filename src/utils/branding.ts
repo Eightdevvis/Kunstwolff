@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { aufloesenBildpfad } from './bildAufloesung';
 import { aufgeloesteHighlights } from './whyHighlights';
+import { warnUnreadable } from './warnUnreadable';
 
 export type BrandingExample = {
   title: string;
@@ -57,7 +58,8 @@ export const getBrandingContent = (): BrandingContent | null => {
 
     if (!seo?.title || !hero?.title) return null;
     return { seo, hero, intro, examplesTitle, examples, otherSectionTitle, otherHighlights };
-  } catch {
+  } catch (err) {
+    warnUnreadable('branding/content.json', err);
     return null;
   }
 };

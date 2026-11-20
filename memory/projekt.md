@@ -17,7 +17,6 @@ Astro 5 + Preact SSG-Website für **kunstwolff.de** (Eventkünstler). Statisch g
 - **swiper 12** – Slideshow-Komponenten
 - **sharp** – Bildoptimierung (Pre-Push-Hook konvertiert zu WebP)
 - **gray-matter** – YAML-Frontmatter aus Reviews/FAQs lesen
-- **markdown-it** – Markdown-Rendering für Review-Bodies
 - **@astrojs/sitemap** – Sitemap-Generierung beim Build
 - Custom-Font **Mayonice** in `public/fonts/mayonice/`, eingebunden via `global.css`
 - **Keine** Astro Content Collections – Content kommt direkt aus `public/` via Utils in `src/utils/`. (`src/content.config.ts` existiert nur weil Astro den Export erwartet, ist aber leer.)

@@ -137,13 +137,6 @@ const encodePathSegment = (segment: string): string =>
 const normalizeMetadataKey = (value: string): string =>
   value.replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
 
-/** Alt-Text aus Dateinamen ableiten (Zahlen-Prefix entfernen, Underscores zu Leerzeichen) */
-const normalizeAlt = (fileName: string): string =>
-  decodeURIComponent(fileName)
-    .replace(/\.[^.]+$/, '')
-    .replace(/^\d+[_-]+/, '')
-    .replace(/[_-]+/g, ' ')
-    .trim();
 
 // ─── Events laden ─────────────────────────────────────────────────────────────
 

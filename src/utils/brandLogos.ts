@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { safeDecode } from './safeDecode';
 
 export type BrandLogo = {
   src: string;
@@ -65,7 +66,7 @@ const ohneBildEndungen = (name: string): string => {
 };
 
 export const buildBrandLabel = (fileName: string): string => {
-  const roh = ohneBildEndungen(decodeURIComponent(fileName))
+  const roh = ohneBildEndungen(safeDecode(fileName))
     .replace(/[_-]+/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()

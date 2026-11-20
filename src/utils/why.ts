@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { DEFAULT_LOCALE, localeContentRoot, type Locale } from '../i18n/config';
+import { warnUnreadable } from './warnUnreadable';
 
 export type WhyBenefit = {
   title: string;
@@ -43,7 +44,8 @@ const readWhyFile = (filePath: string): WhyBenefit[] => {
       .filter((x: WhyBenefit | null): x is WhyBenefit => x !== null);
 
     return benefits;
-  } catch {
+  } catch (err) {
+    warnUnreadable('why', err);
     return [];
   }
 };
