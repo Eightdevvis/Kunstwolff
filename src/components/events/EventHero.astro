@@ -301,10 +301,6 @@ const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroHintergrundStyle
       text-align: center;
     }
 
-    /* Label mindestens 13 px (vorher 11,2 px am Handy). */
-    .event-hero-label {
-      font-size: 13px;
-    }
   }
 
   /* Handy hoch UND quer (390px Höhe): oben Platz für die 104px hohe, fixierte
@@ -313,6 +309,11 @@ const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroHintergrundStyle
     .event-hero-content {
       transform: none;
       padding: 112px 24px 40px;
+    }
+
+    /* Label mindestens 13 px (vorher 11,2 px am Handy, hoch und quer). */
+    .event-hero-label {
+      font-size: 13px;
     }
   }
 </style>
