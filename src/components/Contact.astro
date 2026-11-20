@@ -316,6 +316,13 @@ const t = getSiteTexts(locale).contact;
       font-size: 16px;
     }
   }
+
+  /* Handy: Kicker mindestens 13 px (vorher 11,5 px). */
+  @media (max-width: 640px) {
+    .contact-kicker {
+      font-size: 13px;
+    }
+  }
 </style>
 
 <script is:inline>

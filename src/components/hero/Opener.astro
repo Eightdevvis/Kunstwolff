@@ -143,6 +143,12 @@ const heroStyle = `--hero-bg-image: url('${titleImage}'); ${heroVarianten}--hero
     padding: min(var(--hero-m-frame, var(--hero-frame, 0px)), 4vw);
   }
 
+  /* H1 hier mindestens 13,5 px – der clamp unten landete bei 360–430 px
+     Breite auf 12 px. `.hero .hero-band h1`, weil die Grundregel später steht. */
+  .hero .hero-band h1 {
+    font-size: clamp(13.5px, 2.8vw, 18px);
+  }
+
   /* `section.hero` aus demselben Grund wie oben: die Grundregel steht später. */
   section.hero::after {
     left: min(var(--hero-m-frame, var(--hero-frame, 0px)), 4vw);
