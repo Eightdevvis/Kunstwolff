@@ -1,29 +1,28 @@
 # WIP – Nicht eingebundene Komponenten
 
 Diese Components existieren im Code, sind aber aktuell **nirgendwo in Pages/Layouts
-importiert** (Stand 2026-10-22). Es sind vier, und sie zerfallen in zwei Gruppen – der
-Unterschied entscheidet, was man mit ihnen tun darf.
+eingebunden** (Stand 2026-11-20).
 
 ### Bewusst vorbereitet, noch nicht live
 
 | Component | Zweck |
 | :-- | :-- |
 | `src/components/about/AboutSchnellzeichner.astro` | Skill-spezifische About-Sektion mit festem Schnellzeichner-Text und Bild-Slot |
+| `src/components/about/Aboutsection.astro` | Wird in `src/pages/index.astro` importiert, der Aufruf steht aber nur als Kommentar (`//<Aboutsection />`) – rendert nichts |
 
-### Altlasten – abgelöst, aber nie entfernt
+### Altlasten – gelöscht (2026-11-20, Inventur)
 
-| Component | Zweck / wovon abgelöst |
-| :-- | :-- |
-| `src/components/reviews-references/References.astro` | Referenz-Logos mit eigener `DEFAULT_REFERENCES`-Liste – ersetzt durch `BrandStripe`/`BrandGrid` |
-| `src/components/header/LanguageMenu.astro` | Alter Emoji-Sprachumschalter – ersetzt durch `LangSwitcher.astro` |
-| `src/components/SkillBanner.astro` | Fähigkeiten+Reviews-Dreispalter, steht in keinem `_order` |
+`reviews-references/References.astro` (ersetzt durch `BrandStripe`/`BrandGrid`),
+`header/LanguageMenu.astro` (ersetzt durch `LangSwitcher.astro`),
+`SkillBanner.astro` (stand in keinem `_order`) und
+`reviews-references/Reviews.astro` (nur von `SkillBanner` benutzt).
 
-⚠️ **`SkillBanner` ist der heikle Fall:** der Admin führt dafür noch `COMP.skillBanner`
-in `pageTypes.ts`. Der Eintrag ist eine Karteileiche – er steht in keinem `PAGE_STACKS`
-und in keinem `_order`. Zieht ihn jemand im Admin in den Stack, bricht der Website-Build
-über `resolveSectionOrder`, weil keine Seite die ID in ihrer Registry hat.
+⚠️ Der Admin führt noch `COMP.skillBanner` in `pageTypes.ts` – eine Karteileiche,
+die in keinem `PAGE_STACKS` und keinem `_order` steht. Zieht ihn jemand im Admin
+in den Stack, bricht der Website-Build über `resolveSectionOrder`, weil keine Seite
+die ID in ihrer Registry hat. Im Admin entfernen.
 
-**Beim Refactoren beachten:** Die Files der ersten Gruppe nicht entfernen, nur weil sie
+**Beim Refactoren beachten:** Die Files oben nicht entfernen, nur weil sie
 nicht referenziert sind – sind absichtlich da.
 
 **Nicht mehr WIP:** `src/components/Eventtypes.astro` ist live – importiert und in der Sektions-Component-Map (`eventtypes:`) registriert in `src/pages/index.astro`, `src/pages/[landing].astro` und `src/pages/fr/[landing].astro`.
