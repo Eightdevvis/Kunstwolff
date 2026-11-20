@@ -4,6 +4,7 @@ import { readWebpSize } from './webpSize';
 // Ein Skill hat zwei Schlüssel: die URL (skills.json.link) und den
 // Inhalts-Schlüssel aus dem Titel. Hier zählt der Inhalt – siehe skills.ts.
 import { skillContentKey } from './skills';
+import { warnUnreadable } from './warnUnreadable';
 
 export type SlideItem = {
   src: string;
@@ -218,7 +219,8 @@ const readSlidesMetadata = (): SlideMetadataMap => {
 
     metadataCache = Object.fromEntries(entries);
     return metadataCache;
-  } catch {
+  } catch (err) {
+    warnUnreadable('slides.meta.json', err);
     metadataCache = {};
     return metadataCache;
   }
@@ -286,7 +288,8 @@ const readDefaultSelection = (): string[] => {
     const parsed = JSON.parse(raw) as unknown;
     if (!Array.isArray(parsed)) return [];
     return parsed.filter((item): item is string => typeof item === 'string');
-  } catch {
+  } catch (err) {
+    warnUnreadable('default-selection.json', err);
     return [];
   }
 };

@@ -25,6 +25,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { warnUnreadable } from './warnUnreadable';
 
 type FlagValue = boolean | string[];
 type FlagMap = { [key: string]: FlagValue };
@@ -51,7 +52,8 @@ function loadConfig(): ComponentConfig {
     );
     _cache = JSON.parse(raw);
     return _cache!;
-  } catch {
+  } catch (err) {
+    warnUnreadable('components.json', err);
     return {};
   }
 }

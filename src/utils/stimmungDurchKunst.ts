@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { aufloesenBildpfad } from './bildAufloesung';
 import { aufgeloesteHighlights } from './whyHighlights';
+import { warnUnreadable } from './warnUnreadable';
 
 export type StimmungArtForm = {
   id: string;
@@ -58,7 +59,8 @@ export const getStimmungDurchKunstContent = (): StimmungDurchKunstContent | null
     if (!seo?.title || !hero?.title) return null;
 
     return { seo, hero, intro, artForms, otherSectionTitle, otherHighlights };
-  } catch {
+  } catch (err) {
+    warnUnreadable('stimmung-durch-kunst/content.json', err);
     return null;
   }
 };

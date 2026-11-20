@@ -26,6 +26,7 @@
 import fs from 'fs';
 import path from 'path';
 import { getAllSlidesWithTags, type TaggedSlide, type TagDimension } from './slideImages';
+import { warnUnreadable } from './warnUnreadable';
 
 /**
  * Die URL der Galerie an EINER Stelle.
@@ -139,7 +140,8 @@ const leseVokabular = (): Record<TagDimension, Map<string, string>> => {
         );
       }
     }
-  } catch {
+  } catch (err) {
+    warnUnreadable('config/tags.json', err);
     return leer;
   }
 

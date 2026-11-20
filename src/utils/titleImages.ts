@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { warnUnreadable } from './warnUnreadable';
 
 const titleRoot = path.resolve('./public/img/Titelbild');
 const titleMetadataPath = path.join(titleRoot, 'title.meta.json');
@@ -148,7 +149,8 @@ const readTitleDimensions = (): TitleDimensionsMap => {
 
     dimensionsCache = Object.fromEntries(entries);
     return dimensionsCache;
-  } catch {
+  } catch (err) {
+    warnUnreadable('title.dimensions.json', err);
     dimensionsCache = {};
     return dimensionsCache;
   }
@@ -195,7 +197,8 @@ const readTitleMetadata = (): TitleMetadataMap => {
 
     metadataCache = Object.fromEntries(entries);
     return metadataCache;
-  } catch {
+  } catch (err) {
+    warnUnreadable('title.meta.json', err);
     metadataCache = {};
     return metadataCache;
   }

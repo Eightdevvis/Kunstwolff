@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { DEFAULT_LOCALE, resolveLocalizedFile, type Locale } from '../i18n/config';
+import { warnUnreadable } from './warnUnreadable';
 
 /**
  * Editierbare Abschnitts-Texte (mom-Feedback #7: "allg. Textfelder fehlen").
@@ -76,7 +77,8 @@ export const getSiteTexts = (locale: Locale = DEFAULT_LOCALE): SiteTexts => {
       slideshow: mergeSection(SITE_TEXT_DEFAULTS.slideshow, raw.slideshow),
       faq: mergeSection(SITE_TEXT_DEFAULTS.faq, raw.faq),
     };
-  } catch {
+  } catch (err) {
+    warnUnreadable('site-texts/content.json', err);
     return SITE_TEXT_DEFAULTS;
   }
 };
@@ -101,7 +103,8 @@ const readHeadingMap = (locale: Locale): Record<string, unknown> | null => {
     const raw = JSON.parse(fs.readFileSync(contentFileFor(locale), 'utf-8')) as Record<string, unknown>;
     const map = raw.landingHeadings;
     return map && typeof map === 'object' ? (map as Record<string, unknown>) : null;
-  } catch {
+  } catch (err) {
+    warnUnreadable('site-texts/content.json', err);
     return null;
   }
 };
@@ -156,8 +159,9 @@ export const getLandingIntro = (slug: string, cityName: string, locale: Locale =
         return fillCity(defaultText.trim(), cityName);
       }
     }
-  } catch {
-    /* ignore – kein Eintrag → nichts rendern */
+  } catch (err) {
+    warnUnreadable('site-texts/content.json', err);
+    /* kein Eintrag → nichts rendern */
   }
   return '';
 };
@@ -176,8 +180,9 @@ export const getHomeIntro = (): string => {
         return homeText.trim();
       }
     }
-  } catch {
-    /* ignore – kein Eintrag → nichts rendern */
+  } catch (err) {
+    warnUnreadable('site-texts/content.json', err);
+    /* kein Eintrag → nichts rendern */
   }
   return '';
 };

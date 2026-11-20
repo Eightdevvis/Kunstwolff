@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { aufloesenBildpfad } from './bildAufloesung';
 import { aufgeloesteHighlights } from './whyHighlights';
+import { warnUnreadable } from './warnUnreadable';
 
 export type DuBistKunstExample = {
   personTitle: string;
@@ -58,7 +59,8 @@ export const getDuBistKunstContent = (): DuBistKunstContent | null => {
 
     if (!seo?.title || !hero?.title) return null;
     return { seo, hero, intro, galleryTitle, examples, otherSectionTitle, otherHighlights };
-  } catch {
+  } catch (err) {
+    warnUnreadable('du-bist-kunst/content.json', err);
     return null;
   }
 };
