@@ -62,7 +62,7 @@ die `tags.json` nicht kennt, und der Schaden still in die Dateien wanderte.
 
 ## VS Code
 
-Projektspezifische Settings liegen in `.vscode/settings.json` (u.a. TypeScript-Plugin für Astro). Im Repo-Root liegen außerdem `extensions.json` und `launch.json`.
+Projektspezifische Settings liegen in `.vscode/` (`settings.json` mit dem TypeScript-Plugin für Astro, `extensions.json`, `launch.json`). Bis 2026-11-20 lagen die beiden letzten im Repo-Root, wo VS Code sie nicht liest.
 
 ## Was (noch) NICHT als Script existiert
 
