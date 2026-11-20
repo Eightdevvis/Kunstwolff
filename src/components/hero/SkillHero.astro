@@ -234,6 +234,35 @@ const heroMediaStyle =
         font-size: clamp(2rem, 10vw, 2.8rem);
         overflow-wrap: break-word;
       }
+
+      /* Bewertung UNTER das Titelbild: Titel + eine lange Bewertung füllten
+         vorher den ganzen ersten Bildschirm, das Bild kam erst bei ~1280 px.
+         `display: contents` hebt Titel, Badges und Bewertung in das Raster
+         von .hero-inner, `order` stellt das Bild davor. Abstände von Hand,
+         weil der 64-px-Spaltenabstand jetzt zwischen JEDEM Teil läge. */
+      .hero-inner {
+        gap: 0;
+      }
+
+      .hero-content {
+        display: contents;
+      }
+
+      /* Rasterkinder: Außenabstände fallen nicht mehr zusammen. Vorher wurden
+         aus 24 (h1 unten) und 32 (Badges oben) 32 px – so bleibt es dabei. */
+      .hero-badges {
+        margin-top: 8px;
+      }
+
+      .hero-media {
+        order: 1;
+        margin-top: 40px;
+      }
+
+      .hero-content > :global(.review-slider) {
+        order: 2;
+        margin-top: 24px;
+      }
     }
   </style>
 </div>
