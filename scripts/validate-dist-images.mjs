@@ -59,9 +59,11 @@ const merke = (url, seite) => {
 for (const seite of seiten) {
   const html = readFileSync(seite, 'utf8');
 
-  for (const m of html.matchAll(/\ssrc="([^"]+)"/g)) merke(m[1], seite);
+  // `data-src`/`data-srcset`: die Slideshow-Bilder tragen ihre Adresse bis zum
+  // Vorladen nur dort (siehe src/scripts/slideVorladen.ts).
+  for (const m of html.matchAll(/\s(?:data-)?src="([^"]+)"/g)) merke(m[1], seite);
   // Jede Stufe einzeln – der fehlende Kandidat ist der gefährliche Fall.
-  for (const m of html.matchAll(/\ssrcset="([^"]+)"/g)) {
+  for (const m of html.matchAll(/\s(?:data-)?srcset="([^"]+)"/g)) {
     for (const kandidat of m[1].split(',')) merke(kandidat.trim().split(/\s+/)[0], seite);
   }
   // Hero-Hintergründe kommen als CSS-Variablen im style-Attribut.

@@ -131,10 +131,23 @@ nicht auf die Dateigrösse.
 Gegenmittel in `Slideshow.astro`: ein **rollendes Vorladefenster**. Es öffnet
 per `IntersectionObserver` (`rootMargin: 400px`), gibt die ersten 3 Slides frei
 und läuft danach bei jedem `slideChange` dem Autoplay um 3 Slides voraus.
-Freigeben heisst: `loading` von `lazy` auf `eager` setzen – das startet den
-Ladevorgang sofort. `src` wird bewusst NICHT angefasst, ein neu gesetztes `src`
-würde von vorn beginnen. Der Index kommt aus `realIndex`, nicht `activeIndex`:
+Freigeben startet den Ladevorgang sofort (wie, siehe unten). Der Index kommt aus `realIndex`, nicht `activeIndex`:
 im Loop-Modus zählt letzterer die verschobenen Slides mit.
+
+**Seit 2026-11-20 heisst „Freigeben" nicht mehr `lazy` → `eager`.** Gemessen
+(Handy-Inventur): Chrome lud die `loading="lazy"`-Slides im seitlichen Karussell
+trotzdem ALLE beim Seitenaufruf – `/firmenfeier/` 57 Slides, 5,3 MB. Jetzt trägt
+jedes Slide (mit bekannten Maßen) als `src` nur einen **Platzhalter** – ein leeres
+SVG als data-URI in den Maßen des Bildes, kein Netzwerk, aber dieselben Eigenmaße,
+also dieselben Swiper-Breiten. Die echte Adresse steht in `data-src`/`data-srcset`;
+`ausImg()` in `src/scripts/slideVorladen.ts` setzt sie beim Freigeben (`srcset`
+vor `src`). Zusätzlich gibt `liegtNahe()` alles frei, was auf der Bühne oder eine
+Bühnenbreite daneben steht (mehrere Slides am Desktop, Rückwärtswischen im Loop),
+bei `slideChange` und `sliderMove`. Ohne JS: `<noscript>`-Bild je Slide plus eine
+`<noscript><style>`, die den Platzhalter ausblendet. Slides ohne Maße behalten das
+alte `src` + `lazy`. `validate:dist` prüft `data-src`/`data-srcset` mit.
+Erster Aufruf am Handy danach: `/firmenfeier/` 5326 → 639 KB, `/hochzeit/`
+5118 → 940 KB, `/frankfurt/` 4925 → 1182 KB.
 
 Warum nicht gleich beim Skriptstart: die Slideshow steht fast immer unterhalb
 des ersten Bildschirms – vier Slides würden sonst mit dem **Titelbild** um die

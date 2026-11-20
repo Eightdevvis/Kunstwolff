@@ -33,6 +33,13 @@ const filteredItems =
               return slide.categories.some((cat) => filteredCategories.includes(cat));
           });
 
+// Platzhalter fürs verzögerte Laden: ein leeres SVG in den Maßen des Bildes.
+// Kein Netzwerk, aber dieselben Eigenmaße – Swiper rechnet damit dieselben
+// Slide-Breiten wie mit dem echten Bild, beim Nachladen springt nichts. Die
+// echte Adresse setzt erst das Vorladefenster (`src/scripts/slideVorladen.ts`).
+const platzhalter = (w: number, h: number) =>
+    `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}'%3E%3C/svg%3E`;
+
 
 ---
 
@@ -45,6 +52,9 @@ const filteredItems =
 {filteredItems.length > 0 && (
 <section class="section gallery">
     <h2>{heading}</h2>
+    {/* Ohne JavaScript bleibt der Platzhalter leer – dann zeigt das
+        <noscript>-Bild im selben Slide das Foto. */}
+    <noscript><style>.mySwiper img[data-src] { display: none; }</style></noscript>
 
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
@@ -65,16 +75,35 @@ const filteredItems =
                               Fehlt ein Maß, lässt Astro das Attribut weg —
                               `height="0"` wäre schlimmer als keine Angabe.
                             */}
-                            <img
-                                src={slide.src}
-                                srcset={buildSrcSet(slide.src, slide.width)}
-                                sizes={SLIDESHOW_SIZES}
-                                alt={slide.alt ?? ""}
-                                width={slide.width}
-                                height={slide.height}
-                                loading="lazy"
-                                decoding="async"
-                            />
+                            {slide.width && slide.height ? (
+                                <img
+                                    src={platzhalter(slide.width, slide.height)}
+                                    data-src={slide.src}
+                                    data-srcset={buildSrcSet(slide.src, slide.width) || undefined}
+                                    sizes={SLIDESHOW_SIZES}
+                                    alt={slide.alt ?? ""}
+                                    width={slide.width}
+                                    height={slide.height}
+                                    decoding="async"
+                                />
+                                <noscript>
+                                    <img src={slide.src} alt={slide.alt ?? ""} width={slide.width} height={slide.height} loading="lazy" />
+                                </noscript>
+                            ) : (
+                                // Ohne Maße kein maßgleicher Platzhalter – dann
+                                // lieber das alte Verhalten als ein springendes
+                                // Karussell.
+                                <img
+                                    src={slide.src}
+                                    srcset={buildSrcSet(slide.src, slide.width)}
+                                    sizes={SLIDESHOW_SIZES}
+                                    alt={slide.alt ?? ""}
+                                    width={slide.width}
+                                    height={slide.height}
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            )}
                         </a>
                     </div>
                 ))
@@ -108,7 +137,7 @@ const filteredItems =
 
     // Vorladefenster: eigene Datei, weil die Reihenfolge-Logik ohne Browser
     // pruefbar sein muss (tests/slide-vorladen.test.ts).
-    import { erzeugeVorladefenster } from "../../scripts/slideVorladen";
+    import { ausImg, erzeugeVorladefenster, liegtNahe } from "../../scripts/slideVorladen";
 
     // =====================================================================
     // UNIFORM IMAGE HEIGHT
@@ -213,17 +242,38 @@ const filteredItems =
             // =============================================================
             // ROLLENDES VORLADEFENSTER
             // =============================================================
-            // `lazy` heisst im Karussell „lade erst, wenn das Bild
-            // hereinfährt" – der Autoplay wechselt aber alle 2,5 s, also
-            // beginnt der Browser zu spät und die Bühne bleibt solange
-            // schwarz. Das Fenster läuft ihm um VORLAUF Slides voraus.
+            // Slides tragen nur einen Platzhalter; erst das Fenster setzt die
+            // echte Adresse. Es läuft dem Autoplay um VORLAUF Slides voraus,
+            // sonst bliebe die Bühne beim Wechsel schwarz.
             //
             // Die ganze Begründung und die Fallstricke stehen im Modul
             // (`src/scripts/slideVorladen.ts`), geprüft in
             // `tests/slide-vorladen.test.ts`. Hier bewusst nur der Kurzsatz –
             // zwei Fassungen derselben Erklärung laufen auseinander.
             const VORLAUF = 3;
-            const vorladen = erzeugeVorladefenster(sliderImages, VORLAUF);
+            const bilder = sliderImages.map(ausImg);
+            const vorladen = erzeugeVorladefenster(bilder, VORLAUF);
+            let offen = false;
+            let swiperInstanz: Swiper | null = null;
+
+            // Alles, was auf der Bühne steht oder eine Bühnenbreite daneben
+            // liegt (mehrere Slides am Desktop, Rückwärtswischen im Loop).
+            const naheFreigeben = () => {
+                if (!offen) return;
+                const buehne = host.getBoundingClientRect();
+                bilder.forEach((bild, i) => {
+                    if (!bild.wartend) return;
+                    const slide = sliderImages[i].closest(".swiper-slide") ?? sliderImages[i];
+                    if (liegtNahe(slide.getBoundingClientRect(), buehne, buehne.width)) bild.freigeben();
+                });
+            };
+            const oeffnen = () => {
+                offen = true;
+                // Der Autoplay läuft auch außer Sicht weiter – beim Öffnen
+                // vom AKTUELLEN Slide aus vorladen, nicht von 0.
+                vorladen.bisSlide(swiperInstanz?.realIndex ?? 0);
+                naheFreigeben();
+            };
 
             // Die Slideshow steht auf fast jeder Seite unterhalb des ersten
             // Bildschirms. Öffnete das Fenster schon beim Skriptstart, würden
@@ -234,17 +284,17 @@ const filteredItems =
                 const beobachter = new IntersectionObserver(
                     (eintraege, selbst) => {
                         if (!eintraege.some((e) => e.isIntersecting)) return;
-                        vorladen.bisSlide(0);
+                        oeffnen();
                         selbst.disconnect();
                     },
                     { rootMargin: "400px" },
                 );
                 beobachter.observe(host);
             } else {
-                vorladen.bisSlide(0);
+                oeffnen();
             }
 
-            new Swiper(host, {
+            swiperInstanz = new Swiper(host, {
                 modules: [Autoplay, Navigation, Pagination],
                 slidesPerView: "auto",
                 spaceBetween: 10,
@@ -273,8 +323,14 @@ const filteredItems =
                     // Slides mitzählt. `sliderImages` wurde vor der Swiper-
                     // Initialisierung eingesammelt und steht deshalb in genau
                     // dieser Reihenfolge.
-                    slideChange: (swiper: { realIndex: number }) =>
-                        vorladen.bisSlide(swiper.realIndex),
+                    slideChange: (swiper: { realIndex: number }) => {
+                        if (!offen) return;
+                        vorladen.bisSlide(swiper.realIndex);
+                        naheFreigeben();
+                    },
+                    // Beim Wischen kommt das Nachbar-Slide herein, bevor
+                    // `slideChange` feuert.
+                    sliderMove: naheFreigeben,
                 },
             });
         });
