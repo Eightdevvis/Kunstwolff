@@ -14,6 +14,19 @@ sind das 30+ überflüssige Anfragen pro Besuch.
 Einen Tag frisch, danach eine Woche lang „liefere den alten Stand sofort aus und
 hole im Hintergrund den neuen".
 
+## Sicherheits-Header (seit 2026-11-20)
+
+```
+/*       X-Content-Type-Options: nosniff
+         Referrer-Policy: strict-origin-when-cross-origin
+```
+
+Gelten für alle Pfade, zusätzlich zu Cache-Control und dem HSTS, das Vercel selbst
+setzt. ⚠️ **Bewusst KEIN `X-Frame-Options` und kein CSP-`frame-ancestors`:** der Admin
+zeigt die Seite in einem iframe (`LivePreview.tsx` im Admin-Repo); beides würde die
+Live-Vorschau abschalten. Eine volle CSP ist offen (Inline-Skripte/`define:vars`
+müssten erst erfasst werden).
+
 ## Warum NICHT `immutable` / `max-age=31536000`
 
 Das ist der übliche Rat für Bilder – hier wäre er **falsch**. Das Admin-Tool

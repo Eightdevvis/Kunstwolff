@@ -43,7 +43,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [Team](content-team.md) – `/team/`: zwei Profile (Gabriele zuerst), Portraits als Zuschnitte aus Event-Fotos, **kein `srcset`** für `img/team`
 - [Tag-System](tag-system.md) – Skill × Anlass × Ort: `config/tags.json`, Tag-Blöcke an Bildern/Reviews/FAQs, Migration; **Phase 5a+5b+5d+5e fertig – Bilder, Reviews UND FAQs wählen über Tags aus, und seit 5e (2026-07-31) tut das AUCH der Admin. Der Ordner ist nur noch Ablage und Upload-Ziel.**
 - [Responsive Bilder](responsive-images.md) – `srcset`/`sizes`, Varianten-Erzeugung nach dem Build, warum nicht `astro:assets`
-- [Vercel-Header](vercel-headers.md) – Cache-Control für `/img/*`, warum bewusst kein `immutable`; **Redirect-Karte Wix→Astro** (warum nicht über `astro.config.mjs`)
+- [Vercel-Header](vercel-headers.md) – Cache-Control für `/img/*`, warum bewusst kein `immutable`; **Sicherheits-Header** (`nosniff`, `Referrer-Policy`, bewusst kein `X-Frame-Options` wegen Admin-iframe); **Redirect-Karte Wix→Astro** (warum nicht über `astro.config.mjs`)
 - [Titelbild](content-titelbild.md) – Pfad, Metadaten, Fallback-Kette, **optionales Handy-Titelbild in `<ordner>/mobile/`**
 - [Reviews](content-reviews.md) – Markdown-Format, **Auswahl über `tags.landings` bzw. `tags.events`**, Auffüll-Logik **mit Deckel** und **`tagOnly`-Schalter pro Bewertung**, MiniReviews-Anzeige (Stadtseiten waren bis 2026-07-31 gar nicht angeschlossen)
 - [Allgemeine Texte](content-site-texts.md) – `site-texts/content.json`, Startseiten-Texte, `landingIntros` (Einführungstext), **editierbare Überschriften** (H1 Start/Stadt, Bilder/FAQ/Why/Kontakt/Eventformate)
