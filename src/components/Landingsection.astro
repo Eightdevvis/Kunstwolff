@@ -2,6 +2,7 @@
 import { getVisibleLandingSlugs } from "../utils/landings";
 import { cityComboPath, skillSlugFromLink } from "../utils/comboUrls";
 import { getCityDisplayName } from "../utils/cityNames";
+import { isPageHiddenByPath } from "../utils/pageVisibility";
 
 const cities = getVisibleLandingSlugs();
 
@@ -16,6 +17,18 @@ const cities = getVisibleLandingSlugs();
  */
 const { skillSlug = "" } = Astro.props;
 const normalizedSkill = skillSlugFromLink(String(skillSlug));
+
+/**
+ * Ist die Kombi-Seite ausgeblendet (`page-visibility.json` → `noindex, nofollow`),
+ * zeigt der Link auf die Stadtseite (2026-11-20). Vorher liefen von den
+ * indexierbaren Skill-Seiten 30 Links in ausgeblendete Kombis – Sackgassen für
+ * Crawler, weil dort auch `nofollow` gilt.
+ */
+const cityHref = (city: string): string => {
+  if (!normalizedSkill) return `/${city}/`;
+  const combo = cityComboPath(normalizedSkill, city);
+  return isPageHiddenByPath(combo) ? `/${city}/` : combo;
+};
 ---
 
 <!-- =========================
@@ -29,7 +42,7 @@ const normalizedSkill = skillSlugFromLink(String(skillSlug));
       {
         cities.map((city, index) => (
           <>
-            <a href={normalizedSkill ? cityComboPath(normalizedSkill, city) : `/${city}/`}>
+            <a href={cityHref(city)}>
               {getCityDisplayName(city)}
             </a>
             {index < cities.length - 1 && " · "}
