@@ -17,9 +17,10 @@ const {
   title = "Eventkünstler buchen | Kunstwolff",
   description = "Professionelle Eventkünstler für Firmenfeiern, Messen, Hochzeiten & private Feiern. Live-Karikaturen und Szenenmalerei als Highlight für Ihr Event.",
   image,
+  heroImage,
 } = Astro.props;
 ---
 
-<Layout title={title} description={description} image={image}>
+<Layout title={title} description={description} image={image} heroImage={heroImage}>
   <slot />
 </Layout>

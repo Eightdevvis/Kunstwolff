@@ -7,6 +7,7 @@ import type { LangAlternate } from "../components/LangSwitcher.astro";
 import { isPageHiddenByPath } from "../utils/pageVisibility";
 import { DEFAULT_LOCALE } from "../i18n/config";
 import { metaDescription } from "../utils/seoSnippet";
+import { heroPreloads } from "../utils/heroPreload";
 
 const {
   title = "Kunstwolff – Eventkünstler seit über 25 Jahren",
@@ -18,6 +19,9 @@ const {
   // übergeben `lang` + `alternates`.
   lang = "de",
   alternates = [] as LangAlternate[],
+  // Title image of a BACKGROUND hero (Opener/EventHero) on this page – gets a
+  // preload in <head>, see src/utils/heroPreload.ts. Not set = no preload.
+  heroImage,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -87,6 +91,11 @@ const xDefaultHref = showAlternates
 		    Preload aus demselben Grund wie bei Mayonice: die @font-face steht
 		    hinter mehreren CSS-@imports und würde sonst spät entdeckt. */}
 		<link rel="preload" href="/fonts/inter/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+		{/* Hero-Titelbild vorladen (CSS-Hintergrund, sonst spät entdeckt):
+		    siehe src/utils/heroPreload.ts – eine Zeile je Datei, per media. */}
+		{heroPreloads(heroImage).map((l) => (
+			<link rel="preload" as="image" href={l.href} media={l.media} />
+		))}
 		<link rel="icon" type="image/webp" href="/img/logo/logo_transparent.webp" />
 		<link rel="apple-touch-icon" href="/img/logo/logo_transparent.webp" />
 		<link rel="canonical" href={canonicalURL} />

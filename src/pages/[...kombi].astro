@@ -344,7 +344,7 @@ if (pageType === 'landing' && landingSlides) {
   <!-- ══════════════════════════════════════════════════
        SKILL+EVENT-SEITE – EventLayout mit Skill-Kontext
   ══════════════════════════════════════════════════ -->
-  <EventLayout title={eventPageTitle} description={eventMetaDescription || eventPageDescription} image={eventTitleImage}>
+  <EventLayout title={eventPageTitle} description={eventMetaDescription || eventPageDescription} image={eventTitleImage} heroImage={sectionOrder.includes('eventHero') && isComponentEnabled(pt, landing ?? '', 'eventHero') ? eventTitleImage : undefined}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(eventBreadcrumb)} />
 
     {sectionOrder.map((id) => {

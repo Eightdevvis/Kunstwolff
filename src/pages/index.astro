@@ -121,6 +121,7 @@ const webSiteSchema = {
   title="Kunstwolff – Schnellzeichner & Eventkünstler seit 25 Jahren"
   description="Schnellzeichner, Karikaturisten, Szenenmaler & Graphic Recording live auf Firmenfeier, Messe und Hochzeit – Eventkünstler seit über 25 Jahren."
   image={titleImage}
+  heroImage={isComponentEnabled(PAGE_TYPE, '', 'opener') && sectionOrder.includes('opener') ? titleImage : undefined}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(webSiteSchema)} />

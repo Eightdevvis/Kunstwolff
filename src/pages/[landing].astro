@@ -312,7 +312,7 @@ const langAlternates = getAvailableLocalesForSlug(landing ?? '').map((loc) => ({
   <!-- ══════════════════════════════════════════════════
        STADTSEITE – bestehende Struktur unverändert
   ══════════════════════════════════════════════════ -->
-  <Layout title={landingPageTitle} description={landingPageDescription} image={landingData.titleImage} alternates={langAlternates}>
+  <Layout title={landingPageTitle} description={landingPageDescription} image={landingData.titleImage} alternates={langAlternates} heroImage={sectionOrder.includes('opener') && isComponentEnabled(pt, landing ?? '', 'opener') ? landingData.titleImage : undefined}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(cityServiceSchema)} />
     {sectionOrder.map((id) => {
@@ -330,7 +330,7 @@ const langAlternates = getAvailableLocalesForSlug(landing ?? '').map((loc) => ({
   <!-- ══════════════════════════════════════════════════
        EVENT-SEITE – eigenes EventLayout
   ══════════════════════════════════════════════════ -->
-  <EventLayout title={eventPageTitle} description={eventPageDescription} image={eventTitleImage}>
+  <EventLayout title={eventPageTitle} description={eventPageDescription} image={eventTitleImage} heroImage={sectionOrder.includes('eventHero') && isComponentEnabled(pt, landing ?? '', 'eventHero') ? eventTitleImage : undefined}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(eventBreadcrumbSchema)} />
 
     {sectionOrder.map((id) => {

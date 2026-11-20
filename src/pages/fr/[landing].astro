@@ -128,6 +128,7 @@ const sectionOrder = getSectionOrder('landing', slug);
   title={pageTitle}
   description={pageDescription}
   image={landingData.titleImage}
+  heroImage={sectionOrder.includes('opener') && isComponentEnabled(pt, slug, 'opener') ? landingData.titleImage : undefined}
   lang={LOCALE_META[LOCALE].htmlLang}
   alternates={alternates}
 >

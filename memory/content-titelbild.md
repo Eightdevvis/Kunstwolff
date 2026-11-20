@@ -72,6 +72,29 @@ die H1 war unsichtbar. Seit 2026-11-20 hebt
 das Band mit `position: relative; z-index: 1` darüber – dasselbe Mittel wie im
 Hochkant-Block. Desktop-Höhen erreichen die Regel nicht (Pixelvergleich 1440×900: 0).
 
+## Vorladen (`src/utils/heroPreload.ts`, seit 2026-11-20)
+
+Opener und EventHero zeigen das Titelbild als **CSS-Hintergrund** – der Browser
+findet es erst nach HTML, CSS und Stilberechnung. Lighthouse mobil maß live LCP
+3,8 s (`/berlin/`) bzw. 4,3 s (`/hochzeit/`), LCP-Element war dieses Bild.
+
+Deshalb setzt `Layout.astro` (Prop `heroImage`, von `EventLayout` durchgereicht)
+`<link rel="preload" as="image" href=… media=…>` in den Kopf. Bewusst **ohne**
+`fetchpriority="high"`: damit drängte sich das Bild vor das CSS, und auf der
+Startseite (LCP dort = Bewertungstext, nicht das Bild) wurde LCP 75 ms schlechter.
+Gesetzt wird `heroImage` von `index.astro`, `[landing].astro` (Stadt + Event),
+`[...kombi].astro` (Event-Zweig) und `fr/[landing].astro` – jeweils nur, wenn
+Opener/EventHero laut `components.json` auf der Seite steht.
+
+⚠️ **Bewusst `href` + `media`, nicht `imagesrcset`:** die Heroes wählen ihre Datei
+per Media-Query (Breite, Pixeldichte, optional Handy-Foto), nicht nach
+`srcset`-Regeln. Mit `imagesrcset` rechnet der Browser selbst und kann eine
+andere Datei vorladen als das CSS dann will → doppelter Download. Die vier Fälle
+in `heroPreloads()` spiegeln die vier CSS-Regeln einzeln; gleiche Dateien werden
+zu einem Link mit `,`-verknüpfter `media` zusammengefasst. Ändert sich das Hero-CSS,
+muss `heroPreload.ts` mit (`tests/hero-preload.test.ts` prüft die CSS-Zeilen).
+SkillHero braucht keinen Preload: dort ist das Bild ein echtes `<img>`.
+
 ## Pixel-Maße: `title.dimensions.json`
 
 Zweite JSON neben `title.meta.json`. **Vom Sync gepflegt, nicht von Hand.**
