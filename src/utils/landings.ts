@@ -3,6 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { resolveTitleImage, resolveTitleImageFocus, resolveTitleImageFrame, resolveTitleImageAspect } from './titleImages';
 import { isPageHiddenByPath } from './pageVisibility';
+import { slugify as normalizeSlug } from '../../scripts/slug.mjs';
 
 export type LandingReference = {
   title: string;
@@ -26,22 +27,6 @@ const landingsRegistryMdPath = path.join(landingsRoot, 'landings.md');
 const landingsRegistryJsonPath = path.join(landingsRoot, 'landings.json');
 const slidesRoot = path.resolve('./public/img/slides');
 const reviewsRoot = path.resolve('./public/reviews');
-
-const transliterateGerman = (value: string): string =>
-  String(value)
-    .replace(/ä/gi, 'ae')
-    .replace(/ö/gi, 'oe')
-    .replace(/ü/gi, 'ue')
-    .replace(/ß/gi, 'ss');
-
-const normalizeSlug = (value: string): string =>
-  transliterateGerman(value)
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
 
 const readDirNames = (dir: string): string[] => {
   if (!fs.existsSync(dir)) {

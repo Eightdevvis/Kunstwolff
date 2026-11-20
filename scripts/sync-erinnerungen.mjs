@@ -16,6 +16,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { slugify as normalizeSlug } from './slug.mjs';
 
 // ── Pfade ────────────────────────────────────────────────────────────────────
 
@@ -27,25 +28,7 @@ const landingsMdPath = path.join(landingsRoot, 'landings.md');
 const landingsJsonPath = path.join(landingsRoot, 'landings.json');
 const skillsJsonPath = path.join(projectRoot, 'public', 'skills', 'skills.json');
 
-// ── Hilfsfunktionen (gleiche Logik wie in sync-why.mjs) ──────────────────────
-
-/** Deutsche Umlaute transliterieren */
-const transliterateGerman = (value) =>
-  String(value)
-    .replace(/ä/gi, 'ae')
-    .replace(/ö/gi, 'oe')
-    .replace(/ü/gi, 'ue')
-    .replace(/ß/gi, 'ss');
-
-/** Slug normalisieren (lowercase, keine Sonderzeichen) */
-const normalizeSlug = (value) =>
-  transliterateGerman(value)
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+// ── Hilfsfunktionen (Slug-Regeln: scripts/slug.mjs) ─────────────────────────
 
 /** Liste deduplizieren und sortieren */
 const normalizeList = (items) => {

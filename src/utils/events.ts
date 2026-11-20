@@ -19,6 +19,8 @@ import path from 'path';
 import { isPageHiddenByPath } from './pageVisibility';
 import { getSlidesByTag } from './slideImages';
 import { lookupTitleDimensions, lookupTitleMetadata } from './titleImages';
+// Event-Slug-Ersatz: schreibt Umlaute bewusst NICHT aus (siehe scripts/slug.mjs).
+import { slugifyWithoutTransliteration } from '../../scripts/slug.mjs';
 
 // ─── Pfad-Konstanten ──────────────────────────────────────────────────────────
 const eventsRoot = path.resolve('./public/events');
@@ -114,19 +116,6 @@ export type EventSlideItem = {
 // ─── Interne Helfer ───────────────────────────────────────────────────────────
 
 /**
- * Slugifiziert einen Text: NFD-Normalisierung, Kleinbuchstaben, Bindestriche.
- * Identische Logik wie in skills.ts.
- */
-const slugify = (text: string): string =>
-  text
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-
-/**
  * URL-encodes einen Pfad-Abschnitt – teilweise, nicht am Stück. Am Stück würde ein
  * verschachtelter Schlüssel zu %2F werden, und %2F ist kein Pfadtrenner (siehe slideImages.ts).
  */
@@ -173,7 +162,7 @@ export const getEvents = (): EventItem[] => {
         if (!title) return null;
 
         // Slug aus JSON oder automatisch aus title generieren
-        const slug = (item.slug == null ? '' : String(item.slug).trim()) || slugify(title);
+        const slug = (item.slug == null ? '' : String(item.slug).trim()) || slugifyWithoutTransliteration(title);
         // Ein Slug mit „/" (z.B. eine ganze URL ins Slug-Feld kopiert) ist als
         // `[landing]`-Parameter unzulässig und bricht den GESAMTEN Build ab –
         // dann geht keine Veröffentlichung mehr live. Lieber diesen einen

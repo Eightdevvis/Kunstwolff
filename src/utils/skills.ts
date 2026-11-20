@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { isPageHiddenByPath } from './pageVisibility';
+import { slugify } from '../../scripts/slug.mjs';
 
 export type SkillItem = {
   title: string;
@@ -29,29 +30,8 @@ const normalizeKey = (value: string): string =>
     .toLowerCase()
     .trim();
 
-/**
- * Umlaute vor dem Slug ausschreiben — genau wie `scripts/tags.mjs` und die
- * Sync-Skripte. Ohne diesen Schritt würde aus „Ölmalerei" hier `olmalerei`,
- * während `sync-why.mjs` die Datei als `oelmalerei.json` anlegt: zwei Schlüssel
- * für dieselbe Sache, und die Seite bliebe leer. Bei den drei heutigen Skills
- * ändert die Zeile nichts — sie verhindert den nächsten Fall.
- */
-const transliterateGerman = (value: string): string =>
-  String(value)
-    .replace(/ä/gi, 'ae')
-    .replace(/ö/gi, 'oe')
-    .replace(/ü/gi, 'ue')
-    .replace(/ß/gi, 'ss');
-
-const slugify = (text: string): string => {
-  return transliterateGerman(text)
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-};
+// Slug-Regeln (Umlaute ausschreiben wie die Sync-Skripte, sonst zwei Schlüssel
+// für dieselbe Sache): EINE Quelle in scripts/slug.mjs.
 
 /**
  * Das `link`-Feld kommt von Hand aus dem Admin. Zwei Eingaben haben hier

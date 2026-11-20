@@ -88,6 +88,22 @@ Die URL ist damit NICHT mehr der Schlüssel für Inhalte. Welche Aufrufe welchen
 der beiden brauchen, steht vollständig in `content-skills.md` — die Verwechslung
 erzeugt keine Fehlermeldung, sondern eine leere Seite.
 
+### Slug-Regeln: eine Quelle (`scripts/slug.mjs`, seit 2026-11-20)
+
+Alle Slugs (Orte, Skills, Ordner-/Dateinamen, Tags, Event-Ersatz) kommen aus
+`scripts/slug.mjs`. Sync-Skripte **und** `src/utils/` importieren dieselbe Datei;
+vorher stand die Logik als Kopie in neun Dateien. Drei Funktionen, bewusst getrennt:
+
+| Funktion | Benutzt von | Verhalten |
+| :-- | :-- | :-- |
+| `slugify` | `sync-landings/why/erinnerungen/title-images`, `remove-landing`, `landings.ts`, `titleImages.ts`, `skills.ts` (dort unter dem Alias `normalizeSlug`) | Umlaute ausschreiben (Köln → `koeln`, ß → `ss`), Akzente weg, alles außer a–z/0–9 → `-` |
+| `slugifyTag` | `scripts/tags.mjs` (reicht sie weiter) | wie `slugify`, aber null/undefined → `''`; zeichengleich zu Admin `src/utils/tagSlug.ts` |
+| `slugifyWithoutTransliteration` | `sync-events.mjs`, `events.ts` – nur wenn `events.json` kein `slug` hat | ⚠️ schreibt Umlaute **nicht** aus („Jubiläum" → `jubilaum`). Bekannte Abweichung, nicht angeglichen, weil sie Event-URLs ändern könnte; heute folgenlos (alle Events haben `slug`) |
+
+**Testvektoren:** `tests/fixtures/slug-vectors.json` (aus den alten Kopien
+aufgenommen, geprüft von `tests/slug.test.ts`). Der Admin soll dieselbe Datei gegen
+seine Funktionen laufen lassen. Slug-Regel ändern = Modul + Vektoren + Admin zusammen.
+
 ### Skill-Bilder pro Skill-Seite
 
 Werden automatisch aus `public/img/UnsereFähigkeitenBilder/<Skill-Titel>/` geladen. Erstes Bild alphabetisch.

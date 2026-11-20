@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { slugify as normalizeSlug } from './slug.mjs';
 
 const projectRoot = process.cwd();
 const whyRoot = path.join(projectRoot, 'public', 'why');
@@ -13,13 +14,6 @@ const skillsJsonPath = path.join(skillsRoot, 'skills.json');
 const whyImagesRoot = path.join(projectRoot, 'public', 'img', 'why');
 const defaultWhyImagesDir = path.join(whyImagesRoot, 'default');
 const imageExtensions = new Set(['.avif', '.webp', '.png', '.jpg', '.jpeg', '.gif']);
-
-const transliterateGerman = (value) =>
-  String(value)
-    .replace(/ä/gi, 'ae')
-    .replace(/ö/gi, 'oe')
-    .replace(/ü/gi, 'ue')
-    .replace(/ß/gi, 'ss');
 
 // Fallback wird nur genutzt wenn default.json noch nicht existiert UND keine Bilder gefunden werden.
 // Kein hardcode auf .jpeg – leere image-Strings signalisieren "kein Bild gefunden",
@@ -75,15 +69,6 @@ const readSkills = () => {
     return [];
   }
 };
-
-const normalizeSlug = (value) =>
-  transliterateGerman(value)
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
 
 const normalizeList = (items) => {
   const unique = new Set();

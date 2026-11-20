@@ -1,24 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { slugify as normalizeSlug } from './slug.mjs';
 
 const projectRoot = process.cwd();
-
-const transliterateGerman = (value) =>
-  String(value)
-    .replace(/ä/gi, 'ae')
-    .replace(/ö/gi, 'oe')
-    .replace(/ü/gi, 'ue')
-    .replace(/ß/gi, 'ss');
-
-const normalizeSlug = (value) =>
-  transliterateGerman(value)
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
 
 const ensureDirectory = (dirPath) => {
   fs.mkdirSync(dirPath, { recursive: true });

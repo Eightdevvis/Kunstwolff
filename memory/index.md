@@ -29,7 +29,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 - [Projekt-Übersicht](projekt.md) – Was ist Kunstwolff, Tech-Stack, Ziele, Setup, **Hosting-/Deploy-Stand** (live, keine Stage)
 - [Architektur](architektur.md) – SSG-Logik, dateibasiertes CMS, public/-Prinzip
 - [Pfadstruktur](pfadstruktur.md) – Vollständiger Baum von `public/` mit Zweck pro Pfad
-- [Routing & URL-Generierung](routing.md) – Wie URLs aus landings.md/skills.json/events.json entstehen
+- [Routing & URL-Generierung](routing.md) – Wie URLs aus landings.md/skills.json/events.json entstehen; **Slug-Regeln an einer Stelle: `scripts/slug.mjs`** + Testvektoren `tests/fixtures/slug-vectors.json`
 - [Komponenten-Stack](komponenten-stack.md) – `components.json` `_order` als EINE Quelle für Sektions-Reihenfolge+Sichtbarkeit (Website rendert daraus, Admin liest dasselbe), Build-Guardrail
 - [Admin-Tool / Cross-Repo](admin-tool.md) – Was Admin schreibt, was nicht, Cross-Repo-Workflow
 - [Bug-Zettel](../zettel/LIESMICH.md) – `zettel/bugs.json` (bewusst **nicht** unter `public/`): Mama meldet Bugs im Admin (Käfer-Knopf); wer fixt, setzt im selben Commit `status: gefixt` + `gefixtAm` + `antwort`. Speichern im Admin klappt nur, wenn der **Worker aus aktuellem `master` deployt** ist (sonst 403 `forbidden_path`, siehe `admin-tool.md`)
