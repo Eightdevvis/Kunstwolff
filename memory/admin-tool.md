@@ -22,6 +22,15 @@ Auth: **zwei Modi.**
 
 **Deployment:** Admin-Frontend als Vite-SPA auf **Vercel** (`kunstwolff-admin.vercel.app`, s. `ADMIN_ALLOWED_ORIGIN` in `worker/wrangler.toml`), baut automatisch bei Push auf `master`. Der Backend-Worker geht **nicht** über Vercel, sondern nur per `npm run worker:deploy` (wrangler) – und zwar ⚠️ **nur aus einem frischen Checkout von `origin/master`**. Am 05.10.2026 wurde aus einem veralteten lokalen Checkout deployt; der live Worker kannte danach die Freigabe für `zettel/bugs.json` nicht, und der Bug-Zettel lieferte 403 `forbidden_path`. Details: Admin-`memory/deployment.md`.
 
+> **Repo privat (vorbereitet 2026-11-20, Branch `private-repo-ready`):** Der Admin liest
+> dieses Repo **nicht mehr** über das öffentliche `raw.githubusercontent.com` und
+> Vorschaubilder nicht mehr über `images.weserv.nl`, sondern authentifiziert per Blob-SHA
+> über den Worker (`/api/repo/blob/<sha>`, Server-PAT) bzw. im PAT-Login direkt über
+> `api.github.com`. Damit kann `Eightdevvis/Kunstwolff` privat sein. Bis Sasha den neuen
+> Worker deployt hat, läuft der Admin noch über Raw (Übergang, Admin-`memory/open/private-repo-transition-fallback.md`).
+> Die GitHub Action `sync-landings.yml` braucht kein öffentliches Repo (eigener
+> `GITHUB_TOKEN`); Verbrauch ~20–35 Läufe à <1 Min pro Monat, weit unter den 2000 Gratis-Minuten.
+
 > **Hosting-Stand (2026-10-22):** Die Website ist live auf `www.kunstwolff.de` (Cutover seit August 2026). Jedes Admin-Veröffentlichen ist damit sofort **Production** – es gibt keine Stage mehr dazwischen.
 
 ## Cross-Repo-Doku
@@ -59,7 +68,7 @@ Bei jeder Cross-Repo-Arbeit zuerst:
 | `public/config/tags.json` (Tag-Vokabular) | `services/tagVocabulary.ts` – aus Quick-Add (Skill/Event/Landing), `CityManager`, Tag-Chips und Mediathek. **Seit 2026-07-30**, vorher schrieb es niemand fort und ein neuer Skill war im Admin nicht auswählbar; siehe `tag-system.md` „⚠️ `tags.json` muss COMMITTED werden" |
 | `slides.meta.json` (`tags` mengenweise setzen) | `MediaLibrary.tsx` – Umsortieren-Modus; Uploads landen in `public/img/slides/mediathek/…`. Seit 2026-07-30 auch aus **KI-Tagvorschlägen** (die KI sieht die Fotos an, schreibt aber nie selbst – siehe Admin-Memory `ki-faehigkeiten-und-vision.md`) |
 | `public/partners/partners.json` + `public/img/partners/{id}.{ext}` (Logos, webp) | `PartnerManager.tsx` |
-| `public/calendar/{jahr}/{monat}.json` + `public/calendar/categories.json` | `CalendarView.tsx`/`EventModal.tsx` als Oberfläche; die Schreibpfade selbst liegen in `services/calendar.ts` (`saveEvents`, `saveCategories`) |
+| `admin-data/calendar/{jahr}/{monat}.json` + `admin-data/calendar/categories.json` (**außerhalb `public/`**, seit 2026-11-20; vorher `public/calendar/`) | `CalendarView.tsx`/`EventModal.tsx` als Oberfläche; die Schreibpfade selbst liegen in `services/calendar.ts` (`saveEvents`, `saveCategories`). Übergang bis zum Worker-Deploy: liest beide Orte, schreibt den alten, zieht danach beim Speichern um (Admin-`memory/manager-kalender.md`) |
 | `public/config/page-visibility.json` (ausgeblendete Seitenpfade, Präfix-Match) | `SiteGraphView.tsx` – Sichtbarkeits-Schalter im Seiten-Graph; Website liest über `src/utils/pageVisibility.ts` |
 | `zettel/bugs.json` (Bug-Zettel, **außerhalb `public/`**, sofort per `putFile`, nicht über den Draft) | `BugZettel.tsx` – Käfer-Knopf rechts in der Tab-Leiste. Der Worker erlaubt genau diese Datei zusätzlich zu `public/` (`worker/src/security.ts`). Ablauf und Regeln für den Fixer: `zettel/LIESMICH.md` (seit 2026-10-05) |
 | Bereinigung: löscht doppelte/kaputte Bilder, putzt zugehörige `slides.meta.json`-Einträge mit | `CleanupManager.tsx` |

@@ -41,7 +41,8 @@ Alle Seiten sind statisch (SSG). URLs entstehen automatisch aus `landings.md`, `
 Die zweite Hälfte des Routings steht **nicht** in `src/pages/`, sondern in
 `vercel.json` → `redirects` (Stand 2026-11-20: 188 Einträge, alle `permanent: true` bis auf die
 Sperre `/calendar/:path*` → `/404/`, die den privaten Admin-Kalender unter `public/calendar/` nicht
-mehr ausliefert):
+mehr ausliefert; der Kalender liegt seit 2026-11-20 ohnehin unter `admin-data/calendar/`, die
+Sperre bleibt als Sicherheitsnetz):
 
 - **136 Kombi-Weiterleitungen** von der alten hierarchischen Ort-Form auf die
   flache (`/szenenmaler/berlin` → `/berlin-szenenmaler/`), erzeugt vom
@@ -135,4 +136,4 @@ statisch generierten Seiten **außer** den in `public/config/page-visibility.jso
 ausgeblendeten: die Sitemap-Integration in `astro.config.mjs` filtert sie per
 Präfix-Regel heraus (zeichengleich zu `isPageHiddenByPath()` in
 `src/utils/pageVisibility.ts`), damit keine `noindex`-Seite widersprüchlich in der
-Sitemap steht. Stand 2026-11-20: 135 ausgeblendete Pfade. Output: `dist/sitemap-index.xml` + `dist/sitemap-0.xml`. Host wird zur Build-Zeit aus `process.env.SITE_URL` (Fallback `https://kunstwolff.de`) übernommen – siehe `seo.md` "Stage vs. Production". Cutover-Historie siehe `seo.md` (seit August 2026 live auf `www`).
+Sitemap steht. Stand 2026-11-20: 135 ausgeblendete Pfade. Output: `dist/sitemap-index.xml` + `dist/sitemap-0.xml`. Host wird zur Build-Zeit aus `process.env.SITE_URL` (Fallback `SITE_ORIGIN` = `https://www.kunstwolff.de`, `src/utils/siteOrigin.mjs`) übernommen – siehe `seo.md` "Stage vs. Production". Cutover-Historie siehe `seo.md` (seit August 2026 live auf `www`).

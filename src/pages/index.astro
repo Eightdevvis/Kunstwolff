@@ -1,4 +1,5 @@
 ---
+import { SITE_ORIGIN } from '../utils/siteOrigin.mjs';
 import Opener from "../components/hero/Opener.astro";
 import LandingIntro from "../components/LandingIntro.astro";
 import CinemaWelcome from "../components/CinemaWelcome.astro";
@@ -57,9 +58,9 @@ const sectionProps: Record<string, Record<string, any> | false> = {
 };
 const sectionOrder = resolveSectionOrder(PAGE_TYPE, '', registry);
 
-// WEB-012: Schema-URLs aus Astro.site (= SITE_URL) statt hardcoded kunstwolff.de,
-// konsistent zu Canonical/OG im Layout (Stage → vercel.app, Cutover → kunstwolff.de).
-const site = Astro.site?.origin ?? 'https://kunstwolff.de';
+// WEB-012: Schema-URLs aus Astro.site (= SITE_URL) statt hardcoded Domain,
+// konsistent zu Canonical/OG im Layout. Rückfall: SITE_ORIGIN (www).
+const site = Astro.site?.origin ?? SITE_ORIGIN;
 
 // Feste Kennungen, damit WebSite und LocalBusiness aufeinander zeigen können,
 // statt zwei unverbundene Datensätze zu sein. Der Rautenteil ist reine
@@ -75,6 +76,7 @@ const localBusinessSchema = {
   "description": "Eventkünstler seit über 25 Jahren – Schnellzeichner, Szenenmaler & Live-Performance für Firmenfeiern, Messen und Hochzeiten.",
   "url": site,
   "telephone": "+491736677229",
+  "email": "info@artelines.com",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Birkenstr. 3",

@@ -182,17 +182,29 @@ public/partners/
 public/img/partners/               # Partner-Logos
 ```
 
-## Kalender (nur Admin-Tool)
+## Admin-Daten außerhalb von `public/` (nur Admin-Tool)
 
 ```
-public/calendar/<jahr>/<monat>.json   # NICHT von der Website gelesen, nur vom Admin
+admin-data/calendar/<jahr>/<monat>.json   # Kalender: NICHT von der Website gelesen, nur vom Admin
+admin-data/calendar/categories.json       # Kalender-Kategorien
+zettel/bugs.json                          # Bug-Zettel (siehe zettel/LIESMICH.md)
 ```
 
-⚠️ **Privat, liegt aber unter `public/`.** Alles unter `public/` liefert Vercel aus; der
-Kalender (Familientermine, teils Kundendaten) war bis 2026-11-20 unter
-`www.kunstwolff.de/calendar/…` abrufbar. Seitdem sperrt eine Weiterleitung
-`/calendar/:path*` → `/404/` in `vercel.json` die Auslieferung. Im (öffentlichen)
-Git-Repo bleibt er lesbar – Umzug aus `public/` und Historie entscheidet Sasha.
+**Privat, deshalb nicht unter `public/`.** Alles unter `public/` liefert Vercel aus; der
+Kalender (Familientermine, teils Kundendaten) lag bis 2026-11-20 unter `public/calendar/`
+und war unter `www.kunstwolff.de/calendar/…` abrufbar. Am 20.11. (Branch
+`private-repo-ready`) per `git mv` nach `admin-data/calendar/` umgezogen, Inhalt
+byte-gleich (SHA-256 je Datei verglichen). Astro baut nur `public/` und `src/` in den
+Build, `admin-data/` landet also nie auf der Website. Die Weiterleitung
+`/calendar/:path*` → `/404/` in `vercel.json` bleibt trotzdem stehen (alte Links, und ein
+noch nicht umgestellter Admin könnte den alten Ort bis zum Worker-Deploy neu anlegen).
+Die Git-Historie enthält den Kalender weiter – deshalb wird das Repo privat gestellt.
+
+Schreiben darf der Admin hier nur über den Worker, und nur die Formen
+`admin-data/calendar/<jjjj>/<mm>.json` und `categories.json` (`ADMIN_DATA_WRITE_RE` in
+Admin-`worker/src/security.ts`). Bis der neue Worker deployt ist, schreibt der Admin weiter
+nach `public/calendar/` und zieht danach jede gespeicherte Datei selbst um (Admin-Memory
+`manager-kalender.md`).
 
 ## Konfiguration
 

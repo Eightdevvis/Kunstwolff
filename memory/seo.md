@@ -30,7 +30,7 @@ zur Build-Zeit: siehe `sync-scripts.md`, Schritt 11.
 
 > **Stand 2026-10-22: erledigt.** Der Cutover ist durch, `SITE_URL` steht in Vercel auf
 > `https://www.kunstwolff.de` (nachprüfbar: Canonical und `og:url` live zeigen auf `www`,
-> der Code-Fallback wäre der Apex). Der Abschnitt bleibt als Erklärung der Mechanik –
+> der Code-Fallback `SITE_ORIGIN` ist seit 2026-11-20 ebenfalls `www`). Der Abschnitt bleibt als Erklärung der Mechanik –
 > wichtig, falls je wieder eine zweite Domain/Preview indexierbar zu werden droht.
 
 Solange `kunstwolff.de` noch auf der alten Wix-Site lag und Astro nur unter `https://kunstwolff.vercel.app` läuft, gibt es zwei Risiken:
@@ -40,7 +40,7 @@ Solange `kunstwolff.de` noch auf der alten Wix-Site lag und Astro nur unter `htt
 
 ### Was im Repo gelöst ist
 
-- `astro.config.mjs` liest `site` aus `process.env.SITE_URL` (Fallback: `https://kunstwolff.de`).
+- `astro.config.mjs` liest `site` aus `process.env.SITE_URL` (Fallback: `SITE_ORIGIN` = `https://www.kunstwolff.de` aus `src/utils/siteOrigin.mjs`, seit 2026-11-20 – vorher der Apex, an acht Stellen einzeln).
 - `src/layouts/Layout.astro` setzt `<meta name="robots" …>`. Whitelist: nur `kunstwolff.de` und `www.kunstwolff.de` bekommen `index, follow` – alles andere `noindex, nofollow`.
 
 ### Was im Vercel-Dashboard gesetzt sein muss
@@ -137,7 +137,11 @@ Auf jeder Seite automatisch generiert (für WhatsApp, LinkedIn, Facebook, etc.):
 ```
 
 `og:image` wird automatisch aus dem Titelbild der Seite generiert. Kein manueller
-Aufwand. Seiten ohne eigenes Titelbild (Kontakt, FAQ, Impressum, Datenschutz)
+Aufwand. **Ein AVIF wird nie ausgegeben** (seit 2026-11-20): der Opener fällt ohne
+eigenes Titelbild auf `titelbild.avif` zurück, das stand bis dahin auf 28 Sitemap-Seiten
+(auch der Startseite) als Vorschaubild. Das Layout nimmt dann `DEFAULT_OG_IMAGE`.
+Offen (Inhalt): viele Titelbilder sind hochkant (1200×1600) oder schmaler als 1200 px
+(Schulung/Tagung 543 px, Koblenz 600 px) – Facebook/LinkedIn schneiden auf 1,91:1 zu. Seiten ohne eigenes Titelbild (Kontakt, FAQ, Impressum, Datenschutz)
 fallen auf `DEFAULT_OG_IMAGE` = `/img/Titelbild/default/titelbild.avif` zurück,
 damit die Social-Vorschau nie leer ist. Ist `Astro.site` nicht gesetzt, wird gar
 **kein** `og:image` ausgegeben – die URL wäre sonst relativ und damit nutzlos.
@@ -151,7 +155,7 @@ User-agent: *
 Disallow: /admin/
 Disallow: /testseite/
 
-Sitemap: https://kunstwolff.de/sitemap-index.xml
+Sitemap: https://www.kunstwolff.de/sitemap-index.xml
 ```
 
 - Crawler dürfen alles außer `/admin/` und `/testseite/`
@@ -165,11 +169,19 @@ Vollautomatisch beim Build generiert. Keine manuelle Pflege.
 
 | Seitentyp | Schema-Typen |
 | :-- | :-- |
-| Homepage `/` | `LocalBusiness` |
+| Homepage `/` | `LocalBusiness` (mit `email` seit 2026-11-20, Wert aus dem Impressum) + `WebSite` |
 | Skill-Seite `/schnellzeichner-karikaturist/` | `Service` |
 | Stadtseite `/berlin/` | `BreadcrumbList` + `Service` (seit 2026-10-22: `areaServed` = Ort, `provider` per `@id` = LocalBusiness der Startseite) |
 | Skill+Stadt `/berlin-schnellzeichner-karikaturist/` | `BreadcrumbList` |
+| Anlass `/firmenfeier/`, Skill+Anlass `/szenenmaler/hochzeit/` | `BreadcrumbList` |
 | FAQ-Seite `/faq/` | `FAQPage` |
+| `/galerie/` | `ImageGallery` |
+| `/team/` | zwei `Person`, `worksFor` per `@id` = LocalBusiness der Startseite (seit 2026-11-20) |
+
+Ohne JSON-LD (bewusst unkritisch): branding, canvas, contact, datenschutz, du-bist-kunst,
+impressum, partner, referenzen, stimmung-durch-kunst. **Keine** `Review`/`aggregateRating`
+irgendwo – richtig so: Google wertet Selbstbewertungen eines LocalBusiness auf der eigenen
+Seite nicht als Review-Snippet.
 
 > ⚠ **FAQPage nur auf `/faq/`.** `FAQ.astro` emittiert das FAQPage-Schema nur bei
 > `interactive={true}` (= nur die `/faq/`-Seite). Die eingebetteten FAQ-Blöcke auf
@@ -201,11 +213,12 @@ in eine `siteMeta.ts`/`businessProfile.json` ziehen, dann kann das Admin-Tool si
 irgendwann pflegen.
 
 **Die URLs sind es ausdrücklich nicht.** Host kommt überall aus `Astro.site`
-(= `SITE_URL`), fest ist nur der Pfad (`/img/logo/logo_transparent.webp`). Auf der
-Stage steht dort also `https://kunstwolff.vercel.app/…`. Das ist Regel **WEB-012**
-und per Test festgenagelt: `tests/schema-site-url.test.ts` erlaubt pro Schema-Datei
-**genau ein** Vorkommen von `https://kunstwolff.de` – den Fallback. Wer eine
-absolute URL hart einträgt, macht den Test rot statt still die Stage zu vergiften.
+(= `SITE_URL`), fest ist nur der Pfad (`/img/logo/logo_transparent.webp`). Das ist
+Regel **WEB-012** und per Test festgenagelt: `tests/schema-site-url.test.ts` verlangt in
+allen sieben Schema-Seiten (index, skill, landing, kombi, galerie, team, fr/landing)
+`Astro.site?.origin ?? SITE_ORIGIN` und **kein** hart eingetragenes `https://(www.)kunstwolff.de`.
+Der Rückfall steht nur in `src/utils/siteOrigin.mjs` (`.mjs`, damit auch
+`astro.config.mjs` ihn lesen kann).
 
 ## Cutover-Audit 2026-07-30 – was vor dem Umzug offen ist
 
@@ -236,6 +249,19 @@ Google Fonts wird auf 174 Seiten von Google-Servern geladen (`Layout.astro:57-59
 die Datenschutzerklärung nennt keinen der drei Empfänger (Formspree, Vercel, Google).
 
 ## Sichtbarkeit: welche Seiten indexierbar sind (seit 2026-07-30)
+
+> **Stand 2026-11-20 (SEO-Inventur, live gemessen):** gebaut 278 Seiten, **139 in der
+> Sitemap = 139 `index, follow`**, 138 `noindex`; Sitemap und Robots-Meta stimmen exakt
+> überein. Die Zahlen unten (42/39) stammen von vor dem 04.10.: damals kamen die Skills
+> **Eventzeichner** und **Graphic recording** dazu, und deren 72 Stadt-Kombis
+> (`/<stadt>-eventzeichner/`, `/<stadt>-graphic-recording/`) sind **nicht** in `hidden`
+> – auch die der 21 ausgeblendeten Städte. Offen zur Entscheidung (Admin-Repo
+> `memory/open/hide-duplicate-combo-pages.md`). Dazu 28 Skill×Anlass-Seiten (4 Skills ×
+> 7 Anlässe), 7 Anlässe, 4 Skills, 15 Städte, 12 statische Seiten, Startseite.
+>
+> **Interne Links:** `Landingsection.astro` („Orte:" auf den Skill-Seiten) verlinkt seit
+> 2026-11-20 die Stadtseite statt der Kombi, wenn die Kombi ausgeblendet ist – vorher
+> liefen 30 Links von indexierbaren Seiten in `noindex, nofollow`-Kombis.
 
 `public/config/page-visibility.json` ist nicht mehr leer. Ausgeblendet sind **135 Pfade**
 (108 flache Skill×Ort-Kombis + 21 Städte + `/aquarelle/` + 4 Aquarelle-Anlässe + `/fr/`);

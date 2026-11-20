@@ -1,4 +1,5 @@
 ---
+import { SITE_ORIGIN } from '../utils/siteOrigin.mjs';
 /**
  * Galerie – der vollständige Bildbestand, filterbar und durchsuchbar.
  *
@@ -19,7 +20,7 @@ const gallery = getGalleryData();
 // Vorschaubild ohne eine zweite Stelle, die pflegebedürftig wird.
 const ogBild = gallery.bilder[0]?.src;
 
-const site = Astro.site?.origin ?? "https://kunstwolff.de";
+const site = Astro.site?.origin ?? SITE_ORIGIN;
 
 // ImageGallery statt CollectionPage: der Seiteninhalt IST eine Bildsammlung.
 // Bewusst ohne die 230 Einzelbilder als `associatedMedia` – das wären ~40 kB

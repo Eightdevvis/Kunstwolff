@@ -1,4 +1,5 @@
 ---
+import { SITE_ORIGIN } from '../utils/siteOrigin.mjs';
 /**
  * [landing].astro
  *
@@ -85,8 +86,8 @@ const { pageType } = Astro.props as { pageType: 'landing' | 'event' };
 // Component-Visibility
 const pt: PageType = pageType === 'event' ? 'event' : 'landing';
 
-// WEB-012: Schema-URLs aus Astro.site (= SITE_URL) statt hardcoded kunstwolff.de.
-const site = Astro.site?.origin ?? 'https://kunstwolff.de';
+// WEB-012: Schema-URLs aus Astro.site (= SITE_URL) statt hardcoded Domain.
+const site = Astro.site?.origin ?? SITE_ORIGIN;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // LANDING-Seite: Bestehende Logik unverändert
