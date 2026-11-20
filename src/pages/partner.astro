@@ -27,7 +27,7 @@ const partners = data.partners.filter((p) => p.enabled !== false);
   title="Unsere Partner | Kunstwolff"
   description="Verlässliche Partner an unserer Seite – von Event-Locations bis zur Drucktechnik."
 >
-  <main class="partners-page">
+  <div class="partners-page">
     <div class="partners-header">
       <h1>Unsere Partner</h1>
       <p class="partners-intro">
@@ -101,13 +101,13 @@ const partners = data.partners.filter((p) => p.enabled !== false);
         ))
       }
     </div>
-  </main>
+  </div>
 </Layout>
 
 <style>
   /* ── Seiten-Layout ──────────────────────────────────────────────────────── */
   .partners-page {
-    /* width: 100% nötig damit das <main> als flex-item in body (column-flex)
+    /* width: 100% nötig damit der Seitenblock als flex-item im <main> (column-flex)
        die volle Breite bekommt. Ohne das deaktiviert margin: 0 auto das
        align-self: stretch → Element schrumpft auf max-content-Breite → Grid bricht. */
     width: 100%;

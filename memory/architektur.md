@@ -90,6 +90,19 @@ Fest im Layout, also **nicht** Teil des Stacks: `header/Header.astro` +
 `header/Navigation.astro` (aus `navigation.json`, `content-navigation.md`) und
 `Footer.astro`.
 
+**`<main>`** (seit 2026-11-20): `Layout.astro` legt ein `<main>` um den
+`<slot />` (zwischen `LangSwitcher` und Footer). Seiten setzen selbst **kein**
+`<main>` mehr – die sieben, die eins hatten (branding, canvas, du-bist-kunst,
+partner, referenzen, stimmung-durch-kunst, team), nutzen jetzt ein `<div>` mit
+derselben Klasse. Damit sich nichts verschiebt, ist `body > main` in `global.css`
+selbst eine Flex-Spalte und gibt `flex-grow: 1` an seine Kinder weiter – genau
+das Verhalten, das die Sektionen vorher als direkte Kinder von `body` hatten
+(`body > *:not(header):not(footer)`). Pixelvergleich 1440×900 auf 6 Seiten: 0.
+
+**Titelbild-Preload:** `Layout.astro` nimmt `heroImage` (Desktop-Titelbild eines
+Hintergrund-Heroes) und setzt dafür `<link rel="preload" as="image">` in den
+`<head>` – siehe `content-titelbild.md` → „Vorladen".
+
 ⚠️ `about/Aboutsection.astro` ist ein Sonderfall: `index.astro` **importiert** sie,
 rendert sie aber nicht (`//<Aboutsection />`, Zeile 82). Ein Grep nach dem Dateinamen
 findet sie deshalb – sie steht trotzdem auf keiner Seite. Fünf weitere Komponenten sind

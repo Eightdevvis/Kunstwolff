@@ -131,7 +131,12 @@ const xDefaultHref = showAlternates
 	<body data-nav-tone="dark">
 		<Header />
 		<LangSwitcher alternates={alternates} />
-		<slot />
+		{/* Ein <main> für den Seiteninhalt (Barrierefreiheit: Sprung zum Inhalt,
+		    Landmarke für Screenreader). Seiten setzen selbst KEIN <main> mehr.
+		    Layout-neutral, siehe `body > main` in global.css. */}
+		<main>
+			<slot />
+		</main>
 		<Footer />
 	</body>
 </html>

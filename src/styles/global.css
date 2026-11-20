@@ -69,6 +69,19 @@ body > *:not(header):not(footer) {
     flex-grow: 1;
 }
 
+/* <main> (Layout.astro) soll das Bild nicht verändern: Vorher waren die
+   Sektionen DIREKTE Flex-Kinder von body und teilten sich per flex-grow den
+   freien Platz. `main` wächst jetzt als Ganzes (Regel oben) und reicht beides
+   an seine Kinder weiter – gleiche Flex-Spalte, gleiches Wachsen. */
+body > main {
+    display: flex;
+    flex-direction: column;
+}
+
+body > main > * {
+    flex-grow: 1;
+}
+
 
 /* Inter – selbst ausgeliefert, NICHT von Google.
    Vorher hingen in Layout.astro zwei preconnects und ein Stylesheet auf
