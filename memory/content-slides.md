@@ -97,7 +97,9 @@ wenn nach dem Filtern 0 Einträge übrig sind. Vorher stand die Überschrift
 
 Die Lightbox zeigte `slide.title || slide.alt`. Der Alt-Text wird aus dem
 **Dateinamen** gebaut (`normalizeAlt`: Endung weg, führende Nummer samt folgendem
-`_`/`-` weg, Unterstriche **und Bindestriche** zu Leerzeichen) — unter den Bildern
+`_`/`-` weg, Unterstriche **und Bindestriche** zu Leerzeichen; dekodiert über
+`safeDecode`, damit ein `%` im Dateinamen nicht mehr den Build abbricht — seit
+2026-11-20) — unter den Bildern
 stand also technischer Kram wie
 „2 kollegen weihnachtsfeier trier".
 

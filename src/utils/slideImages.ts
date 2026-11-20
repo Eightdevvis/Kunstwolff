@@ -5,6 +5,7 @@ import { readWebpSize } from './webpSize';
 // Inhalts-Schlüssel aus dem Titel. Hier zählt der Inhalt – siehe skills.ts.
 import { skillContentKey } from './skills';
 import { warnUnreadable } from './warnUnreadable';
+import { safeDecode } from './safeDecode';
 
 export type SlideItem = {
   src: string;
@@ -69,7 +70,7 @@ const encodePathSegment = (segment: string): string =>
   segment.split('/').map((part) => encodeURIComponent(part)).join('/');
 
 const normalizeAlt = (fileName: string): string =>
-  decodeURIComponent(fileName)
+  safeDecode(fileName)
     .replace(/\.[^.]+$/, '')
     .replace(/^\d+[_-]+/, '')
     .replace(/[_-]+/g, ' ')
