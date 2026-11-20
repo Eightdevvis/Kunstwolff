@@ -195,6 +195,19 @@ const filteredSkills = categories.length > 0
     padding-bottom: 1px;
     transition: border-color 0.2s ease, color 0.2s ease;
     align-self: flex-start;
+    position: relative;
+  }
+
+  /* Tap-Ziel 44 px statt 19 px: unsichtbare Fläche über/unter dem Link.
+     Innenabstand ginge hier nicht – die Unterstreichung ist ein Rahmen und
+     würde mitwandern. */
+  .event-skill-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -13px;
+    bottom: -13px;
   }
 
   .event-skill-link:hover {

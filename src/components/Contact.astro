@@ -145,6 +145,20 @@ const t = getSiteTexts(locale).contact;
     text-decoration: none;
     font-weight: 600;
     width: fit-content;
+    /* Mit Maus: 24 px Klickfläche, Layout unverändert (Innenabstand durch
+       negativen Außenabstand ausgeglichen). */
+    padding: 2px 0;
+    margin: -2px 0;
+  }
+
+  /* Touch: Tap-Ziel 44 px statt 20 px. Nur teilweise ausgeglichen (-5 statt
+     -12), damit sich Telefon und E-Mail nicht überlappen – die beiden Zeilen
+     rücken dadurch 14 px auseinander. */
+  @media (pointer: coarse) {
+    .contact-link {
+      padding: 12px 0;
+      margin: -5px 0;
+    }
   }
 
   .contact-form-wrap {

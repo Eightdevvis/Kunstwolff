@@ -479,7 +479,9 @@ const { bilder, facets, ohneTags } = data ?? getGalleryData();
   .gallery-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    /* 12 px Zeilenabstand: Platz für die unsichtbare Tap-Fläche der Chips
+       (unten), ohne dass sich zwei Reihen überlappen. */
+    gap: 12px 8px;
   }
 
   .gallery-tag {
@@ -495,6 +497,17 @@ const { bilder, facets, ohneTags } = data ?? getGalleryData();
     font-family: inherit;
     cursor: pointer;
     transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    position: relative;
+  }
+
+  /* Tap-Ziel 44 px statt 33 px, ohne die Pille größer zu zeichnen. */
+  .gallery-tag::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -6px;
+    bottom: -6px;
   }
 
   .gallery-tag:hover,

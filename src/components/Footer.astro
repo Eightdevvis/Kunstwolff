@@ -46,6 +46,13 @@
   text-decoration: none;
   margin-left: 24px;
   transition: opacity 0.2s ease;
+  /* Tap-Ziel 44 px statt 15 px: Innenabstand oben/unten, durch gleich großen
+     negativen Außenabstand wieder ausgeglichen – die Zeile sieht aus wie
+     vorher, nur die tippbare Fläche wächst. */
+  display: inline-block;
+  padding: 15px 0;
+  margin-top: -15px;
+  margin-bottom: -15px;
 }
 
 .footer-right a:hover {
