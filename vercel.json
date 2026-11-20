@@ -13,6 +13,11 @@
   ],
   "redirects": [
     {
+      "source": "/calendar/:path*",
+      "destination": "/404/",
+      "permanent": false
+    },
+    {
       "source": "/kontakt",
       "destination": "/contact/",
       "permanent": true
