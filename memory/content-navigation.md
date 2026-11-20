@@ -83,6 +83,16 @@ Das Events-Dropdown steht **nicht** in `navigation.json`:
 Die Galerie (`/galerie/`) steht **absichtlich nicht** im Menü: sie ist unter
 jedem „Unsere Kunst"-Banner verlinkt (`content-galerie.md`).
 
+## Handy-Menü (Burger)
+
+Unter 768 px ist das Menü eine reine CSS-Lösung: versteckte Checkbox
+`#nav-toggle-main` + `<label class="nav-toggle">`. Seit 2026-11-20 schließt ein
+kleines Skript in `Navigation.astro` das Menü bei **jedem Tipp auf einen Menü-Link**
+(Checkbox zurück auf `false`). Vorher blieb es nach einer Sprungmarke (`#faq`,
+`#contact`) offen und lag mit ~640 px Höhe über genau dem Abschnitt, zu dem man
+wollte. Tipp daneben oder Escape schließt es weiterhin **nicht**, eine Scroll-Sperre
+dahinter gibt es nicht (offene Punkte der Handy-Inventur).
+
 ## Admin-Tool
 
 Kann Navigation **nicht** verwalten – manuell per Git pflegen.

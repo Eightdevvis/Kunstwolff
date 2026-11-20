@@ -99,6 +99,18 @@ const isCta = (item: NavigationItem): boolean => !isDropdownItem(item) && !!item
       link.setAttribute('href', sprung);
     }
   });
+
+  // Handy: das Burger-Menü ist eine Checkbox und blieb nach einem Tipp auf eine
+  // Sprungmarke (#faq, #contact) offen – die Seite scrollte, aber das Menü lag
+  // mit ~640 px Höhe über genau dem Abschnitt, zu dem man wollte. Ein Tipp auf
+  // irgendeinen Menü-Link schließt es deshalb. Auf Desktop ist die Checkbox nie
+  // angehakt, dort ändert sich nichts.
+  const menuSchalter = document.getElementById('nav-toggle-main') as HTMLInputElement | null;
+  document.querySelectorAll('#main-nav-menu a').forEach((link) => {
+    link.addEventListener('click', () => {
+      if (menuSchalter) menuSchalter.checked = false;
+    });
+  });
 </script>
 
 <style>

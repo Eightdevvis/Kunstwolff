@@ -366,6 +366,10 @@ die Auswahlen aus dem CinemaWelcome-Konfigurator. Die sind in §4 benannt, weil 
 DSGVO Transparenz über das verlangt, was tatsächlich übertragen wird. Kommt ein Feld
 dazu, gehört es dort hinein.
 
+Name, E-Mail und Telefon tragen seit 2026-11-20 `autocomplete="name" | "email" | "tel"`
+(Handy-Inventur): die Handy-Tastatur bietet damit die gespeicherten Kontaktdaten an.
+Kein neues Feld, an §4 ändert das nichts.
+
 Der Text ist ein **Entwurf und braucht Sashas Freigabe.**
 
 ### Vercel: AV-Vertrag besteht, ohne dass jemand etwas klicken muss

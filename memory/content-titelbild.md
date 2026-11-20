@@ -62,6 +62,16 @@ dem Handy sonst nur als flacher Streifen oder hart beschnitten erscheint.
     gibt es dort wie beim Desktop-Bild nicht.
 - Das versteckte SEO-`<img>` und `og:image` bleiben beim Desktop-Bild.
 
+### Handy quer (`Opener.astro`)
+
+Ab 641 px Breite gilt die Desktop-Regel `.hero-band { transform: translateY(20vh) }`.
+Auf einem quer gehaltenen Handy (z.B. 844×390) ist der Hero aber nur ~330 px hoch:
+das Band rutschte in den unteren Weichzeichner (`.hero::after`) und wurde übermalt,
+die H1 war unsichtbar. Seit 2026-11-20 hebt
+`@media (min-width: 641px) and (max-height: 500px) and (orientation: landscape)`
+das Band mit `position: relative; z-index: 1` darüber – dasselbe Mittel wie im
+Hochkant-Block. Desktop-Höhen erreichen die Regel nicht (Pixelvergleich 1440×900: 0).
+
 ## Pixel-Maße: `title.dimensions.json`
 
 Zweite JSON neben `title.meta.json`. **Vom Sync gepflegt, nicht von Hand.**
