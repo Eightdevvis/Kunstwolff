@@ -59,16 +59,7 @@ const readCityLabels = () => {
     .filter((line) => !line.includes(':')); // Frontmatter-Zeilen überspringen
 };
 
-// Eine vorhandene, aber kaputte tags.json NICHT als leer behandeln: der Lauf
-// schreibt die Datei neu, und alle Einträge, die nur dort stehen (im Admin
-// angelegte Tags, Labels), wären weg. Abbrechen, Datei stehen lassen.
-const existingRaw = readJson(tagsPath);
-if (existingRaw === null && fs.existsSync(tagsPath)) {
-  console.error(`sync-tags: FEHLER - ${path.relative(projectRoot, tagsPath)} ist nicht lesbar. Nichts geschrieben.`);
-  process.exit(1);
-}
-const existing = existingRaw ?? {};
-
+const existing = readJson(tagsPath) ?? {};
 
 const next = {
   skills: mergeVocabulary(existing.skills, readSkillLabels(), 'skills.json'),
