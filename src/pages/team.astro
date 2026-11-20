@@ -67,7 +67,8 @@ const teamSchema = {
     name: p.name,
     jobTitle: p.rolle,
     image: `${site}${p.bild}`,
-    worksFor: { "@type": "Organization", name: "Kunstwolff", url: site },
+    // @id verknüpft mit dem LocalBusiness der Startseite (index.astro, ORG_ID).
+    worksFor: { "@type": "LocalBusiness", "@id": `${site}/#organisation`, name: "Kunstwolff", url: `${site}/` },
   })),
 };
 ---
