@@ -106,6 +106,9 @@ const sectionProps: Record<string, Record<string, any> | false> = {
     titleImageAlt: landingData.title,
     titleImagePosition: landingData.titleImagePosition,
     titleImageFrame: landingData.titleImageFrame,
+    // Ohne Ratio fiel der Handy-Hero auf 132 px zusammen, die Wortmarke lag
+    // unter der Navigation (wie die deutsche Stadtseite durchreichen).
+    titleImageAspect: landingData.titleImageAspect,
     heading: landingHeading,
   },
   landingIntro: { text: landingIntro },
