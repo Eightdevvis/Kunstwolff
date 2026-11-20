@@ -35,7 +35,7 @@ Setzt `core.hooksPath` auf `.githooks/`.
 | Hook | Wann | Was |
 | :-- | :-- | :-- |
 | `pre-commit` | Vor jedem Commit | 1. Gestagete Bilder zu WebP optimieren + gestagete WebP/AVIF auf Übergröße prüfen (`optimize:images`)<br>2. `sync:content` ausführen<br>3. generierte Ordner in `public/` stagen |
-| `pre-push` | Vor jedem Push | **Alle** nicht-WebP Bilder in `public/img/` konvertieren und als separaten Commit ablegen. ⚠️ Der Hook **pusht nicht selbst** (kein `git push` darin) – der Commit bleibt lokal liegen und geht erst beim nächsten Push mit. Fasst vorhandene WebP/AVIF **nicht** an – dafür braucht es `--shrink-existing`, siehe unten. |
+| `pre-push` | Vor jedem Push | **Seit 2026-11-20 zuerst `astro check`:** bei einem Typfehler kein Push (~5 s). Fehlt `@astrojs/check` in `node_modules`, bricht der Hook mit Hinweis ab → einmal `npm install`. Danach: **Alle** nicht-WebP Bilder in `public/img/` konvertieren und als separaten Commit ablegen. ⚠️ Der Hook **pusht nicht selbst** (kein `git push` darin) – der Commit bleibt lokal liegen und geht erst beim nächsten Push mit. Fasst vorhandene WebP/AVIF **nicht** an – dafür braucht es `--shrink-existing`, siehe unten. |
 
 ## Kantendeckel: EINE Quelle
 

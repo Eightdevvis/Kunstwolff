@@ -27,8 +27,8 @@ const {
     <h2 class="event-pakete-heading">{title}</h2>
 
     <div class="event-pakete-grid">
+      {/* Mittleres Paket (Index 1 bei 3 Paketen) wird hervorgehoben */}
       {items.map((paket, i) => (
-        <!-- Mittleres Paket (Index 1 bei 3 Paketen) wird hervorgehoben -->
         <div class={`event-paket-card${i === 1 && items.length === 3 ? ' event-paket-card--featured' : ''}`}>
           <div class="event-paket-header">
             <h3 class="event-paket-title">{paket.title}</h3>

@@ -22,7 +22,8 @@ die `tags.json` nicht kennt, und der Schaden still in die Dateien wanderte.
 | :-- | :-- |
 | `npm install` | Abhängigkeiten installieren |
 | `npm run dev` | Entwicklungsserver starten (`predev` ruft `sync:content:safe`) |
-| `npm run build` | Produktionsbuild (`prebuild` ruft `sync:content:safe`) |
+| `npm run build` | Produktionsbuild (`prebuild` ruft `sync:content:safe`); am Ende prüft die Astro-Integration das Ergebnis mit `validate:dist` und **bricht ab**, wenn eine Bild-Adresse ins Leere zeigt |
+| `npm run check` | Typecheck (`astro check`, devDependency `@astrojs/check`). Muss **0 Fehler** melden – der pre-push-Hook prüft das (`git-hooks.md`) |
 | `npm run preview` | Build lokal prüfen |
 | `npm run sync:content` | Alle Content-Syncs nacheinander ausführen |
 | `npm run sync:content:safe` | Fehlertolerant (Teilfehler isoliert, Build/Dev läuft weiter) – **außer `sync:tags`**, das ist ein harter Schritt und bricht ab |
@@ -38,7 +39,7 @@ die `tags.json` nicht kennt, und der Schaden still in die Dateien wanderte.
 | `npm run sync:erinnerungen` | `public/erinnerungen/{city\|skill}.json` (bestehende NICHT überschreiben) |
 | `npm run remove:landing -- <stadt> [archivpfad]` | Archiviert alle Landing-Daten und entfernt Stadt aus `landings.md` |
 | `npm run validate:images` | Bild-Referenzen prüfen (`scripts/validate-image-refs.mjs`); letzter Schritt von `sync:content` |
-| `npm run validate:dist` | Prüft das **gebaute** `dist/`: jede Bild-URL im HTML (`src`, jede `srcset`-Stufe, `url(...)`) muss existieren (`scripts/validate-dist-images.mjs`). Läuft **nirgends automatisch** – nach `npm run build` von Hand. |
+| `npm run validate:dist` | Prüft das **gebaute** `dist/`: jede Bild-URL im HTML (`src`, jede `srcset`-Stufe, `url(...)`) muss existieren (`scripts/validate-dist-images.mjs`). Läuft seit 2026-11-20 **automatisch am Ende jedes Builds** (Astro-Integration `kunstwolff-bild-varianten` in `astro.config.mjs`, nach den Varianten) und lässt den Build scheitern – so geht ein kaputter Build auf Vercel nicht live. Bewusst nicht als npm-`postbuild` (Vercel führt seinen eigenen Astro-Build aus, siehe `responsive-images.md`). Kostet ~0,3 s. Von Hand weiter aufrufbar. |
 | `npm run optimize:images` | Nur gestagte Bilder zu WebP konvertieren (`scripts/optimize-staged-images.mjs`) |
 | `npm run optimize:all` | Alle Bilder in `public/img/` zu WebP konvertieren (manuell) |
 | `npm run variants` | Responsive Bildvarianten manuell erzeugen (`scripts/generate-image-variants.mjs`). Beim Build läuft dasselbe automatisch als Astro-Integration `kunstwolff-bild-varianten` im `astro:build:done`-Hook – **nicht** als npm-Kette, weil Vercel ein nachgestelltes `&& …` im Build-Befehl abschneidet. Siehe `responsive-images.md` |
@@ -67,5 +68,5 @@ Projektspezifische Settings liegen in `.vscode/` (`settings.json` mit dem TypeSc
 
 ## Was (noch) NICHT als Script existiert
 
-- **Kein `typecheck` / `check`-Script.** Astro transpiliert `.astro` ohne harten TS-Check, `.ts`-Fehler werden vom Build durchgewunken. Empfehlung im Health-Check: `"typecheck": "astro check"` in `package.json` ergänzen und im CI laufen lassen (siehe `ARCHIVE/HEALTH_CHECK_2026-05-05.md` BUG-A2).
+- **Typecheck nicht im Build:** `npm run check` gibt es seit 2026-11-20 und der pre-push-Hook verlangt 0 Fehler, aber Vercel-Build und die GitHub Action prüfen keine Typen (Admin-Veröffentlichungen laufen also ungeprüft durch).
 - **Kein `lint`-Script.** Manueller Style-Check fehlt entsprechend.

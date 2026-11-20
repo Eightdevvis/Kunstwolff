@@ -1,5 +1,4 @@
 import { describe, it, expect } from 'vitest';
-// @ts-expect-error – reines JS-Modul ohne Typen
 import { ergaenzeFehlendeDimensionen, findeTagsBlock } from '../scripts/tags.mjs';
 
 /**
@@ -20,7 +19,8 @@ describe('findeTagsBlock', () => {
     const block = findeTagsBlock(
       fm(['question: "X"', 'tags:', '  skills:', '    - schnellzeichner', '  events: []']),
     );
-    expect([...block.vorhanden].sort()).toEqual(['events', 'skills']);
+    expect(block).not.toBeNull();
+    expect([...block!.vorhanden].sort()).toEqual(['events', 'skills']);
   });
 
   it('gibt null zurück, wenn es gar keinen Block gibt', () => {

@@ -68,7 +68,7 @@ const showAlternates = !shouldNoindex && alternates.length > 1;
 // `x-default` = die Fassung für alle Sprachen, die wir NICHT anbieten. Das ist
 // die deutsche: sie ist die Ausgangssprache und die einzige vollständige.
 const xDefaultHref = showAlternates
-  ? alternates.find((a) => a.locale === DEFAULT_LOCALE)?.href
+  ? alternates.find((a: LangAlternate) => a.locale === DEFAULT_LOCALE)?.href
   : undefined;
 ---
 
@@ -93,7 +93,7 @@ const xDefaultHref = showAlternates
 		{/* i18n (Phase 1): hreflang-Alternativen nur wenn vorhanden UND die Seite
 		     indexierbar ist – deutsche Seiten ohne Übersetzung bleiben
 		     unverändert. Siehe `showAlternates` oben. */}
-		{showAlternates && alternates.map((a) => (
+		{showAlternates && alternates.map((a: LangAlternate) => (
 			<link rel="alternate" hreflang={a.locale} href={new URL(a.href, Astro.site).href} />
 		))}
 		{xDefaultHref && (

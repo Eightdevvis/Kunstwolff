@@ -1224,7 +1224,7 @@ const satelliteData = {
     sessionKey:     string;
     selectionKey:   string; // "event" | "muse" | "geschmack"
     requiresUnlock?: boolean; // Sektionen 2 + 3: nicht per Observer starten, nur per Auswahl
-  }): SectionControls {
+  }): SectionControls | null {
     const { sectionId, orbitId, mainBtnId, sessionKey, selectionKey, requiresUnlock } = config;
 
     const section    = document.getElementById(sectionId)  as HTMLElement | null;
@@ -1239,7 +1239,7 @@ const satelliteData = {
 
     if (!section || !orbit || !mainBtn) {
       console.warn(`[CinemaWelcome] Elemente für "${sectionId}" nicht gefunden.`);
-      return;
+      return null;
     }
 
     const sec = section!;

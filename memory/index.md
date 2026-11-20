@@ -56,7 +56,7 @@ Themen-Verzeichnis für Claude. Lies bei jeder Aufgabe zuerst hier nach, identif
 
 ### Build & Automatisierung
 - [Sync-Scripts](sync-scripts.md) – Reihenfolge, was jedes Script tut, GitHub Action
-- [Git-Hooks](git-hooks.md) – pre-commit, pre-push, Bildoptimierung; **pre-commit regeneriert `lastmod.json` + `slides.meta.json` und nimmt sie in fast jeden Commit mit**, braucht `node_modules` (nie `--no-verify`)
+- [Git-Hooks](git-hooks.md) – pre-commit, pre-push (**`astro check` muss 0 Fehler melden**), Bildoptimierung; **pre-commit regeneriert `lastmod.json` + `slides.meta.json` und nimmt sie in fast jeden Commit mit**, braucht `node_modules` (nie `--no-verify`)
 - [Befehle](befehle.md) – `npm run …` Übersicht, Dev/Build/Preview
 - [Validierungsreports](validierungsreports.md) – `reports/validation/`
 

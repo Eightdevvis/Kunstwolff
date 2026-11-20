@@ -43,6 +43,11 @@ ausgelieferte Markup versprach Varianten, die es in der Produktion nie gab, und
 Als Integration kann der Schritt nicht mehr übersprungen werden – egal, wer den
 Build anstösst und wie.
 
+Seit 2026-11-20 prüft dieselbe Integration direkt danach das fertige `dist/` mit
+`validateDist()` (`scripts/validate-dist-images.mjs`): zeigt eine Bild-Adresse oder
+`srcset`-Stufe ins Leere, **scheitert der Build** und Vercel stellt nichts live.
+Genau der Fehler vom 2026-07-28 wäre damit nie live gegangen.
+
 ## Der Schalter `SRCSET_AKTIV`
 
 In `responsiveImages.ts`. **Erst einschalten, wenn die Varianten in der

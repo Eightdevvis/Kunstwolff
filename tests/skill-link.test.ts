@@ -27,13 +27,14 @@ describe('Skill-Link aus dem Admin', () => {
 
 describe('Skill-Liste aus dem Admin', () => {
   it('übersteht Nicht-Texte in den Feldern', () => {
+    // Absichtlich kaputte Admin-Daten (kein `link`, falsche Typen) – daher der Cast.
     const liste = parseSkillsContent({
       skills: [
-        { title: 'Aquarelle', description: 42 as unknown as string, image: ['x'] as unknown as string },
-        null as unknown as { title: string },
+        { title: 'Aquarelle', description: 42, image: ['x'] },
+        null,
         { title: '   ' },
       ],
-    });
+    } as unknown as Parameters<typeof parseSkillsContent>[0]);
     expect(liste.map((s) => s.link)).toEqual(['/aquarelle/']);
     expect(liste[0].description).toBeUndefined();
   });

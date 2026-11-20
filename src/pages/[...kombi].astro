@@ -322,10 +322,8 @@ if (pageType === 'landing' && landingSlides) {
 }
 ---
 
+{/* SKILL+STADT-SEITE – bestehende Struktur unverändert */}
 {pageType === 'landing' && landingSlides && (
-  <!-- ══════════════════════════════════════════════════
-       SKILL+STADT-SEITE – bestehende Struktur unverändert
-  ══════════════════════════════════════════════════ -->
   <SkillLayout title={skillCityPageTitle} description={skillCityDescription} image={skillCityTitleImage}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(skillCityBreadcrumb)} />
     {sectionOrder.map((id) => {
@@ -340,10 +338,8 @@ if (pageType === 'landing' && landingSlides) {
   </SkillLayout>
 )}
 
+{/* SKILL+EVENT-SEITE – EventLayout mit Skill-Kontext */}
 {pageType === 'event' && eventData && eventContent && eventSlides && (
-  <!-- ══════════════════════════════════════════════════
-       SKILL+EVENT-SEITE – EventLayout mit Skill-Kontext
-  ══════════════════════════════════════════════════ -->
   <EventLayout title={eventPageTitle} description={eventMetaDescription || eventPageDescription} image={eventTitleImage}>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(eventBreadcrumb)} />
 

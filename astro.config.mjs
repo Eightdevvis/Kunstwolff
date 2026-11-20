@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 import preact from "@astrojs/preact";
 import sitemap from "@astrojs/sitemap";
@@ -102,12 +103,22 @@ const lastmodMap = readLastmod();
  * Als Integration hängt die Erzeugung am Build selbst und kann nicht mehr
  * abgeschnitten werden – egal, wer den Build anstößt und wie.
  */
+/** @returns {import('astro').AstroIntegration} */
 const bildVarianten = () => ({
   name: 'kunstwolff-bild-varianten',
   hooks: {
-    'astro:build:done': async () => {
+    'astro:build:done': async ({ dir }) => {
       const { generateVariants } = await import('./scripts/generate-image-variants.mjs');
       await generateVariants();
+
+      // Danach das fertige Ergebnis prüfen (seit 2026-11-20): zeigt eine
+      // Bild-Adresse – v. a. eine srcset-Stufe – ins Leere, scheitert der
+      // Build, statt mit leeren Bildern live zu gehen. Hier statt als
+      // npm-`postbuild`, aus demselben Grund wie oben.
+      const { validateDist, reportDist } = await import('./scripts/validate-dist-images.mjs');
+      if (!reportDist(validateDist(fileURLToPath(dir).replace(/\/$/, '')))) {
+        throw new Error('validate-dist: tote Bild-Adressen im Build (siehe oben) – Build abgebrochen.');
+      }
     },
   },
 });

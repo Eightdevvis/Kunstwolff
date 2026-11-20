@@ -141,7 +141,7 @@ So müssen Endbenutzer nach Eintragen einer neuen Stadt nicht lokal builden – 
 
 ### Offene Lücke
 
-- **Kein Build/Typecheck im CI:** Die Action committet Sync-Output ohne `astro check` / `astro build`. Ein durch den Sync erzeugter kaputter JSON fällt erst lokal oder beim Vercel-Deploy auf.
+- **Kein Build/Typecheck im CI:** Die Action committet Sync-Output ohne `astro check` / `astro build`. Ein durch den Sync erzeugter kaputter JSON fällt erst lokal oder beim Vercel-Deploy auf. Seit 2026-11-20 bricht der Vercel-Build wenigstens bei toten Bild-Adressen ab (`validate:dist` in der Build-Integration, `befehle.md`); `astro check` läuft nur im pre-push-Hook.
 
 ## Einmal-Werkzeuge (laufen NICHT im Sync)
 
