@@ -53,6 +53,17 @@ Astro 7 + Preact SSG-Website für **kunstwolff.de** (Eventkünstler). Statisch g
 - Vergleichsverfahren (normalisiertes HTML, CSS in Kaskadenreihenfolge, sichtbarer
   Text, berechnete Stile, Pixel): Werkzeuge lagen nur temporär auf dem PC; die
   Methode steht im Commit `build: upgrade to Astro 7`.
+- Ergebnis gegen Astro 5 (277 Seiten, 390×844 und 1440×900): berechnete Stile
+  aller Elemente gleich bis auf zwei gleichwertige Schreibweisen (Verlaufs-Stopp
+  `50%` weggelassen, liegt ohnehin mittig zwischen 45 % und 55 %; `0%` → `0px`
+  in einer Kreisverlauf-Position). Pixelvergleich auf 6 Seiten × 2 Breiten: 0 Pixel.
+- Fallen bei solchen Vergleichen (gelten für jeden Stand, nicht Astro 7):
+  Slide-Breite `374.875px` statt `375px` taucht auch beim Vergleich eines Builds
+  mit sich selbst auf (Ladezeitpunkt); ganzseitige Screenshots von `/galerie/`
+  und Slideshow-Seiten weichen ab, solange nicht alle Bilder `complete` und
+  dekodiert sind; ein langsamer Test-Wisch (> 300 ms) zählt bei Swiper als
+  „langer Wisch“ und braucht > 50 % Slide-Breite – breite Slides bleiben dann
+  stehen, ein schneller Wisch wie mit dem Finger läuft durch alle Slides.
 
 ## Setup
 
