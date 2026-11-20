@@ -5,7 +5,7 @@ import Footer from "../components/Footer.astro";
 import LangSwitcher from "../components/LangSwitcher.astro";
 import type { LangAlternate } from "../components/LangSwitcher.astro";
 import { isPageHiddenByPath } from "../utils/pageVisibility";
-import { DEFAULT_LOCALE } from "../i18n/config";
+import { DEFAULT_LOCALE, LOCALE_META } from "../i18n/config";
 import { metaDescription } from "../utils/seoSnippet";
 
 const {
@@ -35,7 +35,12 @@ const ogLocale = lang === "fr" ? "fr_FR" : "de_DE";
 // `/img/og/og-default.webp` ist dieselbe Aufnahme, nur umkodiert: gleiche Maße
 // (1180×818), nichts beschnitten, nichts skaliert.
 const DEFAULT_OG_IMAGE = "/img/og/og-default.webp";
-const ogImage = Astro.site ? new URL(image ?? DEFAULT_OG_IMAGE, Astro.site).href : undefined;
+// Auch ein ÜBERGEBENES Bild darf kein AVIF sein (2026-11-20): der Opener fällt
+// ohne eigenes Titelbild auf `titelbild.avif` zurück, und genau das landete als
+// og:image auf 28 Sitemap-Seiten – darunter die Startseite. Dann lieber das
+// Standardbild (dieselbe Aufnahme als WebP).
+const ogSource = image && !/\.avif$/i.test(image) ? image : DEFAULT_OG_IMAGE;
+const ogImage = Astro.site ? new URL(ogSource, Astro.site).href : undefined;
 
 // ─── Robots-Meta: Production-Host-Whitelist + Page-Visibility ────────────────
 // Eine Seite bekommt noindex/nofollow, wenn EINE der drei Bedingungen zutrifft:
@@ -94,7 +99,7 @@ const xDefaultHref = showAlternates
 		     indexierbar ist – deutsche Seiten ohne Übersetzung bleiben
 		     unverändert. Siehe `showAlternates` oben. */}
 		{showAlternates && alternates.map((a) => (
-			<link rel="alternate" hreflang={a.locale} href={new URL(a.href, Astro.site).href} />
+			<link rel="alternate" hreflang={LOCALE_META[a.locale].hreflang} href={new URL(a.href, Astro.site).href} />
 		))}
 		{xDefaultHref && (
 			<link rel="alternate" hreflang="x-default" href={new URL(xDefaultHref, Astro.site).href} />
