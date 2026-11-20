@@ -53,8 +53,10 @@ const platzhalter = (w: number, h: number) =>
 <section class="section gallery">
     <h2>{heading}</h2>
     {/* Ohne JavaScript bleibt der Platzhalter leer – dann zeigt das
-        <noscript>-Bild im selben Slide das Foto. */}
-    <noscript><style>.mySwiper img[data-src] { display: none; }</style></noscript>
+        <noscript>-Bild im selben Slide das Foto. `!important`, weil die
+        gescopte Regel `.swiper-slide img { display: block }` unten
+        spezifischer ist (Astro hängt an beide Teile ein data-Attribut). */}
+    <noscript><style>.mySwiper img[data-src] { display: none !important; }</style></noscript>
 
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
