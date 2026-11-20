@@ -2,7 +2,7 @@
 
 ## Was ist das?
 
-Astro 5 + Preact SSG-Website für **kunstwolff.de** (Eventkünstler). Statisch generierte Landingpages mit Stadt-, Skill- und Event-Kombinationen. Kein klassisches CMS – alle Inhalte liegen dateibasiert im `public/`-Ordner.
+Astro 7 + Preact SSG-Website für **kunstwolff.de** (Eventkünstler). Statisch generierte Landingpages mit Stadt-, Skill- und Event-Kombinationen. Kein klassisches CMS – alle Inhalte liegen dateibasiert im `public/`-Ordner.
 
 ## Ziele
 
@@ -11,11 +11,11 @@ Astro 5 + Preact SSG-Website für **kunstwolff.de** (Eventkünstler). Statisch g
 
 ## Tech-Stack
 
-- **Astro 5** – Static Site Generator, dynamische Routen via `getStaticPaths()`
+- **Astro 7** (seit 2026-11-20, vorher 5; Vite 8, Rust-Compiler) – Static Site Generator, dynamische Routen via `getStaticPaths()`. Upgrade-Besonderheiten siehe unten „Astro 7“
 - **Preact 10** – für die wenigen interaktiven Komponenten
 - **TypeScript** – in `src/utils/`
 - **swiper 12** – Slideshow-Komponenten
-- **sharp** – Bildoptimierung (Pre-Push-Hook konvertiert zu WebP)
+- **sharp 0.35** – Bildoptimierung (Pre-Push-Hook konvertiert zu WebP)
 - **gray-matter** – YAML-Frontmatter aus Reviews/FAQs lesen
 - **@astrojs/sitemap** – Sitemap-Generierung beim Build
 - Custom-Font **Mayonice** in `public/fonts/mayonice/`, eingebunden via `global.css`
@@ -23,8 +23,36 @@ Astro 5 + Preact SSG-Website für **kunstwolff.de** (Eventkünstler). Statisch g
 
 ## Voraussetzungen
 
-- Node.js 20+
+- **Node.js 24** (`engines.node: "24.x"` in `package.json`). Astro 7.4 verlangt
+  **≥ 22.23.4** und prüft das beim Start hart („Node.js … is not supported by
+  Astro!“ → Build bricht ab). Weil Vercel bei „22.x“ den Patch-Stand selbst wählt,
+  legt `engines` die Hauptversion auf 24 fest – das überstimmt die
+  Vercel-Projekteinstellung „Node.js Version“. GitHub Action ebenfalls 24.
 - npm
+
+## Astro 7 – was beim Upgrade (2026-11-20) zu beachten war
+
+- **`compressHTML: true`** steht bewusst in `astro.config.mjs`. Der neue Standard
+  `'jsx'` streicht Leerraum zwischen Inline-Elementen – sichtbar z. B. im Menü
+  („Home | Services“ → „Home|Services“). Nicht entfernen.
+- **CSS-Minifizierung bleibt esbuild** (`vite.build.cssMinify: 'esbuild'`,
+  `esbuild` als dependency, weil der Build es braucht). Vite 8 nähme sonst Lightning CSS – das wirft
+  `backdrop-filter` weg, wenn danach `-webkit-backdrop-filter` steht (gilt ihm als
+  dieselbe Eigenschaft, die letzte gewinnt). Gemessen: in Chrome fehlte die
+  Unschärfe unten im Event-Titelbild. Wer auf Lightning CSS wechseln will, muss
+  vorher überall die `-webkit-`-Zeile **vor** die unpräfixierte setzen und die
+  berechneten Stile aller Seiten vergleichen.
+- **JS-Minifizierung jetzt oxc** (Vite-8-Standard): andere Variablennamen und
+  Schreibweise in den eingebetteten `<script type="module">`, gleiches Verhalten
+  (Laufzeittest: Slideshow, Lightbox, Burger, 0 Konsolenfehler).
+- **Rust-Compiler** korrigiert ungültige Verschachtelung (`<div>` in `<p>`) nicht
+  mehr und lehnt nicht geschlossene Tags ab. Der Build ist damit strenger.
+- `data-astro-cid-…` und `/_astro/`-Dateinamen haben neue Hashes – egal, solange
+  niemand sie von außen hart verdrahtet.
+- `sitemap-index.xml` trägt seit `@astrojs/sitemap` 3.7.6 ein `<lastmod>`.
+- Vergleichsverfahren (normalisiertes HTML, CSS in Kaskadenreihenfolge, sichtbarer
+  Text, berechnete Stile, Pixel): Werkzeuge lagen nur temporär auf dem PC; die
+  Methode steht im Commit `build: upgrade to Astro 7`.
 
 ## Setup
 

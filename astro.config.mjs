@@ -126,6 +126,19 @@ const bildVarianten = () => ({
 // https://astro.build/config
 export default defineConfig({
   site: siteUrl,
+  // Seit Astro 7 ist der Standard `'jsx'`: Leerraum zwischen Inline-Elementen
+  // fällt dann weg („Home | Services" würde zu „Home|Services"). `true` ist das
+  // Verhalten bis Astro 6 – Zeilenumbrüche weg, Wortabstände bleiben. Bewacht
+  // vom HTML-Vergleich beim Upgrade (memory/projekt.md → „Astro 7“).
+  compressHTML: true,
+  // CSS weiter mit esbuild verkleinern statt mit Lightning CSS (Standard seit
+  // Vite 8). Lightning CSS behandelt `backdrop-filter` und
+  // `-webkit-backdrop-filter` als dieselbe Eigenschaft und behält nur die
+  // zuletzt geschriebene – in Chrome verschwand so die Unschärfe unten im
+  // Event-Titelbild. Mit esbuild bleibt das CSS so, wie es bis Astro 5 live war.
+  vite: {
+    build: { cssMinify: 'esbuild' },
+  },
   // Hier steht bewusst KEIN `redirects`-Block: bei statischer Ausgabe baut
   // Astro daraus eine HTML-Seite mit Meta-Refresh. Die hat kein Layout, keinen
   // Fußbereich und damit kein Impressum – und sie wurde tatsächlich
