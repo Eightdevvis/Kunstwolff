@@ -5,6 +5,7 @@ import path from 'path';
 
 import preact from "@astrojs/preact";
 import sitemap from "@astrojs/sitemap";
+import { SITE_ORIGIN } from "./src/utils/siteOrigin.mjs";
 
 // ─── Site-Host pro Umgebung ───────────────────────────────────────────────────
 // `site` wird zur BUILD-Zeit fest in Sitemap, Canonical-Links und OG-URLs
@@ -12,11 +13,10 @@ import sitemap from "@astrojs/sitemap";
 // Domain (kunstwolff.de) verweist (was Crawler in 404-Land schicken würde,
 // solange dort noch Wix läuft), liest die Konfig die Env-Variable SITE_URL.
 //
-// Vercel-Env (Project Settings → Environment Variables):
-//   SITE_URL=https://kunstwolff.vercel.app   (Stage)
-// Beim Cutover dann auf https://www.kunstwolff.de stellen, alternativ
-// Variable löschen → Fallback unten greift.
-const siteUrl = process.env.SITE_URL ?? "https://kunstwolff.de";
+// Vercel-Env (Project Settings → Environment Variables): live steht
+// SITE_URL auf die www-Adresse. Fehlt sie, greift SITE_ORIGIN
+// (src/utils/siteOrigin.mjs) – ebenfalls www, die kanonische Adresse.
+const siteUrl = process.env.SITE_URL ?? SITE_ORIGIN;
 
 // ─── Page-Visibility ──────────────────────────────────────────────────────────
 // `public/config/page-visibility.json` listet Pfade die aus der Sitemap
