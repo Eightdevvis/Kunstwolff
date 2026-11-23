@@ -1,6 +1,12 @@
 {
   "bugs": [
     {
+      "id": "2026-11-23T22-12-08-973Z-a5hu",
+      "text": "Hi, das Titelbild läßt sich immer noch nur sprunghaft skalieren. So ist z.B: auf der Mannheim Seite das Bild enteder zu grß, dass man das Zeichnen nicht mehr sieht, oder nach Verschieben so klein, das ein eißer Hintergrund entsteteht, der mit dem grauen Übergang nicht gut aussieht.",
+      "erstellt": "2026-11-23T22:12:08.973Z",
+      "status": "offen"
+    },
+    {
       "id": "2026-11-20T06-38-14-387Z-0s09",
       "text": "test",
       "erstellt": "2026-11-20T06:38:14.387Z",
