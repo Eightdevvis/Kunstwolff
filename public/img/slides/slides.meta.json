@@ -5694,5 +5694,14 @@
         "schnellzeichner-weihnachtsfeier"
       ]
     }
+  },
+  "events/schnellzeichner-weihnachtsfeier/weihnachtsfeier-karikaturistin-gasthaus-kaut-leidenborn.webp": {
+    "categories": [],
+    "priority": 8,
+    "tags": {
+      "events": [
+        "schnellzeichner-weihnachtsfeier"
+      ]
+    }
   }
 }
