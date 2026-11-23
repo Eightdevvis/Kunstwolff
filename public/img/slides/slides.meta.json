@@ -5631,5 +5631,68 @@
         "rheinland-pfalz"
       ]
     }
+  },
+  "events/schnellzeichner-weihnachtsfeier/elch.webp": {
+    "categories": [],
+    "priority": 7,
+    "tags": {
+      "events": [
+        "schnellzeichner-weihnachtsfeier"
+      ]
+    }
+  },
+  "events/schnellzeichner-weihnachtsfeier/karikatur-aerztin-weihnachtsfeier-bauern-und-winzer-verband-koblenz.webp": {
+    "categories": [],
+    "priority": 6,
+    "tags": {
+      "events": [
+        "schnellzeichner-weihnachtsfeier"
+      ]
+    }
+  },
+  "events/schnellzeichner-weihnachtsfeier/karikaturist-betriebsfeier-actemium-schweiz-ag-arlesheim.webp": {
+    "categories": [],
+    "priority": 5,
+    "tags": {
+      "events": [
+        "schnellzeichner-weihnachtsfeier"
+      ]
+    }
+  },
+  "events/schnellzeichner-weihnachtsfeier/karikaturist-weihnachtsfeier.webp": {
+    "categories": [],
+    "priority": 4,
+    "tags": {
+      "events": [
+        "schnellzeichner-weihnachtsfeier"
+      ]
+    }
+  },
+  "events/schnellzeichner-weihnachtsfeier/karikaturist-weihnachtsfeier-stadthalle-taunusstein.webp": {
+    "categories": [],
+    "priority": 3,
+    "tags": {
+      "events": [
+        "schnellzeichner-weihnachtsfeier"
+      ]
+    }
+  },
+  "events/schnellzeichner-weihnachtsfeier/karikatur-weihnachtsfeier-tommys-teufelskueche-trier.webp": {
+    "categories": [],
+    "priority": 2,
+    "tags": {
+      "events": [
+        "schnellzeichner-weihnachtsfeier"
+      ]
+    }
+  },
+  "events/schnellzeichner-weihnachtsfeier/speed-painting-christmas-party-saarlouis.webp": {
+    "categories": [],
+    "priority": 1,
+    "tags": {
+      "events": [
+        "schnellzeichner-weihnachtsfeier"
+      ]
+    }
   }
 }
